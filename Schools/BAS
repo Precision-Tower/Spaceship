@@ -1,0 +1,389 @@
+BAS_bench_phase_v1:
+  prototype_architecture:
+    purpose: "Expose whether one short-stroke actuator can repeat a bounded hydrostatic cycle."
+    operating_boundary:
+      scale: "bench-scale"
+      depth: "shallow only"
+      actuator_count: 1
+      objective: "state repeatability, not output power"
+
+    chamber_geometry_candidates:
+      simple_cylinder:
+        purpose: "Repeatable volume, easy sealing, easy observation."
+        failure_modes: ["end-cap leakage", "trapped air inconsistency", "wall flex"]
+        tolerance_sensitivity: "medium"
+        maintenance_burden: "low"
+
+      rectangular_clear_chamber:
+        purpose: "Visualize ingress, bubbles, valve behavior."
+        failure_modes: ["corner leakage", "uneven pressure loading", "seal creep"]
+        tolerance_sensitivity: "high"
+        maintenance_burden: "medium"
+
+      bottle_or_tube_float:
+        purpose: "Lowest-cost buoyancy chamber for early tests."
+        failure_modes: ["poor valve integration", "geometry inconsistency", "mount flex"]
+        tolerance_sensitivity: "medium"
+        maintenance_burden: "low"
+
+    guide_geometry:
+      vertical_dual_rail_slider:
+        purpose: "Constrain motion and expose side-loading."
+        failure_modes: ["binding", "rail misalignment", "friction drift"]
+        tolerance_sensitivity: "high"
+        maintenance_burden: "medium"
+
+      single_center_rod:
+        purpose: "Simpler construction."
+        failure_modes: ["rotation", "wobble", "seal/guide wear"]
+        tolerance_sensitivity: "medium"
+        maintenance_burden: "low"
+
+    valve_candidates:
+      gravity_flap:
+        purpose: "Passive ingress and closure."
+        failure_modes: ["flutter", "delayed seating", "edge leakage"]
+        tolerance_sensitivity: "high"
+        maintenance_burden: "low"
+
+      hinged_shutter:
+        purpose: "More defined open/close geometry."
+        failure_modes: ["hinge slack", "debris jam", "impact rebound"]
+        tolerance_sensitivity: "medium-high"
+        maintenance_burden: "medium"
+
+      sliding_gate:
+        purpose: "Endpoint-triggered state separation."
+        failure_modes: ["binding", "seal drag", "mistimed actuation"]
+        tolerance_sensitivity: "high"
+        maintenance_burden: "medium-high"
+
+    linkage_output_geometry:
+      initial_mode: "No useful output extraction during first tests."
+      later_mode: "Light crank or pointer arm only after free oscillation is characterized."
+      reason: "Output load can hide whether the core buoyancy cycle is stable."
+
+    ballast_transfer_path:
+      ingress_path: "Valve opening into chamber."
+      restoration_path: "Pump outlet removes chamber water to surrounding reservoir or external catch."
+      critical_issue: "Ingress and restoration paths must not unintentionally short-circuit each other."
+
+    pump_placement:
+      preferred: "Fixed externally to frame, connected by flexible tubing."
+      avoid: "Pump mounted on moving chamber unless vibration effects are being tested."
+      risk: "Pump vibration may unseat valves or add side-load."
+
+    sealing_assumptions:
+      allowed: "bounded leakage"
+      not_allowed: "perfect sealing"
+      governing_condition: "Q_pump must exceed Q_leak with margin under test depth."
+
+    trigger_mechanisms:
+      top_trigger: ["mechanical stop", "cam tab", "flap release contact"]
+      bottom_trigger: ["flap seating by gravity/pressure", "mechanical closure stop", "gate contact"]
+      hidden_risk: "Trigger repeatability may depend on stroke velocity."
+
+    stroke_length_targets:
+      initial_range: "25–100 mm"
+      reason: "Short enough for bench repeatability, long enough to observe timing separation."
+      unresolved: "Minimum stroke needed for reliable buoyancy-state separation."
+
+  subsystem_registry:
+    chamber:
+      operational_purpose: "Provide variable buoyancy state."
+      likely_failure_modes: ["leakage", "trapped air drift", "insufficient displacement"]
+      tolerance_sensitivity: "volume and seal geometry"
+      maintenance_burden: "seal inspection"
+
+    valve:
+      operational_purpose: "Create passive state transition."
+      likely_failure_modes: ["flutter", "late closure", "incomplete seating", "rebound reopening"]
+      tolerance_sensitivity: "seat flatness, hinge friction, flap mass"
+      maintenance_burden: "cleaning and wear observation"
+
+    guide:
+      operational_purpose: "Constrain vertical motion."
+      likely_failure_modes: ["binding", "side-load friction", "alignment drift"]
+      tolerance_sensitivity: "rail parallelism"
+      maintenance_burden: "lubrication/alignment checks"
+
+    pump:
+      operational_purpose: "Restore buoyancy by evacuating water."
+      likely_failure_modes: ["low flow", "backflow", "pressure pulsing", "vibration"]
+      tolerance_sensitivity: "head height, tubing diameter, check valves"
+      maintenance_burden: "filtering and flow checks"
+
+    trigger:
+      operational_purpose: "Define state-change timing."
+      likely_failure_modes: ["early trigger", "missed trigger", "impact bounce"]
+      tolerance_sensitivity: "stroke endpoint repeatability"
+      maintenance_burden: "stop/cam wear inspection"
+
+    output_linkage:
+      operational_purpose: "Later observe mechanical capture."
+      likely_failure_modes: ["dead-zone stall", "excess damping", "side-load injection"]
+      tolerance_sensitivity: "crank angle and pivot alignment"
+      maintenance_burden: "pivot wear checks"
+
+  instrumentation_plan:
+    Q_leak:
+      method: "Seal chamber at restoration state; measure water gain or buoyancy loss over time."
+      tools: ["graduated cylinder", "scale", "timed video"]
+      priority: "highest"
+
+    Q_pump:
+      method: "Pump from chamber-equivalent depth into measured container over fixed time."
+      tools: ["graduated container", "stopwatch", "same tubing/check valves as prototype"]
+      priority: "highest"
+
+    restoration_time:
+      method: "Time from bottom valve closure to first upward motion."
+      tools: ["video", "frame marks", "manual timestamp"]
+      priority: "high"
+
+    ingress_collapse_time:
+      method: "Time from valve opening to downward motion onset."
+      tools: ["video", "stroke ruler", "visible dye optional"]
+      priority: "high"
+
+    stroke_timing_variance:
+      method: "Measure top-to-bottom, bottom-to-top, and full-cycle periods across repeated cycles."
+      tools: ["video", "frame counter", "position marks"]
+      priority: "high"
+
+    valve_transition_timing:
+      method: "Video valve open/close frame relative to chamber position."
+      tools: ["transparent chamber", "high-frame-rate phone video"]
+      priority: "high"
+
+    rebound_behavior:
+      method: "Observe bottom and top overshoot/bounce after impact."
+      tools: ["position scale", "video"]
+      priority: "high"
+
+    oscillation_decay:
+      method: "Disable pump or valve action selectively and observe amplitude loss."
+      tools: ["position scale", "cycle count"]
+      priority: "medium-high"
+
+    friction_load:
+      method: "Pull chamber through guide using hanging weights or spring scale."
+      tools: ["spring scale", "known weights"]
+      priority: "medium"
+
+    side_loading:
+      method: "Compare guide friction with linkage disconnected vs lightly connected."
+      tools: ["spring scale", "video wobble observation"]
+      priority: "medium"
+
+    pressure_variation:
+      method: "Use shallow depth ruler first; optional low-pressure sensor later."
+      tools: ["water depth scale", "optional manometer tube"]
+      priority: "medium"
+
+  minimal_viable_cycle:
+    successful_rise:
+      required_conditions:
+        - "net buoyancy exceeds weight, friction, and guide drag"
+        - "valve remains sufficiently closed"
+        - "linkage or tubing does not bind motion"
+
+    successful_transition:
+      required_conditions:
+        - "top trigger opens ingress path repeatably"
+        - "opening occurs at consistent position"
+        - "transition does not produce uncontrolled rebound"
+
+    successful_descent:
+      required_conditions:
+        - "water ingress collapses buoyancy fast enough"
+        - "gravity exceeds remaining buoyancy and friction"
+        - "valve does not flutter into partial closure"
+
+    successful_restoration:
+      required_conditions:
+        - "bottom closure creates sufficient state separation"
+        - "Q_pump > Q_leak"
+        - "restoration time does not grow cycle-to-cycle"
+
+    repeatable_next_cycle:
+      required_conditions:
+        - "stroke timing variance remains bounded"
+        - "leakage does not accumulate"
+        - "valve timing does not drift"
+        - "friction does not increase during operation"
+
+  state_machine_seed:
+    states:
+      top_ready:
+        entry_conditions: ["chamber buoyant", "valve closed/seated", "near upper endpoint"]
+        exit_conditions: ["top trigger opens ingress"]
+        trigger_variables: ["position_top", "trigger_contact"]
+        blocking_variables: ["valve stuck closed", "insufficient trigger force"]
+
+      ingress_open:
+        entry_conditions: ["valve open", "water entering chamber"]
+        exit_conditions: ["buoyancy collapses enough for descent"]
+        trigger_variables: ["valve_angle", "water_level_change"]
+        blocking_variables: ["air lock", "low ingress rate", "flutter"]
+
+      descending:
+        entry_conditions: ["net downward force positive"]
+        exit_conditions: ["bottom endpoint reached"]
+        trigger_variables: ["position", "velocity"]
+        blocking_variables: ["guide friction", "linkage resistance", "partial buoyancy"]
+
+      bottom_transition:
+        entry_conditions: ["lower endpoint reached"]
+        exit_conditions: ["valve seated and restoration path active"]
+        trigger_variables: ["bottom_contact", "valve_closed"]
+        blocking_variables: ["rebound", "incomplete seating", "shock reopening"]
+
+      restoring:
+        entry_conditions: ["pump active", "valve sufficiently closed"]
+        exit_conditions: ["positive buoyancy restored"]
+        trigger_variables: ["pump_flow", "leak_rate", "chamber_water_volume"]
+        blocking_variables: ["Q_leak >= Q_pump", "pump backflow", "pressure pulsing"]
+
+      rising:
+        entry_conditions: ["net upward force positive"]
+        exit_conditions: ["top endpoint reached"]
+        trigger_variables: ["buoyancy_margin", "position"]
+        blocking_variables: ["static friction", "side-load", "premature ingress"]
+
+      failure_states:
+        flooded_stall: "Chamber cannot restore buoyancy."
+        dry_stall: "Valve fails to open or ingress is insufficient."
+        timing_drift: "Cycle continues but period/transition points migrate."
+        flutter_loop: "Valve oscillates without clean state separation."
+        guide_bind: "Mechanical friction prevents stroke completion."
+        rebound_unlock: "Impact reopens valve or breaks restoration state."
+
+  failure_discovery_strategy:
+    likely_first_failure_points:
+      - "valve seating repeatability"
+      - "pump flow under real tubing/head"
+      - "bottom rebound reopening"
+      - "guide friction"
+      - "air trapping"
+      - "leakage through passive flap edges"
+
+    hidden_coupling_risks:
+      - "pump vibration affects valve seating"
+      - "linkage side-load increases guide friction"
+      - "valve flutter delays descent and consumes timing margin"
+      - "bottom impact changes valve state"
+      - "tube stiffness adds restoring or damping force"
+
+    geometry_sensitive_regions:
+      - "top trigger location"
+      - "bottom closure location"
+      - "valve seat angle"
+      - "flap mass and hinge friction"
+      - "stroke length"
+      - "guide rail spacing"
+      - "chamber displacement volume"
+
+    passive_timing_instabilities:
+      - "velocity-dependent triggering"
+      - "flap bounce"
+      - "late closure"
+      - "partial-open states"
+      - "hysteresis between opening and closing"
+
+    restoration_collapse_pathways:
+      - "leakage exceeds pump"
+      - "pump starts before closure"
+      - "backflow through pump"
+      - "air pocket blocks evacuation"
+      - "pressure pulse unseats valve"
+
+  contradiction_register:
+    restoration_vs_output_extraction:
+      contradiction: "Any output load may reduce stroke reliability before state cycling is proven."
+      preserve_as_unknown: "Maximum tolerable output load remains undefined."
+
+    simplicity_vs_controllability:
+      contradiction: "Passive mechanisms reduce complexity but remove precise timing control."
+      preserve_as_unknown: "Whether passive timing self-bounds or drifts."
+
+    passive_timing_vs_repeatability:
+      contradiction: "Flaps and gravity closures are simple but sensitive to velocity, hinge friction, and turbulence."
+      preserve_as_unknown: "Cycle-to-cycle valve timing variance."
+
+    bounded_leakage_vs_practical_sealing:
+      contradiction: "Perfect sealing is rejected, but insufficient sealing destroys restoration dominance."
+      preserve_as_unknown: "Actual acceptable leakage threshold."
+
+    short_stroke_vs_usable_displacement:
+      contradiction: "Short stroke improves compact cycling but reduces available buoyancy-state margin."
+      preserve_as_unknown: "Minimum displacement needed for reliable state separation."
+
+    shallow_operation_vs_measurement_noise:
+      contradiction: "Shallow pressure reduces restoration burden but may make small friction and timing errors dominant."
+      preserve_as_unknown: "Relative size of friction losses vs buoyancy margin."
+
+  test_queue_v1:
+    - priority: 1
+      test: "Static leak-rate test"
+      question: "What is Q_leak in the closed/restoration state?"
+      pass_fail_notation: "Do not pass/fail yet; classify leak as bounded, growing, or uncontrolled."
+
+    - priority: 2
+      test: "Pump flow under actual tubing/head"
+      question: "What is Q_pump in the real restoration path?"
+      compare_against: "Q_leak"
+
+    - priority: 3
+      test: "Valve repeatability dry/wet cycling"
+      question: "Does the valve open and close at consistent positions?"
+
+    - priority: 4
+      test: "Bottom rebound observation"
+      question: "Does impact reopen or disturb the restoration state?"
+
+    - priority: 5
+      test: "Ingress collapse timing"
+      question: "How long from valve opening to committed descent?"
+
+    - priority: 6
+      test: "Restoration timing"
+      question: "How long from bottom closure to upward motion?"
+
+    - priority: 7
+      test: "Guide friction and side-load test"
+      question: "Does mechanical constraint consume buoyancy margin?"
+
+    - priority: 8
+      test: "Free oscillation damping"
+      question: "How quickly does motion decay without active restoration?"
+
+    - priority: 9
+      test: "Ten-cycle repeatability run"
+      question: "Do timing, stroke, valve state, and restoration delay remain bounded?"
+
+    - priority: 10
+      test: "Geometry perturbation test"
+      question: "Which dimensions strongly affect cycle stability?"
+
+  blocking_unknowns:
+    - "Actual valve leakage at shallow depth"
+    - "Pump flow after check valves and tubing losses"
+    - "Minimum chamber displacement required"
+    - "Valve flutter threshold"
+    - "Air trapping behavior"
+    - "Guide friction under wet conditions"
+    - "Bottom impact energy"
+    - "Whether rebound disrupts closure"
+    - "Cycle timing variance over repeated runs"
+    - "Whether restoration delay accumulates"
+    - "Whether passive timing self-corrects or drifts"
+
+  next_best_measurements:
+    - "Q_leak closed-state measurement"
+    - "Q_pump real-path measurement"
+    - "Valve open/close video timing"
+    - "Bottom rebound video"
+    - "Rise/descent timing across repeated cycles"
+    - "Guide friction with and without linkage"
+    - "Restoration delay from bottom closure to upward motion"

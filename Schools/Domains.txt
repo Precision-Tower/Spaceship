@@ -1,0 +1,707 @@
+CE-OS :: DOMAIN_MODELS
+Role: interaction-domain topology architecture
+Authority Scope: domain behavior classification + interaction topology
+Non-Authority: ontology definition / governance ownership / methodology execution
+
+==================================================
+1. DOMAIN PURPOSE
+==================================================
+
+Domains exist to preserve:
+- interaction identity
+- behavior classification
+- propagation boundaries
+- coupling specificity
+- loss identity
+- cross-domain traceability
+
+Domain separation required because:
+interaction classes are not semantically interchangeable.
+
+Cross-domain collapse causes:
+- propagation broadening
+- field universalization
+- transfer ambiguity
+- undefined coupling
+- semantic averaging
+
+Primary Stability Principle:
+domain identity must survive abstraction and compression.
+
+==================================================
+2. DOMAIN CLASSIFICATION SYSTEM
+==================================================
+
+--------------------------------------------------
+2.1 Root Domain Categories
+--------------------------------------------------
+
+ROOT DOMAINS:
+- Mass-Centric
+- Field-Centric
+- Cross-Domain
+
+--------------------------------------------------
+2.2 Interaction-Type Hierarchy
+--------------------------------------------------
+
+Interaction
+├── Mass-Centric Interaction
+├── Field-Centric Interaction
+└── Cross-Domain Interaction
+
+--------------------------------------------------
+2.3 Propagation Eligibility
+--------------------------------------------------
+
+Propagation Eligible:
+- field-centric distributed gradient interaction behavior
+
+Propagation Non-Eligible:
+- mass displacement
+- load passage
+- pressure movement
+- mechanical transfer
+- generic motion
+
+--------------------------------------------------
+2.4 Transfer Eligibility
+--------------------------------------------------
+
+Transfer Eligible:
+- load transfer
+- momentum transfer
+- pressure transfer
+- displacement transfer
+- thermal transfer
+
+Transfer Non-Eligible:
+- distributed field-gradient propagation
+
+--------------------------------------------------
+2.5 Coupling Categories
+--------------------------------------------------
+
+Coupling
+├── Mechanical Coupling
+├── Field Coupling
+├── Thermal Coupling
+├── Fluid Coupling
+├── Electromagnetic Coupling
+└── Cross-Domain Coupling
+
+==================================================
+3. MASS-CENTRIC DOMAIN MODEL
+==================================================
+
+--------------------------------------------------
+3.1 Primary Characteristics
+--------------------------------------------------
+
+Mass-Centric Domain:
+- matter
+- inertia
+- load
+- displacement
+- pressure
+- deformation
+- friction
+- structural interaction
+- momentum
+
+--------------------------------------------------
+3.2 Admissible Behaviors
+--------------------------------------------------
+
+Allowed:
+- displacement
+- load support
+- pressure transfer
+- momentum exchange
+- mechanical deformation
+- structural resistance
+- frictional interaction
+
+--------------------------------------------------
+3.3 Interaction Types
+--------------------------------------------------
+
+Interaction Classes:
+- contact interaction
+- pressure interaction
+- mechanical constraint interaction
+- structural load interaction
+
+--------------------------------------------------
+3.4 Transfer Mechanisms
+--------------------------------------------------
+
+Transfer Mechanisms:
+- force transfer
+- momentum transfer
+- pressure transfer
+- displacement transmission
+- load passage
+
+Forbidden Reclassification:
+transfer
+≠ propagation
+
+--------------------------------------------------
+3.5 Resistance Behaviors
+--------------------------------------------------
+
+Mass-Centric Resistance:
+- friction
+- deformation resistance
+- inertial resistance
+- structural resistance
+- compression resistance
+
+--------------------------------------------------
+3.6 Loss Pathways
+--------------------------------------------------
+
+Loss Pathways:
+- frictional heating
+- deformation losses
+- damping
+- turbulence
+- structural wear
+- mechanical inefficiency
+
+--------------------------------------------------
+3.7 Organizational Behaviors
+--------------------------------------------------
+
+Organization May Shape:
+- leverage
+- force concentration
+- load distribution
+- timing
+- constraint arrangement
+- transfer efficiency
+
+Organization Does NOT:
+- generate unconstrained source capability
+
+--------------------------------------------------
+3.8 Constraint Structures
+--------------------------------------------------
+
+Constraints:
+- material limits
+- inertia
+- geometry
+- load thresholds
+- deformation thresholds
+- frictional boundaries
+
+==================================================
+4. FIELD-CENTRIC DOMAIN MODEL
+==================================================
+
+--------------------------------------------------
+4.1 Primary Characteristics
+--------------------------------------------------
+
+Field-Centric Domain:
+- measurable gradient behavior
+- distributed interaction structure
+- non-contact-capable interaction
+- field organization
+- propagation behavior
+- inductive interaction
+- phase behavior
+- impedance behavior
+
+--------------------------------------------------
+4.2 Admissible Behaviors
+--------------------------------------------------
+
+Allowed:
+- field propagation
+- inductive coupling
+- distributed field interaction
+- gradient interaction
+- resonant interaction
+- field displacement behavior
+
+--------------------------------------------------
+4.3 Propagation Requirements
+--------------------------------------------------
+
+Propagation requires:
+- measurable gradient structure
+- distributed interaction behavior
+- field-centric interaction identity
+
+Propagation Forbidden:
+- generalized movement
+- mass displacement synonym
+- universal transfer language
+
+--------------------------------------------------
+4.4 Field Organization
+--------------------------------------------------
+
+Field Organization Includes:
+- gradient distribution
+- inductive topology
+- phase alignment
+- resonance conditions
+- impedance structure
+
+--------------------------------------------------
+4.5 Resonance Conditions
+--------------------------------------------------
+
+Resonance Requires:
+- oscillatory interaction behavior
+- response alignment
+- bounded interaction conditions
+
+Resonance Forbidden:
+- unrestricted amplification implication
+
+--------------------------------------------------
+4.6 Inductive Interaction
+--------------------------------------------------
+
+Inductive Interaction:
+field-mediated interaction relationship preserving field-centric identity.
+
+--------------------------------------------------
+4.7 Impedance Behavior
+--------------------------------------------------
+
+Impedance:
+interaction opposition within field-centric conditions involving:
+- propagation behavior
+- phase conditions
+- field interaction structure
+
+--------------------------------------------------
+4.8 Anti-Universalization Constraint
+--------------------------------------------------
+
+Field
+≠ generalized distributed influence
+
+Field requires:
+- measurable gradient behavior
+- bounded interaction structure
+- domain-specific interaction identity
+
+==================================================
+5. CROSS-DOMAIN MODEL
+==================================================
+
+--------------------------------------------------
+5.1 Cross-Domain Definition
+--------------------------------------------------
+
+Cross-Domain Interaction:
+governed interaction relationship between unlike domains preserving domain identity.
+
+--------------------------------------------------
+5.2 Admissible Cross-Domain Relations
+--------------------------------------------------
+
+Examples:
+- electrical ↔ magnetic
+- magnetic ↔ mechanical
+- thermal ↔ pressure
+- pressure ↔ flow
+- flow ↔ motion
+- field ↔ material response
+
+--------------------------------------------------
+5.3 Cross-Domain Constraints
+--------------------------------------------------
+
+Required:
+- explicit domain labeling
+- preserved interaction identity
+- preserved transfer classification
+- preserved propagation classification
+
+Forbidden:
+- domain flattening
+- unrestricted equivalence
+- generalized interaction merging
+
+--------------------------------------------------
+5.4 Organizational Transition Rules
+--------------------------------------------------
+
+Cross-domain organization may:
+- coordinate interactions
+- sequence interactions
+- constrain interactions
+- redirect interactions
+
+Cross-domain organization may NOT:
+- erase domain identity
+
+==================================================
+6. PROPAGATION VS TRANSFER TAXONOMY
+==================================================
+
+--------------------------------------------------
+6.1 Propagation
+--------------------------------------------------
+
+Propagation:
+field-centric distributed gradient interaction behavior.
+
+Requires:
+- field-centric identity
+- measurable gradient structure
+- distributed interaction behavior
+
+Examples:
+- electromagnetic propagation
+- radiative field behavior
+- distributed field interaction
+
+Propagation Forbidden:
+- generic movement
+- pressure transfer
+- load passage
+- mass displacement
+- generalized transmission
+
+--------------------------------------------------
+6.2 Transfer
+--------------------------------------------------
+
+Transfer:
+movement or passage of:
+- load
+- pressure
+- displacement
+- momentum
+- state conditions
+
+Transfer does NOT require:
+field-centric distributed gradients.
+
+--------------------------------------------------
+6.3 Transmission
+--------------------------------------------------
+
+Transmission:
+organized passage of interaction conditions through constrained pathways.
+
+Transmission may occur in:
+- mechanical systems
+- fluid systems
+- structural systems
+- conductive systems
+
+Transmission does NOT automatically imply:
+field propagation.
+
+--------------------------------------------------
+6.4 Displacement
+--------------------------------------------------
+
+Displacement:
+change in position/state within mass-centric or structural conditions.
+
+Displacement
+≠ propagation
+
+--------------------------------------------------
+6.5 Conductive Interaction
+--------------------------------------------------
+
+Conductive Interaction:
+interaction behavior through structured conductive pathways.
+
+Conductive interaction
+≠ electromagnetic propagation through space.
+
+--------------------------------------------------
+6.6 Electromagnetic Propagation
+--------------------------------------------------
+
+Electromagnetic Propagation:
+field-centric distributed interaction behavior through measurable field gradients.
+
+Electromagnetic propagation
+≠ conductive electrical transport
+
+==================================================
+7. COUPLING SUBCLASS SYSTEM
+==================================================
+
+--------------------------------------------------
+7.1 Mechanical Coupling
+--------------------------------------------------
+
+Mechanical linkage through:
+- contact
+- load interaction
+- rotational interaction
+- structural interaction
+
+--------------------------------------------------
+7.2 Field Coupling
+--------------------------------------------------
+
+Field-mediated interaction linkage preserving field-centric behavior.
+
+--------------------------------------------------
+7.3 Thermal Coupling
+--------------------------------------------------
+
+Interaction linkage involving thermal exchange behavior.
+
+--------------------------------------------------
+7.4 Fluid Coupling
+--------------------------------------------------
+
+Interaction linkage through pressure-flow/fluid interaction conditions.
+
+--------------------------------------------------
+7.5 Electromagnetic Coupling
+--------------------------------------------------
+
+Field-centric electromagnetic interaction linkage involving:
+- inductive behavior
+- gradient interaction
+- field response behavior
+
+--------------------------------------------------
+7.6 Cross-Domain Coupling
+--------------------------------------------------
+
+Coupling between unlike interaction domains while preserving domain identity.
+
+--------------------------------------------------
+7.7 Coupling Constraint
+--------------------------------------------------
+
+Coupling
+≠ undefined influence
+
+All coupling requires:
+- interaction classification
+- domain identity
+- interaction pathway
+
+==================================================
+8. ORGANIZATION VS STRUCTURE
+==================================================
+
+--------------------------------------------------
+8.1 Structure
+--------------------------------------------------
+
+Structure:
+physical arrangement.
+
+Includes:
+- geometry
+- support topology
+- material arrangement
+- physical constraint architecture
+
+--------------------------------------------------
+8.2 Organization
+--------------------------------------------------
+
+Organization:
+interaction orchestration.
+
+Includes:
+- sequencing
+- timing
+- coupling arrangement
+- interaction coordination
+- constraint management
+
+--------------------------------------------------
+8.3 Constraint
+--------------------------------------------------
+
+Structure
+≠ organization
+
+Organization
+≠ hidden optimization force
+
+==================================================
+9. DOMAIN LOSS BEHAVIOR
+==================================================
+
+--------------------------------------------------
+9.1 Mass-Centric Loss
+--------------------------------------------------
+
+Includes:
+- friction
+- deformation losses
+- damping
+- wear
+- turbulence
+- structural inefficiency
+
+--------------------------------------------------
+9.2 Field-Centric Loss
+--------------------------------------------------
+
+Includes:
+- attenuation
+- impedance mismatch
+- propagation degradation
+- inductive inefficiency
+- phase disorder
+
+--------------------------------------------------
+9.3 Cross-Domain Loss
+--------------------------------------------------
+
+Includes:
+- coupling inefficiency
+- conversion inefficiency
+- interaction mismatch
+- transition degradation
+
+--------------------------------------------------
+9.4 Thermal Accumulation
+--------------------------------------------------
+
+Thermal accumulation may emerge across domains through:
+- friction
+- resistance
+- attenuation
+- deformation
+- interaction disorder
+
+Heat remains:
+emergent interaction signature
+
+==================================================
+10. DOMAIN DISTINCTION TOPOLOGY
+==================================================
+
+mass-centric
+≠ field-centric
+
+propagation
+≠ transfer
+
+propagation
+≠ displacement
+
+field
+≠ generalized distributed influence
+
+coupling
+≠ undefined linkage
+
+organization
+≠ hidden source
+
+structure
+≠ organization
+
+resonance
+≠ unrestricted amplification
+
+conductive interaction
+≠ electromagnetic propagation
+
+transfer
+≠ field-gradient behavior
+
+cross-domain interaction
+≠ domain collapse
+
+==================================================
+11. DOMAIN RECOVERY FORMS
+==================================================
+
+--------------------------------------------------
+11.1 Domain Recovery Anchor
+--------------------------------------------------
+
+Mass-Centric:
+matter/load/displacement/pressure/friction domain
+
+Field-Centric:
+gradient/distributed/non-contact-capable interaction domain
+
+Cross-Domain:
+governed unlike-domain interaction
+
+--------------------------------------------------
+11.2 Propagation Eligibility Anchor
+--------------------------------------------------
+
+Propagation requires:
+- field-centric identity
+- measurable gradients
+- distributed interaction behavior
+
+Transfer does not.
+
+--------------------------------------------------
+11.3 Coupling Recovery Anchor
+--------------------------------------------------
+
+Coupling requires:
+- domain identity
+- interaction pathway
+- typed linkage
+
+--------------------------------------------------
+11.4 Structure vs Organization Anchor
+--------------------------------------------------
+
+Structure:
+physical arrangement
+
+Organization:
+interaction orchestration
+
+--------------------------------------------------
+11.5 Ultra-Compressed Recovery Form
+--------------------------------------------------
+
+Domains preserve interaction identity.
+
+Mass-centric:
+matter/load/displacement/pressure/friction.
+
+Field-centric:
+distributed gradient interaction behavior.
+
+Cross-domain:
+governed unlike-domain interaction.
+
+Propagation:
+field-gradient interaction behavior only.
+
+Transfer:
+non-field movement/load/state passage.
+
+Coupling:
+typed interaction linkage.
+
+Structure:
+physical arrangement.
+
+Organization:
+interaction orchestration.
+
+Forbidden collapses:
+propagation ≠ transfer
+field ≠ generalized influence
+organization ≠ hidden source
+coupling ≠ undefined linkage
+conductive interaction ≠ electromagnetic propagation
+mass-centric ≠ field-centric

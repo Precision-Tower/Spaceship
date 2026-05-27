@@ -1,0 +1,461 @@
+BAS Test 0 Simulation Framework Specification
+
+Status: Task 2 only
+Purpose: lightweight pre-build causal-pressure model
+Scope: locked BAS Test 0 configuration only
+Governance state: simulation may expose sensitivities; it may not validate BAS.
+
+1. Simulation Mission Definition
+
+The simulation attempts to estimate:
+
+simulation_targets:
+  - buoyancy_state_timing
+  - rise_descent_timing
+  - restoration_timing
+  - q_pump_vs_q_leak_sensitivity
+  - stroke_response_over_6_in
+  - rod_friction_tolerance
+  - drag_effect_on_motion
+  - trapped_air_sensitivity
+  - partial_fill_metastability_regions
+  - pump_timing_phase_sensitivity
+  - phase_drift_tendency
+  - stall_thresholds
+
+Primary question:
+
+Under simplified assumptions, what variable ranges allow bounded 6-inch vertical cycling, and which variables most quickly destroy it?
+
+The simulation is not allowed to claim:
+
+prohibited_simulation_claims:
+  - BAS_is_validated
+  - BAS_works
+  - stable_actuator_behavior_proven
+  - operational_readiness
+  - useful_power_generation
+  - efficiency
+  - scalability
+  - dirty_water_viability
+  - long_term_reliability
+  - physical_repeatability
+  - safety
+
+Allowed wording:
+
+“The simplified model predicts sensitivity to X under assumed bounds.”
+
+Not allowed:
+
+“The simulation proves BAS will cycle.”
+
+2. Minimum Variable Set
+Variable	Why it matters	Priority
+drum_mass	Sets gravitational load opposing buoyancy	Existential
+drum_displacement_volume	Determines maximum buoyant force	Existential
+submerged_volume	Determines instantaneous buoyancy	Existential
+internal_water_volume / fill_state	Determines buoyancy-state transition	Existential
+trapped_air_volume	Can shift buoyancy unpredictably	Existential
+water_ingress_rate	Controls flooding transition and descent timing	Existential
+water_evacuation_rate	Controls restoration and buoyancy recovery	Existential
+Q_pump	Determines restoration capacity	Existential
+Q_leak	Determines whether restoration can dominate	Existential
+Q_pump - Q_leak margin	Core recovery condition	Existential
+rod_friction / sleeve_drag	Can consume buoyancy margin or create metastable hover	Existential
+fluid_drag	Affects rise/descent timing and damping	Secondary-high
+stroke_length	Initial 6-inch boundary; 12-inch later only	Existential
+position z(t)	Main motion output	Existential
+velocity dz/dt	Indicates transition commitment and damping	Secondary-high
+acceleration d²z/dt²	Indicates rebound, impact, instability	Secondary-high
+pump_timing	Determines phase relationship with state transition	Existential
+pump_lag	Can cause restoration delay or phase drift	Existential
+partial_fill_state	Detects hover/metastability	Existential
+rebound_coefficient	Determines endpoint state corruption risk	Secondary-high
+side_load_proxy	Represents tilt/slosh-induced guide friction	Secondary-high
+cycle_count	Required for drift detection	Existential
+timing_variance	Distinguishes bounded cycling from transient rhythm	Existential
+
+Minimum model may start as 1D vertical motion with lumped parameters:
+
+minimum_model_form:
+  axis: vertical_z_only
+  body: HDPE_drum
+  force_terms:
+    - buoyancy_force
+    - drum_weight
+    - rod_friction
+    - hydrodynamic_drag
+    - endpoint_rebound
+  fluid_state_terms:
+    - internal_water_volume
+    - trapped_air_volume
+    - q_ingress
+    - q_pump
+    - q_leak
+  control_terms:
+    - pump_on_off_timing
+    - restoration_threshold
+    - top_bottom_transition_thresholds
+3. Simplified State Machine
+state_machine:
+  - buoyant_top_state
+  - flooding_transition
+  - descent
+  - bottom_transition
+  - restoration
+  - buoyancy_recovery
+  - rise
+  - top_reset
+State	Transition condition	Hidden risks	Instability injection points
+buoyant_top_state	Drum reaches upper stroke limit and remains buoyant	false stability from rod friction; trapped air	pump timing, residual fill, top rebound
+flooding_transition	Ingress begins; internal water volume increases	asymmetric fill; partial valve/port behavior	trapped air, slosh onset, delayed flooding
+descent	Net buoyancy drops below weight + friction; drum moves downward	rod bind; drag; partial-fill hover	side-load, sleeve drag, fluid drag
+bottom_transition	Drum reaches lower stroke boundary	rebound; incomplete state switch	endpoint impact, trapped air shift
+restoration	Pump evacuates/changes chamber state	Q_pump insufficient; Q_leak too high	pump lag, backflow, pump-forced motion
+buoyancy_recovery	Net buoyancy exceeds weight + friction	metastable hover if margin small	Q_pump≈Q_leak, rod friction, air migration
+rise	Drum moves upward toward top limit	stroke decay; drag; sleeve drag growth	slosh tilt, guide friction, tubing pull
+top_reset	System returns to initial upper state	phase drift; reset incomplete	residual water, top rebound, timing mismatch
+
+Failure states should be explicit, not hidden inside transitions:
+
+failure_states:
+  - rod_bind
+  - restoration_collapse
+  - partial_fill_lock
+  - metastable_hover
+  - pump_forced_motion
+  - rebound_corruption
+  - stroke_decay
+  - phase_drift
+  - divergent_disorder
+4. Dominant Couplings
+Coupling	Risk class	Why it matters
+Q_pump vs Q_leak	Falsification-critical	If restoration cannot dominate leakage, cycling fails
+friction vs buoyancy margin	Falsification-critical	Small rod friction can consume short-stroke buoyancy margin
+pump timing vs state timing	Falsification-critical	Pump may rescue, delay, or force motion
+partial fill vs buoyancy state	Falsification-critical	Ambiguous fill can create hover or non-transition
+trapped air vs stroke consistency	Metastable-critical	Air migration can change buoyancy between cycles
+slosh vs rod side-load	Metastable-critical	Slosh can create tilt and increase rod friction
+rebound vs phase drift	Metastable-critical	Endpoint impact may corrupt next state
+drag vs timing	Usually benign until margins narrow	Drag may damp motion but also hide instability
+stroke length vs instability exposure	Critical for escalation	6 inches may hide failures visible at 12 inches
+pump lag vs restoration delay	Critical	Delayed restoration can accumulate phase error
+
+Ranked by falsification value:
+
+falsification_critical_couplings:
+  1: q_pump_vs_q_leak
+  2: rod_friction_vs_buoyancy_margin
+  3: pump_timing_vs_state_timing
+  4: partial_fill_vs_buoyancy_state
+  5: trapped_air_vs_cycle_repeatability
+  6: slosh_side_load_vs_rod_bind
+  7: rebound_vs_phase_drift
+5. Sensitivity Sweep Recommendations
+
+Each sweep should be run across multiple cycles, not one transition.
+
+Sweep	Purpose	Stable convergence signature	Metastable signature	Transient coherence signature	Divergent disorder signature
+friction increase	Find rod/sleeve tolerance	timing changes but remains bounded	intermittent hover or delayed rise	early cycles pass, later cycles slow	bind/stall or stroke decay
+leak-rate increase	Test restoration margin	Q_pump still dominates; timing bounded	restoration delay fluctuates	recovery delay grows	restoration collapse
+pump lag increase	Test phase robustness	fixed phase offset, no accumulation	occasional delayed recovery	increasing phase error	missed transition/stall
+trapped-air variation	Test buoyancy repeatability	stroke envelope remains bounded	alternate cycle behavior	rhythm changes over cycles	partial-fill lock or erratic motion
+asymmetric fill proxy	Test tilt/side-load sensitivity	model tolerates side-load proxy	intermittent friction spikes	increasing drag/timing drift	rod_bind / stroke collapse
+stroke increase 6 → 12 in	Test hidden short-stroke instability	similar bounded behavior	wider variance	early clean motion then drift	rebound/bind/slosh failure
+timing offset	Test pump/state mismatch	converges to bounded phase	narrow successful window	phase drifts	pump-forced or restoration failure
+drag increase	Test damping sensitivity	slower but bounded	hover near thresholds	amplitude decay	stall
+rebound coefficient increase	Test endpoint corruption	rebound decays	occasional state disturbance	increasing timing noise	reversal/state corruption
+Q_pump variation	Find minimum restoration capacity	bounded above threshold	narrow threshold band	delayed recovery trend	Q_pump insufficient
+Q_leak variation	Find maximum admissible leak	bounded below threshold	noisy recovery near threshold	progressive fill retention	leak-driven collapse
+
+Minimal sweep set:
+
+minimum_sweeps:
+  - q_pump_minus_q_leak_margin
+  - rod_friction
+  - pump_lag
+  - trapped_air_volume
+  - partial_fill_threshold
+  - rebound_coefficient
+  - stroke_length
+6. Simplified Attractor Classification Rules
+
+The simulation should classify outputs using measurable signatures.
+
+Stable attractor candidate
+stable_attractor_candidate:
+  required_signatures:
+    - cycle_period_variance_bounded
+    - stroke_amplitude_variance_bounded
+    - restoration_delay_bounded
+    - no_accumulating_fill_error
+    - no_progressive_friction_failure
+    - no_phase_drift_accumulation
+    - perturbation_returns_to_cycle_envelope
+
+Interpretation:
+
+Candidate only. Requires physical confirmation.
+
+Metastable behavior
+metastable_behavior:
+  signatures:
+    - cycles_complete_temporarily
+    - narrow_parameter_window
+    - intermittent_hover
+    - trapped_air_or_fill_state_sensitivity
+    - perturbation_changes_cycle_envelope
+    - recovery_possible_but_not_robust
+
+Interpretation:
+
+Behavior may appear repeatable but depends on fragile conditions.
+
+Transient coherence
+transient_coherence:
+  signatures:
+    - first_cycles_appear_ordered
+    - timing_variance_increases
+    - stroke_amplitude_decays_or_migrates
+    - restoration_delay_trends_upward
+    - phase_error_accumulates
+    - failure_after_initial_rhythm
+
+Interpretation:
+
+Visual rhythm is not evidence of bounded dynamics.
+
+Divergent disorder
+divergent_disorder:
+  signatures:
+    - stall
+    - rod_bind
+    - restoration_collapse
+    - partial_fill_lock
+    - rebound_corruption
+    - growing_phase_error
+    - increasing_state_ambiguity
+
+Interpretation:
+
+Simulation predicts falsification under the assumed condition.
+
+7. Simulation Governance Boundaries
+
+Simulation outputs are model pressure indicators, not evidence of physical capability.
+
+simulation_governance:
+  allowed:
+    - rank_variable_sensitivity
+    - identify_falsification_thresholds
+    - expose_couplings
+    - propose_measurement_priorities
+    - compare_6in_vs_12in_sensitivity
+    - identify_likely_failure_modes
+
+  prohibited:
+    - validation_claims
+    - operational_readiness_claims
+    - useful_power_claims
+    - scalability_claims
+    - dirty_water_viability_claims
+    - durability_claims
+    - autonomous_reliability_claims
+    - safety_claims
+
+Required distinction:
+
+distinction:
+  simulated_bounded_behavior:
+    meaning: model_remains_bounded_under_assumptions
+    evidence_state: analytical_hypothesis
+
+  experimentally_verified_bounded_behavior:
+    meaning: physical_run_data_remains_bounded_under_recorded_conditions
+    evidence_state: observed_or_partially_measured_or_bounded
+
+Governance rule:
+
+Simulation may prioritize construction and instrumentation. It may not promote BAS evidence state.
+
+8. Physical Measurement Priorities
+Existential physical measurements
+
+These remain mandatory regardless of simulation:
+
+existential_measurements:
+  - drum_mass
+  - drum_displacement_volume
+  - q_pump_under_actual_tubing_and_head
+  - q_leak_under_test_conditions
+  - rod_bushing_sliding_force_pre_run
+  - rod_bushing_sliding_force_post_run
+  - stroke_position_over_time
+  - cycle_timing_variance
+  - pump_command_timing
+  - restoration_delay
+  - fill_state_visual_record
+  - trapped_air_visual_record
+  - terminal_failure_state
+Variables simulation cannot realistically constrain
+poorly_constrained_by_simulation:
+  - slosh_actual_geometry
+  - trapped_air_migration_path
+  - sleeve_wear_progression
+  - rod_surface_condition_effects
+  - debris_or_fouling
+  - pump_vibration_coupling
+  - tubing_pull_on_drum
+  - asymmetric_real_flooding
+  - rebound_state_corruption
+  - partial_fill_metastability
+Physical behaviors most likely to invalidate simplified assumptions
+Slosh-induced side-load
+1D model underestimates lateral effects.
+Trapped air migration
+Model may assume fixed air volume; real air moves.
+Rod/bushing wear or swelling
+Friction may change during run.
+Pump vibration or tubing pull
+Pump may mechanically influence motion.
+Partial-fill metastability
+Discrete state machine may hide continuous ambiguous states.
+Rebound corruption
+Endpoint impacts may alter fill/valve state.
+Asymmetric flooding
+Real inflow may tilt drum even when scalar fill rate looks adequate.
+9. Final Deliverable
+Concise simulation architecture
+BAS_Test0_simulation_architecture:
+  model_type: lumped_parameter_1D_vertical_state_machine
+  body: HDPE_drum
+  water_depth: 4_ft
+  stroke_initial: 6_in
+  guide: single_vertical_stainless_rod
+  interface: low_friction_sleeve_or_bushing
+
+  dynamic_outputs:
+    - z_position
+    - velocity
+    - acceleration
+    - cycle_period
+    - stroke_amplitude
+    - restoration_delay
+    - phase_error
+    - fill_fraction
+    - state_label
+
+  force_terms:
+    - buoyancy_force
+    - drum_weight
+    - rod_friction
+    - hydrodynamic_drag
+    - rebound_force
+
+  flow_terms:
+    - q_ingress
+    - q_pump
+    - q_leak
+
+  state_terms:
+    - trapped_air_volume
+    - partial_fill_fraction
+    - pump_state
+    - cycle_count
+Variable table
+minimum_variables:
+  existential:
+    - drum_mass
+    - displacement_volume
+    - submerged_volume
+    - internal_water_volume
+    - trapped_air_volume
+    - q_ingress
+    - q_pump
+    - q_leak
+    - rod_friction
+    - stroke_length
+    - pump_timing
+    - partial_fill_state
+    - z_position
+    - cycle_timing_variance
+
+  secondary:
+    - hydrodynamic_drag
+    - rebound_coefficient
+    - side_load_proxy
+    - pump_lag
+    - acceleration
+    - slosh_proxy
+State machine
+simulation_states:
+  buoyant_top_state:
+    exits_to: flooding_transition
+  flooding_transition:
+    exits_to: descent_or_partial_fill_lock
+  descent:
+    exits_to: bottom_transition_or_rod_bind
+  bottom_transition:
+    exits_to: restoration_or_rebound_corruption
+  restoration:
+    exits_to: buoyancy_recovery_or_restoration_collapse
+  buoyancy_recovery:
+    exits_to: rise_or_metastable_hover
+  rise:
+    exits_to: top_reset_or_stroke_decay
+  top_reset:
+    exits_to: buoyant_top_state_or_phase_drift
+Parameter sweep plan
+parameter_sweeps:
+  core:
+    - q_pump_minus_q_leak_margin
+    - rod_friction
+    - pump_lag
+    - trapped_air_volume
+    - partial_fill_threshold
+    - stroke_length
+
+  secondary:
+    - hydrodynamic_drag
+    - rebound_coefficient
+    - asymmetric_fill_proxy
+    - slosh_side_load_proxy
+    - timing_offset
+Attractor classification logic
+classification_logic:
+  stable_attractor_candidate:
+    if:
+      - bounded_cycle_period
+      - bounded_stroke_amplitude
+      - bounded_restoration_delay
+      - no_phase_drift
+      - no_stall
+      - perturbation_decay
+
+  metastable:
+    if:
+      - cycles_complete
+      - narrow_success_window
+      - intermittent_hover
+      - sensitivity_to_initial_conditions
+      - perturbation_changes_envelope
+
+  transient_coherence:
+    if:
+      - early_cycles_ordered
+      - timing_variance_grows
+      - stroke_decay_or_phase_drift
+      - later_failure
+
+  divergent_disorder:
+    if:
+      - stall
+      - rod_bind
+      - restoration_collapse
+      - partial_fill_lock
+      - rebound_corruption
+      - increasing_state_ambiguity
+Governance boundary statement
+
+The BAS Test 0 simulation framework is a lightweight causal-pressure model for ranking sensitivities before construction. It may estimate where bounded 6-inch vertical cycling appears possible under assumptions. It may identify likely failure modes and measurement priorities. It may not validate BAS, prove stability, establish repeatability, support output or efficiency claims, or replace physical measurement. Simulated bounded behavior remains an analytical hypothesis until a physical run preserves synchronized evidence showing bounded behavior under recorded conditions.

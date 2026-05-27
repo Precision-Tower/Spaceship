@@ -1,0 +1,591 @@
+Governance:
+  file: Governance.yaml
+  role: claim_firewall_admissibility_and_validation_boundary_registry
+  authority: claim_safety_evidence_tiering_validation_boundaries_and_escalation_rules
+  status: phase_6_replacement_draft
+
+  caution:
+    note: >
+      Governance.yaml controls claim admissibility, evidence tiering, validation
+      boundaries, prohibited claim handling, escalation rules, and review routing.
+      Governance does not own causal doctrine, semantic definitions, physical object
+      registries, bridge contracts, engineering computation, topology, or operational truth.
+
+  owns:
+    - claim_firewall
+    - admissibility_rules
+    - evidence_tiers
+    - validation_boundaries
+    - claim_escalation_rules
+    - prohibited_claims
+    - review_requirements
+    - evidence_state_promotion_rules
+    - summary_quarantine
+    - contradiction_governance
+    - validation_request_schema
+
+  does_not_own:
+    - causal_definitions
+    - semantic_identity
+    - physical_domain_taxonomy
+    - physical_object_registry
+    - bridge_contracts
+    - engineering_operators
+    - repository_topology
+    - prototype_geometry
+    - runtime_execution
+    - replacement_physics_claims
+
+  upstream:
+    - Structure.yaml
+    - CE-OS.yaml
+    - Physics.yaml
+    - Lexicon.yaml
+    - Interface.yaml
+    - Engine.yaml
+
+  downstream:
+    - validation_requests
+    - measurement_plans
+    - Prototype.yaml
+    - Runtime.yaml
+    - external_reports
+    - summaries
+
+  ce_os_pointer:
+    authority_source: CE-OS.yaml
+    governs:
+      - interpretation_not_validation
+      - speculation_not_canon
+      - operational_validity_vs_causal_completeness
+      - scalar_compression_warning
+    rule: >
+      Governance enforces claim boundaries using CE-OS discipline but does not
+      redefine causal doctrine.
+
+  lexicon_pointer:
+    authority_source: Lexicon.yaml
+    governs:
+      - term_identity
+      - aliases
+      - admissible_semantic_use
+      - prohibited_semantic_use
+      - mutation_risks
+    rule: >
+      Governance may flag unsafe or escalated terminology, but Lexicon owns definitions
+      and semantic repair records.
+
+  physics_pointer:
+    authority_source: Physics.yaml
+    governs:
+      - physical_domains
+      - object_records
+      - attached_variables
+      - interaction_topology
+      - measurement_unlocks
+    rule: >
+      Governance may review claims about physical records, but Physics owns physical
+      modeling records and unresolved measurement visibility.
+
+  interface_pointer:
+    authority_source: Interface.yaml
+    governs:
+      - bridge_contracts
+      - blocked_transfers
+      - translation_boundaries
+      - drift_checks
+    rule: >
+      Governance may block claim escalation from bridge mappings, but Interface owns
+      bridge contract logic.
+
+  engine_pointer:
+    authority_source: Engine.yaml
+    governs:
+      - operators
+      - formats
+      - margin_logic
+      - measurement_transforms
+      - state_transition_templates
+    rule: >
+      Governance may evaluate whether Engine outputs support claim promotion, but
+      Engine owns computation structure. Computation alone does not validate claims.
+
+  claim_tiers:
+
+    interpretation:
+      definition: >
+        A meaning, explanation, or causal reading that organizes information but does
+        not assert measured performance or validation.
+      allowed_sources:
+        - Lexicon.yaml
+        - CE-OS.yaml
+        - Interface.yaml
+        - user_notes
+      required_evidence:
+        - source_context
+        - authority_lane
+      prohibited_escalation:
+        - validated_claim
+        - operational_readiness
+        - safety_claim
+
+    hypothesis:
+      definition: >
+        A testable proposed relationship, mechanism, or expected behavior that requires
+        measurement before promotion.
+      allowed_sources:
+        - Physics.yaml
+        - Interface.yaml
+        - Engine.yaml
+        - interpretation_records
+      required_evidence:
+        - stated_variables
+        - expected_interaction_path
+        - unresolved_measurements
+        - test_condition_candidate
+      prohibited_escalation:
+        - proof_claim
+        - validated_performance
+        - broad_operating_envelope
+
+    modeled_result:
+      definition: >
+        Output from an Engine operator, format, simulation, or structured calculation.
+      allowed_sources:
+        - Engine.yaml
+        - measurement_records
+      required_evidence:
+        - input_variables
+        - assumptions
+        - calculation_method
+        - units
+        - boundary_conditions
+        - unresolved_losses
+      prohibited_escalation:
+        - measurement_equivalence
+        - validation_equivalence
+        - safety_equivalence
+
+    observed_behavior:
+      definition: >
+        Behavior seen or recorded but not yet fully measured, repeated, or bounded.
+      allowed_sources:
+        - test_notes
+        - inspection_records
+        - field_observations
+        - images_or_video_with_context
+      required_evidence:
+        - observation_context
+        - date_or_test_condition
+        - object_identity
+        - observed_state_change
+      prohibited_escalation:
+        - repeatability_claim
+        - validated_performance
+        - long_term_durability
+
+    measured_record:
+      definition: >
+        Recorded measurement with method, unit, context, and object or system identity.
+      allowed_sources:
+        - measurement_logs
+        - instrument_readings
+        - structured_test_records
+      required_evidence:
+        - value
+        - unit
+        - method
+        - condition
+        - object_identity
+        - timestamp_or_trial_id
+      prohibited_escalation:
+        - validation_without_repeatability
+        - broad_claim_without_envelope
+
+    bounded_result:
+      definition: >
+        Repeated or constrained measurement record defining a limited condition envelope.
+      allowed_sources:
+        - repeated_measurements
+        - controlled_tests
+        - bounded_operator_outputs
+      required_evidence:
+        - repeat_count
+        - boundary_conditions
+        - variance_or_uncertainty
+        - anomaly_records
+        - negative_results_if_any
+      prohibited_escalation:
+        - extrapolation_beyond_tested_conditions
+        - universal_claim
+        - operational_readiness
+
+    validated_claim:
+      definition: >
+        Claim promoted only after evidence review confirms repeatability, scope,
+        boundary conditions, anomaly handling, and explicit admissibility.
+      allowed_sources:
+        - governance_review
+        - validation_package
+      required_evidence:
+        - claim_text
+        - supporting_measurements
+        - tested_envelope
+        - repeatability_threshold
+        - anomaly_log
+        - review_decision
+      prohibited_escalation:
+        - extrapolation_beyond_scope
+        - implied_commercial_readiness
+        - implied_safety_without_specific_review
+
+  evidence_states:
+
+    none:
+      definition: no evidence record attached
+      permitted_claim_tiers:
+        - interpretation
+      required_action: add_source_context_or_keep_as_note
+
+    candidate:
+      definition: structured idea or model exists but has no measurement record
+      permitted_claim_tiers:
+        - interpretation
+        - hypothesis
+      required_action: define variables_and_measurements_needed
+
+    observed:
+      definition: behavior has been observed but not fully measured or bounded
+      permitted_claim_tiers:
+        - observed_behavior
+      required_action: create_measurement_plan
+
+    measured:
+      definition: measurement exists with value unit method and condition
+      permitted_claim_tiers:
+        - measured_record
+        - modeled_result
+      required_action: repeat_or_bound_before_promotion
+
+    bounded:
+      definition: repeated or constrained evidence supports a limited envelope
+      permitted_claim_tiers:
+        - bounded_result
+      required_action: review_claim_scope_before_validation
+
+    validated:
+      definition: claim approved through Governance review within explicit scope
+      permitted_claim_tiers:
+        - validated_claim
+      required_action: preserve_scope_limits_and_anomaly_records
+
+  promotion_rules:
+
+    interpretation_to_hypothesis:
+      allowed_when:
+        - variables_identified
+        - interaction_path_stated
+        - unresolved_measurements_visible
+      blocked_when:
+        - claim_implies_validation
+        - terms_are_uncontrolled
+        - domain_bridge_missing
+
+    hypothesis_to_modeled_result:
+      allowed_when:
+        - Engine_operator_or_format_exists
+        - inputs_outputs_defined
+        - assumptions_visible
+        - boundary_conditions_stated
+      blocked_when:
+        - computation_missing_units
+        - bridge_required_but_no_Interface_record
+        - loss_terms_hidden
+
+    modeled_result_to_measured_record:
+      allowed_when:
+        - measurement_matches_modeled_variable
+        - method_and_condition_recorded
+        - units_present
+      blocked_when:
+        - calculation_treated_as_measurement
+        - observed_value_without_method
+        - missing_object_identity
+
+    measured_record_to_bounded_result:
+      allowed_when:
+        - repeat_count_present
+        - boundary_conditions_defined
+        - uncertainty_or_variance_recorded
+        - anomaly_records_preserved
+      blocked_when:
+        - single_trial_only
+        - conditions_uncontrolled
+        - negative_results_removed
+
+    bounded_result_to_validated_claim:
+      allowed_when:
+        - claim_text_explicit
+        - tested_scope_defined
+        - evidence_package_complete
+        - contradictions_reviewed
+        - prohibited_claims_checked
+        - review_decision_recorded
+      blocked_when:
+        - extrapolation_beyond_tested_envelope
+        - safety_or_readiness_implied_without_specific_review
+        - commercial_or_operational_claim_inferred
+
+  validation_request_schema:
+    required_fields:
+      - claim_text
+      - requested_claim_tier
+      - source_file_or_record
+      - evidence_state
+      - supporting_measurements
+      - tested_conditions
+      - unresolved_variables
+      - contradictions
+      - prohibited_claim_check
+      - requested_scope
+    optional_fields:
+      - operator_outputs
+      - bridge_records
+      - object_records
+      - anomaly_logs
+      - negative_results
+      - reviewer_notes
+      - decision
+
+  prohibited_claims:
+
+    global:
+      - replacement_physics_validated
+      - repository_language_equals_physical_truth
+      - interpretation_equals_validation
+      - model_output_equals_measurement
+      - measurement_equals_validation
+      - bridge_contract_equals_physical_proof
+      - semantic_definition_equals_evidence
+      - topology_equals_authority
+      - operational_validity_equals_causal_completeness
+
+    engineering_and_operation:
+      - safe_payload
+      - seaworthiness
+      - operational_readiness
+      - validated_stability
+      - reserve_buoyancy
+      - flooded_compartment_survival
+      - validated_restraint_safety
+      - long_term_durability
+      - validated_containment
+      - validated_worker_safety
+      - commercial_readiness
+      - autonomous_operation
+      - broad_operating_envelope
+
+    computational:
+      - computed_margin_equals_safety
+      - positive_margin_equals_validated_design
+      - operator_success_equals_validated_claim
+      - scalar_summary_equals_complete_causal_accounting
+      - single_model_result_equals_repeatability
+
+    semantic:
+      - term_definition_equals_physics_proof
+      - alias_equals_authority
+      - shorthand_equals_canonical_definition
+      - repeated_usage_equals_validation
+      - metaphor_equals_mechanism
+
+  summary_quarantine:
+    rule: >
+      Summaries, polished explanations, diagrams, compressed files, or readable
+      restatements are non-canonical unless routed through the owning authority lane
+      and assigned an evidence or validation state.
+    quarantine_triggers:
+      - summary_restates_claim_without_evidence_state
+      - polished_prose_implies_validation
+      - diagram_or_render_implies_readiness
+      - compression_hides_unresolved_variables
+      - contradiction_smoothed_away
+    required_repair:
+      - restore_authority_pointer
+      - restore_unresolved_variables
+      - mark_claim_tier
+      - route_to_owner_file
+
+  contradiction_governance:
+    rule: >
+      Contradictions must remain visible until resolved by measurement, definition
+      repair, bridge repair, or explicit governance decision. Contradictions are not
+      erased by summary or compression.
+    contradiction_types:
+      design_vs_measurement:
+        route_to:
+          - Physics.yaml
+          - Engine.yaml
+          - Governance.yaml
+      term_vs_definition:
+        route_to:
+          - Lexicon.yaml
+          - Governance.yaml
+      bridge_vs_domain_boundary:
+        route_to:
+          - Interface.yaml
+          - CE-OS.yaml
+      model_vs_evidence:
+        route_to:
+          - Engine.yaml
+          - Governance.yaml
+      claim_vs_evidence:
+        route_to:
+          - Governance.yaml
+      topology_vs_authority:
+        route_to:
+          - Structure.yaml
+          - Governance.yaml
+
+  review_routes:
+
+    semantic_claim_pressure:
+      trigger:
+        - term_used_beyond_definition
+        - alias_conflict
+        - metaphor_becomes_mechanism
+      route_to:
+        - Lexicon.yaml
+        - Governance.yaml
+
+    causal_claim_pressure:
+      trigger:
+        - interpretation_becomes_validation
+        - transfer_propagation_collapse
+        - operational_validity_claims_causal_completeness
+      route_to:
+        - CE-OS.yaml
+        - Governance.yaml
+
+    physical_claim_pressure:
+      trigger:
+        - object_claim_without_measurement
+        - interaction_mapped_without_evidence
+        - domain_label_used_as_proof
+      route_to:
+        - Physics.yaml
+        - Governance.yaml
+
+    bridge_claim_pressure:
+      trigger:
+        - cross_domain_mapping_implies_equivalence
+        - bridge_required_treated_as_validated
+        - blocked_transfer_ignored
+      route_to:
+        - Interface.yaml
+        - Governance.yaml
+
+    computational_claim_pressure:
+      trigger:
+        - operator_output_used_as_safety_claim
+        - margin_used_as_validation
+        - calculation_used_as_measurement
+      route_to:
+        - Engine.yaml
+        - Governance.yaml
+
+  minimum_evidence_packages:
+
+    measurement_package:
+      required:
+        - measured_value
+        - unit
+        - method
+        - instrument_or_observation_method
+        - object_identity
+        - test_condition
+        - timestamp_or_trial_id
+      blocked_if_missing:
+        - unit
+        - method
+        - condition
+        - object_identity
+
+    bounded_result_package:
+      required:
+        - repeated_measurements
+        - boundary_conditions
+        - variance_or_uncertainty
+        - anomaly_records
+        - negative_results_if_any
+        - tested_envelope
+      blocked_if_missing:
+        - repeat_count
+        - envelope
+        - anomaly_handling
+
+    validation_package:
+      required:
+        - explicit_claim_text
+        - claim_scope
+        - evidence_package
+        - tested_envelope
+        - contradiction_review
+        - prohibited_claim_check
+        - decision_record
+      blocked_if_missing:
+        - claim_scope
+        - evidence_state
+        - contradiction_review
+        - review_decision
+
+  unresolved:
+    - no_validated_claims_currently_promoted_by_default
+    - validation_decision_process_needs_human_review_rules_if_external_use_occurs
+    - reviewer_identity_and_signature_schema_not_defined
+    - Runtime_yaml_not_yet_unlocked
+    - Prototype_yaml_not_yet_rebuilt
+    - external_test_record_format_not_defined
+
+  contradiction_register:
+    - clarity_alone_is_not_evidence
+    - coherence_alone_is_not_validation
+    - computation_alone_is_not_measurement
+    - measurement_alone_is_not_validation
+    - bridge_mapping_alone_is_not_equivalence
+    - object_registry_alone_is_not_validated_design
+    - repeated_explanation_alone_is_not_authority
+    - absence_of_contradiction_is_not_proof_of_completeness
+
+  recovery:
+    reconstructable_from:
+      - Structure.yaml
+      - CE-OS.yaml
+      - Physics.yaml
+      - Lexicon.yaml
+      - Interface.yaml
+      - Engine.yaml
+      - prior_Governance_file
+      - phase_6_governance_notes
+
+    recovery_requirements:
+      - every_claim_has_claim_tier_or_remains_quarantined
+      - every_promoted_claim_has_evidence_state
+      - every_validation_request_lists_scope
+      - every_prohibited_claim_pressure_remains_visible
+      - every_contradiction_routes_to_owner_authority
+      - summaries_do_not_replace_source_authority
+
+    compression_rule:
+      - claim_tiers_in
+      - evidence_states_in
+      - promotion_rules_in
+      - prohibited_claims_in
+      - contradiction_governance_in
+      - validation_boundaries_in
+      - causal_doctrine_out
+      - definitions_out
+      - objects_out
+      - operators_out
+      - bridges_out
+      - topology_out

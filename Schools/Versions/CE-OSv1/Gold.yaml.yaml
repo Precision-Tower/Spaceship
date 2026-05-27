@@ -1,0 +1,525 @@
+Gold:
+  file: Gold.yaml
+  role: stable_ecology_recovery_and_lineage_layer
+  authority: recovery_lineage_migration_continuity_and_reconstructability_only
+  status: replacement_draft_for_ecology_refit
+
+  caution:
+    note: >
+      Gold.yaml preserves recovery paths, contradiction lineage, migration memory,
+      compression reconstructability, and continuity across the repository ecology.
+      Gold does not validate claims, define causal doctrine, define semantic identity,
+      own topology, compute operators, own physical objects, control prototype geometry,
+      execute runtime, or assert operational readiness.
+
+  owns:
+    - recovery_paths
+    - contradiction_lineage
+    - migration_memory
+    - compression_reconstructability
+    - authority_route_integrity
+    - anti_fragmentation_controls
+    - drift_observation_records
+    - ecology_health_signals
+    - update_without_rewrite_rules
+    - bounded_experiment_lineage_routes
+    - unresolved_variable_route_memory
+    - prohibited_claim_route_memory
+
+  does_not_own:
+    - claim_validation
+    - causal_doctrine
+    - semantic_definitions
+    - engineering_operators
+    - engineering_formats
+    - physical_object_registry
+    - physical_domain_taxonomy
+    - bridge_contracts
+    - repository_topology
+    - prototype_candidate_geometry
+    - runtime_execution
+    - measurement_records
+    - validation_decisions
+    - operational_readiness
+    - seaworthiness
+    - safe_payload
+    - reserve_buoyancy
+    - validated_stability
+    - validated_restraint_safety
+
+  upstream:
+    - Governance.yaml
+    - CE-OS.yaml
+    - Lexicon.yaml
+    - Directory.yaml
+    - Interface.yaml
+    - Engine.yaml
+    - Physics.yaml
+    - Prototype.yaml
+
+  downstream:
+    - Directory.yaml
+    - migration_notes
+    - recovery_indexes
+    - contradiction_logs
+    - bounded_experiment_lineage_records
+    - package_change_notes
+    - future_Runtime.yaml
+
+  authority_pointers:
+    Governance.yaml:
+      owns:
+        - claim_firewall
+        - evidence_tiers
+        - validation_boundaries
+        - prohibited_claims
+      gold_rule: >
+        Gold may preserve routes to Governance and record that claim pressure occurred.
+        Gold may not decide admissibility, promote claims, or validate evidence.
+
+    CE-OS.yaml:
+      owns:
+        - causal_accounting_order
+        - interaction_definition
+        - transfer_vs_propagation
+        - scalar_compression_warning
+      gold_rule: >
+        Gold may preserve recovery pointers to CE-OS distinctions. Gold may not restate
+        causal doctrine as independent authority or modify the causal kernel.
+
+    Lexicon.yaml:
+      owns:
+        - semantic_identity
+        - canonical_definitions
+        - aliases
+        - admissible_uses
+        - mutation_risks
+      gold_rule: >
+        Gold may flag semantic drift and route terms to Lexicon. Gold may not define,
+        rename, canonicalize, or mutate terms.
+
+    Directory.yaml:
+      owns:
+        - visible_file_mapping
+        - model_lane_identification
+        - routing_topology
+        - navigation_indexing
+      gold_rule: >
+        Gold may preserve topology recovery memory and migration lineage. Gold may not
+        become the active topology index or replace Directory routing authority.
+
+    Interface.yaml:
+      owns:
+        - bridge_contracts
+        - translation_boundaries
+        - blocked_transfers
+        - drift_checks
+      gold_rule: >
+        Gold may preserve bridge drift observations and route them to Interface. Gold may
+        not create bridge authority or validate cross-domain mappings.
+
+    Engine.yaml:
+      owns:
+        - reusable_operators
+        - engineering_formats
+        - margin_logic
+        - measurement_transforms
+        - state_transition_templates
+      gold_rule: >
+        Gold may preserve operator-change lineage and measurement-pressure routes.
+        Gold may not compute operators, define formats, or treat outputs as evidence.
+
+    Physics.yaml:
+      owns:
+        - physical_domain_taxonomy
+        - physical_object_registry
+        - attached_variables
+        - interaction_topology
+        - measurement_unlocks
+      gold_rule: >
+        Gold may preserve physical contradiction lineage and object-record migration paths.
+        Gold may not define physical objects, attach variables, or validate physical claims.
+
+    Prototype.yaml:
+      owns:
+        - candidate_design_records
+        - mockup_logic
+        - layout_constraints
+        - unresolved_build_variables
+        - build_iteration_records
+      gold_rule: >
+        Gold may preserve iteration lineage and route prototype contradictions. Gold may
+        not promote candidate geometry into validated design.
+
+  ecology_role:
+    purpose: >
+      Preserve continuity and reconstructability while the repository shifts from
+      architecture creation toward bounded measurement pressure. Gold keeps track of
+      why records moved, what contradictions remain, which authority owns each route,
+      and how compressed artifacts can be reconstructed without becoming canon.
+
+    active_phase:
+      name: measurement_pressure_pre_runtime
+      description: >
+        The repository has mature semantic, causal, bridge, and governance lanes.
+        The next pressure is bounded experiment lineage, measurement routing, anomaly
+        preservation, and eventual runtime compatibility.
+
+    primary_pressures:
+      - bounded_experiment_growth
+      - measurement_record_growth
+      - anomaly_record_growth
+      - migration_between_draft_and_active_files
+      - compression_recovery_pressure
+      - multi_model_lane_coordination
+
+    non_goals:
+      - validate_experiments
+      - store_raw_measurements
+      - become_runtime_state_machine
+      - summarize_away_contradictions
+      - replace_governing_authority_files
+      - declare_repository_completion
+
+  recovery_principles:
+    - route_back_to_owner_authority
+    - preserve_contradiction_lineage
+    - compression_must_remain_reconstructable
+    - migration_must_record_reason_not_just_result
+    - unresolved_items_must_survive_summary
+    - navigation_maps_do_not_become_canon
+    - continuity_does_not_equal_validation
+    - stable_route_does_not_equal_truth
+    - bounded_experiment_lineage_does_not_equal_bounded_result
+    - measurement_route_does_not_equal_measurement_record
+    - anomaly_visibility_must_not_be_removed_by_polish
+
+  record_schemas:
+    recovery_pointer_schema:
+      required_fields:
+        - pointer_id
+        - target_authority_file
+        - recovered_record_type
+        - reason_pointer_exists
+        - reconstruct_from
+        - authority_boundary
+      optional_fields:
+        - related_migration_id
+        - related_contradiction_id
+        - related_experiment_id
+        - compression_note
+
+    migration_record_schema:
+      required_fields:
+        - migration_id
+        - date_or_sequence
+        - source_record
+        - target_record
+        - reason_for_change
+        - affected_authority_lanes
+        - preserved_unresolved_items
+        - preserved_contradictions
+        - prohibited_claim_check
+      optional_fields:
+        - replacement_file
+        - deprecated_record
+        - reviewer_or_actor
+        - package_reference
+        - rollback_pointer
+
+    contradiction_lineage_schema:
+      required_fields:
+        - contradiction_id
+        - contradiction_type
+        - source_records
+        - affected_authority_lanes
+        - unresolved_state
+        - preservation_reason
+        - routed_to
+      optional_fields:
+        - candidate_resolution_path
+        - measurement_needed
+        - definition_review_needed
+        - bridge_review_needed
+        - governance_review_needed
+        - migration_effect
+
+    drift_observation_schema:
+      required_fields:
+        - drift_id
+        - drift_type
+        - observed_pressure
+        - affected_files
+        - owner_authority
+        - containment_route
+        - unresolved_state
+      optional_fields:
+        - repeated_pattern
+        - severity
+        - recommended_patch
+        - followup_migration_id
+
+    bounded_experiment_lineage_schema:
+      required_fields:
+        - experiment_lineage_id
+        - experiment_name
+        - target_unresolved_variable
+        - originating_pressure
+        - linked_authority_files
+        - measurement_record_location
+        - contradiction_before
+        - prohibited_claim_check
+      optional_fields:
+        - operator_request
+        - prototype_reference
+        - physics_object_reference
+        - interface_bridge_reference
+        - contradiction_after
+        - migration_effect
+        - anomaly_record_location
+
+    package_change_note_schema:
+      required_fields:
+        - package_id
+        - package_contents
+        - replacement_scope
+        - files_changed
+        - authority_boundaries_preserved
+        - migration_map_location
+        - prohibited_claim_check
+      optional_fields:
+        - rollback_package
+        - reviewer_note
+        - promotion_status
+
+  routing_controls:
+    claim_pressure:
+      trigger:
+        - safe
+        - validated
+        - ready
+        - stable
+        - seaworthy
+        - payload_capacity
+        - reserve_buoyancy
+        - durable
+      route_to:
+        - Governance.yaml
+      gold_action:
+        - preserve_pressure_occurrence
+        - record_route_taken
+        - do_not_decide_claim
+
+    semantic_drift:
+      trigger:
+        - uncontrolled_alias
+        - term_used_with_multiple_meanings
+        - shorthand_expands_admissibility
+        - metaphor_becomes_mechanism
+      route_to:
+        - Lexicon.yaml
+        - Governance.yaml
+      gold_action:
+        - create_drift_observation_record
+        - preserve_source_context
+        - do_not_define_term
+
+    causal_drift:
+      trigger:
+        - transfer_propagation_collapse
+        - operational_validity_treated_as_causal_completeness
+        - scalar_summary_hides_interaction_path
+        - organization_treated_as_hidden_source
+      route_to:
+        - CE-OS.yaml
+        - Governance.yaml
+      gold_action:
+        - preserve_causal_drift_route
+        - record_affected_summary_or_file
+        - do_not_rewrite_doctrine
+
+    bridge_drift:
+      trigger:
+        - cross_domain_mapping_without_Interface_record
+        - bridge_required_treated_as_validated
+        - domain_translation_collapses_domain_identity
+      route_to:
+        - Interface.yaml
+        - CE-OS.yaml
+        - Governance.yaml
+      gold_action:
+        - record_bridge_pressure
+        - preserve_missing_bridge_pointer
+        - do_not_create_bridge_contract
+
+    engineering_pressure:
+      trigger:
+        - repeated_variable_use_without_operator
+        - operator_pattern_needs_schema
+        - margin_language_repeats
+        - measurement_transform_needed
+      route_to:
+        - Engine.yaml
+      gold_action:
+        - record_why_engine_update_was_requested
+        - preserve_before_after_lineage
+        - do_not_compute_result
+
+    measurement_pressure:
+      trigger:
+        - unresolved_variable_ready_for_test
+        - bounded_experiment_requested
+        - anomaly_requires_context
+        - repeatability_needed
+      route_to:
+        - Engine.yaml
+        - Physics.yaml
+        - Prototype.yaml
+        - Governance.yaml
+      gold_action:
+        - create_bounded_experiment_lineage_record
+        - preserve_measurement_record_location
+        - preserve_unresolved_items
+        - do_not_store_raw_measurement_as_validation
+
+    topology_pressure:
+      trigger:
+        - new_file_added
+        - model_lane_changed
+        - routing_index_outdated
+        - package_changes_visible_file_set
+      route_to:
+        - Directory.yaml
+      gold_action:
+        - preserve_migration_reason
+        - record_topology_change_pointer
+        - do_not_own_active_topology
+
+  bounded_experiment_support:
+    role: >
+      Gold supports bounded experiments by preserving why the experiment exists,
+      which unresolved variable it targets, where measurement records live, and how
+      the experiment changed repository lineage. Gold does not validate the experiment
+      and does not store raw results as truth.
+
+    allowed_records:
+      - experiment_lineage_id
+      - target_unresolved_variable
+      - originating_pressure
+      - linked_authority_files
+      - measurement_record_location
+      - contradiction_before
+      - contradiction_after
+      - anomaly_record_location
+      - migration_effect
+      - prohibited_claim_check
+
+    blocked_outputs:
+      - validated_result
+      - validated_restraint_safety
+      - reserve_buoyancy
+      - seaworthiness
+      - safe_payload
+      - operational_readiness
+      - long_term_durability
+      - broad_operating_envelope
+
+  ecology_health_signals:
+    healthy:
+      - authority_routes_point_to_owner_files
+      - contradictions_have_lineage_records
+      - compressed_files_have_reconstruct_from_fields
+      - migrations_explain_reason_for_change
+      - bounded_experiments_route_to_measurement_records
+      - unresolved_variables_remain_visible
+      - summaries_do_not_claim_authority
+
+    warning:
+      - summaries_replace_source_files_in_discussion
+      - repeated_terms_without_Lexicon_route
+      - repeated_bridge_patterns_without_Interface_route
+      - measurements_discussed_without_record_location
+      - experiment_results_discussed_without_claim_tier
+      - migration_changes_without_reason
+      - topology_references_conflict_with_Directory
+
+    critical:
+      - Gold_used_as_validation_authority
+      - migration_log_used_as_evidence
+      - continuity_claim_used_as_completion_claim
+      - contradiction_removed_without_resolution_route
+      - compressed_summary_overrides_governing_file
+      - bounded_experiment_treated_as_operational_readiness
+      - prototype_geometry_treated_as_validated_design
+
+  contradiction_register:
+    - continuity_need_vs_rewrite_risk
+    - compression_simplicity_vs_reconstructability
+    - migration_speed_vs_authority_boundary
+    - experiment_growth_vs_validation_pressure
+    - stable_route_vs_false_completion_signal
+    - package_convenience_vs_source_authority
+    - multi_model_routing_vs_meta_authority_risk
+
+  unresolved:
+    - final_Runtime_yaml_route_not_yet_active
+    - bounded_experiment_record_storage_location_not_finalized
+    - external_measurement_log_format_not_finalized
+    - package_promotion_process_not_finalized
+    - reviewer_identity_schema_not_finalized
+    - rollback_process_needs_first_real_migration_trial
+
+  prohibited_claims:
+    - Gold_validates_claims
+    - Gold_redefines_authority
+    - Gold_replaces_Governance
+    - Gold_replaces_Directory
+    - Gold_replaces_CE_OS
+    - Gold_replaces_Lexicon
+    - Gold_replaces_Interface
+    - Gold_replaces_Engine
+    - Gold_replaces_Physics
+    - Gold_replaces_Prototype
+    - continuity_equals_completion
+    - migration_log_equals_evidence
+    - recovery_path_equals_truth
+    - stable_route_equals_canon
+    - bounded_experiment_lineage_equals_bounded_result
+    - measurement_route_equals_measurement_record
+    - package_delivery_equals_governance_promotion
+    - repository_ecology_complete
+    - operational_readiness
+    - seaworthiness
+    - safe_payload
+    - reserve_buoyancy
+    - validated_stability
+    - validated_restraint_safety
+    - long_term_durability
+
+  recovery:
+    reconstruct_from:
+      - previous_Gold.yaml
+      - Directory.yaml
+      - Governance.yaml
+      - CE-OS.yaml
+      - Lexicon.yaml
+      - Interface.yaml
+      - Engine.yaml
+      - Physics.yaml
+      - Prototype.yaml
+      - migration_maps
+      - package_change_notes
+
+    compression_notes:
+      - old_stable_routing_role_refit_into_ecology_recovery_role
+      - broad_operational_structure_language_narrowed_to_lineage_and_reconstructability
+      - governance_claim_firewall_language_reduced_to_routes_and_boundaries
+      - CE_OS_doctrine_reduced_to_pointers_not_redefinitions
+      - Directory_topology_language_reduced_to_recovery_support
+      - bounded_experiment_lineage_added_without_validation_authority
+
+    replacement_scope:
+      status: replacement_draft_not_governance_promoted
+      intended_effect: >
+        Improve Gold's ecological fit by making it a continuity and lineage layer
+        for the measurement-pressure phase while preserving authority boundaries.

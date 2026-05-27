@@ -1,0 +1,2101 @@
+Engineering:
+  forever_version:
+    status: '[STABLE OPERATIONAL FORM — LIVING INFRASTRUCTURE]'
+    definition:
+      means:
+      - durable_routing_structure
+      - recoverable_authority_paths
+      - preserved_unresolved_variables
+      - preserved_contradiction_lineage
+      - prohibited_claim_firewalls
+      - updateable_without_rewrite
+      does_not_mean:
+      - finished_repository
+      - final_schema
+      - permanent_ontology
+      - validation_authority
+      - no_future_branches
+    governing_rule:
+    - improve_navigation_without_rewriting_reality
+    health_metric:
+    - retained_engineering_value_under_scaling_pressure
+    standing_rule:
+    - use_the_structure
+    - do_not_expand_the_structure
+    population_method:
+    - use_reveals_gaps
+    - observed_gaps_trigger_minimal_routing_entries
+    - observed_drift_triggers_containment_patches
+    - no_drift_no_patch
+  forever_lock:
+    Directory:
+      role: routing_index
+      authority: routing_only
+      survival_rule: every_route_points_back_to_owner_authority
+    Control:
+      role: prevents_routing_from_becoming_truth
+      file: Directory_Control.forever.yaml
+    Map:
+      role: shows_connections_without_owning_them
+      file: Directory_Map.forever.yaml
+    Backlog:
+      role: holds_pressure_without_deciding
+      file: Directory_Backlog.forever.yaml
+    Repository:
+      health_metric: retained_engineering_value_under_scaling_pressure
+  directory_status:
+    file_status: '[INDEX / ROUTING LAYER — FOREVER OPERATIONAL FORM]'
+    authority: repository_routing_map_only
+    authority_effect: none
+    review_state: '[STABLE OPERATIONAL FORM — LIVING INFRASTRUCTURE]'
+    purpose: 'Route repository files by authority lane, causal role, validation boundary, unresolved-variable custody, dependency path, and retrieval function without redefining subsystem mechanics, changing validation status, or merging authority domains.
+
+      '
+    branched_status: '[LEAN ROUTING INDEX — BRANCHED FROM STABILIZATION DIRECTORY]'
+    source_file: Directory.updated.yaml
+    source_lineage_preserved_in:
+    - Directory_Control.branch.yaml
+    - Directory_Map.branch.yaml
+    - Directory_Backlog.branch.yaml
+  governing_control_pointer:
+    control_file: Directory_Control.forever.yaml
+    control_rule: Directory_Control_Rule
+    core_lock: Directory_may_expose_repository_cognition_pressure_but_may_not_become_repository_cognition_authority
+    authority: routing_only
+  repository_phase:
+    from: expanding_repository
+    to: stabilizing_causal_operating_system
+    current_phase: stabilization_phase
+    stabilization_goals:
+    - reduce_semantic_entropy
+    - preserve_reconstructability
+    - improve_retrieval_routing
+    - centralize_causal_relationship_navigation
+    - preserve_authority_boundaries
+    - reduce_duplicate_explanations
+    - maintain_claim_firewalls
+    - preserve_unresolved_variable_visibility
+    - preserve_contradiction_reconstructability
+  routing_index:
+    file_to_authority_lane:
+      Governance_Core.yaml:
+        layer: Layer_0_Governance
+        authority_lane: Governance
+        status: proposed_consolidation_target
+      Lexicon_Core.yaml:
+        layer: Layer_0_Governance
+        authority_lane: Governance_and_CEOS_Core_routing
+        purpose:
+        - canonical_definitions
+        - minimum_reconstructable_kernel
+        - anti_collapse_recovery_forms
+        status: proposed_consolidation_target
+      Core_CEOS.yaml:
+        layer: Layer_1_CEOS_Core
+        authority_lane: Layer_1_CEOS_Core
+        status: proposed_consolidation_target
+      Values.yaml:
+        layer: Layer_2_Causal_Engine
+        authority_lane: variable_state_and_domain_identity_only
+        must_not_own:
+        - causal_transforms
+        - operator_equations
+        - subsystem_workflows
+        - operational_state_rules
+      Operators.yaml:
+        layer: Layer_2_Causal_Engine
+        authority_lane: reusable_causal_transforms_only
+        must_not_own:
+        - subsystem_templates
+        - operational_state_machine
+        - file_authority
+        - deployment_claims
+      Formats.yaml:
+        layer: Layer_2_Causal_Engine
+        authority_lane: reusable_engineering_compositions_only
+        must_not_own:
+        - raw_variable_identity
+        - operator_equation_authority
+        - operational_state_machine
+        - validation_promotion
+      Physics.yaml:
+        layer: Layer_2_Causal_Engine
+        authority_lane: causal_relationship_routing_only
+        role:
+        - causal_relationship_hub
+        - interaction_topology_router
+        - measurement_dependency_router
+        - blocking_unknown_router
+        - prohibited_claim_router
+        must_not_own:
+        - validation
+        - runtime_state_management
+        - executable_calculation_runtime
+        - semantic_governance
+        - payload_claims
+        - reserve_buoyancy_claims
+        - stability_validation
+        - seaworthiness
+        - operational_readiness
+        - subsystem_mechanics
+      Machine.yaml:
+        layer: Layer_2_Causal_Engine
+        authority_lane: operational_state_governance
+        must_not_own:
+        - new_values
+        - new_operator_equations
+        - new_format_templates
+        - subsystem_mechanics
+        - validation_without_measurement
+      Objects.yaml:
+        layer: Layer_3_Object_Topology
+        authority_lane: physical_object_and_interface_registry
+        must_not_own:
+        - validation_status_changes
+        - causal_operator_definitions
+        - claim_escalation
+      Equations.yaml:
+        layer: Layer_3_Object_Topology
+        authority_lane: computable_causal_bridge_only
+        role:
+        - computable_compression_layer
+        - margin_extraction
+        - operator_bindings
+        must_not_own:
+        - canonical_variable_definitions
+        - validation_claims
+        - subsystem_mechanics
+        - deployment_readiness
+      Boat_Architecture.yaml:
+        layer: Layer_4_Prototype_Architecture
+        authority_lane: Layer_4_Prototype_Architecture
+        status: proposed_consolidation_target
+      Directory.yaml:
+        layer: Layer_6_Index_and_Routing
+        authority_lane: repository_routing_map_only
+        role:
+        - repository_operating_map
+        - authority_router
+        - dependency_router
+        - unresolved_variable_routing_layer
+        - retrieval_stabilization_layer
+      Relationship_Map.yaml:
+        layer: Layer_6_Index_and_Routing
+        authority_lane: object_variable_operator_format_relationship_index_only
+        status: planned_stub
+      Retrieval_Index.yaml:
+        layer: Layer_6_Index_and_Routing
+        authority_lane: retrieval_shortcuts_and_navigation_only
+        status: planned
+    branch_files:
+      Directory.forever.yaml:
+        role: repository_routing_index
+        authority: routing_only
+        contains:
+        - file_to_authority_lane
+        - routing_pointers
+        - dependency_references
+        - unresolved_variable_routes
+        - contradiction_routes
+        - prohibited_claim_routes
+        must_not_contain:
+        - large_stabilization_essays
+        - governance_doctrine_expansion
+        - ontology_explanations
+        - subsystem_mechanics
+        - validation_reasoning
+      Directory_Control.forever.yaml:
+        role: routing_governance_constraints
+        authority_effect: constrains_Directory_behavior_only
+      Directory_Map.forever.yaml:
+        role: distilled_connection_topology
+        authority_effect: routing_visibility_only
+      Directory_Backlog.forever.yaml:
+        role: unresolved_routing_expansion_queue
+        authority_effect: none
+    directory_entries:
+    - file: Core.txt
+      layer: Layer_1_CEOS_Core
+      authority_lane: invariant_kernel_only
+      owns:
+      - CE-OS_identity
+      - interaction_root
+      - primary_epistemic_distinction
+      - primary_failure_mode
+      - domain_topology
+      - anti_collapse_invariants
+      does_not_own:
+      - pedagogy
+      - speculation
+      - methodology_detail
+      - examples
+      - subsystem_mechanics
+      - validation_promotion
+      routes_to:
+      - Lexicon.txt
+      - Protocols.txt
+      - Recovery.txt
+      - Minimum.txt
+      depends_on: []
+      unresolved_variables: []
+      contradiction_register:
+      - operational_validity_vs_causal_completeness
+      - scalar_equivalence_vs_functional_equivalence
+      - interpretation_vs_validation
+      prohibited_claims:
+      - replacement_physics
+      - unrestricted_ontology
+      - generalized_metaphysics
+      - free_energy_framework
+      - analogy_driven_proof
+    - file: Lexicon.txt
+      layer: Layer_0_Governance_and_Layer_1_CEOS_Core
+      authority_lane: canonical_semantic_definitions_only
+      owns:
+      - canonical_definitions
+      - admissible_uses
+      - non_admissible_uses
+      - boundary_conditions
+      - mutation_risks
+      - recovery_compressions
+      does_not_own:
+      - methodology
+      - pedagogy
+      - speculation
+      - implementation
+      - validation
+      - subsystem_mechanics
+      routes_to:
+      - Core.txt
+      - Protocols.txt
+      - Recovery.txt
+      depends_on:
+      - Core.txt
+      unresolved_variables: []
+      contradiction_register:
+      - field_vs_generalized_influence
+      - propagation_vs_transfer
+      - organization_vs_hidden_source
+      - amplification_vs_energy_creation
+      prohibited_claims:
+      - undefined_influence
+      - unrestricted_speculative_interpretation
+      - ontology_universalization
+    - file: Minimum.txt
+      layer: Layer_1_CEOS_Core
+      authority_lane: minimum_reconstructable_kernel
+      owns:
+      - irreducible_CEOS_elements
+      - minimum_reconstructable_ontology_map
+      - minimum_reconstructable_governance_map
+      - distinction_topology
+      does_not_own:
+      - expanded_definitions
+      - subsystem_mechanics
+      - validation
+      - implementation_authority
+      - new_governance_rules
+      routes_to:
+      - Core.txt
+      - Lexicon.txt
+      - Protocols.txt
+      - Recovery.txt
+      depends_on:
+      - Core.txt
+      - Lexicon.txt
+      - Protocols.txt
+      unresolved_variables: []
+      contradiction_register:
+      - minimum_kernel_vs_total_ontology
+      - compression_vs_reconstruction
+      - interpretation_vs_validation
+      prohibited_claims:
+      - generic_systems_thinking_collapse
+      - anti_abstraction_rhetoric
+      - speculative_physics
+      - ordinary_engineering_methodology
+    - file: Recovery.txt
+      layer: Layer_0_Governance_and_Layer_1_CEOS_Core
+      authority_lane: recovery_topology_only
+      owns:
+      - semantic_bootloader
+      - reconstruction_forms
+      - anti_collapse_recovery_maps
+      - mutation_vector_checkpoints
+      does_not_own:
+      - ontology_ownership
+      - governance_ownership
+      - methodology_ownership
+      - speculative_expansion
+      - validation
+      routes_to:
+      - Core.txt
+      - Lexicon.txt
+      - Protocols.txt
+      - Minimum.txt
+      depends_on:
+      - Core.txt
+      - Lexicon.txt
+      - Protocols.txt
+      unresolved_variables: []
+      contradiction_register:
+      - summarization_vs_recovery
+      - compression_vs_topology_preservation
+      - field_vs_universal_substrate
+      prohibited_claims:
+      - summary_as_recovery
+      - readability_driven_averaging
+      - claim_tier_escalation
+    - file: Protocols.txt
+      layer: Layer_0_Governance
+      authority_lane: admissibility_and_semantic_behavior_governance
+      owns:
+      - admissibility_rules
+      - claim_tiering
+      - domain_firewalls
+      - semantic_entropy_rules
+      - GPT_runtime_constraints
+      does_not_own:
+      - ontology_definition
+      - methodology
+      - pedagogy
+      - speculation
+      - subsystem_mechanics
+      - physics_relationship_content
+      routes_to:
+      - Core.txt
+      - Lexicon.txt
+      - Recovery.txt
+      - Directory_Control.yaml
+      depends_on:
+      - Core.txt
+      - Lexicon.txt
+      unresolved_variables: []
+      contradiction_register:
+      - governance_constrains_ontology_behavior_but_does_not_redefine_it
+      - interpretation_vs_validation
+      - analogy_vs_proof
+      prohibited_claims:
+      - interpretation_to_implied_validation
+      - plausibility_to_capability
+      - summary_to_authority
+    - file: Values.txt
+      layer: Layer_2_Causal_Engine
+      authority_lane: variable_state_and_domain_identity_only
+      owns:
+      - variable_identity
+      - state_identity
+      - domain_identity
+      - validation_linked_terms
+      does_not_own:
+      - causal_transforms
+      - operator_equations
+      - subsystem_workflows
+      - operational_state_rules
+      - validation_promotion
+      routes_to:
+      - Operators.txt
+      - Formats.txt
+      - Machine.txt
+      - Variables.txt
+      depends_on: []
+      unresolved_variables:
+      - minimum_buoyancy_margin
+      - minimum_safe_freeboard
+      - trim_limit
+      - list_limit
+      - sea_state_limit
+      - operating_envelope_definition
+      contradiction_register:
+      - variable_identity_vs_causal_transform
+      - state_identity_vs_state_transition
+      - derived_value_vs_validated_margin
+      prohibited_claims:
+      - safe_payload
+      - operational_readiness
+      - validated_stability
+      - reserve_buoyancy_without_measurement
+    - file: Variables.txt
+      layer: Layer_2_Causal_Engine
+      authority_lane: expanded_variable_catalog
+      owns:
+      - measurable_variables
+      - derived_variables
+      - computed_later_variables
+      - assumed_variables_by_domain
+      does_not_own:
+      - operator_equations
+      - state_transition_rules
+      - claim_validation
+      - subsystem_design_approval
+      routes_to:
+      - Values.txt
+      - Operators.txt
+      - Formats.txt
+      - Physics.txt
+      - Machine.txt
+      depends_on:
+      - Values.txt
+      unresolved_variables:
+      - strap_tension
+      - fatigue_cycles
+      - submerged_volume
+      - buoyancy_margin
+      - metacentric_height
+      - flotation_failure_tolerance
+      - dynamic_shift_under_wave_loading
+      contradiction_register:
+      - measurable_variable_vs_validated_claim
+      - computed_later_variable_vs_decision
+      - derived_variable_vs_safe_margin
+      prohibited_claims:
+      - validated_payload_capacity
+      - seaworthiness
+      - operational_readiness
+      - validated_tow_rating
+    - file: Operators.txt
+      layer: Layer_2_Causal_Engine
+      authority_lane: reusable_causal_transforms_only
+      owns:
+      - operator_forms
+      - causal_transform_slots
+      - equation_forms
+      - validation_boundaries_for_operator_use
+      does_not_own:
+      - subsystem_templates
+      - operational_state_machine
+      - file_authority
+      - deployment_claims
+      - variable_identity
+      routes_to:
+      - Values.txt
+      - Formats.txt
+      - Machine.txt
+      - Physics.txt
+      depends_on:
+      - Values.txt
+      unresolved_variables:
+      - capacity
+      - demand
+      - threshold
+      - cycle_count
+      - environmental_input
+      - remaining_capacity
+      contradiction_register:
+      - operator_form_vs_subsystem_mechanic
+      - margin_equation_vs_validated_margin
+      - degradation_operator_vs_failure_prediction
+      prohibited_claims:
+      - deployment_readiness
+      - safe_payload
+      - validated_failure_threshold
+      - operational_capability
+    - file: Formats.txt
+      layer: Layer_2_Causal_Engine
+      authority_lane: reusable_engineering_compositions_only
+      owns:
+      - engineering_format_templates
+      - operator_compositions
+      - required_value_bindings
+      - blocking_unknown_lists_by_format
+      does_not_own:
+      - raw_variable_identity
+      - operator_equation_authority
+      - operational_state_machine
+      - validation_promotion
+      - subsystem_canon
+      routes_to:
+      - Values.txt
+      - Operators.txt
+      - Machine.txt
+      - Physics.txt
+      depends_on:
+      - Values.txt
+      - Operators.txt
+      unresolved_variables:
+      - submerged_volume_under_load
+      - retained_water_mass
+      - minimum_safe_freeboard
+      - metacentric_behavior
+      - trim_limit
+      - list_limit
+      - dynamic_shift_under_wave_loading
+      - tow_point_capacity
+      contradiction_register:
+      - format_template_vs_validated_system
+      - blocking_unknown_visibility_vs_resolution
+      - composition_coherence_vs_readiness
+      prohibited_claims:
+      - reserve_buoyancy_claims
+      - validated_stability
+      - tow_rating
+      - seaworthiness
+      - operational_readiness
+    - file: Machine.txt
+      layer: Layer_2_Causal_Engine
+      authority_lane: operational_state_governance
+      owns:
+      - operational_state_logic
+      - transition_logic
+      - fallback_logic
+      - margin_governed_state_progression
+      - required_formats_by_state
+      does_not_own:
+      - new_values
+      - new_operator_equations
+      - new_format_templates
+      - subsystem_mechanics
+      - validation_without_measurement
+      - runtime_attention_priority
+      routes_to:
+      - Values.txt
+      - Operators.txt
+      - Formats.txt
+      - Protocols.txt
+      depends_on:
+      - Values.txt
+      - Operators.txt
+      - Formats.txt
+      unresolved_variables:
+      - submerged_volume_under_load
+      - loaded_weight
+      - retained_water_mass
+      - mass_distribution
+      - metacentric_behavior
+      - trim_limit
+      - list_limit
+      - unknown_component_status
+      contradiction_register:
+      - state_progression_vs_validation
+      - deployment_state_logic_vs_deployment_authorization
+      - Machine_state_vs_Runtime_focus
+      prohibited_claims:
+      - seaworthiness
+      - operational_readiness
+      - safe_payload
+      - validated_tow_system
+      - validated_stability
+    - file: Physics.txt
+      layer: Layer_2_Causal_Engine
+      authority_lane: causal_relationship_topology_only
+      owns:
+      - causal_relationships
+      - interaction_topology
+      - domain_relationships
+      - structured_equation_logic
+      - required_input_definitions
+      - candidate_output_definitions
+      does_not_own:
+      - validation
+      - Runtime_state_management
+      - executable_calculation_runtime
+      - semantic_governance
+      - payload_claims
+      - reserve_buoyancy_claims
+      - stability_validation
+      - seaworthiness
+      - operational_readiness
+      - subsystem_mechanics
+      routes_to:
+      - Values.txt
+      - Operators.txt
+      - Formats.txt
+      - Protocols.txt
+      - Memory.txt
+      - Boat_Control.txt
+      - Boat Notebook.txt
+      depends_on:
+      - Values.txt
+      - Protocols.txt
+      unresolved_variables:
+      - submerged_volume_candidate_estimate
+      - total_supported_weight
+      - dynamic_wave_response
+      - flotation_array_interaction_behavior
+      - freeboard_under_dynamic_conditions
+      contradiction_register:
+      - causal_relationship_visibility_vs_validation
+      - buoyant_force_relationship_vs_reserve_buoyancy
+      - observed_float_consistency_vs_payload_capacity
+      prohibited_claims:
+      - reserve_buoyancy_validation
+      - payload_capacity
+      - safe_payload
+      - raft_stability
+      - seaworthiness
+      - tow_readiness
+      - operational_readiness
+      - validated_margin
+    - file: Memory.txt
+      layer: Layer_4_Prototype_Architecture
+      authority_lane: Boat_Prototype_1_compressed_operational_substrate
+      owns:
+      - accepted_operational_truths
+      - object_structure
+      - payload_categories
+      - interfaces
+      - constraints
+      - unknowns
+      - measurements
+      - validation_posture
+      - prohibited_claims
+      does_not_own:
+      - exploratory_reasoning
+      - narrative_identity
+      - final_layout
+      - validated_payload_claims
+      - operating_envelope_claims
+      - canon_without_measurement
+      routes_to:
+      - Values.txt
+      - Operators.txt
+      - Formats.txt
+      - Machine.txt
+      - Physics.txt
+      - Protocols.txt
+      - Boat_Control.txt
+      - Boat Notebook.txt
+      depends_on:
+      - Values.txt
+      - Protocols.txt
+      unresolved_variables:
+      - electrolysis_dimensions
+      - electrolysis_mass
+      - clean_dirty_transfer_method
+      - actual_flotation_and_load_response
+      - minimum_clean_side_interface_hardware_envelope
+      - minimum_reachable_shutdown_isolation_control_envelope
+      contradiction_register:
+      - clean_dirty_boundary_vs_transfer_need
+      - payload_geometry_pressure_vs_no_final_boat_size
+      - measurement_first_structure_vs_operational_pressure
+      prohibited_claims:
+      - final_boat_size
+      - final_layout
+      - safe_payload
+      - operating_envelope
+      - validated_clean_lab_platform
+      - leak_safe_transfer
+      - seaworthiness
+      - stable_platform
+      - operational_readiness
+      - reserve_buoyancy
+    - file: Boat_Control.txt
+      layer: Layer_4_Prototype_Architecture
+      authority_lane: suggested_model_memory_noncanonical
+      owns:
+      - model_geometry_memory
+      - minimum_object_sets
+      - frozen_model_assumptions
+      - connection_logic
+      - required_first_measurements
+      - prohibited_claims
+      - next_unlocks
+      does_not_own:
+      - performance_validation
+      - safety_validation
+      - seaworthiness
+      - payload_throughput_or_economic_viability
+      - operational_readiness
+      - future_measurement_override
+      routes_to:
+      - Memory.txt
+      - Values.txt
+      - Formats.txt
+      - Machine.txt
+      - Physics.txt
+      - Protocols.txt
+      - Boat Notebook.txt
+      depends_on:
+      - Values.txt
+      - Protocols.txt
+      unresolved_variables:
+      - actual_drum_displacement
+      - empty_freeboard
+      - loaded_freeboard
+      - trim_angle
+      - list_angle
+      - deck_deflection
+      - drum_movement
+      - wing_attachment_movement
+      - travel_restraint_movement
+      - operator_walkability
+      contradiction_register:
+      - center_boat_does_not_carry_dirty_wings_vs_travel_restraint_loads
+      - work_mode_vs_travel_mode
+      - 4_row_candidate_vs_physical_validation
+      prohibited_claims:
+      - safe_payload
+      - seaworthiness
+      - reserve_buoyancy
+      - validated_stability
+      - final_boat_design
+      - operational_readiness
+      - certified_work_platform
+      - safe_travel_mode
+      - safe_chamber_restraint
+      - validated_tow_system
+    - file: Boat Notebook.txt
+      layer: Layer_4_Prototype_Architecture
+      authority_lane: noncanonical_build_notebook_pending_validation
+      owns:
+      - candidate_layout_ideas
+      - layer_stackups
+      - weight_distribution_candidates
+      - spatial_relationships
+      - candidate_load_paths
+      - inspection_ledgers
+      - replaceability_ledgers
+      does_not_own:
+      - build_plan
+      - fabrication_authorization
+      - procurement_authority
+      - canonical_engineering_truth
+      - verified_final_design
+      - safety_validation
+      routes_to:
+      - Boat_Control.txt
+      - Memory.txt
+      - Values.txt
+      - Formats.txt
+      - Physics.txt
+      - Protocols.txt
+      depends_on:
+      - Boat_Control.txt
+      - Protocols.txt
+      unresolved_variables:
+      - flotation_row_count
+      - strap_creep
+      - drum_shift
+      - barrel_movement
+      - barrel_entry_closure_method
+      - deck_deflection
+      - truss_racking
+      - interface_geometry
+      - tow_point_strain
+      - side_wing_restraint_behavior
+      contradiction_register:
+      - bracing_density_vs_inspection_visibility
+      - deck_panel_size_vs_manual_handling_access
+      - equipment_skid_footprints_vs_under_deck_accessibility
+      - flotation_capture_vs_replacement_speed
+      - load_logic_may_hide_what_must_remain_visible
+      prohibited_claims:
+      - buoyancy_margins
+      - flooded_compartment_survival
+      - validated_payload_capacity
+      - static_or_dynamic_stability
+      - seaworthiness
+      - tow_ratings
+      - operational_readiness
+      - validated_walking_surface_safety
+      - worker_safety
+      - electrical_safety
+      - containment_performance
+    - file: Directory.yaml
+      layer: Layer_6_Index_and_Routing
+      authority_lane: repository_routing_map_only
+      owns:
+      - file_to_authority_lane
+      - routing_pointers
+      - dependency_references
+      - unresolved_variable_routes
+      - contradiction_routes
+      - prohibited_claim_routes
+      does_not_own:
+      - canon
+      - governance_authority
+      - validation
+      - subsystem_mechanics
+      - ontology_owner
+      - runtime_memory_truth
+      - physics_relationship_authority
+      routes_to:
+      - Directory_Control.yaml
+      - Directory_Map.yaml
+      - Directory_Backlog.yaml
+      - all_owner_authority_files
+      depends_on:
+      - Directory_Control.yaml
+      - Directory_Map.yaml
+      unresolved_variables:
+      - routing_uncertainties
+      - unresolved_variable_routes_by_owner
+      - future_topology_questions
+      contradiction_register:
+      - routing_visibility_vs_authority
+      - retrieval_centrality_vs_claim_authority
+      - summary_route_vs_canon
+      prohibited_claims:
+      - repository_truth
+      - master_canon
+      - validation_gravity_well
+      - cognition_authority
+      - subsystem_owner
+    - file: Directory_Control.yaml
+      layer: Layer_6_Index_and_Routing
+      authority_lane: routing_governance_constraints_only
+      owns:
+      - Directory_behavior_constraints
+      - anti_hidden_canon_firewall
+      - motion_rule
+      - containment_rule
+      - health_metric_constraints
+      - routing_failure_modes
+      does_not_own:
+      - canonical_governance_authority
+      - ontology_definition_layer
+      - subsystem_behavior_owner
+      - validation_escalation_engine
+      - master_policy_engine
+      routes_to:
+      - Directory.yaml
+      - Directory_Map.yaml
+      - Directory_Backlog.yaml
+      - Protocols.txt
+      depends_on:
+      - Protocols.txt
+      unresolved_variables:
+      - authority_drift
+      - summary_truth_drift
+      - unresolved_variable_flattening
+      - contradiction_loss
+      - routing_becoming_canon
+      contradiction_register:
+      - Control_constraint_vs_Governance_authority
+      - routing_firewall_vs_master_policy_engine
+      - health_metric_vs_validation_state
+      prohibited_claims:
+      - Directory_as_repository_truth
+      - Directory_as_master_canon
+      - Directory_as_governance_authority
+      - architectural_clarity_as_engineering_readiness
+    - file: Directory_Map.yaml
+      layer: Layer_6_Index_and_Routing
+      authority_lane: topology_visibility_only
+      owns:
+      - authority_graph_visibility
+      - inheritance_order_visibility
+      - dependency_topology_visibility
+      - route_back_to_owner_authority_structure
+      - layer_relationship_visibility
+      does_not_own:
+      - ontology_owner
+      - subsystem_definition_source
+      - validation_authority
+      - canonical_relationship_truth_engine
+      - semantic_compression_gravity_well
+      routes_to:
+      - Directory.yaml
+      - Directory_Control.yaml
+      - Directory_Backlog.yaml
+      - Values.txt
+      - Operators.txt
+      - Formats.txt
+      - Machine.txt
+      - Physics.txt
+      - Protocols.txt
+      depends_on:
+      - Directory_Control.yaml
+      unresolved_variables:
+      - Map_owns_language_drift
+      - relationship_visibility_drift
+      - dependency_graph_misread_as_canon
+      contradiction_register:
+      - topology_visibility_vs_authority_ownership
+      - dependency_mapping_vs_hidden_canonization
+      - relationship_exposure_vs_validation
+      prohibited_claims:
+      - topology_visibility_creates_canonical_authority
+      - relationship_visibility_creates_validation
+      - Map_as_owner_authority
+    - file: Directory_Backlog.yaml
+      layer: Layer_6_Index_and_Routing
+      authority_lane: unresolved_routing_expansion_queue_only
+      owns:
+      - unresolved_branch_candidates
+      - contradiction_clusters
+      - pending_consolidations
+      - routing_uncertainties
+      - future_topology_questions
+      does_not_own:
+      - accepted_roadmap
+      - implementation_decisions
+      - validation_state_changes
+      - canonical_future_architecture
+      - authority_creation
+      routes_to:
+      - Directory.yaml
+      - Directory_Control.yaml
+      - Directory_Map.yaml
+      - owner_authority_files
+      depends_on:
+      - Directory_Control.yaml
+      unresolved_variables:
+      - Relationship_Map.yaml
+      - Retrieval_Index.yaml
+      - Objects.yaml
+      - Equations.yaml
+      - Runtime_State.yaml
+      - Validation_Ledger.yaml
+      contradiction_register:
+      - backlog_item_vs_accepted_decision
+      - future_topology_question_vs_architecture_commitment
+      - pending_consolidation_vs_authority_merge
+      prohibited_claims:
+      - roadmap_acceptance
+      - schema_lock
+      - branch_creation_authorization
+      - validation_state_promotion
+  dependency_references:
+    topology_map_file: Directory_Map.forever.yaml
+    control_file: Directory_Control.forever.yaml
+    backlog_file: Directory_Backlog.forever.yaml
+    route_back_rule: every_route_must_point_back_to_owner_authority
+    populated_dependency_paths:
+      CEOS_semantic_governance_path:
+      - Core.txt
+      - Lexicon.txt
+      - Protocols.txt
+      - Recovery.txt
+      - Minimum.txt
+      causal_engine_path:
+      - Values.txt
+      - Operators.txt
+      - Formats.txt
+      - Machine.txt
+      physics_claim_boundary_path:
+      - Physics.txt
+      - Values.txt
+      - Operators.txt
+      - Formats.txt
+      - Protocols.txt
+      boat_prototype_context_path:
+      - Memory.txt
+      - Boat_Control.txt
+      - Boat Notebook.txt
+      - Values.txt
+      - Formats.txt
+      - Physics.txt
+      - Protocols.txt
+      directory_control_path:
+      - Directory.yaml
+      - Directory_Control.yaml
+      - Directory_Map.yaml
+      - Directory_Backlog.yaml
+  unresolved_variable_routes:
+    principle: 'Directory.yaml may route unresolved variables to the files that own their identity, relationships, formats, measurements, or governance boundaries. It must not resolve those variables, promote them, or imply measurement completion.
+
+      '
+    routes:
+      variable_identity: Values.yaml
+      object_attachment: Objects.yaml
+      causal_relationship: Physics.yaml
+      operator_or_margin_logic: Operators.yaml
+      engineering_format_context: Formats.yaml
+      operational_state_effect: Machine.yaml
+      prototype_context: Boat_Architecture.yaml
+      measurement_status: Measurement_Observations.yaml
+      validation_promotion_request: Validation_Promotions.yaml
+      claim_boundary: Governance_Core.yaml
+    populated_routes:
+      HDPE_drum_restraint_behavior:
+        routes_to:
+        - Variables.txt
+        - Values.txt
+        - Operators.txt
+        - Formats.txt
+        - Physics.txt
+        - Memory.txt
+        - Boat Notebook.txt
+        - Protocols.txt
+        unresolved_variables:
+        - strap_creep
+        - drum_shift
+        - drum_movement
+        - barrel_movement
+        - barrel_entry_closure_method
+        - fatigue_cycles
+        - strap_tension
+        - anchor_load
+        - cradle_load
+        - dynamic_shift_under_wave_loading
+        claim_boundary:
+        - validated_structural_capability
+        - reserve_buoyancy
+        - validated_stability
+        - seaworthiness
+        - safe_payload
+        - operational_readiness
+      Runtime_State_vs_Machine_Boundary:
+        routes_to:
+        - Machine.txt
+        - Memory.txt
+        - Directory_Control.yaml
+        - Protocols.txt
+        boundary: operational_attention_visibility_is_not_validation_canon_roadmap_authority_or_deployment_readiness
+      Physics_Relationship_vs_Validation_Claim:
+        routes_to:
+        - Physics.txt
+        - Values.txt
+        - Operators.txt
+        - Formats.txt
+        - Machine.txt
+        - Protocols.txt
+        boundary: causal_relationship_visibility_is_not_engineering_validation_operational_readiness_or_deployment_authorization
+  prohibited_claim_routes:
+    principle: 'Directory.yaml may index prohibited claims and route them to Governance and relevant object/prototype files. It must not convert prohibited claims into allowable claims.
+
+      '
+    common_prohibited_claims:
+    - seaworthiness
+    - operational_readiness
+    - payload_capacity
+    - safe_payload
+    - reserve_buoyancy
+    - validated_stability
+    - tow_rating
+    - certified_work_platform
+    - leak_safe_transfer
+    - validated_containment_performance
+    - validated_worker_safety
+    - fabrication_readiness
+    - final_design_status
+    routed_to:
+      claim_boundary: Governance_Core.yaml
+      causal_relationship_boundary: Physics.yaml
+      prototype_context: Boat_Architecture.yaml
+      object_context: Objects.yaml
+    populated_prohibited_claim_routes:
+      boat_flotation_and_restraint_claims:
+      - Memory.txt
+      - Boat_Control.txt
+      - Boat Notebook.txt
+      - Protocols.txt
+      physics_relationship_claims:
+      - Physics.txt
+      - Protocols.txt
+      directory_authority_claims:
+      - Directory_Control.yaml
+      - Directory_Map.yaml
+      - Directory_Backlog.yaml
+      operational_state_claims:
+      - Machine.txt
+      - Protocols.txt
+  contradiction_routes:
+    principle: 'Compression may reduce repetition but must preserve enough routing information to reconstruct contradictions, unresolved variables, blocked claims, and measurement dependencies.
+
+      '
+    must_preserve:
+    - contradiction_source
+    - affected_object
+    - affected_variable
+    - governing_format
+    - physics_relationship
+    - measurement_unlock
+    - prohibited_claim_boundary
+    - governance_review_status
+    must_not:
+    - compress_away_contradiction_history
+    - summarize_contradictions_into_resolved_state
+    - convert_candidate_geometry_into_engineering_truth
+    populated_contradiction_routes:
+      tighter_restraint_vs_drum_damage:
+      - Boat Notebook.txt
+      - Variables.txt
+      - Physics.txt
+      - Protocols.txt
+      flotation_capture_vs_replacement_access:
+      - Boat Notebook.txt
+      - Memory.txt
+      - Boat_Control.txt
+      bracing_density_vs_inspection_visibility:
+      - Boat Notebook.txt
+      - Memory.txt
+      Runtime_visibility_vs_memory_truth:
+      - Directory_Control.yaml
+      - Machine.txt
+      - Memory.txt
+      Physics_relationship_vs_validation_claim:
+      - Physics.txt
+      - Protocols.txt
+      - Directory_Control.yaml
+      Backlog_item_vs_accepted_roadmap:
+      - Directory_Backlog.yaml
+      - Directory_Control.yaml
+  migration_log:
+    current_action: branched_directory_into_routing_control_map_backlog_files
+    source: Directory.updated.yaml
+    lineage_policy:
+    - branch_by_authority_function
+    - do_not_compress_by_deletion
+    - preserve_current_directory_lineage
+    - maintain_reconstructability_of_pre_branch_state
+    validation_effect: none
+    canon_effect: none
+    subsystem_effect: none
+  controlled_population_status:
+    phase: controlled_population_phase
+    architecture_growth: paused
+    branch_creation: frozen_temporarily
+    patch_posture: containment_only_if_observed_drift
+    standing_rule:
+    - use_the_structure
+    - do_not_expand_the_structure
+    governing_rule: improve_navigation_without_rewriting_reality
+    objective: retained_engineering_value_under_scaling_pressure
+    authority_effect: routing_population_only
+  active_routing_structure:
+  - Directory.forever.yaml
+  - Directory_Control.forever.yaml
+  - Directory_Map.forever.yaml
+  - Directory_Backlog.forever.yaml
+
+Directory_Backlog:
+  forever_version:
+    status: '[STABLE OPERATIONAL FORM — LIVING INFRASTRUCTURE]'
+    definition:
+      means:
+      - durable_routing_structure
+      - recoverable_authority_paths
+      - preserved_unresolved_variables
+      - preserved_contradiction_lineage
+      - prohibited_claim_firewalls
+      - updateable_without_rewrite
+      does_not_mean:
+      - finished_repository
+      - final_schema
+      - permanent_ontology
+      - validation_authority
+      - no_future_branches
+    governing_rule:
+    - improve_navigation_without_rewriting_reality
+    health_metric:
+    - retained_engineering_value_under_scaling_pressure
+    standing_rule:
+    - use_the_structure
+    - do_not_expand_the_structure
+    population_method:
+    - use_reveals_gaps
+    - observed_gaps_trigger_minimal_routing_entries
+    - observed_drift_triggers_containment_patches
+    - no_drift_no_patch
+  forever_lock:
+    role: holds_pressure_without_deciding
+    authority_effect: none
+    survival_rule: backlog_items_are_not_decisions
+    must_not_become:
+    - accepted_roadmap
+    - validation_plan
+    - architecture_authority
+    - governance_queue
+  file_status: '[UNRESOLVED ROUTING EXPANSION QUEUE — FOREVER OPERATIONAL FORM]'
+  role: unresolved_routing_expansion_queue
+  authority_effect: none
+  source_file: Directory_Backlog.populated.yaml
+  implementation_posture:
+  - routing_first
+  - rewrite_last
+  - preserve_existing_work
+  - preserve_local_authority
+  - preserve_contradiction_history
+  - preserve_unresolved_variables
+  unresolved_branch_candidates:
+  - Relationship_Map.yaml
+  - Retrieval_Index.yaml
+  - Objects.yaml
+  - Equations.yaml
+  - Runtime_State.yaml
+  - Validation_Ledger.yaml
+  pending_consolidations:
+    Governance_Core.yaml:
+      status: proposed
+      proposed_combines:
+      - Protocol.txt
+      - governance_rules
+      - claim_tiering
+      - authority_routing
+      - summary_quarantine
+      - reconstruction_rules
+      - semantic_entropy_controls
+      authority_lane: Governance
+      authority_effect: none_until_governance_acceptance
+    Lexicon_Core.yaml:
+      status: proposed
+      proposed_combines:
+      - Lexicon.txt
+      - Minimum.txt
+      - Recovery.txt
+      authority_lane: Governance_and_CEOS_Core_routing
+      authority_effect: none_until_governance_acceptance
+    Core_CEOS.yaml:
+      status: proposed
+      proposed_combines:
+      - Core.txt
+      - Domains.txt
+      - Methodology.txt
+      - Reasoning.txt
+      authority_lane: CEOS_Core
+      authority_effect: none_until_governance_acceptance
+    Boat_Architecture.yaml:
+      status: proposed
+      proposed_combines:
+      - Boat_Control.txt
+      - Boat_Notebook.txt
+      authority_lane: Prototype_Architecture
+      authority_effect: none_until_governance_acceptance
+  first_rewrite_targets:
+    completed_in_phase_1:
+    - Directory_Superseded_PreStabilization.yaml
+    - Directory.yaml
+    pending_phase_2:
+    - Runtime_State_Log.yaml
+    - Relationship_Map.yaml
+    pending_phase_3:
+    - Physics.yaml_header_patch_only
+  routing_uncertainties:
+    from_unresolved_variable_routing:
+      principle: 'Directory.yaml may route unresolved variables to the files that own their identity, relationships, formats, measurements, or governance boundaries. It must not resolve those variables, promote them, or imply measurement completion.
+
+        '
+      routes:
+        variable_identity: Values.yaml
+        object_attachment: Objects.yaml
+        causal_relationship: Physics.yaml
+        operator_or_margin_logic: Operators.yaml
+        engineering_format_context: Formats.yaml
+        operational_state_effect: Machine.yaml
+        prototype_context: Boat_Architecture.yaml
+        measurement_status: Measurement_Observations.yaml
+        validation_promotion_request: Validation_Promotions.yaml
+        claim_boundary: Governance_Core.yaml
+    from_contradiction_reconstructability:
+      principle: 'Compression may reduce repetition but must preserve enough routing information to reconstruct contradictions, unresolved variables, blocked claims, and measurement dependencies.
+
+        '
+      must_preserve:
+      - contradiction_source
+      - affected_object
+      - affected_variable
+      - governing_format
+      - physics_relationship
+      - measurement_unlock
+      - prohibited_claim_boundary
+      - governance_review_status
+      must_not:
+      - compress_away_contradiction_history
+      - summarize_contradictions_into_resolved_state
+      - convert_candidate_geometry_into_engineering_truth
+  contradiction_clusters_to_preserve:
+  - directory_usefulness_vs_hidden_authority_gravity
+  - routing_clarity_vs_summary_canonization
+  - schema_uniformity_vs_local_authority_preservation
+  - retrieval_centrality_vs_claim_authority
+  - architectural_clarity_vs_validation_readiness
+  - compression_efficiency_vs_reconstructable_context
+  future_topology_questions:
+  - when_to_promote_Relationship_Map_yaml_from_candidate_to_active_routing_artifact
+  - whether_Runtime_needs_separate_active_state_file_before_it_accumulates_memory_truth_pressure
+  - how_to_index_unresolved_variables_without_turning_index_entries_into_definitions
+  - how_to_preserve_contradiction_lineage_after_local_file_consolidations
+  - how_to_reduce_retrieval_instability_without_creating_master_canon_behavior
+  prohibited_backlog_interpretations:
+  - pending_item_implies_acceptance
+  - consolidation_target_implies_authority_merge
+  - routing_uncertainty_implies_validation_gap_resolution
+  - future_question_implies_design_decision
+  controlled_population_backlog:
+    status: '[POPULATED UNRESOLVED ROUTING QUEUE — NOT ROADMAP ACCEPTANCE]'
+    backlog_items_are_not_decisions: true
+    routing_uncertainties_to_observe:
+    - Backlog_items_treated_as_decisions
+    - pending_consolidations_treated_as_authority_merge
+    - Runtime_State_stub_treated_as_memory_truth
+    - Validation_Ledger_stub_treated_as_validation_authority
+    - Relationship_Map_stub_treated_as_canonical_relationship_truth
+    next_routing_tests_if_needed:
+    - Backlog_item_vs_accepted_roadmap
+    - Summary_vs_canon
+    containment_rule: future_topology_questions_do_not_create_architecture_commitments
+  backlog_nondecision_rule:
+    status: '[NONDECISION CONTAINMENT RULE]'
+    rules:
+    - backlog_items_are_pressure_holders_not_acceptance
+    - pending_phase_language_does_not_create_roadmap_authority
+    - future_topology_questions_remain_unresolved_until_real_use_requires_action
+
+Directory_Control:
+  forever_version:
+    status: '[STABLE OPERATIONAL FORM — LIVING INFRASTRUCTURE]'
+    definition:
+      means:
+      - durable_routing_structure
+      - recoverable_authority_paths
+      - preserved_unresolved_variables
+      - preserved_contradiction_lineage
+      - prohibited_claim_firewalls
+      - updateable_without_rewrite
+      does_not_mean:
+      - finished_repository
+      - final_schema
+      - permanent_ontology
+      - validation_authority
+      - no_future_branches
+    governing_rule:
+    - improve_navigation_without_rewriting_reality
+    health_metric:
+    - retained_engineering_value_under_scaling_pressure
+    standing_rule:
+    - use_the_structure
+    - do_not_expand_the_structure
+    population_method:
+    - use_reveals_gaps
+    - observed_gaps_trigger_minimal_routing_entries
+    - observed_drift_triggers_containment_patches
+    - no_drift_no_patch
+  forever_lock:
+    role: prevents_routing_from_becoming_truth
+    authority_effect: constrains_Directory_behavior_only
+    must_not_become:
+    - canonical_governance_authority
+    - ontology_definition_layer
+    - subsystem_behavior_owner
+    - validation_escalation_engine
+    - master_policy_engine
+  file_status: '[ROUTING GOVERNANCE CONSTRAINT LAYER — FOREVER OPERATIONAL FORM]'
+  role: routing_governance_constraints
+  authority_effect: constrains_Directory_behavior_only
+  source_file: Directory_Control.populated.yaml
+  branch_reason: prevent_routing_usefulness_from_becoming_hidden_authority_gravity
+  hard_constraints:
+    combine_files: allowed
+    combine_authority: prohibited
+    one_concept_one_authority_lane: true
+    no_hidden_authority_duplication: true
+    summaries_inherit_authority: false
+    Runtime_becomes_memory_canon: false
+    Physics_becomes_master_authority: false
+    Physics_validates_claims: false
+    Governance_redefines_subsystem_mechanics: false
+    architectural_clarity_implies_engineering_readiness: false
+    structural_coherence_implies_validation: false
+    contradiction_history_must_remain_reconstructable: true
+    unresolved_variables_must_remain_visible: true
+    prohibited_claims_must_remain_visible: true
+  control_rules:
+    Directory_Control_Rule:
+      status: '[ROUTING GOVERNANCE INSERT — ACCEPTABLE]'
+      authority_effect: constrains_Directory_behavior_only
+      core_lock:
+        Directory:
+          may_expose: repository_cognition_pressure
+          may_not_become: repository_cognition_authority
+          authority: routing_only
+      governing_rule:
+      - improve_navigation_without_rewriting_reality
+      objective:
+      - retained_engineering_value_under_scaling_pressure
+      repository_health:
+        not_measured_by:
+        - elegance
+        - uniformity
+        - centralized_schema_compliance
+        - narrative_cleanliness
+        - reduced_file_count
+        measured_by:
+        - reconstructability
+        - authority_stability
+        - unresolved_variable_visibility
+        - contradiction_persistence
+        - measurement_gap_preservation
+        - causal_lineage_recovery
+        - claim_boundary_survivability
+        - compression_reversibility_sufficient_to_rebuild_context
+      Directory_may_expose:
+      - repository_pressure
+      - dependency_topology
+      - authority_relationships
+      - contradiction_networks
+      - retrieval_instability
+      - unresolved_variable_clusters
+      - prohibited_claim_locations
+      - measurement_dependency_paths
+      Directory_may_not_become:
+      - repository_truth
+      - master_canon
+      - ontology_owner
+      - governance_authority
+      - validation_gravity_well
+      - cognition_authority
+      - subsystem_owner
+      - runtime_memory_truth
+      - physics_relationship_authority
+      containment_rule:
+      - every_route_must_point_back_to_owner_authority
+      healthy_stabilization:
+        function: reduce_semantic_drag_without_erasing_causal_history
+        preserves:
+        - local_authority
+        - active_work
+        - unresolved_states
+        - contradiction_locality
+        - measurement_dependencies
+        - prohibited_claim_boundaries
+        - causal_lineage
+        - engineering_recoverability
+      unhealthy_consolidation:
+        function: make_repository_look_clean
+        risks:
+        - summary_canonization
+        - hidden_authority_mutation
+        - contradiction_deletion
+        - unresolved_variable_flattening
+        - premature_ontology_totalization
+        - validation_by_architectural_coherence
+        - retrieval_centrality_becoming_truth_authority
+      required_directory_behavior:
+      - route_existing_work
+      - expose_authority_lanes
+      - preserve_unresolved_variables
+      - index_contradictions
+      - recover_dependency_paths
+      - reduce_retrieval_instability
+      - maintain_motion
+      - preserve_claim_firewalls
+      prohibited_directory_behavior:
+      - resolving_contradictions
+      - promoting_validation_state
+      - redefining_authority_lanes
+      - rewriting_subsystem_mechanics
+      - collapsing_local_context
+      - converting_summaries_into_truth
+      - treating_architectural_clarity_as_engineering_readiness
+    Directory_Control_Integration_Note:
+      placement_recommendation:
+        file: Directory.yaml
+        section_options:
+        - hard_constraints
+        - control_rules
+        - routing_governance
+      insertion_behavior:
+      - append_only_initially
+      - avoid_restructuring_existing_sections
+      - preserve_current_directory_lineage
+      - maintain_reconstructability_of_pre_insert_state
+      rationale:
+      - establishes_routing_only_firewall
+      - suppresses_hidden_canon_risk
+      - preserves_motion_during_stabilization
+      - prevents_retrieval_gravity_from_mutating_into_truth_authority
+      stabilization_effect:
+        expected:
+        - improved_authority_visibility
+        - improved_scaling_survivability
+        - reduced_semantic_entropy
+        - preserved_engineering_recoverability
+        prohibited_interpretation:
+        - repository_is_complete
+        - cognition_architecture_is_final
+        - directory_has_governance_authority
+        - structural_coherence_implies_validation
+      implementation_posture:
+        strategy:
+        - routing_first
+        - rewrite_last
+        - preserve_existing_work
+        - preserve_local_authority
+        - preserve_contradiction_history
+        - preserve_unresolved_variables
+      next_safe_step:
+      - insert_control_rule
+      - run_small_scope_routing_audit
+      - avoid_global_refactor
+    Directory_Post_Insert_Operational_Guidance:
+      status: '[STABILIZATION TRANSITION GUIDANCE]'
+      immediate_goal:
+      - let_the_control_rule_exist_without_triggering_repository_wide_rewrite_pressure
+      first_order_effects_to_monitor:
+      - retrieval_behavior_changes
+      - authority_reference_clarity
+      - contradiction_traceability
+      - unresolved_variable_visibility
+      - summary_language_drift
+      - routing_consistency
+      expected_positive_effects:
+      - reduced_hidden_authority_overlap
+      - improved_navigation_confidence
+      - improved_dependency_recovery
+      - reduced_summary_gravity
+      - stronger_claim_boundary_visibility
+      expected_failure_modes:
+      - users_treating_directory_as_canon
+      - routing_entries_becoming_implicit_definitions
+      - summaries_accumulating_hidden_authority
+      - pressure_for_total_schema_unification
+      - governance_overexpansion
+      containment_actions:
+        if_directory_entry_starts_explaining_subsystem_behavior:
+        - route_back_to_owner_authority
+        if_summary_language_becomes_reusable_truth:
+        - quarantine_summary
+        - restore_authority_reference
+        if_contradictions_disappear_during_cleanup:
+        - restore_contradiction_trace
+        - preserve_local_context
+        if_retrieval_path_becomes_truth_proxy:
+        - reinforce_routing_only_constraint
+      routing_audit_template:
+        for_each_directory_entry:
+          verify:
+          - authority_owner_is_explicit
+          - unresolved_variables_remain_visible
+          - prohibited_claims_are_preserved
+          - contradictions_remain_reconstructable
+          - routing_does_not_mutate_into_definition
+          - summaries_do_not_inherit_authority
+      stabilization_warning:
+      - repository_coherence_will_increase_faster_than_validation
+      - architectural_clarity_must_not_be_misread_as_engineering_readiness
+      safe_operational_posture:
+      - preserve_motion
+      - prefer_incremental_routing_improvements
+      - avoid_large_scale_cleanup_campaigns
+      - avoid_forcing_uniformity
+      - preserve_engineering_history
+      - preserve_measurement_dependencies
+      long_term_target:
+      - reconstruction_safe_scaling
+      - retained_engineering_value
+      - bounded_semantic_entropy
+      - authority_stable_growth
+    Repository_Transition_Checkpoint:
+      status: '[CONTROLLED STABILIZATION TRANSITION]'
+      current_repository_phase:
+        from:
+        - expanding_repository
+        - distributed_authority_pressure
+        - retrieval_instability_growth
+        - unresolved_variable_accumulation
+        to:
+        - routing_stabilized_repository
+        - authority_visible_repository
+        - reconstruction_safe_scaling
+        - bounded_semantic_entropy
+      stabilization_doctrine_locked:
+        governing_rule:
+        - improve_navigation_without_rewriting_reality
+        objective:
+        - retained_engineering_value_under_scaling_pressure
+      repository_identity:
+        repository_is:
+        - evolving_engineering_environment
+        - causal_dependency_network
+        - unresolved_variable_host
+        - contradiction_preserving_system
+        - reconstructable_reasoning_archive
+        repository_is_not:
+        - unified_master_theory
+        - finalized_ontology
+        - validation_authority
+        - centralized_truth_engine
+        - coherence_equals_readiness_system
+      primary_scaling_strategy:
+      - routing_first
+      - authority_explicit
+      - contradiction_preserved
+      - unresolved_variables_visible
+      - summaries_quarantined_from_authority
+      - compression_reversible_enough_for_context_recovery
+      operational_priority_order:
+        1:
+        - preserve_motion
+        2:
+        - preserve_authority_locality
+        3:
+        - preserve_contradiction_reconstructability
+        4:
+        - preserve_measurement_dependency_visibility
+        5:
+        - improve_retrieval
+        6:
+        - improve_dependency_navigation
+        7:
+        - reduce_semantic_entropy
+        8:
+        - avoid_premature_unification
+      anti-collapse_firewalls:
+      - routing_not_authority
+      - summaries_not_canon
+      - coherence_not_validation
+      - interpretation_not_truth
+      - cognition_pressure_not_cognition_authority
+      - retrieval_centrality_not_claim_authority
+      - organization_not_hidden_source
+      directory_operational_role:
+        role:
+        - repository_air_traffic_control
+        - dependency_visibility_layer
+        - unresolved_variable_index
+        - contradiction_trace_router
+        - authority_lane_mapper
+        authority:
+        - routing_only
+        containment_rule:
+        - every_route_must_point_back_to_owner_authority
+      acceptable_repository_growth_behavior:
+      - local_mess_allowed
+      - unresolved_states_allowed
+      - contradiction_clusters_allowed
+      - partial_models_allowed
+      - candidate_structures_allowed
+      - measurement_gaps_allowed
+      prohibited_cleanup_behavior:
+      - flattening_unknowns
+      - contradiction_erasure
+      - summary_truth_drift
+      - hidden_authority_merging
+      - forced_schema_uniformity
+      - architectural_cleanliness_as_validation_proxy
+      long_term_stability_target:
+      - authority_stable_growth
+      - reconstructable_compression
+      - retained_engineering_lineage
+      - bounded_governance_entropy
+      - recoverable_context_under_scaling_pressure
+      final_lock:
+        repository_health:
+          not: cosmetic_cleanliness
+          is: retained_causal_recoverability_under_growth
+  mandatory_distinction_firewalls:
+    operational_validity_vs_causal_completeness:
+      preserve: operational_validity != causal_completeness
+    propagation_vs_transfer:
+      preserve: propagation != transfer
+    field_boundary:
+      preserve: field != generalized influence
+    organization_boundary:
+      preserve: organization != hidden source
+    amplification_boundary:
+      preserve: amplification != energy_creation
+    validation_boundary:
+      preserve: interpretation != validation
+    canon_boundary:
+      preserve: speculation != canon
+  preserved_governance_split_pointer:
+    source: Directory_Map.forever.yaml
+    rule: Physics_routes_relationships_Governance_routes_claims_Directory_routes_to_owner_authority
+  controlled_population_constraints:
+    status: '[CONTROLLED POPULATION CONSTRAINTS]'
+    standing_rule:
+    - use_the_structure
+    - do_not_expand_the_structure
+    allowed_work:
+    - populate_routing_entries
+    - add_dependency_paths
+    - add_authority_references
+    - add_unresolved_variable_routes
+    - add_contradiction_routes
+    - add_prohibited_claim_routes
+    prohibited_work:
+    - recursive_architecture_expansion
+    - new_branch_creation
+    - total_schema_locking
+    - elegance_cleanup
+    - ontology_consolidation
+    - hidden_canon_creation
+    - architectural_coherence_interpreted_as_validation
+    patch_trigger_only_if_observed:
+    - authority_drift
+    - summary_truth_drift
+    - unresolved_variable_flattening
+    - contradiction_loss
+    - routing_becoming_canon
+
+artifact: Directory_Forever_Operational_Form_Audited
+status: audited_and_pointer_corrected
+changes:
+- corrected_active_forever_file_pointers_that_still_referenced_branch_filenames
+authority_effect: none
+validation: yaml_parse_success
+
+Directory_Map:
+  forever_version:
+    status: '[STABLE OPERATIONAL FORM — LIVING INFRASTRUCTURE]'
+    definition:
+      means:
+      - durable_routing_structure
+      - recoverable_authority_paths
+      - preserved_unresolved_variables
+      - preserved_contradiction_lineage
+      - prohibited_claim_firewalls
+      - updateable_without_rewrite
+      does_not_mean:
+      - finished_repository
+      - final_schema
+      - permanent_ontology
+      - validation_authority
+      - no_future_branches
+    governing_rule:
+    - improve_navigation_without_rewriting_reality
+    health_metric:
+    - retained_engineering_value_under_scaling_pressure
+    standing_rule:
+    - use_the_structure
+    - do_not_expand_the_structure
+    population_method:
+    - use_reveals_gaps
+    - observed_gaps_trigger_minimal_routing_entries
+    - observed_drift_triggers_containment_patches
+    - no_drift_no_patch
+  forever_lock:
+    role: shows_connections_without_owning_them
+    authority_effect: routing_visibility_only
+    survival_rule: all_authority_graph_entries_are_routes_not_definitions
+    must_not_become:
+    - ontology_owner
+    - subsystem_definition_source
+    - validation_authority
+    - canonical_relationship_truth_engine
+    - semantic_compression_gravity_well
+  file_status: '[CONNECTION TOPOLOGY MAP — FOREVER OPERATIONAL FORM]'
+  role: distilled_connection_topology
+  authority_effect: routing_visibility_only
+  source_file: Directory_Map.populated.yaml
+  core_rule: Directory_maps_connections_but_does_not_own_authority
+  map_interpretation_rule:
+    status: '[TOPOLOGY VISIBILITY CONTAINMENT RULE]'
+    rules:
+    - owns_fields_describe_external_owner_authorities
+    - Directory_Map_does_not_own_the_authority_it_maps
+    - all_authority_graph_entries_are_routes_not_definitions
+    - relationship_visibility_does_not_create_validation
+    - topology_visibility_does_not_create_canonical_authority
+    containment_goal:
+    - prevent_visibility_layers_from_mutating_into_hidden_canon
+    governing_rule:
+    - every_route_must_point_back_to_owner_authority
+  authority_graph:
+    Layer_0_Governance:
+      purpose: semantic_firewall_and_claim_governance
+      owns:
+      - admissibility
+      - validation_boundaries
+      - claim_tiering
+      - authority_routing
+      - semantic_firewall
+      - summary_quarantine
+      - contradiction_governance
+      - reconstruction_rules
+      - semantic_entropy_controls
+      must_not_own:
+      - subsystem_mechanics
+      - candidate_geometry
+      - executable_calculation_runtime
+      - physics_relationship_content
+      - engineering_validation_by_implication
+      routing_responsibilities:
+      - route_claims_to_claim_tiers
+      - block_unauthorized_validation_promotion
+      - preserve_authority_lanes
+      - quarantine_summaries_from_authority
+      - preserve_distinction_topology
+      files:
+      - Governance_Core.yaml
+      - Lexicon_Core.yaml
+    Layer_1_CEOS_Core:
+      purpose: root_causal_ontology_and_reasoning_orientation
+      owns:
+      - root_interaction_kernel
+      - domain_topology
+      - causal_accounting_method
+      - propagation_transfer_distinction
+      - operational_validity_vs_causal_completeness
+      - anti_collapse_distinction_topology
+      must_not_own:
+      - validation_promotion
+      - deployment_claims
+      - subsystem_authority
+      - candidate_geometry
+      - runtime_state_truth
+      routing_responsibilities:
+      - preserve_interaction_level_visibility
+      - route_domain_identity
+      - preserve_causal_accounting_before_scalar_reduction
+      - prevent_domain_collapse
+      files:
+      - Core_CEOS.yaml
+    Layer_2_Causal_Engine:
+      purpose: structured_causal_computation_and_relationship_mapping
+      owns:
+      - variable_identity
+      - state_identity
+      - domain_identity
+      - reusable_causal_transforms
+      - reusable_engineering_compositions
+      - causal_relationship_topology
+      - operational_state_logic
+      must_not_own:
+      - claim_validation
+      - subsystem_canon
+      - operational_readiness
+      - final_design_truth
+      routing_responsibilities:
+      - route_values_to_operators
+      - route_operators_to_formats
+      - route_formats_to_machine_states
+      - route_physics_relationships_to_measurement_dependencies
+      - route_blocking_unknowns_without_resolving_them
+      files:
+      - Values.yaml
+      - Operators.yaml
+      - Formats.yaml
+      - Physics.yaml
+      - Machine.yaml
+    Layer_3_Object_Topology:
+      purpose: physical_object_registry_and_interfaces
+      owns:
+      - physical_object_registry
+      - interface_topology
+      - object_variable_bindings
+      - governing_format_links
+      - measurement_unlock_links
+      must_not_own:
+      - variable_definitions
+      - operator_definitions
+      - validation_promotion
+      - final_design_claims
+      - operational_readiness
+      routing_responsibilities:
+      - route_objects_to_variables
+      - route_objects_to_interfaces
+      - route_interfaces_to_measurement_unlocks
+      - preserve_unresolved_engineering_variables
+      - preserve_prohibited_claim_links
+      files:
+      - Objects.yaml
+      - Equations.yaml
+    Layer_4_Prototype_Architecture:
+      purpose: candidate_designs_and_mockup_structures
+      owns:
+      - candidate_geometry
+      - candidate_load_paths
+      - inspection_logic
+      - mockup_sequences
+      - unresolved_engineering_variables
+      - prohibited_claim_visibility_for_prototypes
+      must_not_own:
+      - fabrication_readiness
+      - validated_stability
+      - safe_payload
+      - reserve_buoyancy
+      - seaworthiness
+      - operational_readiness
+      - certified_worker_safety
+      routing_responsibilities:
+      - preserve_candidate_status
+      - route_mockup_sequences_to_measurement_unlocks
+      - preserve_load_path_ledgers
+      - preserve_inspection_ledgers
+      - preserve_contradiction_register_links
+      files:
+      - Boat_Architecture.yaml
+    Layer_5_Runtime_and_Validation:
+      purpose: operational_measurement_and_validation_tracking
+      owns:
+      - active_operational_state_logs
+      - measurement_observation_records
+      - contradiction_tracking
+      - validation_promotion_requests
+      must_not_own:
+      - canonical_memory
+      - validation_without_governance
+      - claim_escalation
+      - subsystem_redefinition
+      - historical_truth_replacement
+      routing_responsibilities:
+      - expose_current_working_state
+      - surface_blocking_unknowns
+      - track_current_measurement_status
+      - preserve_anomaly_links
+      - preserve_contradiction_links
+      - route_validation_requests_to_Governance
+    Layer_6_Index_and_Routing:
+      purpose: retrieval_stabilization_and_navigation
+      owns:
+      - authority_lookup
+      - dependency_lookup
+      - unresolved_variable_lookup
+      - relationship_routing
+      - retrieval_stabilization
+      must_not_own:
+      - canonical_definitions
+      - validation_status_changes
+      - subsystem_mechanics
+      - runtime_state_truth
+      - claim_promotion
+      routing_responsibilities:
+      - route_user_queries_to_authority_lanes
+      - route_objects_to_variables_and_formats
+      - route_unresolved_variables_to_measurement_unlocks
+      - route_prohibited_claims_to_governance_firewall
+      - reduce_retrieval_fragmentation_without_redefining_sources
+      files:
+      - Directory.yaml
+      - Relationship_Map.yaml
+      - Retrieval_Index.yaml
+  preserved_governance_split:
+    Physics:
+      role: causal_gravity_well
+      not: claim_gravity_well
+      routes:
+      - causal_relationships
+      - interaction_topology
+      - measurement_dependencies
+      - blocking_unknowns
+      - prohibited_claim_references
+      must_not_own:
+      - validation
+      - claim_escalation
+      - seaworthiness
+      - payload_claims
+      - reserve_buoyancy_claims
+      - operational_readiness
+      - subsystem_mechanics
+    Governance:
+      role: claim_gravity_well
+      not: subsystem_mechanics_owner
+      routes:
+      - admissibility
+      - claim_tiering
+      - validation_boundaries
+      - authority_routing
+      - semantic_firewall
+      - summary_quarantine
+      must_not_own:
+      - subsystem_mechanics
+      - candidate_geometry
+      - physics_relationship_content
+      - executable_calculation_runtime
+  causal_engine_inheritance_order:
+  - Values.yaml
+  - Operators.yaml
+  - Formats.yaml
+  - Physics.yaml
+  - Machine.yaml
+  route_back_to_owner_authority_structure:
+    Values.yaml: variable_state_and_domain_identity_only
+    Operators.yaml: reusable_causal_transforms_only
+    Formats.yaml: reusable_engineering_compositions_only
+    Physics.yaml: causal_relationship_routing_only
+    Machine.yaml: operational_state_governance
+    Governance_Core.yaml: admissibility_claim_tiering_firewalls
+    Directory.forever.yaml: routing_only
+  layer_relationships:
+    Layer_0_Governance:
+      constrains:
+      - Layer_1_CEOS_Core
+      - Layer_2_Causal_Engine
+      - Layer_3_Object_Topology
+      - Layer_4_Prototype_Architecture
+      - Layer_5_Runtime_and_Validation
+      - Layer_6_Index_and_Routing
+      does_not_own:
+      - subsystem_mechanics
+      - validation_by_implication
+    Layer_1_CEOS_Core:
+      orients:
+      - domain_identity
+      - causal_accounting
+      - anti_collapse_distinctions
+      does_not_own:
+      - deployment_claims
+      - subsystem_authority
+    Layer_2_Causal_Engine:
+      routes:
+      - Values_to_Operators
+      - Operators_to_Formats
+      - Formats_to_Machine
+      - Physics_to_measurement_dependencies
+      does_not_own:
+      - claim_validation
+      - subsystem_canon
+    Layer_3_Object_Topology:
+      routes:
+      - objects_to_variables
+      - interfaces_to_measurement_unlocks
+      does_not_own:
+      - variable_definitions
+      - validation_promotion
+    Layer_4_Prototype_Architecture:
+      routes:
+      - candidate_geometry
+      - mockup_sequences
+      - candidate_load_paths
+      does_not_own:
+      - validated_final_design_claims
+    Layer_5_Runtime_and_Validation:
+      routes:
+      - active_state_visibility
+      - measurement_records
+      - validation_requests
+      does_not_own:
+      - canon
+      - hidden_governance
+    Layer_6_Index_and_Routing:
+      routes:
+      - authority_lookup
+      - dependency_lookup
+      - retrieval_stabilization
+      does_not_own:
+      - truth
+      - validation
+      - ontology
+  populated_topology_routes:
+    semantic_governance_topology:
+      route:
+      - Core.txt
+      - Lexicon.txt
+      - Minimum.txt
+      - Recovery.txt
+      - Protocols.txt
+      visibility_only: true
+      does_not_create:
+      - new_ontology_authority
+      - new_governance_authority
+      - validation
+    causal_engine_topology:
+      inheritance_order:
+      - Values.txt
+      - Operators.txt
+      - Formats.txt
+      - Machine.txt
+      route_back_rule: each_step_returns_to_its_owner_authority
+      does_not_create:
+      - validated_margin
+      - operational_readiness
+      - subsystem_mechanics
+    physics_relationship_topology:
+      route:
+      - Physics.txt
+      - Values.txt
+      - Operators.txt
+      - Formats.txt
+      - Protocols.txt
+      boundary: relationship_visibility_does_not_create_validation
+    prototype_architecture_topology:
+      route:
+      - Memory.txt
+      - Boat_Control.txt
+      - Boat Notebook.txt
+      - Values.txt
+      - Formats.txt
+      - Physics.txt
+      - Protocols.txt
+      boundary: candidate_context_does_not_create_final_design_or_readiness
+    directory_routing_topology:
+      route:
+      - Directory.yaml
+      - Directory_Control.yaml
+      - Directory_Map.yaml
+      - Directory_Backlog.yaml
+      boundary: routing_visibility_does_not_create_authority

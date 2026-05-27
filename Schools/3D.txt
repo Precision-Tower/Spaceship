@@ -1,0 +1,491 @@
+objects:
+  - name: BARGE_deck
+    dimensions: [24, 12, 1]
+    material: aluminum_grate_frame
+    estimated_weight_lbs: 1800
+    location: [0, 0, 0.5]
+    classification: dirty
+    load-bearing: true
+    corrosive_exposure: marine_splash
+
+  - name: BARGE_front_intake_zone
+    dimensions: [6, 12, 1]
+    material: aluminum_grate
+    estimated_weight_lbs: 350
+    location: [-9, 0, 1.6]
+    classification: dirty
+    load-bearing: true
+    corrosive_exposure: marine_splash
+
+  - name: BARGE_middle_drain_separate_zone
+    dimensions: [8, 12, 1]
+    material: aluminum_grate
+    estimated_weight_lbs: 500
+    location: [-2, 0, 1.7]
+    classification: dirty
+    load-bearing: true
+    corrosive_exposure: marine_splash
+    fluid_containment: drainage_pass_through
+
+  - name: BARGE_rear_process_zone
+    dimensions: [10, 12, 1]
+    material: aluminum_grate_frame
+    estimated_weight_lbs: 650
+    location: [7, 0, 1.8]
+    classification: dirty
+    load-bearing: true
+    corrosive_exposure: marine_splash
+
+  - name: BARGE_removable_intake_interface
+    dimensions: [6, 2, 2]
+    material: aluminum_frame
+    estimated_weight_lbs: 180
+    location: [-11, 0, 2.0]
+    classification: dirty
+    load-bearing: false
+    corrosive_exposure: marine_splash
+
+  - name: BARGE_splash_debris_control
+    dimensions: [6, 1, 2]
+    material: HDPE_panel
+    estimated_weight_lbs: 100
+    location: [-11.5, 0, 2.0]
+    classification: dirty
+    corrosive_exposure: marine_splash
+
+  - name: BARGE_grated_tile_panel_A
+    dimensions: [4, 4, 1]
+    material: aluminum_grate
+    estimated_weight_lbs: 120
+    location: [-4, 2, 2.0]
+    classification: dirty
+    load-bearing: true
+    corrosive_exposure: marine_splash
+    fluid_containment: drainage_pass_through
+
+  - name: BARGE_grated_tile_panel_B
+    dimensions: [4, 4, 1]
+    material: aluminum_grate
+    estimated_weight_lbs: 120
+    location: [-4, -2, 2.0]
+    classification: dirty
+    load-bearing: true
+    corrosive_exposure: marine_splash
+    fluid_containment: drainage_pass_through
+
+  - name: BARGE_grated_tile_panel_C
+    dimensions: [4, 4, 1]
+    material: aluminum_grate
+    estimated_weight_lbs: 120
+    location: [0, 2, 2.0]
+    classification: dirty
+    load-bearing: true
+    corrosive_exposure: marine_splash
+    fluid_containment: drainage_pass_through
+
+  - name: BARGE_grated_tile_panel_D
+    dimensions: [4, 4, 1]
+    material: aluminum_grate
+    estimated_weight_lbs: 120
+    location: [0, -2, 2.0]
+    classification: dirty
+    load-bearing: true
+    corrosive_exposure: marine_splash
+    fluid_containment: drainage_pass_through
+
+  - name: BARGE_chamber_port_01
+    dimensions: [4, 2, 2]
+    material: HDPE
+    estimated_weight_lbs: 250
+    location: [4, 5, 2.0]
+    classification: digestion
+    fluid_containment: sealed_placeholder
+    corrosive_exposure: marine_splash
+
+  - name: BARGE_chamber_port_02
+    dimensions: [4, 2, 2]
+    material: HDPE
+    estimated_weight_lbs: 250
+    location: [9, 5, 2.0]
+    classification: digestion
+    fluid_containment: sealed_placeholder
+    corrosive_exposure: marine_splash
+
+  - name: BARGE_chamber_starboard_01
+    dimensions: [4, 2, 2]
+    material: HDPE
+    estimated_weight_lbs: 250
+    location: [4, -5, 2.0]
+    classification: digestion
+    fluid_containment: sealed_placeholder
+    corrosive_exposure: marine_splash
+
+  - name: BARGE_chamber_starboard_02
+    dimensions: [4, 2, 2]
+    material: HDPE
+    estimated_weight_lbs: 250
+    location: [9, -5, 2.0]
+    classification: digestion
+    fluid_containment: sealed_placeholder
+    corrosive_exposure: marine_splash
+
+  - name: BARGE_chamber_cradle_port_01
+    dimensions: [4, 2, 1]
+    material: aluminum_frame
+    estimated_weight_lbs: 90
+    location: [4, 5, 1.5]
+    classification: dirty
+    load-bearing: true
+    corrosive_exposure: marine_splash
+
+  - name: BARGE_chamber_cradle_port_02
+    dimensions: [4, 2, 1]
+    material: aluminum_frame
+    estimated_weight_lbs: 90
+    location: [9, 5, 1.5]
+    classification: dirty
+    load-bearing: true
+    corrosive_exposure: marine_splash
+
+  - name: BARGE_chamber_cradle_starboard_01
+    dimensions: [4, 2, 1]
+    material: aluminum_frame
+    estimated_weight_lbs: 90
+    location: [4, -5, 1.5]
+    classification: dirty
+    load-bearing: true
+    corrosive_exposure: marine_splash
+
+  - name: BARGE_chamber_cradle_starboard_02
+    dimensions: [4, 2, 1]
+    material: aluminum_frame
+    estimated_weight_lbs: 90
+    location: [9, -5, 1.5]
+    classification: dirty
+    load-bearing: true
+    corrosive_exposure: marine_splash
+
+  - name: BARGE_tie_down_band_port
+    dimensions: [10, 1, 1]
+    material: stainless_strap_array
+    estimated_weight_lbs: 60
+    location: [7, 4, 3.2]
+    classification: dirty
+    load-bearing: true
+    corrosive_exposure: marine_splash
+
+  - name: BARGE_tie_down_band_starboard
+    dimensions: [10, 1, 1]
+    material: stainless_strap_array
+    estimated_weight_lbs: 60
+    location: [7, -4, 3.2]
+    classification: dirty
+    load-bearing: true
+    corrosive_exposure: marine_splash
+
+  - name: BARGE_underdeck_drum_row_port
+    dimensions: [24, 2, 2]
+    material: poly_drum_array
+    estimated_weight_lbs: 360
+    location: [0, 4, -1.0]
+    classification: flotation
+    buoyancy_contribution: candidate_positive
+    load-bearing: true
+    corrosive_exposure: marine_immersion
+
+  - name: BARGE_underdeck_drum_row_starboard
+    dimensions: [24, 2, 2]
+    material: poly_drum_array
+    estimated_weight_lbs: 360
+    location: [0, -4, -1.0]
+    classification: flotation
+    buoyancy_contribution: candidate_positive
+    load-bearing: true
+    corrosive_exposure: marine_immersion
+
+  - name: BARGE_underdeck_drum_row_center
+    dimensions: [24, 2, 2]
+    material: poly_drum_array
+    estimated_weight_lbs: 360
+    location: [0, 0, -1.0]
+    classification: flotation
+    buoyancy_contribution: candidate_positive
+    load-bearing: true
+    corrosive_exposure: marine_immersion
+
+  - name: BARGE_rear_transfer_manifold
+    dimensions: [2, 2, 2]
+    material: stainless_manifold
+    estimated_weight_lbs: 80
+    location: [11, -3, 2.0]
+    classification: boundary
+    fluid_containment: gas_fluid_transfer
+    corrosive_exposure: marine_splash
+
+  - name: BOAT_deck_placeholder
+    dimensions: [24, 8, 1]
+    material: aluminum_deck
+    estimated_weight_lbs: 1200
+    location: [0, -20, 0.5]
+    classification: clean
+    load-bearing: true
+    corrosive_exposure: marine_splash
+
+  - name: BOAT_power_control_zone
+    dimensions: [6, 4, 4]
+    material: equipment_skid
+    estimated_weight_lbs: 500
+    location: [-2, -20, 3.0]
+    classification: power_control
+    load-bearing: false
+    thermal_exposure: electrical_heat
+
+  - name: BOAT_battery_block
+    dimensions: [4, 2, 2]
+    material: battery_bank
+    estimated_weight_lbs: 800
+    location: [-4, -20, 2.0]
+    classification: power_control
+    thermal_exposure: battery_heat
+
+  - name: BOAT_solar_input_block
+    dimensions: [4, 2, 1]
+    material: electrical_input_panel
+    estimated_weight_lbs: 80
+    location: [-1, -18, 1.7]
+    classification: power_control
+    thermal_exposure: electrical_heat
+
+  - name: BOAT_PMA_generator_candidate
+    dimensions: [4, 2, 3]
+    material: steel_generator_placeholder
+    estimated_weight_lbs: 250
+    location: [-1, -22, 2.5]
+    classification: power_control
+    thermal_exposure: mechanical_friction
+
+  - name: BOAT_monitoring_panel
+    dimensions: [2, 1, 3]
+    material: electronics_panel
+    estimated_weight_lbs: 60
+    location: [2, -20, 3.0]
+    classification: clean
+    thermal_exposure: electrical_heat
+
+  - name: BOAT_emergency_cutoff_block
+    dimensions: [1, 1, 2]
+    material: electrical_disconnect
+    estimated_weight_lbs: 30
+    location: [4, -17, 2.0]
+    classification: safety
+
+  - name: BOAT_chemistry_lab_block
+    dimensions: [8, 6, 6]
+    material: aluminum_lab_frame
+    estimated_weight_lbs: 900
+    location: [7, -20, 4.0]
+    classification: clean_lab
+    fluid_containment: secondary_containment_zone
+    corrosive_exposure: chemical_splash
+    thermal_exposure: lab_heat
+
+  - name: BOAT_electrolysis_A_hydroxide
+    dimensions: [4, 2, 3]
+    material: electrolysis_cell
+    estimated_weight_lbs: 300
+    location: [6, -18, 3.0]
+    classification: electrolysis_A
+    fluid_containment: active_cell_placeholder
+    corrosive_exposure: chemical_splash
+    thermal_exposure: electrical_heat
+
+  - name: BOAT_electrolysis_B_sulfur
+    dimensions: [4, 2, 3]
+    material: electrolysis_cell
+    estimated_weight_lbs: 300
+    location: [6, -22, 3.0]
+    classification: electrolysis_B
+    fluid_containment: active_cell_placeholder
+    corrosive_exposure: chemical_splash
+    thermal_exposure: electrical_heat
+
+  - name: BOAT_electrolysis_A_tray
+    dimensions: [4, 3, 1]
+    material: HDPE_containment_tray
+    estimated_weight_lbs: 90
+    location: [6, -18, 1.5]
+    classification: clean_lab
+    fluid_containment: secondary_containment
+    corrosive_exposure: chemical_splash
+
+  - name: BOAT_electrolysis_B_tray
+    dimensions: [4, 3, 1]
+    material: HDPE_containment_tray
+    estimated_weight_lbs: 90
+    location: [6, -22, 1.5]
+    classification: clean_lab
+    fluid_containment: secondary_containment
+    corrosive_exposure: chemical_splash
+
+  - name: BOAT_chemical_storage_block
+    dimensions: [4, 2, 4]
+    material: chemical_storage_locker
+    estimated_weight_lbs: 500
+    location: [10, -20, 3.0]
+    classification: chemical_storage
+    fluid_containment: stored_fluid_placeholder
+    corrosive_exposure: chemical_splash
+
+  - name: BOAT_PPE_safety_block
+    dimensions: [2, 2, 4]
+    material: safety_storage
+    estimated_weight_lbs: 80
+    location: [11, -17, 3.0]
+    classification: safety
+
+  - name: BOAT_chemical_response_block
+    dimensions: [2, 2, 3]
+    material: response_kit
+    estimated_weight_lbs: 120
+    location: [11, -23, 2.5]
+    classification: safety
+    corrosive_exposure: chemical_splash
+
+  - name: BOAT_lab_vent_path
+    dimensions: [2, 2, 6]
+    material: ventilation_stack
+    estimated_weight_lbs: 80
+    location: [9, -20, 9.0]
+    classification: clean_lab
+    corrosive_exposure: chemical_vapor
+    thermal_exposure: exhaust_air
+
+  - name: INTERFACE_barge_manifold_block
+    dimensions: [2, 2, 2]
+    material: stainless_manifold
+    estimated_weight_lbs: 80
+    location: [11, -6.5, 2.0]
+    classification: boundary
+    fluid_containment: gas_fluid_transfer
+    corrosive_exposure: marine_splash
+
+  - name: INTERFACE_boat_manifold_block
+    dimensions: [2, 2, 2]
+    material: stainless_manifold
+    estimated_weight_lbs: 80
+    location: [11, -15.5, 2.0]
+    classification: boundary
+    fluid_containment: gas_fluid_transfer
+    corrosive_exposure: marine_splash
+
+  - name: INTERFACE_gas_hose_path
+    dimensions: [8, 1, 1]
+    material: gas_hose
+    estimated_weight_lbs: 40
+    location: [11, -10.5, 3.0]
+    classification: boundary
+    fluid_containment: gas_transfer
+    corrosive_exposure: marine_splash
+
+  - name: INTERFACE_fluid_hose_path
+    dimensions: [8, 1, 1]
+    material: fluid_hose
+    estimated_weight_lbs: 60
+    location: [9, -10.5, 2.5]
+    classification: boundary
+    fluid_containment: fluid_transfer
+    corrosive_exposure: marine_splash
+
+  - name: INTERFACE_optional_flush_sample_path
+    dimensions: [8, 1, 1]
+    material: fluid_hose
+    estimated_weight_lbs: 40
+    location: [7, -10.5, 2.0]
+    classification: boundary
+    fluid_containment: sample_flush_transfer
+    corrosive_exposure: marine_splash
+
+  - name: INTERFACE_slack_loop_envelope
+    dimensions: [8, 4, 4]
+    material: motion_clearance_volume
+    estimated_weight_lbs: 0
+    location: [9, -10.5, 3.5]
+    classification: boundary
+
+  - name: INTERFACE_barge_quick_connect_block
+    dimensions: [1, 1, 1]
+    material: stainless_quick_connect
+    estimated_weight_lbs: 20
+    location: [11, -7.5, 3.0]
+    classification: boundary
+    fluid_containment: gas_fluid_transfer
+    corrosive_exposure: marine_splash
+
+  - name: INTERFACE_boat_quick_connect_block
+    dimensions: [1, 1, 1]
+    material: stainless_quick_connect
+    estimated_weight_lbs: 20
+    location: [11, -14.5, 3.0]
+    classification: boundary
+    fluid_containment: gas_fluid_transfer
+    corrosive_exposure: marine_splash
+
+  - name: INTERFACE_emergency_disconnect_block
+    dimensions: [2, 1, 2]
+    material: stainless_disconnect
+    estimated_weight_lbs: 50
+    location: [11, -11, 2.5]
+    classification: boundary
+    fluid_containment: emergency_isolation
+    corrosive_exposure: marine_splash
+
+  - name: INTERFACE_barge_drip_tray
+    dimensions: [4, 2, 1]
+    material: HDPE_containment_tray
+    estimated_weight_lbs: 60
+    location: [11, -6.5, 1.1]
+    classification: boundary
+    fluid_containment: secondary_containment
+    corrosive_exposure: marine_splash
+
+  - name: INTERFACE_boat_drip_tray
+    dimensions: [4, 2, 1]
+    material: HDPE_containment_tray
+    estimated_weight_lbs: 60
+    location: [11, -15.5, 1.1]
+    classification: boundary
+    fluid_containment: secondary_containment
+    corrosive_exposure: marine_splash
+
+  - name: INTERFACE_strain_relief_barge
+    dimensions: [2, 1, 1]
+    material: stainless_anchor
+    estimated_weight_lbs: 40
+    location: [10, -7.5, 2.0]
+    classification: boundary
+    load-bearing: true
+    corrosive_exposure: marine_splash
+
+  - name: INTERFACE_strain_relief_boat
+    dimensions: [2, 1, 1]
+    material: stainless_anchor
+    estimated_weight_lbs: 40
+    location: [10, -14.5, 2.0]
+    classification: boundary
+    load-bearing: true
+    corrosive_exposure: marine_splash
+
+  - name: INTERFACE_dirty_clean_boundary_marker
+    dimensions: [6, 1, 2]
+    material: HDPE_marker_panel
+    estimated_weight_lbs: 40
+    location: [9, -12, 2.0]
+    classification: boundary
+
+  - name: INTERFACE_hose_stowage_block
+    dimensions: [4, 2, 2]
+    material: hose_storage_rack
+    estimated_weight_lbs: 80
+    location: [5, -15.5, 2.0]
+    classification: boundary
+    corrosive_exposure: marine_splash

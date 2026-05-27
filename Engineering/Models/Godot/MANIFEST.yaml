@@ -1,0 +1,36 @@
+Godot_v1_package:
+  file: MANIFEST.yaml
+  status: v1_package_candidate
+  package_path: Models/Godot/v1
+  created_for: Seth
+  package_rule: lean_runtime_lane_not_throne
+
+  files:
+    - Models/Godot/v1/Godot.yaml
+    - Models/Godot/v1/GodotShell.yaml
+    - Models/Godot/v1/Bridge.yaml
+    - Models/Godot/v1/RuntimeBus.yaml
+    - Models/Godot/v1/SceneTopology.yaml
+    - Godot/FloatingBoxLoop.yaml
+    - Godot/RuntimeResultRecord_001.yaml
+
+  package_state:
+    status: contact_recorded_not_validated
+    next_feature_allowed: false
+    default_unlock: no_unlock
+
+  install_notes:
+    - place_Models_folder_at_repository_root_or_merge_into_existing_Models_tree
+    - Bridge_yaml_replaces_local_Directory_yaml_for_Godot_lane
+    - do_not_delete_Shared_Directory_yaml
+    - update_Shared_Directory_or_parent_route_index_only_after_acceptance
+    - update_GearShell_with_thin_Godot_use_boundary_if_not_already_done
+
+  proposed_GearShell_patch:
+    Godot_use_boundary:
+      rule:
+        - Gear_may_use_Godot_as_runtime_visualization_and_topology_surface
+        - Gear_reads_GodotOps_for_Godot_operational_behavior
+        - Godot_specific_runtime_ontology_routes_to_Models/Godot/v1
+        - Gear_does_not_absorb_Godot_as_core_identity
+        - Godot_output_does_not_equal_validation

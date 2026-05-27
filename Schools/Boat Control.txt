@@ -1,0 +1,1716 @@
+Boat Prototype 1 Geometry Control File
+
+Document Status: [NON-CANONICAL DESIGN CONTROL FILE — PENDING VALIDATION]
+
+Author/Editor: G/Gemini/Jared/Editor
+
+Governing Project: Sargassum Project
+
+Target Design Loop: Candidate Mock Architecture Model (v1.0)
+
+1. Document Status
+
+This document is a non-canonical design-control file created for generative AI layout assistance, constraint propagation, architectural sketching, geometry auditing, and physical mockup planning.
+
+It does not represent verified, certified, or final engineering designs. It serves strictly as a living sandbox and logical constraint manager to coordinate ideas between founder review, system-architecture review, repository-control review, and editorial organization.
+
+2. Purpose and Authority Boundary
+
+This file governs candidate geometry generation, spatial arrangement, and structural rules. It acts as a safety boundary to prevent hallucinated spatial errors or unsafe structural configurations during AI-assisted design loops.
+
+Canonical subsystem files remain the authoritative sources of truth for subsystem mechanics, materials, chemical workflows, power architecture, validation state, and physical test results. If a structural layout generated using this file conflicts with an authoritative subsystem specification, the subsystem specification always takes precedence.
+
+3. Current Boat Ruling
+
+The core architectural directive of this vessel is preserved as follows:
+
+The boat is a clean, inspectable, ballast-testable support raft, not a processing vessel.
+
+The physical system must be optimized for visual inspectability, rapid leak detection, clear structural access, and clean/dirty separation. It does not carry raw, uncontained sargassum biomass, nor does it host biological digestion systems directly on its main deck structure unless explicitly governed by validated interface and containment logic.
+
+4. Validation State
+
+[WORKING MOCK ARCHITECTURE — PENDING VALIDATION]
+
+
+No portion of this geometry is marked as finalized, validated, or certified for fabrication without explicit physical scale-model or full-scale physical mockup testing.
+
+5. Prohibited Claims
+
+Under this current design phase, no agent, human or machine, may claim, imply, or compute as verified any of the following parameters:
+
+Final boat size or ultimate scale boundaries
+
+Final equipment or component layout
+
+Safe payload capacity or cargo limits (deadweight tonnage)
+
+Seaworthiness, stability criteria, or self-righting moments
+
+Reserve buoyancy margins or flooded-compartment survival
+
+Operating envelope (wind speed, wave height, current speed limits)
+
+Validated clean lab platform status or contamination-free air zones
+
+Leak-safe fluid transfer ratings or pressurized line safety
+
+Finalized clean/dirty physical interfaces
+
+Tow ratings, mooring loads, or anchoring hold
+
+Recovery ratings or heavy lifting margins
+
+Commercial readiness
+
+Operational readiness
+
+Validated worker safety
+
+Validated environmental containment
+
+Validated chemical handling safety
+
+Finalized material selection
+
+Finalized structural connection method
+
+6. Working Footprint
+
+Candidate Length (X-axis): 24 ft (nominal) [CANDIDATE PLACEHOLDER — PENDING VALIDATION]
+
+Candidate Beam (Y-axis): 12 ft (nominal) [CANDIDATE PLACEHOLDER — PENDING VALIDATION]
+
+Use-Case Limitation: This is a modeling bounding envelope only. It serves to constrain coordinate maps, layout grids, and mock assembly sketches. It is not an engineering commitment to final dimensions.
+
+7. System Role
+
+To keep our system boundary clear, we have defined what the boat is and what it is not.
+
+The Boat IS:
+
+A clean support vessel providing clean-side working space, subject to physical testing.
+
+A control spine routing dry power, network, and communication lines.
+
+A process control support platform hosting logic controllers, telemetry, and logging arrays.
+
+An electrolysis support platform candidate for hosting isolated electrical and control components, subject to physical testing and subsystem validation.
+
+A monitoring/logging platform capturing sensor telemetry from the environment and adjacent systems.
+
+An emergency shutdown/isolation support node providing physical levers, valves, and power-kill switches.
+
+A clean interface manager regulating transfer pipes and umbilical lines to the dirty barge.
+
+The Boat IS NOT:
+
+A dirty sargassum processing surface.
+
+A biomass drainage deck or sorting station.
+
+A bio-digestion platform or raw anaerobic reactor deck.
+
+A finalized operational vessel ready for unescorted deployment.
+
+8. Clean / Dirty Boundary
+
+The structural, fluidic, and operational boundary between the support raft and the adjacent processing environment must be strictly managed:
+
+Dirty Side Location: All raw sargassum biomass handling, sorting, washing, mechanical dewatering, biological digestion, and effluent drainage remain completely isolated on the barge/tile side.
+
+Clean Side Location: The boat serves as the clean zone. It contains dry controls, safety instrumentation, electrical generation, human monitoring stations, and emergency system isolates.
+
+Boundary Interfaces: Any connection crossing this boundary (electrical, data, hydraulic, or material transfer) must pass through defined, sacrificial interface modules. If a spill, leak, or mechanical failure occurs at the interface, it is intended to localize damage or leakage at replaceable, inspectable boundary components while preserving containment and preventing uncontrolled release. This remains [PENDING VALIDATION].
+
+9. Accepted Architecture Direction
+
+Our modeling assumes the following structural layout components:
+
+HDPE Drum-Row Flotation Grid: Buoyancy provided by longitudinal rows of HDPE drum candidates or other validated flotation units.
+
+Drum Capture/Restraint Frame: A mechanical containment structure designed to trap, align, and prevent shifting of flotation units under cyclic loading.
+
+PVC Distributed Short-Span Truss Chassis: A lightweight, non-corrosive, distributed truss network built using a PVC distributed short-span truss candidate, subject to material and joint validation.
+
+Minimum Viable Inspection Space: Sufficient inspection access to preserve visibility of flotation, restraints, joints, and leak-sensitive areas, subject to mockup testing.
+
+Raised Removable Deck Panels: Removable access panels to allow top-down access to any portion of the underlying truss chassis or flotation grid.
+
+Central Clean Operator Aisle: A clear continuous centerline pathway, width [UNRESOLVED ENGINEERING VARIABLE], kept entirely free of process equipment, piping, or high-voltage lines.
+
+Side Utility/Equipment Bays: Symmetrical structural bays flanking the central aisle designed to host skid-mounted equipment, containment tubs, or battery arrays.
+
+Reinforced Removable Skid Zones: Candidate bay locations intended to distribute modular equipment loads into candidate structural members, subject to deflection and point-load testing.
+
+Sacrificial Clean/Dirty Side Interface Modules: Easily swappable connection zones at the deck edge intended to localize dirty-side contact, hose strain, splash exposure, and potential leakage at replaceable boundary components while preserving containment.
+
+10. Geometry Rule Sheet
+
+The following block is structured for direct parser ingest, constraint validation, and machine-readable coordinate matching.
+
+object_identity:
+  object_name: Clean Support Raft / Boat Prototype
+  role: clean_inspectable_ballast_testable_support_raft
+  validation_state: "[WORKING MOCK ARCHITECTURE — PENDING VALIDATION]"
+  working_footprint: "24 ft x 12 ft candidate mock architecture; not final geometry"
+  prohibited_interpretations:
+    - final_geometry
+    - final_layout
+    - safe_payload_claim
+    - seaworthiness_claim
+    - reserve_buoyancy_claim
+    - stability_claim
+    - operating_envelope_claim
+    - leak_safe_transfer_claim
+    - tow_rating_claim
+    - recovery_rating_claim
+    - finalized_clean_dirty_interface
+
+zones:
+  central_clean_aisle:
+    allowed_components: [operator_path, emergency_reach_path, inspection_access]
+    prohibited_components: [stored_equipment, hose_crossings, chemical_trays, batteries, skids]
+    access_priority: immediate
+    load_sensitivity: operator_live_load_only
+    isolation_requirements: keep_clear_from_dirty_interface_and_chemical_storage
+    inspection_requirements: unobstructed_visual_path
+    unresolved:
+      - aisle_width
+      - degraded_condition_clearance
+
+  port_utility_bays:
+    allowed_components: [battery_control_candidates, electrical_routing, chemical_containment_candidates]
+    prohibited_components: [tow_primary_load_path, dirty_biomass, permanent_obstructions]
+    access_priority: frequent
+    load_sensitivity: point_load_and_distributed_load
+    isolation_requirements: isolate_batteries_from_splash_gas_and_chemicals
+    inspection_requirements: removable_access_panels
+    unresolved:
+      - bay_dimensions
+      - equipment_spacing
+      - load_distribution
+
+  starboard_utility_bays:
+    allowed_components: [electrolysis_skid_candidate, monitoring_logging_candidate, interface_support_candidate]
+    prohibited_components: [unrestrained_hoses, hidden_leaks, dirty_biomass]
+    access_priority: frequent
+    load_sensitivity: point_load_vibration_fluid_load
+    isolation_requirements: isolate_process_support_from_controls
+    inspection_requirements: skid_and_routing_visible
+    unresolved:
+      - skid_clearance
+      - hose_routing
+      - service_access
+
+  battery_control_zone:
+    allowed_components: [battery_skid_candidate, disconnects, electrical_controls]
+    prohibited_components: [chemical_trays, splash_zone, gas_accumulation_zone]
+    access_priority: immediate
+    load_sensitivity: high_point_load
+    isolation_requirements: low_mount_dry_protected_subject_to_validation
+    inspection_requirements: visible_heat_corrosion_cable_condition
+    unresolved:
+      - battery_mass
+      - battery_location
+      - ventilation_requirement
+
+  electrolysis_zone:
+    allowed_components: [electrolysis_skid_candidate, containment_tray_candidate, vent_routing_candidate, isolation_valves]
+    prohibited_components: [battery_skid, blocked_aisle, tow_load_members]
+    access_priority: frequent
+    load_sensitivity: point_load_vibration_fluid_gas
+    isolation_requirements: separated_from_battery_control_zone
+    inspection_requirements: leak_vibration_hose_visibility
+    unresolved:
+      - electrolysis_mass
+      - electrolysis_dimensions
+      - gas_venting_requirement
+      - containment_requirement
+
+  clean_dirty_interface_zone:
+    allowed_components: [sacrificial_module_candidate, hose_strain_relief, quick_disconnects, splash_shield, drip_control]
+    prohibited_components: [battery_skid, control_core, permanent_primary_chassis_integration]
+    access_priority: immediate
+    load_sensitivity: hose_strain_contact_load
+    isolation_requirements: dirty_damage_or_leakage_localizes_at_replaceable_inspectable_boundary_components
+    inspection_requirements: post_contact_inspectable
+    unresolved:
+      - interface_geometry
+      - hose_strain_limit
+      - drip_control_method
+      - containment_method
+
+adjacency_rules:
+  battery_skid:
+    must_be_near: [electrical_controls, battery_disconnect]
+    should_be_near: [monitoring_logging_zone]
+    must_be_isolated_from: [splash_zone, electrolysis_gas_zone, chemical_trays]
+    routing_dependencies: [short_protected_cable_runs, ventilation_clearance]
+    reason: reduce electrical loss, corrosion risk, and emergency delay
+
+  electrolysis_skid:
+    must_be_near: [isolation_valves, containment_tray, vent_routing]
+    should_be_near: [monitoring_logging_zone]
+    must_be_isolated_from: [battery_skid, central_aisle_obstruction]
+    routing_dependencies: [fluid_lines, gas_lines, power_lines]
+    reason: service process support without contaminating control core
+
+  emergency_shutdown_controls:
+    must_be_near: [central_clean_aisle, isolation_valves, electrical_controls]
+    should_be_near: [monitoring_logging_zone]
+    must_be_isolated_from: [stored_equipment, hose_crossings]
+    routing_dependencies: [direct_operator_reach]
+    reason: immediate safe-state access
+
+load_path_rules:
+  tow_recovery_load:
+    allowed_path: tow_point -> reinforced_perimeter_or_spine -> PVC_truss_candidate -> flotation_grid_candidate
+    forbidden_path: [control_cabinets, electrolysis_skids, logging_station, removable_deck_panels_alone]
+    preferred_members: [reinforced_longitudinal_members, perimeter_members, braced_nodes]
+    failure_signs: [joint_creep, twist, cracking, tow_point_movement]
+    required_measurements: [tow_point_strain_test, frame_deflection_test]
+
+  interface_hose_strain:
+    allowed_path: hose -> strain_relief -> sacrificial_interface_module -> boundary_nodes
+    forbidden_path: [direct_to_electrolysis_skid, direct_to_control_panel, loose_valve_mount]
+    preferred_members: [replaceable_interface_bracket, reinforced_edge_node]
+    failure_signs: [hose_tension, bracket_shift, fitting_leak]
+    required_measurements: [hose_pull_test, bend_radius_test]
+
+  battery_skid_load:
+    allowed_path: battery_skid -> skid_rails -> distributed_pads -> reinforced_nodes -> truss -> flotation_rows
+    forbidden_path: [deck_panel_only, high_mount_without_support]
+    preferred_members: [low_reinforced_skid_bay]
+    failure_signs: [deck_sag, rail_shift, pad_crush]
+    required_measurements: [point_load_deflection_test]
+
+inspection_visibility_rules:
+  must_remain_visible:
+    - drums_or_flotation_units
+    - straps_or_restraints
+    - cradle_rails
+    - side_stops
+    - end_stops
+    - PVC_truss_joints
+    - skid_rails
+    - quick_disconnects
+    - hose_cable_routing
+    - interface_module_attachment_points
+  visibility_constraints:
+    no_hidden_failure_zones: true
+    removable_panels_required_over_inspection_areas: true
+    witness_marks_required_on_shift_sensitive_parts: true
+    post_event_inspection_required_for:
+      - tow_event
+      - dirty_side_contact
+      - ballast_test
+      - hose_strain_event
+
+replaceability_rules:
+  drums_or_flotation_units:
+    replaceable: true
+    field_replaceable: "[PENDING VALIDATION]"
+    lift_required: "[UNRESOLVED ENGINEERING VARIABLE]"
+    removal_method: "[UNRESOLVED ENGINEERING VARIABLE]"
+    design_features_required: [visible_access, removable_restraints, no_unnecessary_penetrations]
+
+  deck_panels:
+    replaceable: true
+    field_replaceable: "[PENDING VALIDATION]"
+    lift_required: "[UNRESOLVED ENGINEERING VARIABLE]"
+    removal_method: removable_fasteners_or_latches_candidate
+    design_features_required: [removable_fasteners, labeled_panel_edges, inspection_access]
+
+  interface_module:
+    replaceable: true
+    field_replaceable: "[PENDING VALIDATION]"
+    lift_required: "[UNRESOLVED ENGINEERING VARIABLE]"
+    removal_method: unbolt_replace_module_candidate
+    design_features_required: [sacrificial_mounts, boundary_nodes, inspection_visibility, containment_awareness]
+
+motion_boundary_rules:
+  clean_boat_to_dirty_barge:
+    expected_motion: relative_pitch_yaw_heave
+    risk: hose_strain_and_side_contact
+    flexibility_location: hose_slack_loop_and_interface_buffer
+    rigidity_location: primary_clean_raft_core
+    sacrificial_failure_location: interface_module
+    measurement_required: relative_motion_and_strain_observation
+    prohibited_claim: finalized_clean_dirty_interface
+
+  hose_to_interface:
+    expected_motion: pull_bend_snag
+    risk: fitting_leak_or_equipment_pull
+    flexibility_location: strain_relief_and_slack_loop
+    rigidity_location: valve_mounting_node
+    sacrificial_failure_location: strain_relief_bracket
+    measurement_required: hose_pull_and_bend_test
+    prohibited_claim: leak_safe_transfer
+
+  tow_point_to_frame:
+    expected_motion: tension_shock
+    risk: frame_distortion
+    flexibility_location: tow_line
+    rigidity_location: reinforced_tow_structure
+    sacrificial_failure_location: replaceable_tow_fitting
+    measurement_required: tow_strain_test
+    prohibited_claim: tow_rating
+
+prohibited_geometry:
+  - hidden_drums_or_flotation_units
+  - hidden_straps_or_restraints
+  - inaccessible_PVC_joints
+  - tow_loads_routed_through_controls
+  - tow_loads_routed_through_electrolysis_skids
+  - batteries_mounted_high_without_validated_support_and_stability_data
+  - permanent_deck_panels
+  - one_sided_heavy_equipment_concentration
+  - dirty_interface_integrated_into_primary_chassis
+  - long_unsupported_PVC_spans
+  - blocked_central_aisle
+  - hidden_leak_zones
+  - hose_crossings_through_emergency_path
+  - chemical_trays_adjacent_to_battery_controls
+  - quick_disconnects_hidden_behind_splash_guards
+  - inspection_panels_blocked_by_permanent_equipment
+  - unbraced_rectangular_frame_bays
+  - unrestrained_drum_rows
+  - direct_hose_pull_on_process_equipment
+  - uncontrolled_leak_path_to_marine_environment
+
+measurement_unlocks:
+  empty_float_test:
+    variable_unlocked: [empty_freeboard, empty_trim, empty_list]
+    design_confidence_unlocked: initial_flotation_baseline
+    still_prohibited_claims: [reserve_buoyancy, stability, safe_payload]
+
+  incremental_ballast_test:
+    variable_unlocked: [loaded_freeboard_curve, trim_response, list_response]
+    design_confidence_unlocked: ballast_distribution_behavior
+    still_prohibited_claims: [safe_payload, operating_envelope, stable_platform]
+
+  deck_flex_test:
+    variable_unlocked: [deck_deflection, panel_lift_behavior]
+    design_confidence_unlocked: deck_support_spacing_candidate
+    still_prohibited_claims: [safe_work_surface, stable_platform]
+
+  tow_strain_test:
+    variable_unlocked: [tow_point_strain, frame_deflection_under_pull]
+    design_confidence_unlocked: tow_path_candidate_logic
+    still_prohibited_claims: [tow_rating, seaworthiness]
+
+  interface_hose_pull_test:
+    variable_unlocked: [hose_strain, strain_relief_behavior, module_shift]
+    design_confidence_unlocked: interface_module_candidate_logic
+    still_prohibited_claims: [leak_safe_transfer, finalized_clean_dirty_interface]
+
+
+11. Sketch Package Requirements
+
+The following placeholders define the mandatory schematic views that must be generated and validated in subsequent modeling cycles:
+
+[SKETCH PLACEHOLDER: TOP-DOWN BAY MAP]
+
+Scale: [CANDIDATE SCALE PLACEHOLDER — PENDING VALIDATION]
+
+Required Elements: Layout showing candidate structural boundary boundaries, central aisle line, utility bay divisions (Port, Starboard), designated skid mount points, and location of sacrificial interface modules.
+
+[SKETCH PLACEHOLDER: SIDE-VIEW LAYER STACK]
+
+Scale: [CANDIDATE SCALE PLACEHOLDER — PENDING VALIDATION]
+
+Required Elements: Vertical stacking order showing:
+
+Waterline (empty vs. loaded candidates)
+
+Flotation unit level (outer diameter boundaries)
+
+Flotation Restraint Frame and straps
+
+Truss chassis layer
+
+Removable deck grating line
+
+Maximum equipment height envelope [CANDIDATE HEIGHT PLACEHOLDER — PENDING VALIDATION]
+
+[SKETCH PLACEHOLDER: LOAD PATH DIAGRAM]
+
+Scale: N/A (Schematic)
+
+Required Elements: Arrow paths detailing how a point load on the deck transfers through the candidate truss nodes, down into the flotation-cradle points, and distributes across the flotation rows.
+
+[SKETCH PLACEHOLDER: DRUM RESTRAINT DETAIL]
+
+Scale: [CANDIDATE SCALE PLACEHOLDER — PENDING VALIDATION]
+
+Required Elements: Cross-section of a single flotation unit showing the cradle interface candidate, anti-slip strap path, tensioning hardware, and inspection visibility windows.
+
+[SKETCH PLACEHOLDER: REMOVABLE SKID BAY]
+
+Scale: [CANDIDATE SCALE PLACEHOLDER — PENDING VALIDATION]
+
+Required Elements: Exploded view of a typical candidate utility bay showing the sub-deck support beams, landing pads, index pins, and the removable structural skid itself.
+
+[SKETCH PLACEHOLDER: CLEAN/DIRTY INTERFACE MODULE]
+
+Scale: [CANDIDATE SCALE PLACEHOLDER — PENDING VALIDATION]
+
+Required Elements: Visual routing of umbilical power, communication, and process hoses crossing from the raft to the barge, highlighting gravity-drain drip loops, break-away couplings, and spill catch containment.
+
+[SKETCH PLACEHOLDER: EMERGENCY REACH MAP]
+
+Scale: [CANDIDATE SCALE PLACEHOLDER — PENDING VALIDATION]
+
+Required Elements: Overlaid reach radii representing candidate human arm reach ranges from the central aisle to all emergency valves, main circuit breakers, and fire extinguishers under simulated degraded-access conditions, subject to later definition.
+
+12. Physical Mockup Package
+
+To validate the geometry before sourcing production-grade materials, physical mockups are required. The following mockups must be built, tested, and documented:
+
+[MOCKUP PLACEHOLDER: DRUM RESTRAINT BAY]
+
+Objective: Build a 1-to-1 scale single-drum bay frame using candidate restraint and strap hardware.
+
+Test Questions / Failure Signs:
+
+Does the drum unit shift, creep, deform, or loosen under candidate force loads?
+
+Is manual drum removal or swapping hindered during operation?
+
+What failure signs are observed under simulated cyclic strain?
+
+What measurement does this mockup unlock?
+
+What parameters remain unresolved?
+
+[MOCKUP PLACEHOLDER: PVC TRUSS BAY]
+
+Objective: Assemble a section of the distributed short-span PVC truss chassis [CANDIDATE FOOTPRINT PLACEHOLDER — PENDING VALIDATION].
+
+Test Questions / Failure Signs:
+
+How does the frame deflect under a distributed candidate payload?
+
+Are there signs of joint cracking, permanent distortion, racking, or fastener shearing?
+
+What measurement does this mockup unlock?
+
+What parameters remain unresolved?
+
+[MOCKUP PLACEHOLDER: REMOVABLE DECK PANEL BAY]
+
+Objective: Fabricate candidate deck panels using light grating materials over the truss mockup.
+
+Test Questions / Failure Signs:
+
+Does the panel lift clear using the single-hand candidate pull loop, or does it bind and resist removal?
+
+Does the panel wobble, rattle, or shift under candidate dynamic live footwork?
+
+Does the panel design block visual inspection of critical underlying joints or restraints?
+
+What measurement does this mockup unlock?
+
+[MOCKUP PLACEHOLDER: REINFORCED SKID BAY]
+
+Objective: Create a mock skid assembly representing heavy equipment and mount it to the truss chassis mockup.
+
+Test Questions / Failure Signs:
+
+Does the sub-deck frame transfer the localized mock equipment load without crushing candidate tubes or bending joint pins?
+
+Are there visible failure signs such as joint creep, rail shifting, or deck panel sag?
+
+Does the skid installation induce twists or concentrated structural warping across the surrounding chassis bays?
+
+What measurement does this mockup unlock?
+
+[MOCKUP PLACEHOLDER: SACRIFICIAL INTERFACE MODULE]
+
+Objective: Build a physical mock hose-and-connector panel at the deck-edge zone.
+
+Test Questions / Failure Signs:
+
+Do the quick-disconnect couplings cleanly decouple when tensioned under candidate force and angle ranges?
+
+Does the coupling pull-action cause structural deformation to the mounting plate or adjacent chassis nodes?
+
+Does the breakaway mechanism fail to activate, causing direct pull strain on upstream mock process components?
+
+Where does residual fluid pool, and what drip containment failure signs are observed?
+
+13. Measurement Plan
+
+To evaluate whether this mockup architecture can support further physical design decisions, we follow a strict Measurement Unlock Logic. We do not assume performance; we measure, unlock, and advance.
+
++---------------------------------+
+|   Physical Measurement Taken    |
++---------------------------------+
+                │
+                ▼
++---------------------------------+
+|   Variable Unlocked in Model    |
++---------------------------------+
+                │
+                ▼
++---------------------------------+
+|    Design Confidence Raised     |
++---------------------------------+
+                │
+                ▼
++---------------------------------+
+|  STILL PROHIBITED: Safety,      |
+|  Seaworthiness & Final Ratings  |
++---------------------------------+
+
+
+Required Verification Sequence:
+
+Measurement 01: Actual Component Dry Mass
+
+Unlocks: Frame dead load, component CG (Center of Gravity) coordinates.
+
+Result: Resolves structural dead weight calculation error to candidate margin of error.
+
+Measurement 02: Scale Buoyancy Displacement
+
+Unlocks: Static water displacement of a single sealed drum under incremental loading.
+
+Result: Resolves theoretical drum displacement vs. actual waterline.
+
+Measurement 03: Frame Racking Test
+
+Unlocks: frame racking/torsion behavior.
+
+Result: Establishes how well the chassis resists twisting when suspended by opposite corners.
+
+14. Open Questions / Unresolved Variables
+
+The following variables are strictly unverified and must remain listed as active work items in our tracking cycle:
+
+Variable Identifier
+
+Status
+
+Measurement Needed
+
+Risk / Impact of Inaccuracy
+
+empty_freeboard
+
+[UNRESOLVED ENGINEERING VARIABLE]
+
+[CANDIDATE TARGET — PENDING VALIDATION]
+
+Swamp hazard; deck washing
+
+loaded_freeboard
+
+[UNRESOLVED ENGINEERING VARIABLE]
+
+[CANDIDATE TARGET — PENDING VALIDATION]
+
+Loss of reserve buoyancy; water on deck
+
+trim_response
+
+[UNRESOLVED ENGINEERING VARIABLE]
+
+[CANDIDATE TARGET — PENDING VALIDATION]
+
+Equipment pool-over; line draining failure
+
+list_response
+
+[UNRESOLVED ENGINEERING VARIABLE]
+
+[CANDIDATE TARGET — PENDING VALIDATION]
+
+Liquid level sensor errors; operator slip
+
+drum_shift
+
+[UNRESOLVED ENGINEERING VARIABLE]
+
+[CANDIDATE TARGET — PENDING VALIDATION]
+
+Chafing of flotation walls; structural frame fatigue
+
+strap_creep
+
+[UNRESOLVED ENGINEERING VARIABLE]
+
+[CANDIDATE TARGET — PENDING VALIDATION]
+
+Slack straps; loss of buoyant containment
+
+deck_deflection
+
+[UNRESOLVED ENGINEERING VARIABLE]
+
+[CANDIDATE TARGET — PENDING VALIDATION]
+
+Grating binding; structural joint strain
+
+truss_racking
+
+[UNRESOLVED ENGINEERING VARIABLE]
+
+[CANDIDATE TARGET — PENDING VALIDATION]
+
+Fastener shearing; joint cracking
+
+tow_point_strain
+
+[UNRESOLVED ENGINEERING VARIABLE]
+
+[CANDIDATE TARGET — PENDING VALIDATION]
+
+Tow post tear-out; runaway raft risk
+
+interface_strain
+
+[UNRESOLVED ENGINEERING VARIABLE]
+
+[CANDIDATE TARGET — PENDING VALIDATION]
+
+Hose crimping; fluid flow blockage; rupture
+
+degraded_reach
+
+[UNRESOLVED ENGINEERING VARIABLE]
+
+[CANDIDATE TARGET — PENDING VALIDATION]
+
+Operator inability to trigger emergency shutoff
+
+mockup_spacing
+
+[UNRESOLVED ENGINEERING VARIABLE]
+
+[CANDIDATE TARGET — PENDING VALIDATION]
+
+Hand scraping; impossible maintenance access
+
+15. Jared Editing Rules
+
+To maintain the repository integrity and claim safety of this design file, the Editor (G/Gemini/Jared) must strictly adhere to the following guardrails during all future updates:
+
+Rule 1: Do not promote candidate geometry into final design. Keep all references to footprint, dimensions, and positions clearly marked as "candidate," "mock," or "working."
+
+Rule 2: Do not remove validation states. All draft revisions must display the [NON-CANONICAL DESIGN CONTROL FILE — PENDING VALIDATION] header.
+
+Rule 3: Do not erase unresolved variables. The list in Section 14 must only be modified to update current target estimates or log verification results. Do not delete active structural risks.
+
+Rule 4: Do not convert measurement plans into verified results. Only real-world test telemetry or manual physical measurement inputs may move a variable from "unresolved" to "verified."
+
+Rule 5: Do not make safety claims. Avoid any commercial, seaworthiness, safety, payload, stability, or operational-envelope certifications.
+
+Rule 6: Preserve machine-readable sections. Ensure Section 10 (Geometry Rule Sheet) maintains clean, valid, un-embellished YAML blocks. Do not convert them into long prose.
+
+Rule 7: Use plain technical language. Avoid flowery prose. Keep explanations clear, rigorous, and direct.
+
+Rule 8: Do not use "safe" unless referring to a prohibited claim, safety priority, or future validation objective.
+
+Rule 9: Do not define success criteria without approved thresholds.
+
+Rule 10: Do not introduce candidate force, time, deflection, clearance, scale, or reach values unless placed in a separate candidate-notes area and tagged [CANDIDATE PLACEHOLDER — PENDING VALIDATION].
+
+Rule 11: Do not imply environmental release is acceptable.
+
+Rule 12: Do not imply progression from mockup to fabrication is automatic.
+
+16. Change Log
+
+Paste, summarize, and classify future structural updates from Gear (Gilfoyle) or Grant (Dinesh) here.
+
+Date
+
+Author / Role
+
+Summary of Changes
+
+Revision Type
+
+2026-05-20
+
+G/Jared/Editor
+
+Initial compile of Clean Support Raft Geometry Control File.
+
+Baseline Setup
+
+2026-05-20
+
+G/Jared/Editor
+
+Clean-up: claim-safety and hallucination correction pass. Removed unverified metrics. Added constraint-based YAML.
+
+Safety/Liability Update
+
+2026-05-20
+
+G/Jared/Editor
+
+Final claim-safety cleanup removing residual safety language, premature success criteria, undefined operating-condition language, and unresolved-variable target framing.
+
+Claim-Safety Cleanup
+
+2026-05-20
+
+G/Jared/Editor
+
+Added Appendix A — Mockup Variable Test Procedure Map from Gear output. Preserved pending-validation status and prohibited-claim boundaries.
+
+Test Procedure Appendix Insert
+
+2026-05-20
+
+G/Jared/Editor
+
+Added Appendix B — Mockup Priority Plan from Gear output. Ranked mockups by dependency order, assumption-killing value, physical cost, and downstream design impact.
+
+Mockup Sequence Appendix Insert
+
+2026-05-20
+
+G/Jared/Editor
+
+Added Appendix C — Mockup 1 Tape/Cardboard Full-Scale Access Layout Protocol from Gear output. Preserved pending-validation boundaries and inquiry-based testing structure.
+
+Mockup Protocol Appendix Insert
+
+2026-05-20
+
+G/Jared/Editor
+
+Added Appendix D — Mockup 1 Field Log Sheet for recording observations during the tape/cardboard full-scale access layout test. Preserved pending-validation boundaries and clarified that observation categories do not automatically become canonical unresolved variables.
+
+Field Worksheet Appendix Insert
+
+2026-05-20
+
+G/Jared/Editor
+
+Added Appendix E — Mockup 1 Field Run Plan from Gear output. Preserved pending-validation boundaries and clarified that the first run exposes layout conflicts rather than validating boat capability.
+
+Field Run Plan Appendix Insert
+
+2026-05-20
+
+G/Jared/Editor
+
+Corrected Appendices A–E to remove reintroduced numeric quantities, coordinate-generation language, safety-style phrasing, premature recommendation language, and over-compressed field logging structure.
+
+Appendix Claim-Safety Correction
+
+Appendix A — Mockup Variable Test Procedure Map
+
+Appendix Status: [NON-CANONICAL TEST PROCEDURE MAP — PENDING VALIDATION]
+
+Purpose
+
+This appendix converts unresolved variables from the Boat Prototype 1 Geometry Control File into candidate mockup test procedures. These procedures inform candidate geometry only. No single test validates the full system.
+
+Machine-Readable Test Procedure Map
+
+mockup_variable_test_procedure_map:
+  status: "[NON-CANONICAL TEST PROCEDURE MAP — PENDING VALIDATION]"
+  object: Clean Support Raft / Boat Prototype
+  rule: "Mockup results inform candidate geometry only. No single test validates the full system."
+  tests:
+    - test_name: empty_freeboard
+      mockup_required: "[CANDIDATE PLACEHOLDER — PENDING VALIDATION]"
+      testing: "To observe the flotation depth of the empty raft frame"
+      setup: "Place the empty candidate raft frame with flotation units on calm water."
+      observe: "Observe the distance from the waterline to the top of the flotation units or lower chassis frame."
+      failure_signs: "Water contact with lower deck elements, unexpected list, or uneven flotation"
+      record: "Unverified empty freeboard height"
+      may_unlock: "empty_freeboard"
+      prohibited_claims: [reserve_buoyancy, stability, seaworthiness]
+      affects: [deck_deflection, trim_response]
+
+    - test_name: loaded_freeboard
+      mockup_required: "[CANDIDATE PLACEHOLDER — PENDING VALIDATION]"
+      testing: "To observe flotation depth under a candidate mock equipment load [PENDING VALIDATION]"
+      setup: "Apply candidate mock equipment load [PENDING VALIDATION] to the utility bays."
+      observe: "Observe the resulting waterline across the flotation units."
+      failure_signs: "Waterline exceeding candidate freeboard thresholds or submerging flotation units"
+      record: "Unverified loaded freeboard height"
+      may_unlock: "loaded_freeboard"
+      prohibited_claims: [safe_payload, reserve_buoyancy, stability, seaworthiness]
+      affects: [trim_response, list_response]
+
+    - test_name: trim_response
+      mockup_required: "[CANDIDATE PLACEHOLDER — PENDING VALIDATION]"
+      testing: "To observe longitudinal inclination under unbalanced loads"
+      setup: "Shift candidate mock equipment load [PENDING VALIDATION] along the X-axis."
+      observe: "Observe the pitch angle and change in waterline at bow and stern."
+      failure_signs: "Excessive pitch, waterline dipping below candidate safety margins"
+      record: "Unverified trim response angle"
+      may_unlock: "trim_response"
+      prohibited_claims: [stability, seaworthiness, operating_envelope]
+      affects: [list_response, interface_strain]
+
+    - test_name: list_response
+      mockup_required: "[CANDIDATE PLACEHOLDER — PENDING VALIDATION]"
+      testing: "To observe lateral inclination under unbalanced loads"
+      setup: "Shift candidate mock equipment load [PENDING VALIDATION] along the Y-axis."
+      observe: "Observe the roll angle and change in waterline at port and starboard."
+      failure_signs: "Excessive roll, deck edge dipping near the water"
+      record: "Unverified list response angle"
+      may_unlock: "list_response"
+      prohibited_claims: [stability, seaworthiness, operating_envelope]
+      affects: [trim_response, interface_strain]
+
+    - test_name: drum_shift
+      mockup_required: "DRUM RESTRAINT BAY mockup"
+      testing: "To observe physical stability of flotation units in their cradles under lateral forces"
+      setup: "Apply lateral force on the drum unit within the restraint cradle."
+      observe: "Observe displacement, rotation, or sliding of the drum relative to the frame."
+      failure_signs: "Slippage, persistent displacement, chafing, or restraint deformation"
+      record: "Unverified drum displacement distance"
+      may_unlock: "drum_shift"
+      prohibited_claims: [stability, seaworthiness, structural_integrity]
+      affects: [strap_creep, truss_racking]
+
+    - test_name: strap_creep
+      mockup_required: "DRUM RESTRAINT BAY mockup"
+      testing: "To observe tension loss or elongation of restraint straps under cyclic loading"
+      setup: "Apply cyclic tension/relaxation cycles to the drum restraint straps."
+      observe: "Observe changes in strap tension and buckle security."
+      failure_signs: "Strap stretching, buckle slipping, or loosening of the drum"
+      record: "Unverified tension loss rate"
+      may_unlock: "strap_creep"
+      prohibited_claims: [structural_integrity, seaworthiness]
+      affects: [drum_shift]
+
+    - test_name: deck_deflection
+      mockup_required: "REMOVABLE DECK PANEL BAY mockup"
+      testing: "To observe bending of deck panels under local load"
+      setup: "Apply candidate mock operator load [PENDING VALIDATION] to the center of a deck panel."
+      observe: "Observe vertical displacement at the panel center and support points."
+      failure_signs: "Visible sagging, binding of panel edges during removal, or panel rattling"
+      record: "Unverified deflection measurement"
+      may_unlock: "deck_deflection"
+      prohibited_claims: [worker_safety, structural_integrity]
+      affects: [truss_racking, degraded_reach]
+
+    - test_name: truss_racking
+      mockup_required: "PVC TRUSS BAY mockup"
+      testing: "To observe frame twisting and joint distortion under uneven support"
+      setup: "Suspend the truss chassis mockup by diagonally opposite corners while loaded."
+      observe: "Observe angular distortion of truss bays and joint stress."
+      failure_signs: "Joint separation, pipe bending, visible twisting, or fastener shear"
+      record: "Unverified racking deflection angle"
+      may_unlock: "truss_racking"
+      prohibited_claims: [structural_integrity, seaworthiness]
+      affects: [drum_shift, deck_deflection]
+
+    - test_name: tow_point_strain
+      mockup_required: "PVC TRUSS BAY mockup with tow fittings"
+      testing: "To observe load transfer from the tow fitting to the primary chassis"
+      setup: "Apply horizontal tensile load to the candidate tow point fitting."
+      observe: "Observe strain, distortion, or elongation at the connection node and adjacent truss bays."
+      failure_signs: "Deformation at the attachment node, joint cracking, or fitting tear-out"
+      record: "Unverified pull force and frame deflection"
+      may_unlock: "tow_point_strain"
+      prohibited_claims: [tow_rating, seaworthiness, structural_integrity]
+      affects: [truss_racking]
+
+    - test_name: interface_strain
+      mockup_required: "SACRIFICIAL INTERFACE MODULE mockup"
+      testing: "To observe stress on connections during relative motion or pull events"
+      setup: "Subject the breakaway interface bracket to simulated relative motion and hose tension."
+      observe: "Observe activation of breakaway couplings and deformation of the mounting plate."
+      failure_signs: "Failure to decouple under strain, structural deformation of main chassis, or fluid pooling"
+      record: "Unverified breakaway activation force and deflection"
+      may_unlock: "interface_strain"
+      prohibited_claims: [leak_safe_transfer, finalized_clean_dirty_interface]
+      affects: [truss_racking]
+
+    - test_name: degraded_reach
+      mockup_required: "EMERGENCY REACH MAP layout / mock operator cabin"
+      testing: "To observe ease of emergency control access under degraded positions"
+      setup: "Position a candidate mock operator load [PENDING VALIDATION] on a simulated inclined or wet deck."
+      observe: "Observe the reach path and time to contact simulated emergency controls."
+      failure_signs: "Obstructions blocking arm reach, slipping, or inability to safely reach controls"
+      record: "Unverified reach accessibility time and posture limits"
+      may_unlock: "degraded_reach"
+      prohibited_claims: [worker_safety, operational_readiness]
+      affects: [mockup_spacing]
+
+    - test_name: mockup_spacing
+      mockup_required: "Full-scale layout mock workspace"
+      testing: "To observe maintenance and operator clearance around equipment skids"
+      setup: "Place candidate mock equipment load [PENDING VALIDATION] in utility bays with mock panels."
+      observe: "Observe clearance during simulated maintenance, valve operation, and panel removal."
+      failure_signs: "Hand scraping, inadequate tool clearance, or blocked inspection paths"
+      record: "Unverified spacing clearances"
+      may_unlock: "mockup_spacing"
+      prohibited_claims: [worker_safety, operational_readiness]
+      affects: [degraded_reach]
+
+
+Appendix B — Mockup Priority Plan
+
+Appendix Status: [PENDING VALIDATION — MOCKUP SEQUENCE ONLY]
+
+Purpose
+
+This appendix ranks the first mockups by dependency order, cost of assumption failure, engineering value, and downstream design impact. It does not validate the vessel, establish final geometry, define safe payload, prove stability, or authorize fabrication.
+
+Governing Principle
+
+Build mockups in the order that kills bad assumptions cheapest.
+
+Mockup Priority Sequence
+
+1. Tape/Cardboard Full-Scale Access Layout
+
+Variables tested:
+
+degraded_reach
+
+mockup_spacing
+
+Why first: Cheapest way to catch bad access and layout logic before building physical components.
+
+Cheap tape/cardboard: Yes
+
+Physical material required: No
+
+May unlock:
+
+aisle width candidates
+
+shutdown placement candidates
+
+service clearance candidates
+
+Does not validate:
+
+worker safety
+
+final layout
+
+Next action: Tape the 24 ft x 12 ft candidate footprint and block out candidate bays.
+
+2. Drum Restraint Bay
+
+Variables tested:
+
+drum_shift
+
+strap_creep
+
+Why second: Flotation restraint is foundational. Hidden flotation-unit movement breaks later assumptions.
+
+Cheap tape/cardboard: Partial
+
+Physical material required: Yes
+
+May unlock:
+
+cradle geometry candidates
+
+strap routing candidates
+
+stop geometry candidates
+
+inspection access candidates
+
+Does not validate:
+
+reserve buoyancy
+
+flotation system
+
+Next action: Build one restrained flotation-unit bay.
+
+3. Removable Deck Panel Bay
+
+Variables tested:
+
+deck_deflection
+
+mockup_spacing
+
+Why third: Deck access and flex behavior control the inspection philosophy.
+
+Cheap tape/cardboard: Partial
+
+Physical material required: Yes
+
+May unlock:
+
+deck support spacing candidates
+
+removable panel logic
+
+inspection access refinement
+
+Does not validate:
+
+safe work surface
+
+stable platform
+
+Next action: Build one removable panel over candidate frame supports.
+
+4. PVC Truss Bay
+
+Variables tested:
+
+truss_racking
+
+deck_deflection
+
+Why fourth: Structural bay behavior affects every later module.
+
+Cheap tape/cardboard: No
+
+Physical material required: Yes
+
+May unlock:
+
+bracing pattern candidates
+
+short-span structural logic
+
+repeatable bay doctrine
+
+Does not validate:
+
+final structure
+
+seaworthiness
+
+Next action: Build one braced bay and perform candidate racking/torsion observations.
+
+5. Reinforced Skid Bay
+
+Variables tested:
+
+deck_deflection
+
+mockup_spacing
+
+Why fifth: Heavy equipment placement depends on skid load spreading and bay behavior.
+
+Cheap tape/cardboard: Partial
+
+Physical material required: Yes
+
+May unlock:
+
+skid rail candidates
+
+load-spreading pad logic
+
+equipment bay rules
+
+Does not validate:
+
+safe payload
+
+final equipment placement
+
+Next action: Mock battery/electrolysis weight blocks using candidate placeholders only.
+
+6. Sacrificial Interface Module
+
+Variables tested:
+
+interface_strain
+
+degraded_reach
+
+Why sixth: The clean/dirty boundary must localize strain and damage at replaceable components, not route it into the raft core.
+
+Cheap tape/cardboard: Partial
+
+Physical material required: Yes
+
+May unlock:
+
+hose strain relief candidates
+
+quick-disconnect placement candidates
+
+replaceable interface geometry
+
+Does not validate:
+
+leak-safe transfer
+
+finalized clean/dirty interface
+
+Next action: Build side module with fake hose-load observations.
+
+7. Tow-Point/Frame Section Mockup
+
+Variables tested:
+
+tow_point_strain
+
+truss_racking
+
+Why seventh: Tow loads are high consequence and should be tested after basic truss logic exists.
+
+Cheap tape/cardboard: No
+
+Physical material required: Yes
+
+May unlock:
+
+tow-member reinforcement candidates
+
+frame load-path revisions
+
+Does not validate:
+
+tow rating
+
+recovery rating
+
+Next action: Pull-test a dedicated candidate frame section without assigning a rating.
+
+8. Flotation Frame/Base Raft Float Test
+
+Variables tested:
+
+empty_freeboard
+
+loaded_freeboard
+
+trim_response
+
+list_response
+
+drum_shift
+
+Why eighth: Most informative but highest dependency. Should follow restraint, frame, deck, and load-path lessons.
+
+Cheap tape/cardboard: No
+
+Physical material required: Yes
+
+May unlock:
+
+ballast distribution candidates
+
+waterline behavior observations
+
+flotation geometry revision
+
+Does not validate:
+
+reserve buoyancy
+
+stability
+
+payload
+
+seaworthiness
+
+Next action: Float empty assembly, then conduct incremental ballast observations.
+
+Dependency Logic
+
+Start with space and reach because bad access geometry is cheapest to fix before materials exist.
+
+Then test drum restraint because the raft depends on flotation units staying captured and inspectable.
+
+Then test deck, truss, and skid bays because these define the repeatable structural language.
+
+Then test interface and tow sections because those are boundary loads with high damage potential.
+
+Only then run the base raft float/ballast test, because it should use the best current restraint and frame logic.
+
+Claims Still Prohibited After All Eight
+
+safe payload
+
+stability
+
+reserve buoyancy
+
+seaworthiness
+
+operating envelope
+
+tow rating
+
+leak-safe transfer
+
+validated worker safety
+
+finalized clean/dirty interface
+
+final layout
+
+Appendix C — Mockup 1: Tape/Cardboard Full-Scale Access Layout Protocol
+
+Appendix Status: [NON-CANONICAL MOCKUP PROTOCOL — PENDING VALIDATION]
+
+1. Mockup Purpose
+
+This appendix defines the first low-cost physical layout interrogation for the Clean Support Raft / Boat Prototype. It tests degraded_reach and mockup_spacing using tape, cardboard, string/rope, markers, labels, and mock equipment placeholders before structural materials are committed.
+
+2. Materials Needed
+
+Layout Tape: Minimum 200 ft of highly visible painter's tape or flagging tape.
+
+Vertical Mockups: Heavy cardboard boxes, mailing tubes, or folded cardboard sheets to represent vertical equipment bounds.
+
+Boundary Line: Colored string or thin nylon rope (minimum 100 ft) to model physical handrails or frame edges.
+
+Marking Tools: Thick permanent markers, adhesive labels, and warning tape for color-coding utility boundaries.
+
+Measurement Tools: Tape measure or folding ruler (strictly for recording relative mockup layout coordinates, not establishing production design parameters).
+
+Simulation Hardware: Mock hand tools, mock valve handles, and cardboard tablets to simulate active operator tasks.
+
+3. Layout Elements to Mark
+
+Footprint Bounds: Apply floor tape tracing the 24 ft x 12 ft outer boundary [CANDIDATE FOOTPRINT PLACEHOLDER — PENDING VALIDATION].
+
+Central Clean Operator Aisle: Mark parallel tape lines down the center-longitudinal line, establishing the candidate boundary of width [UNRESOLVED ENGINEERING VARIABLE].
+
+Utility Bays: Divide flanking zones into Port and Starboard equipment bays according to Section 10 rules.
+
+Skid Footprints: Tape outlines of candidate skids:
+
+Battery control skid candidate footprint.
+
+Electrolysis skid candidate footprint.
+
+Monitoring/logging station candidate footprint.
+
+Safety & Interface Zones: Outline the emergency access zones and sacrificial clean/dirty interface edge zones.
+
+4. Test Actions
+
+Action 01: Baseline Aisle Clearance Transit
+
+An operator walks the taped centerline path while carrying simulated hand tools to evaluate side-to-side clearance.
+
+Action 02: Emergency Controls Degraded Reach Simulation
+
+An operator stands at defined points in the centerline aisle, simulating degraded-access conditions (e.g., knee down, leaning to recover balance), and attempts to reach the mapped locations of primary shutdown switches, disconnects, and isolation valves.
+
+Action 03: Service & Tool Swing Test
+
+Position an operator next to the cardboard skid mockups. Have them simulate maintenance actions (e.g., wrenching, valve turning, filter swapping) to observe elbow room and tool path clearance relative to adjacent equipment walls.
+
+Action 04: Simulated Multi-Operator Interference
+
+Two operators simulate task-coordination behaviors in the aisle and bay spaces. Observe if two people cannot maneuver without obstruction or contact conflicts where assistance is being simulated.
+
+Action 05: Deck Access Grating Lift Observation
+
+An operator attempts to simulate grabbing, lifting, and setting aside a marked removable deck panel candidate from the central pathway without stepping outside the aisle footprint.
+
+5. Observations to Record
+
+Visual Contact Points: Note any physical contact between operator elbows/shoulders and adjacent cardboard mockups during transit or simulated maintenance.
+
+Reach Interferences: Document any physical strain, loss of balance, or obstructions preventing a direct hand path to emergency controls.
+
+Tool Blockages: Identify if the swing path of simulated wrenches or maintenance tools is restricted by neighboring mock equipment skids.
+
+Line-of-Sight Blockages: Note if cardboard equipment stacks obstruct the operator's visual line of sight to primary monitoring interfaces or leak-inspection zones.
+
+6. Failure Signs
+
+Cardboard mockups are physically bumped, displaced, or knocked over during normal aisle transit.
+
+An operator is unable to complete a direct hand path to primary emergency controls without losing balance or stepping outside the clean aisle.
+
+Simulated tool swing ranges intersect with adjacent mock equipment profiles.
+
+Two people cannot maneuver without obstruction or contact conflicts where assistance is being simulated.
+
+Removal and lifting maneuvers for simulated deck panels require stepping onto unverified, non-grated, or adjacent equipment zones.
+
+7. Records to Capture
+
+Clearance Coordinates: Record observed relative distance margins between the aisle line and mock skid walls.
+
+Degraded Reach Margins: Log the estimated distance shortfalls where hand access to emergency switches is strained.
+
+Conflict Identifiers: Map and list specific zones where physical collisions occurred during multi-operator simulations.
+
+Mockup Photo/Video Record: Maintain visual documentation of operators at maximum reach and maximum lean profiles against the taped grid.
+
+8. Output Format — Simple Log Sheet
+
+Mock Test ID
+
+Date
+
+Simulated Variable
+
+Operator Height/Reach
+
+Observed Interference/Conflict
+
+Recommended Candidate Adjustment
+
+M1-01-REACH
+
+2026-05-20
+
+degraded_reach
+
+[CANDIDATE PLACEHOLDER]
+
+Hard reach to emergency disconnect over battery mock
+
+Shift disconnect candidate forward towards aisle
+
+M1-02-SPACE
+
+2026-05-20
+
+mockup_spacing
+
+[CANDIDATE PLACEHOLDER]
+
+Elbow contact with electrolysis wall during tool swing
+
+Increase skid-to-aisle clearance candidate target
+
+M1-03-AISLE
+
+2026-05-20
+
+mockup_spacing
+
+[CANDIDATE PLACEHOLDER]
+
+Multi-person contact conflict during mock lift assist
+
+Adjust aisle width variable candidate parameter
+
+9. What This Mockup May Unlock
+
+Refined candidate coordinates for aisle_width range targets.
+
+Optimized placement regions for emergency reach controls.
+
+Initial spacing margins for skid boundaries and utility bays.
+
+Basic spatial clearance mappings for the clean/dirty interface.
+
+10. What This Mockup Does NOT Validate
+
+This mockup does not validate final layout, worker safety, emergency safety, operating readiness, payload, stability, reserve buoyancy, seaworthiness, or clean/dirty interface safety. All spatial layouts remain strictly candidates subject to physical scale and full-scale structural testing.
+
+11. Core Rule
+
+Do not treat simulated access as an operational guarantee. Access must be verified under dynamic loading, water presence, and real-world system vibration in subsequent loops.
+
+Appendix D — Mockup 1 Field Log Sheet
+
+Appendix Status: [NON-CANONICAL FIELD WORKSHEET — PENDING VALIDATION]
+
+1. Purpose
+
+This appendix defines a structured field logging format to record raw observations, physical interferences, and spatial insights collected during the execution of Appendix C.
+
+“Observation categories used in this worksheet may help classify field notes. They do not automatically become canonical unresolved variables unless later reviewed and promoted through repository-control review.”
+
+2. Core Recording Rule
+
+This worksheet is strictly an observation record. All logging agents must adhere to the following principles:
+
+Observation != validation
+
+Movement != safety certification
+
+Reachability != emergency readiness
+
+Spacing != operational approval
+
+3. Classification of Field Notes
+
+When documenting observations on the field log, classify each entry into one or more of the following observation categories:
+
+aisle_obstruction: Physical contact, bumping, or spatial crowding along the central clean path.
+
+inspection_access: Blocked sightlines, restricted panel-removal paths, or inaccessible frame joints.
+
+emergency_response: Interferences, balance strains, or reach blockages while reaching simulated shutdown controls.
+
+clean_dirty_boundary: Splashing, dripping, or hose tension risks observed at the physical transition zone.
+
+replaceability: Alignment binding, tool access limits, or grip difficulties during panel/skid swaps.
+
+hose_crossing: Tripping risks, equipment pulling strains, or pathway crossings of umbilical lines.
+
+4. Field Log Matrix
+
+Log ID
+
+Date
+
+Agent ID
+
+Observation Category
+
+Location Coordinates / Zone
+
+Field Observation Notes
+
+Candidate Adjustment Draft
+
+FL-01
+
+YYYY-MM-DD
+
+
+
+$$Agent ID$$
+
+
+
+[Category]
+
+Port Bay, Node X...
+
+
+
+$$Record raw physical observation here without safety claims$$
+
+
+
+
+
+$$Draft candidate change here$$
+
+
+
+FL-02
+
+YYYY-MM-DD
+
+
+
+$$Agent ID$$
+
+
+
+[Category]
+
+Starboard Bay...
+
+
+
+$$Record raw physical observation here without safety claims$$
+
+
+
+
+
+$$Draft candidate change here$$
+
+
+
+FL-03
+
+YYYY-MM-DD
+
+
+
+$$Agent ID$$
+
+
+
+[Category]
+
+Centerline Aisle...
+
+
+
+$$Record raw physical observation here without safety claims$$
+
+
+
+
+
+$$Draft candidate change here$$
+
+
+
+FL-04
+
+YYYY-MM-DD
+
+
+
+$$Agent ID$$
+
+
+
+[Category]
+
+Boundary Zone...
+
+
+
+$$Record raw physical observation here without safety claims$$
+
+
+
+
+
+$$Draft candidate change here$$
+
+
+
+FL-05
+
+YYYY-MM-DD
+
+
+
+$$Agent ID$$
+
+
+
+[Category]
+
+Battery Bay...
+
+
+
+$$Record raw physical observation here without safety claims$$
+
+
+
+
+
+$$Draft candidate change here$$
+
+
+
+Appendix E — Mockup 1 Field Run Plan
+
+Appendix Status: [NON-CANONICAL FIELD RUN PLAN — PENDING VALIDATION]
+
+Purpose
+
+This appendix defines the first physical interrogation sequence for Mockup 1: Tape/Cardboard Full-Scale Access Layout. It details the setup order, photo discipline, test run order, blocking issue criteria, floor revision marking rules, and the raw dataset to bring back to the Interactive Repository (Grant/Dinesh) after the field run is completed.
+
+1. What To Set Up First
+
+Execute the setup steps in this strict sequence:
+
+Chassis Bounding Line: Sweep the floor clean of debris. Measure and lay down tape to define the outer bounds of the 24 ft x 12 ft working footprint.
+
+Central Clean Operator Aisle: Apply tape lines to trace the candidate centerline aisle along the entire longitudinal axis. Ensure the pathway is marked clearly and kept empty of all materials.
+
+Bay Grid Subdivisions: Section off the Port and Starboard equipment bays on either side of the aisle using contrasting colored tape.
+
+Mock Skid Positioning: Assemble and place the cardboard boxes representing the battery control, electrolysis, and monitoring skids. Weigh down the boxes with scrap blocks so they do not shift prematurely.
+
+Emergency Interfaces: Place mock emergency stop switches and isolation valve fixtures on vertical cardboard stands at their draft coordinate locations.
+
+Clean/Dirty Boundary: Run colored string or thin rope along the outer starboard edge to model the physical handrail transition toward the simulated dirty barge edge.
+
+2. What To Photograph Before Testing
+
+To preserve the baseline, take these photos before performing any simulated operations:
+
+High-Angle Overall View: A wide-angle photo of the entire 24 ft x 12 ft grid from a ladder or elevated point to capture the layout topology.
+
+Aisle Visual Alignment: A straight-line photo taken from the bow looking toward the stern down the center of the operator aisle.
+
+Equipment Closeness Profile: Close-up photos of the spacing clearances between adjacent cardboard equipment skids.
+
+Emergency Reach Lines: Clear photos showing the line-of-sight from the center aisle to each emergency control switch and isolation valve marker.
+
+3. Order To Perform Test Actions
+
+Conduct the test sequence in the following order:
+
+Unloaded Transit Walk: Walk the centerline aisle back and forth to establish baseline body clearances and locate any natural walking path interferences.
+
+Tool-Carry Simulation: Walk the path while carrying typical field tools (wrenches, toolboxes) to observe if bulkier profiles alter movement lanes.
+
+Static Reach Interrogations: Stand at each emergency reach station. Simulate degraded postures (e.g., knee down, leaning away) and reach for the mock switches, recording any balance strain.
+
+Active Service Clashes: Simulate basic equipment maintenance tasks (e.g., wrench swing, filter replacement, panel lift) at each skid bay, checking for physical boundary conflicts.
+
+Multi-Person Transit Coordination: Run simulated two-person passing scenarios in the aisle and assess if assistance tasks create elbow-room or spatial-overlap interferences.
+
+Panel Removal Lift: Simulate lifting a removable deck panel candidate from the sub-frame structure, observing if the panel's physical size forces the operator to step off the central pathway.
+
+4. Observations That Matter Most
+
+While executing the run plan, watch for and record these specific indicators:
+
+Foot-Fault Frequencies: Count how many times an operator’s foot touches or crosses the taped boundary lines of the central clean aisle.
+
+Shoulder/Elbow Contact: Note whenever an operator’s clothing, body, or simulated tools brush against the cardboard equipment profiles.
+
+Line-of-Sight Blockages: Check if vertical cardboard skids obscure direct line of sight to process hoses, the clean/dirty interface, or adjacent utility bays from the main aisle.
+
+Manual Handling Path Bind: Observe any body twisting, stumbling, or awkward footwork required to lift and set aside the mock deck panels.
+
+5. What Counts As A Blocking Layout Issue
+
+Any of the following occurrences constitutes a layout collision that must be flagged for revision:
+
+An operator must step outside the central clean pathway to reach or actuate an emergency shutdown control.
+
+Simulated maintenance tasks or tool swings require intersecting with neighboring equipment skids or routing paths.
+
+Normal two-person passing maneuvers cannot occur without brushing against equipment skids or stepping over utility bay boundaries.
+
+Lifting and setting aside a removable deck panel candidate is physically blocked by vertical equipment heights or adjacent structures.
+
+Hose or umbilical line paths cross directly over the central operator lane, creating a permanent tripping hazard.
+
+6. How To Mark Revisions On The Floor
+
+If a blocking issue is identified, do not tear up the baseline tape layout. Follow these steps:
+
+Leave the original taped line or mock equipment box in its initial baseline position.
+
+Use a contrasting colored tape (e.g., high-visibility orange or striped warning tape) to outline the proposed new boundary or skid shift.
+
+Label the new line clearly with the Revision ID (e.g., "REV-1B-AISLE") and date.
+
+Photograph the physical offset showing the old line and the new proposed candidate line side-by-side.
+
+Record the offset measurement coordinates in Appendix D before shifting the physical cardboard mockup to its new position.
+
+7. What Information To Bring Back To Grant Afterward
+
+Provide the following formatted dataset to the Interactive Repository (Grant/Dinesh) to update our system model:
+
+The Completed Appendix D Log Matrix: A clean, transcribed CSV-compatible text record of all logged occurrences, classified by observation categories.
+
+The Baseline and Revision Photo Set: Organized folders containing pre-run, in-test, and post-revision photos matched to specific Log IDs.
+
+The Offset Coordinate Map: The physical distance adjustments (X and Y offsets) made to the tape lines or skid positions during floor revisions.
+
+Aisle Width Recommendation: A recommended candidate range for the minimum acceptable centerline aisle width based on tool-carry and passing simulations.
+
+8. What Should Remain Unresolved After The First Run
+
+This test is strictly a spatial access check. The following parameters must remain marked as [UNRESOLVED ENGINEERING VARIABLE] and are not validated by this test:
+
+Actual structural frame flexure or joint twisting under live payload weights.
+
+Seaworthiness, stability, rolling response, or flotation performance on water.
+
+Operating envelope limits under environmental wave, wind, or current loads.
+
+The actual effectiveness or sealing of clean/dirty boundary containment interfaces.
+
+Validated workflow safety or operational approval of equipment configurations.

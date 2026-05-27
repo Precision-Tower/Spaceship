@@ -1,0 +1,1311 @@
+# Models/Gear/v2/Spine.yaml
+Spine:
+  file: Models/Gear/v2/Spine.yaml
+  status: candidate_from_spine
+  scope: Gear_v2_candidate
+  canon: false
+  authority: candidate_pattern_only_not_global_doctrine
+  source_scope: Spine_local
+  promotion_required_for_globalization: true
+
+  purpose:
+    - preserve Spine-local runtime governance discoveries
+    - carry SpineDoctrine FileRoleTable and DependencyMap scaffolds into Gear v2
+    - prevent local Spine discoveries from becoming global CE-OS doctrine by accident
+    - preserve classification before compression
+    - preserve dependency truth before deletion authority
+    - preserve cognition infrastructure as load-bearing until traced
+
+  promotion_blocked_until:
+    - repeated_independent_emergence
+    - cross_runtime_comparison
+    - governance_review
+    - explicit_operator_acceptance
+
+  core_boundary:
+    - Spine_local_pattern_does_not_equal_global_model_authority
+    - local_runtime_success_does_not_equal_cross_runtime_doctrine
+    - coherence_does_not_equal_authority
+    - reachable_does_not_equal_active
+    - active_does_not_equal_important
+    - important_does_not_equal_authoritative
+
+  operating_mode:
+    principle: governed_provisionality
+    description: >
+      Explore aggressively while delaying authority promotion through
+      classification, dependency tracing, reconstructability, inflation awareness,
+      and explicit promotion conditions.
+
+  stabilization_stack:
+    - SpineDoctrine
+    - FileRoleTable
+    - DependencyMap
+
+  SpineDoctrine:
+    status: active_candidate
+    scope: Spine_local
+    authority: local_runtime_governance_only
+    canon: false
+    validation_authority: false
+    promotion_required_for_globalization: true
+
+    runtime_classification:
+      principle: "Runtime is not display. Runtime is governance strategy."
+
+    protected_classes:
+      COGNITION_INFRASTRUCTURE:
+        definition: >
+          Systems that regulate interpretation, attention, omission visibility,
+          warning persistence, continuity, pacing, orientation, repetition salience,
+          or unresolved survivability.
+        not_ui: true
+        preservation_rule: >
+          Any system influencing operator interpretation is load-bearing until
+          dependency truth proves otherwise.
+        proven_members:
+          - shared/scripts/runtime_memory.gd
+          - shared/scripts/attention_lens_controller.gd
+          - shared/scripts/warning_persistence_controller.gd
+          - shared/scenes/monitor_group.tscn
+          - shared/scenes/compass_widget.tscn
+
+    anti_flattening_rule:
+      statement: "Cognition infrastructure must not be flattened into UI."
+
+    friction_preservation_rule:
+      statement: >
+        Do not optimize away friction until you know whether that friction
+        preserves interpretation.
+
+    repetition_preservation_rule:
+      statement: >
+        Do not simplify repetition until you know whether repetition preserves
+        unresolved pressure.
+
+    cleanup_boundary:
+      allowed_deletion:
+        - ".godot/"
+        - "shader_cache/"
+        - "*.vulkan.cache"
+        - "editor cache residue"
+      blocked_without_reference_tracing:
+        - "semantic systems"
+        - "runtime systems"
+        - "governance systems"
+        - "cognition infrastructure"
+        - "continuity systems"
+
+    proven_runtime_nucleus:
+      boot_path:
+        - project.godot
+        - state/selection_interaction_boundary/state006a_selection_interaction_boundary.tscn
+        - state/selection_interaction_boundary/state006a_selection_interaction_boundary.gd
+        - shared cognition infrastructure
+
+    current_mission: >
+      Preserve cognition discipline while increasing topology visibility.
+
+    primary_danger: >
+      Semantic topology collapse caused by premature compression.
+
+  FileRoleTable:
+    status: active_candidate
+    scope: Spine_local
+    canon: false
+    purpose: "Inventory and classify Spine files before dependency graphing or compression."
+
+    classes:
+      - ACTIVE
+      - CRITICAL
+      - ARCHIVAL
+      - EXPERIMENTAL
+      - CONCEPTUAL
+      - GENERATED
+      - UNKNOWN
+      - COGNITION_INFRASTRUCTURE
+      - DORMANT
+      - ARCHIVAL_LOAD_BEARING
+
+    deletion_policy:
+      generated_cache: safe
+      unknown: preserve
+      cognition_infrastructure: preserve
+      governance: preserve_until_traced
+      runtime_code: preserve_until_hot_path_traced
+      doctrine: preserve_until_promotion_review
+
+    population_status:
+      pass: first_inventory_seed
+      rule: "Classify from proven hot path and stated topology only. Do not infer execution authority where references are not traced."
+      deletion_authority: cache_only
+
+    files:
+
+      - path: project.godot
+        filename: project.godot
+        class: CRITICAL
+        role: Godot project root and current boot entry configuration
+        authority: runtime_entrypoint_configuration
+        hot_path: proven
+        cognition_infrastructure: false
+        deletion_safe: false
+        notes: "Proven to route run/main_scene to State006A."
+
+      - path: state/selection_interaction_boundary/state006a_selection_interaction_boundary.tscn
+        filename: state006a_selection_interaction_boundary.tscn
+        class: CRITICAL
+        role: current executable State006A scene / live epistemic environment
+        authority: active_runtime_scene
+        hot_path: proven
+        cognition_infrastructure: false
+        deletion_safe: false
+        notes: "Current boot scene. Do not move or compress before DependencyMap tracing."
+
+      - path: state/selection_interaction_boundary/state006a_selection_interaction_boundary.gd
+        filename: state006a_selection_interaction_boundary.gd
+        class: CRITICAL
+        role: current State006A executable state logic and local orchestration
+        authority: active_runtime_state_logic
+        hot_path: proven_likely_script_attached_to_boot_scene
+        cognition_infrastructure: partial
+        deletion_safe: false
+        notes: "Directly orchestrates selection logic, lens handling, memory persistence, warning freshness, monitor expansion, and anti-authority framing."
+
+      - path: shared/scripts/runtime_memory.gd
+        filename: runtime_memory.gd
+        class: COGNITION_INFRASTRUCTURE
+        role: continuity persistence and runtime memory substrate
+        authority: runtime_continuity_support
+        hot_path: proven_dependency
+        cognition_infrastructure: true
+        deletion_safe: false
+        notes: "Not a preferences store. Treat as continuity substrate."
+
+      - path: shared/scripts/attention_lens_controller.gd
+        filename: attention_lens_controller.gd
+        class: COGNITION_INFRASTRUCTURE
+        role: cognition-focus regulation and attention lens switching
+        authority: runtime_attention_modulation
+        hot_path: proven_dependency
+        cognition_infrastructure: true
+        deletion_safe: false
+        notes: "Not merely a mode switcher. Regulates operator attention."
+
+      - path: shared/scripts/warning_persistence_controller.gd
+        filename: warning_persistence_controller.gd
+        class: COGNITION_INFRASTRUCTURE
+        role: warning freshness regulation and anti-normalization infrastructure
+        authority: runtime_warning_persistence
+        hot_path: proven_dependency
+        cognition_infrastructure: true
+        deletion_safe: false
+        notes: "Not a notification helper. Preserves unresolved/warning pressure."
+
+      - path: shared/scenes/monitor_group.tscn
+        filename: monitor_group.tscn
+        class: COGNITION_INFRASTRUCTURE
+        role: graduated interpretive exposure control
+        authority: runtime_attention_exposure_surface
+        hot_path: proven_dependency
+        cognition_infrastructure: true
+        deletion_safe: false
+        notes: "Not merely a UI widget. Controls staged visibility and interpretive load."
+
+      - path: shared/scenes/compass_widget.tscn
+        filename: compass_widget.tscn
+        class: COGNITION_INFRASTRUCTURE
+        role: orientation continuity surface
+        authority: runtime_orientation_support
+        hot_path: proven_dependency
+        cognition_infrastructure: true
+        deletion_safe: false
+        notes: "Not merely visual decoration. Preserves runtime orientation continuity."
+
+      - path: shared/scripts/runtime_camera.gd
+        filename: runtime_camera.gd
+        class: ACTIVE
+        role: runtime camera continuity / view behavior
+        authority: runtime_navigation_support
+        hot_path: proven_dependency
+        cognition_infrastructure: possible
+        deletion_safe: false
+        notes: "Proven State006A dependency. Possible cognition infrastructure due orientation/view continuity; needs deeper tracing."
+
+      - path: .godot/
+        filename: "*"
+        class: GENERATED
+        role: Godot editor/cache state
+        authority: none
+        hot_path: false
+        cognition_infrastructure: false
+        deletion_safe: true
+        notes: "Purge-safe generated residue."
+
+      - path: .godot/shader_cache/
+        filename: "*.vulkan.cache"
+        class: GENERATED
+        role: compiled GPU/runtime shader cache
+        authority: none
+        hot_path: false
+        cognition_infrastructure: false
+        deletion_safe: true
+        notes: "Purge-safe generated residue."
+
+      - path: "**/"
+        filename: "*.vulkan.cache"
+        class: GENERATED
+        role: Vulkan shader cache
+        authority: none
+        hot_path: false
+        cognition_infrastructure: false
+        deletion_safe: true
+        notes: "Purge-safe if confirmed as generated cache."
+
+      - path: "**/"
+        filename: "editor cache residue"
+        class: GENERATED
+        role: editor-generated cache or local editor state
+        authority: none
+        hot_path: false
+        cognition_infrastructure: false
+        deletion_safe: true
+        notes: "Only purge when confirmed generated/editor residue."
+
+      - path: shared/scripts/runtime_controller.gd
+        filename: runtime_controller.gd
+        class: DORMANT
+        role: future or dormant runtime orchestration infrastructure
+        authority: unproven_runtime_infrastructure
+        hot_path: not_proven
+        cognition_infrastructure: unknown
+        deletion_safe: false
+        notes: "Not current boot spine. Preserve until reference tracing proves status."
+
+      - path: shared/scripts/state_loader.gd
+        filename: state_loader.gd
+        class: DORMANT
+        role: future or dormant dynamic state loading infrastructure
+        authority: unproven_runtime_infrastructure
+        hot_path: not_proven
+        cognition_infrastructure: unknown
+        deletion_safe: false
+        notes: "Not proven active in current boot path. Preserve."
+
+      - path: state/state_registry.json
+        filename: state_registry.json
+        class: CONCEPTUAL
+        role: declarative continuity / state lineage registry
+        authority: declarative_lineage_infrastructure
+        hot_path: not_proven
+        cognition_infrastructure: possible
+        deletion_safe: false
+        notes: "May become active through future StateLoader. Preserve."
+
+      - path: modules/_registry/modules.json
+        filename: modules.json
+        class: CONCEPTUAL
+        role: declarative governance/module registry
+        authority: declarative_module_registry
+        hot_path: not_proven
+        cognition_infrastructure: possible
+        deletion_safe: false
+        notes: "Not proven active. Preserve until module dependency graph is traced."
+
+      - path: modules/*/
+        filename: "*.gd"
+        class: UNKNOWN
+        role: module logic requiring reference tracing
+        authority: unproven_module_runtime_or_governance_logic
+        hot_path: unknown
+        cognition_infrastructure: unknown
+        deletion_safe: false
+        notes: "Trace via modules.json, .tscn references, and script references before classification."
+
+      - path: modules/*/
+        filename: "*.tscn"
+        class: UNKNOWN
+        role: module scene requiring reference tracing
+        authority: unproven_module_scene
+        hot_path: unknown
+        cognition_infrastructure: unknown
+        deletion_safe: false
+        notes: "Trace before moving, archiving, or compression."
+
+      - path: state/*/
+        filename: "*.gd"
+        class: UNKNOWN
+        role: state logic requiring reference tracing
+        authority: unproven_state_logic
+        hot_path: unknown
+        cognition_infrastructure: unknown
+        deletion_safe: false
+        notes: "Other state scripts are not current boot nucleus unless referenced."
+
+      - path: state/*/
+        filename: "*.tscn"
+        class: UNKNOWN
+        role: state scene requiring reference tracing
+        authority: unproven_state_scene
+        hot_path: unknown
+        cognition_infrastructure: unknown
+        deletion_safe: false
+        notes: "Other state scenes are not current boot nucleus unless referenced."
+
+      - path: "**/"
+        filename: "*.gd.uid"
+        class: UNKNOWN
+        role: Godot UID metadata
+        authority: Godot_resource_identity_metadata
+        hot_path: unknown
+        cognition_infrastructure: false
+        deletion_safe: false
+        notes: "Preserve for now. Do not classify as purge-safe until Godot UID dependency behavior is verified for this project."
+
+      - path: checkpoints/*
+        filename: "*"
+        class: ARCHIVAL_LOAD_BEARING
+        role: recovery anchors and topology stabilization checkpoints
+        authority: recovery_lineage
+        hot_path: false
+        cognition_infrastructure: possible
+        deletion_safe: false
+        notes: "Preserve. Archive material may be load-bearing for reconstruction and operator continuity."
+
+DependencyMap.yaml:
+  status: active_candidate
+  scope: Spine_local
+  canon: false
+  purpose: "Map proven and suspected Spine dependencies after file classification."
+
+  rule: "If it is not referenced, it is not proven."
+
+  current_authority_boundary:
+    admissible_claims:
+      - project.godot routes run/main_scene to State006A.tscn
+      - State006A.tscn attaches State006A.gd
+      - State006A.tscn declares six ExtResource dependencies
+      - State006A.gd proves active calls into RuntimeMemory for selected_surface selected_lens and expanded_monitor_groups
+      - State006A.gd proves active AttentionLens lens_changed handling and expanded group retrieval
+      - State006A.gd proves active MonitorGroup expansion handling and body updates
+      - State006A.gd proves selection buttons drive selection surface changes
+      - State006A.gd proves CoreText boundary statement update
+      - monitor_group.tscn attaches monitor_group_controller.gd
+    blocked_claims:
+      - scene_declared_dependency_equals_runtime_behavior
+      - runtime_behavior_equals_governance_function
+      - runtime_camera_activation_proven
+      - registry_activation_proven
+      - dormant_controller_activation_proven
+      - cognition_infrastructure_global_doctrine
+      - RuntimeMemory_orbit_zoom_active_in_State006A
+
+  edge_types:
+    - proven_boot
+    - proven_scene_script
+    - proven_scene_declared_resource
+    - proven_script_reference
+    - proven_script_call
+    - proven_signal_connection
+    - proven_nodepath_reference
+    - declared_storage_field
+    - declared_registry
+    - suspected_dormant
+    - archive_recovery
+    - unknown
+
+  edge_status:
+    - proven
+    - declared
+    - suspected
+    - dormant
+    - unknown
+    - activation_unproven
+
+  nodes: []
+
+  edges:
+    - from: project.godot
+      to: state/selection_interaction_boundary/state006a_selection_interaction_boundary.tscn
+      type: proven_boot
+      status: proven
+      source_basis: project.godot run/main_scene
+
+    - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.tscn
+      to: state/selection_interaction_boundary/state006a_selection_interaction_boundary.gd
+      type: proven_scene_script
+      status: proven
+      source_basis: State006A.tscn root script ExtResource
+
+    - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.tscn
+      to: shared/scenes/compass_widget.tscn
+      type: proven_scene_declared_resource
+      status: proven
+      source_basis: State006A.tscn ExtResource and CompassWidget scene instance
+
+    - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.tscn
+      to: shared/scenes/monitor_group.tscn
+      type: proven_scene_declared_resource
+      status: proven
+      source_basis: State006A.tscn ExtResource and MonitorGroup scene instances
+
+    - from: shared/scenes/monitor_group.tscn
+      to: shared/scripts/monitor_group_controller.gd
+      type: proven_scene_script
+      status: proven
+      source_basis: monitor_group.tscn ExtResource script assignment
+
+    - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.tscn
+      to: shared/scripts/runtime_camera.gd
+      type: proven_scene_declared_resource
+      status: activation_unproven
+      source_basis: State006A.tscn ExtResource only; no RuntimeCamera node visible in supplied scene
+
+    - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.tscn
+      to: shared/scripts/attention_lens_controller.gd
+      type: proven_scene_declared_resource
+      status: proven
+      source_basis: State006A.tscn ExtResource and UI/TopBar/AttentionLens script assignment
+
+    - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.tscn
+      to: shared/scripts/runtime_memory.gd
+      type: proven_scene_declared_resource
+      status: proven
+      source_basis: State006A.tscn ExtResource and UI/RuntimeMemory script assignment
+
+    - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.tscn
+      to: shared/scripts/warning_persistence_controller.gd
+      type: proven_scene_declared_resource
+      status: proven
+      source_basis: State006A.tscn ExtResource and UI/Footer/FooterText script assignment
+
+    - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.gd
+      to: shared/scripts/runtime_memory.gd
+      type: proven_script_reference
+      status: proven
+      source_basis: State006A.gd calls RuntimeMemory methods via UI/RuntimeMemory
+      methods:
+        - get_selected_surface
+        - set_selected_surface
+        - get_selected_lens
+        - set_selected_lens
+        - get_expanded_groups
+        - set_expanded_groups
+
+    - from: shared/scripts/runtime_memory.gd
+      to: user://runtime_spine_memory.json
+      type: proven_script_call
+      status: proven
+      source_basis: memory_path FileAccess.open READ/WRITE JSON.parse_string JSON.stringify
+      active_fields_proven_in_State006A:
+        - selected_surface
+        - selected_lens
+        - expanded_monitor_groups
+      stored_fields_not_proven_active_in_State006A:
+        - orbit_state
+        - zoom_state
+
+    - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.gd
+      to: shared/scripts/attention_lens_controller.gd
+      type: proven_script_reference
+      status: proven
+      source_basis: State006A.gd signal and method calls via UI/TopBar/AttentionLens
+      methods:
+        - lens_changed
+        - set_lens
+        - get_expanded_groups_for_lens
+
+    - from: shared/scripts/attention_lens_controller.gd
+      to: monitor_group_exposure_sets
+      type: proven_script_call
+      status: proven
+      source_basis: get_expanded_groups_for_lens match selected_lens
+      lens_mappings:
+        STRUCTURE:
+          - currently_selected
+          - surfaced_structure
+        OMISSION:
+          - possibly_omitted
+          - boundary_warnings
+        BOUNDARY:
+          - boundary_warnings
+          - selection_counters
+        COUNTERFACTUAL:
+          - possibly_omitted
+          - boundary_warnings
+        SELECTION:
+          - currently_selected
+          - selection_counters
+
+    - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.gd
+      to: shared/scenes/monitor_group.tscn
+      type: proven_script_reference
+      status: proven
+      source_basis: State006A.gd monitor group calls via UI/MonitorStack children
+      methods:
+        - expansion_changed
+        - set_expanded
+        - set_body
+        - group_id
+        - expanded
+
+    - from: shared/scripts/monitor_group_controller.gd
+      to: Header
+      type: proven_nodepath_reference
+      status: proven
+      source_basis: $Header.pressed.connect toggle and Header.text update
+
+    - from: shared/scripts/monitor_group_controller.gd
+      to: Body
+      type: proven_nodepath_reference
+      status: proven
+      source_basis: $Body.visible and $Body.text updates
+
+    - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.gd
+      to: UI/RightControlsPanel/SelectAButton
+      type: proven_signal_connection
+      status: proven
+      source_basis: pressed.connect _select_surface selection_surface_001
+
+    - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.gd
+      to: UI/RightControlsPanel/SelectBButton
+      type: proven_signal_connection
+      status: proven
+      source_basis: pressed.connect _select_surface selection_surface_002
+
+    - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.gd
+      to: UI/CorePanel/CoreText
+      type: proven_nodepath_reference
+      status: proven
+      source_basis: CoreText.text update in _refresh
+
+    - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.gd
+      to: RuntimeCamera
+      type: proven_nodepath_reference
+      status: activation_unproven
+      source_basis: has_node("RuntimeCamera") and $RuntimeCamera.handle_input(event), but RuntimeCamera node not visible in supplied State006A.tscn
+
+  unresolved_dependencies:
+    - runtime_camera.gd declared as ExtResource but activation is unproven due missing RuntimeCamera node in supplied scene
+    - compass_widget.tscn is scene-instanced, but internal behavior remains untraced
+    - warning_persistence_controller.gd is scene-declared on FooterText, but internal behavior remains untraced
+    - exact downstream meaning of RuntimeMemory persistence remains governance-unproven
+    - RuntimeMemory orbit_state and zoom_state are stored fields but not proven active in State006A
+
+  dormant_infrastructure:
+    - shared/scripts/runtime_controller.gd
+    - shared/scripts/state_loader.gd
+    - state/state_registry.json
+    - modules/_registry/modules.json
+
+  proven_hot_path:
+    - from: project.godot
+      to: state/selection_interaction_boundary/state006a_selection_interaction_boundary.tscn
+      type: proven_boot
+      status: proven
+
+    - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.tscn
+      to: state/selection_interaction_boundary/state006a_selection_interaction_boundary.gd
+      type: proven_scene_script
+      status: proven
+
+    - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.gd
+      to: shared/scripts/runtime_memory.gd
+      type: proven_script_reference
+      status: proven
+
+    - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.gd
+      to: shared/scripts/attention_lens_controller.gd
+      type: proven_script_reference
+      status: proven
+
+    - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.gd
+      to: shared/scenes/monitor_group.tscn
+      type: proven_script_reference
+      status: proven
+
+    - from: shared/scenes/monitor_group.tscn
+      to: shared/scripts/monitor_group_controller.gd
+      type: proven_scene_script
+      status: proven
+
+  blocked_promotion_notes:
+    - scene-declared dependency does not equal runtime behavior proven
+    - runtime behavior proven does not equal governance function proven
+    - no inferred edges from naming alone
+    - current cleanup authority remains cache-only
+    - stored continuity fields do not equal active runtime use
+    - persistence does not equal identity or validation
+
+  next_trace_targets:
+    - shared/scripts/warning_persistence_controller.gd
+    - shared/scenes/compass_widget.tscn
+    - shared/scripts/runtime_camera.gd
+    - shared/scripts/monitor_group_controller.gd deeper behavior if needed
+
+  trace_requirements:
+    - ExtResource
+    - signal
+    - load
+    - preload
+    - NodePath
+    - instantiated_scene
+    - direct_method_call
+    - storage_path
+    - persistence_timing
+
+  DependencyMap:
+    status: active_candidate
+    scope: Spine_local
+    canon: false
+    purpose: "Map proven and suspected Spine dependencies after file classification."
+
+    rule: "If it is not referenced, it is not proven."
+
+    current_authority_boundary:
+      admissible_claims:
+        - project.godot routes run/main_scene to State006A.tscn
+        - State006A.tscn attaches State006A.gd
+        - State006A.tscn declares six ExtResource dependencies
+        - State006A.gd proves active calls into RuntimeMemory for selected_surface selected_lens and expanded_monitor_groups
+        - State006A.gd proves active AttentionLens lens_changed handling and expanded group retrieval
+        - State006A.gd proves active MonitorGroup expansion handling and body updates
+        - State006A.gd proves selection buttons drive selection surface changes
+        - State006A.gd proves CoreText boundary statement update
+        - monitor_group.tscn attaches monitor_group_controller.gd
+      blocked_claims:
+        - scene_declared_dependency_equals_runtime_behavior
+        - runtime_behavior_equals_governance_function
+        - runtime_camera_activation_proven
+        - registry_activation_proven
+        - dormant_controller_activation_proven
+        - cognition_infrastructure_global_doctrine
+        - RuntimeMemory_orbit_zoom_active_in_State006A
+
+    edge_types:
+      - proven_boot
+      - proven_scene_script
+      - proven_scene_declared_resource
+      - proven_script_reference
+      - proven_script_call
+      - proven_signal_connection
+      - proven_nodepath_reference
+      - declared_storage_field
+      - declared_registry
+      - suspected_dormant
+      - archive_recovery
+      - unknown
+
+    edge_status:
+      - proven
+      - declared
+      - suspected
+      - dormant
+      - unknown
+      - activation_unproven
+
+    nodes: []
+
+    edges:
+      - from: project.godot
+        to: state/selection_interaction_boundary/state006a_selection_interaction_boundary.tscn
+        type: proven_boot
+        status: proven
+        source_basis: project.godot run/main_scene
+
+      - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.tscn
+        to: state/selection_interaction_boundary/state006a_selection_interaction_boundary.gd
+        type: proven_scene_script
+        status: proven
+        source_basis: State006A.tscn root script ExtResource
+
+      - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.tscn
+        to: shared/scenes/compass_widget.tscn
+        type: proven_scene_declared_resource
+        status: proven
+        source_basis: State006A.tscn ExtResource and CompassWidget scene instance
+
+      - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.tscn
+        to: shared/scenes/monitor_group.tscn
+        type: proven_scene_declared_resource
+        status: proven
+        source_basis: State006A.tscn ExtResource and MonitorGroup scene instances
+
+      - from: shared/scenes/monitor_group.tscn
+        to: shared/scripts/monitor_group_controller.gd
+        type: proven_scene_script
+        status: proven
+        source_basis: monitor_group.tscn ExtResource script assignment
+
+      - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.tscn
+        to: shared/scripts/runtime_camera.gd
+        type: proven_scene_declared_resource
+        status: activation_unproven
+        source_basis: State006A.tscn ExtResource only; no RuntimeCamera node visible in supplied scene
+
+      - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.tscn
+        to: shared/scripts/attention_lens_controller.gd
+        type: proven_scene_declared_resource
+        status: proven
+        source_basis: State006A.tscn ExtResource and UI/TopBar/AttentionLens script assignment
+
+      - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.tscn
+        to: shared/scripts/runtime_memory.gd
+        type: proven_scene_declared_resource
+        status: proven
+        source_basis: State006A.tscn ExtResource and UI/RuntimeMemory script assignment
+
+      - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.tscn
+        to: shared/scripts/warning_persistence_controller.gd
+        type: proven_scene_declared_resource
+        status: proven
+        source_basis: State006A.tscn ExtResource and UI/Footer/FooterText script assignment
+
+      - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.gd
+        to: shared/scripts/runtime_memory.gd
+        type: proven_script_reference
+        status: proven
+        source_basis: State006A.gd calls RuntimeMemory methods via UI/RuntimeMemory
+        methods:
+          - get_selected_surface
+          - set_selected_surface
+          - get_selected_lens
+          - set_selected_lens
+          - get_expanded_groups
+          - set_expanded_groups
+
+      - from: shared/scripts/runtime_memory.gd
+        to: user://runtime_spine_memory.json
+        type: proven_script_call
+        status: proven
+        source_basis: memory_path FileAccess.open READ/WRITE JSON.parse_string JSON.stringify
+        active_fields_proven_in_State006A:
+          - selected_surface
+          - selected_lens
+          - expanded_monitor_groups
+        stored_fields_not_proven_active_in_State006A:
+          - orbit_state
+          - zoom_state
+
+      - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.gd
+        to: shared/scripts/attention_lens_controller.gd
+        type: proven_script_reference
+        status: proven
+        source_basis: State006A.gd signal and method calls via UI/TopBar/AttentionLens
+        methods:
+          - lens_changed
+          - set_lens
+          - get_expanded_groups_for_lens
+
+      - from: shared/scripts/attention_lens_controller.gd
+        to: monitor_group_exposure_sets
+        type: proven_script_call
+        status: proven
+        source_basis: get_expanded_groups_for_lens match selected_lens
+        lens_mappings:
+          STRUCTURE:
+            - currently_selected
+            - surfaced_structure
+          OMISSION:
+            - possibly_omitted
+            - boundary_warnings
+          BOUNDARY:
+            - boundary_warnings
+            - selection_counters
+          COUNTERFACTUAL:
+            - possibly_omitted
+            - boundary_warnings
+          SELECTION:
+            - currently_selected
+            - selection_counters
+
+      - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.gd
+        to: shared/scenes/monitor_group.tscn
+        type: proven_script_reference
+        status: proven
+        source_basis: State006A.gd monitor group calls via UI/MonitorStack children
+        methods:
+          - expansion_changed
+          - set_expanded
+          - set_body
+          - group_id
+          - expanded
+
+      - from: shared/scripts/monitor_group_controller.gd
+        to: Header
+        type: proven_nodepath_reference
+        status: proven
+        source_basis: $Header.pressed.connect toggle and Header.text update
+
+      - from: shared/scripts/monitor_group_controller.gd
+        to: Body
+        type: proven_nodepath_reference
+        status: proven
+        source_basis: $Body.visible and $Body.text updates
+
+      - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.gd
+        to: UI/RightControlsPanel/SelectAButton
+        type: proven_signal_connection
+        status: proven
+        source_basis: pressed.connect _select_surface selection_surface_001
+
+      - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.gd
+        to: UI/RightControlsPanel/SelectBButton
+        type: proven_signal_connection
+        status: proven
+        source_basis: pressed.connect _select_surface selection_surface_002
+
+      - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.gd
+        to: UI/CorePanel/CoreText
+        type: proven_nodepath_reference
+        status: proven
+        source_basis: CoreText.text update in _refresh
+
+      - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.gd
+        to: RuntimeCamera
+        type: proven_nodepath_reference
+        status: activation_unproven
+        source_basis: has_node("RuntimeCamera") and $RuntimeCamera.handle_input(event), but RuntimeCamera node not visible in supplied State006A.tscn
+
+    unresolved_dependencies:
+      - runtime_camera.gd declared as ExtResource but activation is unproven due missing RuntimeCamera node in supplied scene
+      - compass_widget.tscn is scene-instanced, but internal behavior remains untraced
+      - warning_persistence_controller.gd is scene-declared on FooterText, but internal behavior remains untraced
+      - exact downstream meaning of RuntimeMemory persistence remains governance-unproven
+      - RuntimeMemory orbit_state and zoom_state are stored fields but not proven active in State006A
+
+    dormant_infrastructure:
+      - shared/scripts/runtime_controller.gd
+      - shared/scripts/state_loader.gd
+      - state/state_registry.json
+      - modules/_registry/modules.json
+
+    proven_hot_path:
+      - from: project.godot
+        to: state/selection_interaction_boundary/state006a_selection_interaction_boundary.tscn
+        type: proven_boot
+        status: proven
+
+      - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.tscn
+        to: state/selection_interaction_boundary/state006a_selection_interaction_boundary.gd
+        type: proven_scene_script
+        status: proven
+
+      - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.gd
+        to: shared/scripts/runtime_memory.gd
+        type: proven_script_reference
+        status: proven
+
+      - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.gd
+        to: shared/scripts/attention_lens_controller.gd
+        type: proven_script_reference
+        status: proven
+
+      - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.gd
+        to: shared/scenes/monitor_group.tscn
+        type: proven_script_reference
+        status: proven
+
+      - from: shared/scenes/monitor_group.tscn
+        to: shared/scripts/monitor_group_controller.gd
+        type: proven_scene_script
+        status: proven
+
+    blocked_promotion_notes:
+      - scene-declared dependency does not equal runtime behavior proven
+      - runtime behavior proven does not equal governance function proven
+      - no inferred edges from naming alone
+      - current cleanup authority remains cache-only
+      - stored continuity fields do not equal active runtime use
+      - persistence does not equal identity or validation
+
+    next_trace_targets:
+      - shared/scripts/warning_persistence_controller.gd
+      - shared/scenes/compass_widget.tscn
+      - shared/scripts/runtime_camera.gd
+      - shared/scripts/monitor_group_controller.gd deeper behavior if needed
+
+    trace_requirements:
+      - ExtResource
+      - signal
+      - load
+      - preload
+      - NodePath
+      - instantiated_scene
+      - direct_method_call
+      - storage_path
+      - persistence_timing
+  # DependencyMap.yaml
+  status: active_candidate
+  scope: Spine_local
+  canon: false
+  purpose: "Map proven and suspected Spine dependencies after file classification."
+
+  rule: "If it is not referenced, it is not proven."
+
+  current_authority_boundary:
+    admissible_claims:
+      - project.godot routes run/main_scene to State006A.tscn
+      - State006A.tscn attaches State006A.gd
+      - State006A.tscn declares six ExtResource dependencies
+      - State006A.gd proves active calls into RuntimeMemory for selected_surface selected_lens and expanded_monitor_groups
+      - State006A.gd proves active AttentionLens lens_changed handling and expanded group retrieval
+      - State006A.gd proves active MonitorGroup expansion handling and body updates
+      - State006A.gd proves selection buttons drive selection surface changes
+      - State006A.gd proves CoreText boundary statement update
+      - monitor_group.tscn attaches monitor_group_controller.gd
+      - warning_persistence_controller.gd is proven active as FooterText script and rotates/pulses warning text
+      - compass_widget.gd behavior is traced as orientation continuity behavior
+      - axis_gizmo.tscn attaches axis_gizmo.gd, but AxisGizmo activation in State006A is not proven
+    blocked_claims:
+      - scene_declared_dependency_equals_runtime_behavior
+      - runtime_behavior_equals_governance_function
+      - warning_freshness_equals_governance_review
+      - compass_orientation_equals_measurement_or_validation
+      - runtime_camera_activation_proven
+      - axis_gizmo_active_in_State006A
+      - registry_activation_proven
+      - dormant_controller_activation_proven
+      - cognition_infrastructure_global_doctrine
+      - RuntimeMemory_orbit_zoom_active_in_State006A
+
+  edge_types:
+    - proven_boot
+    - proven_scene_script
+    - proven_scene_declared_resource
+    - proven_script_reference
+    - proven_script_call
+    - proven_signal_connection
+    - proven_nodepath_reference
+    - active_process_behavior
+    - traced_behavior_unattached
+    - declared_storage_field
+    - declared_registry
+    - suspected_dormant
+    - archive_recovery
+    - unknown
+
+  edge_status:
+    - proven
+    - declared
+    - suspected
+    - dormant
+    - unknown
+    - activation_unproven
+    - scene_attachment_pending
+
+  nodes: []
+
+  edges:
+    - from: project.godot
+      to: state/selection_interaction_boundary/state006a_selection_interaction_boundary.tscn
+      type: proven_boot
+      status: proven
+      source_basis: project.godot run/main_scene
+
+    - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.tscn
+      to: state/selection_interaction_boundary/state006a_selection_interaction_boundary.gd
+      type: proven_scene_script
+      status: proven
+      source_basis: State006A.tscn root script ExtResource
+
+    - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.tscn
+      to: shared/scenes/compass_widget.tscn
+      type: proven_scene_declared_resource
+      status: proven
+      source_basis: State006A.tscn ExtResource and CompassWidget scene instance
+
+    - from: shared/scenes/compass_widget.tscn
+      to: shared/scripts/compass_widget.gd
+      type: proven_scene_script
+      status: scene_attachment_pending
+      source_basis: compass_widget.gd supplied and behavior traced; actual compass_widget.tscn not supplied in latest paste, so scene-script attachment remains pending
+
+    - from: shared/scripts/compass_widget.gd
+      to: Camera3D
+      type: proven_script_call
+      status: proven
+      source_basis: camera_path get_node_or_null fallback get_viewport().get_camera_3d and _camera_heading uses camera.global_transform
+      active_behavior:
+        - reads camera_path if supplied
+        - falls back to viewport active Camera3D
+        - calculates heading from camera forward vector
+        - uses world convention North=-Z East=+X South=+Z West=-X
+        - smooths heading using lerp_angle
+        - redraws compass ring and cardinal ticks
+
+    - from: shared/scripts/compass_widget.gd
+      to: N_E_S_W_cardinal_labels
+      type: proven_nodepath_reference
+      status: proven
+      source_basis: _update_cardinals get_node_or_null for N E S W labels and updates position/modulate
+
+    - from: shared/scenes/axis_gizmo.tscn
+      to: shared/scripts/axis_gizmo.gd
+      type: proven_scene_script
+      status: activation_unproven
+      source_basis: supplied first block was axis_gizmo.tscn with ExtResource axis_gizmo.gd; no State006A active edge shown
+
+    - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.tscn
+      to: shared/scenes/monitor_group.tscn
+      type: proven_scene_declared_resource
+      status: proven
+      source_basis: State006A.tscn ExtResource and MonitorGroup scene instances
+
+    - from: shared/scenes/monitor_group.tscn
+      to: shared/scripts/monitor_group_controller.gd
+      type: proven_scene_script
+      status: proven
+      source_basis: monitor_group.tscn ExtResource script assignment
+
+    - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.tscn
+      to: shared/scripts/runtime_camera.gd
+      type: proven_scene_declared_resource
+      status: activation_unproven
+      source_basis: State006A.tscn ExtResource only; no RuntimeCamera node visible in supplied scene
+
+    - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.tscn
+      to: shared/scripts/attention_lens_controller.gd
+      type: proven_scene_declared_resource
+      status: proven
+      source_basis: State006A.tscn ExtResource and UI/TopBar/AttentionLens script assignment
+
+    - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.tscn
+      to: shared/scripts/runtime_memory.gd
+      type: proven_scene_declared_resource
+      status: proven
+      source_basis: State006A.tscn ExtResource and UI/RuntimeMemory script assignment
+
+    - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.tscn
+      to: shared/scripts/warning_persistence_controller.gd
+      type: proven_scene_declared_resource
+      status: proven
+      source_basis: State006A.tscn ExtResource and UI/Footer/FooterText script assignment
+
+    - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.gd
+      to: shared/scripts/runtime_memory.gd
+      type: proven_script_reference
+      status: proven
+      source_basis: State006A.gd calls RuntimeMemory methods via UI/RuntimeMemory
+      methods:
+        - get_selected_surface
+        - set_selected_surface
+        - get_selected_lens
+        - set_selected_lens
+        - get_expanded_groups
+        - set_expanded_groups
+
+    - from: shared/scripts/runtime_memory.gd
+      to: user://runtime_spine_memory.json
+      type: proven_script_call
+      status: proven
+      source_basis: memory_path FileAccess.open READ/WRITE JSON.parse_string JSON.stringify
+      active_fields_proven_in_State006A:
+        - selected_surface
+        - selected_lens
+        - expanded_monitor_groups
+      stored_fields_not_proven_active_in_State006A:
+        - orbit_state
+        - zoom_state
+
+    - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.gd
+      to: shared/scripts/attention_lens_controller.gd
+      type: proven_script_reference
+      status: proven
+      source_basis: State006A.gd signal and method calls via UI/TopBar/AttentionLens
+      methods:
+        - lens_changed
+        - set_lens
+        - get_expanded_groups_for_lens
+
+    - from: shared/scripts/attention_lens_controller.gd
+      to: monitor_group_exposure_sets
+      type: proven_script_call
+      status: proven
+      source_basis: get_expanded_groups_for_lens match selected_lens
+      lens_mappings:
+        STRUCTURE:
+          - currently_selected
+          - surfaced_structure
+        OMISSION:
+          - possibly_omitted
+          - boundary_warnings
+        BOUNDARY:
+          - boundary_warnings
+          - selection_counters
+        COUNTERFACTUAL:
+          - possibly_omitted
+          - boundary_warnings
+        SELECTION:
+          - currently_selected
+          - selection_counters
+
+    - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.gd
+      to: shared/scenes/monitor_group.tscn
+      type: proven_script_reference
+      status: proven
+      source_basis: State006A.gd monitor group calls via UI/MonitorStack children
+      methods:
+        - expansion_changed
+        - set_expanded
+        - set_body
+        - group_id
+        - expanded
+
+    - from: shared/scripts/monitor_group_controller.gd
+      to: Header
+      type: proven_nodepath_reference
+      status: proven
+      source_basis: $Header.pressed.connect toggle and Header.text update
+
+    - from: shared/scripts/monitor_group_controller.gd
+      to: Body
+      type: proven_nodepath_reference
+      status: proven
+      source_basis: $Body.visible and $Body.text updates
+
+    - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.gd
+      to: UI/RightControlsPanel/SelectAButton
+      type: proven_signal_connection
+      status: proven
+      source_basis: pressed.connect _select_surface selection_surface_001
+
+    - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.gd
+      to: UI/RightControlsPanel/SelectBButton
+      type: proven_signal_connection
+      status: proven
+      source_basis: pressed.connect _select_surface selection_surface_002
+
+    - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.gd
+      to: UI/CorePanel/CoreText
+      type: proven_nodepath_reference
+      status: proven
+      source_basis: CoreText.text update in _refresh
+
+    - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.gd
+      to: RuntimeCamera
+      type: proven_nodepath_reference
+      status: activation_unproven
+      source_basis: has_node("RuntimeCamera") and $RuntimeCamera.handle_input(event), but RuntimeCamera node not visible in supplied State006A.tscn
+
+    - from: shared/scripts/warning_persistence_controller.gd
+      to: UI/Footer/FooterText
+      type: active_process_behavior
+      status: proven
+      source_basis: extends Label; _ready sets text/modulate and set_process(true); _process rotates warning text and pulses opacity
+      exports:
+        - base_opacity
+        - active_opacity
+        - pulse_seconds
+      active_behavior:
+        - sets initial warning text
+        - applies base opacity
+        - enables process loop
+        - rotates warning text every pulse_seconds
+        - pulses opacity between base_opacity and active_opacity
+      external_references: none_found
+
+  unresolved_dependencies:
+    - actual shared/scenes/compass_widget.tscn still needed to prove CompassWidget scene-script attachment and child label nodes directly
+    - runtime_camera.gd declared as ExtResource but activation is unproven due missing RuntimeCamera node in supplied scene
+    - axis_gizmo.tscn / axis_gizmo.gd traced but not proven active in State006A
+    - exact downstream meaning of RuntimeMemory persistence remains governance-unproven
+    - RuntimeMemory orbit_state and zoom_state are stored fields but not proven active in State006A
+    - warning_persistence_controller.gd behavior is proven, but governance function remains unproven
+
+  dormant_infrastructure:
+    - shared/scripts/runtime_controller.gd
+    - shared/scripts/state_loader.gd
+    - state/state_registry.json
+    - modules/_registry/modules.json
+
+  proven_hot_path:
+    - from: project.godot
+      to: state/selection_interaction_boundary/state006a_selection_interaction_boundary.tscn
+      type: proven_boot
+      status: proven
+
+    - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.tscn
+      to: state/selection_interaction_boundary/state006a_selection_interaction_boundary.gd
+      type: proven_scene_script
+      status: proven
+
+    - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.gd
+      to: shared/scripts/runtime_memory.gd
+      type: proven_script_reference
+      status: proven
+
+    - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.gd
+      to: shared/scripts/attention_lens_controller.gd
+      type: proven_script_reference
+      status: proven
+
+    - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.gd
+      to: shared/scenes/monitor_group.tscn
+      type: proven_script_reference
+      status: proven
+
+    - from: shared/scenes/monitor_group.tscn
+      to: shared/scripts/monitor_group_controller.gd
+      type: proven_scene_script
+      status: proven
+
+    - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.tscn
+      to: shared/scripts/warning_persistence_controller.gd
+      type: proven_scene_declared_resource
+      status: proven
+
+    - from: shared/scripts/warning_persistence_controller.gd
+      to: UI/Footer/FooterText
+      type: active_process_behavior
+      status: proven
+
+    - from: state/selection_interaction_boundary/state006a_selection_interaction_boundary.tscn
+      to: shared/scenes/compass_widget.tscn
+      type: proven_scene_declared_resource
+      status: proven
+
+  cognition_infrastructure_members:
+    proven_active:
+      - shared/scripts/runtime_memory.gd
+      - shared/scripts/attention_lens_controller.gd
+      - shared/scenes/monitor_group.tscn
+      - shared/scripts/monitor_group_controller.gd
+      - shared/scripts/warning_persistence_controller.gd
+      - shared/scripts/compass_widget.gd
+    scene_instanced_internal_tscn_pending:
+      - shared/scenes/compass_widget.tscn
+    traced_not_active:
+      - shared/scenes/axis_gizmo.tscn
+      - shared/scripts/axis_gizmo.gd
+    activation_unproven:
+      - shared/scripts/runtime_camera.gd
+
+  blocked_promotion_notes:
+    - scene-declared dependency does not equal runtime behavior proven
+    - runtime behavior proven does not equal governance function proven
+    - warning freshness behavior does not equal governance review
+    - compass orientation behavior does not equal measurement or validation
+    - no inferred edges from naming alone
+    - current cleanup authority remains cache-only
+    - stored continuity fields do not equal active runtime use
+    - persistence does not equal identity or validation
+    - AxisGizmo trace does not prove State006A activation
+
+  next_trace_targets:
+    - shared/scenes/compass_widget.tscn
+    - shared/scripts/runtime_camera.gd
+    - shared/scripts/axis_gizmo.gd only if AxisGizmo becomes referenced
+
+  trace_requirements:
+    - ExtResource
+    - signal
+    - load
+    - preload
+    - NodePath
+    - instantiated_scene
+    - direct_method_call
+    - storage_path
+    - persistence_timing
+    - process_loop
+    - scene_script_attachment

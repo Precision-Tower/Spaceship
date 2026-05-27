@@ -1,0 +1,153 @@
+Runtime:
+  file: Runtime.yaml
+  role: operational_state_and_event_registry
+  authority: active_state_tracking_runtime_transitions_and_event_logging_only
+  status: phase_1_initial_runtime_lane
+
+  caution:
+    note: >
+      Runtime.yaml records active operational state, state transitions,
+      event observations, measurement status, anomaly status, and shutdown/hold
+      conditions. Runtime does not validate claims, certify readiness, define terms,
+      own physics, own engineering operators, or promote evidence.
+
+  owns:
+    - active_operational_state
+    - runtime_transition_records
+    - operational_event_logs
+    - state_observation_logs
+    - active_anomaly_register
+    - live_measurement_status
+    - hold_and_shutdown_conditions
+    - unresolved_runtime_variables
+
+  does_not_own:
+    - claim_validation
+    - operational_readiness
+    - seaworthiness
+    - safe_payload
+    - validated_stability
+    - reserve_buoyancy
+    - validated_restraint_safety
+    - long_term_durability
+    - semantic_identity
+    - causal_definitions
+    - physical_object_registry
+    - bridge_contracts
+    - engineering_operators
+    - prototype_geometry
+    - repository_topology
+
+  upstream:
+    - Structure.yaml
+    - CE-OS.yaml
+    - Lexicon.yaml
+    - Physics.yaml
+    - Interface.yaml
+    - Engine.yaml
+    - Governance.yaml
+    - Prototype.yaml
+
+  downstream:
+    - measurement_logs
+    - anomaly_reports
+    - maintenance_records
+    - validation_requests
+    - shutdown_records
+
+  runtime_states:
+    idle:
+      meaning: system present but not under active test or operation
+
+    mockup_measurement:
+      meaning: candidate geometry or subsystem is being measured
+
+    controlled_test:
+      meaning: bounded test condition is active
+
+    environmental_hold:
+      meaning: external condition blocks or pauses activity
+
+    anomaly_hold:
+      meaning: observed anomaly blocks continued transition
+
+    maintenance:
+      meaning: inspection repair adjustment or replacement is active
+
+    shutdown:
+      meaning: system is inactive by stop condition or operator decision
+
+  transition_schema:
+    required_fields:
+      - transition_id
+      - timestamp
+      - from_state
+      - to_state
+      - trigger_condition
+      - object_or_subsystem
+      - required_measurements
+      - unresolved_variables
+      - anomaly_check
+      - prohibited_claim_check
+    optional_fields:
+      - operator_dependency
+      - prototype_reference
+      - measurement_record_ids
+      - shutdown_condition
+      - governance_route
+
+  event_schema:
+    required_fields:
+      - event_id
+      - timestamp
+      - active_state
+      - object_or_subsystem
+      - observed_condition
+      - measurement_records
+      - anomaly_records
+      - unresolved_variables
+      - next_state_candidate
+      - prohibited_claim_check
+    optional_fields:
+      - operator_reference
+      - format_reference
+      - prototype_reference
+      - bridge_reference
+      - maintenance_action
+      - governance_route
+
+  prohibited_runtime_outputs:
+    - operational_readiness
+    - seaworthiness
+    - safe_payload
+    - validated_stability
+    - reserve_buoyancy
+    - validated_restraint_safety
+    - long_term_durability
+    - commercial_readiness
+
+  unresolved:
+    - runtime_schema_alignment_pending
+    - active_measurement_log_format_pending
+    - anomaly_thresholds_pending
+    - shutdown_condition_thresholds_pending
+    - state_transition_measurement_requirements_pending
+
+  contradiction_register:
+    - active_state_does_not_equal_operational_readiness
+    - runtime_observation_does_not_equal_validation
+    - completed_transition_does_not_equal_safe_operation
+    - anomaly_absence_does_not_equal validated_safety
+    - measured_event_does_not_equal_bounded_result_without_repeatability
+
+  recovery:
+    reconstructable_from:
+      - Structure.yaml
+      - Engine.yaml
+      - Governance.yaml
+      - Prototype.yaml
+
+    recovery_note: >
+      Runtime records what state the system is in and what happened.
+      It does not decide whether the system is validated, safe, seaworthy,
+      durable, or ready.

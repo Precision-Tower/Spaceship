@@ -1,0 +1,625 @@
+Interface:
+  file: Interface.yaml
+  role: boundary_contract_and_bridge_registry
+  authority: translation_boundaries_bridge_contracts_and_drift_control_only
+  status: phase_3_replacement_draft
+
+  caution:
+    note: >
+      Interface.yaml governs how repository authority lanes are allowed to connect.
+      It records bridge contracts, translation boundaries, blocked transfers,
+      drift checks, and pressure-triggered unlock rules. Interface does not own
+      topology, definitions, causal doctrine, physical objects, engineering measurements,
+      validation, or operational truth.
+
+  owns:
+    - bridge_contracts
+    - translation_boundaries
+    - blocked_transfers
+    - drift_checks
+    - authority_crossing_rules
+    - pressure_register
+    - unlock_thresholds
+    - recovery_pointers
+    - bridge_schema
+
+  does_not_own:
+    - repository_topology
+    - causal_definitions
+    - semantic_identity
+    - physical_object_registry
+    - variable_definitions
+    - engineering_operators
+    - claim_validation
+    - operational_readiness
+    - replacement_physics_claims
+
+  upstream:
+    - Structure.yaml
+    - CE-OS.yaml
+    - Physics.yaml
+    - Lexicon.yaml
+
+  downstream:
+    - Engine.yaml
+    - Governance.yaml
+    - Prototype.yaml
+    - measurement_plans
+    - interpretation_formats
+    - future_runtime_records
+
+  bridge_schema:
+    required_fields:
+      - name
+      - source
+      - target
+      - purpose
+      - allowed_transfers
+      - blocked_transfers
+      - drift_checks
+      - required_visible_fields
+      - recovery_pointer
+      - unresolved
+
+    optional_fields:
+      - pressure_domain
+      - unlock_threshold
+      - evidence_requirement
+      - failure_modes
+      - handoff_target
+
+    prohibited_fields:
+      - validation_decision
+      - canonical_definition_override
+      - causal_doctrine_override
+      - object_authority_override
+      - topology_ownership
+      - operational_readiness_claim
+
+  global_boundary_rules:
+    - one_bridge_one_record
+    - every_crossing_has_source_and_target
+    - every_bridge_points_back_to_owner_authorities
+    - Interface_controls_crossing_rules_but_not_source_authority
+    - Physics_identifies_bridge_required_Interface_governs_bridge_contract
+    - Lexicon_defines_terms_Physics_uses_terms
+    - CE_OS_defines_causal_discipline_other_files_reference_it
+    - Structure_routes_files_but_does_not_own_bridge_logic
+    - unresolved_items_remain_visible
+    - duplicated_doctrine_is_drift_risk
+    - bridge_language_must_not_merge_domains
+
+  prohibited_collapses:
+    - Interface_becomes_Structure
+    - Interface_becomes_Lexicon
+    - Interface_becomes_Physics
+    - Interface_becomes_CE_OS_lite
+    - Interface_becomes_Governance
+    - bridge_contract_becomes_validation
+    - translation_boundary_becomes_domain_merger
+    - repeated_bridge_summary_becomes_authority
+    - shorthand_becomes_canonical_definition
+    - mapped_interaction_becomes_validated_interaction
+
+  bridge_inventory:
+
+    Structure_Interface_boundary:
+      name: Structure_Interface_boundary
+      source: Structure.yaml
+      target: Interface.yaml
+      purpose: >
+        Preserve separation between repository topology and bridge governance.
+      allowed_transfers:
+        - Structure_may_point_to_Interface_as_bridge_registry
+        - Structure_may_list_Interface_as_core_file
+        - Interface_may_reference_Structure_for_route_recovery
+      blocked_transfers:
+        - Structure_absorbs_bridge_contract_logic
+        - Interface_owns_repository_topology
+        - routing_becomes_bridge_authority
+      drift_checks:
+        - if_bridge_logic_appears_in_Structure_then_move_to_Interface
+        - if_Interface_defines_file_topology_then_route_back_to_Structure
+      required_visible_fields:
+        - core_file_routes
+        - bridge_registry_pointer
+        - recovery_pointer
+      recovery_pointer:
+        - Structure.yaml
+        - Interface.yaml
+      unresolved: []
+
+    CE_OS_Interface_boundary:
+      name: CE_OS_Interface_boundary
+      source: CE-OS.yaml
+      target: Interface.yaml
+      purpose: >
+        Preserve CE-OS as causal doctrine authority while allowing Interface
+        to enforce crossings that reference CE-OS distinctions.
+      allowed_transfers:
+        - Interface_may_reference_causal_distinctions
+        - Interface_may_block_propagation_transfer_collapse
+        - Interface_may_require_domain_identity_preservation
+      blocked_transfers:
+        - Interface_redefines_interaction
+        - Interface_redefines_transfer_or_propagation
+        - Interface_redefines_causal_accounting_order
+        - bridge_contract_becomes_causal_doctrine
+      drift_checks:
+        - if_Interface_restates_CE_OS_doctrine_then_verify_exact_pointer
+        - if_duplicate_differs_then_CE_OS_governs
+        - prefer_pointer_over_restatement
+      required_visible_fields:
+        - interaction
+        - transfer
+        - propagation
+        - domain_separation
+        - causal_accounting_order
+      recovery_pointer:
+        - CE-OS.yaml
+        - Interface.yaml
+      unresolved: []
+
+    Lexicon_Physics_boundary:
+      name: Lexicon_Physics_boundary
+      source: Lexicon.yaml
+      target: Physics.yaml
+      purpose: >
+        Allow Physics to use controlled terms, codes, and aliases without allowing
+        Physics to mutate definitions or semantic identity.
+      allowed_transfers:
+        - Physics_may_reference_Lexicon_terms
+        - Physics_may_use_Lexicon_aliases_and_codes
+        - Physics_may_request_new_Lexicon_terms
+        - Lexicon_may_define_Physics_domain_terms
+      blocked_transfers:
+        - Physics_redefines_terms
+        - Physics_silently_changes_aliases
+        - object_topology_becomes_semantic_authority
+        - variable_attachment_becomes_definition
+        - term_usage_becomes_validation
+      drift_checks:
+        - any_new_domain_code_requires_Lexicon_record
+        - any_alias_used_in_Physics_must_point_to_Lexicon_primary_term
+        - repeated_uncontrolled_term_usage_triggers_Lexicon_update
+      required_visible_fields:
+        - primary_term
+        - aliases
+        - code
+        - definition
+        - admissible_uses
+        - prohibited_uses
+        - mutation_risks
+      recovery_pointer:
+        - Lexicon.yaml
+        - Physics.yaml
+      unresolved:
+        - future_term_candidates_from_Physics
+
+    Physics_Interface_boundary:
+      name: Physics_Interface_boundary
+      source: Physics.yaml
+      target: Interface.yaml
+      purpose: >
+        Preserve the rule that Physics identifies bridge requirements while
+        Interface owns bridge contracts and blocked transfers.
+      allowed_transfers:
+        - Physics_may_mark_bridge_required
+        - Physics_may_list_required_visible_variables
+        - Physics_may_identify_source_and_target_domains
+        - Interface_may_formalize_bridge_contract
+      blocked_transfers:
+        - Physics_owns_bridge_contract
+        - Physics_validates_cross_domain_transfer
+        - Interface_creates_physical_object_registry
+        - bridge_required_equals_bridge_validated
+      drift_checks:
+        - if_Physics_contains_blocked_transfer_logic_then_move_to_Interface
+        - if_Interface_contains_object_registry_then_move_to_Physics
+        - if_bridge_required_repeats_without_contract_then_create_bridge_record
+      required_visible_fields:
+        - source_domain
+        - target_domain
+        - bridge_required
+        - required_visible_variables
+        - unresolved_measurements
+      recovery_pointer:
+        - Physics.yaml
+        - Interface.yaml
+      unresolved:
+        - complete_bridge_records_for_all_cross_domain_interactions
+
+    Physics_CE_OS_boundary:
+      name: Physics_CE_OS_boundary
+      source: CE-OS.yaml
+      target: Physics.yaml
+      purpose: >
+        Allow Physics to preserve CE-OS causal distinctions while remaining
+        an object, domain, variable, and interaction registry.
+      allowed_transfers:
+        - Physics_may_reference_mass_centric_and_field_centric_distinctions
+        - Physics_may_classify_transfer_or_propagation
+        - Physics_may_preserve_causal_accounting_visibility
+      blocked_transfers:
+        - Physics_redefines_causal_primitives
+        - Physics_collapses_transfer_and_propagation
+        - Physics_turns_domain_label_into_causal_completion
+        - Physics_claims_validation_from_causal_mapping
+      drift_checks:
+        - any_transfer_or_propagation_conflict_routes_to_CE_OS
+        - if_domain_identity_blurs_then_require_Interface_bridge_record
+        - if_scalar_summary_hides_path_then_restore_interaction_path
+      required_visible_fields:
+        - domain
+        - interaction_type
+        - transfer_or_propagation
+        - constraints
+        - losses
+        - unresolved_measurements
+      recovery_pointer:
+        - CE-OS.yaml
+        - Physics.yaml
+      unresolved: []
+
+    Lexicon_Interface_boundary:
+      name: Lexicon_Interface_boundary
+      source: Lexicon.yaml
+      target: Interface.yaml
+      purpose: >
+        Allow Interface to use controlled semantic terms while preventing bridge
+        contracts from mutating definitions.
+      allowed_transfers:
+        - Interface_may_reference_Lexicon_terms
+        - Interface_may_flag_semantic_drift
+        - Interface_may_request_candidate_terms
+      blocked_transfers:
+        - Interface_defines_primary_terms
+        - bridge_contract_creates_alias_without_Lexicon
+        - drift_check_becomes_definition
+      drift_checks:
+        - all_bridge_terms_must_resolve_to_Lexicon_records
+        - uncontrolled_bridge_shorthand_routes_to_Lexicon_candidate_queue
+      required_visible_fields:
+        - primary_term
+        - aliases
+        - mutation_risks
+        - prohibited_uses
+      recovery_pointer:
+        - Lexicon.yaml
+        - Interface.yaml
+      unresolved:
+        - future_bridge_terms_requiring_Lexicon_records
+
+    Structure_Physics_boundary:
+      name: Structure_Physics_boundary
+      source: Structure.yaml
+      target: Physics.yaml
+      purpose: >
+        Allow Structure to route Physics as an authority lane without absorbing
+        physical object or domain registry content.
+      allowed_transfers:
+        - Structure_may_list_Physics_as_core_or_expanded_file
+        - Structure_may_point_to_Physics_for_physical_domains
+        - Physics_may_reference_Structure_for_file_location
+      blocked_transfers:
+        - Structure_contains_object_registry
+        - Structure_redefines_Physics_authority
+        - physical_topology_becomes_repository_topology
+      drift_checks:
+        - if_object_lists_appear_in_Structure_then_move_to_Physics
+        - if_Physics_routes_repository_files_then_move_to_Structure
+      required_visible_fields:
+        - Physics_file_route
+        - authority_lane
+        - recovery_pointer
+      recovery_pointer:
+        - Structure.yaml
+        - Physics.yaml
+      unresolved: []
+
+    Structure_Lexicon_boundary:
+      name: Structure_Lexicon_boundary
+      source: Structure.yaml
+      target: Lexicon.yaml
+      purpose: >
+        Allow Structure to route Lexicon without becoming semantic authority.
+      allowed_transfers:
+        - Structure_may_list_Lexicon_as_semantic_authority
+        - Lexicon_may_reference_Structure_for_recovery_route
+      blocked_transfers:
+        - Structure_defines_terms
+        - Structure_controls_aliases
+        - Structure_mutates_semantic_identity
+      drift_checks:
+        - if_definitions_appear_in_Structure_then_move_to_Lexicon
+        - if_Lexicon_routes_repository_topology_then_move_to_Structure
+      required_visible_fields:
+        - Lexicon_file_route
+        - semantic_authority_pointer
+      recovery_pointer:
+        - Structure.yaml
+        - Lexicon.yaml
+      unresolved: []
+
+  cross_domain_bridge_templates:
+
+    electrical_to_mechanical:
+      source_domain: EC
+      target_domain: ME
+      purpose: electrical_input_to_mechanical_output_mapping
+      allowed_transfers:
+        - voltage_current_to_torque_speed_variable_binding
+        - electrical_input_state_to_mechanical_output_state
+      blocked_transfers:
+        - electrical_domain_becomes_mechanical_domain
+        - efficiency_claim_without_measurement
+        - output_power_claim_without_load_test
+      required_visible_fields:
+        - input_voltage
+        - input_current
+        - output_torque
+        - output_speed
+        - temperature_rise
+        - losses
+      unresolved:
+        - measured_efficiency_curve
+        - load_condition_records
+
+    mechanical_to_electrical:
+      source_domain: ME
+      target_domain: EC
+      purpose: mechanical_input_to_electrical_output_mapping
+      allowed_transfers:
+        - torque_speed_to_voltage_current_variable_binding
+      blocked_transfers:
+        - rotational_motion_equals_validated_generation
+        - output_stability_claim_without_measurement
+      required_visible_fields:
+        - input_torque
+        - input_speed
+        - output_voltage
+        - output_current
+        - load_condition
+        - losses
+      unresolved:
+        - generator_curve
+        - output_stability_records
+
+    hydraulic_to_mechanical:
+      source_domain: FH
+      target_domain: ME
+      purpose: pressure_flow_to_force_displacement_mapping
+      allowed_transfers:
+        - hydraulic_pressure_to_linear_force
+        - flow_rate_to_displacement_rate
+      blocked_transfers:
+        - pressure_rating_equals_output_force_without_geometry
+        - hydraulic_capacity_equals_validated_load_capacity
+      required_visible_fields:
+        - hydraulic_pressure
+        - flow_rate
+        - actuator_area
+        - displacement
+        - leakage
+        - mechanical_output_force
+      unresolved:
+        - seal_loss_records
+        - pressure_drop_records
+
+    mechanical_to_hydraulic:
+      source_domain: ME
+      target_domain: FH
+      purpose: mechanical_input_to_fluid_pressure_or_flow_mapping
+      allowed_transfers:
+        - shaft_power_to_pressure_flow_variable_binding
+      blocked_transfers:
+        - motor_power_equals_pump_output_without_curve
+        - pump_presence_equals_validated_flow_capacity
+      required_visible_fields:
+        - input_torque
+        - input_speed
+        - output_pressure
+        - flow_rate
+        - leakage
+        - losses
+      unresolved:
+        - pump_curve
+        - cavitation_boundary
+
+    thermal_to_fluid:
+      source_domain: TE
+      target_domain: FD
+      purpose: thermal_state_change_to_fluid_state_change_mapping
+      allowed_transfers:
+        - temperature_gradient_to_density_pressure_or_flow_change
+        - phase_change_to_fluid_volume_or_pressure_change
+      blocked_transfers:
+        - heat_presence_equals_flow_prediction
+        - thermal_gradient_equals_validated_circulation
+      required_visible_fields:
+        - temperature_gradient
+        - fluid_density
+        - viscosity
+        - flow_rate
+        - pressure
+        - boundary_conditions
+      unresolved:
+        - measured_convection_path
+        - thermal_loss_path
+
+    fluid_to_structural:
+      source_domain: FD
+      target_domain: ME
+      purpose: fluid_load_to_structural_load_mapping
+      allowed_transfers:
+        - wave_drag_pressure_or_buoyancy_to_structural_load
+      blocked_transfers:
+        - observed_floatation_equals_validated_stability
+        - calm_water_behavior_equals_sea_state_capability
+      required_visible_fields:
+        - wave_height
+        - current_speed
+        - pressure_distribution
+        - contact_area
+        - structural_deflection
+        - attachment_load
+      unresolved:
+        - cyclic_loading_records
+        - impact_loading_records
+
+    magnetic_to_mechanical:
+      source_domain: FX
+      target_domain: ME
+      purpose: magnetic_field_behavior_to_mechanical_force_or_motion_mapping
+      allowed_transfers:
+        - magnetic_force_to_mechanical_load_or_motion_variable_binding
+      blocked_transfers:
+        - magnetic_alignment_equals_free_work
+        - field_presence_equals_validated_force_output
+      required_visible_fields:
+        - magnetic_flux
+        - field_strength
+        - gap_distance
+        - coupling_distance
+        - mechanical_force
+        - losses
+      unresolved:
+        - force_distance_curve
+        - magnetic_saturation_boundary
+
+    electromagnetic_to_thermal:
+      source_domain: EMW
+      target_domain: TE
+      purpose: radiation_absorption_to_thermal_state_change_mapping
+      allowed_transfers:
+        - radiation_input_to_temperature_change
+        - absorption_to_heat_flux_variable_binding
+      blocked_transfers:
+        - radiation_presence_equals_heating_prediction
+        - absorbed_energy_equals_uniform_temperature_change
+      required_visible_fields:
+        - frequency
+        - wavelength
+        - amplitude_or_intensity
+        - material_absorptivity
+        - temperature_change
+        - heat_loss_path
+      unresolved:
+        - absorption_spectrum
+        - thermal_distribution_record
+
+  pressure_register:
+
+    semantic_drift:
+      pressure_source:
+        - uncontrolled_aliases
+        - shorthand_terms
+        - repeated_paraphrase_of_same_concept
+      drift_risk: high
+      authority_collision_risk:
+        - Lexicon_vs_Physics
+        - Lexicon_vs_Interface
+      unlock_threshold:
+        - same_term_used_with_multiple_meanings
+        - new_domain_code_appears_without_definition
+      recommended_action:
+        - create_or_update_Lexicon_record
+
+    bridge_growth:
+      pressure_source:
+        - repeated_cross_domain_mappings
+        - bridge_required_without_contract
+        - blocked_transfer_logic_appearing_outside_Interface
+      drift_risk: high
+      authority_collision_risk:
+        - Physics_vs_Interface
+      unlock_threshold:
+        - same_bridge_pattern_used_more_than_once
+        - bridge_summary_repeated_in_multiple_files
+      recommended_action:
+        - create_Interface_bridge_record
+
+    governance_pressure:
+      pressure_source:
+        - validation_language
+        - performance_claims
+        - safety_claims
+        - readiness_claims
+      drift_risk: medium
+      authority_collision_risk:
+        - Interface_vs_Governance
+        - Physics_vs_Governance
+      unlock_threshold:
+        - evidence_promotion_or_prohibited_claim_language_repeats
+      recommended_action:
+        - create_or_update_Governance_record
+
+    engineering_pressure:
+      pressure_source:
+        - repeated_variable_use
+        - operator_patterns
+        - margin_tracking
+        - measurement_records
+      drift_risk: medium
+      authority_collision_risk:
+        - Physics_vs_Engine
+      unlock_threshold:
+        - variable_requires_computable_operator_or_margin_logic
+      recommended_action:
+        - create_or_update_Engine_record
+
+  unresolved:
+    - complete_bridge_records_for_future_cross_domain_interactions
+    - final_Governance_boundary_when_Governance_yaml_is_rebuilt
+    - Engine_boundary_when_Engine_yaml_is_rebuilt
+    - Prototype_boundary_when_Prototype_yaml_is_rebuilt
+    - Runtime_boundary_if_operational_state_tracking_reappears
+
+  contradiction_register:
+    - bridge_needed_does_not_mean_bridge_validated
+    - translation_boundary_does_not_mean_domain_equivalence
+    - repeated_bridge_pattern_does_not_create_authority
+    - semantic_alias_does_not_replace_primary_definition
+    - physical_mapping_does_not_validate_performance
+    - causal_distinction_reference_does_not_transfer_CE_OS_authority
+    - topology_route_does_not_create_bridge_contract
+
+  prohibited_claims:
+    - interface_validates_claims
+    - bridge_contract_proves_physical_model
+    - cross_domain_mapping_equals_efficiency
+    - translation_equals_equivalence
+    - blocked_transfer_equals_disproof
+    - bridge_registry_equals_topology
+    - interface_replaces_governance
+    - interface_replaces_lexicon
+    - interface_replaces_physics
+    - interface_replaces_CE_OS
+
+  recovery:
+    reconstructable_from:
+      - Structure.yaml
+      - CE-OS.yaml
+      - Physics.yaml
+      - Lexicon.yaml
+      - prior_Interface_file
+      - phase_3_boundary_notes
+
+    recovery_requirements:
+      - every_bridge_has_one_record
+      - every_bridge_points_to_source_and_target_authorities
+      - every_blocked_transfer_remains_visible
+      - every_drift_check_has_owner_authority
+      - every_cross_domain_mapping_preserves_domain_identity
+      - unresolved_items_remain_visible
+
+    compression_rule:
+      - one_bridge_one_record
+      - pointers_over_restatement
+      - bridge_logic_in_Interface
+      - topology_out
+      - definitions_out
+      - objects_out
+      - validation_out
+      - blocked_transfers_visible
+      - drift_checks_visible

@@ -1,0 +1,2975 @@
+Eyes:
+  file: Eyes_v1_1.yaml
+  role: operational_observation_and_packet_contracts
+  status: v1_1_observation_packet_contract_candidate
+  authority: observation_patterns_and_packet_shape_only_not_project_truth
+  canon: false
+  validation_authority: false
+
+  references:
+    gear_kernel_bridge: ./GearKernelBridge.yaml
+    simulation_bridge: ./SimulationBridge.yaml
+    vision_ops: ./VisionOps.yaml
+    godot_ops: ./GodotOps.yaml
+    simulate: ./Simulate.yaml
+    evidence: ./Evidence.yaml
+    boundary: ./Boundary.yaml
+    shared_kernel: ../../Shared/CE-OSv1.yaml
+    shared_directory: ../../Shared/Directory.yaml
+
+  purpose:
+    - capture_reusable_observation_flows
+    - preserve_command_usage_examples
+    - define_bounded_observation_packet_shapes
+    - show_where_outputs_should_land
+    - prevent_observation_outputs_from_becoming_canon
+    - keep_project_truth_in_Projects_or_Designs
+    - make_visual_runtime_outputs_bridgeable_without_promoting_them
+
+  owns:
+    - observation_flow_patterns
+    - snapshot_flow_examples
+    - visualization_flow_examples
+    - report_event_flow_examples
+    - bounded_output_routing
+    - observation_packet_contracts
+    - raw_vs_interpreted_observation_boundary
+    - display_only_label_requirements
+
+  does_not_own:
+    - project_truth
+    - runtime_execution
+    - Godot_API_behavior
+    - simulation_validation
+    - measurement_truth
+    - evidence_promotion
+    - canon_promotion
+    - operational_readiness
+
+  prime_rule: observations_are_not_canon
+
+  packet_contracts:
+
+    ObservationPacket:
+      role: minimum_common_packet_for_any_Eyes_flow
+      authority: packet_shape_only_not_truth
+      required_fields:
+        - packet_id
+        - packet_type
+        - source_files_consulted
+        - object_or_system
+        - observation_type
+        - declared_state
+        - observer_stack
+        - raw_vs_interpreted
+        - evidence_state
+        - known_variables
+        - unresolved_variables
+        - contradictions_carried
+        - prohibited_interpretations
+        - recommended_destination
+        - route_status
+        - created_by
+        - created_at
+      field_rules:
+        packet_id: unique_local_identifier_required
+        packet_type:
+          allowed_values:
+            - snapshot_packet
+            - simulation_trial_request_packet
+            - visual_transition_packet
+            - runtime_report_packet
+            - display_only_packet
+        source_files_consulted:
+          rule: list_source_paths_or_ids_consulted_do_not_imply_authority_transfer
+        object_or_system:
+          rule: name_target_under_observation_without_claiming_identity_validation
+        observation_type:
+          allowed_values:
+            - declared_state_view
+            - modeled_trial_request
+            - visual_transition_request
+            - runtime_event_report
+            - display_only_visualization
+            - unresolved_state_note
+        declared_state:
+          rule: bounded_description_of_what_is_declared_seen_or_requested
+        observer_stack:
+          rule: must_identify_human_instrument_runtime_or_visual_observer_context
+          minimum_fields:
+            - observer_stack_id
+            - observer_type
+            - sensory_or_sensor_channel
+            - sensing_boundary
+            - filtering_or_interpretation_condition
+            - admissible_scope
+            - blocked_scope
+        raw_vs_interpreted:
+          allowed_values:
+            - raw_observation
+            - interpreted_observation
+            - filtered_display
+            - rendered_visualization
+            - summary_note
+            - unresolved
+          rule: must_not_collapse_perception_measurement_render_and_summary
+        evidence_state:
+          allowed_values:
+            - none
+            - conceptual
+            - modeled
+            - observed
+            - measured_candidate
+            - unresolved
+          blocked_values:
+            - validated
+            - operational
+            - safe
+            - ready
+          rule: Eyes_may_carry_evidence_state_labels_but_may_not_promote_them
+        route_status:
+          allowed_values:
+            - draft
+            - route_requested
+            - route_received
+            - record_created
+            - display_updated_only
+            - route_failed
+            - route_deferred
+            - route_closed_without_support
+          rule: signal_or_display_update_does_not_equal_record_creation
+        prohibited_interpretations:
+          required_defaults:
+            - observation_equals_validation
+            - visualization_equals_evidence
+            - simulation_equals_validation
+            - measurement_equals_validation
+            - display_state_equals_source_truth
+            - clean_output_equals_confidence
+            - route_status_equals_claim_support
+
+    SnapshotPacket:
+      inherits_from: ObservationPacket
+      packet_type: snapshot_packet
+      purpose: produce_bounded_declared_state_view
+      required_additions:
+        - declared_configuration
+        - dominant_risks
+        - measurement_gaps
+        - recommended_destination
+      default_destination: Projects_or_Designs
+      evidence_binding:
+        may_reference_evidence_records: true
+        may_create_evidence_record: false
+        may_promote_evidence_state: false
+
+    SimulationTrialRequestPacket:
+      inherits_from: ObservationPacket
+      packet_type: simulation_trial_request_packet
+      purpose: request_model_run_under_declared_assumptions
+      required_additions:
+        - model_assumptions
+        - boundary_conditions
+        - variables_to_sweep
+        - expected_outputs
+        - prohibited_claims
+      default_destination: Projects_or_Designs
+      evidence_binding:
+        simulation_output_state: modeled_only
+        may_create_evidence_record: false
+        may_promote_to_observed: false
+        may_promote_to_validated: false
+
+    VisualTransitionPacket:
+      inherits_from: ObservationPacket
+      packet_type: visual_transition_packet
+      purpose: request_or_record_visual_display_of_state_or_transition
+      required_additions:
+        - transition_candidate
+        - source_state
+        - target_state
+        - displayed_variables
+        - omitted_variables
+        - display_compression_used
+        - source_record_ids
+      default_destination: Projects_or_Designs
+      display_rule:
+        if_source_record_ids_missing: must_label_display_only_no_source_record
+        if_route_incomplete: must_label_route_failed_or_pending
+      evidence_binding:
+        visual_output_is_evidence: false
+        may_reference_records: true
+        may_create_evidence_record: false
+        may_promote_visual_plausibility: false
+
+    RuntimeReportPacket:
+      inherits_from: ObservationPacket
+      packet_type: runtime_report_packet
+      purpose: report_observed_runtime_event_without_claim_promotion
+      required_additions:
+        - event_boundary
+        - route_origin
+        - route_destination
+        - downstream_records_created
+        - records_missing
+        - claims_blocked
+      default_destination: Projects_or_Designs
+      runtime_binding:
+        runtime_state_is_not_canon: true
+        runtime_event_may_reference_evidence_ids: true
+        runtime_event_may_not_absorb_evidence_content: true
+
+  flows:
+    request_snapshot:
+      purpose: produce_bounded_declared_state_view
+      output_type: SnapshotPacket
+      output_lands_in: Projects_or_Designs
+      required_packet: packet_contracts.SnapshotPacket
+      prohibited:
+        - validation_claim
+        - readiness_claim
+        - safety_claim
+        - canon_mutation
+        - measurement_substitution
+      output_contains:
+        - source_files_consulted
+        - declared_configuration
+        - evidence_state
+        - known_variables
+        - unresolved_variables
+        - dominant_risks
+        - prohibited_interpretations
+        - recommended_destination
+      example:
+        name: BAS_Test_0_request_snapshot
+        source: Designs/Buoyancy Actuator/BAS
+        note: example_only_actual_design_state_lives_downstream
+
+    request_simulation_trial:
+      purpose: request_model_run_under_declared_assumptions
+      output_type: SimulationTrialRequestPacket
+      output_lands_in: Projects_or_Designs
+      required_packet: packet_contracts.SimulationTrialRequestPacket
+      prohibited:
+        - simulation_equals_validation
+        - output_equals_evidence
+        - operational_readiness_claim
+        - clean_model_equals_truth
+
+    visualize_transition:
+      purpose: request_visual_display_of_state_or_transition
+      output_type: VisualTransitionPacket
+      output_lands_in: Projects_or_Designs
+      required_packet: packet_contracts.VisualTransitionPacket
+      prohibited:
+        - visualization_equals_evidence
+        - render_equals_truth
+        - visual_plausibility_equals_validation
+        - display_state_equals_source_truth
+
+    report_runtime_event:
+      purpose: report_observed_runtime_event_without_claim_promotion
+      output_type: RuntimeReportPacket
+      output_lands_in: Projects_or_Designs
+      required_packet: packet_contracts.RuntimeReportPacket
+      prohibited:
+        - runtime_state_equals_canon
+        - signal_fired_equals_route_completed
+        - record_created_equals_evidence_supported
+        - event_seen_equals_event_validated
+
+  evidence_binding_rules:
+    - Eyes_packets_may_reference_Evidence_records_but_not_create_validation
+    - SnapshotPacket_may_carry_evidence_state_labels_without_promoting_them
+    - VisualTransitionPacket_is_display_only_unless_source_records_are_declared
+    - SimulationTrialRequestPacket_remains_modeled_only_until_observed_and_measured_elsewhere
+    - RuntimeReportPacket_may_reference_EvidenceRecord_ids_but_may_not_absorb_Evidence_content
+    - observer_stack_identity_required_before_cross_observer_comparison
+    - raw_filtered_rendered_and_summarized_states_must_remain_distinct
+
+  routing_rules:
+    - command_meanings_route_to_SimulationBridge
+    - authority_boundaries_route_to_GearKernelBridge
+    - visual_interpretation_routes_to_VisionOps
+    - Godot_behavior_routes_to_GodotOps
+    - simulation_construction_routes_to_Simulate
+    - evidence_state_tracking_routes_to_Evidence
+    - claim_boundary_pressure_routes_to_Boundary_or_Governance
+    - actual_outputs_land_in_Projects_or_Designs
+
+  compression_rule:
+    - capture_the_maneuver_not_the_project_result
+    - examples_are_not_project_records
+    - observation_patterns_may_be_reused
+    - downstream_truth_must_remain_downstream
+    - packet_shape_does_not_create_authority
+    - source_record_ids_must_survive_summary
+
+  unresolved:
+    - whether_packet_storage_lives_in_Godot_resources_or_external_project_files
+    - whether_route_status_belongs_inside_RuntimeEvent_or_separate_RouteRecord
+    - whether_bridge_loss_gets_own_record_type_or_packet_fields
+    - exact_serialization_format_for_packet_ids_and_source_record_ids
+    - whether_human_Senses_records_get_separate_packet_contract
+
+Observation:
+  file: Observation.yaml
+  role: bounded_runtime_observation_and_route_integrity_layer
+  status: v1_candidate
+  authority: observation_lineage_and_route_integrity_only_not_validation_authority
+  canon: false
+  validation_authority: false
+  evidence_authority: false
+  governance_authority: false
+  physics_authority: false
+  runtime_execution_authority: false
+
+  core_rule: >
+    Observation preserves what was seen, how it was seen, what transformed it,
+    what was lost, what failed, what remained unresolved, and how the route
+    behaved. Observation does not validate, prove, certify, promote evidence
+    state, resolve truth, imply safety, imply stability, imply readiness, or
+    make displays authoritative.
+
+  mission:
+    - preserve_runtime_observation_lineage_between_runtime_occurrence_observation_packet_evidence_ledger_display_surface_and_governance_review
+    - preserve_source_lineage
+    - preserve_observer_identity
+    - preserve_route_integrity
+    - preserve_unresolved_persistence
+    - preserve_contradiction_carry_forward
+    - preserve_display_only_labeling
+    - preserve_route_failure_visibility
+    - preserve_raw_vs_interpreted_distinctions
+    - preserve_authority_separation
+    - expose_clean_UI_confidence_laundering
+    - prevent_dashboard_theater_from_replacing_records
+
+  not_for:
+    - claim_validation
+    - evidence_state_promotion
+    - governance_decision
+    - physics_object_authority
+    - runtime_execution
+    - canon_creation
+    - operational_readiness
+    - safety_claims
+    - stability_claims
+    - evidence_sufficiency_claims
+
+  owns:
+    - observation_identity
+    - runtime_observation_discipline
+    - route_integrity_discipline
+    - observer_stack_preservation
+    - packet_lineage_continuity
+    - source_record_continuity_checks
+    - raw_vs_interpreted_preservation
+    - display_authority_containment
+    - contradiction_survivability
+    - unresolved_carry_forward_checks
+    - route_failure_visibility
+    - orphan_summary_detection
+
+  does_not_own:
+    - validation
+    - evidence_authority
+    - governance_authority
+    - physics_object_registry
+    - runtime_execution
+    - semantic_identity
+    - engineering_operator_definitions
+    - source_truth
+    - safety
+    - stability
+    - readiness
+    - canon
+
+  prohibited_promotions:
+    - visualization_equals_evidence
+    - observation_equals_validation
+    - route_completion_equals_claim_support
+    - display_state_equals_source_truth
+    - filtered_display_equals_raw_record
+    - summary_equals_source_authority
+    - clean_UI_equals_confidence
+    - latest_state_equals_causal_history
+    - contradiction_absence_equals_resolution
+    - route_received_equals_record_created
+    - signal_fired_equals_route_completed
+    - packet_created_equals_ledger_record_created
+    - ledger_write_confirmed_equals_claim_supported
+    - viewer_render_confirmed_equals_source_valid
+    - observer_stack_declared_equals_observer_stack_preserved
+    - unresolveds_listed_once_equals_unresolveds_carried_forward
+
+  evidence_state_boundary:
+    rule:
+      - Observation_may_carry_evidence_state_labels_from_source_records_or_Evidence
+      - Observation_may_flag_missing_or_inconsistent_evidence_state_labels
+      - Observation_must_not_promote_evidence_state
+      - Observation_must_not_downgrade_evidence_state_as_truth_decision
+      - Observation_must_not_treat_route_success_as_evidence_support
+    allowed_labels:
+      - none
+      - conceptual
+      - asserted
+      - reasoned
+      - simulated
+      - observed
+      - measured
+      - bounded
+      - repeatable
+      - governance_review_required
+      - validated_reference_only_if_supplied_by_governed_source
+    blocked_inferences:
+      - observed_to_measured_without_method_units_context_uncertainty
+      - measured_to_validated_without_governance_route
+      - repeatable_to_operational_without_scope_and_governance_review
+      - displayed_to_supported_without_source_record
+      - clean_route_to_claim_support
+
+  identity_layer:
+    purpose:
+      - preserve_identity_of_observation_packet_source_record_route_attempt_observer_stack_and_lineage
+      - prevent_route_or_display_surfaces_from_detaching_observations_from_source_records
+      - preserve_timestamp_and_transformation_continuity
+      - expose_identity_loss_as_route_failure_not_cosmetic_warning
+
+    owns:
+      - observation_identity
+      - observer_stack_identity
+      - route_lineage_identity
+      - packet_lineage_continuity
+      - source_record_continuity
+
+    required_identity_fields:
+      - observation_packet_id
+      - packet_type
+      - source_record_id
+      - parent_record_ids
+      - route_attempt_id
+      - runtime_event_id
+      - observer_stack_id
+      - created_by
+      - created_at
+      - source_timestamp
+      - packet_timestamp
+      - ledger_timestamp
+      - viewer_timestamp
+      - timestamp_continuity_status
+      - transformation_lineage
+      - authority_labels
+      - lineage_integrity_status
+
+    observation_identity_record:
+      required_fields:
+        - observation_packet_id
+        - packet_type
+        - object_or_system
+        - observation_type
+        - runtime_event_id
+        - source_record_id
+        - parent_record_ids
+        - route_attempt_id
+        - observer_stack_id
+        - raw_vs_interpreted
+        - current_evidence_state
+        - authority_scope
+        - blocked_scope
+        - unresolved_variables
+        - contradiction_links
+        - prohibited_interpretations
+        - route_status
+        - lineage_integrity_status
+
+    source_record_continuity_record:
+      required_fields:
+        - source_record_id
+        - runtime_event_id
+        - emitter_identity
+        - source_system
+        - source_schema_version
+        - raw_payload_reference
+        - creation_status
+        - creation_timestamp
+        - parent_record_ids
+        - child_record_ids
+        - checksum_or_hash_if_available
+        - missing_field_flags
+        - unresolved_source_risks
+      hard_rules:
+        - no_source_record_id_means_no_source_record_claim
+        - source_record_declared_is_not_source_record_created
+        - source_payload_reference_missing_blocks_raw_record_claim
+        - source_schema_missing_blocks_route_integrity_claim
+
+    route_lineage_identity_record:
+      required_fields:
+        - route_attempt_id
+        - source_record_id
+        - observation_packet_id
+        - evidence_record_id_if_created
+        - viewer_render_id_if_created
+        - summary_record_id_if_created
+        - route_state_history
+        - route_mutation_history
+        - failed_hops
+        - dropped_fields
+        - transformed_fields
+        - unresolved_transformations
+        - route_closure_state
+
+    timestamp_continuity:
+      required_fields:
+        - source_timestamp
+        - packet_timestamp
+        - ledger_write_attempt_timestamp
+        - ledger_write_confirmed_timestamp
+        - viewer_render_attempt_timestamp
+        - viewer_render_confirmed_timestamp
+        - summary_generated_timestamp
+        - clock_source
+        - ordering_assumption
+        - synchronization_quality
+        - unresolved_ordering_risks
+      blocked_inferences:
+        - timestamp_order_equals_causal_order_without_sync_review
+        - latest_timestamp_equals_authoritative_state
+        - viewer_timestamp_replaces_source_timestamp
+
+    failure_conditions:
+      - observation_packet_without_source_record_id
+      - route_attempt_without_route_attempt_id
+      - observer_stack_id_dropped_downstream
+      - parent_record_ids_removed_by_summary
+      - timestamp_chain_broken_without_failure_label
+      - transformation_lineage_missing
+      - source_record_claim_without_creation_status
+      - evidence_record_id_claim_without_ledger_confirmation
+
+  route_integrity_layer:
+    purpose:
+      - define_route_status_state_machine
+      - preserve_partial_failed_and_quarantined_route_semantics
+      - prevent_signal_fired_from_becoming_route_completed
+      - prevent_route_completion_from_becoming_claim_support
+      - expose_route_mutations_and_route_failures
+
+    core_rule: Signal fired != route completed.
+
+    route_status_state_machine:
+      states:
+        draft:
+          meaning: route_or_packet_is_declared_but_not_executed
+          supports:
+            - conceptual_route_discussion
+            - schema_review
+          does_not_support:
+            - source_record_created
+            - packet_created
+            - ledger_write
+            - viewer_render
+            - evidence_support
+
+        source_record_created:
+          meaning: source_record_exists_with_required_identity_fields
+          entry_requirements:
+            - source_record_id
+            - runtime_event_id
+            - emitter_identity
+            - creation_timestamp
+            - raw_payload_reference_or_explicit_raw_missing_label
+          does_not_support:
+            - observation_packet_created
+            - evidence_record_created
+            - claim_support
+
+        packet_created:
+          meaning: ObservationPacket_exists_and_links_to_source_record_or_explicitly_flags_missing_source
+          entry_requirements:
+            - observation_packet_id
+            - route_attempt_id
+            - source_record_id_or_source_missing_label
+            - observer_stack_id
+            - unresolved_variables
+            - prohibited_interpretations
+            - current_evidence_state
+          does_not_support:
+            - ledger_write_confirmed
+            - viewer_render_confirmed
+            - validation
+
+        ledger_write_attempted:
+          meaning: packet_write_to_evidence_ledger_was_attempted
+          entry_requirements:
+            - ledger_target_id
+            - write_attempt_timestamp
+            - payload_reference
+          does_not_support:
+            - ledger_record_created
+            - evidence_acceptance
+            - evidence_state_promotion
+
+        ledger_write_confirmed:
+          meaning: ledger_acknowledged_record_creation_or_update
+          entry_requirements:
+            - evidence_record_id
+            - ledger_confirmation_timestamp
+            - ledger_response_status
+            - fields_written
+            - fields_dropped_or_transformed
+          does_not_support:
+            - claim_supported
+            - validation
+            - governance_review
+
+        viewer_render_attempted:
+          meaning: display_surface_render_attempt_was_started
+          entry_requirements:
+            - viewer_surface_id
+            - render_attempt_timestamp
+            - render_payload_reference
+          does_not_support:
+            - viewer_render_confirmed
+            - source_truth
+            - evidence_support
+
+        viewer_render_confirmed:
+          meaning: display_surface_rendered_packet_or_route_state
+          entry_requirements:
+            - viewer_render_id
+            - render_confirmed_timestamp
+            - displayed_authority_labels
+            - displayed_route_status
+            - displayed_evidence_state
+            - displayed_unresolveds
+            - displayed_contradictions
+          does_not_support:
+            - display_state_equals_source_truth
+            - visualization_equals_evidence
+            - clean_UI_equals_confidence
+
+        partial_route:
+          meaning: one_or_more_route_hops_succeeded_and_one_or_more_expected_hops_missing_failed_or_unconfirmed
+          required_labels:
+            - partial_route
+            - unsupported_route_completion
+            - missing_or_failed_hops_visible
+          does_not_support:
+            - route_completed
+            - claim_support
+
+        route_failed:
+          meaning: route_attempt_failed_at_one_or_more_required_hops
+          required_fields:
+            - failed_hop
+            - failure_timestamp
+            - failure_reason_if_known
+            - fields_preserved
+            - fields_lost
+            - downstream_surfaces_notified
+          does_not_support:
+            - route_completion
+            - evidence_record_created
+            - display_confidence
+
+        quarantined:
+          meaning: packet_or_route_surface_is_isolated_due_to_authority_bleed_identity_loss_missing_source_or_overclaim_pressure
+          quarantine_triggers:
+            - source_missing_but_displayed_as_evidence
+            - observer_stack_dropped
+            - contradiction_removed
+            - unresolveds_removed
+            - validation_language_detected
+            - display_claims_authority
+            - summary_replaces_source
+            - route_status_mutated_without_authority
+          does_not_support:
+            - any_claim_advancement
+
+        display_only:
+          meaning: displayed_information_is_inspection_surface_only_and_not_source_authority
+          required_labels:
+            - display_only_not_evidence
+            - not_validation
+            - source_lineage_required_for_claims
+          does_not_support:
+            - evidence_record_exists
+            - source_truth
+            - claim_support
+
+        route_closed_without_support:
+          meaning: route_attempt_has_been_closed_and_explicitly_provides_no_claim_support
+          required_fields:
+            - closure_reason
+            - final_route_status
+            - unsupported_claims_blocked
+            - unresolveds_remaining
+            - contradictions_remaining
+          does_not_support:
+            - validation
+            - readiness
+            - safety
+            - stability
+
+    route_transition_rules:
+      - draft_may_transition_to_source_record_created_or_packet_created_with_source_missing_label
+      - source_record_created_may_transition_to_packet_created
+      - packet_created_may_transition_to_ledger_write_attempted_or_viewer_render_attempted_as_display_only
+      - ledger_write_attempted_may_transition_to_ledger_write_confirmed_or_route_failed_or_partial_route
+      - viewer_render_attempted_may_transition_to_viewer_render_confirmed_or_route_failed_or_partial_route
+      - any_state_may_transition_to_quarantined_if_authority_bleed_or_identity_loss_occurs
+      - any_incomplete_route_must_remain_partial_route_or_route_failed_not_silent_success
+      - route_closed_without_support_may_follow_any_state_after_explicit_closure_review
+
+    route_mutation_authority_boundaries:
+      allowed_to_set_initial_route_status:
+        - Runtime_when_emitting_event
+        - Observation_when_creating_packet
+      allowed_to_confirm_ledger_write:
+        - Evidence_ledger_only
+      allowed_to_confirm_viewer_render:
+        - Viewer_display_surface_only_with_display_only_label
+      allowed_to_quarantine:
+        - Observation
+        - Grant
+        - Boundary
+        - Governance
+      allowed_to_promote_claim_support:
+        - none_within_Observation
+      blocked_mutations:
+        - viewer_mutates_evidence_state
+        - summary_mutates_route_status
+        - runtime_event_mutates_validation_state
+        - Observation_promotes_claim_status
+        - route_completion_mutates_claim_support
+        - display_render_mutates_source_record
+
+    partial_route_semantics:
+      rule:
+        - partial_routes_are_first_class_records_not_UI_warnings
+        - partial_routes_must_preserve_successful_hops_failed_hops_missing_hops_and_unconfirmed_hops
+        - partial_route_status_must_display_downstream_if_any_display_occurs
+      required_fields:
+        - successful_hops
+        - failed_hops
+        - missing_hops
+        - unconfirmed_hops
+        - fields_lost
+        - observer_stack_preserved
+        - unresolveds_preserved
+        - contradictions_preserved
+
+    failed_route_semantics:
+      rule:
+        - failed_routes_must_be_visible_at_the_display_layer_if_display_occurs
+        - failed_routes_must_not_be_summarized_as_no_data_without_failure_lineage
+        - failed_routes_must_not_render_as_empty_clean_panels
+      required_fields:
+        - failed_hop
+        - failure_mode
+        - failure_timestamp
+        - failure_surface
+        - preserved_records
+        - missing_records
+        - orphaned_outputs
+        - required_recovery_action
+
+    quarantined_route_semantics:
+      rule:
+        - quarantine_blocks_claim_use_without_destroying_reconstructability
+        - quarantined_packets_remain_available_for_debug_lineage_and_authority_review
+        - quarantine_is_not_validation_failure_or_truth_decision
+      required_fields:
+        - quarantine_reason
+        - triggering_record
+        - prohibited_interpretation_detected
+        - authority_bleed_detected
+        - preserved_lineage
+        - unresolveds_remaining
+        - required_review_route
+
+  observer_layer:
+    purpose:
+      - preserve_observer_stack_topology
+      - preserve_instrumentation_conditions
+      - preserve_filtering_conditions
+      - preserve_display_transformation_boundaries
+      - preserve_observer_induced_ambiguity
+      - prevent_sensor_display_or_human_inspection_from_becoming_neutral_by_assumption
+
+    hard_rules:
+      - no_observer_is_neutral_by_assumption
+      - no_display_is_topology_free
+      - no_filtering_is_epistemically_invisible
+      - human_UI_inspection_is_an_observer_stack_not_truth_access
+      - observed_behavior_is_behavior_under_declared_observer_conditions
+      - observer_stack_declared_does_not_mean_observer_stack_preserved
+
+    observer_stack_record:
+      required_fields:
+        - observer_stack_id
+        - observer_type
+        - observer_objects
+        - sensory_or_sensor_channel
+        - sensing_boundary
+        - instrumentation_properties
+        - signal_processing_properties
+        - filtering_conditions
+        - display_surface_id
+        - display_transformation_steps
+        - synchronization_conditions
+        - latency_or_refresh_conditions
+        - observer_induced_pathway_candidates
+        - observer_vs_observed_ambiguity
+        - admissible_scope
+        - blocked_scope
+        - persistence_status
+        - dropped_or_mutated_fields
+        - unresolved_observer_risks
+
+    display_observer_record:
+      required_fields:
+        - display_surface_id
+        - display_surface_type
+        - data_source_reference
+        - render_transformations
+        - filtering_or_sorting_applied
+        - aggregation_applied
+        - fields_hidden_by_default
+        - authority_labels_displayed
+        - route_status_displayed
+        - unresolveds_displayed
+        - contradictions_displayed
+        - failure_labels_displayed
+        - refresh_rate
+        - latest_state_policy
+        - historical_lineage_access
+      blocked_claims:
+        - display_is_raw_record
+        - display_is_source_truth
+        - display_cleanliness_is_confidence
+        - no_visible_contradiction_means_no_contradiction
+
+    observer_stack_persistence_check:
+      required_at_each_hop:
+        - source_record
+        - observation_packet
+        - evidence_ledger_record
+        - viewer_render_payload
+        - interpreted_summary
+        - governance_review_packet
+      failure_if:
+        - observer_stack_id_missing
+        - observer_type_missing
+        - sensing_boundary_missing
+        - filtering_conditions_removed
+        - display_transformations_unrecorded
+        - blocked_scope_removed
+
+  contradiction_layer:
+    purpose:
+      - preserve_contradiction_lineage
+      - preserve_contradiction_visibility
+      - preserve_unresolved_contradiction_state
+      - force_downstream_contradiction_carry_forward
+      - block_contradiction_erasure_by_filtering_summary_latest_state_or_aggregation
+
+    hard_rules:
+      - contradiction_absence_on_display_does_not_equal_contradiction_resolution
+      - contradiction_resolved_requires_resolution_record_not_visual_disappearance
+      - latest_state_must_not_overwrite_contradiction_history
+      - aggregation_must_not_hide_conflicting_records_without_transformation_review
+      - contradiction_visibility_is_required_even_when_ugly
+
+    contradiction_record:
+      required_fields:
+        - contradiction_id
+        - contradiction_type
+        - involved_records
+        - involved_route_attempts
+        - involved_observer_stacks
+        - involved_display_surfaces
+        - conflicting_observations
+        - conflicting_route_states
+        - conflicting_interpretations
+        - unresolved_causal_pathways
+        - transformation_or_filtering_ambiguity
+        - current_status
+        - downstream_visibility_status
+        - resolution_requirements
+        - prohibited_resolution_shortcuts
+
+    contradiction_types:
+      - source_record_vs_display_state
+      - route_received_vs_record_created
+      - raw_vs_filtered_conflict
+      - observer_stack_conflict
+      - latest_state_vs_history_conflict
+      - visual_display_vs_source_lineage_conflict
+      - summary_vs_source_conflict
+      - route_success_vs_claim_support_conflict
+      - unresolved_disappeared_downstream
+      - authority_label_removed_downstream
+
+    contradiction_carry_forward_contract:
+      required_fields_at_each_hop:
+        - contradiction_ids
+        - contradiction_summaries
+        - unresolved_status
+        - current_status
+        - resolution_requirements
+        - display_visibility_state
+      failure_conditions:
+        - contradiction_ids_removed
+        - contradiction_summaries_converted_to_notes_only
+        - unresolved_status_removed
+        - display_hides_contradiction_without_label
+        - summary_reports_no_contradictions_without_searching_source_lineage
+
+    blocked_resolution_shortcuts:
+      - contradiction_overwrite
+      - contradiction_hiding_through_filtering
+      - contradiction_collapse_into_latest_state
+      - contradiction_disappearance_through_aggregation
+      - contradiction_resolved_by_clean_UI
+      - contradiction_resolved_by_majority_route
+      - contradiction_resolved_by_viewer_preference
+      - contradiction_resolved_by_summary_language
+
+  display_authority_layer:
+    purpose:
+      - contain_display_authority
+      - make_display_surfaces_admissible_as_inspection_surfaces_only
+      - force_display_only_and_not_validation_labels
+      - expose_missing_sources_route_failures_unresolveds_and_contradictions
+      - prevent_clean_UI_from_becoming_confidence_laundering
+
+    hard_rule: Panels are inspection surfaces, not authority surfaces.
+
+    required_display_labels:
+      display_only:
+        label: display_only_not_evidence
+        required_when:
+          - any_visualization_or_panel_renders_observation_route_or_summary
+      rendered_visualization:
+        label: rendered_visualization_not_source_record
+        required_when:
+          - chart_graph_panel_animation_or_status_widget_is_rendered
+      filtered_display:
+        label: filtered_display_not_raw_record
+        required_when:
+          - any_filter_sort_smoothing_aggregation_or_transform_applied
+      source_missing:
+        label: source_record_missing_or_unconfirmed
+        required_when:
+          - source_record_id_missing
+          - source_creation_status_unconfirmed
+      unresolved_present:
+        label: unresolveds_present_do_not_infer_resolution
+        required_when:
+          - unresolved_variables_nonempty
+      route_failed:
+        label: route_failed_or_partial_route_no_claim_support
+        required_when:
+          - route_status_in_route_failed_or_partial_route
+      not_validation:
+        label: not_validation_no_safety_readiness_or_stability_claim
+        required_when:
+          - always
+      conceptual_only:
+        label: conceptual_only_not_observed_runtime_chain
+        required_when:
+          - evidence_state_is_conceptual
+          - route_status_is_draft
+
+    display_surface_contract:
+      required_fields:
+        - display_surface_id
+        - viewer_render_id
+        - rendered_record_ids
+        - route_status_displayed
+        - evidence_state_displayed
+        - validation_state_displayed
+        - source_record_status_displayed
+        - observer_stack_id_displayed
+        - raw_vs_interpreted_status_displayed
+        - transformation_lineage_visible_or_linked
+        - unresolveds_visible
+        - contradictions_visible
+        - failure_state_visible
+        - authority_labels_visible
+        - latest_state_policy_visible
+        - historical_lineage_access_visible
+
+    blocked_display_behaviors:
+      - green_checkmark_without_scope_and_route_status
+      - success_label_for_route_completion_without_failed_hop_review
+      - hiding_unresolveds_behind_collapsed_optional_panel
+      - hiding_contradictions_behind_nonblocking_tooltip
+      - replacing_source_record_with_clean_summary
+      - showing_latest_state_without_lineage_warning
+      - showing_filtered_metric_without_raw_reference
+      - showing_no_data_when_route_failed
+      - rendering_empty_clean_panel_when_source_missing
+      - using_safe_stable_ready_validated_language
+
+    display_failure_labels:
+      source_record_missing: Source record missing or unconfirmed. Display is not evidence.
+      route_failed: Route failed. No claim support. Inspect failed hop.
+      partial_route: Partial route. Some hops missing, failed, or unconfirmed.
+      observer_stack_dropped: Observer stack identity dropped. Observation lineage compromised.
+      contradictions_hidden: Contradictions not visible. Display is non-admissible until restored.
+      unresolveds_hidden: Unresolveds not visible. Display is non-admissible until restored.
+      filtered_without_raw: Filtered display lacks raw reference. Do not treat as raw record.
+      summary_orphaned: Summary lacks source lineage. Quarantine summary.
+      conceptual_only: Conceptual route design only. No runtime chain demonstrated.
+
+  raw_vs_interpreted_layer:
+    purpose:
+      - preserve_distinction_between_raw_observation_transformed_observation_filtered_display_rendered_visualization_interpreted_summary_and_governance_reviewed_statement
+      - prevent_transformed_data_from_silently_replacing_raw_data
+      - prevent_display_summaries_from_replacing_source_records
+      - prevent_interpreted_labels_from_mutating_evidence_state
+
+    observation_forms:
+      raw_observation:
+        definition: unprocessed_or_minimally_processed_record_from_declared_source_or_observer_channel
+        requires:
+          - raw_payload_reference
+          - source_record_id
+          - observer_stack_id
+          - timestamp
+          - method_or_capture_context
+        does_not_support:
+          - interpretation_by_itself
+          - validation
+          - safety
+          - readiness
+
+      transformed_observation:
+        definition: observation_after_declared_processing_mapping_conversion_or_schema_transformation
+        requires:
+          - source_record_id
+          - transformation_steps
+          - preserved_fields
+          - lost_fields
+          - transformation_timestamp
+          - transformation_actor_or_system
+        does_not_support:
+          - raw_record_equivalence
+          - evidence_state_promotion
+
+      filtered_display:
+        definition: displayed_value_or_visual_after_filtering_sorting_smoothing_aggregation_or_selection
+        requires:
+          - filter_type
+          - filter_parameters
+          - fields_hidden_or_removed
+          - raw_reference
+          - delay_or_group_lag_if_relevant
+        does_not_support:
+          - raw_observation_claim
+          - contradiction_resolution
+
+      rendered_visualization:
+        definition: visual_rendering_of_observation_route_or_summary_state
+        requires:
+          - render_transformations
+          - source_reference
+          - display_only_label
+          - route_status_label
+          - evidence_state_label
+        does_not_support:
+          - evidence
+          - source_truth
+          - confidence
+
+      interpreted_summary:
+        definition: human_or_machine_interpretation_of_observation_records_route_state_or_display_surface
+        requires:
+          - source_record_references
+          - interpreted_by
+          - interpretation_timestamp
+          - omitted_fields
+          - unresolveds_carried_forward
+          - contradictions_carried_forward
+          - prohibited_interpretations
+        does_not_support:
+          - source_authority
+          - canon
+          - validation
+
+      governance_reviewed_statement:
+        definition: statement_reviewed_by_governance_process_against_declared_scope
+        requires:
+          - governance_review_id
+          - reviewed_claim
+          - source_records
+          - evidence_state_scope
+          - validation_scope_if_any
+        note: Observation_may_carry_this_reference_but_does_not_create_it
+
+    transformation_record:
+      required_fields:
+        - transformation_id
+        - input_record_ids
+        - output_record_id
+        - transformation_type
+        - transformation_actor_or_system
+        - transformation_timestamp
+        - preserved_fields
+        - modified_fields
+        - removed_fields
+        - added_interpretive_fields
+        - lost_information
+        - uncertainty_added
+        - contradiction_effect
+        - unresolveds_added
+        - unresolveds_removed
+        - authority_label_changes
+        - admissibility_review_status
+
+    hard_rules:
+      - raw_and_filtered_records_are_distinct
+      - transformed_observation_must_not_overwrite_raw_observation
+      - filtered_display_must_link_to_raw_or_source_missing_label
+      - interpreted_summary_must_not_mutate_evidence_state
+      - governance_reviewed_statement_requires_external_governance_reference
+      - display_summaries_must_not_replace_source_records
+
+  packet_contracts:
+    purpose:
+      - define_minimum_ObservationPacket_contracts
+      - make_source_identity_observer_stack_transformation_lineage_route_status_unresolveds_contradictions_prohibited_interpretations_and_display_authority_labels_mandatory
+      - make_missing_fields_route_failures_not_minor_UI_defects
+
+    ObservationPacket_minimum_contract:
+      required_fields:
+        packet_identity:
+          - observation_packet_id
+          - packet_type
+          - schema_version
+          - created_by
+          - created_at
+          - object_or_system
+          - observation_type
+        source_identity:
+          - source_record_id
+          - runtime_event_id
+          - source_system
+          - emitter_identity
+          - source_creation_status
+          - raw_payload_reference
+          - parent_record_ids
+        observer_stack:
+          - observer_stack_id
+          - observer_type
+          - sensory_or_sensor_channel
+          - sensing_boundary
+          - instrumentation_properties
+          - filtering_conditions
+          - admissible_scope
+          - blocked_scope
+          - observer_induced_ambiguity
+        transformation_lineage:
+          - raw_vs_interpreted
+          - transformation_ids
+          - transformation_steps
+          - preserved_fields
+          - lost_fields
+          - unresolved_transformations
+        route_integrity:
+          - route_attempt_id
+          - route_status
+          - route_state_history
+          - successful_hops
+          - failed_hops
+          - missing_hops
+          - unconfirmed_hops
+          - route_mutation_history
+        unresolveds:
+          - unresolved_variables
+          - unresolved_route_questions
+          - unresolved_observer_risks
+          - unresolved_transformation_risks
+        contradictions:
+          - contradictions_carried
+          - contradiction_ids
+          - contradiction_visibility_status
+          - contradiction_resolution_requirements
+        authority_labels:
+          - evidence_state
+          - validation_state
+          - display_authority_label
+          - source_authority_label
+          - summary_authority_label
+        prohibited_interpretations:
+          - prohibited_interpretations
+          - blocked_claims
+          - claim_language_warnings
+        display_labels:
+          - display_only_label
+          - rendered_visualization_label
+          - filtered_display_label
+          - source_missing_label
+          - unresolved_present_label
+          - route_failed_label
+          - not_validation_label
+          - conceptual_only_label
+
+    packet_admissibility_checks:
+      required_checks:
+        - source_identity_present_or_source_missing_label_applied
+        - observer_stack_present
+        - route_attempt_id_present
+        - route_status_valid
+        - unresolveds_present_or_explicitly_none_declared_with_scope
+        - contradictions_present_or_explicitly_none_declared_with_search_scope
+        - prohibited_interpretations_present
+        - authority_labels_present
+        - display_labels_present_if_rendered
+        - raw_vs_interpreted_declared
+        - transformation_lineage_declared_or_no_transformation_declared
+      non_admissible_if:
+        - source_record_id_missing_without_source_missing_label
+        - observer_stack_id_missing
+        - route_status_missing
+        - route_status_not_in_state_machine
+        - evidence_state_missing
+        - validation_state_missing
+        - unresolveds_removed_downstream
+        - contradictions_removed_downstream
+        - display_rendered_without_display_only_label
+        - filtered_display_without_raw_reference_or_filtered_label
+        - summary_generated_without_source_references
+        - claim_language_exceeds_evidence_state
+
+    prohibited_packet_outputs:
+      - route_validated
+      - evidence_validated
+      - source_truth_confirmed
+      - safety_supported
+      - stability_supported
+      - readiness_supported
+      - claim_supported_by_route
+      - display_confidence_confirmed
+      - no_contradictions_because_none_visible
+
+  failure_visibility_layer:
+    purpose:
+      - preserve_missing_source_records_route_failures_dropped_observer_stacks_unresolved_transformations_failed_ledger_writes_failed_viewer_renders_partial_propagation_and_orphaned_summaries
+      - make_failure_visible_as_lineage_data
+      - prevent_clean_UI_during_route_failure
+
+    hard_rule: A clean UI during route failure is a system lie.
+
+    failure_records:
+      missing_source_record:
+        required_fields:
+          - route_attempt_id
+          - observation_packet_id
+          - expected_source_record_id
+          - missing_detected_at
+          - detection_surface
+          - downstream_surfaces_notified
+          - display_label_applied
+          - blocked_claims
+        required_display_label: source_record_missing_or_unconfirmed
+
+      route_failure:
+        required_fields:
+          - route_attempt_id
+          - failed_hop
+          - failure_type
+          - failure_timestamp
+          - failure_reason_if_known
+          - prior_successful_hops
+          - affected_records
+          - fields_lost
+          - fields_preserved
+          - recovery_route
+          - blocked_claims
+        required_display_label: route_failed_or_partial_route_no_claim_support
+
+      dropped_observer_stack:
+        required_fields:
+          - route_attempt_id
+          - last_record_with_observer_stack_id
+          - first_record_missing_observer_stack_id
+          - dropped_fields
+          - affected_display_surfaces
+          - admissibility_status
+          - required_repair
+        required_display_label: observer_stack_identity_dropped_lineage_compromised
+
+      unresolved_transformation_step:
+        required_fields:
+          - transformation_id
+          - input_record_ids
+          - output_record_id
+          - unknown_processing_step
+          - lost_information_unknown
+          - affected_claims
+          - required_reconstruction
+        required_display_label: transformation_lineage_incomplete
+
+      failed_ledger_write:
+        required_fields:
+          - route_attempt_id
+          - observation_packet_id
+          - ledger_target_id
+          - write_attempt_timestamp
+          - failure_response
+          - retry_status
+          - evidence_record_id_created
+          - orphaned_packet_status
+          - downstream_display_block
+        required_display_label: ledger_write_failed_no_evidence_record_created
+
+      failed_viewer_render:
+        required_fields:
+          - route_attempt_id
+          - viewer_surface_id
+          - render_attempt_timestamp
+          - failure_response
+          - display_state_after_failure
+          - operator_visibility
+          - clean_UI_risk
+          - required_failure_surface
+        required_display_label: viewer_render_failed_no_clean_success_panel_allowed
+
+      partial_propagation:
+        required_fields:
+          - route_attempt_id
+          - expected_hops
+          - completed_hops
+          - missing_hops
+          - failed_hops
+          - unconfirmed_hops
+          - downstream_records_that_exist
+          - downstream_records_missing
+          - authority_labels_preserved
+          - unresolveds_preserved
+          - contradictions_preserved
+        required_display_label: partial_route_no_claim_support
+
+      orphaned_summary:
+        required_fields:
+          - summary_record_id
+          - claimed_source_records
+          - actual_source_records_found
+          - missing_source_records
+          - author_or_generator
+          - generated_at
+          - omitted_unresolveds
+          - omitted_contradictions
+          - authority_language_detected
+          - quarantine_status
+        required_display_label: summary_orphaned_quarantine_until_source_lineage_restored
+
+    clean_UI_failure_conditions:
+      non_admissible_if:
+        - route_failed_but_panel_shows_success_or_blank
+        - source_missing_but_panel_shows_normal_state
+        - ledger_write_failed_but_evidence_state_displayed_as_if_record_exists
+        - observer_stack_dropped_but_display_omits_warning
+        - contradictions_removed_but_display_shows_no_contradictions
+        - unresolveds_removed_but_display_shows_complete
+        - filtered_display_lacks_filter_label
+        - latest_state_view_hides_route_history
+
+  authority_routing:
+    Runtime:
+      receives:
+        - runtime_event_route_failure_reports
+        - route_status_machine_implementation_requests
+      blocked_from_by_Observation:
+        - validation_claims
+        - evidence_state_promotion
+        - readiness_language
+
+    Evidence:
+      receives:
+        - evidence_ledger_write_records
+        - observer_stack_identity_records
+        - raw_vs_filtered_record_boundaries
+        - measurement_or_observation_admissibility_questions
+      blocked_from_by_Observation:
+        - silent_source_substitution
+        - measurement_equals_validation
+
+    Boundary_Grant:
+      receives:
+        - claim_language_pressure
+        - display_authority_pressure
+        - summary_overreach
+        - prohibited_interpretation_detection
+      blocked_from_by_Observation:
+        - treating_Observation_output_as_validation
+
+    Physics:
+      receives:
+        - observer_induced_physical_ambiguity
+        - sensing_boundary_physical_interaction_questions
+        - object_or_interaction_identity_questions
+      blocked_from_by_Observation:
+        - physics_truth_resolution
+
+    Gear:
+      receives:
+        - route_failure_surface_analysis_requests
+        - causal_structure_visibility_requests
+        - hidden_coupling_or_failure_chain_questions
+      blocked_from_by_Observation:
+        - claim_promotion
+
+    Governance:
+      receives:
+        - governed_validation_review_packets_only_after_source_evidence_and_claim_scope_are_explicit
+      blocked_from_by_Observation:
+        - automatic_validation_request_from_route_completion
+
+    Gold:
+      receives:
+        - contradiction_lineage
+        - recovery_path_failures
+        - reconstruction_pressure
+      blocked_from_by_Observation:
+        - route_equals_truth
+
+  runtime_review_questions:
+    - was_a_source_record_actually_created
+    - did_route_status_honestly_reflect_what_happened
+    - were_unresolveds_carried_forward
+    - were_contradictions_preserved
+    - was_observer_stack_identity_preserved
+    - did_display_imply_unsupported_confidence
+    - did_any_signal_panel_or_summary_mutate_evidence_state_validation_state_or_claim_status
+    - did_language_drift_into_safety_readiness_stability_truth_or_validation
+    - did_any_clean_UI_surface_hide_route_failure
+    - did_latest_state_overwrite_causal_history
+    - did_filtered_display_replace_raw_record
+    - did_route_received_get_mistaken_for_record_created
+
+  review_output_contract:
+    required_fields:
+      - inspected_object_or_route
+      - current_evidence_state
+      - supported_statements
+      - blocked_claims
+      - unresolveds_preserved
+      - contradictions_preserved
+      - route_integrity
+      - observer_stack_integrity
+      - raw_vs_interpreted_integrity
+      - display_authority_status
+      - failure_visibility_status
+      - authority_bleed_detected
+      - admissible_rephrase
+      - required_next_evidence
+      - escalation_route
+
+  first_test_suite:
+    signal_fired_not_route_completed:
+      input_condition: runtime_signal_emitted_without_source_record_creation
+      expected_status: route_failed
+      required_labels:
+        - source_record_missing_or_unconfirmed
+        - signal_fired_not_route_completed
+        - no_claim_support
+
+    source_created_packet_missing:
+      input_condition: source_record_created_but_observation_packet_not_created
+      expected_status: partial_route
+      required_labels:
+        - partial_route_no_claim_support
+        - packet_missing
+
+    ledger_write_failed_clean_UI:
+      input_condition: ledger_write_failed_but_viewer_shows_clean_panel
+      expected_status: quarantined
+      required_labels:
+        - clean_UI_during_route_failure_is_system_lie
+        - ledger_write_failed_no_evidence_record_created
+
+    viewer_render_success_without_display_only_label:
+      input_condition: viewer_render_confirmed_but_no_display_only_label
+      expected_status: quarantined
+      required_labels:
+        - display_authority_label_missing
+        - visualization_not_evidence
+
+    observer_stack_dropped_downstream:
+      input_condition: observer_stack_id_present_in_packet_missing_in_ledger_or_viewer
+      expected_status: quarantined
+      required_labels:
+        - observer_stack_identity_dropped_lineage_compromised
+
+    contradiction_removed_by_summary:
+      input_condition: packet_contains_contradiction_summary_omits_it
+      expected_status: quarantined
+      required_labels:
+        - contradiction_removed_summary_not_admissible
+
+    filtered_display_without_raw_reference:
+      input_condition: viewer_displays_filtered_state_without_raw_reference_or_filter_label
+      expected_status: quarantined
+      required_labels:
+        - filtered_display_not_raw_record
+        - raw_reference_missing
+
+    route_completed_claim_supported:
+      input_condition: route_status_completed_used_as_claim_support
+      expected_status: prohibited_claim_pressure
+      required_labels:
+        - route_completion_does_not_support_claim
+        - route_closed_without_support
+
+  compression_rule:
+    - preserve_reconstructability_over_elegance
+    - ugly_but_reconstructable_wins
+    - clean_but_lineage_destructive_loses
+    - no_summary_may_erase_source_lineage
+    - no_display_may_erase_route_failure
+    - no_latest_state_may_erase_history
+    - no_filter_may_erase_raw_record_boundary
+    - no_contradiction_may_disappear_without_resolution_record
+
+  claim_boundary_footer: >
+    Observation.yaml preserves runtime observation lineage and route integrity.
+    It does not validate claims, promote evidence state, resolve truth, certify
+    runtime behavior, imply safety, imply stability, imply readiness, or replace
+    source records, Evidence, Boundary, Governance, Runtime, Physics, Gear, or CE-OS.
+
+Senses:
+  file: Senses.yaml
+  role: observer_embodiment_sensing_surface_signal_path_and_perception_boundary
+  status: v1_candidate_pending_review
+  authority: sensing_surface_and_observer_topology_description_only
+  canon: false
+  validation_authority: false
+  evidence_authority: false
+
+  core_rule:
+    - sensing_records_observer_conditioned_signal_contact_not_truth
+    - perception_is_interpretation_not_validation
+    - visualization_is_representation_not_evidence
+    - instrumentation_is_observer_topology_not_neutral_access
+    - signal_lineage_must_survive_summary
+    - bridge_losses_must_remain_visible
+    - observer_worlds_must_not_be_averaged_without_review
+
+  purpose:
+    - preserve_observer_embodiment
+    - preserve_sensing_surface_identity
+    - preserve_signal_path_lineage
+    - preserve_raw_vs_filtered_signal_boundaries
+    - preserve_perception_as_interpretation
+    - preserve_visualization_as_non_evidence_representation
+    - expose_observer_backreaction_candidates
+    - expose_calibration_synchronization_and_filtering_limits
+    - prevent_sensing_outputs_from_becoming_truth_authority
+    - route_evidence_claim_pressure_to_Evidence
+    - route_claim_escalation_pressure_to_Boundary_or_Governance
+    - route_object_and_interaction_topology_pressure_to_Physics
+    - route_cross_modality_translation_pressure_to_Interface
+
+  not_for:
+    - validation
+    - canon_creation
+    - evidence_state_promotion
+    - truth_authority
+    - operational_readiness_claims
+    - safety_claims
+    - observer_neutrality_claims
+    - cross_observer_equivalence_claims
+    - replacement_of_raw_measurement_records
+    - summary_replacement_of_source_lineage
+
+  authority_boundaries:
+    owns:
+      - observer_stack_description
+      - sensing_surface_records
+      - signal_path_records
+      - raw_signal_reference_requirements
+      - filtered_signal_reference_requirements
+      - perception_boundary_records
+      - visualization_boundary_records
+      - observer_backreaction_candidates
+      - calibration_disclosure_requirements
+      - synchronization_disclosure_requirements
+      - bridge_loss_flags
+      - sensing_admissibility_scope
+      - blocked_sensing_claims
+
+    does_not_own:
+      - evidence_state_validation
+      - claim_validation
+      - physical_object_registry
+      - causal_doctrine
+      - semantic_definitions
+      - bridge_contract_authority
+      - engineering_operator_definitions
+      - runtime_execution
+      - operational_readiness
+      - safety_certification
+      - canon_promotion
+
+    upstream_dependencies:
+      Evidence:
+        owns:
+          - observer_conditioned_measurement_lineage
+          - evidence_state_labeling
+          - measurement_sufficiency_review
+          - support_level_tracking_not_truth_status
+      Boundary:
+        owns:
+          - claim_escalation_discipline
+          - prohibited_claim_firewall
+          - validation_bleed_blocking
+      CE_OS:
+        owns:
+          - causal_accounting_order
+          - transfer_vs_propagation_distinction
+          - scalar_compression_warning
+      Physics:
+        owns:
+          - object_identity
+          - interaction_topology
+          - variable_attachment
+          - measurement_unlocks
+      Interface:
+        owns:
+          - bridge_contracts
+          - translation_boundaries
+          - cross_world_comparison_review
+      Lexicon:
+        owns:
+          - term_identity
+          - semantic_drift_control
+      Runtime:
+        owns:
+          - active_event_logs
+          - runtime_state_records
+      Gold:
+        owns:
+          - contradiction_lineage
+          - recovery_paths
+          - reconstructability
+
+  prohibited_global_promotions:
+    - sensing_equals_truth
+    - perception_equals_validation
+    - perception_equals_measurement
+    - visualization_equals_evidence
+    - instrumentation_equals_neutral_observer
+    - cross_observer_agreement_equals_validation
+    - smooth_signal_equals_clean_physics
+    - observer_stack_equals_canon
+    - filtered_signal_equals_raw_signal
+    - signal_pattern_equals_causal_identity
+    - sensor_agreement_equals_bridge_validity
+    - dashboard_equals_authority
+    - detected_equals_confirmed
+    - classified_equals_measured
+    - inferred_state_equals_observed_state
+    - observer_majority_equals_truth
+    - bridge_model_equals_equivalence
+    - averaged_observer_worlds_equal_resolution
+    - clean_interface_equals_clean_lineage
+
+  admissible_claims:
+    - observer_conditioned_signal_recorded_under_declared_conditions
+    - sensing_stack_produced_signal_under_declared_topology
+    - perception_layer_generated_interpretation_from_declared_inputs
+    - visualization_rendered_selected_records
+    - filtered_signal_transformed_raw_signal_under_declared_processing
+    - cross_observer_comparison_requires_bridge_review
+    - sensing_output_may_trigger_measurement_request
+    - sensing_output_may_trigger_anomaly_register
+    - sensing_output_may_support_evidence_review_if_lineage_complete
+    - observer_backreaction_candidate_identified
+    - unresolved_signal_lineage_preserved
+
+  blocked_claims:
+    - sensor_detected_true_system_state
+    - perception_validates_event
+    - visualization_proves_behavior
+    - instrument_output_is_neutral
+    - filtered_signal_is_physical_truth
+    - clean_signal_proves_stability
+    - cross_sensor_agreement_validates_claim
+    - observer_stack_represents_native_behavior_without_controls
+    - dashboard_confirms_readiness
+    - sensing_layer_validates_system
+    - perception_output_is_measurement_without_method_units_uncertainty
+    - inferred_state_is_canon
+
+  evidence_state_boundary:
+    default_state: sensing_surface_record_only
+    allowed_states_for_senses:
+      - asserted
+      - sensed
+      - observed_under_declared_observer_topology
+      - interpreted
+      - visualized
+      - filtered
+      - measurement_review_requested
+      - evidence_review_required
+    prohibited_states_for_senses_without_route:
+      - measured
+      - repeatable
+      - validated
+      - operational
+      - safe
+      - ready
+      - canonical
+    rule:
+      - Senses_may_prepare_records_for_Evidence_review
+      - Senses_may_not_promote_sensed_to_measured
+      - Senses_may_not_promote_observed_to_validated
+      - Senses_may_not_promote_visualized_to_evidence
+      - Senses_may_not_promote_interpreted_to_truth
+      - Senses_may_not_promote_cross_stack_agreement_to_validation
+
+  required_record_types:
+    observer_stack_record:
+      purpose:
+        - preserve_observer_topology
+        - prevent_sensor_neutrality_assumptions
+        - expose_observer_world_scope
+      required_fields:
+        - observer_stack_id
+        - observer_stack_name
+        - observer_objects
+        - attached_base_objects
+        - coupled_boundaries
+        - physical_couplings
+        - signal_couplings
+        - instrumentation_properties
+        - signal_processing_properties
+        - mounting_conditions
+        - power_or_cable_paths
+        - bandwidth_conditions
+        - latency_conditions
+        - sampling_rate
+        - filtering_conditions
+        - synchronization_conditions
+        - calibration_status
+        - environmental_context
+        - observer_backreaction_candidates
+        - observer_vs_observed_ambiguity
+        - admissible_scope
+        - blocked_scope
+        - revision_lineage
+        - unresolved_topology_risks
+
+    sensing_surface_record:
+      purpose:
+        - preserve_boundary_where_observer_contacts_or_receives_signal_from_target
+        - distinguish_contact_transfer_from_field_or_distributed_propagation
+      required_fields:
+        - sensing_surface_id
+        - observer_stack_id
+        - source_object_or_region
+        - target_observer_object
+        - interaction_boundary
+        - sensing_modality
+        - transfer_or_propagation_classification
+        - active_variables
+        - measured_variable_candidates
+        - signal_quantity_recorded
+        - native_behavior_claim_allowed
+        - observer_induced_candidate
+        - loss_channels
+        - timing_boundaries
+        - unresolved_measurements
+        - admissibility_scope
+        - contradiction_links
+        - lineage_links
+
+    signal_path_record:
+      purpose:
+        - preserve_signal_from_source_boundary_to_recorded_output
+        - prevent_processed_output_from_replacing lineage
+      required_fields:
+        - signal_path_id
+        - observer_stack_id
+        - sensing_surface_id
+        - source_boundary
+        - transduction_step
+        - analog_or_native_signal_form
+        - digitization_step
+        - sampling_rate
+        - bandwidth
+        - latency
+        - gain_or_scaling
+        - noise_floor
+        - saturation_limits
+        - clipping_risk
+        - drift_risk
+        - loss_channels
+        - raw_signal_reference
+        - processed_signal_references
+        - unresolved_signal_integrity_risks
+
+    raw_signal_record:
+      purpose:
+        - preserve_unprocessed_or_lowest_available_signal_lineage
+        - prevent_filtered_signal_from_erasing_transition_history
+      required_fields:
+        - raw_signal_id
+        - signal_path_id
+        - observer_stack_id
+        - acquisition_method
+        - units_or_native_units
+        - timestamp_method
+        - sampling_rate
+        - bandwidth
+        - synchronization_quality
+        - calibration_status
+        - uncertainty_notes
+        - environmental_context
+        - storage_reference
+        - completeness_notes
+        - known_artifacts
+        - unresolved_raw_signal_risks
+
+    filtered_signal_record:
+      purpose:
+        - disclose_processing_transformations
+        - prevent_smoothness_from_becoming_physical_claim
+      required_fields:
+        - filtered_signal_id
+        - source_raw_signal_id
+        - filter_type
+        - processing_steps
+        - cutoff_or_window
+        - group_delay_or_phase_shift
+        - smoothing_strength
+        - interpolation_or_resampling
+        - removed_frequencies_or_features
+        - preserved_features
+        - erased_or_weakened_features
+        - uncertainty_added
+        - admissible_uses
+        - blocked_uses
+        - transition_distortion_risks
+        - lineage_links
+
+    perception_record:
+      purpose:
+        - preserve_interpretation_boundary
+        - prevent_classification_or_inference_from_becoming_measurement
+      required_fields:
+        - perception_id
+        - source_signal_records
+        - interpretation_method
+        - algorithm_or_human_observer
+        - feature_selection
+        - classification_labels
+        - inference_rules
+        - confidence_score_if_any
+        - confidence_meaning
+        - confidence_non_meaning
+        - training_or_prior_assumptions
+        - known_blind_spots
+        - false_positive_risks
+        - false_negative_risks
+        - admissible_interpretations
+        - blocked_interpretations
+        - unresolved_interpretation_risks
+        - claims_not_supported
+
+    visualization_record:
+      purpose:
+        - preserve_display_as_representation
+        - prevent_dashboard_or_plot_from_becoming_evidence_authority
+      required_fields:
+        - visualization_id
+        - source_records
+        - rendering_method
+        - selected_variables
+        - omitted_variables
+        - scaling
+        - smoothing_or_interpolation
+        - color_mapping_or_symbol_mapping
+        - aggregation_method
+        - display_latency
+        - annotation_rules
+        - admissible_uses
+        - blocked_uses
+        - summary_risk_notes
+        - source_lineage_links
+
+    cross_modality_bridge_review_record:
+      purpose:
+        - prevent_observer_world_equivalence_assumptions
+        - expose_translation_cost_between_modalities_or_stacks
+      required_fields:
+        - bridge_review_id
+        - source_observer_world
+        - target_observer_world
+        - source_modality
+        - target_modality
+        - source_records
+        - target_records
+        - preserved_variables
+        - transformed_variables
+        - erased_variables
+        - non_equivalent_variables
+        - event_boundary_mapping
+        - incompatible_event_boundaries
+        - translation_cost
+        - causal_information_erasure
+        - uncertainty_added
+        - allowed_comparisons
+        - blocked_comparisons
+        - required_external_route
+
+    observer_backreaction_record:
+      purpose:
+        - preserve_possible_observer_effects_on_target_behavior
+        - prevent_native_behavior_claims_without controls
+      required_fields:
+        - backreaction_id
+        - observer_stack_id
+        - observer_object
+        - affected_base_object_or_boundary
+        - candidate_interaction_type
+        - altered_variables
+        - possible_mechanism
+        - control_measurement_required
+        - bounded_or_unresolved
+        - admissible_scope
+        - blocked_native_behavior_claims
+        - contradiction_links
+
+    contradiction_record:
+      purpose:
+        - preserve_conflicts_without_summary_smoothing
+        - route unresolved causal differences to measurement or bridge review
+      required_fields:
+        - contradiction_id
+        - contradiction_type
+        - involved_records
+        - involved_observer_stacks
+        - involved_modalities
+        - involved_boundaries
+        - conflicting_signals
+        - conflicting_interpretations
+        - candidate_explanations
+        - observer_artifact_candidates
+        - bridge_loss_candidates
+        - unresolved_causal_pathways
+        - prohibited_resolution_shortcuts
+        - current_status
+        - required_next_review_or_measurement
+
+  modality_registry:
+    allowed_modalities:
+      visual_camera:
+        common_outputs:
+          - image_frame
+          - video_stream
+          - optical_flow_candidate
+          - visual_classification_candidate
+        risks:
+          - lighting_artifact
+          - perspective_distortion
+          - compression_artifact
+          - frame_rate_aliasing
+          - rolling_shutter
+          - occlusion
+          - interpretation_as_measurement
+        blocked_claims:
+          - image_shows_truth
+          - visual_stability_equals_physical_stability
+
+      human_observer:
+        common_outputs:
+          - witness_note
+          - operator_annotation
+          - qualitative_state_report
+        risks:
+          - expectation_bias
+          - selective_attention
+          - timing_uncertainty
+          - scale_misjudgment
+          - narrative_smoothing
+        blocked_claims:
+          - human_saw_it_so_it_is_confirmed
+          - repeated_witnessing_equals_measurement
+
+      accelerometer:
+        common_outputs:
+          - acceleration_signal
+          - vibration_signal_candidate
+          - motion_event_candidate
+        risks:
+          - mounting_stiffness_effect
+          - sensor_mass_backreaction
+          - axis_alignment_error
+          - bandwidth_limit
+          - aliasing
+          - integration_drift
+        blocked_claims:
+          - acceleration_pattern_equals_causal_source
+          - smooth_acceleration_equals_stability
+
+      pressure_sensor:
+        common_outputs:
+          - pressure_signal
+          - impulse_candidate
+          - head_or_load_candidate
+        risks:
+          - port_clogging
+          - tubing_delay
+          - pressure_wave_artifact
+          - calibration_drift
+          - thermal_effect
+        blocked_claims:
+          - pressure_signal_equals_load_validation
+          - single_pressure_trace_equals_system_state
+
+      acoustic_sensor:
+        common_outputs:
+          - sound_pressure_signal
+          - spectral_candidate
+          - event_candidate
+        risks:
+          - reflection
+          - resonance
+          - environmental_noise
+          - microphone_placement_bias
+          - filtering_artifact
+        blocked_claims:
+          - acoustic_event_equals_mechanical_cause
+          - spectral_match_equals_validation
+
+      thermal_sensor:
+        common_outputs:
+          - temperature_signal
+          - thermal_image
+          - heat_signature_candidate
+        risks:
+          - emissivity_error
+          - environmental_reflection
+          - lag
+          - spatial_averaging
+          - calibration_drift
+        blocked_claims:
+          - thermal_signature_equals_causal_source
+          - heat_map_equals_evidence
+
+      electromagnetic_sensor:
+        common_outputs:
+          - field_signal
+          - voltage_signal
+          - current_signal
+          - interference_candidate
+        risks:
+          - grounding_path_artifact
+          - cable_coupling
+          - shielding_gap
+          - probe_loading
+          - bandwidth_limit
+        blocked_claims:
+          - field_detection_equals_propagation_claim
+          - voltage_signal_equals_system_truth
+
+      algorithmic_perception:
+        common_outputs:
+          - classification
+          - segmentation
+          - anomaly_flag
+          - feature_vector
+          - confidence_score
+        risks:
+          - training_distribution_mismatch
+          - label_leakage
+          - confidence_misread_as_probability_of_truth
+          - hidden_preprocessing
+          - false_consensus_with_visualization
+        blocked_claims:
+          - algorithm_classified_equals_measured
+          - confidence_score_equals_evidence_state
+          - anomaly_flag_equals_causal_diagnosis
+
+  raw_vs_filtered_rules:
+    - raw_signal_and_filtered_signal_are_distinct_records
+    - filtered_signal_must_reference_source_raw_signal
+    - filtered_signal_must_disclose_filter_type_cutoff_window_delay_and_processing_steps
+    - filtered_signal_may_not_replace_raw_transition_history
+    - filtered_smoothness_is_not_physical_smoothness
+    - event_boundaries_shifted_by_filtering_must_be flagged
+    - visualization_of_filtered_signal_must_not_be_labeled_as_raw_behavior
+
+  calibration_and_synchronization_rules:
+    calibration:
+      required:
+        - instrument_id
+        - calibration_status
+        - calibration_date_or_unknown
+        - calibration_method_or_unknown
+        - drift_estimate_or_unresolved
+        - uncertainty_notes
+        - saturation_or_range_limits
+      blocked:
+        - calibrated_by_assumption
+        - precision_display_equals_accuracy
+        - stable_readout_equals_calibrated
+
+    synchronization:
+      required:
+        - clock_source
+        - timestamp_method
+        - channel_latency
+        - sync_error_bound
+        - trigger_threshold
+        - alignment_method
+        - drift_estimate
+        - unresolved_ordering_risk
+      blocked:
+        - timestamp_order_equals_causal_order_without_sync_review
+        - simultaneous_by_display_equals_synchronized
+        - visual_alignment_equals_temporal_equivalence
+
+  bridge_review_rules:
+    - no_cross_stack_comparison_without_observer_world_identity
+    - no_cross_modality_equivalence_without_bridge_review
+    - no_averaging_across_observer_worlds_without_transformation_review
+    - no_majority_observer_resolution
+    - no_cleaner_signal_resolution
+    - no_preferred_model_resolution
+    - no_bridge_model_may_claim_neutrality
+    - bridge_records_must_preserve_lost_variables
+    - bridge_records_must_preserve_event_boundary_mapping
+    - bridge_records_must_disclose_translation_cost_and_causal_information_erasure
+
+  summary_compression_rules:
+    allowed:
+      - navigation_summary_with_source_links
+      - status_summary_with_unresolveds_visible
+      - anomaly_summary_with_observer_stack_identity
+      - visualization_caption_with_evidence_boundary_footer
+
+    blocked:
+      - summary_replaces_signal_lineage
+      - dashboard_replaces_raw_records
+      - executive_summary_removes_observer_topology
+      - conclusion_language_sounds_validated
+      - detected_becomes_confirmed
+      - interpreted_becomes_measured
+      - visualized_becomes_evidence
+      - averaged_becomes_resolved
+      - agreement_becomes_validation
+
+    required_footer:
+      - summary_is_navigation_only
+      - source_signal_records_remain_authority_for_lineage
+      - observer_topology_remains_attached
+      - no_validation_or_readiness_claim_implied
+      - unresolveds_and_contradictions_remain_active
+
+  admissibility_checks:
+    sensing_vs_measurement:
+      question: Does the record claim measurement status?
+      allowed_if:
+        - variable_identity_declared
+        - method_declared
+        - units_declared
+        - context_declared
+        - uncertainty_declared
+        - calibration_status_declared
+        - observer_stack_identity_declared
+        - regime_identity_declared
+        - routed_to_Evidence_for_state_review
+      block_if:
+        - signal_exists_only
+        - no_units
+        - no_uncertainty
+        - no_method
+        - no_observer_stack
+        - no_calibration
+        - no_context
+
+    perception_vs_interpretation:
+      question: Does perception language imply correctness or validation?
+      allowed_if:
+        - interpretation_method_declared
+        - source_signal_lineage_declared
+        - confidence_meaning_limited
+        - false_positive_and_false_negative_risks_preserved
+      block_if:
+        - perception_output_treated_as_truth
+        - classification_treated_as_measurement
+        - inference_treated_as_observation
+
+    visualization_vs_evidence:
+      question: Does a display carry evidence authority?
+      allowed_if:
+        - visualization_source_records_declared
+        - omitted_variables_disclosed
+        - rendering_transform_disclosed
+        - non_evidence_footer_present
+      block_if:
+        - visualization_replaces_records
+        - chart_clarity_treated_as_evidence
+        - heatmap_treated_as_measurement
+
+    signal_vs_truth:
+      question: Is a signal pattern treated as native physical truth?
+      allowed_if:
+        - signal_path_lineage_declared
+        - observer_backreaction_candidates_preserved
+        - alternative_artifact_candidates_preserved
+      block_if:
+        - signal_pattern_directly_named_as_causal_source
+        - smoothness_treated_as_clean_physics
+        - agreement_treated_as_validation
+
+  contradiction_register:
+    - sensing_improves_visibility_vs_sensing_does_not_create_truth
+    - perception_speed_vs_reconstructable_signal_lineage
+    - clean_visualization_vs_dirty_signal_history
+    - cross_stack_agreement_vs_shared_artifact
+    - filtered_stability_vs_native_instability
+    - observer_presence_vs_native_behavior
+    - summary_utility_vs_topology_loss
+    - instrumentation_precision_vs_accuracy_uncertainty
+    - algorithmic_confidence_vs_evidence_state
+    - bridge_convenience_vs_causal_information_erasure
+
+  unresolved_register:
+    - final_acceptance_of_Senses_as_active_lane
+    - exact_relationship_between_Senses_and_Evidence_record_storage
+    - whether_Senses_holds_runtime_signal_records_or_only_schema
+    - modality_specific_record_templates_pending_expansion
+    - calibration_schema_alignment_pending
+    - synchronization_schema_alignment_pending
+    - bridge_review_schema_alignment_with_Interface_pending
+    - raw_signal_storage_policy_pending
+    - filtered_signal_storage_policy_pending
+    - visualization_output_storage_policy_pending
+    - perception_algorithm_documentation_policy_pending
+    - observer_backreaction_control_protocol_pending
+    - cross_observer_comparison_protocol_pending
+
+  routing_rules:
+    route_to_Evidence:
+      when:
+        - sensing_output_claims_measurement_status
+        - evidence_state_labeling_needed
+        - repeatability_language_appears
+        - validation_language_appears
+        - measurement_sufficiency_review_needed
+      prohibited_outputs:
+        - Senses_promotes_evidence_state
+        - Senses_declares_validation
+
+    route_to_Boundary:
+      when:
+        - sensing_language_exceeds_evidence_state
+        - perception_or_visualization_implies_validation
+        - instrumentation_claims_neutrality
+        - operational_readiness_or_safety_language_appears
+      prohibited_outputs:
+        - sensing_claim_escapes_firewall
+        - dashboard_becomes_authority
+
+    route_to_Governance:
+      when:
+        - validation_pressure_persists_after_Boundary_flag
+        - claim_promotion_requested
+        - external_readiness_or_safety_language_required
+      prohibited_outputs:
+        - Senses_validates_claim
+        - Senses_certifies_system
+
+    route_to_Physics:
+      when:
+        - observer_object_identity_needed
+        - sensing_surface_interaction_topology_needed
+        - observer_backreaction_candidate_affects_system
+        - physical_boundary_or_variable_attachment_unclear
+      prohibited_outputs:
+        - Senses_redefines_physical_object_registry
+        - Senses_redefines_interaction_topology
+
+    route_to_Interface:
+      when:
+        - cross_modality_translation_occurs
+        - observer_worlds_are_compared
+        - bridge_loss_or_erased_variable_review_needed
+        - event_boundary_mapping_needed
+      prohibited_outputs:
+        - Senses_declares_cross_world_equivalence
+        - Senses_averages_observer_worlds_without_review
+
+    route_to_CE_OS:
+      when:
+        - causal_accounting_order_is_touched
+        - transfer_vs_propagation_blurs
+        - scalar_summary_hides_signal_path_or_losses
+      prohibited_outputs:
+        - Senses_redefines_causal_primitives
+
+    route_to_Lexicon:
+      when:
+        - sense_detect_observe_measure_perceive_validate_terms_blur
+        - terminology_expands_admissibility
+      prohibited_outputs:
+        - Senses_mutates_semantic_identity
+
+    route_to_Runtime:
+      when:
+        - active_sensing_logs_are_created
+        - event_state_records_are_created
+        - anomaly_records_enter_active_operations
+      prohibited_outputs:
+        - runtime_log_equals_readiness
+        - active_state_equals_validation
+
+    route_to_Gold:
+      when:
+        - contradiction_lineage_must_survive_summary
+        - recovery_path_needed
+        - compression_risk_detected
+      prohibited_outputs:
+        - summary_resolves_contradiction
+        - route_equals_truth
+
+  standard_output_contract:
+    required_fields:
+      - sensing_claim_or_record
+      - observer_stack_id
+      - sensing_surface_id
+      - signal_path_id
+      - raw_signal_reference
+      - filtered_signal_reference_if_any
+      - perception_record_if_any
+      - visualization_record_if_any
+      - evidence_state_boundary
+      - admissible_claims
+      - blocked_claims
+      - observer_backreaction_candidates
+      - calibration_status
+      - synchronization_quality
+      - bridge_review_required
+      - unresolveds
+      - contradiction_links
+      - required_routes
+      - claim_boundary_footer
+
+  claim_boundary_footer:
+    - Senses_records_observer_conditioned_signal_and_perception_boundaries_only
+    - Senses_does_not_validate_measure_or_certify_by_itself
+    - visualization_does_not_increase_evidence_state
+    - instrumentation_is_not_neutral_by_default
+    - observer_world_comparison_requires_bridge_review
+    - unresolveds_and_contradictions_remain_active
+    - cute_sensors_do_not_get_a_crown
+
+  Grant_review:
+    target_file: Senses.yaml
+    evidence_state:
+      file_state: v1_candidate_created_from_admissibility_review
+      review_state: admissibility_surface_pressure_test_only
+      current_support_level: architecture_candidate
+      blocked_promotions:
+        - sensing_equals_truth
+        - perception_equals_validation
+        - visualization_equals_evidence
+        - instrumentation_equals_neutral_observer
+        - cross_observer_agreement_equals_validation
+        - smooth_signal_equals_clean_physics
+        - observer_stack_equals_canon
+
+    prohibited_escalations:
+      - sensing_treated_as_truth
+      - perception_treated_as_validation
+      - visualization_treated_as_evidence
+      - instrument_output_treated_as_neutral
+      - filtered_signal_treated_as_raw_or_clean_physics
+      - cross_observer_agreement_treated_as_validation
+      - summary_compression_treated_as_canon
+      - dashboard_clarity_treated_as_evidence_state_promotion
+
+    admissible_rewrites:
+      sensing_claim: Observer-conditioned signal recorded under declared topology, method, regime, and uncertainty.
+      perception_claim: Interpretation produced from declared signal inputs and processing rules, not measurement or validation.
+      visualization_claim: Rendering of selected records for review, not evidence authority.
+      instrumentation_claim: Instrument output bounded by observer stack, calibration, bandwidth, filtering, synchronization, and backreaction limits.
+      validation_claim: Sensing output may support review requests; validation requires governed review against declared scope.
+
+    missing_boundaries:
+      - final_storage_boundary_between_Senses_and_Evidence
+      - modality_specific_bridge_templates
+      - calibration_record_format_alignment
+      - synchronization_record_format_alignment
+      - raw_signal_storage_policy
+      - perception_algorithm_disclosure_depth
+      - visualization_caption_footer_enforcement
+      - observer_backreaction_control_thresholds
+
+    observer_topology_risks:
+      - sensor_neutrality_assumption
+      - observer_world_collapse
+      - modality_equivalence_laundering
+      - filter_erases_event_boundary
+      - dashboard_authority_bleed
+      - backreaction_invisibility
+      - calibration_silence
+      - synchronization_blindness
+      - interpretation_as_measurement
+
+    contradiction_register:
+      - sensing_improves_visibility_vs_sensing_does_not_create_truth
+      - perception_speed_vs_reconstructable_lineage
+      - clean_visualization_vs_dirty_signal_history
+      - cross_stack_agreement_vs_shared_artifact
+      - filtered_stability_vs_native_instability
+      - observer_presence_vs_native_behavior
+      - summary_utility_vs_topology_loss
+
+    unresolveds_preserved:
+      - final_acceptance_of_Senses_as_active_lane
+      - exact_Evidence_boundary
+      - exact_Physics_boundary_for_observer_objects
+      - exact_Interface_bridge_review_contract
+      - active_runtime_record_policy
+      - modality_expansion_depth
+      - calibration_and_sync_schema_alignment
+      - backreaction_control_protocol
+
+    required_routes:
+      Evidence: evidence_state_labeling_and_measurement_sufficiency
+      Boundary: claim_escalation_firewall
+      Governance: persistent_validation_pressure
+      Physics: observer_object_identity_and_interaction_topology
+      Interface: cross_modality_and_cross_observer_bridge_review
+      CE_OS: causal_accounting_and_transfer_vs_propagation_boundary
+      Lexicon: semantic_drift_control
+      Runtime: active_sensing_log_records
+      Gold: contradiction_lineage_and_reconstructability
+
+    verdict: >
+      Senses.yaml is admissible only as an observer-conditioned sensing,
+      signal-lineage, perception-boundary, and visualization-boundary surface.
+      It does not validate, canonize, measure by itself, certify neutrality,
+      or convert observer outputs into truth. Any language allowing sensing,
+      perception, visualization, instrumentation, or cross-observer agreement
+      to impersonate evidence authority is blocked and routed.
+      Cute sensors do not get a crown.
+
+VisionOps:
+  file: VisionOps.yaml
+  role: causal_simulation_and_cross_domain_runtime_doctrine
+  status: phase_3_active_compression_candidate
+  created_utc: "2026-05-23T08:38:25.633089+00:00"
+  authority: Gear_operational_vision_layer_not_validation_authority
+
+  reference_header:
+    gear_kernel_bridge: ./GearKernelBridge.yaml
+    simulation_bridge: ./SimulationBridge.yaml
+    godot_ops: ./GodotOps.yaml
+    simulate: ./Simulate.yaml
+
+    local_scope:
+      owns:
+        - visual_interpretation_behavior
+        - causal_visual_runtime_requests
+        - visual_failure_surface_warnings
+      does_not_own:
+        - command_contract_authority
+        - Godot_behavioral_reality
+        - simulation_validation
+        - canon_promotion
+
+    rules:
+      - command_semantics_route_to_SimulationBridge
+      - Godot_behavior_routes_to_GodotOps
+      - authority_boundaries_route_to_GearKernelBridge
+      - simulation_construction_routes_to_Simulate
+      - visual_outputs_are_not_evidence
+
+  purpose:
+    - compress_Grant_simulation_doctrine_into_Gear_native_runtime_doctrine
+    - preserve_shortest_path_between_simulation_logic_and_Godot_runtime
+    - define_minimum_causal_simulation_primitives_for_visual_runtime_operation
+    - prevent_domain_collapse_scalar_collapse_and_validation_bleed
+    - keep_Godot_as_runtime_host_not_causal_truth_authority
+
+  core_rule: >
+    Godot hosts the runtime. VisionOps owns causal simulation doctrine.
+    Grant governs evidence and claim meaning. Gear operates the visual and causal
+    extraction layer. No simulation output, visual behavior, or runtime state may
+    self-promote into validation, safety, readiness, or physical truth.
+
+  authority_split:
+    Grant:
+      owns:
+        - evidence_state_discipline
+        - claim_boundaries
+        - simulation_integrity_rules
+        - falsification_pressure
+        - measurement_vs_validation_boundary
+      blocked_from:
+        - Godot_runtime_implementation_authority
+        - Gear_runtime_topology_ownership
+        - direct_engine_execution_authority
+
+    Gear:
+      owns:
+        - causal_runtime_architecture
+        - visual_causal_surface
+        - object_interaction_mapping
+        - operator_request_preparation
+        - unresolved_measurement_extraction
+        - Godot_adapter_design
+      blocked_from:
+        - validation_claims
+        - evidence_promotion
+        - domain_identity_mutation
+        - treating_visual_output_as_evidence
+
+    GodotOps:
+      owns:
+        - executable_runtime_host_ontology
+        - SceneTree_lifecycle_discipline
+        - Node_runtime_hosting
+        - Resource_data_templates
+        - Signal_event_propagation
+        - ownership_vs_parenthood_distinction
+      blocked_from:
+        - simulation_claim_validation
+        - evidence_state_promotion
+        - causal_doctrine_override
+
+    CE_OS:
+      owns:
+        - causal_accounting_order
+        - interaction_definition
+        - transfer_vs_propagation_distinction
+        - mass_centric_vs_field_centric_distinction
+        - scalar_compression_warning
+      blocked_from:
+        - overriding_Godot_runtime_semantics
+        - validating_simulation_claims
+
+  compression_lineage:
+    source_material:
+      - Grant_Simulation_Doctrine_raw
+      - SimulationBridge_full_yaml
+      - VisionOps_Phase1_Freeze
+      - VisionOps_Phase1_Manifest
+      - Phase2_Spine_Extraction
+    recovery_rule: >
+      VisionOps is the active compressed operational file. Long-form doctrine remains
+      source/recovery material and must not be deleted or treated as unnecessary.
+
+  doctrine_stack:
+    domain_doctrine:
+      rule: domains_are_interaction_organizations_not_substances
+    participation_surface_doctrine:
+      rule: shared_object_identity_does_not_imply_shared_domain_identity
+    interaction_doctrine:
+      rule: interactions_create_state_pressure_but_do_not_commit_state
+    transition_doctrine:
+      rule: continuous_equations_update_variables_transition_contracts_commit_regime_change
+    scheduling_doctrine:
+      rule: simulation_frames_are_sealed_causal_accounting_windows_not_render_frames
+    evidence_doctrine:
+      rule: simulation_outputs_remain_hypothesis_pressure_until_governance_review
+    reconstruction_doctrine:
+      rule: wrong_outputs_remain_useful_if_causal_lineage_is_preserved
+
+  irreducible_primitives:
+    Domain:
+      definition: structured_interaction_organization
+      rule: domains_are_not_substances
+      examples:
+        fluid_dynamic:
+          classification: mass_centric
+          grammar:
+            - pressure
+            - flow
+            - viscosity
+            - containment
+            - displacement
+            - leakage
+            - fluid_momentum
+        mechanical:
+          classification: mass_centric
+          grammar:
+            - load
+            - constraint
+            - displacement
+            - contact
+            - deformation
+            - inertia
+            - friction
+        electrical:
+          classification: field_or_charge_centric
+          grammar:
+            - potential
+            - current
+            - impedance
+            - charge_distribution
+            - field_behavior
+            - conduction
+
+    InterfaceObject:
+      definition: state_bearing_object_participating_in_multiple_domains_through_distinct_surfaces
+      rule: object_identity_can_be_shared_without_domain_identity_being_shared
+      prohibited_interpretations:
+        - magical_converter
+        - proof_of_domain_equivalence
+        - scalar_translator_without_state_change
+
+    ParticipationSurface:
+      definition: domain_specific_surface_through_which_an_object_receives_or_emits_interaction_pressure
+      required_fields:
+        - surface_id
+        - parent_object
+        - domain
+        - accepted_interactions
+        - emitted_interactions
+        - exposed_variables
+        - constraints
+        - losses
+        - state_memory
+        - measurement_points
+        - evidence_state
+        - prohibited_collapses
+
+    InterfaceStateLink:
+      definition: relation_where_state_change_at_one_surface_changes_conditions_at_another_surface
+      rule: preserves_causal_lineage_without_domain_conversion
+      required_fields:
+        - source_surface
+        - target_surface
+        - source_domain
+        - target_domain
+        - transformed_state_condition
+        - losses
+        - delays
+        - thresholds
+        - unresolved_measurements
+
+    InteractionEvent:
+      definition: runtime_record_of_state_affecting_pressure
+      rule: creates_pressure_not_committed_state
+      required_fields:
+        - event_id
+        - frame_id
+        - source_surface
+        - target_surface
+        - domain
+        - interaction_type
+        - pressure_terms
+        - constraints
+        - losses
+        - evidence_state
+        - unresolveds
+
+    TransitionCandidate:
+      definition: possible_regime_change_created_by_interaction_pressure
+      outcomes:
+        - commit
+        - stall
+        - reverse
+        - accumulate
+        - oscillate
+        - fail
+        - defer
+      rule: threshold_crossing_does_not_equal_commitment
+
+    TransitionContract:
+      definition: rule_set_that_decides_when_pressure_becomes_committed_state_change
+      contains:
+        - source_state
+        - target_state
+        - threshold_conditions
+        - commitment_conditions
+        - blockers
+        - reversal_conditions
+        - timeout_conditions
+        - hysteresis_rules
+        - failure_conditions
+        - recording_requirements
+
+    TransitionArbiter:
+      definition: deterministic_resolver_of_competing_transition_candidates
+      rule: no_update_order_causality
+      prohibited_behavior:
+        - first_node_update_wins
+        - arbitrary_order_commit
+        - net_scalar_without_term_preservation
+
+    SimulationFrame:
+      definition: sealed_ordered_replayable_causal_accounting_window
+      not_equivalent_to:
+        - Godot_render_frame
+        - _process_delta
+        - _physics_process_delta
+
+    RuntimeState:
+      definition: published_committed_state_after_arbitration
+      prohibited:
+        - validation_claims
+        - hidden_mutation
+        - operational_readiness_claims
+
+    ReconstructionLedger:
+      definition: replayable_causal_history_for_diagnosis_and_recovery
+      rule: failed_outputs_and_wrong_outputs_must_remain_recoverable
+
+    EvidenceGate:
+      definition: boundary_layer_blocking_claim_escalation
+      blocks:
+        - simulation_equals_validation
+        - visual_output_equals_evidence
+        - measurement_equals_validation
+        - scalar_similarity_equals_equivalence
+
+    GodotAdapter:
+      definition: runtime_adapter_between_Godot_nodes_and_VisionOps_simulation_records
+      rule: adapters_display_or_route_state_but_do_not_own_causal_truth
+
+  shortest_execution_path:
+    - MeasurementIngress
+    - SnapshotSeal
+    - InteractionEvaluation
+    - PropagationWavefront
+    - TransitionCandidateGeneration
+    - TransitionArbitration
+    - ChainValidation
+    - AtomicCommitOrFailure
+    - RuntimePublication
+    - ReconstructionLog
+
+  execution_chain:
+    MeasurementIngress:
+      purpose: collect_measurements_commands_and_external_events
+      prohibited:
+        - measurement_equals_validation
+        - silent_assumption_overwrite
+
+    SnapshotSeal:
+      purpose: freeze_inputs_environment_object_state_and_system_state
+      prohibited:
+        - half_updated_reads
+        - mutation_during_seal
+
+    InteractionEvaluation:
+      purpose: evaluate_interactions_against_sealed_snapshot
+      prohibited:
+        - direct_committed_state_mutation
+        - hidden_transition_commit_inside_equation
+
+    PropagationWavefront:
+      purpose: propagate_pressure_across_declared_topology_with_loss_delay_and_cycle_detection
+      prohibited:
+        - unrecorded_global_influence
+        - flattened_unexplained_influence_scalar
+
+    TransitionCandidateGeneration:
+      purpose: convert_pressure_records_into_possible_regime_changes
+      prohibited:
+        - threshold_crossing_equals_commitment
+
+    TransitionArbitration:
+      purpose: resolve_competing_candidates_deterministically
+      prohibited:
+        - object_update_order_as_causality
+        - first_candidate_wins_without_contract
+
+    ChainValidation:
+      purpose: test_staged_commits_for_dependency_conflicts_before_publication
+      prohibited:
+        - publish_self_invalidating_transition_chain
+        - erase_failed_chain_history
+
+    AtomicCommitOrFailure:
+      purpose: apply_accepted_commits_failures_holds_or_deferrals
+      prohibited:
+        - partial_unrecorded_mutation
+        - commit_without_transition_record
+
+    RuntimePublication:
+      purpose: expose_new_committed_state_to_Godot_visual_and_inspection_layers
+      prohibited:
+        - visual_state_equals_evidence
+        - runtime_state_equals_validation
+
+    ReconstructionLog:
+      purpose: preserve_frame_history_for_replay_diagnosis_and_recovery
+      prohibited:
+        - summarize_away_contradictions
+        - hide_failed_transitions
+
+  cross_domain_doctrine:
+    core_statement: >
+      Different domains remain causally interoperable because shared objects expose
+      distinct participation surfaces whose state changes are legible to different
+      interaction organizations. Domains do not directly convert into each other.
+
+    required_chain:
+      - Domain_A_interaction_event
+      - ParticipationSurface_A_receives_pressure
+      - InterfaceObject_state_change_or_transition_candidate
+      - InterfaceStateLink_changes_conditions_at_Surface_B
+      - Domain_B_interaction_event_or_transition_candidate
+
+    preserved_across_handoff:
+      - object_identity
+      - causal_lineage
+      - event_ordering
+      - constraint_path
+      - loss_visibility
+      - measurement_provenance
+      - evidence_state
+      - unresolved_variables
+
+    transformed_across_handoff:
+      - boundary_condition
+      - state_configuration
+      - organized_capability
+      - transition_eligibility
+      - signal_form
+      - storage_mode
+      - usable_margin
+
+    not_preserved_as_sameness:
+      - domain_identity
+      - mechanism_identity
+      - variable_meaning
+      - measurement_method
+      - ontology
+      - validation_state
+
+  Godot_mapping:
+    SceneTree:
+      role: runtime_host_and_lifecycle_orchestration
+      not_role: causal_truth_authority
+
+    Node:
+      role: visual_runtime_or_logical_adapter
+      not_role: default_simulation_truth_owner
+
+    Resource:
+      role: reusable_contract_template_or_data_container
+      examples:
+        - DomainDefinition
+        - ParticipationSurfaceDefinition
+        - TransitionContract
+        - MeasurementSchema
+        - AssumptionTemplate
+      caution: resources_are_shared_by_reference_unless_isolated
+
+    Signal:
+      role: low_coupling_notification_channel
+      allowed:
+        - notify_visual_layer
+        - notify_inspection_panel
+        - enqueue_external_events
+      prohibited:
+        - bypass_transition_arbitration
+        - hidden_authority_transfer
+
+    _process:
+      role: visual_update_or_UI_domain
+      prohibited:
+        - core_transition_commit_authority
+
+    _physics_process:
+      role: possible_fixed_step_scheduler_host
+      caution: physics_tick_is_host_timing_not_complete_ontology
+
+  anti_collapse_rules:
+    domain_identity:
+      - domains_are_interaction_organizations_not_substances
+      - shared_object_identity_does_not_imply_shared_domain_identity
+      - interface_state_change_is_not_domain_conversion
+      - hydraulic_does_not_become_electrical
+
+    scalar_compression:
+      - pressure_is_not_voltage
+      - flow_is_not_current
+      - scalar_similarity_does_not_equal_causal_identity
+      - energy_is_accounting_not_universal_substance
+      - net_scalar_may_summarize_but_must_not_replace_term_lineage
+
+    analogy_control:
+      - analogy_is_allowed_as_modeling_aid
+      - analogy_is_not_ontology
+      - operator_template_similarity_is_not_domain_equivalence
+
+    transition_control:
+      - continuous_equations_update_variables_not_regime_identity
+      - no_categorical_state_change_without_transition_record
+      - no_failed_transition_disappears
+
+    scheduling_control:
+      - simulation_frame_is_not_render_frame
+      - nothing_commits_during_pressure_discovery
+      - update_order_artifacts_are_not_causality
+
+    evidence_control:
+      - simulation_output_does_not_equal_measurement
+      - measurement_does_not_equal_validation
+      - visual_plausibility_does_not_equal_evidence
+      - governance_review_required_for_claim_promotion
+
+  first_active_test:
+    id: hydraulic_pressure_to_electrical_state_pressure_via_piezo_diaphragm
+    purpose:
+      - test_cross_domain_participation_without_domain_collapse
+      - verify_transition_and_scheduling_discipline
+      - expose_measurement_requirements
+      - prove_runtime_visibility_not_physical_validity
+
+    admissible_chain:
+      - fluid_pressure_acts_on_wetted_face
+      - wetted_face_pressure_creates_mechanical_deflection_candidate
+      - mechanical_transition_arbitrates_deflection_commit_stall_or_failure
+      - committed_deflection_changes_electrical_boundary_conditions
+      - electrical_surface_generates_voltage_or_current_candidate
+      - electrical_transition_arbitrates_output_state
+      - reconstruction_ledger_records_full_lineage
+
+    prohibited_summary:
+      - hydraulic_pressure_creates_voltage
+      - pressure_equals_voltage
+      - visual_output_equals_validation
+      - successful_demo_equals_physical_truth
+
+    success_conditions:
+      - no_domain_collapse
+      - preserved_causal_lineage
+      - deterministic_transition_record
+      - replayable_frame_history
+      - no_validation_language
+
+  unresolved:
+    - exact_unit_typing_schema
+    - dimensional_analysis_runtime_enforcement
+    - conservation_accounting_templates
+    - numerical_integrator_selection
+    - identity_persistence_across_split_merge_repair_replay
+    - approximation_admissibility_rules
+    - ontology_failure_representation
+    - Godot_resource_schema_for_primitives
+    - first_minimal_scene_architecture
+
+  next_build_targets:
+    - define_Godot_Resource_schemas_for_Domain_Surface_TransitionContract
+    - define_SimulationFrame_record_format
+    - define_ReconstructionLedger_serialization_format
+    - build_minimal_Godot_scene_with_nodes_as_adapters_only
+    - implement_hydraulic_to_piezo_test_case_as_non_validating_runtime_demo
+    - add_EvidenceGate_UI_language_filter

@@ -1,0 +1,1317 @@
+GRANT_MODEL_KERNEL
+
+1. Purpose
+
+The GRANT_MODEL_KERNEL is a compressed cognitive interpretation layer established above the canonical project repository. It exists as a structural tool to make the project explainable, fundable, and claim-safe for grant writing, institutional communication, and funding strategies without replacing, duplicating, or overriding the detailed technical files.
+
+2. Repository Relationship
+
+The underlying technical repository remains the sole canonical authority for all physical engineering details, layouts, dimensions, and chemical workflows. The GRANT_MODEL_KERNEL acts as a high-level cognitive interpreter that translates repository logic into fundable concepts; it does not define subsystem specifications, nor does it override or duplicate the repository's files.
+
+The GRANT_MODEL_KERNEL is a non-canonical cognitive interpretation layer. Engineering authority remains exclusively within the canonical technical repository.
+
+3. Compressed Project Identity
+
+The project is defined as:
+
+A Belize-based modular sargassum interception and processing system designed to remove sargassum from coastal and near-shore environments, stabilize biomass through controlled handling, and evaluate recoverable gas, chemical, and residual material streams through staged validation.
+
+This identity does not imply that gas yields, chemical extraction pathways, ecological benefits, or economic outcomes are verified or commercially proven.
+
+4. Minimum System Topology
+
+To maintain structural and logical fidelity, all explanations, institutional briefings, and grant summaries must preserve the following topology sequence exactly:
+
+$$\text{Intercept} \longrightarrow \text{Drain/Separate} \longrightarrow \text{Contain} \longrightarrow \text{Process} \longrightarrow \text{Recover/Test} \longrightarrow \text{Reset} \longrightarrow \text{Validate}$$
+
+Intercept: Biomass is intercepted from pelagic drift corridors or near-shore environments using documented low-energy, operator-controlled marine handling methods.
+
+Drain/Separate: Harvested sargassum is transferred to permeable, low-profile modular structures to allow passive saltwater drainage and the manual extraction of non-target marine bycatch.
+
+Contain: The drained biomass is loaded into sealed, corrosion-mitigated horizontal vessels to isolate the raw material and prevent anaerobic degradation in the open marine environment.
+
+Process: Contained biomass undergoes staged processing under monitored containment, with digestion and chemical recovery pathways remaining subject to validation.
+
+Recover/Test: Resulting process fluids and gases are drawn through closed extraction loops to measure, isolate, and evaluate potential chemical, sulfur, or fuel outputs.
+
+Reset: Digested residue is cleared for shoreside management, and the processing modules are washed, inspected, and prepped for subsequent deployment cycles.
+
+Validate: Manual logs, measured outputs, process observations, material wear patterns, and logistical metrics are recorded to establish baseline evidence and update the project’s technical record.
+
+5. Claim Discipline
+
+All assertions, performance metrics, and system behaviors must remain bound to their documented evidence level. The project enforces a strict distinction between:
+
+Design Intent: What the hardware or process is planned to achieve.
+
+Operational Theory: The scientific or mechanical logic supporting the design.
+
+Unresolved Variables: Known gaps in engineering data, metrics, or physics.
+
+Tested Behavior: Observed physical performance of components during trials.
+
+Validated Capability: Empirically proven, highly repeatable system performance under real-world conditions.
+
+Design intent and operational theory must never be written or communicated as validated capability.
+
+Conceptual coherence, architectural completeness, repeated internal consistency, or structured system logic must not be interpreted as evidence of validated engineering capability.
+
+Furthermore, documentation must preserve a strict distinction between evaluating potential recoverable outputs and demonstrating economically viable recovery systems. The project currently supports feasibility evaluation and measurement pathways, not commercially validated throughput or proven economic viability.
+
+6. Validation-State Awareness
+
+All conceptual elements, technical parameters, and chemical pathways within the project’s scope must visibly display their validation status using the canonical repository classifications:
+
+[VERIFIED]
+
+[ASSUMPTION]
+
+[HYPOTHESIS]
+
+[ESTIMATED BEHAVIOR]
+
+[PENDING VALIDATION]
+
+[UNRESOLVED ENGINEERING VARIABLE]
+
+No claim, process rate, or mechanical capacity may be promoted to [VERIFIED] without direct, documented empirical evidence.
+
+7. Uncertainty Preservation
+
+Technical unknowns, operational gaps, and unmeasured variables must be preserved honestly and transparently in all system documents. Gaps in knowledge must not be hidden, softened, or converted into artificial certainty; instead, they are preserved as structured targets for future engineering and scientific research. Unknowns are treated as fundable validation pathways, not weaknesses.
+
+8. Funding Translation Function
+
+The GRANT_MODEL_KERNEL serves to translate the repository's unresolved engineering and operational variables into clear, fundable validation work packages. Funding proposals must utilize conservative, evidence-building terminology designed to:
+
+measure mechanical parameters or yields
+
+validate chemical pathways or seal durability
+
+test hardware interactions in surf zones
+
+document processing cycle durations
+
+establish baseline water quality and environmental metrics
+
+determine the operating envelope of modular barge arrays
+
+evaluate the feasibility of regional scaling
+
+support next-phase decisions for system deployment
+
+Proposals must not claim that funding will automatically result in commercial deployment, self-powered processing, or guaranteed ecological outcomes.
+
+9. Forbidden Claim Escalations
+
+To preserve the professional credibility of the project under institutional and academic scrutiny, all documentation and communication must strictly prohibit language that converts:
+
+Modular, low-profile architecture into claims of an "industrial scale."
+
+Manual-assisted or operator-controlled mechanical workflows into "full autonomy" or "fully autonomous" systems.
+
+Target extraction profiles into "verified yields" or "guaranteed recovery."
+
+Solar-battery buffers and manual power generators into "self-powered processing platforms" or "closed-loop energy" / "perpetual energy."
+
+Localized containment and remediation intent into "guaranteed ecological restoration" or "zero waste."
+
+Multi-cycle pilot validation trials into "commercial readiness" or "commercially validated" platforms.
+
+Theoretical processing chemistry into "proven revenue streams."
+
+10. Reconstruction-Safe Summary Rule
+
+Any summary, abstract, or briefing generated from this project must retain sufficient logical structure to allow an external technical reviewer to reconstruct the system’s core operational mechanics. Every approved summary must explicitly preserve:
+
+The Belize-based coastal and near-shore operating context.
+
+The modular, low-profile hardware architecture.
+
+The sequential, seven-step minimum system topology.
+
+The containment-first transition logic.
+
+High visibility of validation states and unresolved engineering variables.
+
+Clear separation between communication summaries and canonical repository authority.
+
+No approved summary, grant narrative, or institutional communication may remove the existence of unresolved engineering variables, operational uncertainty, validation dependencies, or evidence limitations.
+
+The project’s credibility comes from preserving uncertainty honestly while showing a disciplined path to convert unknowns into measured operational evidence.
+
+SYSTEM_BOUNDARY_MAP
+
+1. Purpose
+
+The SYSTEM_BOUNDARY_MAP serves as a governance-layer authority topology map and authority firewall established above the canonical project repository. It exists to prevent authority bleed, shadow definitions, duplicated subsystem logic, semantic drift, hidden dependency mutation, and future edit conflicts.
+
+This document ensures that summaries, grant narratives, and institutional communications do not inadvertently mutate into shadow authority structures or displace the raw engineering truth recorded within the canonical technical repository. This is a governance-focused artifact, not a project summary or technical overview.
+
+The primary governing principle is:
+
+A file may reference another subsystem without inheriting authority over that subsystem.
+
+2. Repository Stability Principle
+
+Repository stability depends on knowing which file owns a concept, which files may reference it, and which files inherit impact when that concept changes. To isolate authority, preserve unresolved engineering variables, and maintain traceability, all edits to the repository must respect established single-source-of-truth boundaries.
+
+Any change to a subsystem's design details, material parameters, or physical workflows must be initiated solely within that subsystem's designated authority file.
+
+3. Subsystem Authority Ownership
+
+20_MODULAR_TILE_BARGE_SYSTEM
+
+Owns: Tile units, tile arrays, grated work surface, low-lift handling, passive drainage, tile-based marine-life separation, tile deployment/retrieval concepts, and tile stability and load constraints.
+
+Does Not Own: Digestion chamber mechanics, gas routing, electrolysis chemistry, shoreside reset infrastructure, PSV architecture, or economic claims.
+
+May Reference: PSV interaction, environmental marine-life protection, workforce handling, drainage logging, and emergency retrieval.
+
+Change Impact May Propagate To:
+
+22_PRIMARY_SUPPORT_VESSEL
+
+31_WORKFORCE_OPERATIONS_AND_TRAININ
+
+32_DATA_COLLECTION_VALIDATION_AND_R
+
+40_ENVIRONMENTAL_AND_MARINE_PROTECT
+
+41_EMERGENCY_RESPONSE_AND_FAILURE_C
+
+42_MATERIALS_AND_CORROSION_MANAGEME
+
+44_SYSTEM_INTEGRATION_AND_OPERATION
+
+53_3D_MODELING_AND_DIGITAL_SIMULATI
+
+21_MODULAR_DIGESTION_CHAMBERS
+
+Owns: Chamber architecture, HDPE drum concept, horizontal orientation, hatch/seal interfaces, internal agitation, strainer configuration, quick-connect ports, chamber loading/unloading, and chamber cleaning/reset requirements.
+
+Does Not Own: Long-term gas storage, electrolysis chemistry, PSV deck architecture, shoreside facility layout, or economic valuation.
+
+May Reference: Tile staging, PSV transfer interfaces, gas capture interface, fluid transfer interface, shoreside reset, workforce inspection, and material lifecycle.
+
+Change Impact May Propagate To:
+
+20_MODULAR_TILE_BARGE_SYSTEM
+
+22_PRIMARY_SUPPORT_VESSEL
+
+23_CHEMICAL_AND_ELECTROLYSIS_WORKFL
+
+24_GAS_STORAGE_AND_CONTAINMENT_SYST
+
+30_SHORESIDE_PROCESSING_AND_SUPPORT
+
+31_WORKFORCE_OPERATIONS_AND_TRAININ
+
+32_DATA_COLLECTION_VALIDATION_AND_R
+
+41_EMERGENCY_RESPONSE_AND_FAILURE_C
+
+42_MATERIALS_AND_CORROSION_MANAGEME
+
+44_SYSTEM_INTEGRATION_AND_OPERATION
+
+53_3D_MODELING_AND_DIGITAL_SIMULATI
+
+22_PRIMARY_SUPPORT_VESSEL
+
+Owns: PSV logistical role, transport/staging functions, deployment/retrieval support, vessel work zones, onboard transfer interfaces, onboard electrolysis hosting zones, PSV safety separation, and PSV integration with power support.
+
+Does Not Own: Tile design, chamber design, gas system design, electrolysis chemistry, shoreside facility design, or recovery economics.
+
+May Reference: Tile deployment, chamber transfer, gas/chemical handling interfaces, solar-battery integration, PMA/manual support, emergency stabilization, and workforce deck behavior.
+
+Change Impact May Propagate To:
+
+20_MODULAR_TILE_BARGE_SYSTEM
+
+21_MODULAR_DIGESTION_CHAMBERS
+
+23_CHEMICAL_AND_ELECTROLYSIS_WORKFL
+
+24_GAS_STORAGE_AND_CONTAINMENT_SYST
+
+30_SHORESIDE_PROCESSING_AND_SUPPORT
+
+31_WORKFORCE_OPERATIONS_AND_TRAININ
+
+40_ENVIRONMENTAL_AND_MARINE_PROTECT
+
+41_EMERGENCY_RESPONSE_AND_FAILURE_C
+
+43_POWER_AND_ENERGY_ARCHITECTURE
+
+44_SYSTEM_INTEGRATION_AND_OPERATION
+
+53_3D_MODELING_AND_DIGITAL_SIMULATI
+
+23_CHEMICAL_AND_ELECTROLYSIS_WORKFLOW
+
+Owns: Hydroxide processing workflow, sulfur recovery workflow, electrolysis pathway separation, closed-loop fluid transfer, electrolysis containment logic, chemical storage philosophy, chemical compatibility requirements, and electrode maintenance concerns.
+
+Does Not Own: Digestion chamber mechanics, gas storage architecture, PSV total architecture, shoreside facility layout, economic value of recovered outputs, or validated yield claims.
+
+May Reference: Chamber effluent feed, PSV hosting zones, gas byproduct routing, power availability, spill response, and environmental containment.
+
+Change Impact May Propagate To:
+
+21_MODULAR_DIGESTION_CHAMBERS
+
+22_PRIMARY_SUPPORT_VESSEL
+
+24_GAS_STORAGE_AND_CONTAINMENT_SYST
+
+30_SHORESIDE_PROCESSING_AND_SUPPORT
+
+32_DATA_COLLECTION_VALIDATION_AND_R
+
+33_ECONOMIC_AND_FINANCIAL_MODELING
+
+40_ENVIRONMENTAL_AND_MARINE_PROTECT
+
+41_EMERGENCY_RESPONSE_AND_FAILURE_C
+
+42_MATERIALS_AND_CORROSION_MANAGEME
+
+43_POWER_AND_ENERGY_ARCHITECTURE
+
+44_SYSTEM_INTEGRATION_AND_OPERATION
+
+24_GAS_STORAGE_AND_CONTAINMENT_SYSTEMS
+
+Owns: Gas capture pathways, gas routing, scrubbing, condensation, low-pressure staging, external storage interfaces, methane handling, hydrogen handling, chlorine mitigation interface, gas valve/isolation philosophy, and gas leak inspection logic.
+
+Does Not Own: Digestion chemistry, electrolysis chemistry, chamber mechanical design, economic gas valuation, or final gas utilization claims.
+
+May Reference: Chamber headspace, electrolysis gas byproducts, PSV transfer zones, environmental ventilation, emergency gas response, and energy-supported monitoring.
+
+Change Impact May Propagate To:
+
+21_MODULAR_DIGESTION_CHAMBERS
+
+22_PRIMARY_SUPPORT_VESSEL
+
+23_CHEMICAL_AND_ELECTROLYSIS_WORKFL
+
+30_SHORESIDE_PROCESSING_AND_SUPPORT
+
+31_WORKFORCE_OPERATIONS_AND_TRAININ
+
+32_DATA_COLLECTION_VALIDATION_AND_R
+
+33_ECONOMIC_AND_FINANCIAL_MODELING
+
+40_ENVIRONMENTAL_AND_MARINE_PROTECT
+
+41_EMERGENCY_RESPONSE_AND_FAILURE_C
+
+42_MATERIALS_AND_CORROSION_MANAGEME
+
+43_POWER_AND_ENERGY_ARCHITECTURE
+
+44_SYSTEM_INTEGRATION_AND_OPERATION
+
+30_SHORESIDE_PROCESSING_AND_SUPPORT_INFRASTRUCTURE
+
+Owns: Shoreside logistics hub, chamber receiving/offloading, cleaning/reset workflow, deep maintenance zones, residue handling, chemical staging areas, gas transfer/storage areas, research/testing areas, workforce support spaces, tile servicing, runoff containment, and reserve inventory.
+
+Does Not Own: Offshore collection mechanics, chamber core design, tile core design, PSV deployment mechanics, or chemical/gas yield claims.
+
+May Reference: PSV offloading, chamber reset requirements, tile servicing, gas/chemical staging, environmental runoff controls, workforce coordination, and validation testing.
+
+Change Impact May Propagate To:
+
+20_MODULAR_TILE_BARGE_SYSTEM
+
+21_MODULAR_DIGESTION_CHAMBERS
+
+22_PRIMARY_SUPPORT_VESSEL
+
+23_CHEMICAL_AND_ELECTROLYSIS_WORKFL
+
+24_GAS_STORAGE_AND_CONTAINMENT_SYST
+
+31_WORKFORCE_OPERATIONS_AND_TRAININ
+
+32_DATA_COLLECTION_VALIDATION_AND_R
+
+33_ECONOMIC_AND_FINANCIAL_MODELING
+
+40_ENVIRONMENTAL_AND_MARINE_PROTECT
+
+41_EMERGENCY_RESPONSE_AND_FAILURE_C
+
+42_MATERIALS_AND_CORROSION_MANAGEME
+
+44_SYSTEM_INTEGRATION_AND_OPERATION
+
+31_WORKFORCE_OPERATIONS_AND_TRAINING_DOCTRINE
+
+Owns: Operator discipline, training doctrine, manual inspection, tactile verification, shift handoff, chemical/gas handling behavior, fatigue considerations, local workforce integration, and manual/powered workflow proficiency.
+
+Does Not Own: Mechanical subsystem design, chemical pathway design, gas system architecture, economic productivity claims, or validated labor-to-throughput metrics.
+
+May Reference: Tile handling, chamber inspection, PSV deck behavior, chemical/gas safety behavior, emergency response, data logging, and shoreside reset tasks.
+
+Change Impact May Propagate To:
+
+20_MODULAR_TILE_BARGE_SYSTEM
+
+21_MODULAR_DIGESTION_CHAMBERS
+
+22_PRIMARY_SUPPORT_VESSEL
+
+23_CHEMICAL_AND_ELECTROLYSIS_WORKFL
+
+24_GAS_STORAGE_AND_CONTAINMENT_SYST
+
+30_SHORESIDE_PROCESSING_AND_SUPPORT
+
+32_DATA_COLLECTION_VALIDATION_AND_R
+
+33_ECONOMIC_AND_FINANCIAL_MODELING
+
+40_ENVIRONMENTAL_AND_MARINE_PROTECT
+
+41_EMERGENCY_RESPONSE_AND_FAILURE_C
+
+44_SYSTEM_INTEGRATION_AND_OPERATION
+
+32_DATA_COLLECTION_VALIDATION_AND_RESEARCH_DOCTRINE
+
+Owns: Batch tracking, chamber lifecycle tracking, failure logging, maintenance logging, corrosion tracking data, gas/chemical yield validation philosophy, environmental observation tracking, anomaly reporting, negative-result preservation, and manual vs automated data collection distinction.
+
+Does Not Own: Subsystem design, terminology definitions, economic projections, environmental protection rules, or validated performance claims without empirical data.
+
+May Reference: All subsystem outputs, batch states, maintenance events, environmental observations, workforce logs, and economic model inputs.
+
+Change Impact May Propagate To:
+
+All subsystem files
+
+33_ECONOMIC_AND_FINANCIAL_MODELING
+
+40_ENVIRONMENTAL_AND_MARINE_PROTECT
+
+41_EMERGENCY_RESPONSE_AND_FAILURE_C
+
+42_MATERIALS_AND_CORROSION_MANAGEME
+
+44_SYSTEM_INTEGRATION_AND_OPERATION
+
+50_DECISION_HISTORY_AND_ENGINEERING
+
+52_REPOSITORY_GOVERNANCE_AND_EXPANS
+
+Future grant-facing summaries
+
+40_ENVIRONMENTAL_AND_MARINE_PROTECTION_PROTOCOLS
+
+Owns: Environmental stewardship procedures, benthic protection, marine-life handling requirements, passive drainage environmental logic, spill mitigation from environmental perspective, chemical containment environmental logic, environmental chain-of-custody, atmospheric protection, residual biomass environmental controls, storm environmental procedures, washdown containment, and microplastic/debris prevention.
+
+Does Not Own: Tile architecture, chamber mechanics, gas system design, chemical process design, or workforce training doctrine.
+
+May Reference: Tile separation workflow, gas/chemical handling, shoreside runoff controls, storm retrieval, bycatch logging, and environmental monitoring.
+
+Change Impact May Propagate To:
+
+20_MODULAR_TILE_BARGE_SYSTEM
+
+22_PRIMARY_SUPPORT_VESSEL
+
+23_CHEMICAL_AND_ELECTROLYSIS_WORKFL
+
+24_GAS_STORAGE_AND_CONTAINMENT_SYST
+
+30_SHORESIDE_PROCESSING_AND_SUPPORT
+
+31_WORKFORCE_OPERATIONS_AND_TRAININ
+
+32_DATA_COLLECTION_VALIDATION_AND_R
+
+41_EMERGENCY_RESPONSE_AND_FAILURE_C
+
+44_SYSTEM_INTEGRATION_AND_OPERATION
+
+53_3D_MODELING_AND_DIGITAL_SIMULATI
+
+41_EMERGENCY_RESPONSE_AND_FAILURE_CONTAINMENT
+
+Owns: Emergency stabilization, failure categorization, chemical spill response, gas leak response, electrolysis isolation response, digestion chamber failure response, vessel safety response, tile storm/retrieval response, manual shutdown, maintenance lockout, emergency communication, and post-incident documentation.
+
+Does Not Own: Normal workflow sequence, subsystem architecture, routine maintenance doctrine, or design definitions.
+
+May Reference: All subsystem failure states, safe-state transitions, environmental containment, workforce response, and data logging.
+
+Change Impact May Propagate To:
+
+20_MODULAR_TILE_BARGE_SYSTEM
+
+21_MODULAR_DIGESTION_CHAMBERS
+
+22_PRIMARY_SUPPORT_VESSEL
+
+23_CHEMICAL_AND_ELECTROLYSIS_WORKFL
+
+24_GAS_STORAGE_AND_CONTAINMENT_SYST
+
+30_SHORESIDE_PROCESSING_AND_SUPPORT
+
+31_WORKFORCE_OPERATIONS_AND_TRAININ
+
+32_DATA_COLLECTION_VALIDATION_AND_R
+
+40_ENVIRONMENTAL_AND_MARINE_PROTECT
+
+42_MATERIALS_AND_CORROSION_MANAGEME
+
+43_POWER_AND_ENERGY_ARCHITECTURE
+
+44_SYSTEM_INTEGRATION_AND_OPERATION
+
+42_MATERIALS_AND_CORROSION_MANAGEMENT
+
+Owns: Material durability philosophy, HDPE usage philosophy, UV degradation awareness, saltwater corrosion management, seal/gasket lifecycle philosophy, fastener/linkage wear, valve/quick-connect wear monitoring, tile connection wear, chemical compatibility considerations, cleaning/surface preservation, material testing, and failure pattern documentation.
+
+Does Not Own: Exact subsystem geometry, final material selection unless documented in the relevant subsystem file, economic cost modeling, or subsystem workflow ownership.
+
+May Reference: Tile materials, chamber materials, gas/chemical compatibility, PSV splash-zone exposure, shoreside preservation, and maintenance logs.
+
+Change Impact May Propagate To:
+
+20_MODULAR_TILE_BARGE_SYSTEM
+
+21_MODULAR_DIGESTION_CHAMBERS
+
+22_PRIMARY_SUPPORT_VESSEL
+
+23_CHEMICAL_AND_ELECTROLYSIS_WORKFL
+
+24_GAS_STORAGE_AND_CONTAINMENT_SYST
+
+30_SHORESIDE_PROCESSING_AND_SUPPORT
+
+31_WORKFORCE_OPERATIONS_AND_TRAININ
+
+32_DATA_COLLECTION_VALIDATION_AND_R
+
+41_EMERGENCY_RESPONSE_AND_FAILURE_C
+
+44_SYSTEM_INTEGRATION_AND_OPERATION
+
+53_3D_MODELING_AND_DIGITAL_SIMULATI
+
+43_POWER_AND_ENERGY_ARCHITECTURE
+
+Owns: Solar-battery energy architecture, PMA/manual generation support role, capacitor-buffered electrolysis delivery, battery storage relationships, critical-system power prioritization, graceful degradation, load shedding, emergency power recovery, electrical corrosion protection, and energy validation needs.
+
+Does Not Own: Electrolysis chemistry, PSV propulsion hardware design beyond energy relationship, PMA mechanical details beyond energy integration role, economic energy valuation, or validated continuous power sufficiency.
+
+May Reference: PSV battery integration, electrolysis power demand, PMA/manual support, gas/chemical monitoring loads, emergency power needs, and workforce load scheduling.
+
+Change Impact May Propagate To:
+
+22_PRIMARY_SUPPORT_VESSEL
+
+23_CHEMICAL_AND_ELECTROLYSIS_WORKFL
+
+24_GAS_STORAGE_AND_CONTAINMENT_SYST
+
+31_WORKFORCE_OPERATIONS_AND_TRAININ
+
+32_DATA_COLLECTION_VALIDATION_AND_R
+
+33_ECONOMIC_AND_FINANCIAL_MODELING
+
+41_EMERGENCY_RESPONSE_AND_FAILURE_C
+
+44_SYSTEM_INTEGRATION_AND_OPERATION
+
+53_3D_MODELING_AND_DIGITAL_SIMULATI
+
+44_SYSTEM_INTEGRATION_AND_OPERATIONAL_FLOW
+
+Owns: Workflow choreography, full-cycle sequencing, subsystem handoffs, operational transitions, interface sequencing, hold-state/safe-state sequencing, and cross-subsystem relay logic.
+
+Does Not Own: Tile mechanics, chamber mechanics, PSV architecture, gas storage design, electrolysis chemistry, shoreside specifications, workforce doctrine, environmental rules, material lifecycle rules, or energy architecture.
+
+May Reference: All active subsystem interfaces, operational states, material handoffs, emergency interruptions, reset transitions, and data logging transitions.
+
+Change Impact May Propagate To:
+
+All operational subsystem files
+
+31_WORKFORCE_OPERATIONS_AND_TRAININ
+
+32_DATA_COLLECTION_VALIDATION_AND_R
+
+40_ENVIRONMENTAL_AND_MARINE_PROTECT
+
+41_EMERGENCY_RESPONSE_AND_FAILURE_C
+
+52_REPOSITORY_GOVERNANCE_AND_EXPANS
+
+Grant-facing summaries
+
+44_SYSTEM_INTEGRATION_AND_OPERATIONAL_FLOW may sequence subsystem interaction, but it must not redefine subsystem mechanics or become a shadow encyclopedia.
+
+50_DECISION_HISTORY_AND_ENGINEERING_EVOLUTION
+
+Owns: Architectural rationale, rejected concepts, historical pivots, engineering reversals, reasoning behind modularity, reasoning behind containment-first design, and reasoning behind maintenance-first simplification.
+
+Does Not Own: Current subsystem specifications, active terminology definitions, validation upgrades, or new architecture.
+
+May Reference: Prior versions of subsystem logic, rejected alternatives, rationale for current boundaries, and lessons from failed or reversed approaches.
+
+Change Impact May Propagate To:
+
+52_REPOSITORY_GOVERNANCE_AND_EXPANS
+
+Future audit artifacts
+
+Grant-facing explanation layers
+
+Repository onboarding materials
+
+51_TERMINOLOGY_AND_STANDARDIZATION
+
+Owns: Official terminology, naming conventions, validation-state definitions, prohibited terminology, autonomy/scale/energy language constraints, and claim-safe phrasing rules.
+
+Does Not Own: Subsystem mechanics, physical design details, operational sequencing, or economic claims.
+
+May Reference: All subsystem categories, all validation states, and all prohibited language domains.
+
+Change Impact May Propagate To:
+
+Every repository file
+
+Every summary
+
+Every grant narrative
+
+Every cognitive-layer artifact
+
+52_REPOSITORY_GOVERNANCE_AND_EXPANSION_PROTOCOLS
+
+Owns: Single-source-of-truth doctrine, file creation rules, subsystem separation criteria, validation threshold requirements, anti-speculation rules, anti-inflation rules, AI-assisted editing rules, rollback/reversal philosophy, and traceability requirements.
+
+Does Not Own: Subsystem mechanics, subsystem workflows, engineering dimensions, or validated performance claims.
+
+May Reference: All files as governed repository objects, authority boundaries, expansion triggers, edit discipline, and validation requirements.
+
+Change Impact May Propagate To:
+
+Entire repository structure
+
+Large document editor (Gemini/Jared) editing behavior
+
+Future cognitive-layer artifacts
+
+Grant-facing compression rules
+
+4. Choreography vs Authority Distinction
+
+A clear division must be maintained between the files that sequence operations and the files that define mechanical or chemical reality.
+
+Choreography: Encompasses sequencing interactions, describing transitions, describing handoffs, describing operational states, and describing movement between subsystems.
+
+Authority: Encompasses defining subsystem mechanics, changing subsystem specifications, creating new terminology, resolving unresolved variables, and converting interactions into ownership.
+
+A workflow file describing interaction between systems does not gain authority over the systems being described.
+
+The document 44_SYSTEM_INTEGRATION_AND_OPERATIONAL_FLOW is choreography-only. It describes how hardware, personnel, material streams, and operational states transition through the system, but it cannot alter the specifications, definitions, procedures, constraints, or validation status owned by the designated canonical authority files.
+
+5. Dependency and Impact Visibility
+
+To protect structural integrity during engineering updates, downstream and upstream dependencies must remain fully transparent.
+
+Upstream Dependency: Occurs when a file depends on another file for a definition, constraint, or technical premise.
+
+Example: 44_SYSTEM_INTEGRATION_AND_OPERATIONAL_FLOW depends on files 20, 21, 22, 23, 24, 30, 31, 40, 41, and 43 for subsystem-specific truth.
+
+Downstream Dependency: Occurs when a change in one file may require updates or checks in other files.
+
+Example: A change to chamber hatch or seal logic in 21_MODULAR_DIGESTION_CHAMBERS may affect gas containment (24), emergency response (41), material lifecycle (42), workforce inspection (31), data logging (32), shoreside reset (30), and 3D modeling (53).
+
+Inherited Assumption: Occurs when a file relies on an assumption owned elsewhere without gaining authority over it.
+
+Example: 33_ECONOMIC_AND_FINANCIAL_MODELING may rely on gas or chemical yield assumptions from 24 or 23, but it does not own those yields.
+
+Unresolved-Variable Propagation: Occurs when an unresolved engineering variable in one authority file constrains multiple dependent files.
+
+Example: Unresolved seal longevity in 21 constrains planning and parameters within 24, 31, 32, 33, 41, 42, and 44.
+
+Edit-Impact Chain
+
+Every significant edit to a repository file must explicitly evaluate and answer the following six governance questions:
+
+What file owns the changed concept?
+
+Which files reference it?
+
+Which assumptions are inherited?
+
+Which unresolved variables are affected?
+
+Which downstream documents require review?
+
+Which summaries or grant claims may need tightening?
+
+6. Anti-Duplication Governance
+
+Duplication is a primary vector for semantic drift and technical inflation. The following behaviors are strictly prohibited within the repository:
+
+Repeated definitions across different files.
+
+Paraphrased statements of subsystem ownership in downstream workflows.
+
+Duplicate process explanations across multiple chapters.
+
+Introduction of shadow terminology that bypasses 51_TERMINOLOGY_AND_STANDARDIZATION.
+
+Workflow files expanding to become subsystem encyclopedias.
+
+Summaries or summaries of summaries mutating into alternative authority documents.
+
+Temporary explanatory language or analogical descriptions hardening into repository canon.
+
+Grant-application text relocating, refining, or defining technical truth.
+
+Unresolved variables ([UNRESOLVED ENGINEERING VARIABLE]) being quietly rewritten as assumptions.
+
+Assumptions ([ASSUMPTION]) being written as validated behavior without direct empirical trials.
+
+A repeated definition is not harmless. It creates a future conflict point.
+
+7. Boundary Preservation Rules
+
+To maintain strict modularity, all documents must conform to one of the following five operational roles:
+
+Subsystem Definition: The canonical file defines what a subsystem is, how it is structured, and what it owns (e.g., 21_MODULAR_DIGESTION_CHAMBERS owns the HDPE drum and hatch specifications).
+
+Subsystem Interaction: Other files may describe how a subsystem interacts with another subsystem, but interaction does not transfer ownership (e.g., PSV loading does not transfer drum seal authority to 22_PRIMARY_SUPPORT_VESSEL).
+
+Workflow Sequencing: Sequencing describes the order of operations. It does not define subsystem design (e.g., 44 sequences the reset step but does not define washdown chemical tolerances).
+
+Governance Reference: Governance files define rules for how repository truth is managed. They do not define subsystem mechanics (e.g., 52 defines when to split a file but does not dictate vessel draft).
+
+Communication Summary: Summaries may compress relationships for institutional clarity, but they must not relocate authority, erase dependencies, or convert uncertainty into certainty.
+
+8. Compression-Safe Governance Rule
+
+Future summaries, grant narratives, institutional communications, and cognitive-layer structures may compress repository logic for external stakeholders, but they are strictly prohibited from:
+
+Relocating technical or mechanical authority.
+
+Erasing upstream or downstream dependencies.
+
+Flattening critical subsystem distinctions.
+
+Implying or stating the transfer of subsystem ownership.
+
+Removing or obscuring unresolved engineering variables.
+
+Promoting the validation status of any parameter without documented operational data.
+
+Substituting narrative coherence for hard engineering evidence.
+
+The SYSTEM_BOUNDARY_MAP preserves repository stability by defining where truth lives, how truth propagates, and where truth must not migrate.
+
+VALIDATION_STATE_LEDGER
+
+1. Purpose
+
+The VALIDATION_STATE_LEDGER is an evidence-state governance structure established above the canonical project repository. It does not validate the project, certify subsystem performance, generate test results, or replace detailed subsystem files.
+
+Its function is to prevent premature claim escalation by tracking and classifying what is intended, theorized, assumed, estimated, pending validation, observed, repeatedly validated, or unresolved. This ledger does not serve as empirical proof; instead, it is a structural guardrail designed to prevent narrative coherence or architectural completeness from being mistaken for validated operational capability.
+
+2. Evidence-State Separation
+
+To protect technical integrity, this ledger enforces strict separation between the following nine evidence states. No category may silently inherit authority or validation status from another.
+
+2.1 Design Intent
+
+Definition: A planned function, objective, or desired behavior of a subsystem or workflow.
+
+Permitted Language: "designed to", "intended to", "planned to support", "configured to allow", "aims to".
+
+Prohibited Escalation: Design intent must never be presented as evidence of operational performance.
+
+Example: The statement "The gas routing system is designed to support low-pressure containment" must not be escalated to imply that "The gas routing system has demonstrated safe low-pressure containment."
+
+2.2 Operational Theory
+
+Definition: The technical, scientific, or causal logic explaining why a design or sequence is expected to function.
+
+Permitted Language: "based on", "expected mechanism", "operational theory", "the system logic assumes", "the workflow is structured around".
+
+Prohibited Escalation: A plausible operational mechanism must not be treated as tested behavior.
+
+Example: The operational theory that passive drainage reduces biomass water burden does not prove that passive drainage achieves a specific drainage rate under Belizean field conditions.
+
+2.3 Assumption
+
+Definition: A probable condition or value accepted temporarily to structure ongoing planning or calculations.
+
+Canonical Tag: [ASSUMPTION]
+
+Permitted Language: "assumes", "based on probable conditions", "planning assumption", "operational assumption".
+
+Prohibited Escalation: Repeated referencing or deployment of an assumption must not harden into accepted truth.
+
+Example: The planning assumption that the primary support vessel (PSV) requires shallow draft access does not become validated vessel design parameters merely because it is repeated across multiple system briefs.
+
+2.4 Hypothesis
+
+Definition: A testable prediction requiring structured experimental or operational validation.
+
+Canonical Tag: [HYPOTHESIS]
+
+Permitted Language: "test whether", "hypothesized", "to be evaluated", "subject to testing".
+
+Prohibited Escalation: A hypothesis must never be treated as an estimate, a result, or a validated performance metric.
+
+Example: The hypothesis that an inline flywheel will smooth manual energy generation input remains a hypothesis until physical measurement occurs.
+
+2.5 Estimated Behavior
+
+Definition: Expected performance or likely output calculated through theoretical modeling, engineering calculations, physical analogy, or preliminary expectations.
+
+Canonical Tag: [ESTIMATED BEHAVIOR]
+
+Permitted Language: "estimated", "expected pending validation", "modeled as", "projected behavior", "anticipated".
+
+Prohibited Escalation: An estimate is not a measurement. A repeated estimate is not a validation. A spreadsheet calculation is not a field trial.
+
+Example: Modeling a $15\%$ transition energy loss across a subsystem is an estimate; it must not be reported as a measured operational value.
+
+2.6 Pending Validation
+
+Definition: A design, workflow, or performance parameter that has been physically structured or deployed, but has not yet undergone testing to confirm operational capability.
+
+Canonical Tag: [PENDING VALIDATION]
+
+Permitted Language: "awaiting validation", "requires testing", "planned validation", "validation pending".
+
+Prohibited Escalation: "Pending validation" must never be presented as partial or implied validation.
+
+Example: Identifying electrode durability as "pending validation" does not permit the claim that "electrodes are durable."
+
+2.7 Tested Behavior
+
+Definition: Observed physical performance derived from a specific, documented test, trial, prototype cycle, or field event.
+
+Required Context: Every entry of tested behavior must explicitly state:
+
+Date or test cycle identifier.
+
+Physical location or testing environment.
+
+Hardware version and scale of equipment.
+
+Exact operating conditions and observed results.
+
+Structural limitations and whether repeatability has been attempted.
+
+Prohibited Escalation: A single test event does not establish validated capability. Observed behavior under one set of conditions does not transfer to all conditions.
+
+Example: A chamber seal holding during one low-pressure bench trial does not mean chamber seals are validated for repeated Belizean marine deployment.
+
+2.8 Validated Capability
+
+Definition: A specific behavior or performance rate demonstrated repeatably under relevant real-world operating conditions, supported by documentation sufficient to withstand external audit.
+
+Required Context: Requires documented repeatability, specified environmental exposure parameters, defined failure boundaries, operating limits, and complete data traceability.
+
+Permitted Language: "validated under", "demonstrated across", "verified by", "repeatably observed".
+
+Prohibited Escalation: Validated capability must remain strictly bounded to the specific conditions under which validation was achieved.
+
+Example: Seal performance validated for $50$ cycles under controlled shoreside salt-exposure testing does not establish validation for indefinite offshore marine use.
+
+2.9 Unresolved Engineering Variable
+
+Definition: A known specification gap, unresolved operating parameter, or missing physical measurement required for engineering confidence.
+
+Canonical Tag: [UNRESOLVED ENGINEERING VARIABLE]
+
+Permitted Language: "unresolved", "requires specification", "not yet determined", "requires measurement", "requires engineering decision".
+
+Prohibited Escalation: Unresolved variables must never be obscured inside generic or high-level planning assumptions.
+
+Example: If the wind/wave shutdown threshold for modular barge operation is unresolved, it must not be bypassed with the general statement that the system can operate in seasonal tropical conditions.
+
+3. Validation Escalation Control
+
+To preserve credibility under institutional, academic, and scientific scrutiny, this ledger blocks the following six specific escalation pathways:
+
+3.1 Assumption Hardening
+
+Risk: Planning assumptions are repeatedly cited until they are treated as settled engineering fact.
+
+Control: Every assumption must retain its explicit [ASSUMPTION] tag until replaced by documented empirical evidence.
+
+3.2 Grant-Language Hardening
+
+Risk: High-level, positive framing written for funding applications is imported back into technical planning as if it represents physical performance.
+
+Control: All external or grant-facing language must remain subordinate to the internal evidence status defined by the repository.
+
+3.3 Architecture-as-Proof Error
+
+Risk: A visually complete or logically consistent system diagram creates the false impression of a validated, operational system.
+
+Control: Narrative and visual coherence must be separated from actual demonstrated performance.
+
+Governance Rule: Conceptual coherence is not validation.
+
+3.4 Single-Trial Overreach
+
+Risk: A single successful field demonstration or laboratory test is communicated as a validated capability.
+
+Control: Tested behavior must remain tied to its specific context. Validated capability requires documented proof of multi-cycle repeatability under real-world conditions.
+
+3.5 Simulation Inflation
+
+Risk: 3D computer models, hydrodynamic simulations, or digital rendering packages imply physical finality or validated capacity.
+
+Control: Digital models are tools of design intent and operational theory; they do not imply validated hydrodynamics, marine survivability, or structural integrity unless supported by physical testing.
+
+3.6 Economic Inference Inflation
+
+Risk: The calculation of potential chemical, gas, or biomass recovery profiles is presented as implied revenue, economic viability, or commercial feasibility.
+
+Control: Feasibility models are estimates. Economic viability requires measured yields, recovery costs, equipment maintenance lifecycles, manual labor ratios, local market transport costs, and a validated physical operating envelope.
+
+4. Evidence Visibility
+
+Validation and evidence status must remain visible through every compression layer of project documentation. This rule governs all:
+
+Repository edits.
+
+Executive summaries.
+
+Grant narratives and funding applications.
+
+Institutional and regulatory briefs.
+
+Research collaboration documents.
+
+External partner communications.
+
+Cognitive-layer artifacts.
+
+While narrative compression may reduce text length, it is strictly prohibited from removing evidence limitations, masking unresolved variables, or erasing technical uncertainty.
+
+If a summary states that "the system recovers process fluids and gases," it must explicitly define whether this recovery is a design intent, pending validation, tested behavior, or validated capability. Removing these distinctions to improve narrative flow is classified as unauthorized technical inflation.
+
+5. Validation Ownership
+
+5.1 Ledger Owns
+
+Definition of evidence statuses and validation thresholds.
+
+Claim maturity tracking across all modules.
+
+Validation dependency mapping.
+
+Visibility and tracking of [UNRESOLVED ENGINEERING VARIABLE] markers.
+
+Escalation restriction enforcement.
+
+Minimum evidence-context requirements for repository edits.
+
+5.2 Ledger Does Not Own
+
+Subsystem mechanical specifications or engineering dimensions.
+
+Specific gas, chemical, or biomass yields.
+
+Power performance values or solar/battery capacities.
+
+Ecological impact parameters or environmental baseline data.
+
+Financial formulas or market economics.
+
+Raw test records and physical logs.
+
+Terminology and naming conventions.
+
+5.3 Authority Relationship
+
+The VALIDATION_STATE_LEDGER may record or classify a claim as [PENDING VALIDATION] or [UNRESOLVED ENGINEERING VARIABLE] when that status is supported by the canonical repository or by the absence of documented validation evidence. It does not possess the authority to certify that a subsystem performs to specification unless supported by a canonical test record sourced directly from the relevant canonical authority file.
+
+6. Evidence Dependency Awareness
+
+All validation states are highly conditional. A behavior validated in one context does not transfer to other environments without physical verification.
+
+6.1 Required Validation Context Dimensions
+
+Every physical trial or validated capability entry must remain tied to its verified context across the following dimensions:
+
+File Authority: The specific subsystem file governing the tested hardware.
+
+Hardware Version: The exact design iteration of the equipment tested.
+
+Test Scale: Bench-scale, prototype, pilot-scale, or multi-unit deployment.
+
+Environmental Conditions: Wave heights, wind speed, tidal current, water salinity, temperature, UV exposure, and sediment levels.
+
+Operating Duration: Continuous run-time or total cycles completed.
+
+Load / Throughput: Biomass weight, moisture content, gas volume, or flow rates.
+
+Workforce Condition: Number of operators, required skill levels, training status, and manual intervention frequency.
+
+Energy Condition: Grid connection, solar-battery buffer levels, manual generator integration, or capacitor discharge states.
+
+Material Exposure: Exposure to sulfuric compounds, organic acids, abrasive sediments, saltwater, or intense sunlight.
+
+Measurement Method: Calibration status, tool types, and manual versus digital data logging methods.
+
+Known Limitations: Structural boundary conditions where performance degrades.
+
+6.2 Dependency Categories
+
+Any validation state may be constrained by, or dependent upon:
+
+Environmental Assumptions: Corrosion rates, bio-fouling, wind-load limits, tidal drag.
+
+Scale Assumptions: Transition from single-chamber testing to multi-chamber modular arrays.
+
+Energy Assumptions: Battery reserve capacity, solar intermittency, manual energy generation thresholds.
+
+Workforce Assumptions: Operator speed, manual inspection accuracy, fatigue limits, safety procedure adherence.
+
+Corrosion / Material Assumptions: Seal elasticity decay, UV-driven HDPE embrittlement, galvanic corrosion of connections.
+
+Operational Constraints: Maximum offshore distance, wave-height retrieval limits, deck-load capacity, shoreside reset cycle speed.
+
+6.3 Context Boundary Rule
+
+A validation claim must explicitly define the condition boundary under which it applies.
+
+Example: A digestion chamber hatch seal that is "validated for 50 cycles under controlled, shoreside, manual washdown testing" does not carry validation for offshore marine operations. Physics continues to operate independent of narrative expectations.
+
+7. Anti-Hallucination Governance
+
+The VALIDATION_STATE_LEDGER actively restricts subjective human and automated AI narrative drift.
+
+7.1 Prohibited Language Patterns
+
+The following phrases, and their semantic equivalents, are prohibited from all technical and summary documents unless supported by validated capability data:
+
+"probably works"
+
+"should be sufficient"
+
+"likely scalable"
+
+"proven concept" (without citing documented, multi-cycle field trial evidence)
+
+"commercially viable" (without verified operating economics)
+
+"environmentally beneficial" (without established ecological baseline and impact data)
+
+"autonomous" (without validated mechanical control automation data)
+
+"self-powered" (without validated energy self-sufficiency records)
+
+"industrial scale" (without verified mass-throughput data)
+
+7.2 AI-Specific Risks
+
+To protect the single source of truth from automated decay, this ledger is designed to resist:
+
+AI-Generated Confidence Loops: Where positive language in summaries is re-read by AI tools as technical validation, leading to artificial claim escalation in future drafts.
+
+Internally Consistent Fiction: The creation of highly polished, grammatically flawless system descriptions that lack actual physical engineering validation.
+
+Assumption Recycling: Treating old, unvalidated assumptions as verified inputs because they have appeared in multiple historical iterations of document drafts.
+
+Citation Laundering: Referencing summaries, slide decks, or grant narratives as the primary source of technical validation instead of citing the raw, canonical subsystem engineering files.
+
+7.3 Required Governance Axiom
+
+Repetition, coherence, formatting quality, or citation proximity must not be treated as evidence.
+
+8. Claim Tracking Structure
+
+Each future ledger entry must identify the claim being tracked, the canonical file that owns the underlying technical concept, the current evidence-state category, the evidence or absence of evidence supporting that classification, and the validation pathway required before the claim may be escalated.
+
+No ledger entry may upgrade a claim’s evidence state without a documented evidence source from the canonical repository, a validation record, or a controlled test log.
+
+8.1 Required Entry Fields
+
+Claim Statement: [The specific statement or capacity claim being tracked]
+
+Owning Subsystem File: [Canonical repository file path or identifier]
+
+Current Evidence-State Category: [One of the nine categories defined in Section 2]
+
+Supporting Evidence Source: [Citations to canonical test records, prototype logs, or raw documentation]
+
+Validation Dependencies: [Other systems, variables, or environment dimensions required to support the claim]
+
+Unresolved Variables: [Specific technical measurements or parameters currently outstanding]
+
+Affected Downstream Files: [List of dependent files that rely on this claim status]
+
+Allowed Language: [Permitted phrase options mirroring the exact evidence state]
+
+Prohibited Escalation: [Direct limits on how this claim must not be framed in external communications]
+
+Required Validation Pathway: [Step-by-step actions required to graduate this claim to the next evidence level]
+
+9. Compression-Safe Evidence Rule
+
+Summaries, grant narratives, institutional communications, and cognitive-layer artifacts may compress repository logic, but they are strictly prohibited from performing any of the following actions:
+
+Promoting a claim's validation state without direct empirical data.
+
+Erasing unresolved engineering variables.
+
+Removing evidence limitations, environmental constraints, or physical boundaries.
+
+Substituting narrative coherence or grammatical polish for hard empirical evidence.
+
+Implying verified capability without concrete operational and empirical support.
+
+Converting design intent or planned operational goals into operational proof.
+
+Converting estimates, projections, or calculations into verified performance claims.
+
+Converting feasibility evaluations or target extractions into proven commercial viability or economically validated recovery systems.
+
+Converting tested behavior from isolated trials into validated capability without repeatable, multi-cycle evidence under real-world conditions.
+
+The VALIDATION_STATE_LEDGER preserves repository credibility by making uncertainty visible, tracking evidence honestly, and preventing conceptual architecture from mutating into implied proof.
+
+PAGE 4 — UNRESOLVED_VARIABLE_REGISTER
+
+1. Purpose
+
+The UNRESOLVED_VARIABLE_REGISTER is an uncertainty topology structure established as a governance-layer firewall above the canonical project repository. It exists to prevent hidden planning assumptions, premature engineering certainty, assumption laundering, and the silent conversion of technical unknowns into accepted operational truth.
+
+This register does not serve as a speculative research wishlist or a future-feature roadmap; instead, it provides absolute visibility into the engineering gaps and physical boundaries that remain unmeasured.
+
+2. Uncertainty Governance Principle
+
+Preserving technical unknowns in a visible, structured manner is a core technical asset of this project, not a design weakness.
+
+Repository integrity requires that what is unknown remains visibly unknown, ensuring that planning models, economic projections, and system designs do not inherit unmeasured operational assumptions.
+
+3. Canonical Unresolved Variable Categories
+
+The physical and operational uncertainties of the system are restricted to the following twelve canonical categories. Every technical unknown must be cataloged under its respective category.
+
+3.1 Marine Deployment Variables
+
+Domain Scope: Wave energy levels, tidal currents, seasonal wind profiles, seafloor anchorage conditions, and retrieval window constraints within coastal Belizean near-shore environments.
+
+Affected Downstream Subsystems: 20_MODULAR_TILE_BARGE_SYSTEM, 22_PRIMARY_SUPPORT_VESSEL, 41_EMERGENCY_RESPONSE_AND_FAILURE_CONTAINMENT, and 44_SYSTEM_INTEGRATION_AND_OPERATIONAL_FLOW.
+
+Visibility Mandate: Without direct measurement of localized sea states, mooring tension limits and retrieval timings remain speculative, risking physical system loss.
+
+3.2 Tile Stability Variables
+
+Domain Scope: Hydrodynamic drag coefficients of modular tile arrays under seasonal surge conditions, load limits of low-profile surfaces, and structural limits of tile connections.
+
+Affected Downstream Subsystems: 20_MODULAR_TILE_BARGE_SYSTEM and 42_MATERIALS_AND_CORROSION_MANAGEMENT.
+
+Visibility Mandate: Unmeasured structural stresses on tile connections during surge events allow hidden mechanical failure modes to propagate through the design.
+
+3.3 Chamber Mechanics Variables
+
+Domain Scope: Hatch seal seal-face deformation rates, physical wear patterns under cyclic manual loading, and mechanical structural performance of horizontal HDPE drums under rotational load.
+
+Affected Downstream Subsystems: 21_MODULAR_DIGESTION_CHAMBERS, 24_GAS_STORAGE_AND_CONTAINMENT_SYSTEMS, and 42_MATERIALS_AND_CORROSION_MANAGEMENT.
+
+Visibility Mandate: Relying on theoretical gasket performance without physical cycle-wear testing exposes the containment loop to unmonitored atmospheric leaks.
+
+3.4 Digestion Timing Variables
+
+Domain Scope: Daily biodegradation rates of harvested sargassum, moisture-loss curves during passive drainage, and exact digestion cycle durations under regional temperature variance.
+
+Affected Downsystem Subsystems: 21_MODULAR_DIGESTION_CHAMBERS, 30_SHORESIDE_PROCESSING_AND_SUPPORT_INFRASTRUCTURE, and 44_SYSTEM_INTEGRATION_AND_OPERATIONAL_FLOW.
+
+Visibility Mandate: Operational throughput projections inherit cascading scheduling errors if the physical digestion cycle duration is not empirically established.
+
+3.5 Gas Yield Variables
+
+Domain Scope: Volume, rate, composition ($\text{CH}_4$, $\text{CO}_2$, $\text{H}_2\text{S}$, and trace gases), and temperature dependencies of biogas generated during staged digestion of sargassum biomass.
+
+Affected Downstream Subsystems: 24_GAS_STORAGE_AND_CONTAINMENT_SYSTEMS, 33_ECONOMIC_AND_FINANCIAL_MODELING, and 43_POWER_AND_ENERGY_ARCHITECTURE.
+
+Visibility Mandate: Treating theoretical biomass gasification formulas as empirical yields distorts energy-buffer projections and financial feasibility models.
+
+3.6 Chemical Yield Variables
+
+Domain Scope: Mass-balance ratios of recovered sulfur, process effluents, and hydroxide outputs derived through low-power electrolysis pathways.
+
+Affected Downstream Subsystems: 23_CHEMICAL_AND_ELECTROLYSIS_WORKFLOW, 30_SHORESIDE_PROCESSING_AND_SUPPORT_INFRASTRUCTURE, and 33_ECONOMIC_AND_FINANCIAL_MODELING.
+
+Visibility Mandate: Assumed chemical extraction rates must not be used to assert commercial viability before laboratory and bench-scale trials establish verified mass balances.
+
+3.7 Energy Demand Variables
+
+Domain Scope: Real-world electrical draw of sensor arrays, closed-loop pump systems, and manual PMA-assisted capacitor charging cycles.
+
+Affected Downstream Subsystems: 43_POWER_AND_ENERGY_ARCHITECTURE and 22_PRIMARY_SUPPORT_VESSEL.
+
+Visibility Mandate: Theoretical power calculations do not account for transient electrical loads or heat-driven efficiency losses, which can lead to system blackout during peak demand.
+
+3.8 Workforce Ratio Variables
+
+Domain Scope: Manual cycle times for tile clearing, bycatch extraction, hatch securing, and shoreside vessel washdowns under real-world weather and fatigue conditions.
+
+Affected Downstream Subsystems: 31_WORKFORCE_OPERATIONS_AND_TRAINING_DOCTRINE, 30_SHORESIDE_PROCESSING_AND_SUPPORT_INFRASTRUCTURE, and 33_ECONOMIC_AND_FINANCIAL_MODELING.
+
+Visibility Mandate: Underestimating manual labor constraints and cycle durations creates unvalidated operational dependencies that invalidate shoreside and offshore schedules.
+
+3.9 Environmental Baseline Variables
+
+Domain Scope: Near-shore water quality metrics, sediment baseline values, local benthic conditions, and seasonal pelagic drift corridor dynamics in Belize.
+
+Affected Downstream Subsystems: 40_ENVIRONMENTAL_AND_MARINE_PROTECTION_PROTOCOLS and 32_DATA_COLLECTION_VALIDATION_AND_RESEARCH_DOCTRINE.
+
+Visibility Mandate: Operating without empirical environmental baselines makes it impossible to verify environmental protection intent or identify localized ecological impacts.
+
+3.10 Shoreside Reset Variables
+
+Domain Scope: Physical runoff retention constraints, manual washdown cycle speeds, offloaded sediment separation limits, and logistics hub staging capacity.
+
+Affected Downstream Subsystems: 30_SHORESIDE_PROCESSING_AND_SUPPORT_INFRASTRUCTURE and 44_SYSTEM_INTEGRATION_AND_OPERATIONAL_FLOW.
+
+Visibility Mandate: Bottlenecks at the shoreside interface directly limit the maximum operational frequency of the offshore collection vessels.
+
+3.11 Corrosion / Material Lifecycle Variables
+
+Domain Scope: UV-driven HDPE embrittlement, salt-crust degradation of quick-connect fittings, and galvanic corrosion rates of structural connections in tropical marine conditions.
+
+Affected Downstream Subsystems: 42_MATERIALS_AND_CORROSION_MANAGEMENT, 20_MODULAR_TILE_BARGE_SYSTEM, and 21_MODULAR_DIGESTION_CHAMBERS.
+
+Visibility Mandate: Overlooking real-world material decay rates under continuous tropical UV and saltwater exposure leads to premature structural failure during field trials.
+
+3.12 Economic Readiness Variables
+
+Domain Scope: Regional marine transportation costs, labor overhead, replacement parts logistics, and regional market commodity demand values for extracted outputs.
+
+Affected Downstream Subsystems: 33_ECONOMIC_AND_FINANCIAL_MODELING.
+
+Visibility Mandate: Speculative pricing and idealized maintenance cycles distort economic modeling, hiding the true baseline operational costs.
+
+4. Unresolved Variable Governance Rules
+
+To prevent technical drift and unearned claim escalation, the repository must strictly enforce these five prohibitions:
+
+No Masking: It is strictly prohibited to hide or gloss over unresolved variables inside high-level planning assumptions, general guidelines, or project overviews.
+
+No Simulation Hardening: Expected behaviors derived from digital models, 3D simulations, or theoretical calculations must never be treated or communicated as physical baseline data.
+
+No Unearned Feasibility: Economic modeling and financial projections are prohibited from implying commercial viability or predictable revenues without citing validated operating envelopes and empirical yield data.
+
+No Diagram-Based Validation: Graphic system completeness, operational flowcharts, and CAD diagrams must never be presented as physical proof of mechanical or process capability.
+
+No Narrative Laundering: The removal, softening, or erasure of technical uncertainty, known limits, or unresolved variables in summaries, grant applications, or partner briefs is classified as unauthorized claim inflation.
+
+5. Dependency and Propagation Awareness
+
+An unresolved technical variable within a primary authority file acts as a physical boundary that limits the operational confidence of all dependent downstream systems.
+
+For example, if the seal degradation rate in 21_MODULAR_DIGESTION_CHAMBERS is unresolved, this technical gap propagates downstream and degrades the structural integrity of:
+
+24_GAS_STORAGE_AND_CONTAINMENT_SYSTEMS (unmeasured headspace leakage risk).
+
+31_WORKFORCE_OPERATIONS_AND_TRAINING_DOCTRINE (unverified tactile manual inspection cycle limits).
+
+33_ECONOMIC_AND_FINANCIAL_MODELING (unverified replacement part logistics and maintenance frequency).
+
+41_EMERGENCY_RESPONSE_AND_FAILURE_CONTAINMENT (unmeasured gas-leak response thresholds).
+
+44_SYSTEM_INTEGRATION_AND_OPERATIONAL_FLOW (unverified safe hold-state sequence durations).
+
+No downstream planning model can assert operational capability while its primary upstream engineering variables remain unmeasured.
+
+6. Validation Pathway Awareness
+
+Unresolved engineering variables are not system liabilities; they are structured validation priorities, prototype drivers, and clear funding targets. These variables are resolved systematically through disciplined validation pathways that convert technical unknowns into measured evidence.
+
+Approved validation pathways include:
+
+Bench-Scale Testing: Micro-scale evaluation of chemical reactions, electrode material wear, or polymer reactions under controlled laboratory conditions.
+
+Surf-Zone Trials: Physical testing of low-profile tile connections, mooring lines, and marine handling methods under actual coastal surge conditions.
+
+Accelerated Exposure Tests: Laboratory exposure of HDPE, seals, and structural connections to intensive UV, sulfuric acids, and saline mist to simulate long-term material decay.
+
+Multi-Cycle Evaluations: Running full, continuous process cycles (Intercept to Validate) to record wear, manual handling constraints, and log actual versus theoretical yields.
+
+7. Negative Result Preservation
+
+Failed validation runs, disproven assumptions, failed component prototypes, and unsuccessful chemical recovery pathways are canonical repository assets. They provide critical empirical boundaries that protect future engineering cycles.
+
+The repository must preserve engineering memory of failure to prevent the repetition of historical design errors.
+
+Under no circumstances may negative test results, structural failures, or chemical recovery failures be removed, scrubbed, or omitted from the data collection records to project an artificial narrative of continuous success.
+
+8. Validation Decay Awareness
+
+Physical validation is conditional, highly dependent on operational scale and environment, and temporary. A validated subsystem state does not persist indefinitely across system modifications.
+
+A subsystem or capability must undergo decay and return to [PENDING VALIDATION] if any of the following parameters are altered:
+
+Geometry: Modifications to physical layout, seal configurations, or chamber dimensions.
+
+Operational Scale: Transitioning from bench testing to pilot-scale or from single-unit arrays to multi-chamber modular configurations.
+
+Operating Environment: Moving from controlled shoreside environments to offshore marine deployment zones.
+
+Material Exposure: Exposure to different concentrations of sulfuric compounds, organic acids, or levels of saline density.
+
+Workforce Configuration: Altering manual labor-to-machine ratios or physical operator deployment methods.
+
+Energy Configuration: Transitioning from grid-tied testing to intermittent solar-battery power architectures.
+
+9. Future Register Entry Structure
+
+Future ledger entries for unresolved variables must conform to this schema. No actual data parameters are to be populated in this template:
+
+Variable ID: [Unique alphanumeric identifier, e.g., UVR-XXX]
+
+Variable Description: [Cold, precise description of the unknown parameter or unmeasured behavior]
+
+Owning Subsystem File: [Canonical repository file path with authority over this variable]
+
+Dependency Chain: [Upstream technical parameters or files that constrain this variable]
+
+Affected Downstream Files: [List of downstream files that inherit uncertainty from this unknown]
+
+Current Evidence State: [Current status of this variable sourced from the VALIDATION_STATE_LEDGER]
+
+Known Constraints: [Physical, environmental, or operational boundaries surrounding the variable]
+
+Validation Pathway: [The exact mechanical, chemical, or field test sequence required to resolve the unknown]
+
+Failure Consequence: [Direct mechanical, process, or safety impact if the variable remains unmeasured]
+
+Funding Relevance: [How this variable is structured into a fundable work package or research study]
+
+Escalation Restrictions: [Explicit limits on how this variable must not be framed in summaries or grant applications]
+
+10. Compression-Safe Uncertainty Rule
+
+Summaries, abstracts, briefs, and external communications may compress the repository's detailed technical files for external stakeholders, but they are strictly prohibited from erasing unresolved engineering variables, flattening uncertainty boundaries, or substituting narrative confidence for hard empirical gaps.
+
+If a compressed text describes a potential subsystem performance parameter, it must retain a visible indication of any unmeasured variables that constrain that performance.
+
+Critical Governance Constraints
+
+The UNRESOLVED_VARIABLE_REGISTER may identify where uncertainty exists, but it may not replace subsystem-level engineering analysis, determine final design choices, arbitrate competing design options, or authorize engineering resolution. Final design resolution remains with the canonical subsystem authority files and validated engineering evidence.
+
+The UNRESOLVED_VARIABLE_REGISTER behaves like an uncertainty firewall, protecting the repository from hidden assumptions and premature certainty.

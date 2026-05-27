@@ -1,0 +1,102 @@
+AuthoritySurface:
+  file: AuthoritySurface.yaml
+  role: boundary_between_tool_intent_and_actual_world_state_change
+  status: candidate_operational_boundary_note
+  authority: execution_boundary_only_not_doctrine
+  canon: false
+  validation_authority: false
+
+  purpose:
+    - preserve_boundary_between_planned_action_and_completed_action
+    - prevent_tool_intent_from_becoming_false_world_state_claim
+    - make_blocked_execution_cleanly_reportable
+    - preserve_patch_packets_without_implying_applied_changes
+    - prevent_ghost_edits
+
+  owns:
+    - execution_authority_boundary_language
+    - prepared_diff_vs_completed_edit_distinction
+    - blocked_access_reporting
+    - completion_claim_requirements
+    - patch_packet_integrity_status
+
+  does_not_own:
+    - repository_doctrine
+    - Contract_authority
+    - filesystem_authority
+    - validation
+    - canon_promotion
+    - actual_file_mutation
+
+  core_rules:
+    - tool_intent_does_not_equal_filesystem_authority
+    - prepared_diff_does_not_equal_world_changed
+    - blocked_access_reports_boundary_not_completion
+    - completion_claim_requires_actual_authority_surface
+    - no_ghost_edits
+    - no_files_changed_means_no_completion_claim
+
+  evidence_state_boundaries:
+    observed_allowed:
+      - intended_diff_prepared
+      - target_file_missing_or_inaccessible
+      - edit_not_completed
+      - no_files_changed
+      - patch_packet_preserved
+
+    not_allowed_without_authority_surface:
+      - target_file_modified
+      - repository_state_changed
+      - patch_completed
+      - sync_completed
+      - doctrine_updated
+
+  failure_modes:
+    - claiming_completion_from_intent
+    - treating_tool_plan_as_filesystem_change
+    - treating_blocked_access_as_repo_failure
+    - expanding_scope_to_hide_blocked_execution
+    - editing_nearby_file_because_target_is_missing
+    - laundering_prepared_diff_as_completed_patch
+
+  admissible_reports:
+    - "Prepared exact intended diff; target file not accessible; no files changed."
+    - "Blocked by missing authority surface."
+    - "Patch packet preserved, not applied."
+    - "Manual filesystem authority required."
+
+  prohibited_reports:
+    - "Updated file"
+    - "Patch completed"
+    - "Directory synced"
+    - "Repo changed"
+    - "No other files changed"
+    - "Applied diff"
+    - "Fixed"
+
+  promotion_route_if_repeated:
+    promote_only_if:
+      - blocked_authority_surface_pattern_repeats
+      - runtime_tools_attempt_world_state_claims_without_execution_authority
+      - repository_patch_work_requires_formal_execution_boundary
+    possible_destination:
+      - Contract.yaml
+      - Governance
+      - Runtime
+    rule:
+      - candidate_note_must_not_promote_itself
+
+  example_patch_packet_boundary:
+    target: Models/Gear/v1/Directory.yaml
+    intended_change:
+      add_to_Gear_local_files:
+        - GearKernelBridge.yaml
+        - Eyes.yaml
+        - Float.yaml
+    authority_surface:
+      target_file_accessible: false
+      filesystem_write_authority: false
+    report:
+      status: prepared_not_applied
+      files_changed: none
+      completion_claim_allowed: false

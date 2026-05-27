@@ -1,0 +1,178 @@
+Protocol:
+  file: Shared/Protocol.yaml
+  role: recursive_state_preservation_and_reentry_boundary_protocol
+  status: draft_candidate
+
+  admissibility: Grant-reviewed
+  canonical_status: unresolved
+  preservation_lane: Cali/Print
+
+  authority:
+    owns:
+      - recursive_state_preservation_boundaries
+      - reentry_visibility_constraints
+      - continuity_handling_constraints
+      - preservation_transform_constraints
+      - admissibility_boundary_visibility
+      - preservation_equivalence_requirements
+      - preservation_warning_visibility
+      - continuity_vs_identity_distinction_visibility
+
+    does_not_own:
+      - validation
+      - canon_promotion
+      - semantic_promotion
+      - runtime_confirmation
+      - engineering_truth
+      - admissibility_rulings
+      - ontology_resolution
+      - identity_survival_claims
+
+  governing_constraints:
+
+    preservation_definition: >
+      structured_state -> clean_preserved_output
+      WITHOUT changing causal meaning, authority state,
+      admissibility state, semantic state, identity state,
+      unresolved visibility, contradiction visibility,
+      or source lineage.
+
+    preservation_rule:
+      - preservation_must_remain_reconstructably_equivalent_to_source_packet_under_declared_transforms
+      - source_packet_remains_controlling_where_meaning_diverges
+      - readability_must_not_mutate_claim_force
+      - formatting_must_not_mutate_claim_force
+      - section_ordering_must_not_change_claim_priority
+      - warnings_unresolveds_and_contradictions_must_not_be_demoted
+
+    allowed_transforms:
+      - formatting_cleanup
+      - readability_safe_organization
+      - stable_ids
+      - export_formatting
+      - section_ordering_without_claim_mutation
+      - non_semantic_typography
+      - reference_linking
+      - continuity_indexing
+
+    forbidden_transforms:
+      - softening_uncertainty
+      - removing_contradictions
+      - compressing_unresolveds
+      - upgrading_authority_language
+      - translating_candidate_into_confirmed
+      - implying_runtime_success
+      - implying_identity_persistence
+      - implying_canon_promotion
+      - replacing_source_topology_with_narrative_smoothness
+      - continuity_laundering
+      - readability_laundering
+      - preservation_laundering_into_validation
+
+  required_visibility:
+
+    preserve:
+      - source_lineage
+      - authority_state
+      - unresolveds
+      - contradictions
+      - evidence_labels
+      - semantic_state
+      - transform_log
+      - source_lane_identity
+      - blocked_promotions
+      - admissibility_boundaries
+      - warning_prominence
+
+    watchpoints:
+      - preservation_induced_identity_drift
+      - continuity_vs_identity_distinction
+      - preservation_vs_validation_distinction
+      - readability_vs_equivalence_distinction
+      - clean_formatting_overearning_trust
+      - continuity_language_drifting_into_identity_language
+      - readability_pressure_hiding_lineage
+      - narrative_smoothing_absorbing_source_topology
+
+  continuity_constraints:
+
+    continuity_rule:
+      - preservation_is_not_identity
+      - continuity_evidence_is_not_identity_survival_evidence
+      - reentry_is_not_identity_confirmation
+      - preserved_state_is_not_runtime_state
+      - preservation_does_not_infer_continuity
+
+    reentry_rule:
+      - reentered_packet_is_preserved_continuity_evidence_not_identity_survival_evidence
+      - recursive_reentry_must_preserve_reconstructability
+      - recursive_reentry_must_not_accumulate_false_authority
+      - preservation_lineage_must_remain_traceable
+
+  blocked_promotions:
+    - preservation_equals_validation
+    - preservation_equals_truth
+    - readability_equals_equivalence
+    - readability_equals_safety
+    - continuity_equals_identity
+    - continuity_equals_runtime_persistence
+    - preservation_equals_canon
+    - admissibility_review_equals_confirmation
+    - stable_formatting_equals_semantic_stability
+    - preserved_output_equals_executable_state
+    - recursive_reentry_equals_identity_survival
+    - continuity_surface_equals_authority_engine
+
+  contradiction_register:
+    - readability_improves_navigation_while_increasing_overtrust_risk
+    - continuity_requires_compression_while_compression_can_reduce_reconstructability
+    - preserved_structure_can_feel_more_authoritative_than_source_structure
+    - recursive_reentry_support_can_be_misread_as_identity_persistence
+    - clean_output_can_reduce_visibility_of_uncertainty_without_explicit_warning_surfaces
+    - continuity_support_requires_stability_without_implying_truth
+
+  unresolveds:
+    - what_minimum_visibility_is_required_to_prevent_preservation_laundering
+    - how_much_readability_can_be_introduced_before_equivalence_drift_occurs
+    - how_recursive_reentry_affects_perceived_identity_continuity
+    - whether_preservation_surfaces_can_remain_human_navigable_without_overearning_trust
+    - how_warning_prominence_should_scale_under_compression_pressure
+
+  routing_rules:
+
+    to_Grant_when:
+      - continuity_language_begins_drifting_toward_identity_claims
+      - readability_pressure_conflicts_with_admissibility_visibility
+      - preservation_surface_overearns_confidence
+      - formatting_changes_perceived_evidence_state
+      - continuity_output_appears_to_imply_confirmation
+
+    to_Gear_when:
+      - structural_constraints_begin_defining_preservation_meaning
+      - reconstructability_constraints_require_structural_review
+      - preservation_mapping_obscures_causal_topology
+
+    to_Elrich_when:
+      - external_translation_needed_after_boundaries_are_stable
+      - presentation_surface_needed_without_boundary_mutation
+
+  transform_log:
+    operation_type: preservation_only
+    semantic_mutation: prohibited
+    authority_mutation: prohibited
+    admissibility_mutation: prohibited
+    canon_promotion: prohibited
+    continuity_promotion: prohibited
+    identity_promotion: prohibited
+
+  preservation_warning:
+    - clean_formatting_causes_humans_to_emotionally_overtrust_continuity
+    - readability_must_not_be_allowed_to_quietly_become_authority
+    - preserved_packets_may_feel_stable_without_being_validated
+    - recursive_reentry_can_accumulate_false_identity_impressions_if_lineage_visibility_degrades
+
+  footer: >
+    Preserved by Cali/Print.
+    Preservation does not imply validation, canon promotion,
+    semantic promotion, runtime execution,
+    identity continuity, or operational readiness.

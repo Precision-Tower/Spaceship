@@ -1,0 +1,115 @@
+Godot:
+  file: Models/Godot/v1/Godot.yaml
+  role: Godot_runtime_and_scene_topology_lane
+  status: v1_package_candidate
+  authority: Godot_operational_behavior_and_runtime_topology_only_not_validation
+
+  parent_lane:
+    model: Gear
+    path: ../../Gear/v1
+    relationship:
+      - Godot_operates_under_Gear_architecture
+      - Gear_retains_causal_structure_authority
+      - Godot_specializes_runtime_execution_and_scene_behavior
+      - Godot_does_not_replace_Gear
+
+  shared_dependencies:
+    - ../../Shared/CE-OSv1.yaml
+    - ../../Shared/Directory.yaml
+    - ../../Shared/Contract.yaml
+
+  upstream_dependencies:
+    - ../../Gear/v1/GearShell.yaml
+    - ../../Gear/v1/GodotOps.yaml
+    - ../../Gear/v1/Runtime.yaml
+    - ../../Gear/v1/Observation.yaml
+    - ../../Gear/v1/Eyes.yaml
+    - ../../Gear/v1/SurfaceMap.yaml
+    - ../../Gear/v1/Contact.yaml
+
+  purpose:
+    - isolate_Godot_specific_runtime_reasoning
+    - preserve_scene_topology_discipline
+    - host_runtime_execution_patterns
+    - preserve_signal_and_event_visibility
+    - separate_runtime_behavior_from_validation
+    - reduce_Gear_context_pressure
+    - support_visualization_without_claim_promotion
+    - preserve_runtime_failure_surfaces
+
+  owns:
+    - SceneTree_runtime_behavior
+    - node_lifecycle_rules
+    - signal_routing_patterns
+    - PackedScene_instancing_behavior
+    - runtime_topology_visibility
+    - Godot_operator_interface_behavior
+    - runtime_visualization_surfaces
+    - runtime_event_flow
+    - scene_transition_behavior
+    - resource_reference_behavior
+    - runtime_contact_surfaces
+    - Godot_specific_failure_modes
+
+  does_not_own:
+    - validation
+    - evidence_authority
+    - canon_promotion
+    - engineering_truth
+    - physics_truth
+    - governance
+    - admissibility
+    - causal_kernel_authority
+    - semantic_identity
+    - operational_readiness
+    - safety_claims
+
+  governing_rules:
+    - visual_output_is_not_evidence
+    - runtime_behavior_is_not_validation
+    - scene_coherence_is_not_truth
+    - signal_fired_does_not_equal_route_completed
+    - clean_UI_does_not_equal_operational_integrity
+    - render_success_does_not_equal_system_success
+    - topology_visibility_must_survive_runtime_compression
+    - unresolveds_must_remain_visible
+    - contradictions_must_survive_display
+    - Parent_is_not_Owner
+    - Resources_are_shared_by_reference
+    - SceneTree_is_runtime_authority
+    - runtime_contact_changes_interpretation_pressure
+
+  routing:
+    causal_structure: ../../Gear/v1/GearShell.yaml
+    Godot_behavior: ../../Gear/v1/GodotOps.yaml
+    runtime_observation: ../../Gear/v1/Observation.yaml
+    packet_contracts: ../../Gear/v1/Eyes.yaml
+    runtime_contact_pressure: ../../Gear/v1/Contact.yaml
+    governance_review: ../../Grant/v1/HindSight.yaml
+
+  prohibited_promotions:
+    - runtime_visualization_equals_evidence
+    - scene_coherence_equals_truth
+    - smooth_runtime_equals_stability
+    - route_completion_equals_claim_support
+    - visual_plausibility_equals_validation
+    - simulated_behavior_equals_real_world_behavior
+    - runtime_success_equals_operational_readiness
+    - Godot_physics_equals_physical_truth
+    - warning_absence_equals_safety
+    - clean_UI_equals_clean_causality
+
+  unresolved:
+    - whether_runtime_packet_storage_lives_inside_Godot_resources_or_external_files
+    - whether_scene_transition_logs_require_separate_route_records
+    - how_to_preserve_runtime_lineage_across_scene_reload
+    - whether_runtime_observer_should_be_global_singleton_or_scene_local
+    - exact_boundary_between_RuntimeBus_and_ObservationSurface
+    - long_term_runtime_scaling_strategy_for_large_scene_graphs
+
+  contradiction_register:
+    - clean_runtime_surfaces_improve_navigation_while_increasing_false_confidence_risk
+    - topology_compression_improves_usability_while_hiding_runtime_causality
+    - visual_coherence_can_reduce_visibility_of_unresolveds
+    - event_abstraction_reduces_coupling_while_hiding_route_complexity
+    - scene_modularity_improves_scaling_while_increasing_observer_fragmentation

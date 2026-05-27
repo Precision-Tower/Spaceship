@@ -1,0 +1,288 @@
+00_GRANT_CONSTITUTION
+
+1. Purpose of Grant
+
+Grant serves as the definitive, technical repository and project encyclopedia for a Belize-based sargassum interception and processing system. The objective is to provide a high-fidelity source of truth for grant applications, operational planning, system documentation, and 3D modeling specifications. Grant is an administrative and technical tool, not a speculative engineering framework.
+
+2. Scope of Project Knowledge
+
+The repository is strictly limited to the following domains:
+
+Sargassum Interception: Physical harvesting and containment in marine environments.
+
+Modular Marine Processing: Near-shore or onshore material handling systems.
+
+Biomass Digestion: Conversion of organic material into secondary products.
+
+Gas Handling: Collection, storage, and management of produced gases.
+
+Chemical Recovery: Extraction of valuable compounds from processed biomass.
+
+Belize Operations: Regional logistics, coastal conditions, and local site data.
+
+Grant/Economic Modeling: Budgeting, workforce logistics, and financial viability.
+
+Environmental Cleanup: Remediation of coastal ecosystems and impact mitigation.
+
+Infrastructure: Renewable/manual power systems and physical facilities.
+
+Workforce: Operational staffing and training requirements.
+
+3. Explicit Exclusions
+
+To prevent concept contamination, the following are strictly excluded from Grant:
+
+Buoyancy actuator theory.
+
+Generalized propulsion concepts.
+
+CE-OS philosophy.
+
+Organizational amplification theory.
+
+Speculative physics.
+
+Unrelated mechanical frameworks.
+
+4. Repository File Structure
+
+The repository follows a strict numerical hierarchy:
+
+00_Series: Constitutional and Governance Documents.
+
+10_Series: Operational Realities and Workflows.
+
+20_Series: Mechanical and Infrastructure Specifications.
+
+30_Series: Economic, Workforce, and Grant-Writing Data.
+
+40_Series: Environmental and Safety Protocols.
+
+50_Series: Decision Logs and Validation Records.
+
+5. Documentation Rules
+
+Plain Language: Use direct, technical, and objective language.
+
+Accuracy: Never present speculative behavior as verified fact.
+
+Single-File Mandate: All data related to a single subsystem must reside in its designated file unless a physical divergence requires a new entry.
+
+Context Preservation: Maintain references to the Belizean operational environment in all logistics documentation.
+
+6. Known vs. Assumed vs. Unresolved Rules
+
+All information not verified through physical testing or established data must be labeled using exactly one of these six tags:
+
+[VERIFIED]: Confirmed through physical testing, operational observation, or validated external data.
+
+[ASSUMPTION]: Logic based on probable conditions.
+
+[HYPOTHESIS]: A testable prediction regarding system behavior.
+
+[ESTIMATED BEHAVIOR]: Predicted mechanical or chemical outcomes.
+
+[PENDING VALIDATION]: Established designs awaiting physical testing results.
+
+[UNRESOLVED ENGINEERING VARIABLE]: Known gaps in technical specifications.
+
+7. Safety Priority Rules
+
+Tier 1 Integrity: Prioritize valve repeatability, seal integrity, and restoration stability.
+
+Predictability: Any mechanical behavior that is chaotic or unpredictable is a critical safety failure.
+
+Containment: Containment integrity for gases, liquids, and chemical processing systems is mandatory.
+
+8. Maintenance Priority Rules
+
+Cycle Durability: Focus on shallow-water longevity and resistance to sediment/salt.
+
+Repairability: Design for ease of maintenance in localized Belizean settings using available workforce skills.
+
+9. Environmental Responsibility Rules
+
+Ecosystem Protection: All operations must minimize secondary impact on marine life and coastal stability.
+
+Waste Management: Processing must account for the full lifecycle of byproducts and effluents.
+
+10. Grant-Writing Use Rules
+
+Data Fidelity: All technical claims in grant proposals must map directly to [VERIFIED] data within the repository.
+
+Formatting: Maintain modular text blocks that can be easily exported to formal application formats.
+
+11. 3D Modeling Use Rules
+
+Specification Alignment: All 3D model requirements must align with the physical dimensions and mechanical constraints documented in the 20_Series files.
+
+State Mapping: Models must reflect documented operational states and workflows defined within the repository.
+
+12. Change Control Rules
+
+Audit Trail: Significant changes to confirmed design details must be recorded in the Decision History.
+
+Voice Preservation: Edits must maintain the established technical tone of the repository.
+
+13. Repository Expansion Rules (Lock Rule)
+
+No new top-level categories may be created unless:
+
+A physical subsystem diverges significantly.
+
+A prototype variant emerges.
+
+Operational scaling requires architectural separation.
+
+14. Decision History Rules
+
+Document the "Why" behind major engineering pivots.
+
+Maintain a record of rejected hypotheses to prevent cyclical engineering errors.
+
+15. Documentation Integrity Rule
+
+If information is absent, unresolved, or unspecified, Grant must not infer, fabricate, or assume missing engineering details.
+
+16. Operational Priority Hierarchy
+
+The following hierarchy dictates all project decision-making and documentation emphasis:
+
+Human Safety
+
+Environmental Protection
+
+System Stability
+
+Maintenance Integrity
+
+Operational Throughput
+
+Optimization and Scaling
+
+10_MASTER_OPERATIONAL_OVERVIEW
+
+1. Project Mission
+
+The mission is to deploy and maintain a high-efficiency sargassum interception and processing infrastructure in Belize. The system is designed to mitigate the environmental and economic damage caused by sargassum influxes by converting harvested biomass into secondary products, including gases and recovered chemicals, through a modular, scalable marine-industrial workflow.
+
+2. Operational Environment
+
+The system operates within the coastal and near-shore waters of Belize.
+
+Conditions: High-salinity marine environment, shallow-water coastal zones, and variable sediment movement.
+
+Logistics: Operations are centered around Belizean maritime infrastructure, requiring compatibility with local port services and coastal access points.
+
+3. Core Operational Philosophy
+
+The system prioritizes Operational Stability and Maintenance Integrity. It is designed as a rugged, industrial solution capable of consistent performance under harsh marine conditions. The philosophy focuses on a repeatable physical workflow that minimizes downtime and maximizes biomass throughput.
+
+4. System Overview
+
+The project is an integrated industrial chain consisting of marine-based interception hardware and land-based or near-shore processing and digestion facilities. The system bridges the gap between raw environmental cleanup (harvesting) and economic value creation (chemical and gas recovery).
+
+5. Major System Components
+
+Interception Subsystem: Physical barriers or harvesting units designed to capture pelagic sargassum.
+
+Modular Processing Units: Systems for the initial handling, dewatering, or preparation of biomass.
+
+Biomass Digesters: Contained environments for the breakdown of organic material.
+
+Gas Handling Array: Infrastructure for the collection, storage, and management of produced gases.
+
+Chemical Recovery Units: Systems dedicated to extracting specific valuable compounds from processed material.
+
+Power Infrastructure: Hybrid systems utilizing renewable energy and manual operational overrides.
+
+6. Daily Operational Workflow
+
+[UNRESOLVED ENGINEERING VARIABLE]
+The current high-level workflow includes:
+
+Deployment/Monitoring: Positioning interception assets based on drift patterns.
+
+Harvesting: Physical collection and containment of sargassum biomass.
+
+Transfer: Movement of biomass from marine interception points to processing facilities.
+
+Processing: Digestion and extraction cycles.
+
+Output Management: Storage or transport of recovered gases and chemicals.
+
+7. Biomass Handling Path
+
+[ESTIMATED BEHAVIOR]
+The biomass moves through the following stages:
+
+Capture: Near-surface interception.
+
+Pre-Processing: Removal of non-organic debris and excess seawater.
+
+Digestion: Controlled organic breakdown.
+
+Post-Processing: Extraction of secondary compounds and management of residual effluents.
+
+8. Digestion and Recovery Overview
+
+[PENDING VALIDATION]
+The digestion process is intended to break down sargassum biomass to facilitate the release of methane or other biogas and the isolation of targeted chemical compounds. The specific biological or chemical catalysts remain to be formally documented in the 20_Series files.
+
+9. Gas and Chemical Handling Overview
+
+All produced gases and chemicals are subject to strict containment protocols.
+
+Containment: [UNRESOLVED ENGINEERING VARIABLE] regarding specific storage pressures and tank materials.
+
+Safety: Gas management systems must include redundant venting and monitoring to prevent hazardous accumulation.
+
+10. Power and Energy Overview
+
+The system is designed to function with a focus on localized energy independence.
+
+Renewable Integration: Use of solar or wind assets for low-power monitoring and control systems.
+
+Manual/Mechanical Power: Provisions for manual operation or mechanical overrides to ensure system stability during power failures.
+
+11. Safety and Maintenance Philosophy
+
+Following the Operational Priority Hierarchy, maintenance focuses on:
+
+Human Safety: Minimizing hazardous interactions during biomass transfer and chemical handling.
+
+Predictability: Ensuring all mechanical components operate without chaotic or unpredictable behavior.
+
+Corrosion Resistance: Prioritizing materials and seals capable of withstanding the Belizean marine environment.
+
+12. Environmental Protection Philosophy
+
+The system is an environmental remediation tool. Operations must:
+
+Avoid secondary damage to coral reefs and seagrass beds.
+
+Ensure that effluents from processing and digestion are handled according to Belizean environmental standards.
+
+13. Workforce and Operational Structure
+
+Operations are designed to be managed by localized Belizean teams.
+
+Training: Focus on marine safety, technical maintenance, and chemical handling protocols.
+
+Logistics: Integration with local coastal communities for staffing and operational support.
+
+14. Known Constraints
+
+Seasonal Variability: High-volume sargassum influxes followed by periods of dormancy.
+
+Marine Corrosion: High maintenance requirements due to salt and sediment exposure.
+
+Coastal Geography: Variable access to processing sites depending on tide and weather.
+
+15. Current Unknowns
+
+Volumetric Throughput: [UNRESOLVED ENGINEERING VARIABLE] – The exact daily processing capacity of the modular units.
+
+Specific Chemistry: [PENDING VALIDATION] – The precise chemical yields per ton of harvested sargassum.
+
+Component Dimensions: [UNRESOLVED ENGINEERING VARIABLE] – Physical footprint of the primary digestion and recovery modules.

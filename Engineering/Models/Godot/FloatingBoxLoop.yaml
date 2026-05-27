@@ -1,0 +1,60 @@
+FloatingBoxLoop:
+  file: Godot/FloatingBoxLoop.yaml
+  authority: runtime_contact_only_not_doctrine
+  prime_rule: motion_without_epistemic_fraud
+  proof_question: Can motion happen without epistemic fraud?
+
+  routing:
+    runtime_packet_loop:
+      route_to: Godot/FloatingBoxLoop.yaml
+
+  owns:
+    - FloatingBox runtime maneuver
+    - dirty packet loop
+    - bridge crossing record
+    - unresolved survival check
+    - runtime contact observation
+
+  does_not_own:
+    - doctrine
+    - validation
+    - evidence authority
+    - physics truth
+    - stability claims
+
+  loop:
+    object: FloatingBox
+    packet_state: dirty
+    maneuver: move_through_godot_runtime
+
+    required_record:
+      - origin_packet_id
+      - dirty_status
+      - unresolved_reason
+      - bridge_entry
+      - bridge_exit
+      - runtime_contact_observation
+      - contamination_notes
+
+  unresolved:
+    - whether_dirty_status_is_immutable_or_accumulates_contamination_lineage
+    - whether_bridge_crossings_require_unique_route_attempt_ids
+    - whether_runtime_contact_observations_are_append_only
+    - whether_display_contamination_can_recursively_dirty_downstream_packets
+    - whether_replayed_runtime_loops_inherit_prior_unresolved_state
+
+  success_condition:
+    - motion_occurred
+    - dirty_status_preserved
+    - unresolveds_remained_unresolved
+    - display_output_not_promoted_to_evidence
+    - runtime_event_not_promoted_to_doctrine
+
+  failure_condition:
+    - display_treated_as_fact
+    - motion_treated_as_validation
+    - engine_state_claimed_as_truth
+    - unresolved_removed_without_authority
+    - bridge_crossing_unrecorded
+
+  knife_rule: Godot may cut, move, render, and report. It may not write scripture.

@@ -1,0 +1,158 @@
+Operators.yaml:
+  authority: reusable_causal_transforms_only
+  uses:
+    - Values.yaml
+  must_not_define:
+    - subsystem_templates
+    - operational_state_machine
+    - file_authority
+    - deployment_claims
+
+  operators:
+    margin_state_operator:
+      causal_form: capacity - demand -> margin -> state
+      slots:
+        capacity: Value
+        demand: Value
+        margin: DerivedValue
+        threshold: ThresholdValue
+        state: State
+      equations:
+        - margin = capacity - demand
+        - state = margin >= threshold
+      validation_boundary: margin_state_requires_measured_or_bounded_capacity_and_demand
+
+    accumulation_capacity_operator:
+      causal_form: rate -> accumulated_quantity -> capacity_check -> state
+      slots:
+        rate: Value
+        time: Value
+        accumulated_quantity: DerivedValue
+        capacity: Value
+        margin: DerivedValue
+        threshold: ThresholdValue
+        state: State
+      equations:
+        - accumulated_quantity = integral(rate dt)
+        - margin = capacity - accumulated_quantity
+
+    environmental_load_operator:
+      causal_form: environmental_input -> force -> transmitted_load -> operating_limit
+      slots:
+        environmental_input: EnvironmentalValue
+        coefficient: AssumptionOrMeasuredValue
+        exposed_area: DerivedValue
+        force: DerivedValue
+        transmitted_load: DerivedValue
+        capacity: Value
+        operating_limit: ThresholdValue
+      equations:
+        - force = f(environmental_input, coefficient, exposed_area)
+        - operating_limit = transmitted_load <= capacity
+
+    distribution_instability_operator:
+      causal_form: distribution -> center -> orientation_state -> risk
+      slots:
+        distribution: Value
+        location: Value
+        center: DerivedValue
+        orientation_state: State
+        threshold: ThresholdValue
+        risk: DerivedValue
+      equations:
+        - center = sum(value_i * location_i) / sum(value_i)
+        - risk = f(orientation_state, threshold)
+
+    resistance_motion_operator:
+      causal_form: drive_force - resistance_sum -> net_force -> motion_state
+      slots:
+        drive_force: Value
+        resistance_sum: DerivedValue
+        net_force: DerivedValue
+        mass: Value
+        motion_state: State
+      equations:
+        - net_force = drive_force - resistance_sum
+        - motion_state = f(net_force, mass)
+
+    degradation_failure_operator:
+      causal_form: exposure_or_cyclic_load -> damage -> capacity_loss -> failure_risk
+      slots:
+        exposure_or_cyclic_load: Value
+        cycle_count: Value
+        damage: DerivedValue
+        capacity_loss: DerivedValue
+        remaining_capacity: DerivedValue
+        demand: Value
+        failure_risk: DerivedValue
+      equations:
+        - remaining_capacity = initial_capacity - capacity_loss
+        - failure_risk = demand > remaining_capacity
+
+    pressure_leak_operator:
+      causal_form: pressure -> boundary_load -> leak_rate -> containment_state
+      slots:
+        pressure: Value
+        boundary_area: Value
+        boundary_load: DerivedValue
+        seal_capacity: Value
+        leak_rate: Value
+        accumulated_quantity: DerivedValue
+        containment_capacity: Value
+        containment_state: State
+      equations:
+        - boundary_load = pressure * boundary_area
+        - accumulated_quantity = integral(leak_rate dt)
+        - containment_state = accumulated_quantity <= containment_capacity
+
+    transfer_bottleneck_operator:
+      causal_form: transfer_capacity -> flow_limit -> accumulation -> delay_or_overflow_state
+      slots:
+        transfer_capacity: Value
+        demand_rate: Value
+        flow_limit: Value
+        accumulation: DerivedValue
+        capacity: Value
+        delay_or_overflow_state: State
+      equations:
+        - accumulation = integral((demand_rate - flow_limit) dt)
+        - delay_or_overflow_state = accumulation >= capacity
+
+    recovery_transition_operator:
+      causal_form: recovery_rate -> reduced_demand_or_accumulation -> restored_margin -> recovery_state
+      slots:
+        recovery_rate: Value
+        reduced_demand_or_accumulation: DerivedValue
+        restored_margin: DerivedValue
+        threshold: ThresholdValue
+        recovery_state: State
+      equations:
+        - reduced_demand_or_accumulation = integral(recovery_rate dt)
+        - recovery_state = restored_margin >= threshold
+      validation_boundary: recovery_restores_margin_only_with_measurement
+
+    safe_state_operator:
+      causal_form: risk -> threshold_exceeded -> safe_state -> response_sequence
+      slots:
+        risk: DerivedValue
+        threshold: ThresholdValue
+        threshold_exceeded: BooleanState
+        safe_state: State
+        response_sequence: MachineReference
+      equations:
+        - threshold_exceeded = risk >= threshold
+        - safe_state = any(threshold_exceeded)
+
+    validation_measurement_operator:
+      causal_form: measurement -> evidence -> validation_state
+      slots:
+        measurement: Value
+        repeatability: Value
+        operating_context: Value
+        evidence_level: DerivedValue
+        validation_threshold: ThresholdValue
+        validation_state: ValidationState
+      equations:
+        - evidence_gap = validation_threshold - evidence_level
+        - validation_state = f(measurement, repeatability, operating_context)
+      validation_boundary: no_state_promotion_without_documented_empirical_evidence

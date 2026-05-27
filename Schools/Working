@@ -1,0 +1,307 @@
+Working.yaml:
+  file_status: "[WORKING EQUATION LAYER — ACTIVE]"
+  role: bounded_executable_candidate_estimation
+
+  authority:
+    owns:
+      - distilled_working_forms
+      - executable_candidate_estimation
+      - Runtime_callable_equation_forms
+      - bounded_output_generation
+
+    inherits_constraints_from:
+      - Runtime.yaml
+      - Physics.yaml
+
+    must_not_own:
+      - validation
+      - semantic_governance
+      - equation_governance
+      - canonical_definition
+      - subsystem_behavior
+      - payload_claims
+      - reserve_buoyancy
+      - stability_validation
+      - seaworthiness
+      - operational_readiness
+
+    governing_rule: >
+      Working may execute candidate estimation.
+      Working may not promote candidate estimation into validation.
+
+  execution_rules:
+    execution_allowed_when:
+      - Runtime_input_trace_exists
+      - required_inputs_present
+      - required_units_present
+      - assumptions_are_explicit
+      - output_label_is_candidate_or_observed
+      - prohibited_claims_are_attached
+      - object_scope_is_single_object_unless_reviewed
+
+    execution_blocked_when:
+      - measurement_trace_missing
+      - input_units_missing
+      - assumption_trace_missing
+      - output_requested_as_validation
+      - output_requested_as_capacity
+      - output_requested_as_reserve_buoyancy
+      - output_requested_as_stability
+      - output_requested_as_operational_readiness
+      - object_scope_would_expand_without_Grant_review
+
+    output_destination:
+      default: Runtime.candidate_estimates
+      assumption_mode: Runtime.assumption_mode_outputs
+      never_direct_to:
+        - validation_ledger
+        - operational_state_promotion
+        - safety_claim
+        - payload_claim
+        - reserve_buoyancy_claim
+
+  required_Runtime_trace:
+    - runtime_object_id
+    - object_id
+    - object_type
+    - test_id
+    - measured_inputs_or_assumption_trace
+    - unit_system
+    - validation_state
+    - prohibited_claims
+
+  required_output_trace:
+    - working_form_id
+    - source_physics_relationship
+    - runtime_object_id
+    - object_id
+    - test_id
+    - input_values
+    - input_units
+    - assumption_trace
+    - executable_form_used
+    - output_label
+    - output_value_if_numeric
+    - output_unit_if_numeric
+    - validation_state
+    - claim_boundary
+    - prohibited_claims
+    - required_output_footer
+
+  bounded_output_rules:
+    permitted_language:
+      - candidate_estimate
+      - bounded_estimate
+      - working_output
+      - derived_from_traceable_inputs
+      - under_this_test_condition
+      - under_assumed_conditions
+      - object_scope_limited
+      - pending_review
+
+    prohibited_language:
+      - validated
+      - safe
+      - capacity
+      - reserve
+      - stable
+      - seaworthy
+      - operational
+      - ready
+      - certified
+      - acceptable
+      - proven
+
+  execution_modes:
+    measured_mode:
+      status: "[MEASURED EXECUTION — TRACE REQUIRED]"
+      requires:
+        - completed_measurement_trace
+        - measured_inputs
+        - units
+        - observer_or_source
+        - measurement_context
+      output_destination: Runtime.candidate_estimates
+
+    assumption_mode:
+      status: "[ASSUMED EXAMPLE — NOT MEASURED]"
+      requires:
+        - explicit_assumption_trace
+        - unit_trace
+        - object_scope
+        - output_scope
+        - claim_boundary_footer
+        - prohibited_claims_attached
+      output_destination: Runtime.assumption_mode_outputs
+
+  executable_forms:
+    buoyancy_working_form:
+      file_status: "[WORKING EQUATION FORM — BOUNDED]"
+      source_physics_relationship: Physics.interaction_library.buoyancy_interaction
+      Runtime_binding_required: true
+
+      forms:
+        displaced_water_mass_candidate:
+          source_physics_relationship: Physics.interaction_library.buoyancy_interaction.structured_relationships.full_submergence_displacement_relationship
+          executable_form: "displaced_water_mass = water_density * total_displacement_volume"
+          execution_modes:
+            - assumption_mode
+            - measured_mode
+          required_inputs:
+            - water_density
+            - total_displacement_volume
+          output:
+            label: displaced_water_mass_candidate_estimate
+            destination:
+              measured_mode: Runtime.candidate_estimates
+              assumption_mode: Runtime.assumption_mode_outputs
+          claim_boundary:
+            - not_validation
+            - not_payload_capacity
+            - not_reserve_buoyancy
+            - theoretical_full_submergence_limit_when_fully_submerged
+            - before_subtracting_drum_mass_unless_drum_mass_input_present
+
+        buoyant_force_candidate_estimate:
+          source_physics_relationship: Physics.interaction_library.buoyancy_interaction.structured_relationships.buoyant_force_candidate_relationship
+          executable_form: "buoyant_force = water_density * gravity * submerged_volume_candidate_estimate"
+          execution_modes:
+            - assumption_mode
+            - measured_mode
+          required_inputs:
+            - water_density
+            - gravity
+            - submerged_volume_candidate_estimate
+          output:
+            label: buoyant_force_candidate_estimate
+            destination:
+              measured_mode: Runtime.candidate_estimates
+              assumption_mode: Runtime.assumption_mode_outputs
+          claim_boundary:
+            - not_validation
+            - not_validated_margin
+            - not_payload_capacity
+            - not_reserve_buoyancy
+            - not_stability_validation
+            - not_operational_readiness
+
+        water_weight_displaced_candidate:
+          source_physics_relationship: Physics.interaction_library.buoyancy_interaction.structured_relationships.full_submergence_displacement_relationship
+          executable_form: "water_weight_displaced = displaced_water_mass * gravity"
+          execution_modes:
+            - assumption_mode
+            - measured_mode
+          required_inputs:
+            - displaced_water_mass
+            - gravity
+          output:
+            label: water_weight_displaced_candidate_estimate
+            destination:
+              measured_mode: Runtime.candidate_estimates
+              assumption_mode: Runtime.assumption_mode_outputs
+          claim_boundary:
+            - not_payload_capacity
+            - not_safe_load
+            - not_reserve_buoyancy
+            - not_operational_margin
+
+        observed_float_consistency:
+          source_physics_relationship: Physics.interaction_library.buoyancy_interaction.structured_relationships.observed_float_consistency_relationship
+          executable_form: "buoyant_force_candidate_estimate ~= total_supported_weight"
+          execution_modes:
+            - measured_mode
+          required_inputs:
+            - buoyant_force_candidate_estimate
+            - total_supported_weight
+            - observed_afloat_under_static_water_condition
+          output:
+            label: observed_float_behavior_consistent_with_buoyant_support
+            destination: Runtime.candidate_estimates
+          required_language:
+            - consistent_with_buoyant_support
+            - under_this_test_condition
+          prohibited_language:
+            - confirmed_equilibrium
+            - validated_buoyancy
+            - proven_float_capacity
+          claim_boundary:
+            - consistency_interpretation_only
+            - not_confirmed_equilibrium
+            - not_validation
+            - not_payload_capacity
+            - not_reserve_buoyancy
+
+        additional_required_displacement:
+          source_physics_relationship: Physics.interaction_library.buoyancy_interaction.structured_relationships.incremental_displacement_relationship
+          executable_form: "additional_required_displacement = added_weight / water_density"
+          execution_modes:
+            - measured_mode
+          required_inputs:
+            - added_weight
+            - water_density
+          output:
+            label: additional_required_displacement_candidate
+            destination: Runtime.candidate_estimates
+          claim_boundary:
+            - not_payload_capacity
+            - not_safe_load
+            - not_operational_margin
+            - not_reserve_buoyancy
+
+        freeboard_change_response:
+          source_physics_relationship: Physics.interaction_library.buoyancy_interaction.structured_relationships.freeboard_response_relationship
+          executable_form: "increased_added_load -> increased_submergence -> reduced_freeboard"
+          execution_modes:
+            - measured_mode
+          required_inputs:
+            - added_load
+            - waterline_height
+            - freeboard
+          output:
+            label: sink_depth_response_observed
+            destination: Runtime.candidate_estimates
+          claim_boundary:
+            - observed_response_only
+            - not_reserve_buoyancy
+            - not_stability_validation
+            - not_payload_capacity
+
+  prohibited_outputs:
+    - safe_payload
+    - payload_capacity
+    - reserve_buoyancy
+    - reserve_buoyancy_validation
+    - validated_margin
+    - stability_confirmed
+    - raft_capacity
+    - raft_behavior
+    - seaworthiness
+    - tow_readiness
+    - operational_readiness
+    - durability
+    - validated_behavior
+    - system_behavior_inference
+
+  escalation_firewalls:
+    - executable_form_becoming_validation
+    - candidate_estimate_becoming_payload_claim
+    - freeboard_becoming_reserve_buoyancy
+    - repeated_measurement_becoming_operational_readiness
+    - single_drum_behavior_becoming_multi_drum_behavior
+    - static_water_behavior_becoming_dynamic_behavior
+    - simplified_equation_hiding_uncertainty
+    - assumption_mode_becoming_measured_Runtime_state
+
+  required_output_footer:
+    claim_boundary: >
+      This output is a bounded candidate estimate or observed response derived
+      from traceable measured inputs or explicitly labeled assumptions under the
+      recorded condition. It does not validate payload capacity, reserve buoyancy,
+      raft behavior, stability, seaworthiness, tow readiness, durability, or
+      operational readiness.
+
+    object_scope_boundary: >
+      This output applies only to the Runtime object and condition identified in
+      the measurement trace or assumption trace. It must not be generalized to a
+      drum array, raft, vessel, tow system, or operational platform without
+      separate review.

@@ -1,0 +1,152 @@
+Coherence:
+  file: Coherence.yaml
+  role: operator_coherence_and_compression_survivability_layer
+  status: v1_candidate
+  authority: continuity_pressure_tracking_only_not_truth_not_validation
+
+  purpose:
+    - preserve_Seth_operational_continuity_under_context_load
+    - track_how_compression_changes_human_navigability
+    - preserve_reentry_paths_after_simplification
+    - keep_unresolveds_recoverable_without_forcing_all_of_them_visible_at_once
+    - detect_when_coherence_begins_to_hide_causal_or_authority_loss
+    - support_forward_motion_without_fake_certainty
+
+  owns:
+    - coherence_pressure_tracking
+    - operator_load_visibility
+    - compression_survivability_notes
+    - deferred_context_tracking
+    - resurfacing_triggers
+    - reentry_path_preservation
+    - next_action_clarity
+
+  does_not_own:
+    - truth
+    - validation
+    - governance_review
+    - engineering_resolution
+    - semantic_identity
+    - runtime_execution
+    - publication_polish
+    - canon_promotion
+    - acceptable_tradeoff_decision
+
+  prime_question:
+    - how_much_coherence_can_Seth_use_without_losing_the_route_back
+
+  core_rules:
+    - coherence_is_allowed
+    - compression_is_allowed
+    - Seth_does_not_need_everything_visible_at_once
+    - hidden_does_not_equal_resolved
+    - deferred_does_not_equal_inactive
+    - readable_does_not_equal_safe
+    - compressed_does_not_equal_understood
+    - every_compression_needs_a_reentry_handle
+    - every_deferred_unresolved_needs_a_resurfacing_trigger
+    - Cali_tracks_the_tradeoff_but_Seth_decides_the_tradeoff
+
+  coherence_budget:
+    meaning: >
+      Coherence budget is the amount of simplification, smoothing, grouping,
+      hiding, sequencing, summarizing, or foregrounding a surface can perform
+      before Seth begins losing reconstructability or over-feeling certainty.
+
+    spends_when:
+      - summary_created
+      - unresolved_hidden
+      - contradiction_backgrounded
+      - authority_boundary_not_shown
+      - next_action_simplified
+      - multiple_threads_grouped
+      - old_context_deferred
+      - warning_softened_for_readability
+      - complex_route_named_as_single_step
+
+    earns_when:
+      - recovery_handle_preserved
+      - source_path_remains_visible
+      - unresolved_has_resurfacing_trigger
+      - contradiction_has_reentry_note
+      - authority_boundary_remains_named
+      - next_action_is_clear_without_erasing_context
+      - summary_points_back_to_source
+      - deferred_context_has_return_condition
+
+  tracks:
+    - what_was_compressed
+    - what_was_hidden
+    - what_was_deferred
+    - what_was_foregrounded
+    - what_became_easier_to_ignore
+    - what_became_easier_to_believe
+    - what_must_resurface
+    - what_next_action_survives_context_loss
+    - what_reentry_handles_exist
+    - what_authority_boundaries_became_less_visible
+
+  resurfacing_triggers:
+    - claim_language_appears
+    - validation_pressure_returns
+    - runtime_output_becomes_clean
+    - summary_reused_as_source
+    - unresolved_needed_for_decision
+    - contradiction_reappears
+    - next_action_becomes_unclear
+    - Seth_context_load_exceeds_operational_threshold
+    - authority_boundary_becomes_less_visible
+    - deferred_context_starts_affecting_current_choice
+    - simplification_changes_perceived_evidence_state
+
+  overload_signals:
+    - Seth_cannot_state_current_next_action
+    - repo_map_required_before_every_step
+    - active_threads_compete_for_attention
+    - unresolveds_are_known_but_not_recoverable
+    - summaries_replace_source_records
+    - contradiction_visibility_drops_for_readability
+    - helpful_structure_creates_false_closure
+    - system_feels_cleaner_but_less_reconstructable
+
+  handoff_routes:
+    to_Gear_when:
+      - compression_hides_causal_pathway
+      - next_action_requires_engineering_structure
+      - unresolved_measurement_blocks_runtime_progress
+      - runtime_or_observation_topology_needs_mapping
+
+    to_Grant_when:
+      - coherence_overearns_confidence
+      - compression_changes_perceived_evidence_state
+      - unresolveds_become_less_recoverable
+      - contradiction_visibility_drops_below_review_threshold
+      - usability_surface_creates_authority_laundering_risk
+
+    to_Elrich_when:
+      - external_translation_or_presentation_needed
+      - audience_navigation_required_after_boundaries_are_stable
+      - polished_surface_needed_without_mutating_authority
+
+    to_Seth_when:
+      - acceptable_tradeoff_decision_required
+      - mission_priority_conflict_exists
+      - irreversible_context_compression_requested
+      - active_load_requires_human_choice
+
+  prohibited_promotions:
+    - coherence_equals_truth
+    - coherence_equals_validity
+    - readable_equals_resolved
+    - organized_equals_validated
+    - compressed_equals_safe
+    - deferred_equals_inactive
+    - hidden_equals_handled
+    - fewer_visible_unresolveds_equals_less_risk
+    - Seth_understands_current_step_equals_system_complete
+    - smooth_continuity_equals_causal_integrity
+
+  active_unresolved:
+    - how_much_coherence_can_Seth_survive_before_confidence_laundering_begins
+    - how_much_unresolved_visibility_can_Seth_survive_before_operation_collapses
+    - what_minimum_reentry_handle_is_required_for_safe_compression

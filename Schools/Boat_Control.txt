@@ -1,0 +1,622 @@
+# MODEL_SUGGESTION_LEDGER_RESTART_POINT
+
+Status: `[WORKING MODEL LEDGER — NON-CANONICAL]`
+Purpose: Preserve the current suggested model state in compressed form so the project can restart from this point without re-expanding the full design discussion.
+
+This document stores **model decisions, not debates**. It does not validate performance, safety, seaworthiness, payload, throughput, economic viability, or operational readiness.
+
+---
+
+## Ledger Doctrine
+
+```yaml
+ledger_doctrine:
+  purpose: "compact memory for suggested physical model configurations"
+  authority: "suggested_model_memory"
+  status: "[MODELED OPERATION ONLY]"
+  validation_state: "[PENDING VALIDATION]"
+
+  governs:
+    - model_geometry_memory
+    - minimum_object_sets
+    - frozen_model_assumptions
+    - connection_logic
+    - required_first_measurements
+    - prohibited_claims
+    - next_unlocks
+
+  does_not_override:
+    - canonical_subsystem_files
+    - validation_state_ledger
+    - unresolved_variable_register
+    - future_engineering_measurements
+    - physical_test_results
+
+  compression_rule: >
+    Store only enough information to reconstruct the suggested model later.
+    Do not store every variable, every argument, every alternate path, or every
+    future engineering question.
+```
+
+Core system topology to preserve:
+
+```text
+Intercept → Drain/Separate → Contain → Process → Recover/Test → Reset → Validate
+```
+
+---
+
+# BARGE_MODEL_001
+
+```yaml
+BARGE_MODEL_001:
+  name: "PVC Pontoon Modular Tile Barge"
+  status: "[RESOLUTION CANDIDATE — MODELED OPERATION ONLY]"
+  validation_state: "[PENDING VALIDATION]"
+
+  role:
+    topology_position:
+      - Intercept
+      - Drain/Separate
+      - Contain
+    description: >
+      Dirty modular floating work-floor system for low-freeboard sargassum
+      handling, passive drainage, marine-life separation support, and staging
+      toward digestion chamber loading.
+
+  frozen_model_assumptions:
+    tile_standard:
+      length: "8 ft"
+      width: "6 ft"
+      workflow_axis: "8 ft direction"
+      lateral_axis: "6 ft direction"
+
+    tile_stack:
+      top: "plastic livestock flooring or permeable paver candidate"
+      middle: "2 in PVC structural lattice"
+      bottom: "6 in sealed PVC pontoons"
+
+    total_depth:
+      formula: "grating_depth + PVC_lattice_depth + pontoon_diameter"
+      preferred_grating_depth: "1.9 in"
+      structural_lattice_depth: "2 in"
+      pontoon_depth: "6 in"
+      calculated_total_depth: "9.9 in"
+      rounded_model_depth: "10 in"
+      validation_state: "[MODELED OPERATION ONLY]"
+
+    structural_behavior:
+      assumed_behavior: "semi-flexible modular mat"
+      explicitly_not: "rigid platform"
+
+  minimum_objects:
+    tile_level:
+      - TILE_walk_surface
+      - TILE_structural_frame
+      - TILE_pontoons
+      - TILE_rope_perimeter
+      - TILE_corner_lashing_points
+      - TILE_vessel_hang_points
+      - TILE_underbody_spacing
+      - TILE_connection_gap
+
+    barge_level:
+      - BARGE_tile_array
+      - BARGE_operator_lane
+      - BARGE_drain_zone
+      - BARGE_biomass_zone
+      - BARGE_chamber_zone
+      - BARGE_tow_connection
+
+  surface_material_candidate:
+    status: "[RESOLUTION CANDIDATE — PENDING VALIDATION]"
+
+    preferred_candidate: "Techno Earth square rigid-wall permeable plastic paver"
+    alternate_candidate: "Vodaland HexPave hexagonal permeable plastic paver"
+
+    reason_for_preference: >
+      Square grid geometry better matches PVC cross-joists and the rectangular
+      6 ft x 8 ft tile prototype. It should be easier to align, fasten, inspect,
+      replace, and model as repeatable deck panels.
+
+    validation_boundary: >
+      Ground-paver ratings do not validate elevated marine deck use. Surface
+      material must be tested wet, fastened over the actual PVC lattice, and
+      loaded by operator movement before any deck-safety claim is made.
+
+  connection_logic:
+    tile_to_tile: "rope-lashed flexible coupling"
+    vessel_connection: "side tether plus anti-swing tie"
+    retrieval_assumption: "must be recoverable as modular floating tile units"
+
+  required_first_measurements:
+    prototype_scope: "one tile only"
+    geometry:
+      - actual_dimensions
+      - actual_weight
+    flotation:
+      - freeboard_empty
+      - freeboard_loaded
+      - submerged_depth
+    stability:
+      - trim_angle
+      - list_angle
+      - walking_wobble
+    structural:
+      - deck_flex
+      - pontoon_deformation
+      - connection_strain
+    surface_behavior:
+      - panel_flex_under_operator_weight
+      - fastening_security_to_PVC_lattice
+      - edge_lift_or_panel_shift
+      - slip_behavior_when_wet
+      - drainage_performance_with_sargassum
+      - clogging_behavior
+      - cell_wall_deformation
+      - crack_or_fatigue_behavior
+      - snag_or_trip_risk
+      - ease_of_replacement
+    human_use:
+      - person_can_stand
+      - person_can_move_while_wet
+      - tile_can_be_recovered
+
+  current_defensible_claim: >
+    A modular PVC-pontoon floating work-floor system appears geometrically
+    and causally plausible for low-freeboard modular biomass handling,
+    pending flotation, stability, structural, surface, and operator-access
+    measurements.
+
+  prohibited_claims:
+    - safe_operating_load
+    - wave_survivability
+    - storm_survivability
+    - tow_rating
+    - payload_capacity
+    - commercial_viability
+    - continuous_operation
+    - worker_safety_certification
+    - validated_structural_deck
+    - validated_slip_resistance
+    - validated_long_term_UV_or_saltwater_durability
+
+  next_unlock:
+    build_and_measure: "TILE_PROTOTYPE_001"
+    unlocks:
+      - Version_2_tile_geometry
+      - bounded_mass_estimate
+      - preliminary_buoyancy_margin
+      - preliminary_operator_access_assessment
+      - first_3D_model_refinement
+```
+
+Compressed ruling:
+
+> Start with one 6 ft x 8 ft x 10 in semi-flexible PVC-pontoon tile. Use it as the base dirty-barge unit. Validate only whether it floats, stays reasonably level, supports basic human movement, connects modularly, ties to the vessel, and can be recovered.
+
+---
+
+# BOAT_MODEL_002
+
+```yaml
+BOAT_MODEL_002:
+  name: "Clean Center Boat with Self-Buoyant Dirty Side Wings"
+  status: "[RESOLUTION CANDIDATE — MODELED OPERATION ONLY]"
+  validation_state: "[PENDING VALIDATION]"
+
+  role:
+    center_boat: "clean spine / control vessel"
+    dirty_wings: "self-buoyant modular work floors"
+    deployed_layout: "LEFT_WING | CENTER_BOAT | RIGHT_WING"
+    topology_support:
+      - Intercept
+      - Drain/Separate
+      - Contain
+      - Process
+      - Recover/Test
+      - Reset
+      - Validate
+
+  frozen_model_assumptions:
+    center_boat:
+      footprint: "24 ft x 12 ft"
+      flotation: "4 longitudinal HDPE drum rows"
+      frame: "2 in Schedule 80 PVC primary chassis"
+      secondary_bracing: "1–1.5 in PVC optional"
+      deck: "raised clean deck over subfloor inspection space"
+      role_boundary: "clean control, power, shutdown, positioning, recovery, and interface support only"
+
+    dirty_wings:
+      count: 2
+      placement: "left and right of center boat"
+      tiles_per_wing: 4
+      total_tiles: 8
+      tile_size: "6 ft x 8 ft x 10 in"
+      each_wing_size: "16 ft x 12 ft"
+      total_deployed_footprint: "approx. 24 ft x 36 ft"
+      role_boundary: "dirty biomass handling and chamber-side support; not clean control space"
+
+  flotation_logic:
+    rule: "Center boat does not carry the dirty wings' full operating weight."
+    center_margin: "center_boat_buoyancy - center_boat_loaded_weight"
+    left_margin: "left_wing_buoyancy - left_wing_loaded_weight"
+    right_margin: "right_wing_buoyancy - right_wing_loaded_weight"
+
+  construction_stack:
+    center_boat:
+      - clean_walking_deck
+      - raised_deck_frame
+      - subfloor_inspection_space
+      - 2in_Sch80_PVC_barrel_capture_chassis
+      - HDPE_drum_flotation_grid
+      - water
+
+    load_path: "operator/equipment → deck → PVC subfloor → barrel-capture chassis → HDPE drums → water"
+
+  drum_restraint_rule:
+    do_not_drill_drums_unless_forced: true
+    required:
+      - lower_cradle_rails
+      - side_stop_rails
+      - end_stops
+      - over_straps
+      - inspection_access
+    purpose: "prevent float-out, sliding, rolling, and frame racking"
+
+  dirty_wing_state_logic:
+    work_mode:
+      state: "deployed flat"
+      support: "wing buoyancy supports dirty work floor and chamber-side loads"
+
+    travel_mode:
+      state: "raised or angled along boat side"
+      support: "restraint-load-supported / partially buoyant"
+      requirement: "boat hardpoints restrain motion"
+
+    boundary_rule: "Do not merge work mode and travel mode."
+
+  chamber_logic:
+    placement: "outside clean boat, mirrored left and right"
+    support: "dirty wing cradle plus wing flotation"
+    travel: "strapped against boat side"
+    prohibited: "no digestion chambers on clean boat deck"
+
+  minimum_objects:
+    center:
+      - CENTER_clean_vessel_24x12
+      - CENTER_HDPE_drum_rows_01_to_04
+      - CENTER_2in_PVC_chassis
+      - CENTER_subfloor_space
+      - CENTER_clean_deck
+      - CENTER_operator_lane
+      - CENTER_power_control_zone
+      - CENTER_shutdown_zone
+      - CENTER_left_interface_edge
+      - CENTER_right_interface_edge
+      - CENTER_left_hardpoints
+      - CENTER_right_hardpoints
+
+    wings:
+      - LEFT_wing_tile_array_4
+      - RIGHT_wing_tile_array_4
+      - LEFT_wing_flotation
+      - RIGHT_wing_flotation
+      - LEFT_chamber_cradle_zone
+      - RIGHT_chamber_cradle_zone
+      - LEFT_travel_restraints
+      - RIGHT_travel_restraints
+
+    interfaces:
+      - CLEAN_DIRTY_transfer_boundary_left
+      - CLEAN_DIRTY_transfer_boundary_right
+
+  critical_margins:
+    - center_boat_buoyancy_margin
+    - left_wing_buoyancy_margin
+    - right_wing_buoyancy_margin
+    - trim_margin
+    - list_margin
+    - deck_deflection_margin
+    - drum_restraint_margin
+    - wing_hardpoint_margin
+    - travel_restraint_margin
+    - clean_dirty_boundary_margin
+
+  required_first_measurements:
+    - actual_drum_displacement
+    - empty_freeboard
+    - loaded_freeboard
+    - trim_angle
+    - list_angle
+    - deck_deflection
+    - drum_movement
+    - wing_attachment_movement
+    - travel_restraint_movement
+    - operator_walkability
+
+  prohibited_claims:
+    - safe_payload
+    - seaworthiness
+    - reserve_buoyancy
+    - validated_stability
+    - final_boat_design
+    - operational_readiness
+    - certified_work_platform
+    - safe_travel_mode
+    - safe_chamber_restraint
+    - validated_tow_system
+
+  current_defensible_claim: >
+    A 24 ft x 12 ft clean center vessel using a 4-row HDPE drum flotation grid,
+    2 in Schedule 80 PVC barrel-capture chassis, raised clean deck, and two
+    self-buoyant 16 ft x 12 ft dirty side wings is logically modelable as a
+    dual-state sargassum work platform, pending buoyancy, stability, deflection,
+    restraint, and access measurements.
+
+  next_unlock:
+    - model_center_boat_and_side_wings_in_Blender
+    - verify_separate_center_and_wing_buoyancy_logic
+    - mock_up_drum_restraint_bay
+    - test_one_tile_from_BARGE_MODEL_001
+    - test_hardpoint_and_travel_restraint_behavior
+```
+
+Compressed ruling:
+
+> `BOAT_MODEL_002` is the system-layout doctrine: clean center boat with two dirty self-buoyant wings. The center boat controls and restrains; the wings float and work. Work mode and travel mode must stay separate.
+
+---
+
+# BOAT_MODEL_003
+
+```yaml
+BOAT_MODEL_003:
+  name: "Full-Glued Cheap-PVC Distributed Floating Truss Raft"
+  status: "[RESOLUTION CANDIDATE — MODELED OPERATION ONLY]"
+  validation_state: "[PENDING VALIDATION]"
+
+  relationship_to_previous_model: >
+    Refines BOAT_MODEL_002 by defining the center boat as a full-glued
+    cheap/common-PVC distributed floating truss raft while preserving the
+    clean-center / dirty-wing system layout.
+
+  core_decision:
+    material: "common PVC"
+    joining: "fully glued PVC fittings"
+    structure_type: "distributed floating truss raft"
+    repair_philosophy: "cut out damaged sections, replace pipe/fittings, re-glue"
+    rejected:
+      - stainless_cassette_hardware
+      - expensive_marine_hardware_dependency
+      - fully_modular_mechanical_lattice
+
+  doctrine:
+    - "The boat is not optimized as a yacht."
+    - "The boat is a distributed floating truss raft."
+    - "Strength comes from dense geometry, not heroic members."
+    - "Failure response is cut out, replace pipe/fittings, re-glue."
+    - "Repair kit is pipe, fittings, primer, cement, saw, straps."
+    - "Unknowns remain labeled until tested."
+
+  frozen_geometry:
+    footprint: "24 ft x 12 ft"
+    grid_logic:
+      x_stations: "2 ft spacing along 24 ft length"
+      y_deck_rows: "2 ft spacing across 12 ft width"
+      y_primary_rows: "4 ft primary flotation/load rows"
+    node_logic:
+      vertical_load_nodes: 52
+      deck_grid_nodes: 91
+
+  construction_doctrine:
+    - "No long unsupported PVC spans."
+    - "Use 2 ft grid wherever walking or load support occurs."
+    - "Stack vertical load paths."
+    - "Deck loads transfer through nodes, not mid-span."
+    - "Use glued diagonal/X-bracing to resist racking and twist."
+    - "Keep barrels replaceable."
+    - "Keep HDPE grating removable."
+    - "Add local support under heavy future loads."
+
+  vertical_layers:
+    Z0_bottom:
+      name: "barrel capture frame"
+      role:
+        - hold_barrel_rows
+        - prevent_roll
+        - prevent_slide
+        - prevent_float_out
+
+    Z1_middle:
+      name: "service/load transfer space"
+      role:
+        - connect_vertical_supports
+        - allow_inspection
+        - create_stiffness_depth
+
+    Z2_top:
+      name: "deck support lattice"
+      role:
+        - support_removable_HDPE_grating
+        - spread_walking_loads
+        - receive_future_load_pads
+
+    Z3_surface:
+      name: "removable HDPE grating"
+      role:
+        - walking_floor
+        - drainage
+        - inspection_access
+
+  bracing_resolution:
+    method:
+      - glued_diagonal_PVC_braces
+      - X_bracing_on_end_walls
+      - X_bracing_on_side_walls
+      - extra_bracing_at_corners_and_midship
+    purpose:
+      - prevent_rectangle_to_parallelogram_racking
+      - resist_torsional_twist
+      - protect_glued_joints_from_peel_loads
+
+  flotation_and_wing_boundary:
+    center_boat_rule: "center boat supports itself only"
+    dirty_wing_rule: "dirty wings remain self-buoyant"
+    travel_mode_rule: "wings fasten alongside/upright while still water-supported where possible"
+    restraint_rule: "restraints position and control motion; they are not assumed full load-bearing supports"
+
+  repair_doctrine:
+    failure_assumption: "localized damage is acceptable"
+    method: "cut, replace, re-glue, temporarily strap if needed"
+    repair_kit:
+      - PVC_pipe
+      - PVC_tees_crosses_elbows
+      - primer
+      - cement
+      - saw
+      - measuring_tape
+      - marker
+      - temporary_straps
+
+  must_test_before_claims:
+    - PVC_creep
+    - glued_joint_strength
+    - racking
+    - torsional_twist
+    - deck_deflection
+    - loaded_freeboard
+    - trim_and_list
+    - barrel_movement
+    - wing_travel_restraint
+    - tow_drag
+
+  prohibited_claims:
+    - validated_vessel_design
+    - safe_payload
+    - seaworthiness
+    - reserve_buoyancy
+    - validated_stability
+    - certified_work_platform
+    - safe_travel_mode
+    - validated_tow_system
+    - long_term_PVC_durability
+
+  current_defensible_claim: >
+    BOAT_MODEL_003 is a 24 ft x 12 ft full-glued common-PVC distributed
+    floating truss raft doctrine for the clean center boat. It is logically
+    modelable using dense 2 ft geometry, stacked load paths, removable HDPE
+    grating, replaceable barrel rows, and cut-to-repair field maintenance,
+    pending buoyancy, joint, deflection, racking, restraint, and access tests.
+```
+
+Compressed ruling:
+
+> `BOAT_MODEL_003` is the center-boat construction doctrine. `BOAT_MODEL_002` remains the system layout doctrine. Together, they define a clean center raft with dirty self-buoyant wings.
+
+---
+
+# Current System Relationship
+
+```yaml
+current_model_relationship:
+  BARGE_MODEL_001:
+    role: "dirty tile prototype / modular work-floor unit"
+    status: "[RESOLUTION CANDIDATE — MODELED OPERATION ONLY]"
+
+  BOAT_MODEL_002:
+    role: "system layout: clean center boat with dirty self-buoyant side wings"
+    status: "[RESOLUTION CANDIDATE — MODELED OPERATION ONLY]"
+
+  BOAT_MODEL_003:
+    role: "center boat construction doctrine: full-glued PVC distributed floating truss raft"
+    status: "[RESOLUTION CANDIDATE — MODELED OPERATION ONLY]"
+
+  active_combined_interpretation: >
+    The current suggested model is a 24 ft x 12 ft clean center raft built as
+    a full-glued common-PVC distributed floating truss over replaceable HDPE
+    drum rows, paired with two dirty self-buoyant side wings made from repeated
+    6 ft x 8 ft x 10 in PVC-pontoon tile units.
+```
+
+---
+
+# Universal Prohibited Claims
+
+```yaml
+universal_prohibited_claims:
+  - validated_vessel_design
+  - seaworthiness
+  - safe_payload
+  - reserve_buoyancy
+  - validated_stability
+  - certified_work_platform
+  - worker_safety_certification
+  - wave_survivability
+  - storm_survivability
+  - operational_readiness
+  - commercial_viability
+  - continuous_operation
+  - validated_tow_system
+  - validated_chamber_restraint
+  - validated_long_term_PVC_durability
+  - validated_marine_deck_surface
+```
+
+---
+
+# Current Admissible Combined Claim
+
+```yaml
+current_admissible_combined_claim: >
+  The current suggested model is a logically modelable sargassum work-platform
+  architecture consisting of a clean 24 ft x 12 ft full-glued PVC distributed
+  floating truss raft and two dirty self-buoyant modular side wings made from
+  repeated 6 ft x 8 ft x 10 in PVC-pontoon tile units. The model preserves
+  separate clean-control and dirty-work functions and remains pending flotation,
+  stability, deflection, joint, restraint, surface, access, and recovery tests.
+```
+
+---
+
+# Next Gear Prompt
+
+```text
+Gear, restart from MODEL_SUGGESTION_LEDGER_RESTART_POINT.
+
+Do not redesign from scratch.
+
+We have three active model entries:
+
+1. BARGE_MODEL_001 — 6 ft x 8 ft x 10 in PVC-pontoon dirty tile unit.
+2. BOAT_MODEL_002 — clean center boat with two dirty self-buoyant side wings.
+3. BOAT_MODEL_003 — full-glued common-PVC distributed floating truss raft doctrine for the center boat.
+
+Your next task is to convert this restart point into Blender-ready geometry instructions.
+
+Return only:
+
+1. object hierarchy,
+2. layer heights / Z positions,
+3. PVC grid layout,
+4. drum row placement,
+5. wing placement in work mode and travel mode,
+6. bracing placement,
+7. removable grating placement,
+8. inspection/access gaps,
+9. first mockup requirements,
+10. claims still prohibited.
+
+Keep it compact.
+No giant variable dump.
+No new doctrine unless you find a contradiction.
+Every answer must become a Blender object, geometry freeze, connection rule, restraint rule, margin check, mockup requirement, prohibited claim, ledger update, or deferred item.
+```
+
+---
+
+# Restart Summary
+
+We restart from here:
+
+> Build the suggested model around a clean 24 ft x 12 ft full-glued PVC distributed floating truss raft, with four longitudinal HDPE drum rows, removable grating, stacked 2 ft grid load paths, and two dirty self-buoyant modular side wings composed of 6 ft x 8 ft x 10 in PVC-pontoon tiles. Keep work mode and travel mode separate. Nothing is validated until measured.

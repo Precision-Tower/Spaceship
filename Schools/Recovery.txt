@@ -1,0 +1,642 @@
+CE-OS :: RECOVERY_FORMS
+Role: semantic bootloader / ontology reconstruction layer / compression recovery architecture
+Authority Scope: recovery topology only
+Non-Authority: ontology ownership / governance ownership / methodology ownership / speculative expansion
+
+==================================================
+1. RECOVERY PURPOSE
+==================================================
+
+Recovery exists because GPT systems:
+- average distinctions
+- smooth abstractions
+- flatten certainty
+- merge neighboring concepts
+- compress exclusions
+- erase topology boundaries
+
+Summarization
+≠
+recovery
+
+Summarization:
+compresses language.
+
+Recovery:
+preserves reconstructable topology.
+
+Recovery objective:
+restore:
+- distinctions
+- dependencies
+- governance
+- domain identity
+- anti-collapse boundaries
+
+under:
+- truncation
+- recursive prompting
+- paraphrase drift
+- partial retrieval
+- memory degradation
+- cross-agent transfer
+
+==================================================
+2. MINIMUM RECONSTRUCTABLE KERNEL
+==================================================
+
+CE-OS
+= constrained causal engineering interpretation architecture.
+
+ROOT:
+interaction = measurable state-affecting relation.
+
+CORE DISTINCTION:
+operational validity
+≠
+causal completeness
+
+PRIMARY FAILURE:
+scalar compression
+= interaction topology collapse into scalar abstraction.
+
+PRIMARY METHOD:
+causal accounting
+= preserve interactions before scalar reduction.
+
+DOMAINS:
+mass-centric
+field-centric
+cross-domain
+
+FIELD-CENTRIC:
+propagation
+
+NON-FIELD:
+transfer
+
+ORGANIZERS:
+structure
+organization
+coupling
+geometry
+timing
+
+CONSEQUENCES:
+resistance
+loss
+heat
+resonance
+amplification
+
+GOVERNANCE:
+one concept → one canonical definition
+one file → one authority domain
+speculation quarantined
+
+ANTI-COLLAPSE:
+field ≠ generalized influence
+propagation ≠ transfer
+organization ≠ hidden source
+amplification ≠ energy creation
+coupling ≠ undefined influence
+interpretation ≠ validation
+
+==================================================
+3. DISTINCTION TOPOLOGY MAPS
+==================================================
+
+operational validity
+≠ causal completeness
+
+scalar equivalence
+≠ functional equivalence
+
+interaction
+≠ abstraction
+
+causal accounting
+≠ scalar accounting
+
+mass-centric
+≠ field-centric
+
+propagation
+≠ transfer
+
+propagation
+≠ generalized movement
+
+field
+≠ generalized influence
+
+field
+≠ universal substrate
+
+coupling
+≠ undefined linkage
+
+structure
+≠ organization
+
+organization
+≠ hidden source
+
+amplification
+≠ energy creation
+
+efficiency
+≠ surplus output
+
+resonance
+≠ unrestricted amplification
+
+heat
+≠ primary causal mechanism
+
+loss
+≠ conservation failure
+
+conductive interaction
+≠ electromagnetic propagation
+
+analogy
+≠ ontology
+
+interpretation
+≠ validation
+
+speculation
+≠ canon
+
+==================================================
+4. ROOT PRIMITIVE RECOVERY FORMS
+==================================================
+
+Interaction:
+measurable state-affecting relation
+NOT mystical connectedness
+
+Structure:
+physical arrangement
+NOT abstract organization
+
+Organization:
+interaction orchestration
+NOT hidden capability source
+
+Coupling:
+typed interaction linkage
+NOT undefined influence
+
+Propagation:
+field-gradient distributed interaction behavior
+NOT generalized movement
+
+Transfer:
+non-field movement/load/state passage
+NOT propagation
+
+Field:
+measurable gradient interaction structure
+NOT universal substrate
+
+Resistance:
+interaction constraint
+
+Loss:
+reduced usable organized interaction
+NOT disappearance
+
+Heat:
+emergent interaction signature
+NOT primary cause
+
+Resonance:
+oscillatory response alignment
+NOT unlimited amplification
+
+Amplification:
+organizational capability increase
+NOT energy creation
+
+Scalar Compression:
+interaction topology reduced into scalar abstraction
+
+Causal Accounting:
+interaction-preserving analysis before scalar reduction
+
+==================================================
+5. DOMAIN RECOVERY MAPS
+==================================================
+
+--------------------------------------------------
+5.1 Domain Compression Map
+--------------------------------------------------
+
+Mass-Centric:
+matter/load/displacement/pressure/friction domain
+
+Field-Centric:
+distributed gradient interaction domain
+
+Cross-Domain:
+governed unlike-domain interaction
+
+--------------------------------------------------
+5.2 Propagation Eligibility
+--------------------------------------------------
+
+Propagation requires:
+- field-centric identity
+- measurable gradients
+- distributed interaction behavior
+
+Transfer does not.
+
+--------------------------------------------------
+5.3 Coupling Compression
+--------------------------------------------------
+
+Mechanical:
+contact/load linkage
+
+Field:
+gradient-mediated linkage
+
+Thermal:
+thermal exchange linkage
+
+Fluid:
+pressure-flow linkage
+
+Electromagnetic:
+field-centric inductive linkage
+
+Cross-Domain:
+unlike-domain linkage
+
+--------------------------------------------------
+5.4 Transfer Compression
+--------------------------------------------------
+
+Transfer:
+load / pressure / displacement / momentum passage
+
+--------------------------------------------------
+5.5 Conductive vs Electromagnetic
+--------------------------------------------------
+
+Conductive interaction:
+structured pathway interaction
+
+Electromagnetic propagation:
+distributed field-gradient behavior
+
+==================================================
+6. GOVERNANCE RECOVERY FORMS
+==================================================
+
+Governance exists because GPT systems:
+- average distinctions
+- broaden abstractions
+- merge neighboring concepts
+- flatten certainty
+
+Core Governance:
+one concept → one canonical definition
+one file → one authority domain
+
+Admissibility:
+permitted semantic boundary
+
+Claim Tiers:
+interpretation
+→ hypothesis
+→ implication
+→ experiment
+→ anomaly
+→ demonstrated capability
+→ validated behavior
+
+Escalation prohibited without evidence.
+
+Speculation:
+quarantined from canon.
+
+Compression must preserve:
+- distinctions
+- exclusions
+- domain labels
+- governance topology
+
+==================================================
+7. METHODOLOGY RECOVERY FORMS
+==================================================
+
+Causal Accounting Workflow:
+
+domains
+→ interactions
+→ couplings
+→ propagation
+→ transfer
+→ constraints
+→ losses
+→ organization
+→ scalar summaries
+
+Interaction Mapping:
+source
+→ pathway
+→ coupling
+→ constraints
+→ effects
+
+Decomposition:
+system
+→ domains
+→ interactions
+→ losses
+→ organization
+→ scalars
+
+Organizational Analysis:
+geometry
+timing
+sequencing
+coupling arrangement
+constraint arrangement
+
+Propagation Analysis:
+field-centric distributed gradient behavior only
+
+Loss Analysis:
+friction
+attenuation
+damping
+impedance mismatch
+deformation
+thermal emergence
+
+==================================================
+8. MUTATION VECTOR CHECKPOINTS
+==================================================
+
+--------------------------------------------------
+8.1 Amplification Drift
+--------------------------------------------------
+
+Mutation:
+capability increase
+→ implied energy creation
+
+Detection:
+surplus-output rhetoric
+
+Correction:
+amplification = organizational capability increase only
+
+--------------------------------------------------
+8.2 Field Universalization
+--------------------------------------------------
+
+Mutation:
+field
+→ universal substrate
+
+Detection:
+everything-is-a-field rhetoric
+
+Correction:
+field requires measurable gradient interaction behavior
+
+--------------------------------------------------
+8.3 Propagation Overextension
+--------------------------------------------------
+
+Mutation:
+propagation
+→ generalized movement
+
+Detection:
+propagation applied to all transfer
+
+Correction:
+propagation restricted to field-centric distributed behavior
+
+--------------------------------------------------
+8.4 Organization Mystification
+--------------------------------------------------
+
+Mutation:
+organization
+→ hidden optimization force
+
+Detection:
+organization treated as unexplained capability source
+
+Correction:
+organization = interaction orchestration only
+
+--------------------------------------------------
+8.5 Coupling Abstraction Bleed
+--------------------------------------------------
+
+Mutation:
+coupling
+→ undefined influence
+
+Detection:
+coupling without typed linkage
+
+Correction:
+all coupling requires:
+- domain identity
+- interaction pathway
+
+--------------------------------------------------
+8.6 Resonance Escalation
+--------------------------------------------------
+
+Mutation:
+resonance
+→ unlimited amplification
+
+Detection:
+unbounded amplification language
+
+Correction:
+resonance constrained by:
+- losses
+- damping
+- interaction conditions
+
+--------------------------------------------------
+8.7 Efficiency Escalation
+--------------------------------------------------
+
+Mutation:
+efficiency
+→ surplus output implication
+
+Detection:
+reduced losses interpreted as energy generation
+
+Correction:
+efficiency remains comparative operational metric
+
+==================================================
+9. RECURSIVE RECOVERY TESTS
+==================================================
+
+--------------------------------------------------
+9.1 Truncation Test
+--------------------------------------------------
+
+Question:
+can topology reconstruct after partial loss?
+
+Required:
+- root primitives
+- distinctions
+- governance invariants
+
+--------------------------------------------------
+9.2 Recursive Summarization Test
+--------------------------------------------------
+
+Question:
+do neighboring concepts merge after repeated compression?
+
+Failure:
+semantic averaging
+
+--------------------------------------------------
+9.3 Paraphrase Drift Test
+--------------------------------------------------
+
+Question:
+do exclusions survive wording variation?
+
+Failure:
+boundary erosion
+
+--------------------------------------------------
+9.4 Cross-Agent Reconstruction Test
+--------------------------------------------------
+
+Question:
+do separate agents reconstruct identical distinctions?
+
+Failure:
+authority instability
+
+--------------------------------------------------
+9.5 Partial Memory Recovery Test
+--------------------------------------------------
+
+Question:
+can minimal anchors restore:
+- ontology
+- governance
+- domain topology
+- methodology order
+
+==================================================
+10. LOWEST-TOKEN BOOTSTRAP FORM
+==================================================
+
+CE-OS:
+constrained causal engineering interpretation architecture.
+
+Root:
+interaction = measurable state-affecting relation.
+
+Method:
+causal accounting before scalar compression.
+
+Domains:
+mass-centric / field-centric / cross-domain.
+
+Propagation:
+field-gradient distributed behavior only.
+
+Transfer:
+non-field movement/load/state passage.
+
+Organization:
+interaction orchestration.
+
+Coupling:
+typed linkage.
+
+Amplification:
+organizational capability increase only.
+
+Core Distinctions:
+propagation ≠ transfer
+field ≠ generalized influence
+organization ≠ hidden source
+amplification ≠ energy creation
+interpretation ≠ validation
+
+Governance:
+one concept → one canonical definition
+speculation quarantined
+
+==================================================
+11. RECOVERY HIERARCHY
+==================================================
+
+Priority-1:
+distinction topology
+
+Priority-2:
+root primitives
+
+Priority-3:
+governance invariants
+
+Priority-4:
+domain topology
+
+Priority-5:
+methodology sequence
+
+Priority-6:
+extended interpretation
+
+Recovery Rule:
+topology before elaboration
+
+==================================================
+12. RECOVERY FAILURE MODES
+==================================================
+
+Failure Sources:
+- synonym averaging
+- abstraction smoothing
+- domain blending
+- governance erosion
+- distinction erosion
+- speculative escalation
+- authority duplication
+- paraphrase broadening
+- prose replacement of topology
+- analogy literalization
+
+Critical Collapse Modes:
+field universalization
+propagation overextension
+organization mystification
+coupling abstraction bleed
+amplification escalation
+
+Recovery Failure Signature:
+neighboring concepts become semantically interchangeable.
+
+Primary Anti-Collapse Rule:
+sharp distinctions
+>
+semantic smoothness

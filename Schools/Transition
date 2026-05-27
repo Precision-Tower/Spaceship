@@ -1,0 +1,530 @@
+Transition:
+  role: state_change_governance_and_authority_leak_prevention_layer
+  authority: constrained_transition_boundary_only
+
+  caution:
+    note: >
+      Transition governs movement constraints,
+      state-change visibility,
+      rollback boundaries,
+      admissibility propagation restrictions,
+      and authority-leak prevention.
+
+      Transition does not define:
+        - truth
+        - admissibility
+        - semantic identity
+        - causality
+        - topology
+        - canon
+        - validation
+
+      Transition constrains movement.
+      It does not authorize destination authority.
+
+  authority_boundaries:
+
+    Governance:
+      retains:
+        - admissibility_authority
+        - validation_authority
+        - contradiction_resolution_authority
+        - claim_boundary_authority
+        - prohibited_claim_authority
+
+    Lexicon:
+      retains:
+        - semantic_identity_authority
+        - definition_authority
+        - semantic_drift_control
+
+    CE_OS:
+      retains:
+        - causal_discipline_authority
+        - interaction_definition_authority
+        - propagation_and_transfer_constraints
+
+    Directory:
+      retains:
+        - topology_visibility_authority
+        - routing_visibility_authority
+
+    Recovery:
+      retains:
+        - survivability_support
+        - reconstruction_support
+        - rollback_access_support
+        - lineage_support
+
+    Gold:
+      retains:
+        - stability_preservation
+        - recoverable_path_support
+        - contradiction_lineage_support
+
+  governing_principles:
+
+    first_rule:
+      statement: >
+        State movement does not move authority.
+
+    second_rule:
+      statement: >
+        Failed, contradictory, partial, contaminated,
+        blocked, and unauthorized transitions must persist.
+
+    third_rule:
+      statement: >
+        Recoverability does not imply reactivation.
+
+    fourth_rule:
+      statement: >
+        Rollback restores visibility, not admissibility.
+
+    fifth_rule:
+      statement: >
+        Transition cannot silently mutate semantic identity,
+        admissibility, causality, or canonical status.
+
+  minimally_admissible_scope:
+
+    Transition_may_control:
+      - transition_tracking
+      - transition_constraints
+      - state_change_visibility
+      - rollback_boundary_management
+      - transition_failure_persistence
+      - migration_visibility
+      - authority_propagation_blocking
+      - reactivation_constraints
+      - transition_labeling
+      - partial_transition_visibility
+      - temporal_boundary_enforcement
+
+    Transition_must_not_control:
+      - admissibility_definition
+      - semantic_identity_definition
+      - causal_truth_definition
+      - canonical_validation
+      - contradiction_resolution
+      - evidence_sufficiency
+      - topology_definition
+      - source_authority_definition
+
+  governed_transition_definition:
+
+    governed_transition:
+      meaning: >
+        Any movement, attempted movement,
+        restoration,
+        rollback,
+        migration,
+        reactivation,
+        quarantine,
+        deprecation,
+        relabeling,
+        archival movement,
+        or state mutation
+        capable of affecting:
+          - authority perception
+          - admissibility
+          - semantic identity
+          - contradiction visibility
+          - causal interpretation
+          - topology routing
+          - repository continuity
+
+  transition_states:
+
+    persistent:
+      meaning: >
+        State remains preserved or traceable.
+      authority_effect: none
+
+    recovered:
+      meaning: >
+        State surfaced from survivability or reconstruction support.
+      authority_effect: visibility_only
+
+    archived:
+      meaning: >
+        Historical inactive state preserved for lineage.
+      authority_effect: none
+
+    deprecated:
+      meaning: >
+        Formerly active state no longer preferred or safe
+        for default routing.
+      authority_effect: inactive
+
+    unresolved:
+      meaning: >
+        State contains unresolved contradiction,
+        incomplete causal accounting,
+        missing evidence,
+        or unsettled semantic identity.
+      authority_effect: limited_or_suspended
+
+    quarantined:
+      meaning: >
+        State preserved but blocked from active routing due to risk.
+      authority_effect: restricted_visibility
+
+    candidate:
+      meaning: >
+        State proposed for possible active routing
+        pending review.
+      authority_effect: pending_only
+
+    canonical:
+      meaning: >
+        State active within explicitly governed scope.
+      authority_effect: explicitly_granted
+
+    reactivated:
+      meaning: >
+        Previously inactive state restored to active routing
+        after review.
+      authority_effect: explicitly_granted_not_inherited
+
+    rejected:
+      meaning: >
+        State denied active reuse after review.
+      authority_effect: inactive_preserved_lineage
+
+    failed_transition:
+      meaning: >
+        Transition attempt violated constraints,
+        lacked required review,
+        or produced unresolved mutation.
+      authority_effect: none
+
+    blocked_transition:
+      meaning: >
+        Transition prevented before completion.
+      authority_effect: none
+
+    partial_transition:
+      meaning: >
+        Transition known or inferred
+        but incompletely visible.
+      authority_effect: inspection_only
+
+    contaminated_transition:
+      meaning: >
+        Transition mixed incompatible authority,
+        semantic,
+        contradiction,
+        or causal states.
+      authority_effect: quarantined
+
+    contradictory_transition:
+      meaning: >
+        Transition conflicts with preserved lineage
+        or competing transition records.
+      authority_effect: unresolved
+
+    unauthorized_transition:
+      meaning: >
+        Transition attempted authority movement
+        without required review.
+      authority_effect: void
+
+    orphan_transition:
+      meaning: >
+        Transition lacks recoverable source or target identity.
+      authority_effect: forensic_only
+
+    temporal_authority_leak:
+      meaning: >
+        Prior authority attempts to propagate into current routing
+        without current review.
+      authority_effect: blocked
+
+    transition_failed_semantic_drift:
+      meaning: >
+        Transition introduced unresolved semantic mutation.
+      authority_effect: blocked_pending_Lexicon_review
+
+  transition_metadata:
+
+    required_fields:
+      - transition_id
+      - source_state
+      - target_state
+      - affected_object_identity
+      - affected_authority_lanes
+      - transition_reason
+      - transition_scope
+      - initiating_context
+      - prior_admissibility_status
+      - proposed_admissibility_status
+      - semantic_identity_status
+      - contradiction_status_before
+      - contradiction_status_after
+      - recovery_relationship_if_any
+      - rollback_relationship_if_any
+      - required_authority_review
+      - review_status
+      - visibility_status
+      - reversibility_status
+      - failure_mode_if_any
+      - prohibited_claims_attached
+
+  admissibility_propagation:
+
+    default_rule:
+      statement: >
+        Admissibility does not automatically propagate through transition.
+
+    governing_rule:
+      statement: >
+        Transition may preserve lineage and historical labels.
+        It may not preserve active admissibility
+        unless Governance explicitly reasserts it.
+
+    hard_stop_conditions:
+      - partially_visible_transition_requests_authority_effect
+      - recovered_state_requests_active_use_without_review
+      - deprecated_state_requests_reactivation_without_review
+      - contradiction_lineage_missing
+      - semantic_identity_unresolved
+      - rollback_attempts_authority_restoration
+      - hidden_recovery_path_requests_canonical_routing
+
+  authority_transfer_constraints:
+
+    default:
+      authority_transfer: blocked
+
+    authority_may_transfer_only_when:
+      - source_authority_is_identified
+      - target_authority_is_identified
+      - governing_review_is_complete
+      - semantic_identity_is_checked
+      - contradiction_status_is_preserved
+      - transition_metadata_is_complete
+      - prohibited_claims_are_attached
+      - active_authority_scope_is_explicit
+
+    prohibited_authority_transfer:
+      - rollback_without_review
+      - recovery_without_review
+      - partially_visible_transition
+      - unresolved_semantic_identity
+      - unresolved_contradiction
+      - orphan_transition
+      - contaminated_transition
+      - unauthorized_transition
+
+  rollback_governance:
+
+    rollback_definition:
+      meaning: >
+        Rollback restores visibility,
+        inspectability,
+        comparison capability,
+        and lineage access.
+
+        Rollback does not restore:
+          - admissibility
+          - validation
+          - canonical authority
+          - semantic authority
+          - causal truth
+
+    rollback_may:
+      - expose_prior_state
+      - support_reconstruction
+      - support_forensics
+      - reveal_contradiction_emergence
+      - restore_visibility
+
+    rollback_must_not:
+      - erase_later_contradictions
+      - silently_replace_active_state
+      - reactivate_deprecated_state
+      - imply_validation
+      - bypass_Governance
+      - bypass_Lexicon
+      - delete_failed_transition_records
+
+  reactivation_rules:
+
+    default_rule:
+      statement: >
+        Reactivation is prohibited until reviewed.
+
+    required_reviews:
+
+      Governance:
+        required_for:
+          - admissibility_restoration
+          - validation_status_change
+          - canonical_routing
+          - contradiction_resolution_claims
+
+      Lexicon:
+        required_for:
+          - semantic_identity_reuse
+          - deprecated_meaning_reuse
+          - semantic_conflict_resolution
+
+      CE_OS:
+        required_for:
+          - causal_claim_reactivation
+          - interaction_logic_reactivation
+          - engineering_mechanism_reentry
+
+      Directory:
+        required_for:
+          - active_topology_visibility_change
+          - routing_exposure_change
+
+    prohibited_reactivation_conditions:
+      - unresolved_semantic_conflict
+      - unresolved_contradiction
+      - hidden_source_identity
+      - recoverability_used_as_authority
+      - rollback_used_as_validation
+      - missing_review_path
+
+  contradiction_preservation:
+
+    doctrine:
+      statement: >
+        Transition cannot resolve contradiction through movement.
+
+    requirements:
+      - contradiction_markers_follow_the_object
+      - contradictory_versions_remain_distinguishable
+      - failed_transitions_persist
+      - rollback_preserves_later_conflicts
+      - migration_cannot_summarize_conflict_into_resolution
+      - contradictory_transitions_remain_visible
+
+    prohibited_effects:
+      - transition_erases_conflict
+      - rollback_erases_contradiction
+      - migration_hides_conflict
+      - reactivation_ignores_conflict
+      - compression_removes_recovery_path
+
+  semantic_identity_protection:
+
+    governing_rule:
+      statement: >
+        Transition cannot mutate semantic identity silently.
+
+    required_controls:
+      - semantic_identity_checked_before_transition
+      - semantic_identity_checked_after_transition
+      - deprecated_meanings_remain_deprecated_until_reviewed
+      - restored_terms_cannot_override_current_terms
+      - semantic_drift_requires_Lexicon_review
+      - migrated_terms_preserve_lineage
+
+  temporal_boundary_conditions:
+
+    doctrine:
+      statement: >
+        Authority is context-bound and time-bound.
+
+    rules:
+      - prior_authority_does_not_automatically_survive_restoration
+      - historical_canonical_status_requires_current_review
+      - rollback_does_not_restore_current_authority
+      - intervening_contradictions_must_persist
+      - historical_semantics_require_current_Lexicon_alignment
+      - historical_causal_claims_require_current_CE_OS_alignment
+
+  partial_transition_visibility:
+
+    governing_rule:
+      statement: >
+        Partial visibility supports inspection only,
+        never authority propagation.
+
+    required_label_conditions:
+      - hidden_source_state
+      - hidden_target_state
+      - incomplete_transition_path
+      - incomplete_contradiction_visibility
+      - unresolved_semantic_identity
+      - unresolved_authority_effect
+
+    prohibited_effects:
+      - partial_visibility_as_validation
+      - partial_visibility_as_admissibility
+      - partial_visibility_as_canonical_routing
+      - hidden_transition_authority_transfer
+
+  recoverability_vs_transition_authority:
+
+    recoverability:
+      meaning: >
+        State may be surfaced,
+        reconstructed,
+        inspected,
+        or compared.
+      authority_effect: none
+
+    transition_authority:
+      meaning: >
+        State movement permitted to affect active routing.
+      authority_effect: requires_explicit_review
+
+    governing_rule:
+      statement: >
+        Recoverability may expose a state.
+        Transition may constrain movement.
+        Neither grants admissibility.
+
+  prohibited_transition_effects:
+
+    - transition_implies_validation
+    - transition_implies_admissibility
+    - rollback_implies_truth
+    - rollback_implies_current_authority
+    - recoverability_implies_reactivation
+    - recovery_implies_authority
+    - migration_erases_contradiction
+    - restored_semantics_override_current_semantics
+    - partial_visibility_supports_authority
+    - transition_resolves_contradiction
+    - transition_defines_canon
+    - transition_redefines_semantics
+    - transition_redefines_causality
+    - transition_redefines_topology
+    - transition_becomes_shadow_governance
+
+  installation_recommendation:
+
+    name: Transition_Governance_Boundary_Protocol
+
+    placement:
+      - referenced_by_Governance
+      - referenced_by_Recovery
+      - referenced_by_Gold
+      - constrained_by_Lexicon
+      - constrained_by_CE_OS
+      - topology_visible_through_Directory
+
+    caution:
+      note: >
+        Transition should exist as a movement firewall,
+        not as a positive authority engine.
+
+        Its role is to prevent silent authority mutation
+        during state movement.
+
+  bottom_line:
+
+    statement: >
+      Transition is admissible only as a constrained state-change layer
+      designed to preserve lineage,
+      prevent authority leakage,
+      preserve contradiction visibility,
+      constrain rollback semantics,
+      and prevent silent semantic or admissibility mutation
+      during movement through repository state-space.

@@ -1,0 +1,780 @@
+Float:
+  file: Float_v1_1.yaml
+  role: buoyancy_state_observation_patterns
+  status: v1_1_observation_packet_specialization_candidate
+  authority: observation_pattern_only_not_validation
+  canon: false
+  validation_authority: false
+
+  references:
+    eyes: ./Eyes.yaml
+    simulate: ./Simulate.yaml
+    simulation_bridge: ./SimulationBridge.yaml
+    vision_ops: ./VisionOps.yaml
+    gear_kernel_bridge: ./GearKernelBridge.yaml
+    shared_kernel: ../../Shared/CE-OSv1.yaml
+    shared_directory: ../../Shared/Directory.yaml
+
+  prime_rule: oscillation_is_not_stability
+
+  packet_contract:
+    inherits_from: ./Eyes.yaml#Eyes.packet_contracts.ObservationPacket
+    specialization: buoyancy_state_observation_packet
+    required_common_fields:
+      - packet_id
+      - packet_type
+      - source_files_consulted
+      - object_or_system
+      - observation_type
+      - declared_state
+      - observer_stack
+      - raw_vs_interpreted
+      - evidence_state
+      - known_variables
+      - unresolved_variables
+      - contradictions_carried
+      - prohibited_interpretations
+      - recommended_destination
+      - route_status
+    buoyancy_required_fields:
+      - buoyancy_state
+      - waterline_z
+      - submerged_volume
+      - vertical_velocity
+      - tilt_angle
+      - flooded_volume
+      - restore_time
+      - damping_trend
+      - leak_or_flooding_indicator
+    allowed_buoyancy_states:
+      - float
+      - submerge
+      - restore
+      - neutral_hover_or_stall
+      - oscillation
+      - failure_to_restore
+      - unresolved
+    hard_rules:
+      - Float_packets_do_not_validate_buoyancy
+      - Float_packets_do_not_claim_stability
+      - Float_packets_do_not_claim_reserve_buoyancy
+      - Float_packets_do_not_claim_safe_payload
+      - visual_float_posture_must_not_replace_measurement
+      - oscillation_must_not_be_promoted_to_stability
+      - restore_response_must_not_be_promoted_to_validation
+    default_destination: Designs/Buoyancy_Actuator_or_Project_specific_record
+
+  owns:
+    - float_state_observation_language
+    - submerge_state_observation_language
+    - restore_state_observation_language
+    - oscillation_state_observation_language
+    - failure_to_restore_observation_language
+
+  does_not_own:
+    - BAS_design_truth
+    - buoyancy_validation
+    - stability_claims
+    - safety_claims
+    - operational_readiness
+    - measurement_truth
+
+  observer_states:
+    observe_float_state:
+      record:
+        - waterline_z
+        - submerged_volume
+        - vertical_velocity
+        - tilt_angle
+
+    observe_submerge_state:
+      trigger: downward_load_or_flooding_exceeds_float_margin
+      record:
+        - submerge_rate
+        - force_deficit
+        - flooded_volume
+        - damping_loss
+
+    observe_restore_state:
+      trigger: upward_restoring_response_after_submerge
+      record:
+        - net_vertical_force_sign_change
+        - upward_velocity
+        - water_shedding_or_leak_persistence
+        - restore_time
+
+    observe_neutral_hover_or_stall_state:
+      trigger: near_zero_vertical_velocity_after_submerge_or_partial_restore_without_committed_return_or_failure
+      record:
+        - vertical_velocity
+        - vertical_acceleration
+        - waterline_z
+        - submerged_volume
+        - flooded_volume
+        - tilt_angle
+        - damping_trend
+        - restore_time
+        - drift
+      exits:
+        - commits_back_to_float_band
+        - resumes_submerge
+        - enters_oscillation
+        - transitions_to_failure_to_restore
+        - times_out_as_unresolved_stall
+      warning: visually_calm_posture_may_hide_force_balance_damping_loss_leak_accumulation_or_tilt_lock
+
+    observe_oscillation_state:
+      trigger: repeated_float_submerge_restore_cycling
+      record:
+        - oscillation_amplitude
+        - oscillation_period
+        - damping_trend
+        - phase_delay
+        - drift
+
+    observe_failure_to_restore:
+      trigger: no_committed_return_before_timeout_or_amplitude_collapse_or_divergence
+      record:
+        - sink_trend
+        - stuck_submerged_state
+        - leak_accumulation
+        - tilt_lock
+        - damping_failure
+
+  warning_blocks:
+    - oscillation_is_not_stability
+    - restoration_is_not_validation
+    - threshold_crossing_is_not_transition_commitment
+    - net_buoyancy_scalar_can_hide_loss_delay_leak_and_hysteresis
+    - visual_float_posture_is_not_buoyancy_margin
+    - restore_response_is_not_committed_restore
+
+  measurement_needs:
+    - dry_mass
+    - displaced_volume_vs_depth
+    - submerged_volume_curve
+    - leak_or_flooding_rate
+    - damping_estimate_in_water
+    - restore_time_after_forced_submerge
+    - vertical_displacement_over_time
+    - oscillation_amplitude_decay_or_growth
+    - center_of_mass_z
+    - center_of_buoyancy_z
+    - tilt_or_list_during_restore
+    - waterline_at_rest_after_load_and_after_disturbance
+
+  example_reference:
+    name: BAS_Test_0_float_observation_pass
+    source: Designs/Buoyancy Actuator/BAS
+    rule: example_only_actual_design_truth_lives_downstream
+
+  routing_rules:
+    - Float_frames_observation_language_only
+    - actual_BAS_records_live_in_Designs
+    - command_meanings_route_to_SimulationBridge
+    - observation_patterns_route_to_Eyes
+    - visual_interpretation_routes_to_VisionOps
+    - simulation_construction_routes_to_Simulate
+    - authority_boundaries_route_to_GearKernelBridge
+
+Float_boundary_governance:
+  role: buoyancy_state_observation_boundary_and_governance_section
+  status: v0_1_merge_ready_candidate
+  authority: boundary_and_admissibility_only_not_physics_not_validation
+  owner_boundary:
+    Float_preserves:
+      - buoyancy_state_observation_language
+      - buoyancy_state_boundary_labels
+      - buoyancy_observation_prohibited_interpretations
+      - buoyancy_observation_unresolveds
+      - buoyancy_observation_contradictions
+      - buoyancy_observation_viewer_warnings
+      - buoyancy_observation_route_guardrails
+    Gear_retains_ownership_of:
+      - buoyancy_observation_structure
+      - runtime_implementation
+      - causal_structure_mapping
+      - state_machine_implementation
+      - observation_model_design
+      - failure_surface_mapping
+    Float_does_not_own:
+      - buoyancy_mechanics_definition
+      - BAS_design_truth
+      - stability_validation
+      - payload_certification
+      - reserve_buoyancy_validation
+      - seaworthiness
+      - operational_readiness
+      - safety_claims
+      - validation
+      - evidence_state_promotion
+      - governance_decision
+
+  core_rule:
+    - Float_may_observe_and_route_float_state_language
+    - Float_may_not_make_float_mean_anything_nice
+    - Float_state_language_must_not_promote_itself_into_stability_safety_readiness_reserve_buoyancy_payload_seaworthiness_or_validation
+    - observed_buoyancy_behavior_is_not_validated_buoyancy_performance
+    - visual_float_posture_is_not_stability
+    - oscillation_is_not_stability
+    - restore_is_not_validation
+    - route_completion_is_not_claim_support
+    - display_state_is_not_source_truth
+
+  prohibited_promotions:
+    global:
+      - visualization_equals_evidence
+      - observation_equals_validation
+      - observed_float_equals_stability
+      - floating_equals_stability
+      - floating_equals_reserve_buoyancy
+      - floating_equals_safe_payload
+      - floating_equals_seaworthiness
+      - floating_equals_operational_readiness
+      - visual_calmness_equals_restoring_margin
+      - visual_calmness_equals_stability
+      - oscillation_equals_stability
+      - oscillation_damping_equals_validated_stability
+      - restore_response_equals_validation
+      - restore_response_equals_restoring_margin
+      - neutral_hover_equals_stability
+      - failure_to_restore_equals_complete_failure_analysis
+      - waterline_visual_estimate_equals_displacement_curve
+      - tilt_visual_estimate_equals_stability_measurement
+      - route_completion_equals_claim_support
+      - display_state_equals_source_truth
+      - viewer_render_equals_evidence
+      - ledger_write_confirmed_equals_evidence_support
+      - latest_float_state_equals_causal_history
+      - contradiction_absence_equals_resolution
+      - summary_equals_source_authority
+      - clean_UI_equals_confidence
+      - filtered_display_equals_raw_record
+      - source_record_declared_equals_source_record_created
+      - observer_stack_declared_equals_observer_stack_preserved
+
+    by_state:
+      float:
+        blocked_promotions:
+          - stability
+          - reserve_buoyancy
+          - safe_payload
+          - seaworthiness
+          - operational_readiness
+          - validation
+          - restoring_margin
+          - payload_support
+      submerge:
+        blocked_promotions:
+          - failure_cause_known
+          - complete_failure_analysis
+          - negative_payload_limit
+          - validated_instability
+          - design_truth
+      restore:
+        blocked_promotions:
+          - stability
+          - restoring_margin
+          - self_righting
+          - validated_recovery
+          - safety
+          - readiness
+      oscillation:
+        blocked_promotions:
+          - stability
+          - damping_validation
+          - dynamic_response_validation
+          - operational_acceptability
+          - restoring_margin
+      neutral_hover_stall:
+        blocked_promotions:
+          - stable_equilibrium
+          - neutral_buoyancy_validation
+          - safe_hold_state
+          - controlled_behavior
+          - readiness
+      failure_to_restore:
+        blocked_promotions:
+          - complete_instability_diagnosis
+          - root_cause_known
+          - validated_failure_mode
+          - unsafe_by_certified_standard
+          - design_disqualification
+
+  required_labels:
+    boundary_labels:
+      - float_not_stability
+      - float_not_reserve_buoyancy
+      - float_not_safe_payload
+      - float_not_seaworthiness
+      - float_not_operational_readiness
+      - restore_not_validation
+      - restore_not_restoring_margin
+      - oscillation_not_stability
+      - visual_calmness_not_restoring_margin
+      - observed_state_not_measured_response
+      - interpreted_observation_not_raw_record
+      - display_state_not_source_truth
+      - route_completed_not_claim_supported
+
+    viewer_display_labels:
+      - display_only_not_evidence
+      - interpreted_observation_not_measurement
+      - float_state_not_stability
+      - oscillation_not_stability
+      - restore_response_not_validation
+      - visual_calmness_not_restoring_margin
+      - route_completion_not_claim_support
+      - not_safety_not_readiness_not_payload
+      - not_reserve_buoyancy
+      - not_seaworthiness
+      - source_record_required
+      - observer_stack_required
+      - route_identity_required
+      - unresolveds_present
+      - contradictions_must_carry_forward
+
+    route_labels:
+      - route_status_is_route_mechanics_only
+      - route_success_not_physical_support
+      - ledger_write_not_evidence_support
+      - viewer_render_not_evidence
+      - route_closed_without_support
+
+    persistence_requirement:
+      labels_must_survive:
+        - source_record
+        - ObservationPacket
+        - ledger_write
+        - viewer_render
+        - summary
+        - display_surface
+        - governance_review_packet_if_created
+
+  evidence_state_constraints:
+    observed_state_guardrail:
+      rule: >
+        evidence_state_observed_is_admissible_only_if_source_record_id,
+        observer_stack_id, route_attempt_id, observation_timestamp,
+        timestamp_lineage, and route_state_history exist and survive downstream.
+      required_for_observed:
+        - source_record_id
+        - runtime_event_id
+        - route_attempt_id
+        - observer_stack_id
+        - observation_timestamp
+        - timestamp_lineage
+        - route_state_history
+        - source_creation_status
+        - raw_record_reference_or_raw_missing_label
+      otherwise_state_must_be:
+        - interpreted_observation_draft
+
+    non_promotion_rules:
+      - Float_may_carry_evidence_state_label
+      - Float_may_flag_missing_evidence_state_support
+      - Float_may_not_promote_observed_to_measured
+      - Float_may_not_promote_measured_to_validated
+      - Float_may_not_treat_repeat_visual_observation_as_repeatability
+      - Float_may_not_treat_route_completion_as_evidence_support
+      - Float_may_not_treat_viewer_render_as_evidence
+      - Float_may_not_treat_ledger_write_as_validation
+
+    observed_does_not_support:
+      - stability
+      - reserve_buoyancy
+      - safe_payload
+      - seaworthiness
+      - operational_readiness
+      - validated_restoring_margin
+      - validated_dynamic_response
+      - validation
+      - BAS_approval
+      - design_truth
+
+  route_integrity_constraints:
+    hard_rules:
+      - signal_fired != source_record_created
+      - source_record_created != packet_created
+      - packet_created != ledger_write_confirmed
+      - ledger_write_confirmed != evidence_support
+      - viewer_render_confirmed != evidence
+      - route_closed != claim_supported
+      - display_rendered != source_truth
+      - latest_state != causal_history
+
+    required_route_fields:
+      - source_record_id
+      - runtime_event_id
+      - route_attempt_id
+      - observer_stack_id
+      - observation_timestamp
+      - route_state_history
+      - source_creation_status
+      - ledger_write_status
+      - viewer_render_status
+
+    route_boundary_rules:
+      - route_status_may_describe_route_mechanics_only
+      - route_status_must_not_describe_buoyancy_truth
+      - route_status_must_not_support_stability_or_safety_claims
+      - route_success_must_not_hide_unresolveds
+      - route_success_must_not_hide_contradictions
+      - partial_route_must_remain_partial_route
+      - failed_route_must_remain_visible_at_display_layer
+      - quarantined_route_must_block_summary_authority
+      - route_closed_without_support_must_not_be_reworded_as_passed
+      - route_integrity_success_must_not_be_displayed_as_float_success
+
+    blocked_route_labels:
+      - passed
+      - verified
+      - validated
+      - stable
+      - safe
+      - ready
+      - supported
+      - confirmed_buoyancy
+      - confirmed_stability
+
+    admissible_route_labels:
+      - route_draft
+      - source_record_created
+      - packet_created
+      - ledger_write_attempted
+      - ledger_write_confirmed_no_claim_support
+      - viewer_render_confirmed_display_only
+      - partial_route_no_claim_support
+      - route_failed_no_claim_support
+      - quarantined_claim_pressure_detected
+      - route_closed_without_support
+
+    route_state_semantic_boundaries:
+      draft:
+        allowed_meaning: float_observation_route_or_packet_declared_not_executed
+        blocked_meaning: observed_float_state
+      source_record_created:
+        allowed_meaning: source_record_exists_with_required_identity_fields
+        blocked_meaning: packet_created_or_evidence_supported
+      packet_created:
+        allowed_meaning: Float_packet_exists_and_carries_required_boundary_labels
+        blocked_meaning: ledger_record_created_or_claim_supported
+      ledger_write_attempted:
+        allowed_meaning: write_attempt_occurred
+        blocked_meaning: evidence_record_created
+      ledger_write_confirmed:
+        allowed_meaning: ledger_acknowledged_record_storage
+        blocked_meaning: evidence_support_or_validation
+      viewer_render_confirmed:
+        allowed_meaning: viewer_rendered_display_only_surface
+        blocked_meaning: source_truth_or_visual_evidence
+      partial_route:
+        allowed_meaning: route_incomplete_with_visible_missing_failed_or_unconfirmed_hops
+        blocked_meaning: successful_route
+      route_failed:
+        allowed_meaning: route_failure_visible_and_claim_support_blocked
+        blocked_meaning: no_data_no_problem
+      quarantined:
+        allowed_meaning: claim_pressure_identity_loss_or_authority_bleed_detected
+        blocked_meaning: truth_decision_or_physical_failure
+      route_closed_without_support:
+        allowed_meaning: route_review_closed_with_no_physical_claim_support
+        blocked_meaning: buoyancy_claim_resolved
+
+  contradiction_rules:
+    required_contradictions_to_carry_forward:
+      - float_observed_but_stability_unresolved
+      - restore_like_response_observed_but_restore_margin_unmeasured
+      - oscillation_observed_but_stability_not_supported
+      - visual_calmness_observed_but_dynamic_response_unresolved
+      - route_rendered_but_source_authority_not_transferred
+
+    contradiction_survivability_rules:
+      - contradictions_must_remain_visible_downstream
+      - contradictions_must_not_be_collapsed_into_latest_state
+      - contradictions_must_not_be_hidden_by_filtering
+      - contradictions_must_not_be_removed_by_summary
+      - contradictions_must_not_be_aggregated_out_of_view
+      - contradiction_absence_requires_search_scope_and_lineage_check
+      - contradiction_resolution_requires_resolution_record_not_visual_disappearance
+      - contradiction_visibility_must_survive_viewer_render
+      - contradiction_visibility_must_survive_summary_generation
+
+    blocked_resolution_shortcuts:
+      - newest_record_wins
+      - cleanest_visual_wins
+      - smoothed_curve_wins
+      - summary_says_no_issue
+      - UI_shows_green
+      - route_completed_so_contradiction_resolved
+      - calm_barrel_so_stable
+
+  unresolved_requirements:
+    must_preserve:
+      baseline:
+        - barrel_mass
+        - sealed_air_volume
+        - displaced_volume
+        - center_of_mass
+        - center_of_buoyancy
+        - damping_characteristics
+        - leak_state
+        - water_density
+        - tilt_angle
+        - disturbance_energy
+        - observer_stack_limitations
+      added_by_boundary_patch:
+        - disturbance_method
+        - disturbance_duration
+        - disturbance_repeatability
+        - waterline_measurement_method
+        - tilt_measurement_method
+        - barrel_geometry
+        - barrel_orientation
+        - wall_deformation
+        - seal_condition
+        - camera_angle_or_parallax
+        - raw_record_reference
+        - filtered_display_transformations
+        - failed_or_ambiguous_observations
+
+    preservation_rules:
+      - unresolveds_must_survive_source_record_packet_ledger_viewer_summary
+      - unresolveds_must_not_be_removed_by_clean_display
+      - unresolveds_must_not_be_removed_by_latest_state
+      - unresolveds_must_not_be_removed_by_summary
+      - unresolveds_must_not_be_renamed_as_minor_notes
+      - unresolveds_must_remain_claim_blockers_where_relevant
+      - unresolveds_must_be_visible_where_float_state_is_visible
+      - unresolveds_must_remain_attached_to_state_record_and_route_record
+
+  viewer_constraints:
+    hard_rule: clean_float_UI_is_not_confidence
+
+    blocked_viewer_behaviors:
+      - green_checkmark_for_float_state
+      - pass_fail_badge_for_buoyancy_behavior
+      - stable_icon_or_stability_language
+      - hiding_unresolveds_in_collapsed_panel
+      - hiding_contradictions_in_tooltip
+      - displaying_float_without_boundary_labels
+      - displaying_restore_without_restore_not_validation_label
+      - displaying_oscillation_without_oscillation_not_stability_label
+      - showing_latest_state_without_history
+      - showing_filtered_trace_without_raw_reference
+      - showing_route_success_as_claim_success
+      - showing_ledger_write_as_evidence_support
+      - showing_empty_clean_panel_when_source_missing
+      - showing_no_contradictions_without_lineage_search_scope
+
+    required_viewer_fields:
+      - displayed_buoyancy_state
+      - evidence_state_label
+      - validation_state_label
+      - source_record_status
+      - observer_stack_id
+      - route_attempt_id
+      - route_status
+      - raw_vs_interpreted_status
+      - unresolveds_visible
+      - contradictions_visible
+      - boundary_labels_visible
+      - display_only_not_evidence_label
+      - route_completion_not_claim_support_label
+
+    viewer_failure_labels:
+      source_missing: source_record_required_no_source_no_observed_claim
+      observer_missing: observer_stack_missing_observation_scope_invalid
+      route_missing: route_identity_missing_no_route_integrity_claim
+      unresolveds_hidden: unresolveds_hidden_display_non_admissible
+      contradictions_hidden: contradictions_hidden_display_non_admissible
+      filtered_without_raw: filtered_display_not_raw_record
+      route_success_overclaim: route_completion_not_claim_support
+      float_overclaim: float_state_not_stability
+
+  escalation_patterns:
+    stable_language:
+      trigger_terms:
+        - stable
+        - stabilized
+        - dynamically_stable
+        - self_righting
+        - restoring_margin
+      action:
+        - quarantine_claim
+        - require_boundary_rephrase
+        - route_to_Grant_or_Boundary
+        - request_measurement_scope_if_claim_must_advance
+
+    safety_readiness_language:
+      trigger_terms:
+        - safe
+        - ready
+        - operational
+        - deployable
+        - seaworthy
+        - approved
+        - passed
+      action:
+        - block_until_governance_review
+        - label_not_safety_not_readiness_not_payload
+        - preserve_as_prohibited_claim_pressure
+
+    reserve_payload_language:
+      trigger_terms:
+        - reserve_buoyancy
+        - payload
+        - capacity
+        - can_carry
+        - load_rating
+      action:
+        - block_claim
+        - require_measured_displacement_load_case_and_governance_scope
+        - preserve_unresolveds
+
+    visual_confidence_language:
+      trigger_terms:
+        - looks_good
+        - sits_nicely
+        - calm
+        - smooth
+        - clean
+        - no_problem_seen
+      action:
+        - label_visual_calmness_not_restoring_margin
+        - preserve_observer_stack_limitations
+        - require_raw_reference_and_unresolveds
+
+    route_confidence_language:
+      trigger_terms:
+        - route_passed
+        - viewer_confirmed
+        - ledger_confirmed
+        - displayed
+        - logged
+      action:
+        - label_route_completion_not_claim_support
+        - confirm_route_mechanics_only
+        - block_evidence_or_validation_inference
+
+  admissible_rephrases:
+    float:
+      prohibited: The barrel is stable.
+      admissible: >
+        The barrel was visually observed floating under the declared observer
+        stack and conditions. Stability, reserve buoyancy, payload, safety,
+        seaworthiness, readiness, and validation remain unsupported.
+
+    restore:
+      prohibited: The barrel restored, so it passed.
+      admissible: >
+        A restore-like response was visually observed after a declared disturbance.
+        Restore margin, disturbance energy, damping trend, dynamic response,
+        repeatability, and validation remain unresolved.
+
+    oscillation:
+      prohibited: The oscillation damped, so the barrel is stable.
+      admissible: >
+        Oscillation appeared to reduce visually under the declared observer stack.
+        Quantified damping, restoring moment, disturbance input, and dynamic
+        stability were not established.
+
+    visual_calmness:
+      prohibited: It looks calm, so the float state is good.
+      admissible: >
+        Visual calmness was observed as an interpreted display or observer
+        condition. Visual calmness does not establish restoring margin, stability,
+        safety, readiness, reserve buoyancy, or payload support.
+
+    route_success:
+      prohibited: The route completed, so the float observation is supported.
+      admissible: >
+        The route status may indicate that records moved through declared route
+        stages. Route completion does not support buoyancy, stability, safety,
+        payload, reserve buoyancy, readiness, or validation claims.
+
+    viewer_render:
+      prohibited: The viewer shows float, so the barrel is floating.
+      admissible: >
+        The viewer rendered an interpreted buoyancy-state label. The display is
+        inspection-only and does not replace the source record, observer stack,
+        evidence ledger, or governance review.
+
+  observation_vs_validation_separation:
+    hard_rules:
+      - observation_records_behavior_under_declared_conditions_only
+      - observation_does_not_validate_physical_behavior
+      - observed_float_does_not_validate_buoyancy_margin
+      - observed_restore_does_not_validate_restoring_moment
+      - observed_oscillation_does_not_validate_stability
+      - observed_calmness_does_not_validate_safety
+      - repeated_visual_observation_does_not_equal_repeatability
+      - measured_waterline_does_not_equal_reserve_buoyancy_validation
+      - ledger_write_does_not_equal_evidence_support
+      - viewer_render_does_not_equal_evidence
+      - summary_does_not_equal_source_authority
+
+  governance_routes:
+    escalation_pressure_exists_when:
+      - stability_language_appears
+      - safety_language_appears
+      - readiness_language_appears
+      - reserve_buoyancy_language_appears
+      - payload_language_appears
+      - seaworthiness_language_appears
+      - validation_language_appears
+      - display_state_used_as_source_truth
+      - route_completion_used_as_claim_support
+      - unresolveds_removed
+      - contradictions_removed
+      - summary_replaces_source_record
+
+    Boundary_or_Grant:
+      receives:
+        - claim_language_pressure
+        - prohibited_interpretation_detection
+        - display_authority_laundering
+        - summary_overclaim
+        - stability_safety_readiness_language
+        - route_completion_claim_support_language
+
+    Evidence:
+      receives:
+        - observation_or_measurement_sufficiency_questions
+        - raw_vs_interpreted_record_boundary_questions
+        - observer_stack_record_questions
+        - evidence_state_label_support_questions
+
+    Observation:
+      receives:
+        - route_integrity_failures
+        - source_lineage_failures
+        - display_authority_failures
+        - contradiction_carry_forward_failures
+        - unresolved_preservation_failures
+
+    Gear:
+      receives:
+        - buoyancy_observation_structure_questions
+        - runtime_implementation_questions
+        - causal_failure_surface_questions
+        - state_machine_implementation_questions
+
+    Governance:
+      receives:
+        - validation_review_only_after_explicit_claim_scope_source_records_measurement_records_and_boundary_conditions_exist
+
+    Gold:
+      receives:
+        - contradiction_lineage_records
+        - recovery_path_failures
+        - summary_authority_collapse_records
+
+  final_boundary_statement: >
+    Float.yaml may classify and route buoyancy-state observations under declared
+    observer and route conditions. Float.yaml may not infer or imply stability,
+    safety, readiness, reserve buoyancy, payload capacity, seaworthiness,
+    restoring margin, validated dynamic response, evidence sufficiency, or
+    validation from float-state language, route success, ledger write success,
+    viewer render success, visual calmness, restore-like response, or oscillation
+    behavior.

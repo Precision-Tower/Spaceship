@@ -1,0 +1,2982 @@
+Boat Prototype 1 Build Notebook
+
+Document Status: [NON-CANONICAL BUILD NOTEBOOK — PENDING VALIDATION]
+
+Author/Editor: G/Gemini/Jared/Editor
+
+Governing Project: Sargassum Project
+
+Target Design Loop: Candidate Mock Architecture Model (v1.0)
+
+1. Status and Boundary
+
+This notebook is a non-canonical build notebook and working design diary created to document the candidate, section-by-section development of the Clean Support Raft / Boat Prototype. It serves to track structural layout ideas, layer stack-ups, weight distributions, and spatial relationships before physical materials are cut or assembled.
+
+Important Boundaries:
+
+This is not a build plan or fabrication guide.
+
+This is not procurement document or authorized bill of materials.
+
+This is not canonical engineering truth and does not represent verified, certified, or final designs.
+
+This document does not authorize construction or physical fabrication.
+
+This document does not validate:
+
+buoyancy margins or flooded-compartment survival,
+
+validated payload capacity,
+
+static or dynamic stability,
+
+seaworthiness or self-righting moments,
+
+validated walking-surface safety,
+
+validated worker safety,
+
+validated electrical safety,
+
+validated containment performance of chemicals or effluent,
+
+tow ratings or mooring loads,
+
+travel-mode safety or towing behavior,
+
+overall operational readiness.
+
+Relationship to Governing Files:
+
+The Boat Prototype 1 Geometry Control File remains the authoritative, non-negotiable constraint rulebook. All candidate designs, layer stacks, and inventories documented in this notebook must strictly adhere to the rules, adjacency guidelines, and prohibited geometries established in the Geometry Control File.
+
+This Build Notebook functions as the flexible sandbox where those constraints are applied to initial candidate layouts.
+
+2. Current System Ruling
+
+The core architectural directive of this vessel is preserved from our governing rulebook:
+
+The boat is a clean, inspectable, ballast-testable support raft, not a processing vessel.
+
+Accordingly, all designs logged in this notebook focus on organizing clean-side operations, logic controls, electrical containment candidates, subject to subsystem validation, and modular operator pathways. It excludes any raw biomass handling, anaerobic digestion structures, or uncontained fluid flows.
+
+Every layer, section, and weight calculation must preserve visual inspectability of all joints, straps, and flotation units.
+
+3. Candidate Layer Stack
+
+The following stack represents the vertical hierarchy (Z-axis) of the candidate support raft, from the water surface up to the highest equipment envelope profile.
+
+                             [Z-Axis Stack-Up]
+                             
+       +---------------------------------------------------------+
+Layer  | 5. MODULAR EQUIPMENT PLACEMENT / UTILITY BAYS (SKIDS)   |  <- Top
+       +---------------------------------------------------------+
+Layer  | 4. REMOVABLE DECK SURFACE (PANELS / GRATING)            |
+       +---------------------------------------------------------+
+Layer  | 3. PVC DISTRIBUTED SHORT-SPAN TRUSS CHASSIS             |
+       +---------------------------------------------------------+
+Layer  | 2. DRUM CAPTURE & RESTRAINT FRAME                       |
+       +---------------------------------------------------------+
+Layer  | 1. FLOTATION ARRAY (HDPE DRUM ROWS)                     |
+       +---------------------------------------------------------+
+Layer  | 0. STATIC WATERLINE / FLUID BOUNDARY                    |  <- Bottom
+       +---------------------------------------------------------+
+
+
+Layer Details:
+
+Layer 0: Static Waterline / Fluid Boundary
+
+Description: Marine boundary layer.
+
+Modeling Targets: Expected trim and list response to be observed during flotation testing.
+
+Risk/Constraint: No uncontained process fluid or battery compartment is permitted to drop into direct contact with Layer 0.
+
+Layer 1: Flotation Array (HDPE Drum Rows)
+
+Description: Symmetrical rows of HDPE drum candidates or other validated flotation units.
+
+Modeling Targets: Continuous visual contact along the entire length of the row to check for leaks, outer-wall chafing, or hull degradation.
+
+Risk/Constraint: Flotation units must remain entirely un-penetrated by permanent structural fasteners.
+
+Layer 2: Drum Capture & Restraint Frame
+
+Description: Longitudinal cradle rails, side stops, and end-stops designed to contain Layer 1. Includes adjustable anti-slip restraint straps.
+
+Modeling Targets: Strap tension remains manually checkable. Strap creep must remain observable via witness marks.
+
+Risk/Constraint: Failure of restraint straps directly threatens buoyant stability; must remain highly visible from above.
+
+Layer 3: PVC Distributed Short-Span Truss Chassis
+
+Description: Distributed short-span PVC truss network composed of repeatable, braced structural bays.
+
+Modeling Targets: Translates deck forces down to the drum cradle frames. Uses visible joint markers [CANDIDATE PLACEHOLDER — PENDING VALIDATION].
+
+Risk/Constraint: Subject to deflection and joint shear testing. Long-term creep of PVC members under persistent load remains a critical unresolved risk.
+
+Layer 4: Removable Deck Surface (Panels / Grating)
+
+Description: Candidate grating or removable deck panels [PENDING VALIDATION].
+
+Modeling Targets: Must feature removable access features [PENDING VALIDATION] for rapid top-down removal.
+
+Risk/Constraint: Undergoes deck flex testing to confirm support span integrity. Grating must not block the line of sight to underlying Layer 3 joints or Layer 2 straps. Does not establish validated walking-surface safety prior to physical testing.
+
+Layer 5: Modular Equipment Placement / Utility Bays (Skids)
+
+Description: Skid-mounted equipment modules sitting in designated, low-mount Port and Starboard utility bays flanking the central centerline aisle.
+
+Modeling Targets: Candidate zones for battery controls, electrolysis skids, and monitoring stations. Includes the sacrificial clean/dirty side interface modules at the deck edge.
+
+Risk/Constraint: All candidate mass above must be distributed to align with load-spreader pads and underlying truss nodes to prevent point-loading deck grating directly.
+
+4. Section Inventory
+
+This section details the candidate layout divided into repeating physical sections or bays along the longitudinal axis (X-axis) of the 24 ft x 12 ft working footprint.
+
+                             [Longitudinal Bays]
+                             
+       +------------------+------------------+------------------+
+Y-Axis | Port Utility Bay | Port Utility Bay | Port Utility Bay |
+       +------------------+------------------+------------------+
+  ^    |      BOW /       |     MIDSHIP      |      STERN /     |
+  |    |  FORE DIVISION   |  UTILITY DIVISION|   AFT DIVISION   |
+Center |  (Section A)     |   (Section B)    |   (Section C)    |
+  |    |==================|==================|==================|
+  |    |  Center Aisle    |   Center Aisle   |   Center Aisle   |
+       |==================|==================|==================|
+       | Starboard Utility| Starboard Utility| Starboard Utility|
+       |       Bay        |       Bay        |       Bay        |
+       +------------------+------------------+------------------+
+       X-Axis ------------------------------------------------->
+
+
+1. Section A: Fore Candidate Zone
+
+Role: Towing path and anchoring termination zone candidate.
+
+Major Components:
+
+Candidate reinforced perimeter structural joints.
+
+Tow-point nodes candidate [UNRESOLVED ENGINEERING VARIABLE].
+
+Forward drum-row end stops and nose-cap assemblies candidate [UNRESOLVED ENGINEERING VARIABLE].
+
+Candidate Material Notes — Pending Validation: Candidate hardware / material selection [UNRESOLVED ENGINEERING VARIABLE].
+
+Candidate Connection Questions — Pending Validation: Tow-line termination nodes structurally linked back to the primary longitudinal spine [PENDING VALIDATION].
+
+2. Section B: Midship Candidate Utility Zone
+
+Role: Primary equipment payload bays and operator access lanes candidate.
+
+Major Components:
+
+Symmetrical utility bays (Port and Starboard).
+
+Low-mount skid-rail landing zones candidate.
+
+Raised removable grating panels over central clean operator path candidate.
+
+Candidate Material Notes — Pending Validation: Candidate hardware / material selection [UNRESOLVED ENGINEERING VARIABLE].
+
+Candidate Connection Questions — Pending Validation: Load-spreader pads aligned directly with candidate structural nodes to manage point-loads safely [PENDING VALIDATION].
+
+3. Section C: Aft Candidate Interface Zone
+
+Role: Clean/dirty process interface and mooring/anchor controls candidate.
+
+Major Components:
+
+Sacrificial clean/dirty side interface edge brackets candidate.
+
+Gravity-drain drip loop trays candidate.
+
+Umbilical hose strain relief and breakaway quick-disconnect couplings candidate.
+
+Rear mooring cleats candidate.
+
+Candidate Material Notes — Pending Validation: Candidate hardware / material selection [UNRESOLVED ENGINEERING VARIABLE].
+
+Candidate Connection Questions — Pending Validation: Sacrificial breakaway connections designed to shear or release prior to transferring stress to the primary chassis [PENDING VALIDATION].
+
+5. Weight / Buoyancy Ledger
+
+This ledger catalogs candidate dry mass and buoyant displacement calculations. All values are candidate placeholders pending formal physical scale and full-scale ballast measurements.
+
+1. Candidate Dry Mass Estimates
+
+Sub-Component / Layer
+
+Candidate Mass (lbs)
+
+Distribution Notes
+
+Status
+
+Layer 1: HDPE Drum Array
+
+[PENDING]
+
+candidate flotation row count [UNRESOLVED ENGINEERING VARIABLE]; BOAT_MODEL_002 currently references four longitudinal drum rows as a modeled candidate.
+
+[UNRESOLVED ENGINEERING VARIABLE]
+
+Layer 2: Drum Restraint Frame
+
+[PENDING]
+
+Straps, cradle rails, and side-stops
+
+[UNRESOLVED ENGINEERING VARIABLE]
+
+Layer 3: PVC Truss Chassis
+
+[PENDING]
+
+Tubes, joint nodes, and structural cross-braces
+
+[UNRESOLVED ENGINEERING VARIABLE]
+
+Layer 4: Removable Deck Panels
+
+[PENDING]
+
+Removable floor grating candidates
+
+[UNRESOLVED ENGINEERING VARIABLE]
+
+Skid: Battery & Controls
+
+[PENDING]
+
+Low-mount Port utility bay placeholder
+
+[UNRESOLVED ENGINEERING VARIABLE]
+
+Skid: Electrolysis Candidate
+
+[PENDING]
+
+Low-mount Starboard utility bay placeholder
+
+[UNRESOLVED ENGINEERING VARIABLE]
+
+Skid: Monitoring / Telemetry
+
+[PENDING]
+
+Center-starboard console placeholder
+
+[UNRESOLVED ENGINEERING VARIABLE]
+
+Interface Module Skid
+
+[PENDING]
+
+Sacrificial edge assembly, drip pans
+
+[UNRESOLVED ENGINEERING VARIABLE]
+
+Total Empty Dry Mass
+
+[PENDING]
+
+Structural chassis + flotation frames only
+
+[UNRESOLVED ENGINEERING VARIABLE]
+
+Total Loaded Dry Mass
+
+[PENDING]
+
+Chassis + all payload skids + operator load
+
+[UNRESOLVED ENGINEERING VARIABLE]
+
+2. Buoyancy / Displacement Fields — Pending Measurement
+
+Volume Per Flotation Unit: [UNRESOLVED ENGINEERING VARIABLE] (Based on candidate HDPE drum volumes).
+
+theoretical buoyant force field [UNRESOLVED ENGINEERING VARIABLE — PENDING MEASUREMENT]: [UNRESOLVED ENGINEERING VARIABLE] (Sum of all flotation units fully submerged).
+
+Target Draft (Empty Frame): [CANDIDATE TARGET — PENDING VALIDATION] (Requires empty float test verification).
+
+Target Draft (Loaded Bay Profile): [CANDIDATE TARGET — PENDING VALIDATION] (Requires incremental ballast test verification).
+
+reserve buoyancy question [UNRESOLVED ENGINEERING VARIABLE]: [UNRESOLVED ENGINEERING VARIABLE] (Subject to formal reserve buoyancy and flooded-compartment stability testing).
+
+3. Structural Contradiction / Model Gap Registers
+
+flotation_row_count: [UNRESOLVED ENGINEERING VARIABLE] (A physical model discrepancy exists between the initial 3-row layout and 4-row BOAT_MODEL_002 candidate; physical testing is required to resolve optimal track count before structure is finalized).
+
+4. Claim Safety Reminders
+
+No Validated Payload Capacity: These estimates do not establish safe cargo, crew, or equipment weight limits.
+
+No Stability Claims: Center of gravity, self-righting moments, and listing coefficients remain strictly unverified.
+
+No Structural Guarantee: The division of mass does not guarantee the PVC chassis can withstand local point-loads.
+
+6. Load Path Ledger
+
+Section Status: [CANDIDATE LOAD PATH — PENDING VALIDATION]
+
+Purpose: Document candidate load paths through the Clean Support Raft without creating final structural design, validated capacity claims, or build authorization.
+
+Load Path Name
+
+Source of Load
+
+Candidate Transfer Path
+
+Must Not Carry This Load
+
+Interaction Risks
+
+Inspection Needs
+
+Unresolved Variables
+
+Required Mockup/Test
+
+Claims Still Prohibited
+
+Operator live load path
+
+operator placeholder
+
+operator placeholder → removable grating candidate → upper deck frame candidate → grid/node candidate → flotation capture frame → flotation units → water
+
+removable panels alone, unsupported mid-span members
+
+panel deflection, access conflict, grid misalignment
+
+panel edge, support contact, grid/node visibility
+
+deck_deflection, grating_support_spacing, service_space_height
+
+removable grating / deck panel mockup
+
+validated walking-surface safety, validated structural capability
+
+Battery/control placeholder load path
+
+battery/control placeholder
+
+battery/control placeholder → load-spreader pad candidate → candidate grid nodes → lower grid / capture frame → flotation units
+
+control cabinet shell, removable panel alone, chemical trays
+
+point load, node mismatch, access blockage
+
+pad-to-node visibility, panel removability
+
+battery_mass, load_pad_node_alignment, deck_deflection
+
+load-pad over node mockup
+
+validated payload capacity, validated electrical safety
+
+Electrolysis placeholder load path
+
+electrolysis placeholder
+
+electrolysis placeholder → load-spreader pad candidate → candidate grid nodes → lower grid / capture frame → flotation units
+
+electrolysis equipment body, removable panel alone, hose fittings
+
+point load, vibration, hose/service conflict
+
+skid edge, pad contact, hose clearance
+
+electrolysis_mass, electrolysis_dimensions, load_pad_node_alignment
+
+load-pad/service placeholder mockup
+
+validated payload capacity, leak-safe transfer
+
+Chemical containment placeholder load path
+
+containment placeholder
+
+containment placeholder → containment support candidate → deck/grid candidate → flotation support
+
+chemical trays alone, removable panel alone, unsupported mid-span members
+
+containment support conflict, panel trapping, service blockage
+
+support base, tray edge, panel access
+
+containment_requirement, equipment_spacing, deck_deflection
+
+containment footprint/support mockup
+
+validated containment performance, validated worker safety
+
+Removable grating / deck panel load path
+
+panel surface
+
+panel surface → deck support candidate → grid/node candidate
+
+panel alone as primary structure, unsupported span
+
+sag, binding, hidden structure
+
+support edge, clip area, below-deck visibility
+
+grating_clip_method, panel_clearance, deck_deflection
+
+removable panel over braced bay mockup
+
+validated walking-surface safety
+
+Hose/interface strain load path
+
+hose motion
+
+hose motion → strain-relief candidate → sacrificial interface module candidate → boundary nodes
+
+hose fittings directly, electrolysis equipment, control cabinets
+
+pull-through, fitting strain, route conflict
+
+strain-relief point, hose bend, module attachment
+
+hose_strain_limit, interface_strain, hose_routing
+
+interface strain mockup
+
+leak-safe transfer
+
+Clean/dirty interface contact load path
+
+dirty-side contact or pull
+
+dirty-side contact/pull → replaceable interface candidate → boundary structure candidate
+
+primary chassis without isolation logic, equipment bays
+
+dirty-side force migration, boundary ambiguity
+
+interface mounts, replaceable module, boundary nodes
+
+interface_geometry, interface_strain, side_wing_restraint_behavior
+
+clean/dirty interface interaction mockup
+
+validated clean/dirty interface safety
+
+Tow/recovery load path candidates
+
+tow/recovery point candidate
+
+tow/recovery point candidate → perimeter/spine candidate → grid structure candidate
+
+control cabinets, electrolysis equipment, monitoring/logging station, removable panels alone
+
+load path crosses equipment bay, frame distortion
+
+tow marker, perimeter/spine marker, adjacent nodes
+
+tow_point_strain, frame_racking, joint_strength
+
+tow/recovery load-path section mockup
+
+validated tow rating, validated seaworthiness
+
+Side-wing restraint interaction load path
+
+side-wing motion/restraint candidate
+
+side-wing motion/restraint candidate → restraint interface candidate → boundary nodes; center raft not treated as validated carrier of dirty-side loads
+
+clean center raft as unverified dirty-load carrier, primary chassis without isolation logic
+
+dirty-side load inheritance, travel restraint ambiguity
+
+restraint interface, boundary nodes, motion contact points
+
+travel_restraint_behavior, side_wing_restraint_behavior, interface_strain
+
+side-wing restraint interaction mockup
+
+validated travel mode, validated operational readiness
+
+Barrel/flotation reaction load path
+
+flotation unit reaction
+
+flotation unit → cradle/restraint candidate → capture frame → lower grid
+
+loose straps alone, hidden restraints, uninspectable_capture points
+
+barrel roll, slide, float-out, hidden movement
+
+cradle, stops, straps, witness marks
+
+barrel_movement, barrel_entry_closure_method, strap_creep
+
+barrel capture and replacement-access mockup
+
+validated reserve buoyancy, validated stability, validated seaworthiness
+
+A. Forbidden Load Transfers
+
+Candidate loads must not be routed through:
+
+removable panels alone
+
+control cabinets
+
+electrolysis equipment
+
+chemical trays
+
+monitoring/logging station
+
+hose fittings directly
+
+dirty interface module into primary chassis without isolation logic
+
+unsupported mid-span members
+
+B. Load-Path Contradictions to Mine
+
+Contradiction
+
+Why It Matters
+
+load pad wants node alignment but panel wants removability
+
+support logic may trap access
+
+bracing improves load path but blocks access
+
+racking logic may destroy serviceability
+
+tow path wants direct structure but must avoid equipment bays
+
+recovery load logic may collide with clean equipment zones
+
+hose strain wants interface isolation but may pull toward process equipment
+
+strain relief may fail as a boundary concept
+
+heavy placeholders want low distribution but may conflict with inspection
+
+load logic may hide what must remain visible
+
+side-wing restraint wants containment but may transfer dirty-side loads into clean center raft
+
+boundary logic may collapse into center-raft load inheritance
+
+C. Load-Path Ledger Status Rule
+
+Every entry remains:
+
+[CANDIDATE LOAD PATH — PENDING VALIDATION]
+
+No load path establishes:
+
+validated structural capability
+
+validated payload capacity
+
+validated stability
+
+validated reserve buoyancy
+
+validated tow rating
+
+validated travel mode
+
+validated seaworthiness
+
+validated operational readiness
+
+validated walking-surface safety
+
+validated worker safety
+
+validated electrical safety
+
+validated containment performance
+
+leak-safe transfer
+
+validated clean/dirty interface safety
+
+7. Access / Inspection Ledger
+
+Section Status: [CANDIDATE ACCESS / INSPECTION PATH — PENDING VALIDATION]
+
+Purpose: Document candidate access and inspection requirements for each major raft layer, section, and load-path area without creating final layout, validated worker safety, maintenance certification, or validated operational readiness claims.
+
+Inspection Target
+
+Raft Layer
+
+Section/Bay
+
+Inspection Method / Access Route
+
+Frequency Class
+
+Failure Indicators
+
+Unresolved Variables
+
+Required Mockup/Test
+
+Prohibited Claims
+
+HDPE Drum Array / Flotation rows
+
+Layer 1
+
+Symmetrical rows (Port/Starboard) across Sections A, B, C
+
+Top-down visual inspection via removable deck panels (Layer 4) over the central aisle and utility bays
+
+Class 1 (Pre-launch & post-tow/contact event)
+
+drum deformation, listing, water presence inside drum, wall wear, cradle slip
+
+drum_shift, empty_freeboard, loaded_freeboard
+
+Drum restraint bay mockup / empty float test
+
+validated reserve buoyancy, validated seaworthiness
+
+Anti-slip restraint straps / Witness marks
+
+Layer 2
+
+Flotation Capture Frame (All Bays)
+
+Direct vertical line-of-sight through open chassis spaces when deck grating panels are lifted
+
+Class 1 (Post-tow, post-ballast, pre-launch)
+
+strap slackness, witness mark misalignment, buckle distortion, strap fraying
+
+strap_creep, drum_shift
+
+Drum restraint bay mockup
+
+validated structural capability, validated seaworthiness
+
+PVC Truss Joints & Node Connectors
+
+Layer 3
+
+Distributed Short-Span Truss (All Bays)
+
+Manual panel removal to inspect node connection pins and structural joint markers
+
+Class 2 (Scheduled operational intervals)
+
+joint shear, hair-line cracks, node deformation, racking twist, pin sliding
+
+truss_racking, deck_deflection
+
+PVC truss bay mockup / Frame racking test
+
+validated structural capability
+
+Removable Deck Panel Seating & Clips
+
+Layer 4
+
+Upper Deck (All Bays)
+
+Direct walk-over check and manual panel-lift test from the central operator aisle
+
+Class 2 (Scheduled daily check)
+
+panel wiggle, edge binding, grating deflection, clip fatigue, lift handle binding
+
+deck_deflection, mockup_spacing
+
+Removable deck panel bay mockup / Deck flex test
+
+validated walking-surface safety
+
+Battery Control Skid & Disconnects
+
+Layer 5
+
+Port Utility Bay (Section B)
+
+Dedicated side access from the central aisle; visual inspection of cable glands, terminal seals, and vents
+
+Class 2 (Daily pre-operational check)
+
+heat buildup, terminal corrosion, gas smell, loose mount, splash exposure
+
+battery_mass, battery_location, ventilation_requirement
+
+Reinforced skid bay mockup
+
+validated electrical safety, validated payload capacity
+
+Electrolysis Skid & Vent Routing
+
+Layer 5
+
+Starboard Utility Bay (Section B)
+
+Dedicated side-access path; visual inspection of liquid levels, vent path clearance, and pressure gauges
+
+Class 2 (Scheduled operational check)
+
+fluid leakage, localized vibration, vent tube blockage, hose degradation
+
+electrolysis_mass, electrolysis_dimensions, gas_venting_requirement, containment_requirement
+
+Reinforced skid bay mockup
+
+validated operational readiness, validated leak-safe transfer
+
+Sacrificial Interface Quick-Disconnects & Drip Loops
+
+Layer 5
+
+Starboard Edge Interface Zone (Section C)
+
+Unobstructed visual inspection from the aft boundary lane; manual breakaway clearance check
+
+Class 1 (Post-contact, post-tow, post-operational cycle)
+
+drip accumulation, hose strain, fitting wear, bracket shifting, fluid leaks
+
+interface_geometry, interface_strain, drip_control_method
+
+Sacrificial interface module mockup / Interface hose pull test
+
+validated clean/dirty interface safety, validated leak-safe transfer
+
+Tow Point Termination Nodes
+
+Layer 3 & 4
+
+Fore Primary Spine (Section A)
+
+Front perimeter access; visual inspectability of reinforced tow-line connections and node intersections
+
+Class 1 (Pre-tow and post-tow event inspection)
+
+node cracking, frame racking, perimeter joint shear, deformation
+
+tow_point_strain, truss_racking
+
+Tow strain test / Tow-point section mockup
+
+validated tow rating, validated seaworthiness
+
+Emergency Shutdown Controls & Isolation Valves
+
+Layer 5
+
+Central Aisle Boundary (Section B/C)
+
+Direct manual reach test from the central operator aisle under simulated degraded-access conditions
+
+Class 2 (Daily safety check)
+
+lever binding, valve leakage, physical obstruction, blocked hand path
+
+degraded_reach, mockup_spacing
+
+Tape/cardboard full-scale access layout (Mockup 1)
+
+validated worker safety, validated operational readiness
+
+A. Access / Inspection Contradictions to Mine
+
+Contradiction
+
+Why It Matters
+
+Bracing density vs. inspection visibility
+
+Diagonal structural members keep the frame stiff but can block the direct vertical line-of-sight required to check flotation restraints and lower joint nodes.
+
+Deck panel size vs. manual handling access
+
+Larger panels reduce the number of seam supports, but they increase manual handling weight and lift-clearance, potentially forcing the operator to step off the central aisle.
+
+Equipment skid footprints vs. under-deck accessibility
+
+Dense skid landing zones are necessary to distribute payload weight, but permanent skid frames can trap the removable deck panels beneath them, creating hidden failure zones.
+
+Splash/vent shielding vs. rapid leak detection
+
+Protective covers prevent operator chemical contact and splash exposure, but they conceal tube joins, fittings, and gravity drip loops from direct visual path monitoring.
+
+B. Inspection Priority Classes
+
+Class 1: Pre-Launch / Event-Triggered Inspections
+
+Description: Intensive inspection routines triggered immediately before deployment, or directly following tow events, ballast tests, wave impacts, or dirty-side contact events.
+
+Scope: Critical structural nodes, tow fittings, flotation restraints, strap witness marks, and interface breakaway module alignments.
+
+Class 2: Scheduled Operational Inspections
+
+Description: Standard maintenance checklists conducted at designated daily or shift intervals while the raft is deployed and in-service.
+
+Scope: Removable grating seatings, operator aisle clearances, battery skid terminal condition, chemical containment pans, drip loops, and direct manual reach path checks for emergency shutoffs.
+
+C. Section 7 Status Rule
+
+Every entry remains:
+[CANDIDATE ACCESS / INSPECTION PATH — PENDING VALIDATION]
+
+No access or inspection pathway establishes:
+
+validated reserve buoyancy
+
+validated seaworthiness
+
+validated tow rating
+
+validated operational readiness
+
+validated leak-safe transfer
+
+validated structural capability
+
+validated walking-surface safety
+
+validated worker safety
+
+validated electrical safety
+
+validated containment performance
+
+validated clean/dirty interface safety
+
+8. Replaceability Ledger
+
+Section Status: [CANDIDATE REPLACEABILITY PATH — PENDING VALIDATION]
+
+Purpose: Document candidate replacement/removal logic for major raft components without creating final repair procedures, maintenance certification, build instructions, or validated field-service claims.
+
+Replacement Target
+
+Raft Layer
+
+Section/Bay
+
+Candidate Removal Method / Route
+
+Priority Class
+
+Interaction Risks / Failure Modes
+
+Unresolved Variables
+
+Required Mockup/Test
+
+Prohibited Claims
+
+HDPE Drum Array / Flotation units
+
+Layer 1
+
+Symmetrical rows (Port/Starboard) across Sections A, B, C
+
+Candidate flotation removal path [PENDING VALIDATION] after candidate deck access and candidate restraint release concept
+
+periodic replacement candidate
+
+Cradle misalignment, strap damage/loosening, flotation unit binding, accidental frame torque
+
+barrel_movement, barrel_entry_closure_method, mockup_spacing
+
+Barrel capture and replacement-access mockup
+
+validated reserve buoyancy, validated seaworthiness, validated operational readiness
+
+Removable Deck Panels
+
+Layer 4
+
+Upper Deck (All Bays)
+
+Candidate panel removal path [PENDING VALIDATION] from central operator aisle
+
+frequent replacement candidate
+
+Panel edge binding, panel damage, operator footing slip, panel wind-catch
+
+deck_deflection, panel_clearance, grating_clip_method
+
+Removable grating panel over braced bay mockup
+
+validated walking-surface safety, validated worker safety, validated operational readiness
+
+Sacrificial Interface Module
+
+Layer 5
+
+Starboard Edge Interface Zone (Section C)
+
+Candidate module removal concept [PENDING VALIDATION] and decoupling candidate interface components
+
+post-event replacement candidate
+
+Localized deformation of edge nodes, residual fluid pooling, fitting thread wear
+
+interface_geometry, interface_strain, drip_control_method
+
+Sacrificial interface module mockup / Interface hose pull test
+
+validated clean/dirty interface safety, validated leak-safe transfer, validated containment performance
+
+PVC Truss Nodes & Joint Connectors
+
+Layer 3
+
+Distributed Short-Span Truss (All Bays)
+
+Candidate node removal path [PENDING VALIDATION] under temporary candidate structural support
+
+major-teardown replacement candidate
+
+Structural frame racking, member joint creep, adjacent node twisting, connection binding
+
+truss_racking, joint_strength, PVC_creep_behavior
+
+Single PVC node / fitting interaction mockup
+
+validated structural capability, validated operational readiness, validated worker safety
+
+Diagonal Bracing Members
+
+Layer 3
+
+Distributed Truss Network (All Bays)
+
+Candidate brace removal path [PENDING VALIDATION] from dedicated grid bays
+
+periodic replacement candidate
+
+Sudden reduction of shear/racking resistance, trapped manual access to flotation restraints
+
+brace_placement_conflicts, truss_racking
+
+Brace-access interaction mockup
+
+validated structural capability, validated operational readiness
+
+Load-Spreader Pads / Skid Rails
+
+Layer 4/5
+
+Port/Starboard Utility Bays (Section B)
+
+Candidate landing pad removal path [PENDING VALIDATION] after candidate skid is moved clear
+
+periodic replacement candidate
+
+Point-load stress concentration on frame, deck panel trapping, structural connection shear
+
+load_pad_node_alignment, deck_deflection, battery_mass
+
+Load-pad over node alignment mockup
+
+validated payload capacity, validated structural capability
+
+Tow/Recovery Fittings
+
+Layer 3 & 4
+
+Fore Primary Spine (Section A)
+
+Candidate fitting removal path [PENDING VALIDATION] from primary longitudinal chassis candidate members
+
+periodic replacement candidate
+
+Frame node shear during high-pull removal, thread wear, primary spine structural misalignment
+
+tow_point_strain, truss_racking, joint_strength
+
+Tow/recovery load-path section mockup / Tow strain test
+
+validated tow rating, validated seaworthiness, validated structural capability
+
+Side-Wing Restraint Interface
+
+Layer 2 & 3
+
+Lateral Boundary Nodes (Section B & C)
+
+Candidate interface removal path [PENDING VALIDATION] from perimeter grid boundary nodes
+
+periodic replacement candidate
+
+Transferred side loads distorting center raft, latch/connection binding under tension, boundary confusion
+
+travel_restraint_behavior, side_wing_restraint_behavior, interface_strain
+
+Side-wing restraint interaction mockup
+
+validated travel mode, validated operational readiness
+
+A. Replaceability Contradictions to Mine
+
+Contradiction
+
+Why It Matters
+
+Replaceability vs. Structural Rigidity
+
+Securing components with quick-release fasteners makes field swaps simple but can compromise primary truss stiffness and lead to connection pin loosening under cyclic loads.
+
+Clearance vs. Skid Footprints
+
+Dense payload skids distribute heavy loads but can trap underlying removable deck panels and diagonal braces, preventing access to flotation without crane lifting.
+
+Quick-disconnect accessibility vs. Spill containment
+
+Splash and wind shields prevent operator exposure and drip pathways but can physically block hands and tools during emergency manual replacement.
+
+Flotation capture vs. replacement speed
+
+Cradle rails and high-tension straps hold drum rows completely secure but require significant clearance and manual manipulation to slide out under water.
+
+B. Replaceability Priority Classes
+
+emergency removal candidate
+
+Description: Components requiring rapid, immediate alternative routing or safety decoupling context, where immediate separation of functional loops is simulated.
+
+frequent replacement candidate
+
+Description: Components subject to regular visual checking and physical swap testing under normal layout iteration, without requiring structural teardowns.
+
+post-event replacement candidate
+
+Description: Components designed to be replaced following structural contact, tow strain events, or dirty-side boundary failures.
+
+periodic replacement candidate
+
+Description: Components requiring baseline operational halting and manual weight unloading for safe mock swap verification.
+
+major-teardown replacement candidate
+
+Description: High-consequence structural frames or backbone components requiring complete system suspension or partial frame deconstruction to swap.
+
+not-yet-replaceable / unresolved
+
+Description: Unresolved structural nodes or system parameters where no removal path can be modeled until physical mockup measurements are taken.
+
+Note: No class defines maintenance schedules, response times, personnel requirements, tool requirements, field-service certification, or validated service method.
+
+C. Section 8 Status Rule
+
+Every entry remains:
+[CANDIDATE REPLACEABILITY PATH — PENDING VALIDATION]
+
+No replaceability path establishes:
+
+validated maintenance certification
+
+validated worker safety
+
+validated emergency readiness
+
+validated structural capability
+
+validated payload capacity
+
+validated clean/dirty interface safety
+
+validated leak-safe transfer
+
+validated operational readiness
+
+9. Clean / Dirty Boundary Ledger
+
+Section Status: [CANDIDATE CLEAN / DIRTY BOUNDARY PATH — PENDING VALIDATION]
+
+Purpose: Document candidate clean/dirty boundary logic for the Clean Support Raft without creating final containment design, validated isolation, leak-safe transfer, environmental safety claims, or operational approval.
+
+Boundary Target
+
+Clean-Side Role
+
+Dirty-Side Interaction
+
+Candidate Boundary Mechanism
+
+What Must Not Cross the Boundary
+
+What May Stress or Confuse the Boundary
+
+Inspection / Replacement Need
+
+Unresolved Variables
+
+Required Mockup/Test
+
+Claims Still Prohibited
+
+Clean center raft role
+
+control, monitoring, power/control support, emergency shutdown, clean interface management
+
+receives candidate hose/cable/interface interaction only
+
+clean-side operational zone candidate
+
+raw biomass handling, dirty-side processing loads, uncontrolled splash/contact
+
+hose congestion, emergency-route overlap, side-wing load transfer
+
+clean-side visibility and access preservation
+
+interface_geometry, service_access
+
+Mockup 1 pressure pass
+
+validated clean/dirty interface safety, validated operational readiness
+
+Dirty side work zone role
+
+isolate dirty-side handling away from clean center raft
+
+sargassum handling, chamber-side support, dirty-side modular flotation
+
+dirty-side modular interaction candidate
+
+uncontrolled dirty-side load transfer into center raft
+
+side contact, splash/contact exposure, travel restraint interaction
+
+dirty-side boundary visibility
+
+side_wing_restraint_behavior, travel_restraint_behavior
+
+side-wing interaction mockup
+
+validated environmental protection, validated containment performance
+
+Clean/dirty interface module
+
+localized crossing/interface candidate
+
+hose/cable transition, splash/contact exposure
+
+sacrificial interface module candidate, quick-disconnect candidate
+
+direct dirty-side effects into primary chassis without isolation logic
+
+hose strain, trapped routing, hidden drip area
+
+visible interface access and replaceability
+
+interface_geometry, interface_strain, hose_routing
+
+interface module mockup
+
+validated leak-safe transfer, validated clean/dirty interface safety
+
+Hose / umbilical crossing
+
+controlled hose/cable transition
+
+dirty-side hose or cable interaction
+
+routed crossing candidate with strain-relief candidate
+
+emergency access path blockage, uncontrolled routing into clean zones
+
+snagging, bend strain, aisle conflict, panel conflict
+
+visible routing and reroute access
+
+hose_routing, hose_strain_limit
+
+hose-routing pressure pass
+
+validated leak-safe transfer
+
+Drip-control candidate zone
+
+observe potential drip/contact area from clean side
+
+possible dirty-side drips or leakage observations
+
+drip-control candidate zone only
+
+hidden drip accumulation into inaccessible areas
+
+hose strain, splash/contact exposure, trapped panel areas
+
+visual observation and cleanup access
+
+drip_control_method, interface_geometry
+
+drip-zone observation mockup
+
+validated containment performance
+
+Splash/contact exposure zone
+
+identify where splash/contact may reach candidate interface areas
+
+dirty-side splash/contact interaction
+
+splash/contact exposure observation zone
+
+uncontrolled migration into electrical/control zones
+
+hose motion, side contact, blocked visibility
+
+visible inspection after splash/contact event
+
+splash_contact_behavior, interface_geometry
+
+splash/contact interaction mockup
+
+validated environmental protection, validated worker safety
+
+Emergency isolation boundary
+
+preserve clean-side emergency access
+
+interface shutdown/isolation interaction
+
+shutdown marker and isolation-valve candidate logic
+
+requirement to enter dirty-side zone for isolation
+
+blocked aisle, hose congestion, degraded reach
+
+repeated reach-path inspection
+
+degraded_condition_clearance, service_access
+
+Mockup 1 emergency reach rerun
+
+validated emergency readiness
+
+Electrical/control separation
+
+preserve separation from wet/dirty/interface effects
+
+cable routing near interface interaction
+
+clean-side routing and separation candidate
+
+dirty-side splash/contact, containment overlap
+
+hose rerouting, interface crowding, panel trapping
+
+cable visibility and reroute access
+
+cable_routing_logic, battery_location
+
+electrical-routing mockup
+
+validated electrical safety
+
+Chemical/process containment separation
+
+preserve visibility and separation from electrical/control zones
+
+dirty-side or wet-zone adjacency
+
+containment boundary candidate
+
+direct overlap with control/electrical zones
+
+tray crowding, hidden boundaries, blocked inspection
+
+tray visibility and access after routing changes
+
+containment_requirement, equipment_spacing
+
+containment-access mockup
+
+validated containment performance
+
+Side-wing interaction boundary
+
+isolate dirty-side restraint interaction from clean center raft
+
+side-wing motion/restraint interaction
+
+side-wing restraint boundary candidate
+
+direct dirty-side load inheritance into clean center raft
+
+restraint motion, interface strain, blocked visibility
+
+visible restraint and boundary-node inspection
+
+side_wing_restraint_behavior, interface_strain
+
+side-wing restraint mockup
+
+validated travel mode, validated clean/dirty interface safety
+
+Tow/recovery interaction with boundary
+
+preserve separation between recovery loads and interface zones
+
+tow/recovery strain near boundary areas
+
+perimeter/spine tow-path candidate
+
+tow load transfer through interface module or dirty-side routing
+
+crossed load paths, boundary congestion
+
+tow-path visibility after pull events
+
+tow_point_strain, frame_racking
+
+tow/recovery section mockup
+
+validated tow rating
+
+Post-event inspection boundary
+
+preserve inspection after disturbance or interaction event
+
+splash/contact, pull, blocked-access, hose-strain interaction
+
+post-event inspection candidate path
+
+hidden damage or inaccessible interface zones
+
+trapped panels, blocked service posture, hidden routing
+
+repeatable inspection visibility after event
+
+inspection_access, interface_geometry
+
+post-event rerun mockup
+
+validated operational readiness
+
+A. Clean / Dirty Boundary Contradictions to Mine
+
+Contradiction
+
+Why It Matters
+
+interface must connect systems but keep dirty-side effects localized
+
+crossing logic may collapse isolation assumptions
+
+hose routing must cross boundary but not steal emergency/access paths
+
+routing logic may consume movement topology
+
+drip-control candidate must remain visible but not imply containment validation
+
+visibility may be mistaken for validated containment
+
+splash/contact shielding may protect components but block inspection or replacement
+
+shielding logic may destroy observability
+
+side-wing restraint may localize dirty-side motion but transfer load into clean center raft
+
+restraint logic may collapse boundary separation
+
+emergency isolation must be reachable without entering dirty-side zone
+
+access topology may fail under pressure-pass conditions
+
+electrical/control systems need access but must stay separated from wet/dirty/interface effects
+
+serviceability may conflict with separation logic
+
+B. Boundary Priority Classes
+
+Boundary Class
+
+Definition
+
+hard separation candidate
+
+intended to minimize direct interaction between clean-side and dirty-side zones
+
+controlled crossing candidate
+
+intended to permit limited hose/cable/interface interaction through visible candidate paths
+
+sacrificial interface candidate
+
+intended to localize strain, contact, routing, or replacement interaction into replaceable boundary elements
+
+inspection boundary candidate
+
+intended to preserve visibility and post-event observation across the boundary
+
+emergency isolation candidate
+
+intended to preserve reachable shutdown/isolation logic from clean-side access paths
+
+unresolved boundary condition
+
+interaction or crossing logic remains contradictory, undefined, or dependent on future mockups
+
+No class implies validated containment, validated safety, or operational approval.
+
+C. Section 9 Status Rule
+
+Every entry remains:
+
+[CANDIDATE CLEAN / DIRTY BOUNDARY PATH — PENDING VALIDATION]
+
+No boundary path establishes:
+
+validated clean/dirty interface safety
+
+validated containment performance
+
+validated leak-safe transfer
+
+validated worker safety
+
+validated electrical safety
+
+validated emergency readiness
+
+validated environmental protection
+
+validated operational readiness
+
+10. Unresolved Engineering Variables Register
+
+Section Status: [UNRESOLVED ENGINEERING VARIABLE — PENDING VALIDATION]
+
+Purpose: Preserve unresolved engineering unknowns exposed by the Geometry Control File and Build Notebook so candidate logic is not accidentally treated as validated truth.
+
+Note:
+This register does not rank engineering importance permanently. Priority may change after Mockup 1 and later physical tests.
+
+1. Buoyancy / Flotation Variables
+
+Variable Name
+
+Category
+
+Why It Matters
+
+Appears In
+
+Blocks
+
+Required Mockup / Test / Measurement
+
+Current Status
+
+Claims Still Prohibited
+
+flotation_row_count
+
+buoyancy/flotation
+
+affects candidate flotation distribution logic
+
+Candidate Layer Stack, flotation row zone
+
+flotation topology assumptions
+
+flotation layout mockup
+
+[UNRESOLVED ENGINEERING VARIABLE — PENDING VALIDATION]
+
+validated reserve buoyancy, validated stability
+
+empty_freeboard
+
+buoyancy/flotation
+
+affects unloaded flotation observations
+
+Weight/Buoyancy Ledger
+
+flotation assumptions
+
+float test
+
+[UNRESOLVED ENGINEERING VARIABLE — PENDING VALIDATION]
+
+validated reserve buoyancy
+
+loaded_freeboard
+
+buoyancy/flotation
+
+affects candidate loaded flotation response
+
+Weight/Buoyancy Ledger
+
+ballast/load assumptions
+
+incremental ballast test
+
+[UNRESOLVED ENGINEERING VARIABLE — PENDING VALIDATION]
+
+validated payload capacity
+
+trim_response
+
+buoyancy/flotation
+
+affects fore/aft load interaction
+
+Weight/Buoyancy Ledger
+
+equipment distribution assumptions
+
+ballast shift test
+
+[UNRESOLVED ENGINEERING VARIABLE — PENDING VALIDATION]
+
+validated stability
+
+list_response
+
+buoyancy/flotation
+
+affects side-to-side interaction
+
+Weight/Buoyancy Ledger
+
+bay placement assumptions
+
+ballast shift test
+
+[UNRESOLVED ENGINEERING VARIABLE — PENDING VALIDATION]
+
+validated stability
+
+barrel_movement
+
+buoyancy/flotation
+
+affects restraint and inspection logic
+
+Replaceability Ledger, flotation zones
+
+capture-frame assumptions
+
+barrel movement mockup
+
+[UNRESOLVED ENGINEERING VARIABLE — PENDING VALIDATION]
+
+validated seaworthiness
+
+barrel_entry_closure_method
+
+buoyancy/flotation
+
+affects replacement access and restraint logic
+
+Replaceability Ledger
+
+flotation capture decisions
+
+barrel replacement mockup
+
+[UNRESOLVED ENGINEERING VARIABLE — PENDING VALIDATION]
+
+validated maintenance certification
+
+strap_creep
+
+buoyancy/flotation
+
+affects long-duration restraint visibility
+
+Replaceability Ledger
+
+restraint assumptions
+
+restraint creep observation
+
+[UNRESOLVED ENGINEERING VARIABLE — PENDING VALIDATION]
+
+validated structural capability
+
+2. Structure / PVC / Bracing Variables
+
+Variable Name
+
+Category
+
+Why It Matters
+
+Appears In
+
+Blocks
+
+Required Mockup / Test / Measurement
+
+Current Status
+
+Claims Still Prohibited
+
+PVC_creep_behavior
+
+structure/PVC
+
+affects long-duration deformation assumptions
+
+Candidate Layer Stack, Replaceability Ledger
+
+structural topology confidence
+
+PVC duration/load mockup
+
+[UNRESOLVED ENGINEERING VARIABLE — PENDING VALIDATION]
+
+validated structural capability
+
+joint_strength
+
+structure/PVC
+
+affects node/load interaction logic
+
+Load Path Ledger
+
+node topology assumptions
+
+PVC node interaction mockup
+
+[UNRESOLVED ENGINEERING VARIABLE — PENDING VALIDATION]
+
+validated structural capability
+
+frame_racking
+
+structure/bracing
+
+affects brace necessity and tow-path behavior
+
+Structural Interaction Map
+
+chassis assumptions
+
+brace-access interaction mockup
+
+[UNRESOLVED ENGINEERING VARIABLE — PENDING VALIDATION]
+
+validated structural capability
+
+brace_placement_conflicts
+
+structure/bracing
+
+affects access, inspection, replacement
+
+Brace-Access Interrogation Guide
+
+brace-routing logic
+
+brace-access mockup
+
+[UNRESOLVED ENGINEERING VARIABLE — PENDING VALIDATION]
+
+validated maintenance certification
+
+load_pad_node_alignment
+
+structure/load path
+
+affects point-load transfer assumptions
+
+Load Path Ledger
+
+equipment support assumptions
+
+load-pad/node mockup
+
+[UNRESOLVED ENGINEERING VARIABLE — PENDING VALIDATION]
+
+validated payload capacity
+
+point_load_behavior
+
+structure/load path
+
+affects concentrated load assumptions
+
+Load Path Ledger
+
+load distribution logic
+
+weighted placeholder mockup
+
+[UNRESOLVED ENGINEERING VARIABLE — PENDING VALIDATION]
+
+validated payload capacity
+
+3. Deck / Grating / Panel Variables
+
+Variable Name
+
+Category
+
+Why It Matters
+
+Appears In
+
+Blocks
+
+Required Mockup / Test / Measurement
+
+Current Status
+
+Claims Still Prohibited
+
+deck_deflection
+
+deck/grating
+
+affects deck support logic
+
+Load Path Ledger
+
+panel support assumptions
+
+removable panel mockup
+
+[UNRESOLVED ENGINEERING VARIABLE — PENDING VALIDATION]
+
+validated walking-surface safety
+
+grating_clip_method
+
+deck/grating
+
+affects removability and inspection
+
+Replaceability Ledger
+
+panel retention logic
+
+grating clip mockup
+
+[UNRESOLVED ENGINEERING VARIABLE — PENDING VALIDATION]
+
+validated maintenance certification
+
+panel_clearance
+
+deck/panels
+
+affects removability and service access
+
+Replaceability Ledger
+
+panel-removal logic
+
+removable panel mockup
+
+[UNRESOLVED ENGINEERING VARIABLE — PENDING VALIDATION]
+
+validated operational readiness
+
+grating_support_spacing
+
+deck/grating
+
+affects candidate deck support topology
+
+Candidate Layer Stack
+
+support assumptions
+
+deck support mockup
+
+[UNRESOLVED ENGINEERING VARIABLE — PENDING VALIDATION]
+
+validated walking-surface safety
+
+removable_panel_conflicts
+
+deck/panels
+
+affects inspection and replacement
+
+Mockup 1 findings
+
+removable-zone assumptions
+
+Mockup 1 pressure pass
+
+[UNRESOLVED ENGINEERING VARIABLE — PENDING VALIDATION]
+
+validated maintenance certification
+
+4. Weight / Load Path Variables
+
+Variable Name
+
+Category
+
+Why It Matters
+
+Appears In
+
+Blocks
+
+Required Mockup / Test / Measurement
+
+Current Status
+
+Claims Still Prohibited
+
+battery_mass
+
+weight/load path
+
+affects trim/list/load distribution
+
+Weight/Buoyancy Ledger
+
+load assumptions
+
+dry mass measurement
+
+[UNRESOLVED ENGINEERING VARIABLE — PENDING VALIDATION]
+
+validated payload capacity
+
+electrolysis_mass
+
+weight/load path
+
+affects support and routing logic
+
+Weight/Buoyancy Ledger
+
+load distribution assumptions
+
+dry mass measurement
+
+[UNRESOLVED ENGINEERING VARIABLE — PENDING VALIDATION]
+
+validated payload capacity
+
+equipment_spacing
+
+weight/load path
+
+affects service/access/load overlap
+
+Section Inventory
+
+bay arrangement assumptions
+
+Mockup 1
+
+[UNRESOLVED ENGINEERING VARIABLE — PENDING VALIDATION]
+
+validated operational readiness
+
+service_space_height
+
+weight/load path
+
+affects posture and center-of-mass assumptions
+
+Access Ledger
+
+service topology assumptions
+
+service-height mockup
+
+[UNRESOLVED ENGINEERING VARIABLE — PENDING VALIDATION]
+
+validated stability
+
+candidate_mass_above
+
+weight/load path
+
+affects upper-structure interaction assumptions
+
+Weight/Buoyancy Ledger
+
+flotation assumptions
+
+dry mass + ballast observation
+
+[UNRESOLVED ENGINEERING VARIABLE — PENDING VALIDATION]
+
+validated stability
+
+tow_point_strain
+
+weight/load path
+
+affects recovery load assumptions
+
+Load Path Ledger
+
+tow/recovery topology
+
+tow/recovery section mockup
+
+[UNRESOLVED ENGINEERING VARIABLE — PENDING VALIDATION]
+
+validated tow rating
+
+5. Access / Inspection Variables
+
+Variable Name
+
+Category
+
+Why It Matters
+
+Appears In
+
+Blocks
+
+Required Mockup / Test / Measurement
+
+Current Status
+
+Claims Still Prohibited
+
+aisle_width
+
+access/inspection
+
+affects movement topology
+
+Mockup 1
+
+aisle logic assumptions
+
+Mockup 1 pressure pass
+
+[UNRESOLVED ENGINEERING VARIABLE — PENDING VALIDATION]
+
+validated worker safety
+
+degraded_condition_clearance
+
+access/inspection
+
+affects emergency reach and obstruction logic
+
+Mockup 1
+
+degraded movement assumptions
+
+blocked-side pressure pass
+
+[UNRESOLVED ENGINEERING VARIABLE — PENDING VALIDATION]
+
+validated emergency readiness
+
+inspection_access
+
+access/inspection
+
+affects observability
+
+Access Ledger
+
+inspection assumptions
+
+visibility mockup
+
+[UNRESOLVED ENGINEERING VARIABLE — PENDING VALIDATION]
+
+validated maintenance certification
+
+service_access
+
+access/inspection
+
+affects hand/tool interaction
+
+Access Ledger
+
+serviceability assumptions
+
+service access mockup
+
+[UNRESOLVED ENGINEERING VARIABLE — PENDING VALIDATION]
+
+validated operational readiness
+
+mockup_spacing
+
+access/inspection
+
+affects all candidate movement relationships
+
+Mockup 1
+
+spacing assumptions
+
+Mockup 1 reruns
+
+[UNRESOLVED ENGINEERING VARIABLE — PENDING VALIDATION]
+
+validated worker safety
+
+cable_routing_logic
+
+access/inspection
+
+affects separation and service visibility
+
+Boundary Ledger
+
+routing assumptions
+
+cable-routing mockup
+
+[UNRESOLVED ENGINEERING VARIABLE — PENDING VALIDATION]
+
+validated electrical safety
+
+hose_routing
+
+access/inspection
+
+affects boundary crossing and emergency access
+
+Boundary Ledger
+
+hose/interface assumptions
+
+hose-routing pressure pass
+
+[UNRESOLVED ENGINEERING VARIABLE — PENDING VALIDATION]
+
+validated leak-safe transfer
+
+6. Replaceability Variables
+
+Variable Name
+
+Category
+
+Why It Matters
+
+Appears In
+
+Blocks
+
+Required Mockup / Test / Measurement
+
+Current Status
+
+Claims Still Prohibited
+
+removal_path_viability
+
+replaceability
+
+affects removable-component logic
+
+Replaceability Ledger
+
+replacement assumptions
+
+replacement-path mockup
+
+[UNRESOLVED ENGINEERING VARIABLE — PENDING VALIDATION]
+
+validated maintenance certification
+
+replacement_access
+
+replaceability
+
+affects service topology
+
+Replaceability Ledger
+
+serviceability assumptions
+
+replacement-access mockup
+
+[UNRESOLVED ENGINEERING VARIABLE — PENDING VALIDATION]
+
+validated operational readiness
+
+node_repair_access
+
+replaceability
+
+affects grid repairability
+
+Replaceability Ledger
+
+dense-grid assumptions
+
+node-access mockup
+
+[UNRESOLVED ENGINEERING VARIABLE — PENDING VALIDATION]
+
+validated structural capability
+
+brace_rerouting_viability
+
+replaceability
+
+affects brace adaptability
+
+Brace-Access Guide
+
+brace logic assumptions
+
+brace reroute mockup
+
+[UNRESOLVED ENGINEERING VARIABLE — PENDING VALIDATION]
+
+validated structural capability
+
+flotation_replacement_access
+
+replaceability
+
+affects flotation serviceability
+
+Replaceability Ledger
+
+flotation capture assumptions
+
+flotation replacement mockup
+
+[UNRESOLVED ENGINEERING VARIABLE — PENDING VALIDATION]
+
+validated seaworthiness
+
+7. Clean / Dirty Boundary Variables
+
+Variable Name
+
+Category
+
+Why It Matters
+
+Appears In
+
+Blocks
+
+Required Mockup / Test / Measurement
+
+Current Status
+
+Claims Still Prohibited
+
+interface_geometry
+
+clean/dirty boundary
+
+affects crossing topology
+
+Boundary Ledger
+
+interface assumptions
+
+interface mockup
+
+[UNRESOLVED ENGINEERING VARIABLE — PENDING VALIDATION]
+
+validated clean/dirty interface safety
+
+interface_strain
+
+clean/dirty boundary
+
+affects load transfer into boundary nodes
+
+Load Path Ledger
+
+isolation assumptions
+
+interface strain mockup
+
+[UNRESOLVED ENGINEERING VARIABLE — PENDING VALIDATION]
+
+validated leak-safe transfer
+
+hose_strain_limit
+
+clean/dirty boundary
+
+affects routing and pull behavior
+
+Boundary Ledger
+
+hose assumptions
+
+hose strain mockup
+
+[UNRESOLVED ENGINEERING VARIABLE — PENDING VALIDATION]
+
+validated leak-safe transfer
+
+drip_control_method
+
+clean/dirty boundary
+
+affects visibility and observation of drips
+
+Boundary Ledger
+
+drip-zone assumptions
+
+drip-zone observation mockup
+
+[UNRESOLVED ENGINEERING VARIABLE — PENDING VALIDATION]
+
+validated containment performance
+
+splash_contact_behavior
+
+clean/dirty boundary
+
+affects dirty-side exposure assumptions
+
+Boundary Ledger
+
+splash interaction assumptions
+
+splash/contact mockup
+
+[UNRESOLVED ENGINEERING VARIABLE — PENDING VALIDATION]
+
+validated environmental protection
+
+containment_requirement
+
+clean/dirty boundary
+
+affects tray and separation logic
+
+Boundary Ledger
+
+containment assumptions
+
+containment-access mockup
+
+[UNRESOLVED ENGINEERING VARIABLE — PENDING VALIDATION]
+
+validated containment performance
+
+boundary_behavior_validation_status
+
+clean/dirty boundary
+
+prevents accidental promotion of candidate logic
+
+Section 9 status rule
+
+all boundary conclusions
+
+repository review only
+
+[UNRESOLVED ENGINEERING VARIABLE — PENDING VALIDATION]
+
+validated clean/dirty interface safety
+
+8. Side-Wing / Tow / Recovery Variables
+
+Variable Name
+
+Category
+
+Why It Matters
+
+Appears In
+
+Blocks
+
+Required Mockup / Test / Measurement
+
+Current Status
+
+Claims Still Prohibited
+
+side_wing_restraint_behavior
+
+side-wing/tow
+
+affects dirty-side isolation logic
+
+Boundary Ledger
+
+side-wing assumptions
+
+side-wing restraint mockup
+
+[UNRESOLVED ENGINEERING VARIABLE — PENDING VALIDATION]
+
+validated travel mode
+
+travel_restraint_behavior
+
+side-wing/tow
+
+affects transport/restraint assumptions
+
+Structural Interaction Map
+
+restraint assumptions
+
+travel-restraint mockup
+
+[UNRESOLVED ENGINEERING VARIABLE — PENDING VALIDATION]
+
+validated travel mode
+
+side_wing_behavior
+
+side-wing/tow
+
+affects interaction with center raft
+
+Boundary Ledger
+
+side-wing topology
+
+side-wing interaction mockup
+
+[UNRESOLVED ENGINEERING VARIABLE — PENDING VALIDATION]
+
+validated clean/dirty interface safety
+
+tow_path_isolation
+
+side-wing/tow
+
+affects separation from equipment bays
+
+Load Path Ledger
+
+tow topology assumptions
+
+tow-path mockup
+
+[UNRESOLVED ENGINEERING VARIABLE — PENDING VALIDATION]
+
+validated tow rating
+
+dirty_side_load_inheritance
+
+side-wing/tow
+
+affects clean-center isolation logic
+
+Boundary Ledger
+
+boundary assumptions
+
+side-wing load-path mockup
+
+[UNRESOLVED ENGINEERING VARIABLE — PENDING VALIDATION]
+
+validated structural capability
+
+9. Measurement Dependencies
+
+Dependency
+
+Why It Matters
+
+Blocks
+
+Required Evidence
+
+Current Status
+
+Claims Still Prohibited
+
+dry_mass_measurement
+
+establishes candidate mass observations
+
+load assumptions
+
+measured values
+
+[PENDING MEASUREMENT / OBSERVATION]
+
+validated payload capacity
+
+float_test
+
+establishes unloaded flotation observations
+
+flotation assumptions
+
+float observations
+
+[PENDING MEASUREMENT / OBSERVATION]
+
+validated reserve buoyancy
+
+incremental_ballast_test
+
+establishes loaded flotation interaction
+
+load distribution assumptions
+
+ballast observations
+
+[PENDING MEASUREMENT / OBSERVATION]
+
+validated stability
+
+Mockup 1 pressure pass
+
+establishes movement/access contradictions
+
+layout assumptions
+
+repeated observations
+
+[PENDING MEASUREMENT / OBSERVATION]
+
+validated worker safety
+
+brace-access interaction mockup
+
+establishes brace/access contradictions
+
+brace logic assumptions
+
+physical conflict observations
+
+[PENDING MEASUREMENT / OBSERVATION]
+
+validated structural capability
+
+barrel capture/replacement mockup
+
+establishes flotation serviceability contradictions
+
+flotation capture assumptions
+
+replacement observations
+
+[PENDING MEASUREMENT / OBSERVATION]
+
+validated seaworthiness
+
+load-pad/node mockup
+
+establishes point-load interaction logic
+
+equipment support assumptions
+
+node alignment observations
+
+[PENDING MEASUREMENT / OBSERVATION]
+
+validated payload capacity
+
+interface strain mockup
+
+establishes interface load behavior
+
+boundary assumptions
+
+strain observations
+
+[PENDING MEASUREMENT / OBSERVATION]
+
+validated leak-safe transfer
+
+tow/recovery section mockup
+
+establishes tow-path interaction logic
+
+recovery assumptions
+
+load-path observations
+
+[PENDING MEASUREMENT / OBSERVATION]
+
+validated tow rating
+
+side-wing restraint mockup
+
+establishes side-wing interaction behavior
+
+side-wing assumptions
+
+interaction observations
+
+[PENDING MEASUREMENT / OBSERVATION]
+
+validated travel mode
+
+A. Highest-Priority Unresolveds
+
+Rank
+
+Variable
+
+Why High Priority
+
+1
+
+frame_racking
+
+affects bracing, tow paths, chassis assumptions
+
+2
+
+brace_placement_conflicts
+
+affects access, inspection, replacement simultaneously
+
+3
+
+load_pad_node_alignment
+
+affects all heavy-placeholder support assumptions
+
+4
+
+hose_routing
+
+affects boundary logic, aisle logic, emergency access
+
+5
+
+deck_deflection
+
+affects removable panels and access topology
+
+6
+
+interface_geometry
+
+affects clean/dirty boundary assumptions
+
+7
+
+barrel_movement
+
+affects flotation restraint and replacement logic
+
+8
+
+service_access
+
+affects operational topology assumptions
+
+9
+
+degraded_condition_clearance
+
+affects emergency-path assumptions
+
+10
+
+tow_point_strain
+
+affects perimeter/spine interaction assumptions
+
+B. Variables Mockup 1 Can Partially Reduce
+
+Mockup 1 can only partially bound these through repeated observation:
+
+aisle_width
+
+degraded_condition_clearance
+
+inspection_access
+
+service_access
+
+mockup_spacing
+
+hose_routing
+
+equipment_spacing
+
+removable_panel_conflicts
+
+interface_geometry
+
+cable_routing_logic
+
+C. Variables Mockup 1 Cannot Reduce
+
+Require structural, flotation, load, or interface mockups:
+
+PVC_creep_behavior
+
+joint_strength
+
+frame_racking
+
+deck_deflection
+
+load_pad_node_alignment
+
+point_load_behavior
+
+empty_freeboard
+
+loaded_freeboard
+
+trim_response
+
+list_response
+
+barrel_movement
+
+tow_point_strain
+
+interface_strain
+
+side_wing_restraint_behavior
+
+travel_restraint_behavior
+
+D. Section 10 Status Rule
+
+Every entry remains:
+
+[UNRESOLVED ENGINEERING VARIABLE — PENDING VALIDATION]
+
+No unresolved variable may be closed without:
+
+documented physical measurement
+
+mockup observation
+
+repository-approved evidence
+
+No entry establishes:
+
+validated payload capacity
+
+validated stability
+
+validated reserve buoyancy
+
+validated seaworthiness
+
+validated tow rating
+
+validated travel mode
+
+validated worker safety
+
+validated electrical safety
+
+validated containment performance
+
+validated clean/dirty interface safety
+
+validated leak-safe transfer
+
+validated walking-surface safety
+
+validated structural capability
+
+validated maintenance certification
+
+validated environmental protection
+
+validated operational readiness
+
+11. Measurement Plan
+
+Status Rule: [CANDIDATE MEASUREMENT / MOCKUP PACKAGE — PENDING EXECUTION]
+
+Purpose: convert unresolved engineering variables into candidate measurement and mockup work packages without promoting observations into validated capability claims.
+
+Measurement / Mockup Package Ledger
+Measurement / mockup name	Purpose	Variables addressed	Setup concept (non-final)	Observation to record	May partially unlock	Cannot validate	Related notebook sections	Claims still prohibited
+Mockup 1 pressure pass	layout/access/hose/panel/interface contradiction mining	aisle_width, degraded_condition_clearance, inspection_access, service_access, mockup_spacing, hose_routing, equipment_spacing, removable_panel_conflicts, interface_geometry, cable_routing_logic	tape/cardboard candidate footprint with placeholder zones and routing paths	blocked movement, hidden inspection, hose conflict, trapped panel, emergency reach degradation	candidate movement topology revisions	worker safety, operational readiness	Sections 4, 7, 9, 10	validated worker safety, validated clean/dirty interface safety
+Dry mass measurement package	replace placeholder mass assumptions with measured component observations	battery_mass, electrolysis_mass, candidate_mass_above, PVC/grid frame mass, removable grating mass, interface hardware placeholder mass	staged weighing of candidate components/placeholders	measured component masses and configuration notes	candidate load-path refinement	payload capacity, stability	Sections 5, 6, 10	validated payload capacity
+Empty float test	observe unloaded flotation behavior	empty_freeboard, flotation_row_count, barrel_movement	unloaded flotation configuration candidate	flotation position, visible movement, unloaded flotation behavior	flotation interaction observations	reserve buoyancy, stability	Sections 5, 10	validated reserve buoyancy, validated stability
+Incremental ballast test	observe loaded flotation response under candidate ballast placement	loaded_freeboard, trim_response, list_response, candidate_mass_above	staged ballast placement candidate	flotation response, trim/list observation, movement changes	candidate ballast interaction logic	payload capacity, stability	Sections 5, 6, 10	validated payload capacity, validated stability
+Barrel capture / replacement-access mockup	test coexistence of flotation restraint and replacement access	barrel_movement, barrel_entry_closure_method, strap_creep, flotation_replacement_access	flotation placeholder with removable capture/restraint candidate	trapped barrel condition, visible restraint movement, replacement obstruction	capture-access topology revisions	seaworthiness, maintenance certification	Sections 3, 7, 8, 10	validated seaworthiness
+Removable grating / deck panel mockup	test panel removal, support interaction, and access conflicts	deck_deflection, grating_clip_method, panel_clearance, grating_support_spacing, removable_panel_conflicts	removable panel candidate over support/grid candidate	binding, trapped clips, support conflict, hidden inspection zones	panel/removability candidate logic	walking-surface safety, structural capability	Sections 3, 7, 8, 10	validated walking-surface safety
+Brace-access interaction mockup	test whether bracing coexists with access, inspection, and replaceability	frame_racking, brace_placement_conflicts, node_repair_access, brace_rerouting_viability, inspection_access	candidate brace paths over access/removal zones	blocked access, trapped panel, hidden inspection, inaccessible node	brace-routing candidates and no-brace zones	structural capability, maintenance certification	Sections 6, 7, 8, 10	validated structural capability
+Load-pad / node alignment mockup	test relationship between heavy placeholders, load pads, and support nodes	load_pad_node_alignment, point_load_behavior, deck_deflection, equipment_spacing	heavy-placeholder footprints over candidate node grid	unsupported pad edge, node mismatch, service conflict	candidate support topology refinement	payload capacity, structural capability	Sections 5, 6, 10	validated payload capacity
+Interface strain / hose routing mockup	test localized routing and inspectable strain behavior	interface_strain, hose_strain_limit, hose_routing, drip_control_method, interface_geometry	routed hose/cable candidate across interface module	routing conflict, strain concentration, hidden drip zone, access conflict	interface-routing revisions	leak-safe transfer, containment performance	Sections 6, 7, 9, 10	validated leak-safe transfer
+Clean / dirty boundary observation mockup	test visibility and observation logic around the boundary	splash_contact_behavior, containment_requirement, boundary_behavior_validation_status, interface_geometry	interface visibility and splash/contact observation setup	hidden splash area, blocked inspection, boundary confusion	candidate boundary visibility logic	containment performance, environmental protection	Sections 7, 9, 10	validated containment performance
+Tow/recovery section mockup	test tow/recovery separation from equipment/interface zones	tow_point_strain, tow_path_isolation, frame_racking, joint_strength	localized tow/recovery path candidate near perimeter/spine logic	crossed load path, equipment interaction, visible distortion	tow-path isolation candidates	tow rating, structural capability	Sections 6, 9, 10	validated tow rating
+Side-wing restraint interaction mockup	test whether side-wing interaction transfers dirty-side loads into clean center raft	side_wing_restraint_behavior, travel_restraint_behavior, side_wing_behavior, dirty_side_load_inheritance	boundary-side restraint interaction candidate	force transfer, interface strain, boundary-node interaction	side-wing isolation candidate logic	travel mode, clean/dirty interface safety	Sections 6, 9, 10	validated travel mode
+A. Measurement Dependency Sequence
+Order / relationship	Measurement package	Why
+first	Mockup 1 pressure pass	establishes candidate movement/access contradictions before structural mockups
+first	Dry mass measurement package	begins replacing placeholder assumptions with measured observations
+after Mockup 1 findings	Removable grating / deck panel mockup	depends on removable-zone observations
+after Mockup 1 findings	Brace-access interaction mockup	depends on access conflict observations
+after Mockup 1 findings	Interface strain / hose routing mockup	depends on hose/interface conflict observations
+parallel candidate work	Barrel capture / replacement-access mockup	partially separable from access layout work
+parallel candidate work	Load-pad / node alignment mockup	partially separable from flotation testing
+after dry mass observations	Empty float test	benefits from candidate mass awareness
+after empty float observations	Incremental ballast test	depends on unloaded flotation observations
+not yet recommended	Tow/recovery section mockup	downstream of frame/load-path understanding
+not yet recommended	Side-wing restraint interaction mockup	downstream of interface and boundary logic
+dependent on multiple earlier observations	Clean / dirty boundary observation mockup	depends on routing/interface visibility logic
+B. Measurement Record Template
+measurement_record:
+  test_or_mockup_name:
+  date:
+  layout_or_version_reference:
+  variables_addressed:
+  setup_description:
+  observation_recorded:
+  photo_or_log_reference:
+  issue_severity:
+    - low
+    - medium
+    - high
+    - blocking
+  candidate_revision_suggested:
+  claims_still_prohibited:
+  status_after_test:
+    - unresolved
+    - partially_bounded
+    - requires_retest
+C. Section 11 Status Rule
+
+Every measurement package remains:
+[CANDIDATE MEASUREMENT / MOCKUP PACKAGE — PENDING EXECUTION]
+
+No measurement package establishes:
+
+validated payload capacity
+validated stability
+validated reserve buoyancy
+validated seaworthiness
+validated tow rating
+validated travel mode
+validated worker safety
+validated electrical safety
+validated containment performance
+validated clean/dirty interface safety
+validated leak-safe transfer
+validated walking-surface safety
+validated structural capability
+validated maintenance certification
+validated environmental protection
+validated operational readiness
+
+12. Decision Log
+
+Status Rule: [CANDIDATE / DEFERRED / BLOCKED DECISION — PENDING VALIDATION]
+
+Purpose: preserve current candidate choices, constraints, exclusions, and deferred decision gates without promoting them into validated engineering truth or build authorization.
+
+Decision Ledger
+Decision ID	Decision title	Decision type	Current decision statement	Why this decision exists	Evidence/source layer	Unresolved variables that could change it	Required mockup/test before strengthening	What it currently enables	What it does not authorize	Claims still prohibited	Status
+D-001	Clean support raft ruling	constraint adoption	The center boat remains a clean support raft, not a dirty processing vessel.	preserves clean/dirty topology separation	Geometry Control File, Section 9 Boundary Ledger	interface_geometry, dirty_side_load_inheritance	Mockup 1 + interface mockups	clean-center topology planning	dirty-side processing integration	validated clean/dirty interface safety	[CANDIDATE DECISION — PENDING VALIDATION]
+D-002	Candidate layer-stack organization	working assumption	Raft organized as flotation → capture/restraint → lower grid/subfloor → service space → upper deck frame → removable deck/grating → load pads → equipment placeholders → interface boundary.	establishes structural interaction order	Section 3 Candidate Layer Stack	frame_racking, deck_deflection	structural tabletop mockups	candidate topology coordination	final structure	validated structural capability	[WORKING ASSUMPTION — PENDING VALIDATION]
+D-003	Removable deck/grating preference	candidate preference	Deck surfaces remain candidate removable panels/grating instead of sealed deck surfaces.	preserves inspection and replaceability	Sections 7 and 8	grating_clip_method, panel_clearance	removable grating mockup	removable inspection logic	final deck design	validated walking-surface safety	[CANDIDATE DECISION — PENDING VALIDATION]
+D-004	Inspection-first structure preference	constraint adoption	Structural logic must preserve visibility of flotation units, restraints, lower grid nodes, bracing, routing, and interface components.	prevents hidden failure zones	Sections 7, 8, 9	inspection_access, brace_placement_conflicts	Mockup 1 + brace-access mockup	inspection-aware topology	inspection certification	validated maintenance certification	[CANDIDATE DECISION — PENDING VALIDATION]
+D-005	Candidate low-mount equipment preference	candidate preference	Heavy placeholders treated as low/distributed load-awareness objects pending ballast observations.	reduces premature top-heavy assumptions	Weight/Buoyancy Ledger	battery_mass, electrolysis_mass, candidate_mass_above	dry mass + ballast tests	candidate load distribution logic	stability conclusions	validated stability	[WORKING ASSUMPTION — PENDING VALIDATION]
+D-006	Load-spreader pad/node alignment preference	candidate preference	Heavy placeholders should route into candidate load-spreader pads and node areas.	preserves visible load-path logic	Section 6 Load Path Ledger	load_pad_node_alignment, point_load_behavior	load-pad/node mockup	candidate support topology	final support structure	validated payload capacity	[CANDIDATE DECISION — PENDING VALIDATION]
+D-007	No direct dirty-side processing on center raft	constraint adoption	Raw biomass handling and dirty processing loads remain outside the clean center raft.	preserves clean support role	Geometry Control File, Section 9	dirty_side_load_inheritance	side-wing/interface mockups	clean-center operational boundary	dirty-side processing workflow	validated environmental protection	[CANDIDATE DECISION — PENDING VALIDATION]
+D-008	Candidate sacrificial interface module preference	candidate preference	Clean/dirty crossings should localize at replaceable, inspectable interface candidates.	preserves inspectable crossing logic	Sections 8 and 9	interface_geometry, interface_strain	interface mockup	localized boundary topology	validated isolation design	validated clean/dirty interface safety	[CANDIDATE DECISION — PENDING VALIDATION]
+D-009	Hose/interface strain isolation preference	constraint adoption	Hose strain should not route directly into process equipment, control cabinets, or primary chassis without isolation logic.	prevents uncontrolled strain migration	Section 6 Load Paths	hose_strain_limit, hose_routing	interface strain mockup	candidate strain-isolation routing	routing validation	validated leak-safe transfer	[WORKING ASSUMPTION — PENDING VALIDATION]
+D-010	Tow/recovery load-path isolation preference	candidate preference	Tow/recovery load-path candidates remain separated from equipment bays and removable panels alone.	preserves load-path isolation	Sections 6 and 9	tow_point_strain, tow_path_isolation	tow/recovery section mockup	candidate tow topology	tow capability	validated tow rating	[CANDIDATE DECISION — PENDING VALIDATION]
+D-011	Side-wing restraint deferred decision	deferred decision	Side-wing restraint logic remains unresolved until center-raft topology and interface isolation are better understood.	downstream dependency management	Structural Interaction Map	side_wing_restraint_behavior, travel_restraint_behavior	side-wing restraint mockup	preserves unresolved-variable integrity	side-wing implementation	validated travel mode	[DEFERRED DECISION — PENDING MEASUREMENT]
+D-012	Flotation row count deferred decision	deferred decision	Flotation row count remains unresolved despite BOAT_MODEL_002 references.	flotation behavior remains unmeasured	Section 10 Unresolved Variables	flotation_row_count, empty_freeboard	float testing	preserves flotation flexibility	final flotation layout	validated reserve buoyancy	[DEFERRED DECISION — PENDING MEASUREMENT]
+D-013	PVC/grid structural behavior blocked decision	blocked decision	PVC/grid structure cannot be treated as build-ready until creep, joints, racking, bracing conflicts, and load paths are interrogated physically.	prevents premature structural confidence	Sections 6, 10, 11	PVC_creep_behavior, joint_strength, frame_racking	structural mockups	preserves contradiction mining	build readiness	validated structural capability	[BLOCKED DECISION — UNRESOLVED ENGINEERING VARIABLE]
+D-014	Mockup 1 first-measurement priority	constraint adoption	Mockup 1 pressure pass remains the first physical layout interrogation before higher-cost structural mockups.	layout contradictions are upstream	Measurement Plan	mockup_spacing, service_access	Mockup 1 execution	access/topology contradiction mining	structural validation	validated worker safety	[CANDIDATE DECISION — PENDING VALIDATION]
+D-015	Brace-access interaction priority	measurement-gated decision	Brace-access interaction is the first structural contradiction to mine after Mockup 1 reveals conflict zones.	brace conflicts affect multiple downstream systems	Structural Gold-Mining Rank	brace_placement_conflicts, node_repair_access	brace-access mockup	brace-routing candidate logic	structural approval	validated structural capability	[DEFERRED DECISION — PENDING MEASUREMENT]
+D-016	No procurement/no construction decision	constraint adoption	No current candidate decision authorizes procurement, fabrication, or construction.	preserves repository discipline	all notebook sections	all unresolved variables	physical evidence + repository review	controlled modeling progression	purchasing or build actions	build authorization, procurement authorization	[CANDIDATE DECISION — PENDING VALIDATION]
+A. Decision Dependency Map
+Decision	Depends on	Required observation	May become stronger after	Still cannot authorize
+clean support raft ruling	interface separation logic	boundary interaction observations	interface mockups	operational readiness
+removable deck/grating preference	removable access viability	panel-removal observations	removable grating mockup	walking-surface certification
+inspection-first structure preference	inspection visibility preservation	repeated visibility observations	brace-access mockup	maintenance certification
+low-mount equipment preference	measured mass behavior	ballast and dry-mass observations	ballast tests	stability claims
+load-pad/node alignment preference	visible node support logic	node interaction observations	load-pad/node mockup	payload capacity
+sacrificial interface preference	interface replaceability	strain/routing observations	interface strain mockup	containment validation
+hose/interface strain isolation	hose-routing behavior	strain and routing observations	hose/interface mockup	leak-safe transfer
+tow/recovery isolation preference	perimeter/spine separation logic	tow-path observations	tow section mockup	tow rating
+side-wing restraint deferred decision	interface/load isolation understanding	side-wing interaction observations	side-wing restraint mockup	travel mode
+flotation row count deferred decision	flotation observations	float and ballast observations	float testing	reserve buoyancy
+PVC/grid blocked decision	structural contradiction interrogation	node/racking observations	structural mockups	build readiness
+Mockup 1 first priority	unresolved access contradictions	pressure-pass observations	Mockup 1 reruns	structural validation
+brace-access interaction priority	access conflict identification	brace obstruction observations	brace-access mockup	structural approval
+B. Decisions Not Yet Ready
+
+The following decisions remain deferred or blocked:
+
+final layout
+final geometry
+flotation row count
+frame material / joining method
+grating clip method
+service-space height
+side-wing restraint method
+tow/recovery fittings
+containment method
+electrical/control placement
+equipment mass placement
+payload capacity
+stability / reserve buoyancy
+operational workflow
+
+All remain dependent on:
+
+mockup observations
+measurements
+unresolved-variable reduction
+repository review
+C. Section 12 Status Rule
+
+Every decision remains:
+[CANDIDATE / DEFERRED / BLOCKED DECISION — PENDING VALIDATION]
+
+No decision log entry establishes:
+
+validated payload capacity
+validated stability
+validated reserve buoyancy
+validated seaworthiness
+validated tow rating
+validated travel mode
+validated worker safety
+validated electrical safety
+validated containment performance
+validated clean/dirty interface safety
+validated leak-safe transfer
+validated walking-surface safety
+validated structural capability
+validated maintenance certification
+validated environmental protection
+validated operational readiness
+build authorization
+procurement authorization
+
+Baseline updated with Section 12 populated.
+13. Rejected / Deferred Concepts
+
+[ENGINEERING STUDY DEFERRALS — ARCHIVAL]
+
+
+Rejected / Deferred Concept Candidate 01: Direct Digestion Module Mounting on Boat Frame
+
+Reason for Rejection: Violated the clean support vessel ruling. Shifted bio-digestion side effects to the clean deck.
+
+Rejected / Deferred Concept Candidate 02: Permanent Non-Removable Deck Grating
+
+Reason for Rejection: Blocked manual visual inspection of flotation straps, cradle rails, and lower PVC truss nodes.
+
+Rejected / Deferred Concept Candidate 03: Direct Hose Coupling to Electrolysis Skid
+
+Reason for Rejection: Transferred relative hull movement and hose pull strain directly into active process equipment, violating structural isolation goals.
+
+14. Change Log
+
+Date
+
+Author / Role
+
+Summary of Changes
+
+Revision Type
+
+2026-05-20
+
+G/Jared/Editor
+
+Created Boat Prototype 1 Build Notebook as a separate non-canonical working design diary. Added initial Candidate Layer Stack, Section Inventory, and Weight / Buoyancy Ledger from Gear output while preserving pending-validation boundaries.
+
+Initial Build Notebook Setup
+
+2026-05-20
+
+G/Jared/Editor
+
+Corrected Build Notebook to remove unvalidated material standards, final-sounding connection language, hidden flotation-row contradiction, and premature buoyancy-calculation framing. Preserved candidate-only pending-validation status.
+
+Build Notebook Claim-Safety Correction
+
+2026-05-20
+
+G/Jared/Editor
+
+Populated Section 6 — Load Path Ledger with candidate load paths from Gear output. Preserved candidate-only status and prohibited-claim boundaries.
+
+Load Path Ledger Insert
+
+2026-05-20
+
+G/Jared/Editor
+
+Replaced incomplete Section 6 — Load Path Ledger with the full candidate load-path ledger from Grant’s cleaned Gear packet, including additional load paths, forbidden load transfers, load-path contradictions to mine, and full pending-validation status rules.
+
+Load Path Ledger Completion / Correction
+
+2026-05-20
+
+G/Jared/Editor
+
+Populated Section 7 — Access / Inspection Ledger with candidate access and inspection paths from Grant’s cleaned Gear packet. Preserved pending-validation boundaries and prohibited-claim language.
+
+Access / Inspection Ledger Insert
+
+2026-05-20
+
+G/Jared/Editor
+
+Populated Section 8 — Replaceability Ledger with candidate replacement/removal paths from Grant’s cleaned Gear packet. Preserved pending-validation boundaries, replaceability contradiction tracking, and prohibited-claim language.
+
+Replaceability Ledger Insert
+
+2026-05-20
+
+G/Jared/Editor
+
+Corrected Section 8 — Replaceability Ledger to remove unvalidated repair-method language, hardware assumptions, service-category implications, and field-service claims. Restored candidate-only replaceability-path framing.
+
+Replaceability Ledger Claim-Safety Correction
+
+2026-05-20
+
+G/Jared/Editor
+
+Set Section 9 — Clean / Dirty Boundary Ledger placeholders to pending Grant review as no input packet was received, preserving strict anti-hallucination boundaries.
+
+Section 9 Boundary Placeholder Audit
+
+2026-05-20
+
+G/Jared/Editor
+
+Replaced Section 9 placeholders with the full Clean / Dirty Boundary Ledger from Grant’s cleaned Gear packet. Preserved pending-validation boundaries, clean/dirty separation logic, boundary contradiction tracking, and prohibited-claim language.
+
+Clean / Dirty Boundary Ledger Insert / Placeholder Replacement
+
+2026-05-20
+
+G/Jared/Editor
+
+Populated Section 10 — Unresolved Engineering Variables Register with categorized unresolved variables from Grant’s cleaned Gear packet. Preserved pending-validation status, measurement dependencies, priority caveats, and prohibited-claim boundaries.
+
+Unresolved Engineering Variables Register Insert

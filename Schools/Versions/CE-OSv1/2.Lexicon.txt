@@ -1,0 +1,466 @@
+Lexicon:
+  file: Lexicon.yaml
+  role: semantic_identity_and_definition_registry
+  authority: definitions_admissibility_and_mutation_control_only
+  status: phase_2_replacement_draft
+
+  ce_os_pointer:
+    authority_source: CE-OS.yaml
+    governs:
+      - causal_accounting_order
+      - interaction_doctrine
+      - transfer_vs_propagation_distinction
+      - operational_validity_vs_causal_completeness
+
+    rule: >
+      Lexicon owns term meaning and aliases.
+      CE-OS owns causal doctrine.
+      If semantic wording conflicts with causal doctrine,
+      CE-OS governs doctrine and Lexicon receives a definition review request.
+
+  caution:
+    note: >
+      Lexicon.yaml stabilizes semantic identity, admissible meaning,
+      aliases, prohibited interpretation boundaries, and mutation risks.
+      Lexicon does not validate claims, define topology, govern bridges,
+      execute engineering analysis, or redefine causal doctrine.
+
+  owns:
+    - canonical_term_identity
+    - admissible_definitions
+    - aliases_and_codes
+    - prohibited_uses
+    - mutation_risk_tracking
+    - semantic_drift_containment
+    - definition_scope_boundaries
+    - terminology_normalization
+
+  does_not_own:
+    - claim_validation
+    - causal_accounting_order
+    - interaction_topology
+    - engineering_measurements
+    - object_registry
+    - bridge_contracts
+    - operational_truth
+    - cosmology
+    - metaphysical_claims
+    - replacement_physics_claims
+
+  upstream:
+    - Structure.yaml
+    - CE-OS.yaml
+    - Physics.yaml
+    - Interface.yaml
+
+  downstream:
+    - Engine.yaml
+    - Governance.yaml
+    - Interpretation_formats
+    - object_records
+    - bridge_records
+
+  semantic_rules:
+    - one_term_one_primary_definition
+    - aliases_must_point_to_primary_term
+    - semantic_identity_must_remain_stable
+    - definitions_must_not_expand_into_claims
+    - domain_terms_must_not_absorb_other_domains
+    - bridge_terms_must_not_become_causal_authority
+    - unresolved_interpretations_remain_visible
+    - shorthand_must_not_mutate_canonical_meaning
+
+  prohibited_collapses:
+    - propagation_equals_transfer
+    - field_equals_universal_substrate
+    - object_exists_equals_validated_object
+    - measurement_exists_equals_validation
+    - bridge_equals_domain_merge
+    - semantics_equals_truth
+    - terminology_equals_physics_proof
+    - domain_label_equals_complete_model
+
+  evidence_states:
+    candidate:
+      definition: >
+        Proposed semantic structure not yet stabilized across repository usage.
+      admissible_uses:
+        - draft_definitions
+        - exploratory_modeling
+      prohibited_uses:
+        - canonical_claim_authority
+
+    canonical:
+      definition: >
+        Repository-approved semantic identity with stabilized definition boundaries.
+      admissible_uses:
+        - repository_reference
+        - schema_binding
+        - interpretation_routing
+      prohibited_uses:
+        - claim_validation
+
+    quarantined:
+      definition: >
+        Semantically unstable or high-pressure term isolated pending governance review.
+      admissible_uses:
+        - interpretation_tracking
+        - unresolved_concept_registry
+      prohibited_uses:
+        - canonical_domain_use
+        - implied_validation
+
+  domains:
+
+    mass_centric:
+      code: MC
+      aliases:
+        - mass_domain
+      definition: >
+        Domain primarily governed through matter, inertia, load, pressure,
+        friction, displacement, and structural interaction.
+      admissible_uses:
+        - mechanical_systems
+        - hydraulic_systems
+        - structural_systems
+        - pressure_systems
+      prohibited_uses:
+        - generalized_field_behavior
+        - universal_motion_domain
+      mutation_risks:
+        - mass_centric_becomes_generic_physicality
+      status: canonical
+
+    field_centric:
+      code: FC
+      aliases:
+        - field_domain
+      definition: >
+        Domain primarily governed through measurable distributed field behavior,
+        gradients, induction, radiation, or propagation.
+      admissible_uses:
+        - electromagnetic_systems
+        - magnetic_systems
+        - thermal_radiation
+        - wave_behavior
+      prohibited_uses:
+        - universal_substrate
+        - unrestricted_environmental_energy
+      mutation_risks:
+        - field_centric_becomes_universal_explanation
+      status: canonical
+
+  interaction_terms:
+
+    transfer:
+      definition: >
+        Movement, load passage, pressure passage, or state movement that does not
+        require distributed field propagation.
+      admissible_uses:
+        - load_transfer
+        - pressure_transfer
+        - momentum_transfer
+        - displacement_transfer
+      prohibited_uses:
+        - electromagnetic_wave_behavior
+        - generalized_field_propagation
+      mutation_risks:
+        - transfer_collapses_into_propagation
+      status: canonical
+
+    propagation:
+      definition: >
+        Distributed field-centric interaction behavior expressed through gradients,
+        induction, or wave-like field transmission.
+      admissible_uses:
+        - electromagnetic_wave_behavior
+        - thermal_radiation
+        - magnetic_field_behavior
+      prohibited_uses:
+        - generic_movement
+        - mass_displacement
+        - fluid_flow_synonym
+      mutation_risks:
+        - propagation_becomes_generic_motion
+      status: canonical
+
+    bridge_required:
+      definition: >
+        Marker indicating that a controlled mapping is required between distinct domains.
+      admissible_uses:
+        - electrical_to_mechanical_mapping
+        - thermal_to_fluid_mapping
+        - hydraulic_to_structural_mapping
+      prohibited_uses:
+        - domain_erasure
+        - unrestricted_cross_domain_merging
+      mutation_risks:
+        - bridge_becomes_universal_translation
+      status: canonical
+
+  variable_terms:
+
+    potential:
+      aliases:
+        - p
+      definition: >
+        A modeled condition capable of producing state change under defined constraints.
+      admissible_uses:
+        - pressure_potential
+        - electrical_potential
+        - thermal_gradient_potential
+      prohibited_uses:
+        - metaphysical_force
+        - unrestricted_universal_cause
+      mutation_risks:
+        - potential_becomes_hidden_energy_source
+      status: canonical
+
+    resistance:
+      aliases:
+        - r
+      definition: >
+        Opposition, constraint, impedance, or limiting condition affecting interaction behavior.
+      admissible_uses:
+        - electrical_resistance
+        - mechanical_resistance
+        - thermal_resistance
+        - fluid_resistance
+      prohibited_uses:
+        - universal_obstruction_principle
+      mutation_risks:
+        - resistance_becomes_scalar_only_abstraction
+      status: canonical
+
+    displacement:
+      aliases:
+        - d
+      definition: >
+        Observable state change, movement, propagation, transfer, or configuration change.
+      admissible_uses:
+        - linear_displacement
+        - rotational_displacement
+        - field_displacement
+        - fluid_displacement
+      prohibited_uses:
+        - proof_of_causal_completeness
+      mutation_risks:
+        - displacement_becomes_generic_everything_term
+      status: canonical
+
+    energy:
+      aliases:
+        - e
+      definition: >
+        Scalar abstraction used to summarize system capability, transfer, work,
+        radiation, thermal state, or interaction behavior within a defined domain.
+      admissible_uses:
+        - thermal_energy
+        - mechanical_energy
+        - electrical_energy
+        - stored_energy
+      prohibited_uses:
+        - universal_substance
+        - standalone_causal_explanation
+      mutation_risks:
+        - energy_becomes_hidden_physical_object
+        - energy_becomes_complete_causal_model
+      status: canonical
+
+    force:
+      aliases:
+        - f
+      definition: >
+        Interaction effect capable of changing motion, load state, pressure state,
+        or structural configuration.
+      admissible_uses:
+        - applied_force
+        - reaction_force
+        - buoyant_force
+        - magnetic_force
+      prohibited_uses:
+        - undefined_generalized_influence
+      mutation_risks:
+        - force_becomes_metaphysical_cause
+      status: canonical
+
+    pressure:
+      aliases:
+        - P
+      definition: >
+        Distributed load or force intensity acting across an area or boundary.
+      admissible_uses:
+        - hydraulic_pressure
+        - gas_pressure
+        - ambient_pressure
+      prohibited_uses:
+        - universal_stress_field
+      mutation_risks:
+        - pressure_becomes_generic_tension_term
+      status: canonical
+
+    gradient:
+      definition: >
+        Measurable spatial or state variation across a defined region.
+      admissible_uses:
+        - temperature_gradient
+        - pressure_gradient
+        - field_gradient
+      prohibited_uses:
+        - undefined_directional_change
+      mutation_risks:
+        - gradient_becomes_vague_difference_term
+      status: canonical
+
+    boundary_condition:
+      definition: >
+        Constraint or external condition defining the operational limits of a system.
+      admissible_uses:
+        - environmental_constraints
+        - geometric_constraints
+        - thermal_constraints
+      prohibited_uses:
+        - hidden_failure_explanation
+      mutation_risks:
+        - boundary_condition_becomes_catchall_term
+      status: canonical
+
+  domain_terms:
+
+    mechanical:
+      code: ME
+      definition: >
+        Domain involving motion, load, constraint, deformation, or configuration of mass.
+      admissible_uses:
+        - rotational_systems
+        - translational_systems
+        - structural_motion
+      prohibited_uses:
+        - generalized_energy_domain
+      mutation_risks:
+        - mechanical_absorbs_nonmechanical_domains
+      status: canonical
+
+    fluid_dynamic:
+      code: FD
+      definition: >
+        Domain involving fluid flow, pressure, viscosity, buoyancy, and fluid momentum.
+      admissible_uses:
+        - hydraulic_systems
+        - pneumatic_systems
+        - ambient_flow_behavior
+      prohibited_uses:
+        - generalized_material_motion
+      mutation_risks:
+        - fluid_dynamic_becomes_generic_transfer_domain
+      status: canonical
+
+    electrical:
+      code: EC
+      aliases:
+        - Ec
+      definition: >
+        Domain involving voltage, current, electric field behavior, resistance,
+        impedance, and electrical conduction.
+      admissible_uses:
+        - AC_systems
+        - DC_systems
+        - electrical_measurement
+      prohibited_uses:
+        - all_field_behavior
+      mutation_risks:
+        - electrical_becomes_universal_field_model
+      status: canonical
+
+    magnetic:
+      code: FX
+      aliases:
+        - Fx
+      definition: >
+        Domain involving magnetic flux, magnetic field strength, inductance,
+        permeability, and magnetic coupling behavior.
+      admissible_uses:
+        - magnetic_fields
+        - inductive_behavior
+        - magnetic_coupling
+      prohibited_uses:
+        - undefined_hidden_force
+      mutation_risks:
+        - magnetic_becomes_mystical_linkage
+      status: canonical
+
+    electromagnetic_wave:
+      code: EMW
+      definition: >
+        Domain involving electromagnetic radiation, wavelength, frequency,
+        amplitude, attenuation, and propagation behavior.
+      admissible_uses:
+        - radio_waves
+        - visible_light
+        - infrared
+        - microwave
+      prohibited_uses:
+        - generalized_information_field
+      mutation_risks:
+        - electromagnetic_wave_becomes_all_propagation
+      status: canonical
+
+    thermal:
+      code: TE
+      definition: >
+        Domain involving temperature, heat transfer, thermal gradients,
+        thermal radiation, and material thermal response.
+      admissible_uses:
+        - heat_transfer
+        - thermal_expansion
+        - phase_change
+      prohibited_uses:
+        - universal_causal_source
+      mutation_risks:
+        - thermal_becomes_primary_explanation_for_everything
+      status: canonical
+
+  unresolved_terms:
+    note: >
+      These terms remain unresolved, quarantined, or outside current neutral
+      semantic scope pending future governance review.
+    terms:
+      - ether
+      - zero_point_energy
+      - heliosphere_as_causal_structure
+      - thermal_inversion_collapse
+      - electrostatic_friction
+      - refrigerant_effect_as_universal_mechanism
+      - causal_retraction
+
+  contradiction_register:
+    - shorthand_can_increase_semantic_drift
+    - aliases_can_accidentally_mutate_term_identity
+    - operational_language_can_be_mistaken_for_validation
+    - domain_labels_can_hide_missing_measurements
+    - compressed_terms_can_absorb_multiple_meanings
+    - bridge_language_can_collapse_domain_boundaries
+
+  prohibited_claims:
+    - semantic_definition_equals_physical_validation
+    - terminology_equals_proof
+    - definition_equals_measurement
+    - canonical_term_equals_causal_completeness
+    - repository_language_equals_replacement_physics
+
+  recovery:
+    reconstructable_from:
+      - Structure.yaml
+      - CE-OS.yaml
+      - Physics.yaml
+      - Interface.yaml
+      - prior_Lexicon_file
+      - phase_2_semantic_notes
+
+    compression_rule:
+      - one_term_one_definition
+      - aliases_point_to_primary_term
+      - claims_out
+      - drift_visible
+      - mutation_risks_visible
+      - unresolved_terms_preserved

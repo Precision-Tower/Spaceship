@@ -1,0 +1,806 @@
+Engine:
+  file: Engine.yaml
+  role: computable_operator_format_and_state_registry
+  authority: reusable_engineering_logic_measurement_transforms_and_margin_structure
+  status: phase_5_replacement_draft
+
+  caution:
+    note: >
+      Engine.yaml defines reusable operators, engineering formats, margin logic,
+      measurement transforms, and state-transition templates. Engine does not define
+      terms, own physical objects, govern bridges, validate claims, replace causal
+      doctrine, or assert operational readiness.
+
+  owns:
+    - reusable_operators
+    - engineering_formats
+    - computable_variable_relationships
+    - margin_logic
+    - measurement_transforms
+    - state_transition_templates
+    - calculation_readiness_requirements
+    - operator_input_output_schemas
+    - unresolved_computation_register
+
+  does_not_own:
+    - causal_definitions
+    - semantic_identity
+    - physical_object_registry
+    - bridge_contracts
+    - repository_topology
+    - claim_validation
+    - prototype_candidate_geometry
+    - operational_readiness
+    - replacement_physics_claims
+
+  upstream:
+    - Structure.yaml
+    - CE-OS.yaml
+    - Physics.yaml
+    - Lexicon.yaml
+    - Interface.yaml
+
+  downstream:
+    - Prototype.yaml
+    - Governance.yaml
+    - measurement_plans
+    - validation_requests
+    - future_Runtime.yaml
+
+  ce_os_pointer:
+    authority_source: CE-OS.yaml
+    governs:
+      - interaction_definition
+      - causal_accounting_order
+      - transfer_vs_propagation
+      - operational_validity_vs_causal_completeness
+      - scalar_compression_warning
+    rule: >
+      Engine may compress interaction structure into computable operators and scalar
+      margins, but CE-OS governs causal doctrine. Operator success does not imply
+      causal completeness or validation.
+
+  physics_pointer:
+    authority_source: Physics.yaml
+    governs:
+      - physical_domains
+      - physical_objects
+      - attached_variables
+      - interaction_topology
+      - measurement_unlocks
+    rule: >
+      Engine may compute with variables and formats referenced from Physics, but
+      Physics owns the physical domain and object registry.
+
+  lexicon_pointer:
+    authority_source: Lexicon.yaml
+    governs:
+      - term_definitions
+      - aliases
+      - admissible_uses
+      - mutation_risks
+    rule: >
+      Engine may use controlled terms and aliases, but Lexicon owns semantic identity.
+
+  interface_pointer:
+    authority_source: Interface.yaml
+    governs:
+      - bridge_contracts
+      - blocked_transfers
+      - translation_boundaries
+      - drift_checks
+    rule: >
+      Cross-domain operators require Interface bridge records or explicit bridge-required
+      flags. Engine may not create bridge authority by computation alone.
+
+  evidence_states:
+    candidate_operator:
+      meaning: operator structure exists but has not been checked against measured data
+    measured_operator:
+      meaning: operator inputs and outputs have measurement records in stated conditions
+    bounded_operator:
+      meaning: operator is limited to a documented range or envelope
+    governance_review_required:
+      meaning: operator output could support a claim and must route to Governance before promotion
+
+  operator_schema:
+    required_fields:
+      - name
+      - role
+      - domain
+      - input_variables
+      - output_variables
+      - operation_type
+      - required_measurements
+      - assumptions
+      - constraints
+      - loss_terms
+      - evidence_state
+      - prohibited_outputs
+    optional_fields:
+      - source_domain
+      - target_domain
+      - interface_bridge_required
+      - failure_modes
+      - margin_thresholds
+      - units
+      - test_method
+      - recovery_pointer
+
+  format_schema:
+    required_fields:
+      - name
+      - role
+      - composed_operators
+      - required_variables
+      - output_records
+      - required_measurements
+      - unresolved
+      - prohibited_claims
+    optional_fields:
+      - domain
+      - bridge_records
+      - margin_dashboard
+      - state_transitions
+      - evidence_state
+
+  state_transition_schema:
+    required_fields:
+      - name
+      - from_state
+      - to_state
+      - trigger_condition
+      - required_measurements
+      - hold_conditions
+      - prohibited_claims
+    optional_fields:
+      - operator_dependency
+      - recovery_action
+      - shutdown_condition
+      - governance_review_required
+
+  operator_classes:
+
+    margin_operators:
+      role: compare_measured_or_modeled_capacity_against_load_or_demand
+      examples:
+        - buoyancy_margin_operator
+        - power_margin_operator
+        - containment_margin_operator
+        - structural_margin_operator
+        - thermal_margin_operator
+
+    transfer_operators:
+      role: map non-field load pressure momentum displacement or state passage
+      examples:
+        - load_transfer_operator
+        - pressure_transfer_operator
+        - fluid_flow_operator
+        - torque_power_operator
+        - hydraulic_force_operator
+
+    propagation_operators:
+      role: map field-centric distributed propagation or gradient behavior
+      examples:
+        - electromagnetic_wave_operator
+        - thermal_gradient_operator
+        - inductive_coupling_operator
+        - radiation_absorption_operator
+
+    bridge_operators:
+      role: map controlled cross-domain transformations with Interface boundary rules
+      examples:
+        - electrical_to_mechanical_operator
+        - mechanical_to_hydraulic_operator
+        - hydraulic_to_mechanical_operator
+        - electromagnetic_to_thermal_operator
+
+    degradation_operators:
+      role: track loss creep wear fatigue corrosion thermal damage or state degradation
+      examples:
+        - abrasion_wear_operator
+        - strap_creep_operator
+        - fatigue_cycle_operator
+        - corrosion_exposure_operator
+        - thermal_rise_operator
+
+    measurement_operators:
+      role: convert observations into structured variable records
+      examples:
+        - measurement_capture_operator
+        - uncertainty_bounds_operator
+        - repeatability_operator
+        - anomaly_register_operator
+
+  reusable_operators:
+
+    buoyancy_force_operator:
+      role: compute or estimate buoyant force from displaced fluid conditions
+      domain: BC
+      operation_type: transfer_operator
+      input_variables:
+        - displaced_volume
+        - fluid_density
+        - gravitational_acceleration
+      output_variables:
+        - buoyant_force
+      required_measurements:
+        - displaced_volume
+        - fluid_density
+        - object_mass
+        - submerged_volume
+      assumptions:
+        - fluid_density_known_or_measured
+        - displaced_volume_geometry_valid_for_test_condition
+      constraints:
+        - calm_water_result_does_not_validate_sea_state_behavior
+        - buoyant_force_does_not_equal_reserve_buoyancy_without_margin_analysis
+      loss_terms:
+        - leakage
+        - trapped_water
+        - deformation
+      evidence_state: candidate_operator
+      prohibited_outputs:
+        - reserve_buoyancy_claim
+        - seaworthiness_claim
+        - validated_stability_claim
+
+    buoyancy_margin_operator:
+      role: compare buoyant support against loaded weight under stated conditions
+      domain: BC
+      operation_type: margin_operator
+      input_variables:
+        - buoyant_force
+        - loaded_weight
+        - safety_factor_or_margin_threshold
+      output_variables:
+        - flotation_margin
+        - overload_gap
+      required_measurements:
+        - buoyant_force
+        - loaded_weight
+        - waterline_z
+        - freeboard
+      assumptions:
+        - load_case_defined
+        - water_condition_defined
+      constraints:
+        - positive_margin_does_not_validate_system_stability
+        - margin_is_condition_bound
+      loss_terms:
+        - dynamic_wave_load
+        - water_ingress
+        - uneven_load_distribution
+      evidence_state: candidate_operator
+      prohibited_outputs:
+        - safe_payload
+        - validated_stability
+        - operational_readiness
+
+    torque_power_operator:
+      role: compute shaft power relationship from torque and angular velocity
+      domain: MA
+      operation_type: transfer_operator
+      input_variables:
+        - torque
+        - angular_velocity
+      output_variables:
+        - shaft_power
+      required_measurements:
+        - torque
+        - rpm
+      assumptions:
+        - torque_and_speed_measured_at_same_shaft_condition
+      constraints:
+        - shaft_power_does_not_equal_available_output_after_losses
+      loss_terms:
+        - bearing_loss
+        - coupling_loss
+        - heat_generation
+      evidence_state: candidate_operator
+      prohibited_outputs:
+        - validated_output_power
+        - validated_duty_cycle
+
+    hydraulic_force_operator:
+      role: compute mechanical force from hydraulic pressure and actuator area
+      domain: FH
+      operation_type: bridge_operator
+      source_domain: FH
+      target_domain: ME
+      interface_bridge_required: hydraulic_to_mechanical
+      input_variables:
+        - hydraulic_pressure
+        - actuator_area
+      output_variables:
+        - mechanical_output_force
+      required_measurements:
+        - pressure
+        - actuator_area
+        - leakage
+        - displacement
+      assumptions:
+        - actuator_geometry_known
+        - pressure_applied_at_effective_area
+      constraints:
+        - pressure_rating_does_not_equal_validated_load_capacity
+      loss_terms:
+        - seal_loss
+        - pressure_drop
+        - friction
+      evidence_state: candidate_operator
+      prohibited_outputs:
+        - validated_lift_capacity
+        - safe_payload
+
+    electrical_power_operator:
+      role: compute electrical power from voltage and current under stated condition
+      domain: EC
+      operation_type: transfer_operator
+      input_variables:
+        - voltage
+        - current
+      output_variables:
+        - electrical_power
+      required_measurements:
+        - voltage
+        - current
+        - measurement_condition
+      assumptions:
+        - voltage_and_current_recorded_under_same_load_condition
+      constraints:
+        - input_power_does_not_equal_useful_output_power_without_bridge_and_loss_accounting
+      loss_terms:
+        - heat_generation
+        - voltage_drop
+        - internal_resistance
+      evidence_state: candidate_operator
+      prohibited_outputs:
+        - validated_runtime
+        - validated_safe_output
+
+    electrical_to_mechanical_operator:
+      role: map electrical input variables to mechanical output variables through a conversion component
+      domain: cross_domain
+      operation_type: bridge_operator
+      source_domain: EC
+      target_domain: ME
+      interface_bridge_required: electrical_to_mechanical
+      input_variables:
+        - input_voltage
+        - input_current
+      output_variables:
+        - output_torque
+        - output_speed
+        - mechanical_output_power
+      required_measurements:
+        - input_voltage
+        - input_current
+        - output_torque
+        - output_speed
+        - temperature_rise
+      assumptions:
+        - component_interface_identified
+        - load_condition_defined
+      constraints:
+        - conversion_map_requires_Interface_bridge
+        - efficiency_requires_measured_input_and_output_under_same_condition
+      loss_terms:
+        - electrical_loss
+        - thermal_loss
+        - mechanical_friction
+      evidence_state: candidate_operator
+      prohibited_outputs:
+        - validated_efficiency
+        - validated_output_power
+        - operational_readiness
+
+    thermal_gradient_operator:
+      role: map thermal gradient to heat transfer tendency under stated material and boundary conditions
+      domain: TE
+      operation_type: propagation_operator
+      input_variables:
+        - temperature_gradient
+        - thermal_conductivity
+        - boundary_area
+        - material_thickness
+      output_variables:
+        - heat_flux
+        - heat_transfer_rate
+      required_measurements:
+        - temperature_1
+        - temperature_2
+        - material_thickness
+        - thermal_conductivity
+        - boundary_area
+      assumptions:
+        - boundary_conditions_defined
+        - material_path_identified
+      constraints:
+        - heat_transfer_rate_is_condition_bound
+        - thermal_gradient_does_not_validate_fluid_circulation
+      loss_terms:
+        - radiation_loss
+        - convection_loss
+        - contact_resistance
+      evidence_state: candidate_operator
+      prohibited_outputs:
+        - validated_thermal_performance
+
+    fluid_drag_operator:
+      role: estimate fluid drag against an object under defined flow conditions
+      domain: FD
+      operation_type: transfer_operator
+      input_variables:
+        - fluid_density
+        - relative_velocity
+        - projected_area
+        - drag_coefficient
+      output_variables:
+        - drag_force
+      required_measurements:
+        - fluid_density
+        - relative_velocity
+        - projected_area
+        - drag_coefficient_or_test_data
+      assumptions:
+        - flow_condition_defined
+        - object_orientation_defined
+      constraints:
+        - estimated_drag_does_not_validate_mooring_or_tow_rating
+      loss_terms:
+        - turbulence
+        - surface_roughness
+        - wake_effects
+      evidence_state: candidate_operator
+      prohibited_outputs:
+        - tow_rating
+        - mooring_rating
+        - seaworthiness
+
+    abrasion_wear_operator:
+      role: track material wear risk at contact interface under cyclic or sliding contact
+      domain: ME
+      operation_type: degradation_operator
+      input_variables:
+        - contact_pressure
+        - relative_motion
+        - material_abrasion_resistance
+        - cycle_count
+      output_variables:
+        - wear_risk
+        - inspection_interval_candidate
+      required_measurements:
+        - contact_pressure
+        - relative_motion
+        - material_pair
+        - cycle_count
+        - observed_wear_depth
+      assumptions:
+        - contact_interface_identified
+      constraints:
+        - wear_risk_does_not_equal_long_term_durability
+      loss_terms:
+        - material_loss
+        - surface_deformation
+      evidence_state: candidate_operator
+      prohibited_outputs:
+        - long_term_durability
+        - validated_restraint_safety
+
+    strap_creep_operator:
+      role: track restraint elongation or tension loss under sustained or cyclic load
+      domain: ME
+      operation_type: degradation_operator
+      input_variables:
+        - strap_tension
+        - load_duration
+        - cycle_count
+        - material_type
+        - temperature
+      output_variables:
+        - creep_risk
+        - tension_loss
+      required_measurements:
+        - initial_tension
+        - final_tension
+        - elapsed_time
+        - cycle_count
+        - material_type
+        - temperature
+      assumptions:
+        - strap_material_identified
+        - loading_profile_defined
+      constraints:
+        - creep_observation_does_not_validate_restraint_safety
+      loss_terms:
+        - elongation
+        - fiber_damage
+        - abrasion
+      evidence_state: candidate_operator
+      prohibited_outputs:
+        - validated_restraint_safety
+        - long_term_durability
+
+    measurement_capture_operator:
+      role: convert observation into structured variable record with context
+      domain: validation_support
+      operation_type: measurement_operator
+      input_variables:
+        - observed_value
+        - measurement_method
+        - unit
+        - test_condition
+        - timestamp
+      output_variables:
+        - measurement_record
+        - uncertainty_note
+      required_measurements:
+        - observed_value
+        - method
+        - condition
+      assumptions:
+        - observation_context_recorded
+      constraints:
+        - measurement_record_does_not_self_promote_to_validation
+      loss_terms:
+        - measurement_uncertainty
+        - instrument_error
+        - sampling_error
+      evidence_state: candidate_operator
+      prohibited_outputs:
+        - validation_claim
+        - operational_readiness
+
+  engineering_formats:
+
+    buoyancy_payload_support_format:
+      role: compose buoyancy force and margin checks for flotation support analysis
+      composed_operators:
+        - buoyancy_force_operator
+        - buoyancy_margin_operator
+      required_variables:
+        - displaced_volume
+        - fluid_density
+        - object_mass
+        - loaded_weight
+        - submerged_volume
+        - freeboard
+      output_records:
+        - buoyant_force
+        - flotation_margin
+        - unresolved_load_cases
+      required_measurements:
+        - measured_displacement_volume
+        - measured_loaded_weight
+        - waterline_z
+        - freeboard
+      unresolved:
+        - dynamic_wave_behavior
+        - uneven_load_distribution
+        - flooding_or_leakage_state
+      prohibited_claims:
+        - reserve_buoyancy
+        - safe_payload
+        - seaworthiness
+        - validated_stability
+
+    electrical_motor_output_format:
+      role: compose electrical input and mechanical output checks for motor-like conversion
+      composed_operators:
+        - electrical_power_operator
+        - electrical_to_mechanical_operator
+        - torque_power_operator
+      required_variables:
+        - input_voltage
+        - input_current
+        - output_torque
+        - output_speed
+        - temperature_rise
+      output_records:
+        - electrical_input_power
+        - mechanical_output_power
+        - loss_gap
+      required_measurements:
+        - voltage_under_load
+        - current_under_load
+        - torque_under_load
+        - rpm_under_load
+        - temperature_rise
+      unresolved:
+        - efficiency_curve
+        - duty_cycle_boundary
+        - thermal_limit
+      prohibited_claims:
+        - validated_efficiency
+        - validated_output_power
+        - operational_readiness
+
+    hydraulic_actuation_format:
+      role: compose hydraulic pressure flow and mechanical output checks
+      composed_operators:
+        - hydraulic_force_operator
+      required_variables:
+        - hydraulic_pressure
+        - actuator_area
+        - flow_rate
+        - displacement
+        - leakage
+      output_records:
+        - mechanical_output_force
+        - displacement_rate
+        - leakage_note
+      required_measurements:
+        - pressure
+        - actuator_area
+        - flow_rate
+        - stroke_displacement
+        - leak_rate
+      unresolved:
+        - pressure_drop
+        - seal_loss
+        - load_hold_behavior
+      prohibited_claims:
+        - safe_payload
+        - validated_lift_capacity
+        - validated_hold_capacity
+
+    HDPE_drum_restraint_format:
+      role: compose flotation contact restraint and degradation operators for drum restraint analysis
+      composed_operators:
+        - buoyancy_force_operator
+        - buoyancy_margin_operator
+        - abrasion_wear_operator
+        - strap_creep_operator
+      required_variables:
+        - displaced_volume
+        - submerged_volume
+        - buoyant_force
+        - cradle_load
+        - strap_tension
+        - contact_pressure
+        - cycle_count
+        - relative_motion
+      output_records:
+        - buoyant_uplift_record
+        - restraint_load_path_record
+        - wear_risk
+        - creep_risk
+        - unresolved_restraint_modes
+      required_measurements:
+        - drum_mass
+        - displacement_volume
+        - strap_tension
+        - side_stop_load
+        - end_stop_load
+        - contact_wear
+        - cyclic_motion
+      unresolved:
+        - float_out_risk
+        - drum_roll_or_slide
+        - cyclic_wave_loading
+        - inspection_visibility
+        - replacement_access
+      prohibited_claims:
+        - validated_restraint_safety
+        - reserve_buoyancy
+        - long_term_durability
+        - seaworthiness
+        - operational_readiness
+
+  state_transition_templates:
+
+    candidate_to_measured:
+      from_state: candidate_operator
+      to_state: measured_operator
+      trigger_condition: required_measurements_recorded_with_context
+      required_measurements:
+        - input_values
+        - output_values
+        - measurement_method
+        - test_condition
+      hold_conditions:
+        - missing_units
+        - missing_test_context
+        - missing_repeat_count
+      prohibited_claims:
+        - validation_claim
+        - readiness_claim
+
+    measured_to_bounded:
+      from_state: measured_operator
+      to_state: bounded_operator
+      trigger_condition: repeated_measurements_define_condition_bound
+      required_measurements:
+        - repeat_count
+        - boundary_conditions
+        - variance_or_uncertainty
+        - anomaly_records
+      hold_conditions:
+        - single_trial_only
+        - uncontrolled_environment
+        - missing_negative_results
+      prohibited_claims:
+        - broad_operating_envelope
+        - validated_performance
+
+    bounded_to_governance_review:
+      from_state: bounded_operator
+      to_state: governance_review_required
+      trigger_condition: output_may_support_claim_promotion
+      required_measurements:
+        - bounded_test_records
+        - anomaly_records
+        - claim_text
+        - operating_envelope
+      hold_conditions:
+        - unsupported_claim_language
+        - missing_evidence_state
+      prohibited_claims:
+        - self_validation_by_Engine
+        - automatic_claim_promotion
+
+  unresolved:
+    - final_unit_normalization
+    - complete_operator_library
+    - measurement_record_schema_alignment
+    - Governance_yaml_not_yet_rebuilt
+    - Runtime_yaml_not_yet_unlocked
+    - operator_threshold_values_not_set
+    - margin_thresholds_not_validated
+
+  contradiction_register:
+    - computable_operator_does_not_equal_validated_claim
+    - scalar_margin_does_not_replace_causal_accounting
+    - positive_margin_does_not_equal_operational_readiness
+    - measured_once_does_not_equal_bounded_operation
+    - bounded_operator_does_not_equal_broad_operating_envelope
+    - cross_domain_operator_requires_Interface_bridge
+    - variable_calculation_does_not_define_variable_meaning
+
+  prohibited_claims:
+    - Engine_validates_claims
+    - operator_success_equals_causal_completeness
+    - computed_margin_equals_safety
+    - model_output_equals_operational_readiness
+    - calculation_equals_measurement
+    - measurement_equals_validation
+    - bridge_operator_equals_bridge_authority
+    - efficiency_claim_without_measured_input_output
+    - safe_payload
+    - seaworthiness
+    - reserve_buoyancy
+    - validated_stability
+    - validated_restraint_safety
+    - long_term_durability
+
+  recovery:
+    reconstructable_from:
+      - Structure.yaml
+      - CE-OS.yaml
+      - Physics.yaml
+      - Lexicon.yaml
+      - Interface.yaml
+      - prior_Engine_file
+      - phase_5_engine_notes
+
+    recovery_requirements:
+      - every_operator_lists_inputs_outputs
+      - every_operator_lists_required_measurements
+      - every_cross_domain_operator_points_to_Interface
+      - every_term_resolves_to_Lexicon_when_defined
+      - every_physical_variable_resolves_to_Physics
+      - every_claim_pressure_routes_to_Governance_when_unlocked
+      - unresolved_thresholds_remain_visible
+
+    compression_rule:
+      - operators_in
+      - formats_in
+      - margins_in
+      - measurements_in
+      - state_templates_in
+      - definitions_out
+      - objects_out
+      - bridge_authority_out
+      - validation_out
+      - causal_doctrine_out

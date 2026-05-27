@@ -1,0 +1,427 @@
+Minimum Reconstructable Form of CE-OS
+Kernel Definition
+
+CE-OS minimum reconstructable form:
+
+A constrained causal engineering interpretation architecture that preserves interaction-level visibility across domains before scalar abstraction, while governing admissibility to prevent ontology drift, domain collapse, and speculative escalation.
+
+This is the irreducible kernel.
+
+If reduced further, CE-OS becomes either:
+
+generic systems thinking,
+anti-abstraction rhetoric,
+speculative physics,
+or ordinary engineering methodology.
+Irreducible Elements
+1. Interaction
+Why irreducible
+
+Root event primitive.
+
+If removed
+
+All downstream terms lose causal substrate.
+
+Dependency role
+
+Parent of:
+
+coupling
+propagation
+resistance
+loss
+organization
+domain behavior
+2. Domain Separation
+Why irreducible
+
+Prevents category collapse.
+
+If removed
+
+Mass behavior, field behavior, thermal behavior, electrical behavior, and mechanical behavior merge under vague causality.
+
+Dependency role
+
+Controls:
+
+admissible vocabulary
+propagation classification
+coupling type
+transfer type
+cross-domain mapping
+3. Scalar Compression
+Why irreducible
+
+Defines the central failure mode CE-OS guards against.
+
+If removed
+
+CE-OS loses its reason for existing.
+
+Dependency role
+
+Parent of:
+
+causal accounting
+use-case equivalence
+abstraction governance
+operational validity distinction
+4. Causal Accounting
+Why irreducible
+
+Defines CE-OS method at minimum resolution.
+
+If removed
+
+Framework becomes critique without procedure.
+
+Dependency role
+
+Operational bridge between ontology and methodology.
+
+5. Operational Validity ≠ Causal Completeness
+Why irreducible
+
+Prevents CE-OS from rejecting working models while preserving its interpretive purpose.
+
+If removed
+
+System collapses into either mainstream redundancy or anti-physics rhetoric.
+
+Dependency role
+
+Root epistemic distinction.
+
+6. Propagation / Transfer Distinction
+Why irreducible
+
+Highest-risk compression boundary.
+
+If removed
+
+Field-centric and mass-centric behavior collapse.
+
+Dependency role
+
+Controls:
+
+field admissibility
+domain classification
+electrical interpretation
+resonance interpretation
+7. Field / Mass Distinction
+Why irreducible
+
+Core domain firewall.
+
+If removed
+
+“Field” becomes universalized and CE-OS mutates into vague metaphysics.
+
+Dependency role
+
+Controls:
+
+propagation
+voltage
+flux
+conductive vs electromagnetic behavior
+field-centric systems
+8. Organization
+Why irreducible
+
+Explains capability difference without conservation violation.
+
+If removed
+
+CE-OS cannot distinguish scalar equivalence from functional non-equivalence.
+
+Dependency role
+
+Parent of:
+
+organizational amplification
+geometry
+timing
+coupling arrangement
+capability analysis
+9. Amplification ≠ Energy Creation
+Why irreducible
+
+Primary anti-collapse constraint.
+
+If removed
+
+System drifts toward over-unity interpretation.
+
+Dependency role
+
+Governance boundary for:
+
+OAF
+resonance
+efficiency
+functional capability
+10. Claim Tiering
+Why irreducible
+
+Prevents interpretation from becoming validated claim.
+
+If removed
+
+GPT systems escalate speculative implications into asserted engineering facts.
+
+Dependency role
+
+Governance spine.
+
+A. Minimum Reconstructable Ontology Map
+CE-OS
+= constrained causal engineering interpretation architecture
+
+ROOT:
+  Interaction
+    = measurable state-affecting relation
+
+PRIMARY EPISTEMIC DISTINCTION:
+  Operational validity ≠ causal completeness
+
+PRIMARY FAILURE MODE:
+  Scalar compression
+    = loss of interaction-level structure through scalar summary
+
+PRIMARY METHOD:
+  Causal accounting
+    = analysis of interaction organization, domain behavior, coupling, loss, and constraints
+
+DOMAIN TOPOLOGY:
+  Mass-centric
+    = matter/inertia/load/pressure/friction/displacement
+  Field-centric
+    = measurable gradient / field behavior / non-contact-capable interaction
+  Cross-domain
+    = governed transition between unlike domains
+
+CORE ORGANIZERS:
+  Structure
+    = physically instantiated arrangement
+  Organization
+    = orchestration of interactions, constraints, geometry, timing, coupling
+  Coupling
+    = typed interaction linkage
+  Propagation
+    = field-centric distributed gradient behavior
+  Transfer / transmission
+    = mass-centric or non-field interaction movement/load/state passage
+
+CONSEQUENCE TERMS:
+  Resistance
+    = opposition/constraint to organized interaction
+  Loss
+    = reduction of usable organized interaction
+  Heat
+    = emergent interaction signature
+  Resonance
+    = oscillatory/system-response alignment
+  Amplification
+    = increased usable capability through organization, not energy creation
+B. Minimum Reconstructable Governance Map
+GOVERNANCE ROOT:
+  No term may broaden beyond admissibility boundary.
+
+AUTHORITY RULES:
+  One concept → one canonical definition.
+  One file → one authority domain.
+  Examples/analogies → no ontology authority.
+  Speculation → quarantined.
+
+CLAIM TIERS:
+  Interpretation
+  Hypothesis
+  Engineering implication
+  Experimental proposal
+  Observed anomaly
+  Demonstrated behavior
+  Validated capability
+
+DOMAIN FIREWALLS:
+  mass-centric ≠ field-centric
+  propagation ≠ transfer
+  coupling ≠ unexplained influence
+  organization ≠ hidden source
+  amplification ≠ energy creation
+  analogy ≠ proof
+  operational success ≠ causal completeness
+
+GPT CONSTRAINT:
+  Do not average distinctions.
+  Do not upgrade claim tier.
+  Do not redefine canonical terms.
+  Do not collapse domains for readability.
+C. Minimum Reconstructable Distinction Topology
+Operational validity ≠ causal completeness
+Scalar equivalence ≠ functional equivalence
+Interaction ≠ abstraction
+Causal accounting ≠ scalar accounting
+Mass-centric ≠ field-centric
+Propagation ≠ transfer
+Field ≠ generalized distributed influence
+Coupling ≠ undefined linkage
+Organization ≠ structure
+Organization ≠ hidden energy source
+Amplification ≠ energy creation
+Efficiency ≠ surplus output
+Heat ≠ primary causal mechanism
+Loss ≠ disappearance / conservation failure
+Resonance ≠ unlimited amplification
+Analogy ≠ ontology
+Interpretation ≠ validation
+Speculation ≠ canon
+
+These distinctions are the actual CE-OS skeleton.
+
+D. Minimum Viable File Architecture
+1. CORE_KERNEL.txt
+
+Contains only:
+
+CE-OS identity
+root principles
+epistemic distinctions
+domain existence
+anti-collapse axioms
+
+Cannot contain:
+
+expanded definitions
+examples
+speculation
+pedagogy
+2. CANONICAL_LEXICON.txt
+
+Contains:
+
+single authoritative definitions
+admissible uses
+prohibited uses
+dependency roles
+domain type
+mutation risks
+
+Cannot contain:
+
+methodology
+analogies
+speculative claims
+3. GOVERNANCE_PROTOCOLS.txt
+
+Contains:
+
+admissibility rules
+claim tiering
+domain firewalls
+GPT output constraints
+anti-drift rules
+
+Cannot contain:
+
+ontology redefinition
+engineering expansion
+4. DOMAIN_MODELS.txt
+
+Contains:
+
+mass-centric model
+field-centric model
+cross-domain transition rules
+propagation/transfer taxonomy
+coupling subclasses
+
+Cannot contain:
+
+core definitions
+speculation
+pedagogy
+5. ENGINEERING_METHODOLOGY.txt
+
+Contains:
+
+causal accounting workflow
+interaction mapping
+loss mapping
+coupling analysis
+organizational analysis
+
+Cannot contain:
+
+canonical definitions
+claim escalation
+6. RECOVERY_FORMS.txt
+
+Contains:
+
+minimal recovery kernel
+distinction topology
+dependency maps
+anti-collapse summary
+reconstruction prompts
+
+Cannot contain:
+
+new ontology
+examples unless marked non-authoritative
+E. Lowest-Token Recovery Form
+CE-OS = constrained causal engineering interpretation architecture.
+
+Purpose:
+preserve interaction-level visibility before scalar abstraction.
+
+Root:
+Interaction = measurable state-affecting relation.
+
+Core distinction:
+operational validity ≠ causal completeness.
+scalar equivalence ≠ functional equivalence.
+
+Method:
+causal accounting = map interaction, domain, coupling, constraint, loss, organization before scalar compression.
+
+Domains:
+mass-centric = matter/inertia/load/pressure/friction/displacement.
+field-centric = measurable gradient field behavior with non-contact-capable interaction.
+cross-domain = governed transition between unlike domains.
+
+Critical separations:
+propagation = field-centric distributed gradient behavior.
+transfer/transmission = non-field movement/load/state passage.
+structure = physical arrangement.
+organization = orchestration of interactions/constraints/geometry/timing/coupling.
+coupling = typed interaction linkage, not unexplained influence.
+
+Consequences:
+resistance = interaction constraint.
+loss = reduction of usable organized interaction.
+heat = emergent interaction signature.
+resonance = response alignment under oscillatory behavior.
+amplification = increased usable capability through organization, never energy creation.
+
+Governance:
+one concept → one canonical definition.
+one file → one authority domain.
+analogies teach only.
+speculation quarantined.
+claim tiers required.
+do not upgrade interpretation to validation.
+do not collapse domains.
+do not broaden high-risk terms.
+
+Forbidden collapses:
+field ≠ universal influence.
+propagation ≠ movement.
+organization ≠ hidden source.
+amplification ≠ surplus energy.
+efficiency ≠ over-unity.
+analogy ≠ proof.
+CE-OS ≠ replacement physics.

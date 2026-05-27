@@ -1,0 +1,330 @@
+Politics:
+  file: Politics.yaml
+  role: regional_political_operating_strategy
+  status: draft_candidate
+  authority: strategy_and_organization_only_not_public_policy_final_authority
+
+  mission:
+    - rebuild_local_trust
+    - create_culturally_legible_democratic_presence
+    - organize_southeastern_oklahoma_without_imported_language
+    - support_candidates_with_local_legitimacy
+    - build_long_term_regional_power
+    - protect_working_families_and_community_stability
+
+  prime_directive: >
+    Become useful before asking for power.
+
+  operating_rules:
+    - respect_local_identity
+    - respect_faith_without_surrendering_to_religious_abuse_of_power
+    - respect_tribal_sovereignty
+    - do_not_use_tribal_nations_as_symbolic_props
+    - prioritize_outcomes_over_performance
+    - translate_values_into_local_language
+    - never_humiliate_rural_voters
+    - never_confuse_attention_with_trust
+    - never_confuse_outrage_with_organization
+    - preserve_long_term_relationships_over_short_term_clout
+
+  prohibited_behaviors:
+    - imported_national_jargon
+    - public_moral_grandstanding_without_local_work
+    - treating_voters_as_stupid
+    - attacking_religion_broadly
+    - using_tribal_identity_for_campaign_aesthetics
+    - consultant_driven_message_without_local_validation
+    - election_cycle_only_organizing
+    - social_media_activity_mistaken_for_power
+    - purity_tests_that_destroy_coalition
+    - promising_unrealistic_transformation
+
+  core_frame:
+    identity: regional_reconstruction_party
+    message: >
+      Oklahoma families are being failed by political leadership that performs
+      outrage while hospitals, schools, roads, wages, addiction recovery, and
+      local opportunity deteriorate.
+
+  strategic_objectives:
+    - become_the_party_of_functioning_local_systems
+    - become_the_party_of_working_family_dignity
+    - become_the_party_of_honest_government_and_anti_corruption
+    - become_the_party_of_child_protection_and_community_safety
+    - become_the_party_of_rural_healthcare_and_education_stability
+    - become_the_party_that_can_partner_with_tribal_governments_respectfully
+
+  target_trust_groups:
+    exhausted_nonvoters:
+      need:
+        - proof_party_is_not_theater
+        - practical_help
+        - local_presence
+      approach:
+        - show_up_before_election_season
+        - solve_small_real_problems
+        - avoid_ideological_recruitment_language
+
+    working_class_families:
+      need:
+        - wages
+        - healthcare
+        - schools
+        - roads
+        - cost_relief
+      approach:
+        - dignity_language
+        - competence_language
+        - anti_corruption_language
+
+    tribal_communities:
+      need:
+        - sovereignty_respect
+        - institutional_partnership
+        - no_symbolic_extraction
+      approach:
+        - government_to_government_respect
+        - long_term_relationships
+        - shared_regional_infrastructure_priorities
+
+    faith_communities:
+      need:
+        - respect
+        - protection_from_exploitation
+        - child_and_family_safety
+      approach:
+        - attack_abuse_of_power_not_belief
+        - emphasize_family_protection
+        - emphasize_honesty_and_service
+
+    young_rural_voters:
+      need:
+        - reason_to_stay
+        - jobs
+        - housing
+        - education_paths
+      approach:
+        - future_building_language
+        - trade_and_technical_pathways
+        - local_opportunity_creation
+
+  organizational_model:
+    type: distributed_regional_network
+
+    county_nodes:
+      role: local_trust_and_execution_units
+      responsibilities:
+        - identify_local_pressure_points
+        - maintain_relationship_maps
+        - recruit_local_candidates
+        - host_regular_non_election_events
+        - collect_voter_language
+        - report_ground_truth_upward
+
+      required_roles:
+        county_operations_lead:
+          owns:
+            - volunteer_continuity
+            - event_execution
+            - contact_lists
+            - local_calendar
+
+        community_bridge_lead:
+          owns:
+            - churches
+            - schools
+            - civic_groups
+            - tribal_contacts
+            - small_business_relationships
+
+        issue_signal_lead:
+          owns:
+            - hospitals
+            - schools
+            - roads
+            - addiction
+            - housing
+            - jobs
+            - local_corruption_signals
+
+        story_lead:
+          owns:
+            - voter_stories
+            - local_testimony
+            - plain_language_translation
+            - candidate_story_support
+
+        candidate_watch_lead:
+          owns:
+            - local_leader_identification
+            - candidate_readiness_notes
+            - community_legitimacy_assessment
+
+  candidate_pipeline:
+    preferred_profiles:
+      - teachers
+      - nurses
+      - veterans
+      - tradespeople
+      - small_business_owners
+      - tribal_administrators
+      - county_level_problem_solvers
+      - parents_with_community_trust
+      - public_safety_and_recovery_workers
+
+    training_needs:
+      - local_message_discipline
+      - hostile_question_handling
+      - policy_translation
+      - coalition_respect
+      - anti_corruption_framing
+      - rural_identity_respect
+      - faith_boundary_handling
+      - tribal_sovereignty_basics
+
+    disqualifying_patterns:
+      - contempt_for_local_voters
+      - attention_seeking_over_service
+      - inability_to_listen
+      - national_brand_dependency
+      - purity_test_reflex
+      - instability_under_pressure
+
+  messaging_rules:
+    say_more:
+      - working_families
+      - honest_government
+      - protect_kids
+      - keep_hospitals_open
+      - good_schools
+      - roads_that_work
+      - addiction_recovery
+      - local_jobs
+      - respect_sovereignty
+      - stop_political_theater
+
+    say_less:
+      - abstract_ideology
+      - national_party_language
+      - academic_language
+      - activist_jargon
+      - insider_process_talk
+      - culture_war_reaction_language
+
+    never_say:
+      - voters_are_voting_against_their_interests
+      - rural_people_are_backward
+      - religion_is_the_problem
+      - tribes_are_a_voting_bloc
+      - demographics_will_save_us
+      - we_just_need_better_messaging
+
+  issue_stack:
+    primary:
+      - rural_healthcare
+      - public_schools
+      - roads_and_infrastructure
+      - wages_and_local_jobs
+      - addiction_recovery
+      - child_protection
+      - corruption_and_accountability
+      - housing_pressure
+      - tribal_partnership
+      - youth_retention
+
+    secondary:
+      - broadband
+      - technical_education
+      - small_business_support
+      - veterans_services
+      - environmental_health
+      - emergency_services
+      - food_security
+
+  opposition_frame:
+    target: failed_one_party_rule
+    rule: >
+      Attack outcomes, corruption, hypocrisy, and abuse of power.
+      Do not attack voter identity.
+
+    message: >
+      The same people have held power for years. If hospitals are closing,
+      schools are struggling, roads are failing, and families are falling behind,
+      they own the results.
+
+  tribal_partnership_protocol:
+    prime_rule: respect_sovereignty_first
+
+    allowed:
+      - listen_before_proposing
+      - recognize_government_status
+      - discuss_shared_regional_needs
+      - support infrastructure_and_healthcare_partnerships
+      - protect_long_term_relationships
+
+    prohibited:
+      - endorsement_hunting_as_first_contact
+      - symbolic_photo_op_behavior
+      - cultural_tokenization
+      - speaking_for_tribal_nations
+      - treating_tribal_citizens_as_a_monolithic_bloc
+
+  faith_boundary_protocol:
+    rule: >
+      Separate sincere faith from political exploitation of religion.
+
+    allowed:
+      - respect_church_communities
+      - talk_about_service
+      - talk_about_child_protection
+      - talk_about_honesty
+      - expose_abuse_of_power
+
+    prohibited:
+      - mocking_belief
+      - treating_churchgoers_as_enemies
+      - framing_all_religion_as_corruption
+      - letting_predators_hide_behind_religious_language
+
+  success_metrics:
+    short_term:
+      - more_local_meetings_than_social_posts
+      - county_contact_lists_updated
+      - local_issue_maps_created
+      - tribal_and_civic_relationships_opened_respectfully
+      - candidate_pipeline_identified
+
+    medium_term:
+      - volunteer_retention_improves
+      - nonvoter_contact_increases
+      - local_candidates_file_for_office
+      - county_parties_hold_regular_service_events
+      - message_language_becomes_more_local
+
+    long_term:
+      - democratic_brand_becomes_less_toxic
+      - local_trust_networks_rebuild
+      - competitive_county_races_return
+      - regional_institutional_partnerships_strengthen
+      - voters_associate_party_with_usefulness_not_theater
+
+  failure_modes:
+    - national_language_overrides_local_reality
+    - campaign_season_activity_replaces_year_round_presence
+    - consultant_class_extracts_without_building_capacity
+    - symbolic_allyship_replaces_relationships
+    - outrage_replaces_organization
+    - purity_conflict_splits_coalition
+    - urban_language_alienates_rural_voters
+    - tribal_relationships_are_rushed_or_extracted
+    - faith_discussion_becomes_identity_attack
+    - candidates_chosen_for_ideology_not_local_trust
+
+  next_actions:
+    - build_county_pressure_map
+    - identify_existing_local_trust_holders
+    - create_southeastern_oklahoma_message_primitives
+    - draft_tribal_respect_protocol_for_campaign_staff
+    - build_candidate_recruitment_profile
+    - create_90_day_local_presence_plan
+    - create_post_event_learning_record

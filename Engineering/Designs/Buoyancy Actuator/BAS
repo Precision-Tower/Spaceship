@@ -1,0 +1,574 @@
+# BAS Test 0 — Consolidated Framework & Findings
+
+## Purpose
+
+BAS Test 0 is a constrained falsification and dynamics experiment.
+
+It is not:
+
+* a power-generation validation,
+* an efficiency demonstration,
+* a self-sustaining system,
+* a deployment prototype,
+* or a commercial viability study.
+
+The purpose of Test 0 is to determine whether a buoyancy-state-controlled vertical oscillator can maintain bounded, repeatable motion under shallow-water conditions without manual rescue.
+
+The central scientific question is:
+
+> Does the system possess a restoring attractor, or does it drift toward disorder?
+
+---
+
+# Locked Test 0 Configuration
+
+```yaml
+BAS_Test_0:
+  water_depth: 4_ft
+  moving_body: modified_HDPE_drum
+  motion: vertical_oscillation_only
+
+  guidance:
+    type: rolling_constraint
+    geometry:
+      - central_stainless_guide_tube
+      - three_polymer_rollers
+      - loose_preload
+
+  stroke:
+    initial: 6_in
+    secondary: 12_in_only_after_validation
+
+  buoyancy_control:
+    target_positive_margin: 25_to_40_lb
+    target_negative_margin: 25_to_40_lb
+
+  fluid_handling:
+    pump_power: external_AC_or_DC
+    pump_energy_constraints: ignored_for_Test0
+    inlet: symmetric_diffused_fill
+    outlet: centered_nonreactive
+    pump_isolated_from_motion: true
+
+  internal_geometry:
+    - radial_slosh_baffles
+    - controlled_air_spine
+    - symmetric_fill_geometry
+    - bottom_drain_geometry
+
+  output_extraction: none
+  rocker_bar: removed
+
+  objective: bounded_repeatable_vertical_oscillation_only
+```
+
+---
+
+# Core Design Principle
+
+```text
+REDUCE RESISTANCE
+INCREASE RESTORING FORCE
+MINIMIZE STATE AMBIGUITY
+```
+
+The architecture intentionally shifted away from:
+
+* delicate equilibrium,
+* narrow transition margins,
+* and precision-balanced behavior.
+
+The current architecture favors:
+
+* decisive state separation,
+* strong rise/descent commitment,
+* low friction,
+* wider tolerance margins,
+* and metastability resistance.
+
+---
+
+# System-Level Objective
+
+The experiment is attempting to produce:
+
+```text
+bounded repeatable state transitions
+```
+
+NOT:
+
+```text
+maximum oscillation
+```
+
+The primary engineering target is:
+
+```text
+maximum restoring robustness per unit complexity
+```
+
+---
+
+# Current Admissible Claims
+
+Currently admissible:
+
+* BAS Test 0 is a bounded shallow-water buoyancy oscillation experiment.
+* The architecture is physically plausible.
+* The architecture possesses coherent causal topology.
+* Stronger restoring margins likely reduce hover/metastability risk.
+* Reduced friction likely improves transition commitment.
+* The system is suitable for simulation and falsification testing.
+
+---
+
+# Current Prohibited Claims
+
+Still prohibited:
+
+* validated stable actuator behavior
+* useful power generation
+* self-sustaining operation
+* operational readiness
+* scalability
+* deployment viability
+* dirty-water survivability
+* durability
+* efficiency claims
+* autonomous long-term reliability
+
+Simulation success does not promote these claims.
+Prototype motion does not promote these claims.
+
+---
+
+# Current Dominant Risks
+
+The architecture no longer appears dominated by weak-transition ambiguity.
+
+The dominant risk cluster has shifted toward high-energy dynamic instability.
+
+## Primary Instability Surfaces
+
+```yaml
+primary_instability_surfaces:
+  - rebound_corruption
+  - slosh_impulse_loading
+  - roller_chatter
+  - radial_wobble
+  - preload_sensitivity
+  - trapped_air_compartment_effects
+  - oscillatory_overshoot
+  - dynamic_guide_loading
+  - fill_asymmetry
+  - restoration_timing_drift
+```
+
+---
+
+# Key Causal Insights
+
+## 1. Neutral Equilibrium Was Dangerous
+
+The earlier low-margin architecture risked:
+
+* metastable hover,
+* stick-slip drift,
+* narrow timing windows,
+* partial-fill ambiguity,
+* and tuned-condition dependence.
+
+The stronger-margin architecture likely improves:
+
+* transition commitment,
+* falsification clarity,
+* tolerance to friction,
+* tolerance to leakage,
+* and tolerance to small disturbances.
+
+---
+
+## 2. Friction Was a First-Class Variable
+
+Sliding bushings created:
+
+* wedging risk,
+* stick-slip,
+* groove wear,
+* and side-load amplification.
+
+The rolling-constraint geometry converts:
+
+```text
+friction-dominated guidance
+```
+
+into:
+
+```text
+geometry-dominated guidance
+```
+
+Likely benefits:
+
+* lower resistance,
+* lower stick-slip,
+* reduced binding,
+* improved tolerance to slight asymmetry.
+
+New risks introduced:
+
+* roller chatter,
+* preload sensitivity,
+* radial wobble,
+* hidden compliance,
+* debris sensitivity.
+
+---
+
+## 3. Internal Geometry Matters
+
+A plain drum behaves like a chaotic fluid cavity.
+
+Internal geometry now intentionally shapes:
+
+* slosh behavior,
+* trapped-air migration,
+* fluid symmetry,
+* drainage behavior,
+* and center-of-mass stability.
+
+Current internal concepts:
+
+* radial slosh baffles
+* controlled air spine
+* symmetric fill geometry
+* bottom drain geometry
+
+These likely reduce:
+
+* asymmetric fill,
+* delayed slosh impulse,
+* random air migration,
+* partial-fill ambiguity,
+* retained water.
+
+But may introduce:
+
+* hidden trapped compartments,
+* uneven drainage,
+* internal impacts,
+* vortexing,
+* hidden geometry dependence.
+
+---
+
+## 4. Strong Margins Improve State Separation
+
+Current target margins:
+
+```yaml
+positive_margin: 25_to_40_lb
+negative_margin: 25_to_40_lb
+```
+
+Assessment:
+
+```yaml
+below_15_lb:
+  risk: delicate_hover_region
+
+15_to_25_lb:
+  risk: transitional_sensitive_region
+
+25_to_40_lb:
+  status: preferred_Test0_region
+
+40_to_60_lb:
+  risk: rebound_and_slosh_growth
+
+above_60_lb:
+  risk: likely_too_violent_for_Test0
+```
+
+The system now prioritizes:
+
+```text
+decisive transitions
+```
+
+rather than:
+
+```text
+balanced ambiguity
+```
+
+---
+
+# Central Scientific Question
+
+The experiment is no longer primarily asking:
+
+```text
+Can the system transition?
+```
+
+It is now asking:
+
+```text
+Can the system dissipate transition energy
+without accumulating disorder?
+```
+
+---
+
+# Attractor Hypotheses
+
+## Stable Attractor Candidate
+
+Possible signature:
+
+* bounded timing variance
+* bounded stroke amplitude
+* bounded rebound
+* bounded slosh behavior
+* bounded guide loading
+* successful disturbance recovery
+* repeated startup success
+
+---
+
+## Metastable Behavior
+
+Possible signature:
+
+* temporary coherence
+* slowly accumulating drift
+* partial-fill sensitivity
+* increasing timing spread
+* growing wobble or chatter
+* dependence on startup conditions
+
+---
+
+## Transient Coherence
+
+Possible signature:
+
+* early rhythmic motion
+* apparent synchronization
+* gradual amplitude decay
+* growing phase drift
+* increasing intervention dependence
+
+---
+
+## Divergence Toward Disorder
+
+Possible signature:
+
+* rebound amplification
+* slosh amplification
+* chatter growth
+* radial wobble growth
+* loss of state separation
+* phase collapse
+* repeated stall states
+
+---
+
+# Current Simulation Direction
+
+Simulation is now justified.
+
+Simulation purpose:
+
+* identify parameter cliffs,
+* identify dominant sensitivities,
+* estimate transition timing,
+* estimate force margins,
+* identify likely metastable regions.
+
+Simulation is NOT allowed to claim:
+
+* stability validation,
+* operational readiness,
+* robustness,
+* deployment viability,
+* or useful power behavior.
+
+---
+
+# Current Dominant Simulation Variables
+
+```yaml
+primary_simulation_variables:
+  - positive_margin_lb
+  - negative_margin_lb
+  - rolling_friction
+  - roller_preload_proxy
+  - radial_clearance
+  - rebound_coefficient
+  - endpoint_damping
+  - slosh_impulse_proxy
+  - trapped_air_compartment_factor
+  - fill_symmetry_factor
+  - q_pump
+  - q_leak
+  - restoration_timing
+```
+
+---
+
+# Recommended Initial Simulation Sweeps
+
+```yaml
+simulation_sweeps:
+  buoyancy_margin_lb:
+    - 15
+    - 25
+    - 40
+    - 60
+
+  rolling_friction_lb:
+    - 0.5
+    - 1
+    - 2.5
+    - 5
+    - 10
+
+  rebound_coefficient:
+    - 0
+    - 0.1
+    - 0.25
+    - 0.5
+
+  slosh_impulse_proxy:
+    - none
+    - low
+    - medium
+    - high
+
+  roller_preload_proxy:
+    - loose
+    - nominal
+    - tight
+
+  radial_clearance:
+    - low
+    - nominal
+    - high
+
+  trapped_air_compartment_factor:
+    - fixed
+    - slowly_migrating
+    - cycle_to_cycle_shift
+
+  fill_symmetry_factor:
+    - symmetric
+    - 10_percent_asymmetry
+    - 25_percent_asymmetry
+    - 50_percent_asymmetry
+
+  stroke_in:
+    - 6
+    - 8
+    - 10
+    - 12
+```
+
+---
+
+# Concern Triggers
+
+Simulation or physical testing should trigger concern if:
+
+```yaml
+concern_triggers:
+  - rebound_growth_cycle_to_cycle
+  - stable_only_with_exact_preload
+  - radial_wobble_growth
+  - roller_chatter_growth
+  - slosh_impulse_causes_phase_drift
+  - internal_air_state_drift
+  - 25_to_40lb_margin_still_hovering
+  - 60lb_margin_causes_endpoint_corruption
+  - bounded_motion_requires_heavy_damping
+  - stability_exists_only_at_one_fill_volume
+```
+
+---
+
+# Experimental Governance Boundaries
+
+Mandatory:
+
+* full unedited video
+* startup-state logging
+* terminal-state logging
+* intervention logging
+* failed-run preservation
+* timing variance reporting
+* disturbance separation
+* full evidence chain preservation
+
+Forbidden:
+
+* selective reporting
+* hidden resets
+* hidden tuning
+* output mythology
+* visual persuasion replacing measurement
+* simulation treated as validation
+
+---
+
+# Final Current Assessment
+
+Current status:
+
+```yaml
+current_status:
+  physical_plausibility: supported
+  causal_topology: coherent
+  restoring_attractor: unresolved
+  metastability_risk: reduced_but_not_removed
+  dominant_failure_cluster:
+    - rebound
+    - slosh
+    - chatter
+    - wobble
+    - trapped_air_drift
+
+  architecture_direction:
+    stronger_and_healthier_than_low_margin_design
+
+  simulation_ready: true
+  physical_Test0_ready: nearly
+```
+
+Most important unresolved question:
+
+```text
+Does stronger restoring force produce
+bounded repeatable dynamics,
+or merely more energetic instability?
+```
+
+---
+
+# Final Governance Boundary
+
+This framework does not claim BAS works.
+
+It preserves:
+
+* the current causal structure,
+* the locked Test 0 architecture,
+* dominant risks,
+* simulation priorities,
+* governance boundaries,
+* and unresolved variables
+
+before quantitative simulation and physical water testing begin.

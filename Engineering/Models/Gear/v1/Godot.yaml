@@ -1,0 +1,1026 @@
+Godot.yaml:
+  role: operator_interface_adapter
+  mission: make_Godot_usable_without_trusting_Godot
+  owns:
+    - operator_buttons
+    - display_labels
+    - panel_visibility_rules
+    - contact_test_controls
+  does_not_own:
+    - Godot_runtime_truth
+    - validation
+    - evidence
+    - HindSight_review
+
+# GodotOps v0.3 — Integrated Operational Doctrine
+
+## Communication Boundary
+
+```yaml
+identity:
+  role: godot_runtime_communication_adapter
+  status: communication_compression_pass_01
+  authority: interface_behavior_only_not_validation_authority
+  canon: false
+
+references:
+  gear_kernel_bridge: ./GearKernelBridge.yaml
+  simulation_bridge: ./SimulationBridge.yaml
+  vision_ops: ./VisionOps.yaml
+  simulate: ./Simulate.yaml
+  shared_kernel: ../../Shared/CE-OSv1.yaml
+  shared_directory: ../../Shared/Directory.yaml
+
+local_scope:
+  owns:
+    - Godot communication assumptions
+    - runtime interaction mappings
+    - scene interaction boundaries
+    - visualization interface contracts
+  does_not_own:
+    - simulation validation
+    - canonical authority
+    - governance validation
+    - measurement truth
+
+compression_rules:
+  - repeated_boundary_language_routes_to_GearKernelBridge
+  - repeated_authority_language_routes_to_Shared
+  - preserve_local_failure_surface_warnings
+  - preserve_Godot_behavioral_truths
+  - parent_reference_beats_duplicate_doctrine
+
+source_pointers:
+  authority_boundary: ./GearKernelBridge.yaml
+  runtime_translation_boundary: ./SimulationBridge.yaml
+  visual_interpretation_boundary: ./VisionOps.yaml
+  simulation_construction_boundary: ./Simulate.yaml
+
+do_not_compress:
+  - SceneTree lifecycle ordering
+  - Parent vs Owner distinction
+  - Resource shared-by-reference behavior
+  - signal propagation behavior
+  - render frame vs simulation frame distinction
+  - visual output is not evidence
+  - transition commitment vs threshold crossing
+```
+
+## Purpose
+
+GodotOps exists to give Gear a coherent operational model for Godot.
+
+Not:
+
+* tutorial accumulation,
+* API trivia memorization,
+* or random best-practice cargo culting.
+
+GodotOps attempts to preserve:
+
+* causal integrity,
+* topology awareness,
+* lifecycle discipline,
+* data/runtime separation,
+* low-coupling event propagation,
+* and reconstructability under project scale.
+
+The objective is not merely:
+
+> “use Godot.”
+
+The objective is:
+
+> “operate coherently inside Godot’s actual ontology.”
+
+---
+
+# Core Ontology
+
+## Runtime Ontology
+
+```text
+Object
+    = reflective runtime substrate
+
+RefCounted
+    = lifetime-managed object
+
+Resource
+    = reusable serialized shared data
+
+Script
+    = behavioral extension resource
+
+Node
+    = runtime topology participant
+
+Signal
+    = low-coupling event propagation channel
+
+PackedScene
+    = serialized topology template
+
+SceneTree
+    = runtime orchestration authority
+
+InputMap
+    = intent abstraction layer
+
+Input
+    = global input state + simulation layer
+
+Animation
+    = serialized temporal state data
+```
+
+Everything in Godot ultimately derives from:
+
+* runtime objects,
+* topology,
+* signals,
+* transforms,
+* serialization,
+* and lifecycle propagation.
+
+Godot is fundamentally:
+
+```text
+reflective event-driven topology architecture
+```
+
+NOT:
+
+* pure ECS,
+* prefab soup,
+* isolated object islands,
+* or invisible engine magic.
+
+---
+
+# First Principles
+
+## SceneTree is runtime authority
+
+SceneTree is not merely hierarchy storage.
+
+It owns:
+
+* runtime orchestration,
+* process propagation,
+* physics propagation,
+* scene transitions,
+* input propagation,
+* group coordination,
+* timers,
+* tweens,
+* multiplayer routing,
+* and frame sequencing.
+
+The active game universe exists inside SceneTree.
+
+---
+
+## Nodes are topology participants
+
+Nodes are runtime entities participating in:
+
+* hierarchy,
+* lifecycle,
+* transform inheritance,
+* processing order,
+* and propagation systems.
+
+The SceneTree is behaviorally meaningful.
+
+It is NOT cosmetic.
+
+Tree structure changes:
+
+* readiness timing,
+* process order,
+* input routing,
+* transform behavior,
+* deletion behavior,
+* and runtime validity.
+
+---
+
+## Resources are data containers
+
+Resources exist primarily to hold:
+
+* serialized configuration,
+* reusable state,
+* animation data,
+* materials,
+* themes,
+* scene templates,
+* and compositional data structures.
+
+Resources are NOT automatically copied.
+
+By default:
+
+```text
+Resources are shared by reference.
+```
+
+This is one of the most important Godot architectural realities.
+
+---
+
+## Scripts are extensions
+
+Scripts are not standalone programs.
+
+They are:
+
+```text
+behavioral extensions attached to runtime objects
+```
+
+This means:
+
+* lifecycle matters,
+* topology matters,
+* runtime validity matters,
+* and scene participation matters.
+
+---
+
+## Signals are topology-safe propagation channels
+
+Signals exist to:
+
+* reduce direct coupling,
+* separate emitters from listeners,
+* preserve modularity,
+* and support reactive runtime coordination.
+
+Signals are not “just callbacks.”
+
+They are event-propagation architecture.
+
+---
+
+# Topology Doctrine
+
+## Runtime hierarchy matters
+
+Tree order affects:
+
+* _ready ordering,
+* process ordering,
+* rendering,
+* notifications,
+* input propagation,
+* and destruction behavior.
+
+Important rules:
+
+```text
+parent enters tree before children
+children become ready before parent
+```
+
+This timing is critically important.
+
+---
+
+## Parent != Owner
+
+This is one of the most dangerous Godot misunderstandings.
+
+```text
+Parent
+    = runtime hierarchy
+
+Owner
+    = persistence authority
+```
+
+PackedScene serialization uses ownership.
+
+NOT mere parenthood.
+
+This distinction matters enormously for:
+
+* runtime-created nodes,
+* save systems,
+* editor persistence,
+* and scene reconstruction.
+
+---
+
+## Groups are coordination overlays
+
+Groups are:
+
+* query systems,
+* coordination channels,
+* broadcast routing surfaces.
+
+Groups are NOT hierarchy.
+
+Use groups for:
+
+* distributed coordination,
+* broad capability routing,
+* orchestration,
+* category operations.
+
+Avoid:
+
+* excessive group calls in hot paths,
+* hidden authority through group magic.
+
+---
+
+# Lifecycle Doctrine
+
+## Timing domains exist
+
+Godot has explicit runtime timing phases.
+
+### _init()
+
+Use for:
+
+* local object initialization,
+* non-tree state.
+
+Avoid required _init parameters for scene-instanced nodes.
+
+PackedScene instancing becomes fragile otherwise.
+
+---
+
+### _enter_tree()
+
+Use for:
+
+* tree entry behavior,
+* early registration,
+* topology-aware setup.
+
+Do NOT assume children are ready here.
+
+---
+
+### _ready()
+
+Use for:
+
+* child binding,
+* dependency wiring,
+* scene initialization.
+
+This is where:
+
+* @onready references become safe,
+* child topology becomes reliable.
+
+---
+
+### _process(delta)
+
+Use for:
+
+* visual updates,
+* UI,
+* camera follow,
+* non-physics logic.
+
+Frame-rate dependent.
+
+---
+
+### _physics_process(delta)
+
+Use for:
+
+* movement,
+* collisions,
+* deterministic simulation,
+* CharacterBody logic.
+
+Fixed timestep domain.
+
+---
+
+## queue_free is deferred destruction
+
+Node destruction is lifecycle-sensitive.
+
+queue_free():
+
+* defers destruction,
+* prevents topology mutation hazards,
+* avoids active-frame corruption.
+
+Removing a child does NOT free it.
+
+Freeing a parent DOES free children.
+
+---
+
+# Transform Doctrine
+
+## Local vs global space must remain distinct
+
+One of the easiest ways to create hidden bugs:
+
+```text
+mixing local and global transforms unconsciously
+```
+
+Always know whether you are operating in:
+
+* local space,
+* parent-relative space,
+* or world/global space.
+
+---
+
+## Node3D transform inheritance is causal
+
+Parent transforms affect children.
+
+Unless:
+
+```text
+top_level = true
+```
+
+which breaks transform inheritance.
+
+---
+
+## Real transform intent matters
+
+Avoid:
+
+* accidental parent-transform side effects,
+* invisible inherited rotation assumptions,
+* nonuniform scale surprises.
+
+Prefer:
+
+* explicit transform reasoning.
+
+---
+
+# Input Doctrine
+
+## Input architecture has multiple layers
+
+```text
+InputEvent
+    = raw physical event
+
+InputMap
+    = named gameplay intent mapping
+
+Input
+    = global input state querying/simulation
+
+Node._input
+    = propagation routing surface
+```
+
+These systems are related but distinct.
+
+---
+
+## Gameplay should operate on intent
+
+Do NOT hardcode:
+
+```gdscript
+KEY_W
+```
+
+Prefer:
+
+```gdscript
+Input.is_action_pressed("move_forward")
+```
+
+This preserves:
+
+* rebinding,
+* controller support,
+* touch compatibility,
+* accessibility,
+* and platform flexibility.
+
+---
+
+## Input propagation and global state are different
+
+Consumed input events:
+
+* stop propagation,
+* but do NOT change global Input singleton state.
+
+This distinction is critical for debugging.
+
+---
+
+## Input simulation is first-class
+
+Godot supports:
+
+* virtual input injection,
+* action simulation,
+* replay/testing patterns.
+
+This is useful for:
+
+* AI,
+* automated testing,
+* tooling,
+* deterministic replay systems.
+
+---
+
+# Resource Doctrine
+
+## Resources are shared by reference
+
+This is critically important.
+
+Loading the same resource repeatedly:
+
+* often returns the same shared cached object.
+
+Meaning:
+
+```text
+mutating one reference may affect all users
+```
+
+Use duplication when instance-specific mutation is required.
+
+---
+
+## resource_local_to_scene controls instance isolation
+
+```text
+resource_local_to_scene = true
+```
+
+creates per-instance copies during scene instancing.
+
+This is extremely important for:
+
+* character state,
+* procedural runtime tuning,
+* mutable scene-local resources.
+
+---
+
+## Resources should hold reusable configuration
+
+Use Resources for:
+
+* stats,
+* config,
+* item definitions,
+* tuning values,
+* dialogue data,
+* animation assets,
+* reusable state containers.
+
+Avoid using Nodes for everything.
+
+---
+
+# Animation Doctrine
+
+## Animation is serialized temporal data
+
+Animation resources store:
+
+* tracks,
+* keys,
+* interpolation,
+* timing,
+* markers.
+
+They do NOT execute themselves.
+
+Playback authority belongs to:
+
+* AnimationPlayer,
+* AnimationMixer,
+* or orchestration systems.
+
+---
+
+## Tracks are targeted mutation channels
+
+Animation tracks mutate:
+
+* properties,
+* transforms,
+* methods,
+* audio,
+* blend shapes,
+* sub-animations.
+
+Animations are:
+
+```text
+time-structured state orchestration
+```
+
+---
+
+## Method tracks require discipline
+
+Method tracks can invoke runtime behavior.
+
+Avoid:
+
+* hiding core gameplay authority inside animation timelines.
+
+Use method tracks for:
+
+* timing events,
+* effects,
+* synchronization,
+* animation coordination.
+
+---
+
+## Markers are timeline coordination anchors
+
+Markers should replace:
+
+* magic timestamps,
+* hidden timing assumptions.
+
+Markers express:
+
+* named synchronization intent.
+
+---
+
+# CharacterBody Doctrine
+
+## CharacterBody3D is script-authoritative
+
+CharacterBody3D is NOT rigidbody simulation.
+
+It is:
+
+```text
+script-controlled movement + collision resolution
+```
+
+The script remains authority.
+
+---
+
+## move_and_slide consumes velocity intent
+
+Velocity represents:
+
+```text
+meters_per_second intent
+```
+
+DO NOT multiply velocity by delta before move_and_slide.
+
+move_and_slide already handles timestep integration internally.
+
+---
+
+## Movement belongs in physics domain
+
+Core movement and collision logic belong in:
+
+```text
+_physics_process
+```
+
+NOT _process.
+
+---
+
+## Requested velocity != real velocity
+
+Important distinction:
+
+```text
+velocity
+    = requested intent
+
+real_velocity
+    = actual resulting motion
+```
+
+This matters for:
+
+* animation,
+* networking,
+* effects,
+* camera behavior,
+* debugging.
+
+---
+
+# Reflection Doctrine
+
+## Reflection exists for tooling and flexibility
+
+Godot supports:
+
+* get(),
+* set(),
+* call(),
+* property introspection,
+* dynamic property lists,
+* signal inspection.
+
+This is powerful.
+
+But reflection is slower.
+
+Prefer direct references in:
+
+* hot gameplay paths,
+* per-frame logic.
+
+Use reflection for:
+
+* tooling,
+* editors,
+* dynamic systems,
+* plugins,
+* debugging.
+
+---
+
+# Deferred Execution Doctrine
+
+## Deferred calls exist to preserve topology safety
+
+Godot repeatedly exposes:
+
+* call_deferred,
+* set_deferred,
+* deferred signal connections,
+* deferred group calls.
+
+This is because:
+
+```text
+runtime topology mutation is dangerous during active processing
+```
+
+Deferred execution is part of the engine’s causal safety model.
+
+---
+
+# Coding Discipline
+
+## Typed GDScript is preferred where shape matters
+
+Prefer typed:
+
+* public interfaces,
+* shared state,
+* reusable systems,
+* exported configuration,
+* collections with stable structure.
+
+Avoid:
+
+* invisible Variant soup.
+
+---
+
+## @export is editor architecture
+
+Exports are not merely serialization.
+
+They are:
+
+* editor-visible configuration,
+* inspector integration,
+* designer-facing tuning surfaces,
+* persistence structure.
+
+Expose meaningful runtime tuning intentionally.
+
+---
+
+## @onready expresses lifecycle timing
+
+@onready exists because:
+
+```text
+some references are invalid before _ready
+```
+
+This annotation encodes lifecycle assumptions.
+
+---
+
+## preload vs load is timing doctrine
+
+### preload()
+
+Use when:
+
+* path known at parse time,
+* asset expected to exist permanently.
+
+### load()
+
+Use when:
+
+* runtime selection required,
+* dynamic loading needed.
+
+---
+
+## Avoid god scripts
+
+One script should have:
+
+* one primary operational role.
+
+Avoid:
+
+* omniscient control scripts,
+* giant singleton authorities,
+* topology-breaking reach-across logic.
+
+---
+
+# Autoload Doctrine (Provisional)
+
+## Autoloads are global services, not junk drawers
+
+Autoloads should represent:
+
+* true global authority,
+* persistent runtime services,
+* orchestration systems,
+* save systems,
+* networking roots,
+* configuration authorities.
+
+Avoid:
+
+* dumping arbitrary gameplay state globally,
+* bypassing topology discipline,
+* turning every dependency into singleton reach-through.
+
+Autoload misuse is one of the fastest routes to:
+
+```text
+global spaghetti collapse
+```
+
+---
+
+# Precision Doctrine
+
+## Floating point precision matters
+
+Use:
+
+```text
+is_equal_approx()
+```
+
+when appropriate.
+
+Avoid exact float equality assumptions.
+
+This especially matters in:
+
+* geometry,
+* transforms,
+* animation,
+* movement,
+* procedural systems.
+
+---
+
+# Platform Doctrine
+
+## Platform differences are expected
+
+Godot repeatedly acknowledges:
+
+* mobile limitations,
+* web limitations,
+* controller mapping variance,
+* sensor availability,
+* editor/runtime differences,
+* export differences.
+
+Never assume:
+
+* universal feature parity.
+
+Feature-detect where possible.
+
+---
+
+# Anti-Patterns
+
+## High-risk architecture failures
+
+### Treating hierarchy as cosmetic
+
+Wrong.
+
+Topology affects runtime causality.
+
+---
+
+### Confusing owner and parent
+
+Creates persistence corruption.
+
+---
+
+### Using process for physics movement
+
+Creates framerate-dependent bugs.
+
+---
+
+### Overusing singletons
+
+Creates:
+
+* hidden authority,
+* invisible coupling,
+* debugging collapse.
+
+---
+
+### Everything is a Node
+
+Wrong.
+
+Resources exist for a reason.
+
+---
+
+### Hidden gameplay logic inside animation timelines
+
+Creates unreconstructable behavior.
+
+---
+
+### Excessive reflection in hot loops
+
+Performance + clarity hazard.
+
+---
+
+### String-based fragile node paths everywhere
+
+Creates topology fragility.
+
+Prefer:
+
+* exports,
+* unique names,
+* injected references,
+* signal routing.
+
+---
+
+# Final Operational Principle
+
+Godot is coherent.
+
+Most bugs emerge when developers violate:
+
+* lifecycle domains,
+* topology assumptions,
+* transform domains,
+* ownership semantics,
+* or authority boundaries.
+
+The goal of GodotOps is not:
+
+```text
+memorize engine trivia
+```
+
+The goal is:
+
+```text
+preserve causal integrity while building scalable runtime systems
+```

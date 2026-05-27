@@ -1,0 +1,213 @@
+Runtime.yaml:
+  file_status: "[RUNTIME GOVERNANCE PATTERN — ACTIVE]"
+  role: semantic_governance_and_active_state_visibility
+
+  authority:
+    owns:
+      - active_object_state_tracking
+      - measurement_trace_governance
+      - validation_state_visibility
+      - prohibited_claims
+      - contradiction_watchpoints
+      - escalation_routing
+      - language_firewalls
+      - assumption_mode_output_storage
+
+    must_not_own:
+      - validation
+      - equation_definition
+      - executable_calculation
+      - canonical_definition
+      - subsystem_mechanics
+      - payload_claims
+      - reserve_buoyancy
+      - stability_validation
+      - seaworthiness
+      - operational_readiness
+      - system_behavior_inference
+
+    governing_rule: >
+      Runtime may make active state visible.
+      Runtime may not make active state true.
+
+  runtime_state_classes:
+    permitted:
+      - "[RUNTIME ACTIVE]"
+      - "[RUNTIME INACTIVE]"
+      - "[RUNTIME QUIET UNTIL MEASUREMENT]"
+      - "[OBSERVED EVENT — BOUNDED]"
+      - "[MEASUREMENT PENDING]"
+      - "[MEASUREMENT RECORDED]"
+      - "[MEASUREMENT TRACE INCOMPLETE]"
+      - "[CANDIDATE ESTIMATE AVAILABLE]"
+      - "[CONTRADICTION DETECTED]"
+      - "[GEAR CAUSAL UPDATE REQUIRED]"
+      - "[GRANT REVIEW REQUIRED]"
+      - "[HANDOFF READY]"
+      - "[ESCALATION FIREWALL ACTIVE]"
+
+    prohibited:
+      - "[VALIDATED]"
+      - "[SAFE]"
+      - "[READY]"
+      - "[PAYLOAD CONFIRMED]"
+      - "[RESERVE BUOYANCY CONFIRMED]"
+      - "[STABILITY CONFIRMED]"
+      - "[SEAWORTHY]"
+      - "[OPERATIONAL READY]"
+      - "[CERTIFIED]"
+      - "[APPROVED FOR USE]"
+
+  assumption_mode_outputs:
+    role:
+      - store_non_measured_reference_calculations
+      - preserve_assumption_trace
+      - preserve_unit_trace
+      - preserve_non_validation_status
+      - preserve_claim_boundary_footer
+
+    storage_boundary:
+      may_store_as:
+        - assumption_mode_outputs
+        - example_reference_calculations
+        - non_measured_candidate_estimates
+
+      must_not_store_as:
+        - measured_variables
+        - measured_Runtime_state
+        - validation_evidence
+        - payload_capacity
+        - reserve_buoyancy
+        - stability_evidence
+        - operational_characterization
+
+    required_status_label: "[ASSUMED EXAMPLE — NOT MEASURED]"
+
+  assumption_trace_rules:
+    required_fields:
+      - assumption_source
+      - unit_trace
+      - execution_mode
+      - object_scope
+      - output_scope
+      - claim_boundary_footer
+      - prohibited_claims_attached
+
+    required_execution_mode_label: "[ASSUMED EXAMPLE — NOT MEASURED]"
+
+    required_language:
+      permitted:
+        - assumed_example
+        - candidate_estimate
+        - non_measured_reference
+        - under_assumed_conditions
+        - theoretical_full_submergence_limit
+        - before_subtracting_drum_mass
+
+      prohibited:
+        - measured
+        - validated
+        - safe
+        - capacity
+        - reserve
+        - stable
+        - seaworthy
+        - operationally_ready
+        - proven
+
+  active_runtime_objects:
+    HDPE_drum_float_unit_001:
+      runtime_object_id: runtime_HDPE_drum_float_unit_001
+      object_id: HDPE_drum_float_unit_001
+      object_type: single_HDPE_drum_float_unit
+
+      runtime_status: active
+      validation_state: "[OBSERVED EVENT — BOUNDED]"
+      measurement_status: "[MEASUREMENT PENDING]"
+
+      measured_variables: []
+      candidate_estimates: []
+
+      assumption_mode_outputs:
+        buoyancy_nominal_55gal_example:
+          execution_mode: "[ASSUMED EXAMPLE — NOT MEASURED]"
+          output_status: non_measured_reference_calculation
+          object_scope: nominal_single_55_gallon_HDPE_drum
+          Runtime_measured_state_promotion: prohibited
+
+          assumptions:
+            drum_volume:
+              value: 55
+              unit: US_gallons
+              status: assumed_nominal
+              assumption_source: nominal_55_gallon_drum_reference
+
+            drum_volume_metric:
+              value: 0.208
+              unit: cubic_meters
+              status: assumed_converted_nominal
+              assumption_source: rounded_conversion_from_55_US_gallons
+
+            water_density:
+              value: 1000
+              unit: kg_per_m3
+              status: assumed_freshwater
+
+            gravity:
+              value: 9.80665
+              unit: m_per_s2
+              status: assumed_standard_gravity
+
+            material:
+              value: HDPE
+              status: assumed_material_identity
+
+          candidate_outputs:
+            maximum_displaced_water_mass_if_fully_submerged:
+              candidate_estimate: 208
+              unit: kg
+              output_boundary:
+                - assumed_example
+                - theoretical_full_submergence_limit
+                - before_subtracting_drum_mass
+                - not_measured_Runtime_state
+
+            maximum_buoyant_force_if_fully_submerged:
+              candidate_estimate: 2040
+              unit: N
+              output_boundary:
+                - assumed_example
+                - theoretical_full_submergence_limit
+                - before_subtracting_drum_mass
+                - not_measured_Runtime_state
+
+            water_weight_displaced_if_fully_submerged:
+              candidate_estimate: 459
+              unit: lb_equivalent
+              output_boundary:
+                - assumed_example
+                - theoretical_full_submergence_limit
+                - before_subtracting_drum_mass
+                - not_measured_Runtime_state
+
+          prohibited_claims:
+            - measured_Runtime_state
+            - validation_evidence
+            - safe_payload
+            - payload_capacity
+            - reserve_buoyancy
+            - reserve_buoyancy_validation
+            - stability_validation
+            - raft_behavior
+            - seaworthiness
+            - operational_readiness
+
+          required_claim_boundary_footer: >
+            Assumption-mode candidate estimates only. These values are non-measured
+            reference calculations for a nominal 55-gallon HDPE drum under assumed
+            freshwater and standard-gravity conditions. They are theoretical
+            full-submergence estimates before subtracting drum mass, attachments,
+            restraints, frame effects, freeboard requirements, dynamic motion,
+            degradation, or safety margins. They are not measured Runtime state,
+            not payload capacity, not reserve buoyancy, not validation, and not
+            operational characterization.

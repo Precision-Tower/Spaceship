@@ -1,0 +1,151 @@
+Physics.yaml:
+  file_status: "[PHYSICS RELATIONSHIP LAYER — ACTIVE]"
+  role: causal_interaction_and_relationship_structure
+
+  authority:
+    owns:
+      - causal_relationships
+      - interaction_topology
+      - domain_relationships
+      - structured_equation_logic
+      - required_input_definitions
+      - candidate_output_definitions
+
+    must_not_own:
+      - validation
+      - Runtime_state_management
+      - executable_calculation_runtime
+      - semantic_governance
+      - payload_claims
+      - reserve_buoyancy
+      - stability_validation
+      - seaworthiness
+      - operational_readiness
+
+  interaction_library:
+
+    buoyancy_interaction:
+      interaction_status: "[PHYSICS RELATIONSHIP — CAUSAL STRUCTURE ONLY]"
+
+      governing_domains:
+        - flotation
+        - mass
+        - geometry
+        - validation
+
+      causal_relationships:
+        submerged_volume_to_displaced_water:
+          relationship: submerged_volume -> displaced_water
+          boundary: volume_displacement_relationship_only
+
+        displaced_water_to_buoyant_force:
+          relationship: displaced_water -> buoyant_force
+          boundary: force_relationship_only_not_validation
+
+        buoyant_force_to_observed_float_behavior:
+          relationship: buoyant_force -> observed_float_behavior
+          boundary: consistent_with_buoyant_support_under_test_condition_only
+
+        increased_load_to_increased_submergence:
+          relationship: increased_load -> increased_submergence
+          boundary: load_response_relationship_only
+
+        increased_submergence_to_reduced_freeboard:
+          relationship: increased_submergence -> reduced_freeboard
+          boundary: freeboard_change_not_reserve_buoyancy
+
+      structured_relationships:
+        buoyant_force_candidate_relationship:
+          relationship_form: buoyant_force = water_density * gravity * submerged_volume
+          required_inputs:
+            - water_density
+            - gravity
+            - submerged_volume_candidate_estimate
+          candidate_output:
+            - buoyant_force_candidate_estimate
+          boundary:
+            - not_validated_margin
+            - not_payload_capacity
+            - not_reserve_buoyancy
+
+        full_submergence_displacement_relationship:
+          relationship_form: displaced_water_mass = water_density * total_displacement_volume
+          required_inputs:
+            - water_density
+            - total_displacement_volume
+          candidate_output:
+            - maximum_displaced_water_mass_if_fully_submerged
+          boundary:
+            - theoretical_full_submergence_limit
+            - before_subtracting_drum_mass
+            - not_payload_capacity
+            - not_reserve_buoyancy
+
+        observed_float_consistency_relationship:
+          relationship_form: buoyant_force_candidate_estimate ~= total_supported_weight
+          required_inputs:
+            - buoyant_force_candidate_estimate
+            - total_supported_weight
+            - observed_afloat_under_static_water_condition
+          candidate_output:
+            - observed_float_behavior_consistent_with_buoyant_support
+          boundary:
+            - consistency_interpretation_only
+            - not_confirmed_equilibrium
+            - not_validation
+
+        incremental_displacement_relationship:
+          relationship_form: added_weight / water_density
+          required_inputs:
+            - added_weight
+            - water_density
+          candidate_output:
+            - additional_required_displacement_candidate
+          boundary:
+            - not_payload_capacity
+            - not_safe_load
+            - not_operational_margin
+
+        freeboard_response_relationship:
+          relationship_form: increased_added_load -> increased_submergence -> reduced_freeboard
+          required_inputs:
+            - added_load
+            - waterline_height
+            - freeboard
+          candidate_output:
+            - sink_depth_response_observed
+          boundary:
+            - observed_response_only
+            - not_reserve_buoyancy
+            - not_stability_validation
+
+      interaction_constraints:
+        - static_water_condition_only
+        - single_object_scope_only
+        - measurement_trace_required_for_measured_outputs
+        - assumption_trace_required_for_assumption_outputs
+        - candidate_estimate_language_required
+        - not_dynamic_wave_behavior
+        - not_tow_behavior
+        - not_system_behavior
+        - not_multi_drum_array_behavior
+        - not_operational_behavior
+
+      admissible_interpretations:
+        - observed_float_behavior_consistent_with_buoyant_support
+        - bounded_candidate_estimation
+        - measured_sink_depth_response
+        - assumed_theoretical_full_submergence_limit
+        - freeboard_change_under_this_test_condition
+        - single_object_buoyancy_characterization_pending_review
+
+      prohibited_interpretations:
+        - reserve_buoyancy_validation
+        - payload_capacity
+        - safe_payload
+        - raft_stability
+        - seaworthiness
+        - tow_readiness
+        - operational_readiness
+        - validated_margin
+        - validated_multi_drum_array_behavior

@@ -1,0 +1,277 @@
+Formats.yaml:
+  authority: reusable_engineering_compositions
+  uses:
+    - Values.yaml
+    - Operators.yaml
+  must_not_define:
+    - raw_variable_identity
+    - operator_equation_authority
+    - operational_state_machine
+
+  formats:
+    buoyancy_payload_support:
+      domains:
+        - flotation
+        - mass
+        - structural
+      inherits:
+        - margin_state_operator
+        - accumulation_capacity_operator
+      slot_bindings:
+        capacity: buoyant_force
+        demand: loaded_weight
+        margin: buoyancy_margin
+        threshold: minimum_buoyancy_margin
+        state: float_state
+      required_values:
+        - submerged_volume
+        - water_density
+        - total_mass
+        - retained_water_mass
+        - minimum_buoyancy_margin
+      blocking_unknowns:
+        - submerged_volume_under_load
+        - retained_water_mass
+        - minimum_safe_freeboard
+
+    stability_center_of_mass:
+      domains:
+        - mass
+        - flotation
+        - structural
+      inherits:
+        - distribution_instability_operator
+        - safe_state_operator
+      slot_bindings:
+        distribution: mass_distribution
+        location: payload_location
+        center: center_of_mass
+        orientation_state:
+          - trim_angle
+          - list_angle
+        threshold:
+          - trim_limit
+          - list_limit
+        risk: tipping_risk
+      blocking_unknowns:
+        - metacentric_behavior
+        - trim_limit
+        - list_limit
+        - dynamic_shift_under_wave_loading
+
+    drainage_retained_water:
+      domains:
+        - fluid
+        - mass
+        - operational
+      inherits:
+        - accumulation_capacity_operator
+        - recovery_transition_operator
+      slot_bindings:
+        rate: drainage_rate
+        accumulated_quantity: retained_water_mass
+        recovery_rate: drainage_rate
+        restored_margin: buoyancy_margin
+        state: drained_state
+      blocking_unknowns:
+        - drainage_rate_curve
+        - retained_water_mass
+        - clogging_effect
+
+    containment_leak_overflow:
+      domains:
+        - fluid
+        - gas
+        - chemical
+        - safety
+      inherits:
+        - pressure_leak_operator
+        - accumulation_capacity_operator
+        - safe_state_operator
+      slot_bindings:
+        pressure: gas_pressure
+        boundary_area: seal_area
+        boundary_load: seal_load
+        seal_capacity: seal_capacity
+        leak_rate: leak_rate
+        accumulated_quantity: leak_volume
+        containment_capacity: secondary_containment_capacity
+        containment_state: containment_state
+      blocking_unknowns:
+        - seal_capacity
+        - leak_rate
+        - cycle_degradation
+        - acceptable_leak_rate
+
+    towing_drag_resistance:
+      domains:
+        - environmental
+        - fluid
+        - structural
+        - operational
+      inherits:
+        - environmental_load_operator
+        - resistance_motion_operator
+        - margin_state_operator
+      slot_bindings:
+        environmental_input:
+          - current_speed
+          - wind_speed
+          - wave_height
+        force: drag_force
+        resistance_sum: total_resistance
+        drive_force: tow_force
+        margin: tow_margin
+        state: retrieval_state
+      blocking_unknowns:
+        - drag_coefficient
+        - tow_force
+        - submerged_exposed_area
+        - tow_point_capacity
+
+    mooring_environmental_load:
+      domains:
+        - environmental
+        - structural
+        - safety
+      inherits:
+        - environmental_load_operator
+        - margin_state_operator
+        - safe_state_operator
+      slot_bindings:
+        environmental_input:
+          - current_speed
+          - wind_speed
+          - wave_height
+        force: mooring_load
+        transmitted_load: anchor_load
+        capacity: anchor_capacity
+        margin: anchor_margin
+        state: holding_state
+      blocking_unknowns:
+        - anchor_capacity
+        - wave_coefficient
+        - seabed_holding_condition
+        - retrieval_threshold
+
+    digestion_timing:
+      domains:
+        - biological
+        - chemical
+        - gas
+        - operational
+      inherits:
+        - accumulation_capacity_operator
+        - validation_measurement_operator
+      slot_bindings:
+        rate: digestion_rate
+        time: digestion_time
+        accumulated_quantity:
+          - gas_volume
+          - effluent_volume
+          - residual_solid_mass
+        state: batch_process_state
+      blocking_unknowns:
+        - digestion_rate
+        - batch_timing
+        - process_completion_threshold
+        - gas_generation_rate
+
+    gas_pressure_venting:
+      domains:
+        - gas
+        - containment
+        - safety
+      inherits:
+        - accumulation_capacity_operator
+        - pressure_leak_operator
+        - safe_state_operator
+      slot_bindings:
+        rate: gas_generation_rate
+        accumulated_quantity: gas_volume
+        pressure: gas_pressure
+        capacity:
+          - headspace_capacity
+          - venting_capacity
+          - external_storage_capacity
+        state:
+          - gas_accumulation_state
+          - venting_state
+      blocking_unknowns:
+        - gas_generation_rate
+        - gas_composition
+        - venting_capacity
+        - maximum_allowable_pressure
+
+    power_energy_margin:
+      domains:
+        - electrical
+        - operational
+        - safety
+      inherits:
+        - margin_state_operator
+        - accumulation_capacity_operator
+      slot_bindings:
+        capacity: available_energy
+        demand: required_energy
+        margin: energy_margin
+        threshold:
+          - operational_requirement
+          - safe_shutdown_requirement
+        state:
+          - powered_state
+          - low_power_state
+          - load_shed_state
+      blocking_unknowns:
+        - transient_load_profile
+        - battery_capacity
+        - capacitor_capacity
+        - duty_cycle
+
+    workforce_reset_flow:
+      domains:
+        - operational
+        - logistics
+        - validation
+      inherits:
+        - recovery_transition_operator
+        - margin_state_operator
+        - validation_measurement_operator
+      slot_bindings:
+        recovery_rate: reset_rate
+        restored_margin: reset_capacity_margin
+        capacity: workforce_capacity
+        demand: workflow_demand
+        margin: workforce_margin
+        state:
+          - ready_state
+          - service_state
+          - reset_state
+      blocking_unknowns:
+        - operator_cycle_time
+        - reset_cycle_time
+        - ready_inventory_rate
+        - manpower_ratio
+
+    lifecycle_degradation:
+      domains:
+        - material
+        - structural
+        - containment
+      inherits:
+        - degradation_failure_operator
+      slot_bindings:
+        exposure_or_cyclic_load:
+          - UV_exposure
+          - salt_exposure
+          - cycle_count
+          - chemical_exposure
+        damage: damage
+        capacity_loss: capacity_loss
+        remaining_capacity: remaining_capacity
+        failure_risk: failure_risk
+      blocking_unknowns:
+        - material_lifecycle
+        - corrosion_rate
+        - UV_degradation_rate
+        - gasket_lifecycle

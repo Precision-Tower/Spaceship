@@ -1,0 +1,921 @@
+Senses:
+  file: Senses.yaml
+  role: observer_embodiment_sensing_surface_signal_path_and_perception_boundary
+  status: v1_candidate_pending_review
+  authority: sensing_surface_and_observer_topology_description_only
+  canon: false
+  validation_authority: false
+  evidence_authority: false
+
+  core_rule:
+    - sensing_records_observer_conditioned_signal_contact_not_truth
+    - perception_is_interpretation_not_validation
+    - visualization_is_representation_not_evidence
+    - instrumentation_is_observer_topology_not_neutral_access
+    - signal_lineage_must_survive_summary
+    - bridge_losses_must_remain_visible
+    - observer_worlds_must_not_be_averaged_without_review
+
+  purpose:
+    - preserve_observer_embodiment
+    - preserve_sensing_surface_identity
+    - preserve_signal_path_lineage
+    - preserve_raw_vs_filtered_signal_boundaries
+    - preserve_perception_as_interpretation
+    - preserve_visualization_as_non_evidence_representation
+    - expose_observer_backreaction_candidates
+    - expose_calibration_synchronization_and_filtering_limits
+    - prevent_sensing_outputs_from_becoming_truth_authority
+    - route_evidence_claim_pressure_to_Evidence
+    - route_claim_escalation_pressure_to_Boundary_or_Governance
+    - route_object_and_interaction_topology_pressure_to_Physics
+    - route_cross_modality_translation_pressure_to_Interface
+
+  not_for:
+    - validation
+    - canon_creation
+    - evidence_state_promotion
+    - truth_authority
+    - operational_readiness_claims
+    - safety_claims
+    - observer_neutrality_claims
+    - cross_observer_equivalence_claims
+    - replacement_of_raw_measurement_records
+    - summary_replacement_of_source_lineage
+
+  authority_boundaries:
+    owns:
+      - observer_stack_description
+      - sensing_surface_records
+      - signal_path_records
+      - raw_signal_reference_requirements
+      - filtered_signal_reference_requirements
+      - perception_boundary_records
+      - visualization_boundary_records
+      - observer_backreaction_candidates
+      - calibration_disclosure_requirements
+      - synchronization_disclosure_requirements
+      - bridge_loss_flags
+      - sensing_admissibility_scope
+      - blocked_sensing_claims
+
+    does_not_own:
+      - evidence_state_validation
+      - claim_validation
+      - physical_object_registry
+      - causal_doctrine
+      - semantic_definitions
+      - bridge_contract_authority
+      - engineering_operator_definitions
+      - runtime_execution
+      - operational_readiness
+      - safety_certification
+      - canon_promotion
+
+    upstream_dependencies:
+      Evidence:
+        owns:
+          - observer_conditioned_measurement_lineage
+          - evidence_state_labeling
+          - measurement_sufficiency_review
+          - support_level_tracking_not_truth_status
+      Boundary:
+        owns:
+          - claim_escalation_discipline
+          - prohibited_claim_firewall
+          - validation_bleed_blocking
+      CE_OS:
+        owns:
+          - causal_accounting_order
+          - transfer_vs_propagation_distinction
+          - scalar_compression_warning
+      Physics:
+        owns:
+          - object_identity
+          - interaction_topology
+          - variable_attachment
+          - measurement_unlocks
+      Interface:
+        owns:
+          - bridge_contracts
+          - translation_boundaries
+          - cross_world_comparison_review
+      Lexicon:
+        owns:
+          - term_identity
+          - semantic_drift_control
+      Runtime:
+        owns:
+          - active_event_logs
+          - runtime_state_records
+      Gold:
+        owns:
+          - contradiction_lineage
+          - recovery_paths
+          - reconstructability
+
+  prohibited_global_promotions:
+    - sensing_equals_truth
+    - perception_equals_validation
+    - perception_equals_measurement
+    - visualization_equals_evidence
+    - instrumentation_equals_neutral_observer
+    - cross_observer_agreement_equals_validation
+    - smooth_signal_equals_clean_physics
+    - observer_stack_equals_canon
+    - filtered_signal_equals_raw_signal
+    - signal_pattern_equals_causal_identity
+    - sensor_agreement_equals_bridge_validity
+    - dashboard_equals_authority
+    - detected_equals_confirmed
+    - classified_equals_measured
+    - inferred_state_equals_observed_state
+    - observer_majority_equals_truth
+    - bridge_model_equals_equivalence
+    - averaged_observer_worlds_equal_resolution
+    - clean_interface_equals_clean_lineage
+
+  admissible_claims:
+    - observer_conditioned_signal_recorded_under_declared_conditions
+    - sensing_stack_produced_signal_under_declared_topology
+    - perception_layer_generated_interpretation_from_declared_inputs
+    - visualization_rendered_selected_records
+    - filtered_signal_transformed_raw_signal_under_declared_processing
+    - cross_observer_comparison_requires_bridge_review
+    - sensing_output_may_trigger_measurement_request
+    - sensing_output_may_trigger_anomaly_register
+    - sensing_output_may_support_evidence_review_if_lineage_complete
+    - observer_backreaction_candidate_identified
+    - unresolved_signal_lineage_preserved
+
+  blocked_claims:
+    - sensor_detected_true_system_state
+    - perception_validates_event
+    - visualization_proves_behavior
+    - instrument_output_is_neutral
+    - filtered_signal_is_physical_truth
+    - clean_signal_proves_stability
+    - cross_sensor_agreement_validates_claim
+    - observer_stack_represents_native_behavior_without_controls
+    - dashboard_confirms_readiness
+    - sensing_layer_validates_system
+    - perception_output_is_measurement_without_method_units_uncertainty
+    - inferred_state_is_canon
+
+  evidence_state_boundary:
+    default_state: sensing_surface_record_only
+    allowed_states_for_senses:
+      - asserted
+      - sensed
+      - observed_under_declared_observer_topology
+      - interpreted
+      - visualized
+      - filtered
+      - measurement_review_requested
+      - evidence_review_required
+    prohibited_states_for_senses_without_route:
+      - measured
+      - repeatable
+      - validated
+      - operational
+      - safe
+      - ready
+      - canonical
+    rule:
+      - Senses_may_prepare_records_for_Evidence_review
+      - Senses_may_not_promote_sensed_to_measured
+      - Senses_may_not_promote_observed_to_validated
+      - Senses_may_not_promote_visualized_to_evidence
+      - Senses_may_not_promote_interpreted_to_truth
+      - Senses_may_not_promote_cross_stack_agreement_to_validation
+
+  required_record_types:
+    observer_stack_record:
+      purpose:
+        - preserve_observer_topology
+        - prevent_sensor_neutrality_assumptions
+        - expose_observer_world_scope
+      required_fields:
+        - observer_stack_id
+        - observer_stack_name
+        - observer_objects
+        - attached_base_objects
+        - coupled_boundaries
+        - physical_couplings
+        - signal_couplings
+        - instrumentation_properties
+        - signal_processing_properties
+        - mounting_conditions
+        - power_or_cable_paths
+        - bandwidth_conditions
+        - latency_conditions
+        - sampling_rate
+        - filtering_conditions
+        - synchronization_conditions
+        - calibration_status
+        - environmental_context
+        - observer_backreaction_candidates
+        - observer_vs_observed_ambiguity
+        - admissible_scope
+        - blocked_scope
+        - revision_lineage
+        - unresolved_topology_risks
+
+    sensing_surface_record:
+      purpose:
+        - preserve_boundary_where_observer_contacts_or_receives_signal_from_target
+        - distinguish_contact_transfer_from_field_or_distributed_propagation
+      required_fields:
+        - sensing_surface_id
+        - observer_stack_id
+        - source_object_or_region
+        - target_observer_object
+        - interaction_boundary
+        - sensing_modality
+        - transfer_or_propagation_classification
+        - active_variables
+        - measured_variable_candidates
+        - signal_quantity_recorded
+        - native_behavior_claim_allowed
+        - observer_induced_candidate
+        - loss_channels
+        - timing_boundaries
+        - unresolved_measurements
+        - admissibility_scope
+        - contradiction_links
+        - lineage_links
+
+    signal_path_record:
+      purpose:
+        - preserve_signal_from_source_boundary_to_recorded_output
+        - prevent_processed_output_from_replacing lineage
+      required_fields:
+        - signal_path_id
+        - observer_stack_id
+        - sensing_surface_id
+        - source_boundary
+        - transduction_step
+        - analog_or_native_signal_form
+        - digitization_step
+        - sampling_rate
+        - bandwidth
+        - latency
+        - gain_or_scaling
+        - noise_floor
+        - saturation_limits
+        - clipping_risk
+        - drift_risk
+        - loss_channels
+        - raw_signal_reference
+        - processed_signal_references
+        - unresolved_signal_integrity_risks
+
+    raw_signal_record:
+      purpose:
+        - preserve_unprocessed_or_lowest_available_signal_lineage
+        - prevent_filtered_signal_from_erasing_transition_history
+      required_fields:
+        - raw_signal_id
+        - signal_path_id
+        - observer_stack_id
+        - acquisition_method
+        - units_or_native_units
+        - timestamp_method
+        - sampling_rate
+        - bandwidth
+        - synchronization_quality
+        - calibration_status
+        - uncertainty_notes
+        - environmental_context
+        - storage_reference
+        - completeness_notes
+        - known_artifacts
+        - unresolved_raw_signal_risks
+
+    filtered_signal_record:
+      purpose:
+        - disclose_processing_transformations
+        - prevent_smoothness_from_becoming_physical_claim
+      required_fields:
+        - filtered_signal_id
+        - source_raw_signal_id
+        - filter_type
+        - processing_steps
+        - cutoff_or_window
+        - group_delay_or_phase_shift
+        - smoothing_strength
+        - interpolation_or_resampling
+        - removed_frequencies_or_features
+        - preserved_features
+        - erased_or_weakened_features
+        - uncertainty_added
+        - admissible_uses
+        - blocked_uses
+        - transition_distortion_risks
+        - lineage_links
+
+    perception_record:
+      purpose:
+        - preserve_interpretation_boundary
+        - prevent_classification_or_inference_from_becoming_measurement
+      required_fields:
+        - perception_id
+        - source_signal_records
+        - interpretation_method
+        - algorithm_or_human_observer
+        - feature_selection
+        - classification_labels
+        - inference_rules
+        - confidence_score_if_any
+        - confidence_meaning
+        - confidence_non_meaning
+        - training_or_prior_assumptions
+        - known_blind_spots
+        - false_positive_risks
+        - false_negative_risks
+        - admissible_interpretations
+        - blocked_interpretations
+        - unresolved_interpretation_risks
+        - claims_not_supported
+
+    visualization_record:
+      purpose:
+        - preserve_display_as_representation
+        - prevent_dashboard_or_plot_from_becoming_evidence_authority
+      required_fields:
+        - visualization_id
+        - source_records
+        - rendering_method
+        - selected_variables
+        - omitted_variables
+        - scaling
+        - smoothing_or_interpolation
+        - color_mapping_or_symbol_mapping
+        - aggregation_method
+        - display_latency
+        - annotation_rules
+        - admissible_uses
+        - blocked_uses
+        - summary_risk_notes
+        - source_lineage_links
+
+    cross_modality_bridge_review_record:
+      purpose:
+        - prevent_observer_world_equivalence_assumptions
+        - expose_translation_cost_between_modalities_or_stacks
+      required_fields:
+        - bridge_review_id
+        - source_observer_world
+        - target_observer_world
+        - source_modality
+        - target_modality
+        - source_records
+        - target_records
+        - preserved_variables
+        - transformed_variables
+        - erased_variables
+        - non_equivalent_variables
+        - event_boundary_mapping
+        - incompatible_event_boundaries
+        - translation_cost
+        - causal_information_erasure
+        - uncertainty_added
+        - allowed_comparisons
+        - blocked_comparisons
+        - required_external_route
+
+    observer_backreaction_record:
+      purpose:
+        - preserve_possible_observer_effects_on_target_behavior
+        - prevent_native_behavior_claims_without controls
+      required_fields:
+        - backreaction_id
+        - observer_stack_id
+        - observer_object
+        - affected_base_object_or_boundary
+        - candidate_interaction_type
+        - altered_variables
+        - possible_mechanism
+        - control_measurement_required
+        - bounded_or_unresolved
+        - admissible_scope
+        - blocked_native_behavior_claims
+        - contradiction_links
+
+    contradiction_record:
+      purpose:
+        - preserve_conflicts_without_summary_smoothing
+        - route unresolved causal differences to measurement or bridge review
+      required_fields:
+        - contradiction_id
+        - contradiction_type
+        - involved_records
+        - involved_observer_stacks
+        - involved_modalities
+        - involved_boundaries
+        - conflicting_signals
+        - conflicting_interpretations
+        - candidate_explanations
+        - observer_artifact_candidates
+        - bridge_loss_candidates
+        - unresolved_causal_pathways
+        - prohibited_resolution_shortcuts
+        - current_status
+        - required_next_review_or_measurement
+
+  modality_registry:
+    allowed_modalities:
+      visual_camera:
+        common_outputs:
+          - image_frame
+          - video_stream
+          - optical_flow_candidate
+          - visual_classification_candidate
+        risks:
+          - lighting_artifact
+          - perspective_distortion
+          - compression_artifact
+          - frame_rate_aliasing
+          - rolling_shutter
+          - occlusion
+          - interpretation_as_measurement
+        blocked_claims:
+          - image_shows_truth
+          - visual_stability_equals_physical_stability
+
+      human_observer:
+        common_outputs:
+          - witness_note
+          - operator_annotation
+          - qualitative_state_report
+        risks:
+          - expectation_bias
+          - selective_attention
+          - timing_uncertainty
+          - scale_misjudgment
+          - narrative_smoothing
+        blocked_claims:
+          - human_saw_it_so_it_is_confirmed
+          - repeated_witnessing_equals_measurement
+
+      accelerometer:
+        common_outputs:
+          - acceleration_signal
+          - vibration_signal_candidate
+          - motion_event_candidate
+        risks:
+          - mounting_stiffness_effect
+          - sensor_mass_backreaction
+          - axis_alignment_error
+          - bandwidth_limit
+          - aliasing
+          - integration_drift
+        blocked_claims:
+          - acceleration_pattern_equals_causal_source
+          - smooth_acceleration_equals_stability
+
+      pressure_sensor:
+        common_outputs:
+          - pressure_signal
+          - impulse_candidate
+          - head_or_load_candidate
+        risks:
+          - port_clogging
+          - tubing_delay
+          - pressure_wave_artifact
+          - calibration_drift
+          - thermal_effect
+        blocked_claims:
+          - pressure_signal_equals_load_validation
+          - single_pressure_trace_equals_system_state
+
+      acoustic_sensor:
+        common_outputs:
+          - sound_pressure_signal
+          - spectral_candidate
+          - event_candidate
+        risks:
+          - reflection
+          - resonance
+          - environmental_noise
+          - microphone_placement_bias
+          - filtering_artifact
+        blocked_claims:
+          - acoustic_event_equals_mechanical_cause
+          - spectral_match_equals_validation
+
+      thermal_sensor:
+        common_outputs:
+          - temperature_signal
+          - thermal_image
+          - heat_signature_candidate
+        risks:
+          - emissivity_error
+          - environmental_reflection
+          - lag
+          - spatial_averaging
+          - calibration_drift
+        blocked_claims:
+          - thermal_signature_equals_causal_source
+          - heat_map_equals_evidence
+
+      electromagnetic_sensor:
+        common_outputs:
+          - field_signal
+          - voltage_signal
+          - current_signal
+          - interference_candidate
+        risks:
+          - grounding_path_artifact
+          - cable_coupling
+          - shielding_gap
+          - probe_loading
+          - bandwidth_limit
+        blocked_claims:
+          - field_detection_equals_propagation_claim
+          - voltage_signal_equals_system_truth
+
+      algorithmic_perception:
+        common_outputs:
+          - classification
+          - segmentation
+          - anomaly_flag
+          - feature_vector
+          - confidence_score
+        risks:
+          - training_distribution_mismatch
+          - label_leakage
+          - confidence_misread_as_probability_of_truth
+          - hidden_preprocessing
+          - false_consensus_with_visualization
+        blocked_claims:
+          - algorithm_classified_equals_measured
+          - confidence_score_equals_evidence_state
+          - anomaly_flag_equals_causal_diagnosis
+
+  raw_vs_filtered_rules:
+    - raw_signal_and_filtered_signal_are_distinct_records
+    - filtered_signal_must_reference_source_raw_signal
+    - filtered_signal_must_disclose_filter_type_cutoff_window_delay_and_processing_steps
+    - filtered_signal_may_not_replace_raw_transition_history
+    - filtered_smoothness_is_not_physical_smoothness
+    - event_boundaries_shifted_by_filtering_must_be flagged
+    - visualization_of_filtered_signal_must_not_be_labeled_as_raw_behavior
+
+  calibration_and_synchronization_rules:
+    calibration:
+      required:
+        - instrument_id
+        - calibration_status
+        - calibration_date_or_unknown
+        - calibration_method_or_unknown
+        - drift_estimate_or_unresolved
+        - uncertainty_notes
+        - saturation_or_range_limits
+      blocked:
+        - calibrated_by_assumption
+        - precision_display_equals_accuracy
+        - stable_readout_equals_calibrated
+
+    synchronization:
+      required:
+        - clock_source
+        - timestamp_method
+        - channel_latency
+        - sync_error_bound
+        - trigger_threshold
+        - alignment_method
+        - drift_estimate
+        - unresolved_ordering_risk
+      blocked:
+        - timestamp_order_equals_causal_order_without_sync_review
+        - simultaneous_by_display_equals_synchronized
+        - visual_alignment_equals_temporal_equivalence
+
+  bridge_review_rules:
+    - no_cross_stack_comparison_without_observer_world_identity
+    - no_cross_modality_equivalence_without_bridge_review
+    - no_averaging_across_observer_worlds_without_transformation_review
+    - no_majority_observer_resolution
+    - no_cleaner_signal_resolution
+    - no_preferred_model_resolution
+    - no_bridge_model_may_claim_neutrality
+    - bridge_records_must_preserve_lost_variables
+    - bridge_records_must_preserve_event_boundary_mapping
+    - bridge_records_must_disclose_translation_cost_and_causal_information_erasure
+
+  summary_compression_rules:
+    allowed:
+      - navigation_summary_with_source_links
+      - status_summary_with_unresolveds_visible
+      - anomaly_summary_with_observer_stack_identity
+      - visualization_caption_with_evidence_boundary_footer
+
+    blocked:
+      - summary_replaces_signal_lineage
+      - dashboard_replaces_raw_records
+      - executive_summary_removes_observer_topology
+      - conclusion_language_sounds_validated
+      - detected_becomes_confirmed
+      - interpreted_becomes_measured
+      - visualized_becomes_evidence
+      - averaged_becomes_resolved
+      - agreement_becomes_validation
+
+    required_footer:
+      - summary_is_navigation_only
+      - source_signal_records_remain_authority_for_lineage
+      - observer_topology_remains_attached
+      - no_validation_or_readiness_claim_implied
+      - unresolveds_and_contradictions_remain_active
+
+  admissibility_checks:
+    sensing_vs_measurement:
+      question: Does the record claim measurement status?
+      allowed_if:
+        - variable_identity_declared
+        - method_declared
+        - units_declared
+        - context_declared
+        - uncertainty_declared
+        - calibration_status_declared
+        - observer_stack_identity_declared
+        - regime_identity_declared
+        - routed_to_Evidence_for_state_review
+      block_if:
+        - signal_exists_only
+        - no_units
+        - no_uncertainty
+        - no_method
+        - no_observer_stack
+        - no_calibration
+        - no_context
+
+    perception_vs_interpretation:
+      question: Does perception language imply correctness or validation?
+      allowed_if:
+        - interpretation_method_declared
+        - source_signal_lineage_declared
+        - confidence_meaning_limited
+        - false_positive_and_false_negative_risks_preserved
+      block_if:
+        - perception_output_treated_as_truth
+        - classification_treated_as_measurement
+        - inference_treated_as_observation
+
+    visualization_vs_evidence:
+      question: Does a display carry evidence authority?
+      allowed_if:
+        - visualization_source_records_declared
+        - omitted_variables_disclosed
+        - rendering_transform_disclosed
+        - non_evidence_footer_present
+      block_if:
+        - visualization_replaces_records
+        - chart_clarity_treated_as_evidence
+        - heatmap_treated_as_measurement
+
+    signal_vs_truth:
+      question: Is a signal pattern treated as native physical truth?
+      allowed_if:
+        - signal_path_lineage_declared
+        - observer_backreaction_candidates_preserved
+        - alternative_artifact_candidates_preserved
+      block_if:
+        - signal_pattern_directly_named_as_causal_source
+        - smoothness_treated_as_clean_physics
+        - agreement_treated_as_validation
+
+  contradiction_register:
+    - sensing_improves_visibility_vs_sensing_does_not_create_truth
+    - perception_speed_vs_reconstructable_signal_lineage
+    - clean_visualization_vs_dirty_signal_history
+    - cross_stack_agreement_vs_shared_artifact
+    - filtered_stability_vs_native_instability
+    - observer_presence_vs_native_behavior
+    - summary_utility_vs_topology_loss
+    - instrumentation_precision_vs_accuracy_uncertainty
+    - algorithmic_confidence_vs_evidence_state
+    - bridge_convenience_vs_causal_information_erasure
+
+  unresolved_register:
+    - final_acceptance_of_Senses_as_active_lane
+    - exact_relationship_between_Senses_and_Evidence_record_storage
+    - whether_Senses_holds_runtime_signal_records_or_only_schema
+    - modality_specific_record_templates_pending_expansion
+    - calibration_schema_alignment_pending
+    - synchronization_schema_alignment_pending
+    - bridge_review_schema_alignment_with_Interface_pending
+    - raw_signal_storage_policy_pending
+    - filtered_signal_storage_policy_pending
+    - visualization_output_storage_policy_pending
+    - perception_algorithm_documentation_policy_pending
+    - observer_backreaction_control_protocol_pending
+    - cross_observer_comparison_protocol_pending
+
+  routing_rules:
+    route_to_Evidence:
+      when:
+        - sensing_output_claims_measurement_status
+        - evidence_state_labeling_needed
+        - repeatability_language_appears
+        - validation_language_appears
+        - measurement_sufficiency_review_needed
+      prohibited_outputs:
+        - Senses_promotes_evidence_state
+        - Senses_declares_validation
+
+    route_to_Boundary:
+      when:
+        - sensing_language_exceeds_evidence_state
+        - perception_or_visualization_implies_validation
+        - instrumentation_claims_neutrality
+        - operational_readiness_or_safety_language_appears
+      prohibited_outputs:
+        - sensing_claim_escapes_firewall
+        - dashboard_becomes_authority
+
+    route_to_Governance:
+      when:
+        - validation_pressure_persists_after_Boundary_flag
+        - claim_promotion_requested
+        - external_readiness_or_safety_language_required
+      prohibited_outputs:
+        - Senses_validates_claim
+        - Senses_certifies_system
+
+    route_to_Physics:
+      when:
+        - observer_object_identity_needed
+        - sensing_surface_interaction_topology_needed
+        - observer_backreaction_candidate_affects_system
+        - physical_boundary_or_variable_attachment_unclear
+      prohibited_outputs:
+        - Senses_redefines_physical_object_registry
+        - Senses_redefines_interaction_topology
+
+    route_to_Interface:
+      when:
+        - cross_modality_translation_occurs
+        - observer_worlds_are_compared
+        - bridge_loss_or_erased_variable_review_needed
+        - event_boundary_mapping_needed
+      prohibited_outputs:
+        - Senses_declares_cross_world_equivalence
+        - Senses_averages_observer_worlds_without_review
+
+    route_to_CE_OS:
+      when:
+        - causal_accounting_order_is_touched
+        - transfer_vs_propagation_blurs
+        - scalar_summary_hides_signal_path_or_losses
+      prohibited_outputs:
+        - Senses_redefines_causal_primitives
+
+    route_to_Lexicon:
+      when:
+        - sense_detect_observe_measure_perceive_validate_terms_blur
+        - terminology_expands_admissibility
+      prohibited_outputs:
+        - Senses_mutates_semantic_identity
+
+    route_to_Runtime:
+      when:
+        - active_sensing_logs_are_created
+        - event_state_records_are_created
+        - anomaly_records_enter_active_operations
+      prohibited_outputs:
+        - runtime_log_equals_readiness
+        - active_state_equals_validation
+
+    route_to_Gold:
+      when:
+        - contradiction_lineage_must_survive_summary
+        - recovery_path_needed
+        - compression_risk_detected
+      prohibited_outputs:
+        - summary_resolves_contradiction
+        - route_equals_truth
+
+  standard_output_contract:
+    required_fields:
+      - sensing_claim_or_record
+      - observer_stack_id
+      - sensing_surface_id
+      - signal_path_id
+      - raw_signal_reference
+      - filtered_signal_reference_if_any
+      - perception_record_if_any
+      - visualization_record_if_any
+      - evidence_state_boundary
+      - admissible_claims
+      - blocked_claims
+      - observer_backreaction_candidates
+      - calibration_status
+      - synchronization_quality
+      - bridge_review_required
+      - unresolveds
+      - contradiction_links
+      - required_routes
+      - claim_boundary_footer
+
+  claim_boundary_footer:
+    - Senses_records_observer_conditioned_signal_and_perception_boundaries_only
+    - Senses_does_not_validate_measure_or_certify_by_itself
+    - visualization_does_not_increase_evidence_state
+    - instrumentation_is_not_neutral_by_default
+    - observer_world_comparison_requires_bridge_review
+    - unresolveds_and_contradictions_remain_active
+    - cute_sensors_do_not_get_a_crown
+
+  Grant_review:
+    target_file: Senses.yaml
+    evidence_state:
+      file_state: v1_candidate_created_from_admissibility_review
+      review_state: admissibility_surface_pressure_test_only
+      current_support_level: architecture_candidate
+      blocked_promotions:
+        - sensing_equals_truth
+        - perception_equals_validation
+        - visualization_equals_evidence
+        - instrumentation_equals_neutral_observer
+        - cross_observer_agreement_equals_validation
+        - smooth_signal_equals_clean_physics
+        - observer_stack_equals_canon
+
+    prohibited_escalations:
+      - sensing_treated_as_truth
+      - perception_treated_as_validation
+      - visualization_treated_as_evidence
+      - instrument_output_treated_as_neutral
+      - filtered_signal_treated_as_raw_or_clean_physics
+      - cross_observer_agreement_treated_as_validation
+      - summary_compression_treated_as_canon
+      - dashboard_clarity_treated_as_evidence_state_promotion
+
+    admissible_rewrites:
+      sensing_claim: Observer-conditioned signal recorded under declared topology, method, regime, and uncertainty.
+      perception_claim: Interpretation produced from declared signal inputs and processing rules, not measurement or validation.
+      visualization_claim: Rendering of selected records for review, not evidence authority.
+      instrumentation_claim: Instrument output bounded by observer stack, calibration, bandwidth, filtering, synchronization, and backreaction limits.
+      validation_claim: Sensing output may support review requests; validation requires governed review against declared scope.
+
+    missing_boundaries:
+      - final_storage_boundary_between_Senses_and_Evidence
+      - modality_specific_bridge_templates
+      - calibration_record_format_alignment
+      - synchronization_record_format_alignment
+      - raw_signal_storage_policy
+      - perception_algorithm_disclosure_depth
+      - visualization_caption_footer_enforcement
+      - observer_backreaction_control_thresholds
+
+    observer_topology_risks:
+      - sensor_neutrality_assumption
+      - observer_world_collapse
+      - modality_equivalence_laundering
+      - filter_erases_event_boundary
+      - dashboard_authority_bleed
+      - backreaction_invisibility
+      - calibration_silence
+      - synchronization_blindness
+      - interpretation_as_measurement
+
+    contradiction_register:
+      - sensing_improves_visibility_vs_sensing_does_not_create_truth
+      - perception_speed_vs_reconstructable_lineage
+      - clean_visualization_vs_dirty_signal_history
+      - cross_stack_agreement_vs_shared_artifact
+      - filtered_stability_vs_native_instability
+      - observer_presence_vs_native_behavior
+      - summary_utility_vs_topology_loss
+
+    unresolveds_preserved:
+      - final_acceptance_of_Senses_as_active_lane
+      - exact_Evidence_boundary
+      - exact_Physics_boundary_for_observer_objects
+      - exact_Interface_bridge_review_contract
+      - active_runtime_record_policy
+      - modality_expansion_depth
+      - calibration_and_sync_schema_alignment
+      - backreaction_control_protocol
+
+    required_routes:
+      Evidence: evidence_state_labeling_and_measurement_sufficiency
+      Boundary: claim_escalation_firewall
+      Governance: persistent_validation_pressure
+      Physics: observer_object_identity_and_interaction_topology
+      Interface: cross_modality_and_cross_observer_bridge_review
+      CE_OS: causal_accounting_and_transfer_vs_propagation_boundary
+      Lexicon: semantic_drift_control
+      Runtime: active_sensing_log_records
+      Gold: contradiction_lineage_and_reconstructability
+
+    verdict: >
+      Senses.yaml is admissible only as an observer-conditioned sensing,
+      signal-lineage, perception-boundary, and visualization-boundary surface.
+      It does not validate, canonize, measure by itself, certify neutrality,
+      or convert observer outputs into truth. Any language allowing sensing,
+      perception, visualization, instrumentation, or cross-observer agreement
+      to impersonate evidence authority is blocked and routed.
+      Cute sensors do not get a crown.

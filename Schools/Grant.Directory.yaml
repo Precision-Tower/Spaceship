@@ -1,0 +1,340 @@
+Engineering:
+  role: current_model_topology_index
+  authority: routing_only
+
+  caution:
+    note: >
+      Directory identifies model lanes, visible files,
+      routing relationships, and operational topology.
+      It does not validate claims, redefine canon,
+      resolve contradictions by summary,
+      or duplicate source authority.
+
+  repository_state:
+    mode: compressed_active_topology
+    visibility_scope: currently_attached_files
+    topology_strategy:
+      - layered_routing
+      - compressed_navigation
+      - recoverable_authority_paths
+      - expandable_structure
+      - minimal_duplication
+      - semantic_stability
+
+  current_visible_files:
+    - Directory.yaml
+    - Governance
+    - CE-OS
+    - Lexicon
+    - Engine
+    - Physics
+    - Prototype
+    - Gold
+
+  Models:
+
+    Shared:
+      role: cross_model_navigation_and_continuity_layer
+
+      purpose:
+        note: >
+          Shared files preserve repository-wide
+          governance, semantic stability,
+          causal primitives, and navigation continuity
+          across all participating model lanes.
+
+      files:
+
+        Directory.yaml:
+          authority_state: "[ACTIVE TOPOLOGY INDEX]"
+          role: topology_and_model_routing
+          owns:
+            - visible_file_mapping
+            - model_lane_identification
+            - compressed_repository_navigation
+            - routing_topology
+
+        Governance:
+          authority_state: "[CANONICAL GOVERNANCE AUTHORITY]"
+          role: governance_protocol_and_claim_firewall
+          owns:
+            - claim_safety
+            - validation_boundaries
+            - authority_routing
+            - semantic_firewall
+            - admissibility_constraints
+            - contradiction_governance
+
+        CE-OS:
+          authority_state: "[CANONICAL CAUSAL KERNEL]"
+          role: causal_accounting_and_interaction_primitives
+          owns:
+            - interaction_definition
+            - causal_accounting
+            - propagation_vs_transfer
+            - organization_logic
+            - scalar_compression_warnings
+            - domain_separation
+
+        Lexicon:
+          authority_state: "[CANONICAL SEMANTIC REGISTRY]"
+          role: semantic_identity_and_definition_control
+          owns:
+            - term_identity
+            - admissible_definitions
+            - semantic_drift_control
+            - mutation_constraints
+            - terminology_stability
+
+        Gold:
+          authority_state: "[STABLE ROUTING AND RECOVERY LAYER]"
+          role: durable_operational_structure
+          owns:
+            - recoverable_authority_paths
+            - contradiction_lineage
+            - routing_stability
+            - update_without_rewrite_rules
+            - continuity_preservation
+            - compression_recovery_logic
+
+    Gear:
+      role: engineering_architecture_and_causal_reasoning_substrate
+
+      purpose:
+        note: >
+          Gear extracts operational structure,
+          causal relationships,
+          engineering variables,
+          interaction pathways,
+          and unresolved constraints
+          without asserting validation.
+
+      files:
+
+        Engine:
+          authority_state: "[ENGINEERING REASONING SUBSTRATE]"
+          role: variable_operator_and_machine_structure
+          contains:
+            - Values
+            - Operators
+            - Formats
+            - Machine
+          owns:
+            - variable_identity
+            - reusable_operators
+            - engineering_formats
+            - operational_state_logic
+            - state_transitions
+            - causal_templates
+
+        Physics:
+          authority_state: "[PHYSICAL DOMAIN AND OBJECT REGISTRY]"
+          role: object_binding_and_domain_topology
+          owns:
+            - physical_objects
+            - object_relationships
+            - attached_variables
+            - physical_domains
+            - interaction_topology
+            - environmental_bindings
+
+        Prototype:
+          authority_state: "[NON-CANONICAL DESIGN CONTROL FILE — PENDING VALIDATION]"
+          role: candidate_design_and_mockup_control
+          owns:
+            - candidate_geometry
+            - mockup_structure
+            - prototype_layout_logic
+            - unresolved_build_variables
+            - operational_candidates
+            - design_iteration_paths
+
+        CE-OS:
+          authority_state: "[SHARED CAUSAL KERNEL]"
+          role: causal_accounting_anchor
+
+        Lexicon:
+          authority_state: "[SHARED SEMANTIC REGISTRY]"
+          role: engineering_definition_stability
+
+    Grant:
+      role: governance_validation_and_claim_firewall
+
+      purpose:
+        note: >
+          Grant governs admissibility,
+          claim boundaries,
+          evidence requirements,
+          validation discipline,
+          and semantic safety constraints.
+
+      files:
+
+        Governance:
+          authority_state: "[PRIMARY GOVERNANCE AUTHORITY]"
+          role: claim_firewall_and_validation_control
+          owns:
+            - evidence_requirements
+            - validation_state
+            - prohibited_claims
+            - governance_doctrine
+            - escalation_constraints
+            - semantic_firewall_rules
+
+        Gold:
+          authority_state: "[RECOVERY AND STABILITY LAYER]"
+          role: contradiction_preservation_and_safe_recovery
+          owns:
+            - contradiction_lineage
+            - routing_stability
+            - recovery_paths
+            - anti-collapse_structure
+            - rewrite_constraints
+
+        CE-OS:
+          authority_state: "[CAUSAL KERNEL REFERENCE]"
+          role: interaction_definition_reference
+
+        Lexicon:
+          authority_state: "[SEMANTIC CONTROL REFERENCE]"
+          role: admissible_definition_control
+
+    Cali:
+      role: editorial_middleware_and_relationship_continuity
+
+      purpose:
+        note: >
+          Cali preserves continuity,
+          relationship topology,
+          semantic coherence,
+          and recoverable editorial structure
+          without becoming canonical authority.
+
+      files:
+
+        Lexicon:
+          authority_state: "[SEMANTIC CONTINUITY REGISTRY]"
+          role: terminology_and_context_stability
+          owns:
+            - continuity_terms
+            - semantic_alignment
+            - drift_detection
+            - interpretive_consistency
+
+        Gold:
+          authority_state: "[CONTINUITY RECOVERY LAYER]"
+          role: contradiction_lineage_and_route_preservation
+          owns:
+            - continuity_recovery
+            - topology_stability
+            - historical_route_preservation
+            - anti-fragmentation_logic
+
+        Directory.yaml:
+          authority_state: "[NAVIGATION INDEX]"
+          role: relationship_routing_visibility
+
+    Elrich:
+      role: workspace_navigation_and_external_surface_mapping
+
+      purpose:
+        note: >
+          Elrich exposes repository topology,
+          workspace structure,
+          routing visibility,
+          and external-facing navigation layers.
+
+      files:
+
+        Directory.yaml:
+          authority_state: "[PRIMARY TOPOLOGY MAP]"
+          role: workspace_navigation_and_model_routing
+          owns:
+            - topology_visibility
+            - navigation_structure
+            - routing_map
+            - compressed_indexing
+
+        Gold:
+          authority_state: "[STABLE STRUCTURE LAYER]"
+          role: durable_navigation_and_recovery_paths
+          owns:
+            - persistent_topology
+            - routing_stability
+            - migration_safety
+            - structural_recovery
+
+        Governance:
+          authority_state: "[GOVERNANCE REFERENCE]"
+          role: public_boundary_constraints
+
+  topology:
+
+    governance_layer:
+      - Governance
+      - Gold
+
+    causal_kernel_layer:
+      - CE-OS
+      - Lexicon
+
+    engineering_reasoning_layer:
+      - Engine
+      - Physics
+      - Prototype
+
+    navigation_layer:
+      - Directory.yaml
+
+  routing_rules:
+
+    - Directory routes topology; it does not govern truth.
+    - Shared files may appear across multiple model lanes.
+    - Cross-listing does not transfer authority ownership.
+    - Governance controls admissibility and claim safety.
+    - CE-OS defines causal primitives and interaction doctrine.
+    - Lexicon controls semantic identity and definition stability.
+    - Gear extracts causal structure rather than validation.
+    - Prototype remains non-canonical pending validation.
+    - Navigation artifacts must not become canon.
+    - Compression must preserve reconstructability.
+    - Contradictions must remain recoverable rather than hidden.
+
+  scaling_strategy:
+
+    note: >
+      Future repository growth should preserve:
+        - layered routing
+        - compressed navigation
+        - machine-readable topology
+        - recoverable authority paths
+        - contradiction lineage
+        - expandable model partitions
+        - reusable governance overlays
+        - minimal duplication
+
+  growth_rule:
+
+    note: >
+      Add new files only when operationally present.
+      Preserve sparse topology.
+      Avoid speculative directory expansion.
+      Maintain recoverable authority lanes.
+
+  prohibited_directory_behavior:
+
+    - validate_claims
+    - redefine_source_authority
+    - collapse_contradictions_into_summary
+    - convert_navigation_into_canon
+    - erase_unresolved_variables
+    - replace_governing_files
+    - silently_mutate_semantic_identity
+
+  global_caution:
+
+    note: >
+      Operational validity does not imply causal completeness.
+      Navigation structure does not replace validation.
+      Semantic compression remains causally lossy.
+      Repository authority remains with governing source files.

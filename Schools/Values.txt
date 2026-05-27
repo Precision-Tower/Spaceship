@@ -1,0 +1,238 @@
+causal_architecture_stabilization:
+  objective: stable_4_file_reasoning_substrate
+  files:
+    - Values.yaml
+    - Operators.yaml
+    - Formats.yaml
+    - Machine.yaml
+
+  authority_rule:
+    Values.yaml: defines_variables_states_domains_and_validation_linked_terms
+    Operators.yaml: defines_reusable_causal_transforms_using_values
+    Formats.yaml: composes_operators_into_engineering_templates
+    Machine.yaml: governs_operational_states_using_values_operators_formats
+    no_file_may_redefine_authority_owned_by_another_file: true
+
+  inheritance_order:
+    - Values
+    - Operators
+    - Formats
+    - Machine
+
+  source_alignment:
+    validation_tags:
+      - "[VERIFIED]"
+      - "[ASSUMPTION]"
+      - "[HYPOTHESIS]"
+      - "[ESTIMATED BEHAVIOR]"
+      - "[PENDING VALIDATION]"
+      - "[UNRESOLVED ENGINEERING VARIABLE]"
+    topology_preserved:
+      - Intercept
+      - Drain/Separate
+      - Contain
+      - Process
+      - Recover/Test
+      - Reset
+      - Validate
+    repository_boundary: "The canonical repository remains authority for subsystem mechanics; this architecture is a causal reasoning substrate, not a subsystem rewrite."
+
+Values.yaml:
+  authority: variable_identity_and_state_identity_only
+  must_not_define:
+    - causal_transforms
+    - operator_equations
+    - subsystem_workflows
+    - operational_state_rules
+
+  domains:
+    core:
+      - geometry
+      - mass
+      - material
+      - flotation
+      - structural
+      - fluid
+      - gas
+      - chemical
+      - electrical
+      - thermal
+      - environmental
+      - operational
+      - logistics
+      - safety
+      - validation
+
+  variable_classes:
+    measurable:
+      geometry:
+        - length
+        - width
+        - height
+        - wall_thickness
+        - object_spacing
+        - mounting_height
+        - seal_area
+        - boundary_area
+      mass:
+        - dry_weight
+        - wet_weight
+        - payload_weight
+        - biomass_weight
+        - residue_mass
+      flotation:
+        - freeboard
+        - trim_angle
+        - list_angle
+        - waterline_z
+      fluid:
+        - drainage_rate
+        - flow_rate
+        - leak_rate
+        - retained_water_mass
+      gas:
+        - gas_pressure
+        - gas_volume
+        - gas_composition
+        - gas_generation_rate
+        - vent_flow_rate
+      electrical:
+        - voltage
+        - current
+        - power
+        - runtime
+        - duty_cycle
+        - charge_rate
+      environmental:
+        - wave_height
+        - wind_speed
+        - current_speed
+        - salinity
+        - temperature
+        - turbidity
+        - pH
+      operational:
+        - operator_cycle_time
+        - reset_cycle_time
+        - deployment_time
+        - retrieval_time
+        - manpower_ratio
+        - inspection_status
+      validation:
+        - batch_id
+        - cycle_count
+        - repeat_count
+        - anomaly_count
+        - measurement_precision
+        - evidence_level
+
+    derived:
+      geometry:
+        - internal_volume
+        - external_volume
+        - surface_area
+        - footprint_area
+        - deck_zone_area
+        - submerged_volume
+        - exposed_area
+      mass:
+        - loaded_weight
+        - fluid_weight
+        - total_mass
+        - point_load
+        - distributed_load
+        - center_of_mass
+      flotation:
+        - displacement_volume
+        - buoyant_force
+        - buoyancy_margin
+        - reserve_buoyancy
+      structural:
+        - frame_load
+        - cradle_load
+        - anchor_load
+        - shear_load
+        - bending_moment
+        - strap_tension
+      fluid_gas:
+        - accumulated_quantity
+        - leak_volume
+        - headspace_volume
+        - pressure_margin
+      electrical:
+        - required_energy
+        - available_energy
+        - energy_margin
+      operational:
+        - workforce_margin
+        - reset_capacity_margin
+        - ready_inventory_rate
+      validation:
+        - evidence_gap
+        - validation_state
+
+    unresolved_or_threshold:
+      - minimum_buoyancy_margin
+      - minimum_safe_freeboard
+      - trim_limit
+      - list_limit
+      - sea_state_limit
+      - venting_limit
+      - containment_threshold
+      - acceptable_leak_rate
+      - workflow_requirement
+      - safe_shutdown_requirement
+      - repeatability_threshold
+      - sample_size_requirement
+      - operating_envelope_definition
+
+  states:
+    operational:
+      - idle
+      - deployment
+      - interception
+      - towing
+      - drainage
+      - separation
+      - digestion
+      - transfer
+      - recovery_testing
+      - reset
+      - maintenance
+      - degraded_operation
+      - environmental_hold
+      - containment_hold
+      - shutdown
+      - emergency_retrieval
+
+    physical:
+      - float_state
+      - stable
+      - unstable
+      - overload_state
+      - overflow_state
+      - leak_state
+      - clogged_state
+      - sealed_state
+      - venting_state
+      - isolated_state
+      - degraded_state
+      - recovery_state
+      - ready_state
+      - service_state
+      - failure_state
+
+    validation:
+      - modeled_operation
+      - bounded_operation
+      - experimentally_supported_operation
+      - operationally_validated_operation
+
+  validation_classifications:
+    official_tags:
+      - "[VERIFIED]"
+      - "[ASSUMPTION]"
+      - "[HYPOTHESIS]"
+      - "[ESTIMATED BEHAVIOR]"
+      - "[PENDING VALIDATION]"
+      - "[UNRESOLVED ENGINEERING VARIABLE]"

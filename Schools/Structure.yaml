@@ -1,0 +1,434 @@
+Structure:
+  file: Structure.yaml
+  role: repository_topology_and_authority_lane_spine
+  authority: routing_composition_recovery_and_expansion_visibility_only
+  status: phase_4_replacement_draft
+
+  caution:
+    note: >
+      Structure.yaml routes the repository topology, authority lanes,
+      recovery pointers, and expansion visibility. It does not define terms,
+      govern bridges, validate claims, own physical object registries,
+      redefine causal doctrine, or execute engineering analysis.
+
+  owns:
+    - repository_topology
+    - authority_lane_index
+    - file_route_visibility
+    - recovery_paths
+    - expansion_hooks
+    - core_file_registry
+    - pressure_triggered_file_unlocks
+
+  does_not_own:
+    - causal_definitions
+    - semantic_identity
+    - physical_object_registry
+    - variable_definitions
+    - interaction_topology
+    - bridge_contracts
+    - validation_governance
+    - engineering_operators
+    - operational_truth
+    - claim_promotion
+
+  repository_state:
+    mode: expanded_core_active
+    architecture: pointer_first_authority_lanes
+    expansion_policy: pressure_triggered_runtime_unlocked
+    validation_state: structure_only_not_validation
+    drift_state: monitored
+
+  core_files:
+    - Structure.yaml
+    - CE-OS.yaml
+    - Physics.yaml
+    - Lexicon.yaml
+    - Interface.yaml
+    - Governance.yaml
+    - Engine.yaml
+    - Prototype.yaml
+    - Runtime.yaml
+
+  deferred_files:
+    Governance.yaml:
+      unlock_when:
+        - validation_language_repeats
+        - prohibited_claim_pressure_accumulates
+        - evidence_state_promotion_needed
+        - claim_tier_logic_needed
+      owns_when_unlocked:
+        - claim_firewall
+        - validation_boundaries
+        - admissibility_governance
+        - evidence_promotion_rules
+
+    Engine.yaml:
+      unlock_when:
+        - reusable_operator_logic_needed
+        - computable_margin_tracking_needed
+        - variables_require_calculation_schema
+        - formats_or_state_machines_reappear
+      owns_when_unlocked:
+        - operators
+        - formats
+        - margins
+        - state_transitions
+        - computable_variable_logic
+
+    Prototype.yaml:
+      unlock_when:
+        - candidate_geometry_pressure_accumulates
+        - mockup_layout_records_repeat
+        - design_iteration_paths_need_tracking
+        - unresolved_build_variables_expand
+      owns_when_unlocked:
+        - candidate_designs
+        - mockup_logic
+        - layout_constraints
+        - unresolved_build_variables
+
+  authority_lanes:
+
+    Structure:
+      file: Structure.yaml
+      owns:
+        - topology
+        - routing
+        - authority_lane_visibility
+        - recovery_paths
+        - expansion_hooks
+      blocked_from:
+        - definitions
+        - bridge_logic
+        - physical_objects
+        - validation
+        - causal_doctrine
+
+    CE_OS:
+      file: CE-OS.yaml
+      owns:
+        - causal_primitives
+        - causal_accounting_order
+        - distinction_topology
+        - anti_collapse_constraints
+        - domain_separation_discipline
+      blocked_from:
+        - claim_validation
+        - physical_object_registry
+        - semantic_alias_management
+        - repository_topology
+
+    Physics:
+      file: Physics.yaml
+      owns:
+        - physical_domain_taxonomy
+        - physical_object_registry
+        - attached_variable_registry
+        - interaction_topology
+        - measurement_unlocks
+        - physical_contradiction_register
+      blocked_from:
+        - semantic_definitions
+        - bridge_contract_authority
+        - claim_validation
+        - causal_doctrine_override
+        - topology_ownership
+
+    Lexicon:
+      file: Lexicon.yaml
+      owns:
+        - term_identity
+        - definitions
+        - aliases
+        - admissible_uses
+        - prohibited_uses
+        - mutation_risks
+        - semantic_drift_control
+      blocked_from:
+        - physical_object_registry
+        - interaction_topology
+        - bridge_contracts
+        - validation
+        - engineering_measurements
+
+    Interface:
+      file: Interface.yaml
+      owns:
+        - bridge_contracts
+        - translation_boundaries
+        - blocked_transfers
+        - drift_checks
+        - pressure_register
+        - unlock_thresholds
+      blocked_from:
+        - repository_topology
+        - primary_definitions
+        - physical_object_registry
+        - causal_doctrine
+        - validation_decisions
+
+    Runtime:
+      file: Runtime.yaml
+      owns:
+        - active_state
+        - runtime_transitions
+        - operational_event_records
+        - state_observation_logs
+        - active_object_state_tracking
+        - measurement_trace_governance
+        - contradiction_watchpoints
+        - escalation_routing
+      blocked_from:
+        - validation
+        - equation_definition
+        - executable_calculation
+        - canonical_definition
+        - subsystem_mechanics
+        - payload_claims
+        - reserve_buoyancy
+        - stability_validation
+        - seaworthiness
+        - operational_readiness
+
+  routing_rules:
+    - Structure_routes_but_does_not_validate
+    - Structure_points_to_authority_but_does_not_absorb_authority
+    - CE_OS_governs_causal_discipline
+    - Physics_governs_physical_domains_objects_and_interactions
+    - Lexicon_governs_term_identity_and_meaning
+    - Interface_governs_cross_file_and_cross_domain_boundaries
+    - bridge_logic_lives_in_Interface_not_Structure
+    - definitions_live_in_Lexicon_not_Structure
+    - object_registries_live_in_Physics_not_Structure
+    - unresolved_items_remain_visible
+    - expansion_requires_pressure_unlock
+    - summaries_do_not_become_authority
+    - duplicated_doctrine_is_drift_risk
+
+  file_relationships:
+
+    Structure_to_CE_OS:
+      relationship: routes_causal_authority
+      allowed:
+        - list_CE_OS_as_core_file
+        - point_to_CE_OS_for_causal_discipline
+      blocked:
+        - restate_causal_doctrine_as_Structure_authority
+        - redefine_interaction_transfer_or_propagation
+      interface_record: CE_OS_Interface_boundary
+
+    Structure_to_Physics:
+      relationship: routes_physical_modeling_authority
+      allowed:
+        - list_Physics_as_core_file
+        - point_to_Physics_for_domains_objects_interactions
+      blocked:
+        - contain_object_registry
+        - contain_domain_taxonomy_details
+        - validate_physical_models
+      interface_record: Structure_Physics_boundary
+
+    Structure_to_Lexicon:
+      relationship: routes_semantic_authority
+      allowed:
+        - list_Lexicon_as_core_file
+        - point_to_Lexicon_for_definitions_aliases_mutation_risks
+      blocked:
+        - define_terms
+        - control_aliases
+        - mutate_semantic_identity
+      interface_record: Structure_Lexicon_boundary
+
+    Structure_to_Interface:
+      relationship: routes_bridge_authority
+      allowed:
+        - list_Interface_as_core_file
+        - point_to_Interface_for_bridge_contracts_and_drift_checks
+      blocked:
+        - contain_bridge_contracts
+        - own_blocked_transfers
+        - absorb_translation_boundaries
+      interface_record: Structure_Interface_boundary
+
+  topology_layers:
+
+    routing_layer:
+      - Structure.yaml
+
+    causal_discipline_layer:
+      - CE-OS.yaml
+
+    physical_modeling_layer:
+      - Physics.yaml
+
+    semantic_layer:
+      - Lexicon.yaml
+
+    boundary_bridge_layer:
+      - Interface.yaml
+
+    governance_layer:
+      - Governance.yaml
+
+    engineering_layer:
+      - Engine.yaml
+      - Prototype.yaml
+
+    runtime_layer:
+      - Runtime.yaml
+
+  expansion_hooks:
+
+    add_core_files_here: []
+
+    add_deferred_files_here: []
+
+    add_authority_lanes_here: []
+
+    add_routing_edges_here: []
+
+    add_recovery_paths_here: []
+
+    add_unlock_thresholds_here: []
+
+    add_contradictions_here: []
+
+    add_unresolved_items_here: []
+
+  pressure_register:
+
+    governance_pressure:
+      current_state: deferred
+      monitored_by: Structure.yaml
+      routed_to_when_unlocked: Governance.yaml
+      pressure_signals:
+        - validation_claims_repeat
+        - evidence_promotion_needed
+        - prohibited_claims_expand
+        - safety_or_readiness_language_appears
+
+    engineering_pressure:
+      current_state: deferred
+      monitored_by: Structure.yaml
+      routed_to_when_unlocked: Engine.yaml
+      pressure_signals:
+        - variable_calculation_needed
+        - reusable_operator_pattern_appears
+        - margin_tracking_needed
+        - state_machine_logic_reappears
+
+    prototype_pressure:
+      current_state: deferred
+      monitored_by: Structure.yaml
+      routed_to_when_unlocked: Prototype.yaml
+      pressure_signals:
+        - candidate_geometry_records_repeat
+        - layout_decision_pressure_accumulates
+        - build_iteration_tracking_needed
+        - unresolved_build_variables_expand
+
+    runtime_pressure:
+      current_state: deferred
+      monitored_by: Structure.yaml
+      routed_to_when_unlocked: Runtime.yaml
+      pressure_signals:
+        - active_state_tracking_needed
+        - test_events_repeat
+        - operational_logs_require_state_transitions
+
+    semantic_pressure:
+      current_state: active
+      routed_to: Lexicon.yaml
+      pressure_signals:
+        - uncontrolled_aliases
+        - term_drift
+        - candidate_terms
+        - shorthand_expansion
+
+    physical_modeling_pressure:
+      current_state: active
+      routed_to: Physics.yaml
+      pressure_signals:
+        - domain_expansion
+        - object_records
+        - interaction_topology
+        - measurement_unlocks
+
+    bridge_pressure:
+      current_state: active
+      routed_to: Interface.yaml
+      pressure_signals:
+        - cross_domain_mapping
+        - blocked_transfer_logic
+        - bridge_required_without_contract
+        - authority_collision_risk
+
+    runtime_pressure:
+      current_state: active
+      monitored_by: Structure.yaml
+      routed_to: Runtime.yaml
+      pressure_signals:
+        - active_state_tracking_needed
+        - test_events_repeat
+        - operational_logs_require_state_transitions
+
+  unresolved:
+    - CE_OS_yaml_alignment_review_pending
+    - final_bundle_integrity_audit_pending
+    - runtime_schema_alignment_pending
+    - bridge_records_incomplete
+    - operators_candidate_until_measured
+
+  contradiction_register:
+    - routing_visibility_does_not_create_authority
+    - core_file_presence_does_not_validate_content
+    - deferred_file_absence_does_not_remove_future_pressure
+    - expansion_hooks_do_not_mean_expansion_required
+    - bridge_pressure_must_not_be_absorbed_by_Structure
+    - semantic_pressure_must_not_be_absorbed_by_Structure
+    - physical_modeling_pressure_must_not_be_absorbed_by_Structure
+    - active_runtime_state_does_not_equal_operational_readiness
+    - runtime_observation_does_not_equal_validation
+
+  prohibited_claims:
+    - Structure_validates_claims
+    - Structure_replaces_CE_OS
+    - Structure_replaces_Physics
+    - Structure_replaces_Lexicon
+    - Structure_replaces_Interface
+    - route_equals_truth
+    - topology_equals_validation
+    - core_file_status_equals_completion
+    - expansion_hook_equals_authority
+
+  recovery:
+    reconstructable_from:
+      - Structure.yaml
+      - CE-OS.yaml
+      - Physics.yaml
+      - Lexicon.yaml
+      - Interface.yaml
+      - prior_Structure_file
+      - phase_4_alignment_notes
+
+    recovery_requirements:
+      - every_core_file_has_single_authority_lane
+      - every_route_points_to_owner_authority
+      - every_deferred_file_has_unlock_threshold
+      - every_pressure_signal_has_routing_target
+      - every_cross_file_boundary_points_to_Interface
+      - unresolved_items_remain_visible
+      - contradictions_remain_recoverable
+
+    compression_rule:
+      - topology_in
+      - routes_in
+      - authority_lanes_in
+      - recovery_paths_in
+      - expansion_hooks_in
+      - definitions_out
+      - bridge_logic_out
+      - object_registry_out
+      - validation_out
+      - causal_doctrine_out

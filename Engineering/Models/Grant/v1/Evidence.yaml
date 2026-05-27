@@ -1,0 +1,759 @@
+Accepted.
+
+This is the operational Evidence architecture. It is not optimized for elegance. It is optimized so a future operator can reconstruct which world observed what, under which topology, with which losses, through which bridge, under which unresolveds.
+
+Evidence:
+  file: Evidence.yaml
+  role: operational_interaction_ledger_for_observer_conditioned_measurement_worlds
+  status: architecture_candidate
+  authority: evidence_state_tracking_only_not_validation_authority
+  guarded_by:
+    Physics:
+      owns:
+        - object_identity
+        - interaction_topology
+        - variable_attachment
+        - measurement_unlocks
+    Grant:
+      owns:
+        - admissibility
+        - claim_boundaries
+        - escalation_firewall
+        - contradiction_preservation
+        - summary_quarantine
+
+  core_rule:
+    - evidence_records_support_conditions_not_truth
+    - no_summary_may_erase_topology_lineage
+    - no_bridge_model_may_claim_neutrality
+    - no_averaging_may_occur_without_transformation_review
+    - no_observer_world_may_become_canon_through_popularity_cleanliness_or_convenience
+
+  prohibited_global_promotions:
+    - measurement_equals_validation
+    - observation_equals_validation
+    - simulation_equals_validation
+    - visualization_equals_evidence
+    - clean_model_equals_truth
+    - fitted_parameter_equals_causal_identity
+    - observer_majority_equals_truth
+    - bridge_model_equals_equivalence
+    - averaging_equals_resolution
+    - summary_equals_source_authority
+
+This aligns with the existing Evidence rule that evidence state tracks support level, not truth status, and that measured/repeatable/validated remain distinct states. It also follows Boundary’s firewall against measurement-equals-validation, visualization-equals-evidence, clean-model-equals-truth, and topology/authority collapse.
+
+identity_layer:
+  purpose:
+    - preserve_identity_of_all_objects_worlds_regimes_observers_and_bridges
+    - prevent_identity_collapse_during_summary_translation_or_averaging
+    - preserve_lineage_across_revisions
+
+  required_records:
+    object_identity_record:
+      required_fields:
+        - object_id
+        - object_name
+        - object_class
+        - physical_role
+        - parent_or_component_relationships
+        - attached_variables
+        - active_boundaries
+        - revision_lineage
+        - unresolved_identity_risks
+
+    observer_stack_identity_record:
+      required_fields:
+        - observer_stack_id
+        - observer_stack_name
+        - observer_objects
+        - coupled_boundaries
+        - instrumentation_properties
+        - signal_processing_properties
+        - observer_backreaction_candidates
+        - admissibility_scope
+        - revision_lineage
+
+    regime_identity_record:
+      required_fields:
+        - regime_id
+        - operating_condition_name
+        - amplitude_range
+        - preload_state
+        - mounting_condition
+        - support_condition
+        - contact_surface_condition
+        - sensor_condition
+        - environmental_condition
+        - regime_boundaries
+        - neighboring_regime_noninheritance_rule
+
+    bridge_model_identity_record:
+      required_fields:
+        - bridge_model_id
+        - source_world
+        - target_world
+        - transformation_type
+        - preserved_variables
+        - lost_variables
+        - event_boundary_mapping
+        - translation_cost
+        - causal_information_erasure
+        - admissibility_review_status
+
+    lineage_record:
+      required_fields:
+        - record_id
+        - parent_record_ids
+        - revision_id
+        - changed_fields
+        - reason_for_change
+        - unresolveds_added
+        - unresolveds_removed
+        - contradictions_added
+        - contradictions_resolved_by_measurement_or_left_open
+        - prohibited_claim_check
+
+  failure_condition:
+    - any_record_summary_that_removes_object_observer_regime_or_bridge_identity_is_non_admissible
+interaction_layer:
+  purpose:
+    - preserve_boundary_specific_interactions
+    - preserve_transfer_vs_propagation_distinction
+    - preserve_active_variables_loss_channels_and_timing_boundaries
+    - prevent_net_scalar_terms_from_replacing_topology
+
+  interaction_record:
+    required_fields:
+      - interaction_id
+      - source_object
+      - target_object
+      - interaction_boundary
+      - regime_id
+      - observer_stack_id
+      - interaction_type
+      - transfer_or_propagation
+      - active_variables
+      - constraints
+      - loss_channels
+      - timing_boundaries
+      - transition_candidates
+      - measurement_points
+      - unresolved_measurements
+      - evidence_state
+      - contradiction_links
+      - lineage_links
+
+  transfer_or_propagation:
+    required_classification:
+      primary:
+        allowed_values:
+          - transfer
+          - propagation
+          - unresolved
+      secondary_candidates:
+        allowed_values:
+          - transfer_candidate
+          - propagation_candidate
+          - observer_induced_candidate
+          - instrumentation_artifact_candidate
+      rule:
+        - load_contact_displacement_pressure_or_state_passage_defaults_to_transfer
+        - field_wave_gradient_or_distributed_wave_behavior_requires_measurement_before_propagation_claim
+        - transfer_and_propagation_must_not_be_collapsed_into_generic_interaction
+
+  loss_channels:
+    required_format:
+      - channel_id
+      - boundary
+      - candidate_loss_mechanism
+      - affected_variables
+      - measurement_method_required
+      - measured_or_unresolved
+      - observer_induced_candidate
+      - native_candidate
+      - cannot_be_absorbed_into
+
+    prohibited_compressions:
+      - damping_coefficient_replaces_loss_channels
+      - total_energy_loss_replaces_energy_distribution
+      - decay_curve_replaces_boundary_specific_loss_records
+      - effective_spring_constant_erases_mounting_plate_or_table_boundary
+
+  timing_boundaries:
+    required_fields:
+      - entry_condition
+      - exit_condition
+      - transition_detection_method
+      - timing_resolution
+      - synchronization_quality
+      - unresolved_timing_risks
+
+    prohibited_compressions:
+      - smooth_curve_replaces_transition_boundary
+      - filtered_signal_replaces_raw_transition
+      - timestamp_order_replaces_causal_order_without_sync_review
+observer_layer:
+  purpose:
+    - preserve_observer_topology_as_part_of_physics
+    - preserve_instrumentation_coupling_and_backreaction
+    - preserve_filtering_bandwidth_sync_and_stack_specific_admissibility
+    - prevent_sensor_neutrality_assumptions
+
+  observer_stack_record:
+    required_fields:
+      - observer_stack_id
+      - observer_objects
+      - attached_base_objects
+      - coupled_boundaries
+      - physical_couplings
+      - signal_couplings
+      - filtering_conditions
+      - bandwidth_conditions
+      - synchronization_conditions
+      - cable_or_wireless_conditions
+      - observer_induced_pathways
+      - observer_vs_observed_ambiguity
+      - admissible_scope
+      - blocked_scope
+
+  observer_object_record:
+    required_fields:
+      - observer_object_id
+      - object_type
+      - mass
+      - stiffness
+      - damping
+      - mounting_method
+      - adhesive_or_contact_interface
+      - cable_or_power_path
+      - bandwidth
+      - latency
+      - sampling_rate
+      - filtering
+      - calibration_status
+      - unresolved_backreaction
+
+  observer_induced_pathway_record:
+    required_fields:
+      - pathway_id
+      - observer_object
+      - affected_base_object
+      - affected_boundary
+      - interaction_type
+      - altered_variables
+      - possible_backreaction
+      - control_measurement_required
+      - unresolved_native_vs_observer_contribution
+
+  stack_specific_admissibility:
+    required_fields:
+      - observer_stack_id
+      - admissible_statements
+      - blocked_statements
+      - native_behavior_claim_allowed
+      - observer_backreaction_bounded
+      - bridge_requirements_before_cross_stack_comparison
+
+  hard_rules:
+    - no_sensor_is_neutral_by_assumption
+    - no_measurement_is_topology_free
+    - measured_behavior_is_behavior_under_observer_topology
+    - native_behavior_claim_requires_observer_backreaction_controls
+measurement_layer:
+  purpose:
+    - preserve_method_units_uncertainty_sampling_sync_and_raw_filtered_distinctions
+    - prevent_measurement_records_from_promoting_themselves
+    - preserve_measurement_conditions_as_part_of evidence
+
+  measurement_record:
+    required_fields:
+      - measurement_id
+      - measured_variable
+      - object_or_boundary_measured
+      - regime_id
+      - observer_stack_id
+      - method
+      - units
+      - instrument_id
+      - sampling_rate
+      - bandwidth
+      - filter_state
+      - raw_signal_reference
+      - filtered_signal_reference
+      - synchronization_quality
+      - timestamp_method
+      - uncertainty
+      - calibration_status
+      - environmental_context
+      - operator_notes
+      - unresolved_measurement_risks
+      - evidence_state_supported
+      - claims_not_supported
+
+  raw_vs_filtered:
+    rule:
+      - raw_signal_and_filtered_signal_are_distinct_records
+      - filtered_signal_must_record_filter_type_group_delay_cutoff_and_processing_steps
+      - filtered_signal_may_not_replace_raw_transition_history
+      - filtered_smoothness_is_not_physical_smoothness
+
+  synchronization_quality:
+    required_fields:
+      - clock_source
+      - channel_latency
+      - sync_error_bound
+      - trigger_threshold
+      - alignment_method
+      - drift_estimate
+      - unresolved_ordering_risk
+
+  measurement_admissibility:
+    observed:
+      requires:
+        - declared_conditions
+        - record_of_behavior
+        - object_boundary_identity
+      does_not_support:
+        - validation
+        - generalization
+        - causal_source_identification
+
+    measured:
+      requires:
+        - method
+        - units
+        - context
+        - uncertainty
+        - observer_stack_identity
+        - regime_identity
+      does_not_support:
+        - validation_by_itself
+        - global_behavior_claim
+        - observer_neutrality
+
+    repeatable:
+      requires:
+        - repeated_measurements
+        - declared_conditions
+        - consistency_criteria
+        - failed_or_anomalous_runs_preserved
+      does_not_support:
+        - validation_without_governance_route
+        - scope_expansion_to_other_regimes_or_observer_worlds
+contradiction_layer:
+  purpose:
+    - preserve_conflicts_without_rhetorical_resolution
+    - preserve_mutually_incompatible_admissible_records
+    - preserve_unresolved_causal_pathways
+    - preserve_translation_failures
+
+  contradiction_record:
+    required_fields:
+      - contradiction_id
+      - contradiction_type
+      - involved_records
+      - involved_regimes
+      - involved_observer_stacks
+      - involved_boundaries
+      - conflicting_observations
+      - conflicting_measurements
+      - competing_interpretations
+      - unresolved_causal_pathways
+      - instrumentation_ambiguity
+      - translation_failure_links
+      - current_status
+      - resolution_requirements
+      - prohibited_resolution_shortcuts
+
+  contradiction_types:
+    - fit_vs_measurement_conflict
+    - observer_world_conflict
+    - regime_migration_conflict
+    - event_boundary_conflict
+    - variable_non_equivalence_conflict
+    - observer_vs_observed_ambiguity
+    - translation_failure
+    - summary_erasure
+
+  mutually_incompatible_record_policy:
+    rule:
+      - mutually_incompatible_records_may_remain_admissible_if_scope_topology_and_uncertainty_are_explicit
+    prohibited:
+      - majority_vote_resolution
+      - cleaner_signal_resolution
+      - preferred_model_resolution
+      - summary_smoothing
+      - averaging_without_transformation_review
+
+  unresolved_causal_pathway_record:
+    required_fields:
+      - pathway_id
+      - candidate_source
+      - candidate_target
+      - candidate_mechanism
+      - supporting_pressure
+      - conflicting_pressure
+      - required_measurement_unlock
+      - current_evidence_state
+      - blocked_claims
+translation_layer:
+  purpose:
+    - preserve_bridge_model_identity
+    - preserve_translation_cost
+    - preserve_non_equivalent_variables
+    - preserve_event_boundary_incompatibility
+    - preserve_causal_information_erasure
+
+  bridge_attempt_record:
+    required_fields:
+      - bridge_attempt_id
+      - bridge_model_id
+      - source_observer_world
+      - target_observer_world
+      - source_regime
+      - target_regime
+      - source_variables
+      - target_variables
+      - preserved_variables
+      - non_equivalent_variables
+      - transformed_variables
+      - erased_variables
+      - event_boundary_mapping
+      - incompatible_event_boundaries
+      - translation_cost
+      - causal_information_erasure
+      - admissibility_status
+      - allowed_uses
+      - blocked_uses
+
+  bridge_model_record:
+    required_fields:
+      - bridge_model_id
+      - model_type
+      - bridge_is_observer_topology
+      - assumptions
+      - input_worlds
+      - output_world
+      - transformation_steps
+      - loss_statement
+      - uncertainty_added
+      - validation_state
+      - governance_review_required
+
+  translation_cost:
+    required_dimensions:
+      topology_cost:
+        meaning: objects_or_boundaries_added_removed_or_merged
+      variable_cost:
+        meaning: variables_missing_or_non_equivalent
+      event_boundary_cost:
+        meaning: source_and_target_do_not_define_same_event
+      uncertainty_cost:
+        meaning: translation_adds_unbounded_or_unmodeled_uncertainty
+      causal_loss_cost:
+        meaning: causal_pathways_erased_or_relabelled
+
+  causal_information_erasure_record:
+    required_fields:
+      - erasure_id
+      - bridge_attempt_id
+      - erased_objects
+      - erased_boundaries
+      - erased_variables
+      - erased_event_boundaries
+      - erased_loss_channels
+      - erased_observer_conditions
+      - false_summary_risk
+      - admissibility_status
+
+  hard_rules:
+    - bridge_model_is_itself_an_observer_topology
+    - translation_may_destroy_causal_information
+    - equivalent_summary_requires_demonstrated_equivalence
+    - lossy_projection_must_be_labeled_as_lossy
+    - averaging_across_worlds_requires_transformation_review
+governance_layer:
+  purpose:
+    - enforce_claim_boundaries
+    - block_prohibited_compressions
+    - prohibit_observer_majority_theater
+    - restrict_averaging
+    - require_bridge_model_review
+
+  blocked_claims:
+    global:
+      - global_damping_claim
+      - single_damping_coefficient_describes_system
+      - primary_damping_origin_identified_globally
+      - measurement_equals_validation
+      - observation_equals_validation
+      - repeatability_equals_validation
+      - visualization_equals_evidence
+      - clean_model_equals_truth
+      - fitted_parameter_equals_causal_identification
+      - bridge_model_equals_equivalence
+      - observer_majority_equals_truth
+      - cleaner_signal_equals_higher_authority
+      - less_intrusive_equals_native
+      - summary_equals_source_authority
+
+  admissible_statement_template:
+    required_form:
+      - under_regime_id
+      - under_observer_stack_id
+      - using_method
+      - with_units_and_uncertainty
+      - variable_or_boundary_X_was_observed_or_measured
+      - within_declared_conditions
+      - unresolveds_remain
+
+    example:
+      - Under regime_R2_high_amplitude and observer_stack_OS_HighBWProbe, A_B contact transition timing was measured with declared sampling rate, bandwidth, and uncertainty; this supports a regime-local contact-transition record but does not identify global damping origin.
+
+  prohibited_compressions:
+    - decay_curve_replaces_boundary_records
+    - effective_parameter_replaces_object_identity
+    - average_replaces_observer_world_lineage
+    - filtered_signal_replaces_raw_signal
+    - summary_replaces_contradiction_register
+    - bridge_output_replaces_source_worlds
+    - repeatable_envelope_replaces_transition_variability
+    - visual_smoothness_replaces_measurement_precision
+
+  observer_majority_prohibition:
+    rule:
+      - number_of_observer_stacks_agreeing_does_not_establish_truth
+    blocked_patterns:
+      - most_stacks_show_X_therefore_X_is_true
+      - cleaner_stacks_agree_therefore_conflicting_stack_is_artifact
+      - preferred_stack_overrides_others_without_bridge_model
+
+  averaging_restrictions:
+    averaging_allowed_only_if:
+      - averaging_process_has_identity_record
+      - input_worlds_are_listed
+      - non_equivalent_variables_are_declared
+      - event_boundary_mismatches_are_declared
+      - erased_topology_is_declared
+      - transformation_loss_is_declared
+      - governance_review_completed
+
+    averaging_blocked_when:
+      - observer_worlds_have_non_equivalent_variables
+      - event_boundaries_do_not_match
+      - observer_backreaction_unbounded
+      - native_vs_observer_induced_pathways_entangled
+      - averaging_erases_regime_or_stack_identity
+
+  bridge_model_review_requirements:
+    required_before_bridge_output_use:
+      - bridge_model_identity
+      - source_and_target_worlds
+      - variables_preserved
+      - variables_lost
+      - event_boundaries_preserved
+      - event_boundaries_destroyed_or_mapped
+      - uncertainty_added
+      - causal_information_erasure
+      - admissible_scope
+      - prohibited_scope
+
+Grant’s operating role remains claim firewall and admissibility surface, not validation authority. GrantShell may classify evidence state, block prohibited escalation, preserve contradictions, and prepare governance handoffs, but not promote claims.
+
+escalation_layer:
+  purpose:
+    - govern_evidence_state_promotion_without_scope_creep
+    - ensure_all_promotion_is_regime_scoped_and_observer_topology_scoped
+    - prevent_measurement_or_repeatability_from_becoming_validation
+
+  allowed_states:
+    - conceptual
+    - observed
+    - measured
+    - repeatable
+    - validated
+
+  universal_scope_rule:
+    every_escalation_requires:
+      - regime_id
+      - observer_stack_id
+      - object_or_boundary_id
+      - measurement_method_if_applicable
+      - uncertainty_state
+      - unresolveds_preserved
+      - blocked_claims_listed
+
+  conceptual_to_observed:
+    requirements:
+      - declared_regime
+      - declared_observer_topology
+      - observed_behavior_record
+      - object_boundary_identity_preserved
+      - unresolved_measurements_listed
+    blocked_promotions:
+      - observed_equals_measured
+      - observed_equals_validated
+      - visual_coherence_equals_measurement_sufficiency
+
+  observed_to_measured:
+    requirements:
+      - method
+      - units
+      - context
+      - uncertainty
+      - sampling_conditions
+      - synchronization_quality
+      - raw_vs_filtered_state
+      - observer_backreaction_notes
+    blocked_promotions:
+      - measurement_equals_validation
+      - measured_value_generalizes_to_other_regimes
+      - measured_value_generalizes_to_other_observer_stacks
+      - measurement_resolves_native_behavior_without_observer_controls
+
+  measured_to_repeatable:
+    requirements:
+      - repeated_measurements
+      - same_regime_id_or_declared_regime_variation
+      - same_observer_stack_or_declared_stack_variation
+      - consistency_criteria
+      - anomaly_register
+      - failed_runs_preserved
+      - contradiction_review
+    blocked_promotions:
+      - repeatability_equals_validation
+      - repeatability_in_one_variable_equals_repeatability_of_full_chain
+      - repeatability_in_one_observer_world_invalidates_other_worlds
+
+  repeatable_to_validated:
+    requirements:
+      - governed_validation_process
+      - declared_standard
+      - claim_scope
+      - regime_scope
+      - observer_topology_scope
+      - bridge_model_review_if_cross_world
+      - contradiction_register_review
+      - prohibited_claim_review
+      - validation_boundary_statement
+    blocked_promotions:
+      - validation_outside_scope
+      - validation_across_unreviewed_regimes
+      - validation_across_unreviewed_observer_worlds
+      - validation_of_native_behavior_from_observer_conditioned_data_without_controls
+
+  escalation_packet:
+    required_fields:
+      - requested_state_change
+      - source_records
+      - current_evidence_state
+      - target_evidence_state
+      - regime_scope
+      - observer_stack_scope
+      - boundary_scope
+      - measurement_scope
+      - contradiction_status
+      - translation_status
+      - unresolveds_preserved
+      - claims_supported
+      - claims_blocked
+      - governance_decision
+operational_record_bundle:
+  minimum_reconstructable_bundle:
+    required_records:
+      - object_identity_record
+      - observer_stack_identity_record
+      - regime_identity_record
+      - interaction_record
+      - observer_induced_pathway_record
+      - measurement_record
+      - contradiction_record
+      - bridge_attempt_record_if_translation_occurs
+      - escalation_packet_if_claim_state_changes
+
+  reconstruction_questions_must_answer:
+    - which_world_observed_what
+    - under_which_observer_topology
+    - under_which_regime
+    - at_which_interaction_boundary
+    - with_which_active_variables
+    - with_which_loss_channels
+    - with_which_measurement_method
+    - with_which_units_and_uncertainty
+    - with_which_raw_or_filtered_state
+    - with_which_sync_quality
+    - through_which_bridge_if_any
+    - with_which_translation_losses
+    - under_which_unresolveds
+    - which_claims_are_blocked
+
+  failure_conditions:
+    - future_operator_cannot_identify_observer_stack
+    - future_operator_cannot_identify_regime
+    - future_operator_cannot_reconstruct_boundary_topology
+    - loss_channels_absorbed_into_single_scalar
+    - raw_filtered_distinction_missing
+    - synchronization_quality_missing
+    - contradiction_resolved_by_summary
+    - bridge_model_identity_missing
+    - averaging_process_unreviewed
+    - unsupported_claim_promoted
+summary_admissibility_gate:
+  rule: summary_is_allowed_only_if_it_preserves_reconstructability
+
+  summary_must_include:
+    - regime_scope
+    - observer_stack_scope
+    - object_boundary_scope
+    - evidence_state
+    - unresolveds
+    - contradictions
+    - translation_losses_if_any
+    - blocked_claims
+
+  summary_is_non_admissible_if_it:
+    - removes_object_identity
+    - removes_observer_stack_identity
+    - removes_regime_identity
+    - removes_bridge_model_identity
+    - removes_loss_channels
+    - removes_timing_boundaries
+    - removes_raw_vs_filtered_distinction
+    - removes_uncertainty
+    - removes_contradictions
+    - converts_fit_to_causal_identity
+    - converts_measurement_to_validation
+    - averages_across_worlds_without_review
+
+Final Grant ruling:
+
+grant_ruling:
+  architecture_status: admissible_operational_evidence_architecture_candidate
+  validation_status: not_validation_authority
+  optimization_priority:
+    - causal_reconstructability
+    - contradiction_preservation
+    - admissibility_discipline
+    - observer_conditioned_lineage
+    - regime_scoped_escalation
+
+  allowed_use:
+    - create_interaction_ledgers
+    - record_observer_conditioned_measurements
+    - preserve_conflicting_measurement_worlds
+    - review_bridge_attempts
+    - govern_evidence_state_escalation
+
+  blocked_use:
+    - declare_truth_from_evidence_records
+    - promote_summary_to_authority
+    - promote_observer_world_to_canon
+    - validate_global_damping_model
+    - average_incompatible_worlds_without_review
+    - erase_unresolveds_for_readability
+
+  terminal_check:
+    - if_future_operator_cannot_reconstruct_which_world_observed_what_under_which_topology_with_which_losses_through_which_bridge_under_which_unresolveds_the_architecture_has_failed
+
+Operationally: Evidence is not a truth warehouse. It is the chain-of-custody system for support conditions.

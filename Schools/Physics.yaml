@@ -1,0 +1,801 @@
+Physics:
+  file: Physics.yaml
+  role: physical_domain_and_interaction_registry
+  authority: object_binding_domain_topology_and_variable_attachment
+  status: phase_1_replacement_draft
+
+  ce_os_pointer:
+    authority_source: CE-OS.yaml
+    governs:
+      - interaction_definition
+      - causal_accounting_order
+      - transfer_vs_propagation
+      - mass_centric_vs_field_centric_distinction
+      - operational_validity_vs_causal_completeness
+
+    rule: >
+      Physics may classify and attach physical records using CE-OS distinctions,
+      but CE-OS governs causal doctrine if phrasing conflicts.
+
+  caution:
+    note: >
+      Physics.yaml records physical domains, physical objects, variable attachments,
+      interaction topology, domain bridges, and unresolved measurement requirements.
+      It does not redefine physics, validate claims, replace causal doctrine,
+      or promote interpreted models into operational truth.
+
+  owns:
+    - physical_domain_taxonomy
+    - physical_object_registry
+    - object_relationships
+    - attached_variable_registry
+    - interaction_topology
+    - domain_bridge_requirements
+    - measurement_unlocks
+    - unresolved_physical_states
+    - physical_contradiction_register
+
+  does_not_own:
+    - causal_definitions
+    - semantic_identity
+    - claim_validation
+    - engineering_operator_definitions
+    - prototype_candidate_geometry
+    - operational_readiness
+    - replacement_physics_claims
+    - cosmology
+    - metaphysical_substrate_claims
+
+  upstream:
+    - Structure.yaml
+    - CE-OS.yaml
+    - Interface.yaml
+
+  downstream:
+    - Engine.yaml
+    - Prototype.yaml
+    - measurement_plans
+    - validation_requests
+
+  modeling_interface:
+    accepts:
+      - component_objects
+      - domain_tags
+      - causal_roles
+      - input_output_chains
+      - observed_state_changes
+      - candidate_interactions
+      - variable_observations
+      - unresolved_measurements
+
+    outputs:
+      - object_registry
+      - domain_map
+      - interaction_graph
+      - variable_bindings
+      - bridge_requirements
+      - measurement_unlocks
+      - contradiction_register
+
+    blocked_outputs:
+      - validated_performance
+      - safe_payload
+      - seaworthiness
+      - reserve_buoyancy
+      - operational_readiness
+      - universal_physics_claims
+      - replacement_physics_claims
+
+  domain_taxonomy:
+
+    mass_centric:
+      code: MC
+      role: mass_load_displacement_domain
+      description: >
+        Domains primarily governed through matter, inertia, load, pressure,
+        friction, displacement, structural contact, and material motion.
+      transfer_mode: transfer
+      prohibited_collapse:
+        - mass_centric_as_field_centric
+        - transfer_as_propagation
+        - object_motion_as_universal_causal_proof
+
+      subdomains:
+
+        mechanical:
+          code: ME
+          role: mass_motion_and_configuration
+          description: >
+            Mechanical behavior expressed through the motion, configuration,
+            loading, or constraint of mass.
+          forms:
+            linear_mechanical:
+              code: ML
+              role: translational_motion
+              variables:
+                - force
+                - displacement
+                - velocity
+                - acceleration
+                - friction
+                - work
+                - linear_momentum
+                - inertia
+                - mass
+                - point_load
+                - distributed_load
+            angular_mechanical:
+              code: MA
+              role: rotational_motion
+              variables:
+                - torque
+                - angular_velocity
+                - angular_momentum
+                - mechanical_advantage
+                - bearing_load
+                - rotational_inertia
+                - shaft_power
+                - rpm
+                - moment_arm
+                - bending_moment
+
+        fluid_dynamic:
+          code: FD
+          role: fluid_pressure_flow_and_buoyancy
+          description: >
+            Fluid behavior expressed through pressure, flow, viscosity,
+            displacement, buoyancy, and fluid momentum.
+          forms:
+            ambient_fluid:
+              code: FA
+              role: open_environment_fluid_motion
+              variables:
+                - fluid_momentum
+                - flow_rate
+                - viscosity
+                - fluid_mass
+                - current_speed
+                - drag_force
+                - turbulence_state
+                - boundary_layer_state
+            pneumatic:
+              code: FP
+              role: gas_pressure_and_expansion
+              variables:
+                - gas_pressure
+                - gas_volume
+                - gas_flow_rate
+                - expansion_force
+                - compressibility
+                - vent_rate
+                - leak_rate
+            hydraulic:
+              code: FH
+              role: liquid_pressure_and_flow
+              variables:
+                - liquid_pressure
+                - hydraulic_pressure
+                - flow_rate
+                - hydraulic_force
+                - head_pressure
+                - pump_pressure
+                - pressure_drop
+                - fluid_volume
+            buoyancy:
+              code: BC
+              aliases:
+                - Bc
+              role: displacement_based_fluid_support
+              variables:
+                - density_difference
+                - displaced_volume
+                - submerged_volume
+                - buoyant_force
+                - waterline_z
+                - freeboard
+                - trim_angle
+                - list_angle
+                - flotation_margin
+
+    field_centric:
+      code: FC
+      role: distributed_field_gradient_domain
+      description: >
+        Domains primarily governed through measurable distributed field behavior,
+        gradients, induction, radiation, thermal propagation, or electromagnetic interaction.
+      transfer_mode: propagation_or_field_coupled_transfer
+      prohibited_collapse:
+        - field_centric_as_mass_centric
+        - propagation_as_generic_movement
+        - field_as_universal_substrate
+        - field_behavior_as_validation
+
+      subdomains:
+
+        magnetic:
+          code: FX
+          aliases:
+            - Fx
+          role: magnetic_field_behavior
+          description: >
+            Magnetic behavior expressed through field strength, flux, reluctance,
+            permeability, inductance, and magnetic force relationships.
+          variables:
+            - magnetic_flux
+            - magnetic_field_strength
+            - magnetic_force
+            - permeability
+            - magnetic_permeance
+            - magnetic_reluctance
+            - magnetomotive_force
+            - inductance
+            - field_gradient
+            - magnetic_coupling_distance
+
+        electrical:
+          code: EC
+          aliases:
+            - Ec
+          role: electrical_potential_and_conduction_behavior
+          description: >
+            Electrical behavior expressed through voltage, current, resistance,
+            impedance, capacitance, conductance, and electric field relationships.
+          variables:
+            - voltage
+            - current
+            - resistance
+            - impedance
+            - capacitance
+            - conductance
+            - electric_field_strength
+            - electric_flux
+            - power
+            - voltage_drop
+            - grounding_continuity
+          forms:
+            alternating_current:
+              code: AC
+              role: cyclic_electrical_behavior
+              variables:
+                - alternating_voltage
+                - alternating_current
+                - impedance_ac
+                - reactance
+                - apparent_power
+                - frequency
+                - phase_angle
+            direct_current:
+              code: DC
+              role: unidirectional_electrical_behavior
+              variables:
+                - direct_voltage
+                - direct_current
+                - resistance_dc
+                - power_dc
+                - capacitance
+                - conductance
+                - electric_field_strength
+                - electric_flux
+
+        electromagnetic_wave:
+          code: EMW
+          role: electromagnetic_radiation_and_wave_behavior
+          description: >
+            Electromagnetic wave behavior expressed through frequency, wavelength,
+            amplitude, radiation, refractive effects, and propagation conditions.
+          variables:
+            - electromagnetic_radiation
+            - photon_energy
+            - frequency
+            - wavelength
+            - speed_of_light
+            - wave_amplitude
+            - wave_velocity
+            - refractive_index
+            - attenuation
+            - absorption
+            - reflection
+            - transmission
+
+        thermal:
+          code: TE
+          role: thermal_state_transfer_and_material_response
+          description: >
+            Thermal behavior expressed through temperature, heat transfer,
+            thermal gradients, material response, phase change, and thermal resistance.
+          variables:
+            - thermal_energy
+            - heat_transfer
+            - temperature
+            - specific_heat_capacity
+            - thermal_conductivity
+            - entropy
+            - enthalpy
+            - thermal_resistance
+            - thermal_expansion
+            - phase_change
+            - heat_flux
+            - thermal_radiation
+            - convection
+            - conduction
+            - latent_heat
+            - absolute_zero
+            - thermal_equilibrium
+
+  universal_physical_variables:
+    note: >
+      These are neutral modeling variables used across domains. Definitions and
+      admissibility boundaries belong in Lexicon.yaml. Computable operators belong
+      in Engine.yaml.
+    variables:
+      - potential
+      - resistance
+      - displacement
+      - time
+      - volume
+      - density
+      - pressure
+      - force
+      - mass
+      - acceleration
+      - velocity
+      - momentum
+      - inertia
+      - energy
+      - power
+      - gradient
+      - proximity
+      - boundary_condition
+      - constraint
+      - loss
+      - efficiency
+      - margin
+
+  object_record_schema:
+    required_fields:
+      - name
+      - domain
+      - role
+      - attached_variables
+      - interactions
+      - unresolved_measurements
+      - evidence_state
+      - prohibited_claims
+    optional_fields:
+      - aliases
+      - parent_object
+      - child_objects
+      - material
+      - geometry
+      - boundary_conditions
+      - environmental_exposure
+      - service_access
+      - inspection_access
+      - replacement_access
+
+  interaction_record_schema:
+    required_fields:
+      - name
+      - source_object
+      - target_object
+      - domain
+      - interaction_type
+      - transfer_or_propagation
+      - constraints
+      - losses
+      - unresolved_measurements
+      - evidence_state
+    optional_fields:
+      - intermediate_objects
+      - bridge_required
+      - governing_variables
+      - state_change
+      - failure_modes
+      - measurement_method
+      - evidence_state
+
+  domain_bridge_schema:
+    required_fields:
+      - name
+      - source_domain
+      - target_domain
+      - bridge_required
+      - interface_pointer
+      - required_visible_variables
+      - unresolved_measurements
+      - evidence_state
+    optional_fields:
+      - coupling_type
+      - intermediate_object
+      - loss_terms
+      - threshold_conditions
+      - failure_modes
+      - interface_pointer
+
+  evidence_states:
+    candidate:
+      meaning: structure is proposed or interpreted but not observed as a measured physical record
+    observed:
+      meaning: behavior or object state has been seen but not sufficiently measured
+    measured:
+      meaning: variables have recorded values with stated method or context
+    bounded:
+      meaning: values are constrained within a stated operating or test envelope
+    governance_validated:
+      meaning: claim promotion is approved outside Physics by the validation authority
+
+  example_objects:
+    battery:
+      domain: EC
+      role: electrical_storage_or_supply_component
+      attached_variables:
+        - voltage
+        - current
+        - stored_energy
+        - internal_resistance
+        - temperature
+      interactions:
+        - electrical_output_to_load
+      unresolved_measurements:
+        - discharge_curve
+        - internal_resistance
+        - thermal_rise_under_load
+      evidence_state: candidate
+      prohibited_claims:
+        - validated_runtime
+        - validated_safe_output
+
+    motor:
+      domain: ME
+      bridge_required: electrical_to_mechanical
+      role: electrical_input_to_mechanical_output_component
+      attached_variables:
+        - input_voltage
+        - input_current
+        - output_torque
+        - rpm
+        - temperature_rise
+      interactions:
+        - electrical_to_mechanical_conversion
+      unresolved_measurements:
+        - torque_curve
+        - efficiency_under_load
+        - heat_generation
+      evidence_state: candidate
+      prohibited_claims:
+        - validated_output_power
+        - validated_duty_cycle
+
+    pump:
+      domain: FH
+      bridge_required: mechanical_to_hydraulic
+      role: mechanical_input_to_fluid_pressure_or_flow_component
+      attached_variables:
+        - input_power
+        - flow_rate
+        - pressure
+        - pressure_drop
+        - leakage
+      interactions:
+        - mechanical_to_hydraulic_transfer
+      unresolved_measurements:
+        - flow_curve
+        - pressure_curve
+        - leakage_rate
+      evidence_state: candidate
+      prohibited_claims:
+        - validated_flow_capacity
+        - validated_pressure_rating
+
+    cylinder:
+      domain: FH
+      bridge_required: hydraulic_to_mechanical
+      role: fluid_pressure_to_linear_mechanical_displacement_component
+      attached_variables:
+        - hydraulic_pressure
+        - actuator_area
+        - stroke_length
+        - output_force
+        - leakage
+      interactions:
+        - hydraulic_pressure_to_linear_force
+      unresolved_measurements:
+        - seal_leak_rate
+        - stroke_force
+        - deflection_under_load
+      evidence_state: candidate
+      prohibited_claims:
+        - validated_lift_capacity
+        - validated_hold_capacity
+
+    HDPE_drum:
+      domain: BC
+      role: flotation_body
+      attached_variables:
+        - displaced_volume
+        - submerged_volume
+        - buoyant_force
+        - waterline_z
+        - abrasion_resistance
+      interactions:
+        - buoyant_response
+        - cradle_contact
+        - strap_restraint_contact
+      unresolved_measurements:
+        - actual_displacement_volume
+        - drum_mass
+        - contact_wear
+        - float_out_response
+      evidence_state: candidate
+      prohibited_claims:
+        - reserve_buoyancy
+        - validated_restraint_safety
+        - seaworthiness
+
+    cradle:
+      domain: ME
+      role: structural_support_and_restraint_interface
+      attached_variables:
+        - cradle_load
+        - contact_area
+        - deflection
+        - side_stop_load
+        - end_stop_load
+      interactions:
+        - frame_to_cradle_load_path
+        - cradle_to_drum_contact
+        - side_stop_contact
+        - end_stop_contact
+      unresolved_measurements:
+        - contact_pressure
+        - side_stop_load
+        - end_stop_load
+        - cyclic_deflection
+      evidence_state: candidate
+      prohibited_claims:
+        - validated_restraint_safety
+        - long_term_durability
+
+  lexicon_handoff:
+    note: >
+      Physics may use codes and terms, but Lexicon.yaml owns definitions,
+      admissible uses, prohibited uses, aliases, and mutation risks.
+    terms_requiring_lexicon_records:
+      - mass_centric
+      - field_centric
+      - mechanical
+      - linear_mechanical
+      - angular_mechanical
+      - fluid_dynamic
+      - ambient_fluid
+      - pneumatic
+      - hydraulic
+      - buoyancy
+      - magnetic
+      - electrical
+      - alternating_current
+      - direct_current
+      - electromagnetic_wave
+      - thermal
+      - transfer
+      - propagation
+      - bridge_required
+      - evidence_state
+
+  interaction_classes:
+    mass_centric:
+      - load_transfer
+      - pressure_transfer
+      - momentum_transfer
+      - displacement_transfer
+      - structural_contact
+      - frictional_resistance
+      - buoyant_response
+      - fluid_drag
+      - hydraulic_actuation
+      - pneumatic_expansion
+
+    field_centric:
+      - field_propagation
+      - inductive_coupling
+      - radiative_transfer
+      - thermal_gradient_transfer
+      - electric_conduction
+      - magnetic_coupling
+      - electromagnetic_wave_propagation
+
+    cross_domain:
+      - electrical_to_mechanical
+      - mechanical_to_electrical
+      - hydraulic_to_mechanical
+      - pneumatic_to_mechanical
+      - thermal_to_fluid
+      - thermal_to_structural
+      - electromagnetic_to_thermal
+      - magnetic_to_mechanical
+      - fluid_to_structural
+      - structural_to_fluid
+
+  bridge_requirements:
+    note: >
+      Physics identifies that a bridge is required and lists the variables that must
+      remain visible. Interface.yaml owns the full bridge contract, blocked transfers,
+      drift checks, and translation boundary rules. Physics does not govern bridge logic
+      beyond identifying the need for one.
+    examples:
+      electrical_to_mechanical:
+        source_domain: EC
+        target_domain: ME
+        bridge_condition: actuator_motor_or_equivalent_conversion_interface_present
+        allowed_transfer:
+          - electrical_input_to_mechanical_output_mapping
+          - voltage_current_to_torque_speed_variable_binding
+        blocked_interpretation:
+          - electrical_domain_becomes_mechanical_domain
+          - efficiency_claim_without_measurement
+          - output_power_claim_without_load_test
+        required_measurements:
+          - input_voltage
+          - input_current
+          - output_torque
+          - output_speed
+          - temperature_rise
+          - losses
+
+      hydraulic_to_mechanical:
+        source_domain: FH
+        target_domain: ME
+        bridge_condition: piston_turbine_or_hydraulic_actuator_interface_present
+        allowed_transfer:
+          - pressure_flow_to_force_displacement_mapping
+        blocked_interpretation:
+          - pressure_rating_equals_output_force_without_geometry
+          - hydraulic_capacity_equals_validated_load_capacity
+        required_measurements:
+          - hydraulic_pressure
+          - flow_rate
+          - actuator_area
+          - displacement
+          - leakage
+          - mechanical_output_force
+
+      thermal_to_fluid:
+        source_domain: TE
+        target_domain: FD
+        bridge_condition: temperature_gradient_affects_fluid_density_pressure_or_flow
+        allowed_transfer:
+          - thermal_state_change_to_fluid_state_change_mapping
+        blocked_interpretation:
+          - heat_presence_equals_flow_prediction
+          - thermal_gradient_equals_validated_circulation
+        required_measurements:
+          - temperature_gradient
+          - fluid_density
+          - viscosity
+          - flow_rate
+          - boundary_conditions
+
+      fluid_to_structural:
+        source_domain: FD
+        target_domain: ME
+        bridge_condition: fluid_load_contacts_or_pressurizes_structure
+        allowed_transfer:
+          - wave_drag_pressure_or_buoyancy_to_structural_load_mapping
+        blocked_interpretation:
+          - observed_floatation_equals_validated_stability
+          - calm_water_behavior_equals_sea_state_capability
+        required_measurements:
+          - wave_height
+          - current_speed
+          - pressure_distribution
+          - contact_area
+          - structural_deflection
+          - attachment_load
+
+  measurement_unlocks:
+    minimum_common_measurements:
+      - object_dimensions
+      - object_mass
+      - material_type
+      - material_properties
+      - attachment_method
+      - environmental_conditions
+      - input_state
+      - output_state
+      - boundary_conditions
+      - loss_observations
+      - repeat_count
+
+    domain_specific_measurements:
+      mechanical:
+        - force
+        - torque
+        - displacement
+        - velocity
+        - acceleration
+        - deflection
+        - fatigue_cycles
+      fluid_dynamic:
+        - pressure
+        - flow_rate
+        - fluid_density
+        - viscosity
+        - submerged_volume
+        - drag_force
+      electrical:
+        - voltage
+        - current
+        - resistance
+        - impedance
+        - power
+        - temperature_rise
+      magnetic:
+        - magnetic_flux
+        - field_strength
+        - gap_distance
+        - coupling_distance
+        - inductance
+      electromagnetic_wave:
+        - frequency
+        - wavelength
+        - amplitude
+        - attenuation
+        - absorption
+      thermal:
+        - temperature
+        - heat_flux
+        - thermal_conductivity
+        - thermal_resistance
+        - phase_state
+        - expansion_coefficient
+
+  unresolved:
+    - measured_object_dimensions
+    - measured_object_masses
+    - material_properties
+    - environmental_loads
+    - attachment_loads
+    - degradation_behavior
+    - repeatability_data
+    - cross_domain_bridge_measurements
+    - loss_accounting
+    - boundary_condition_records
+
+  contradiction_register:
+    - object_exists_does_not_mean_object_is_validated
+    - variable_attached_does_not_mean_variable_is_measured
+    - interaction_mapped_does_not_mean_interaction_is_complete
+    - bridge_identified_does_not_mean_bridge_is_validated
+    - domain_label_does_not_replace_measurement
+    - field_centric_and_mass_centric_behavior_must_not_be_collapsed
+    - propagation_and_transfer_must_remain_distinct
+    - scalar_summary_must_not_hide_interaction_path
+
+  prohibited_claims:
+    - validated_performance
+    - safe_payload
+    - seaworthiness
+    - reserve_buoyancy
+    - operational_readiness
+    - validated_stability
+    - validated_containment
+    - long_term_durability
+    - replacement_physics
+    - universal_physics_claim
+
+  recovery:
+    reconstructable_from:
+      - Structure.yaml
+      - CE-OS.yaml
+      - Interface.yaml
+      - prior_Physics_file
+      - phase_1_domain_taxonomy_notes
+    compression_rule:
+      - domains_in
+      - objects_in
+      - interactions_in
+      - variables_attached_not_validated
+      - bridges_explicit
+      - claims_out
+      - measurements_visible
+      - contradictions_preserved

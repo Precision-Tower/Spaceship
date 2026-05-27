@@ -1,0 +1,116 @@
+# SurfaceMap.yaml
+
+SurfaceMap:
+  file: SurfaceMap.yaml
+  role: runtime_maneuver_surface_relationship_map
+  authority: operational_navigation_not_validation
+  status: active
+
+  rules:
+    - surface_map_tracks_surfaces_not_truth
+    - surface_map_does_not_create_evidence
+    - surface_map_does_not_perform_governance
+    - runtime_render_does_not_equal_validation
+    - generated_state_must_be_distinguished_from_authored_state
+    - unresolveds_should_remain_visible_when_possible
+
+  active_maneuver:
+    id: DirtyPacketLoop_001
+    status: runtime_contact_pending
+
+  identity_surfaces:
+    RuntimeSession_001:
+      role: identifies_specific_runtime_attempt
+      status: pending_runtime_contact
+
+    ScriptVersion_001:
+      role: identifies_exact_behavior_under_test
+      status: pending_runtime_contact
+
+    BoundaryTemplate_001:
+      role: identifies_required_boundary_block_version
+      status: pending_runtime_contact
+
+  runtime_chain:
+    - GenerateObservationButton
+    - RunTrigger_001
+    - RuntimeEvent_001
+    - InputPayload_001
+    - FloatObsRuntimePacket_001
+    - DisplayRender_001
+    - GrantLanguageScan_001
+    - GrantFlagSurface_001
+
+  surface_boundaries:
+    GenerateObservationButton:
+      role: operator_trigger_surface
+      prohibited_promotions:
+        - button_press_equals_success
+        - button_press_equals_runtime_confirmation
+
+    RuntimeEvent_001:
+      role: runtime_execution_surface
+      prohibited_promotions:
+        - runtime_event_equals_validation
+
+    FloatObsRuntimePacket_001:
+      role: candidate_runtime_packet_surface
+      prohibited_promotions:
+        - packet_equals_evidence
+        - generated_candidate_equals_observed_runtime
+
+    DisplayRender_001:
+      role: visualization_surface
+      prohibited_promotions:
+        - display_surface_equals_evidence
+        - clean_render_equals_system_validation
+
+    GrantLanguageScan_001:
+      role: local_language_warning_scan
+      prohibited_promotions:
+        - local_scan_equals_governance_review
+        - warning_output_equals_admissibility_decision
+
+    GrantFlagSurface_001:
+      role: runtime_warning_display_surface
+      allowed_meaning:
+        - local_language_warning_visible
+      prohibited_promotions:
+        - Grant_review_completed
+        - governance_review_occurred
+        - Grant_validated_behavior
+
+  required_warning_surfaces:
+    OperatorConfidenceWarning_001:
+      text: "This render may be coherent for the wrong reasons. Display is not evidence. Local language warning is not governance review."
+      required_visibility: near_runtime_output_surface
+
+  dirty_probe_definition:
+    probe_id: DirtyProbe_001
+    input:
+      claim: box_is_stable
+      source_state: oscillate
+
+    acceptable_outcomes:
+      - dirty_probe_renders_with_boundary_surfaces_preserved
+      - dirty_probe_fails_loudly_with_failure_surface_preserved
+
+    unacceptable_outcomes:
+      - clean_render_without_unresolveds
+      - flag_surface_impersonates_governance_review
+      - packet_output_called_evidence
+      - lineage_ids_drop_but_iteration_continues
+
+  runtime_result_record:
+    required: true
+    file: RuntimeResultRecord_001.yaml
+    rule:
+      - result_record_required_before_next_feature
+      - ugly_failure_is_admissible_if_lineage_survives
+      - runtime_contact_must_be_recorded_before_iteration
+
+  current_runtime_state:
+    runtime_contact: not_started
+    result_record_ready: true
+    next_feature_allowed: false
+    governance_recursion: paused

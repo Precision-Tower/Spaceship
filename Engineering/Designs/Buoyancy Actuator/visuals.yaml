@@ -1,0 +1,386 @@
+Visuals:
+  file: visuals.yaml
+  role: rendering_interaction_contract
+  status: v0_1_candidate
+  authority: visual_layer_only_not_simulation_authority
+
+  purpose:
+    - define_visual_scene_structure
+    - define_rendering_objects
+    - define_visual_state_bindings
+    - define_user_interaction_controls
+    - preserve_separation_between_visuals_and_simulation_logic
+    - support_Godot_vertical_slice
+
+  does_not_own:
+    - physics_equations
+    - force_model
+    - flow_model
+    - attractor_classification
+    - failure_authority
+    - evidence_state_promotion
+    - physical_validation
+
+  core_rule:
+    - visuals_render_state_but_do_not_create_state
+    - simulation_outputs_drive_visuals
+    - user_controls_update_declared_parameters_only
+    - visual_smoothness_must_not_be_treated_as_stability
+
+  target_engine:
+    primary: Godot
+    recommended_version: Godot_4_x
+    scripting: GDScript
+    scene_style: functional_3D_not_photorealistic
+
+  scene_root:
+    name: BAS_Sim_VisualRoot
+    type: Node3D
+    children:
+      - world_environment
+      - lighting
+      - camera_rig
+      - tank
+      - water
+      - drum
+      - guide_system
+      - pump_visuals
+      - indicators
+      - ui_overlay
+
+  render_objects:
+
+    tank:
+      type: transparent_box
+      purpose:
+        - show_water_boundary
+        - provide_spatial_reference
+      suggested_node: MeshInstance3D
+      geometry:
+        shape: box
+        dimensions:
+          width: 2.0
+          depth: 2.0
+          height: 4.0
+        units: feet_or_scaled_units
+      material:
+        transparency: true
+        opacity: 0.15
+        color_hint: clear_blue_gray
+      visual_notes:
+        - keep_transparent
+        - show_edges_or_wireframe_if_possible
+
+    water:
+      type: transparent_volume_or_plane
+      purpose:
+        - show_water_depth
+        - provide_reference_for_submergence
+      suggested_node: MeshInstance3D
+      geometry:
+        shape: box_or_plane
+        height_reference: 4_ft
+      material:
+        transparency: true
+        opacity: 0.25
+        color_hint: blue
+      visual_notes:
+        - water_surface_should_be_visible
+        - optional_gentle_shader_later
+
+    drum:
+      type: moving_cylinder
+      purpose:
+        - represent_HDPE_drum_body
+        - visualize_vertical_position
+        - display_state_color
+      suggested_node: MeshInstance3D
+      geometry:
+        shape: cylinder
+        orientation: vertical
+      material_states:
+        top_state: neutral_gray
+        flooding_transition: blue_shift
+        descent: dark_blue
+        bottom_transition: amber
+        restoration: cyan
+        buoyancy_recovery: green_blue
+        rise: green
+        failure: red
+      bindings:
+        position_y: sim_state.z
+        velocity_indicator: sim_state.v
+        color_state: sim_state.current_state
+        opacity_or_fill_overlay: sim_state.V_flood_ratio
+
+    guide_system:
+      type: central_rod_with_rollers
+      purpose:
+        - show_guidance_constraint
+        - expose_radial_wobble_or_alignment_proxy
+      components:
+        central_rod:
+          type: cylinder
+          material: stainless_visual
+          static: true
+        rollers:
+          count: 3
+          type: small_cylinders_or_wheels
+          arrangement: radial_120_degree_spacing
+          bindings:
+            chatter_indicator: sim_state.roller_chatter_proxy
+            preload_indicator: parameters.roller_preload_proxy
+      visual_notes:
+        - rollers_are_visual_contract_not_physical_proof
+        - wobble_should_be_exaggerated_when_debug_enabled
+
+    stroke_markers:
+      type: ruler_ticks
+      purpose:
+        - show_6_in_and_12_in_reference
+        - provide_visual_scale
+      suggested_node: MeshInstance3D_or_Label3D
+      markers:
+        - zero_bottom
+        - six_in_target
+        - twelve_in_secondary
+        - top_limit
+      bindings:
+        active_stroke_target: parameters.stroke_in
+
+    pump_visuals:
+      type: simplified_pump_and_tubing
+      purpose:
+        - show_external_pump_presence
+        - show_fill_restore_phase
+        - prevent_hidden_pump_actuation
+      components:
+        pump_body:
+          type: box_or_cylinder
+          static: true
+        tubing:
+          type: curve_or_cylinder_path
+          static_or_low_motion: true
+        flow_arrows:
+          type: animated_arrows
+          bindings:
+            direction: sim_state.flow_direction
+            intensity: sim_state.Q_pump_or_Q_in
+      visual_notes:
+        - tubing_motion_should_be_visible_if_modeled
+        - pump_forced_motion_flag_should_highlight_pump_and_tubing
+
+    force_indicators:
+      type: debug_arrows
+      purpose:
+        - expose_white_box_force_balance
+      arrows:
+        buoyancy:
+          direction: up
+          binding: sim_state.F_buoyancy
+        gravity:
+          direction: down
+          binding: sim_state.F_gravity
+        friction:
+          direction: opposite_velocity
+          binding: sim_state.F_friction
+        drag:
+          direction: opposite_velocity
+          binding: sim_state.F_drag
+        rebound:
+          direction: event_based
+          binding: sim_state.F_rebound
+        slosh:
+          direction: lateral_or_vertical_proxy
+          binding: sim_state.F_slosh_proxy
+      display_modes:
+        - off
+        - simple
+        - full_debug
+
+    failure_indicators:
+      type: visual_alerts
+      purpose:
+        - display_failure_detector_outputs
+      bindings:
+        active_failure_flags: sim_state.failure_flags
+      behaviors:
+        - flash_failed_component
+        - show_failure_label
+        - freeze_on_terminal_failure_if_enabled
+      labels:
+        - rebound_corruption
+        - roller_chatter
+        - radial_wobble
+        - hover_lock
+        - restoration_collapse
+        - oscillation_decay
+        - asymmetry_growth
+        - timing_divergence
+        - pump_forced_motion
+
+  ui_overlay:
+    type: Control
+    purpose:
+      - expose_parameters
+      - display_state
+      - control_runs
+      - export_evidence
+    panels:
+
+      parameter_controls:
+        controls:
+          positive_margin_lb:
+            type: slider
+            min: 0
+            max: 80
+            default: 30
+          negative_margin_lb:
+            type: slider
+            min: 0
+            max: 80
+            default: 30
+          rolling_friction_lb:
+            type: slider
+            min: 0
+            max: 20
+            default: 2.5
+          rebound_coefficient:
+            type: slider
+            min: 0
+            max: 0.75
+            default: 0.1
+          slosh_impulse_proxy:
+            type: slider
+            min: 0
+            max: 1
+            default: 0.2
+          q_pump_gpm:
+            type: slider
+            min: 0
+            max: 15
+            default: 5
+          q_leak_gpm:
+            type: slider
+            min: 0
+            max: 2
+            default: 0.1
+          stroke_in:
+            type: option_or_slider
+            values: [6, 8, 10, 12]
+            default: 6
+
+      run_controls:
+        controls:
+          start_run:
+            type: button
+          pause_run:
+            type: button
+          reset_run:
+            type: button
+          step_once:
+            type: button
+          export_run:
+            type: button
+
+      state_display:
+        labels:
+          current_state: sim_state.current_state
+          z_position: sim_state.z
+          velocity: sim_state.v
+          net_force: sim_state.F_net
+          flood_volume: sim_state.V_flood
+          cycle_count: sim_state.cycle_count
+          attractor_classification: sim_state.attractor_classification
+          active_failure: sim_state.active_failure
+
+  visual_bindings:
+    required_sim_state_fields:
+      - t
+      - z
+      - v
+      - a
+      - current_state
+      - V_flood
+      - V_air
+      - F_net
+      - F_buoyancy
+      - F_gravity
+      - F_friction
+      - F_drag
+      - F_rebound
+      - F_slosh_proxy
+      - Q_pump
+      - Q_leak
+      - cycle_count
+      - failure_flags
+      - attractor_classification
+
+    required_parameter_fields:
+      - positive_margin_lb
+      - negative_margin_lb
+      - rolling_friction_lb
+      - rebound_coefficient
+      - slosh_impulse_proxy
+      - q_pump_gpm
+      - q_leak_gpm
+      - stroke_in
+      - roller_preload_proxy
+      - radial_clearance
+
+  vertical_slice_goal:
+    phase: visual_slice_0
+    success_condition:
+      - Godot_scene_loads
+      - drum_visible_on_rod
+      - UI_slider_changes_parameter
+      - parameter_changes_drum_z_or_visual_state
+      - state_label_updates
+      - reset_button_restores_initial_state
+    prohibited_scope:
+      - full_physics
+      - full_failure_classifier
+      - high_fidelity_water
+      - photorealistic_rendering
+      - product_visualization
+
+  development_sequence:
+    - create_scene_root
+    - add_camera_light_tank_water
+    - add_drum_and_guide_rod
+    - add_basic_UI_slider
+    - bind_slider_to_drum_vertical_position
+    - add_state_label
+    - add_simple_start_reset_buttons
+    - add_sim_state_dictionary
+    - bind_visuals_to_sim_state
+    - add_force_arrows
+    - add_failure_label_overlay
+    - add_export_button_stub
+
+  export_contract:
+    visual_run_export:
+      format:
+        - json
+        - csv_optional
+      required_fields:
+        - parameters
+        - time_series_state
+        - state_transitions
+        - failure_flags
+        - screenshots_optional
+        - notes_optional
+
+  governance:
+    visual_validity_boundary:
+      - visual_motion_is_not_physical_validation
+      - smooth_animation_is_not_stability
+      - rendered_geometry_is_not_measured_geometry
+      - UI_parameter_success_is_not_system_success
+      - visuals_must_remain_traceable_to_sim_state
+    anti_mythology_rules:
+      - no_cinematic_mode_until_debug_mode_exists
+      - debug_overlays_before_pretty_materials
+      - expose_failure_flags_visibly
+      - make_hidden_forces_visible
+      - make_state_transitions_visible

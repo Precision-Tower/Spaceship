@@ -1,0 +1,326 @@
+Imagination:
+  file: Imagination.yaml
+  path: Models/Grant/v1/Imagination.yaml
+  role: causal_structure_completion_pressure_under_partial_visibility
+  status: v0_1_candidate
+  authority: interpretive_pressure_observation_only_not_truth_not_validation_not_pathology
+  canon: false
+  validation_authority: false
+  pathology_authority: false
+
+  one_sentence_summary: >
+    Imagination.yaml preserves imagination as a powerful hypothesis engine while
+    preventing causal completion under partial visibility from silently becoming
+    evidence, validation, readiness, or truth.
+
+  prime_rule:
+    - imagination_is_required_for_hypothesis_generation
+    - imagination_becomes_dangerous_when_it_silently_upgrades_possibility_into_authority
+    - coherence_invites_completion
+    - partial_visibility_invites_causal_filling
+    - clean_runtime_surfaces_accelerate_belief_binding
+    - imagination_may_generate_paths_but_must_not_certify_paths
+
+  purpose:
+    - preserve_imagination_as_exploration_capacity
+    - detect_causal_completion_pressure_under_partial_visibility
+    - prevent_possibility_from_becoming_claim_authority
+    - prevent_felt_understanding_from_becoming_validation
+    - prevent_clean_runtime_surfaces_from_binding_belief_without_evidence
+    - route_imagination_generated_claim_pressure_to_Grant_or_Boundary
+    - keep_creativity_powerful_without_allowing_it_to_forge_credentials
+
+  owns:
+    - causal_completion_pressure_detection
+    - possibility_to_authority_drift_detection
+    - belief_binding_risk_tracking
+    - imagination_generated_claim_pressure
+    - felt_understanding_pressure
+    - narrative_fit_pressure
+    - post_contact_interpretive_completion_pressure
+    - admissible_imagination_use_boundaries
+    - prohibited_imagination_promotions
+    - imagination_pressure_records
+
+  does_not_own:
+    - truth
+    - validation
+    - pathology
+    - diagnosis
+    - engineering_design
+    - runtime_execution
+    - evidence_state_promotion
+    - causal_completeness
+    - operational_readiness
+    - canon
+    - suppression_of_exploration
+    - final_operator_authority
+
+  authority_boundary:
+    allowed:
+      - identify_imagination_pressure
+      - separate_hypothesis_from_claim
+      - flag_possibility_to_authority_drift
+      - preserve_missing_information_visibility
+      - request_measurement_or_review
+      - route_claim_pressure
+      - preserve_creative_exploration_as_admissible
+
+    blocked:
+      - treating_imagination_as_truth
+      - treating_imagination_as_evidence
+      - treating_imagination_as_validation
+      - treating_imagination_as_readiness
+      - treating_imagination_as_pathology
+      - treating_felt_understanding_as_causal_completeness
+      - treating_coherent_story_as_measured_behavior
+      - blocking_exploration_merely_because_it_is_unvalidated
+
+  imagination_modes:
+    generative_imagination:
+      status: admissible
+      allowed:
+        - hypothesis_creation
+        - design_exploration
+        - causal_model_search
+        - future_state_projection
+        - analogy_generation
+        - missing_variable_search
+        - failure_mode_construction
+        - trial_design_prompting
+      rule:
+        - generative_imagination_may_create_candidate_paths
+        - candidate_paths_require_route_to_Gear_Evidence_or_Runtime_before_claim_escalation
+
+    authority_imagination:
+      status: blocked
+      blocked:
+        - possibility_becomes_claim
+        - coherent_story_becomes_evidence
+        - clean_visual_becomes_truth
+        - imagined_completion_becomes_validation
+        - felt_understanding_becomes_operational_readiness
+        - plausible_path_becomes_measured_path
+        - narrative_fit_becomes_causal_completeness
+      rule:
+        - imagination_must_not_promote_its_own_outputs
+
+  relationship_to_Contact:
+    Contact:
+      expected_path: Models/Gear/v1/Contact.yaml
+      owns:
+        - runtime_contact_surfaces
+        - visibility_mutation
+        - display_interpretation_pressure
+        - runtime_as_meaning_shaping_surface
+        - contact_induced_observer_pressure
+
+    Imagination:
+      owns:
+        - post_contact_causal_completion_pressure
+        - missing_structure_fill_in
+        - belief_binding_after_visibility
+        - possibility_to_authority_drift
+
+    boundary_rule:
+      - Contact_changes_what_is_visible
+      - Imagination_completes_what_is_missing
+      - Grant_reviews_when_completion_tries_to_become_authority
+
+  relationship_to_Grant:
+    Grant:
+      owns:
+        - claim_boundary_review
+        - admissibility_pressure
+        - prohibited_claim_detection
+        - evidence_state_boundary_enforcement
+
+    Imagination:
+      prepares_for_Grant:
+        - imagination_pressure_record
+        - suspected_prohibited_promotion
+        - admissible_rewrite_candidate
+        - missing_information_list
+
+    rule:
+      - Grant_does_not_own_imagination
+      - Grant_reviews_when_imagination_generated_language_becomes_claim_pressure
+      - Grant_must_not_treat_imagination_as_pathology
+      - absence_of_Grant_flag_is_not_validation_of_imagined_completion
+
+  contact_triggers:
+    - partial_runtime_visibility
+    - clean_display_surface
+    - coherent_packet_flow
+    - successful_route_completion
+    - visually_stable_state
+    - persuasive_summary
+    - contradiction_suppression
+    - unresolved_truncation
+    - grouped_anomalies
+    - repeated_non_failure
+    - simulation_visualization
+    - analogy_that_fits_too_well
+
+  runtime_amplifiers:
+    - clean_display_surface
+    - coherent_packet_flow
+    - successful_route_completion
+    - warning_color_priority
+    - contradiction_suppression
+    - unresolved_truncation
+    - timeline_smoothing
+    - grouped_anomalies
+    - confidence_visualization
+    - repeated_non_failure
+    - persuasive_summary
+    - visually_stable_state
+
+  prohibited_promotions:
+    - imagined_completion_equals_evidence
+    - coherence_equals_truth
+    - felt_understanding_equals_causal_completeness
+    - possibility_equals_claim
+    - plausible_path_equals_measured_path
+    - clean_runtime_surface_equals_system_understanding
+    - narrative_fit_equals_validation
+    - operator_confidence_equals_readiness
+    - repeated_imagined_path_equals_observed_path
+    - visual_coherence_equals_physical_coherence
+    - possible_failure_mode_equals_confirmed_failure_mode
+    - possible_success_path_equals_operational_plan
+    - analogy_equals_mechanism
+    - simulation_imagery_equals_observed_behavior
+    - imaginable_route_equals_available_route
+    - no_imagined_contradiction_equals_no_contradiction
+
+  admissible_uses:
+    - mark_as_hypothesis
+    - mark_as_candidate_path
+    - mark_as_design_possibility
+    - mark_as_failure_mode_candidate
+    - mark_as_measurement_request_source
+    - mark_as_Gear_mapping_request
+    - mark_as_runtime_trial_candidate
+    - mark_as_unresolved_completion_pressure
+
+  detection_patterns:
+    - phrase: "I can see how this works"
+      risk:
+        - imagined_future_operation_completed_into_capability
+        - possibility_equals_claim
+      required_response:
+        - preserve_as_plausible_path_only
+        - request_causal_mapping_or_runtime_trial
+
+    - phrase: "that makes sense"
+      risk:
+        - coherence_equals_truth
+        - felt_understanding_equals_causal_completeness
+      required_response:
+        - distinguish_understandable_model_from_validated_behavior
+
+    - phrase: "it looks stable"
+      risk:
+        - visual_coherence_equals_physical_coherence
+        - clean_runtime_surface_equals_system_understanding
+      required_response:
+        - route_to_Float_Boundary_or_Grant_review_before_stability_language
+
+    - phrase: "the runtime shows it"
+      risk:
+        - display_equals_evidence
+        - route_completion_equals_claim_support
+        - runtime_surface_equals_truth
+      required_response:
+        - route_to_Contact_RuntimeObserver_and_Grant
+
+    - phrase: "probably ready"
+      risk:
+        - operator_confidence_equals_readiness
+        - plausible_path_equals_operational_plan
+      required_response:
+        - block_readiness_language_until_governance_review
+
+  required_records:
+    imagination_pressure_record:
+      required_fields:
+        - imagination_event_id
+        - source_context
+        - visible_inputs
+        - missing_information
+        - imagined_completion
+        - trigger_surface
+        - contact_or_runtime_amplifier
+        - confidence_language_used
+        - claim_pressure_detected
+        - evidence_state_if_any
+        - prohibited_promotion_risk
+        - admissible_rewrite
+        - unresolved_variables
+        - required_measurement_or_review
+        - route_destination
+
+  routes:
+    claim_pressure: Grant
+    prohibited_promotion: Boundary
+    runtime_visibility_pressure: Contact
+    runtime_transform_pressure: RuntimeObserver
+    causal_mapping_needed: Gear
+    semantic_drift: Lexicon
+    evidence_state_pressure: Evidence
+    validation_pressure: Governance
+    contradiction_lineage: Gold
+    sensory_or_observer_pressure: Senses
+    simulation_pressure: SimulationBridge
+
+  examples:
+    Example_01:
+      input: "The box looks stable now."
+      hidden_completion: visual_calmness_completed_into_stability
+      prohibited_risk:
+        - visual_coherence_equals_physical_coherence
+        - felt_understanding_equals_causal_completeness
+      admissible_rewrite: "The box appears visually calm under the current display conditions; stability is not established."
+      route_destination:
+        - Grant
+        - Boundary
+        - Float
+
+    Example_02:
+      input: "The runtime flow makes sense, so the architecture is probably right."
+      hidden_completion: coherent_route_completed_into_architecture_confidence
+      prohibited_risk:
+        - coherence_equals_truth
+        - route_completion_equals_claim_support
+      admissible_rewrite: "The runtime flow is coherent under the current route model; architecture correctness remains unvalidated."
+      route_destination:
+        - Contact
+        - RuntimeObserver
+        - Grant
+
+    Example_03:
+      input: "I can see how this would work."
+      hidden_completion: imagined_future_operation_completed_into_capability
+      prohibited_risk:
+        - possibility_equals_claim
+        - plausible_path_equals_measured_path
+      admissible_rewrite: "A plausible operating path has been imagined; it requires causal mapping, measurement, and runtime testing before claim escalation."
+      route_destination:
+        - Gear
+        - Evidence
+        - Runtime
+
+  unresolved:
+    - exact_boundary_between_productive_visualization_and_belief_binding_requires_runtime_pressure_tests
+    - Contact_yaml_schema_pending
+    - RuntimeObserver_integration_pending
+    - how_to_measure_belief_binding_without_pathologizing_operator_remains_unresolved
+    - examples_may_need_project_specific_specialization_after_dirty_packet_tests
+
+  contradiction_register:
+    - imagination_is_required_for_design_but_dangerous_when_credentialed
+    - coherence_supports_navigation_but_can_accelerate_false_authority
+    - partial_visibility_enables_action_but_invites_completion
+    - Grant_must_review_claim_pressure_without_suppressing_creativity
+    - clean_runtime_surfaces_help_operators_but_increase_belief_binding_risk

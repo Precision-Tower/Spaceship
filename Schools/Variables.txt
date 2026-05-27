@@ -1,0 +1,936 @@
+variables:
+
+  # GEOMETRY
+
+  - variable_name: length
+    computational_domain: geometry
+    applies_to: all_physical_objects
+    why_it_matters_computationally: defines occupied volume, footprint, spacing, and collision bounds
+    variable_type: measurable
+
+  - variable_name: width
+    computational_domain: geometry
+    applies_to: all_physical_objects
+    why_it_matters_computationally: defines deck crowding, service lanes, and lateral load placement
+    variable_type: measurable
+
+  - variable_name: height
+    computational_domain: geometry
+    applies_to: all_physical_objects
+    why_it_matters_computationally: defines vertical clearance, center-of-mass height, access, and stacking risk
+    variable_type: measurable
+
+  - variable_name: wall_thickness
+    computational_domain: geometry
+    applies_to: HDPE_chambers, HDPE_drums, containment_trays, hoses, storage_locker
+    why_it_matters_computationally: affects internal volume, structural strength, mass, and containment behavior
+    variable_type: measurable
+
+  - variable_name: internal_volume
+    computational_domain: geometry
+    applies_to: digestion_chambers, electrolysis_cells, chemical_storage, hoses, containment_trays, flotation_drums
+    why_it_matters_computationally: determines fill volume, displacement, payload capacity, and fluid containment limits
+    variable_type: derived
+
+  - variable_name: external_volume
+    computational_domain: geometry
+    applies_to: all_physical_objects
+    why_it_matters_computationally: defines occupied space and collision envelope
+    variable_type: derived
+
+  - variable_name: surface_area
+    computational_domain: geometry
+    applies_to: deck, grating, chambers, drums, trays, lab_frame, hoses, storage_locker
+    why_it_matters_computationally: affects corrosion exposure, UV exposure, heat exchange, and cleaning burden
+    variable_type: derived
+
+  - variable_name: footprint_area
+    computational_domain: geometry
+    applies_to: deck_zones, chambers, lab_blocks, power_blocks, storage_blocks, trays, manifolds
+    why_it_matters_computationally: determines deck occupancy, crowding, and placement conflicts
+    variable_type: derived
+
+  - variable_name: clearance_envelope
+    computational_domain: geometry
+    applies_to: walkways, chambers, hatches, electrolysis_bays, manifolds, hose_paths, emergency_routes
+    why_it_matters_computationally: defines whether operators can access, service, inspect, and escape
+    variable_type: computed_later
+
+  - variable_name: hatch_swing_envelope
+    computational_domain: geometry
+    applies_to: digestion_chambers, chemical_storage, battery_enclosures, lab_access_panels
+    why_it_matters_computationally: determines service access and collision risk
+    variable_type: computed_later
+
+  - variable_name: deck_zone_area
+    computational_domain: geometry
+    applies_to: intake_zone, drain_zone, process_zone, lab_zone, power_zone, interface_zone
+    why_it_matters_computationally: supports area allocation and workflow path analysis
+    variable_type: derived
+
+  - variable_name: object_spacing
+    computational_domain: geometry
+    applies_to: chamber_rows, flotation_rows, electrolysis_bays, storage_blocks, manifolds
+    why_it_matters_computationally: affects inspection access, center-of-mass distribution, and interference risk
+    variable_type: measurable
+
+  - variable_name: mounting_height
+    computational_domain: geometry
+    applies_to: chambers, manifolds, electrolysis_cells, batteries, controls, hoses, drums
+    why_it_matters_computationally: affects reach, center of mass, hose routing, and splash exposure
+    variable_type: measurable
+
+
+  # MASS
+
+  - variable_name: dry_weight
+    computational_domain: mass
+    applies_to: all_physical_objects
+    why_it_matters_computationally: baseline mass for load, flotation, and center-of-mass calculations
+    variable_type: measurable
+
+  - variable_name: wet_weight
+    computational_domain: mass
+    applies_to: biomass_zones, drainage_tiles, chambers, hoses, trays, barge_deck
+    why_it_matters_computationally: determines worst-case handling load and flotation demand
+    variable_type: measurable
+
+  - variable_name: payload_weight
+    computational_domain: mass
+    applies_to: digestion_chambers, intake_zone, drain_zone, process_zone, boat_lab, chemical_storage
+    why_it_matters_computationally: defines variable load carried by each structure
+    variable_type: measurable
+
+  - variable_name: fluid_weight
+    computational_domain: mass
+    applies_to: chambers, hoses, electrolysis_cells, trays, storage_locker, manifolds
+    why_it_matters_computationally: affects load state, transfer forces, and center-of-mass shifts
+    variable_type: derived
+
+  - variable_name: biomass_weight
+    computational_domain: mass
+    applies_to: intake_zone, drain_zone, digestion_chambers
+    why_it_matters_computationally: drives payload, drainage, stability, and handling calculations
+    variable_type: measurable
+
+  - variable_name: loaded_weight
+    computational_domain: mass
+    applies_to: chambers, trays, storage_locker, hoses, barge, boat
+    why_it_matters_computationally: combines dry weight and contents for structural and flotation analysis
+    variable_type: derived
+
+  - variable_name: center_of_mass_x
+    computational_domain: mass
+    applies_to: all_objects, barge_system, boat_system, combined_system
+    why_it_matters_computationally: determines longitudinal trim and load balance
+    variable_type: derived
+
+  - variable_name: center_of_mass_y
+    computational_domain: mass
+    applies_to: all_objects, barge_system, boat_system, combined_system
+    why_it_matters_computationally: determines port/starboard balance and tipping risk
+    variable_type: derived
+
+  - variable_name: center_of_mass_z
+    computational_domain: mass
+    applies_to: all_objects, barge_system, boat_system, combined_system
+    why_it_matters_computationally: determines stability sensitivity and overturning risk
+    variable_type: derived
+
+  - variable_name: load_distribution_x
+    computational_domain: mass
+    applies_to: barge_deck, boat_deck, chamber_rows, flotation_rows
+    why_it_matters_computationally: shows front/rear loading and trim tendency
+    variable_type: computed_later
+
+  - variable_name: load_distribution_y
+    computational_domain: mass
+    applies_to: barge_deck, boat_deck, chamber_rows, flotation_rows
+    why_it_matters_computationally: shows port/starboard balance and asymmetric loading
+    variable_type: computed_later
+
+  - variable_name: point_load
+    computational_domain: mass
+    applies_to: chamber_cradles, battery_block, electrolysis_skids, storage_locker, manifold_mounts
+    why_it_matters_computationally: determines localized deck and frame stress
+    variable_type: derived
+
+  - variable_name: distributed_load
+    computational_domain: mass
+    applies_to: deck, grating, drum_rows, intake_zone, drain_zone, process_zone
+    why_it_matters_computationally: determines broad structural support requirement
+    variable_type: derived
+
+  - variable_name: moving_load
+    computational_domain: mass
+    applies_to: operators, wet_biomass, hoses, chambers_during_service
+    why_it_matters_computationally: affects transient imbalance and dynamic stability
+    variable_type: computed_later
+
+
+  # MATERIAL
+
+  - variable_name: material_type
+    computational_domain: material
+    applies_to: all_physical_objects
+    why_it_matters_computationally: determines density, strength, corrosion behavior, thermal behavior, and compatibility
+    variable_type: assumed
+
+  - variable_name: density
+    computational_domain: material
+    applies_to: all_physical_objects
+    why_it_matters_computationally: converts geometry into estimated mass
+    variable_type: assumed
+
+  - variable_name: tensile_strength
+    computational_domain: material
+    applies_to: straps, frames, cradles, hoses, fasteners, grating
+    why_it_matters_computationally: constrains allowable tension and structural stress
+    variable_type: measurable
+
+  - variable_name: compressive_strength
+    computational_domain: material
+    applies_to: deck, cradles, drum_supports, chamber_supports, storage_mounts
+    why_it_matters_computationally: constrains crushing, deck loading, and support compression
+    variable_type: measurable
+
+  - variable_name: flexural_strength
+    computational_domain: material
+    applies_to: deck, grating, frame_members, HDPE_chambers, HDPE_drums
+    why_it_matters_computationally: determines bending resistance under load
+    variable_type: measurable
+
+  - variable_name: modulus_of_elasticity
+    computational_domain: material
+    applies_to: deck_frame, grating, chamber_cradles, flotation_supports
+    why_it_matters_computationally: supports deflection and flex calculations
+    variable_type: measurable
+
+  - variable_name: corrosion_resistance
+    computational_domain: material
+    applies_to: aluminum, steel, stainless, fasteners, manifolds, electrical_housings
+    why_it_matters_computationally: affects lifecycle, inspection interval, and failure risk
+    variable_type: measurable
+
+  - variable_name: UV_resistance
+    computational_domain: material
+    applies_to: HDPE_drums, HDPE_chambers, hoses, plastic_trays, marker_panels
+    why_it_matters_computationally: affects degradation in Belize sun exposure
+    variable_type: measurable
+
+  - variable_name: chemical_compatibility
+    computational_domain: material
+    applies_to: hoses, trays, electrolysis_cells, chambers, seals, storage_locker, manifolds
+    why_it_matters_computationally: determines whether materials tolerate process fluids and byproducts
+    variable_type: measurable
+
+  - variable_name: abrasion_resistance
+    computational_domain: material
+    applies_to: grating, hoses, chamber_ports, tile_panels, intake_interface
+    why_it_matters_computationally: affects wear from sand, sargassum fibers, and handling
+    variable_type: measurable
+
+  - variable_name: seal_material
+    computational_domain: material
+    applies_to: chamber_hatches, quick_connects, manifolds, hoses, electrolysis_cells
+    why_it_matters_computationally: determines containment reliability and replacement cycle
+    variable_type: assumed
+
+  - variable_name: fastener_material
+    computational_domain: material
+    applies_to: frames, cradles, straps, manifolds, deck_panels, lab_skids
+    why_it_matters_computationally: affects galvanic corrosion and structural security
+    variable_type: assumed
+
+  - variable_name: galvanic_pairing_risk
+    computational_domain: material
+    applies_to: aluminum_frame, stainless_fasteners, steel_generator, manifolds, cradles
+    why_it_matters_computationally: identifies corrosion acceleration from material pairings
+    variable_type: computed_later
+
+
+  # FLOTATION
+
+  - variable_name: displacement_volume
+    computational_domain: flotation
+    applies_to: HDPE_drum_rows, barge_total, boat_total
+    why_it_matters_computationally: determines buoyant force potential
+    variable_type: derived
+
+  - variable_name: submerged_volume
+    computational_domain: flotation
+    applies_to: drum_rows, barge, boat
+    why_it_matters_computationally: determines actual buoyancy at a given load condition
+    variable_type: computed_later
+
+  - variable_name: buoyant_force
+    computational_domain: flotation
+    applies_to: drum_rows, barge, boat
+    why_it_matters_computationally: compares flotation support to total system weight
+    variable_type: derived
+
+  - variable_name: buoyancy_margin
+    computational_domain: flotation
+    applies_to: barge, drum_rows, boat
+    why_it_matters_computationally: measures remaining flotation capacity after loading
+    variable_type: computed_later
+
+  - variable_name: freeboard
+    computational_domain: flotation
+    applies_to: barge, boat
+    why_it_matters_computationally: tracks deck height above water under load
+    variable_type: measurable
+
+  - variable_name: trim_angle
+    computational_domain: flotation
+    applies_to: barge, boat
+    why_it_matters_computationally: describes front/rear tilt under load
+    variable_type: measurable
+
+  - variable_name: list_angle
+    computational_domain: flotation
+    applies_to: barge, boat
+    why_it_matters_computationally: describes port/starboard tilt under asymmetric load
+    variable_type: measurable
+
+  - variable_name: metacentric_height
+    computational_domain: flotation
+    applies_to: barge, boat
+    why_it_matters_computationally: supports stability analysis
+    variable_type: computed_later
+
+  - variable_name: reserve_buoyancy
+    computational_domain: flotation
+    applies_to: barge, boat, drum_rows
+    why_it_matters_computationally: defines additional buoyancy before unsafe immersion
+    variable_type: computed_later
+
+  - variable_name: flotation_failure_tolerance
+    computational_domain: flotation
+    applies_to: drum_rows, barge
+    why_it_matters_computationally: determines effect of losing one or more flotation units
+    variable_type: computed_later
+
+  - variable_name: waterline_z
+    computational_domain: flotation
+    applies_to: barge, boat, drum_rows
+    why_it_matters_computationally: defines immersion state and exposure boundaries
+    variable_type: measurable
+
+
+  # STRUCTURAL
+
+  - variable_name: frame_load
+    computational_domain: structural
+    applies_to: barge_deck, scaffolding_frame, boat_deck, lab_frame
+    why_it_matters_computationally: determines total load carried by structural frame
+    variable_type: derived
+
+  - variable_name: deck_load_limit
+    computational_domain: structural
+    applies_to: barge_deck, boat_deck
+    why_it_matters_computationally: constrains maximum safe mass placement
+    variable_type: measurable
+
+  - variable_name: cradle_load
+    computational_domain: structural
+    applies_to: chamber_cradles
+    why_it_matters_computationally: determines whether chamber supports carry static and dynamic loads
+    variable_type: derived
+
+  - variable_name: strap_tension
+    computational_domain: structural
+    applies_to: tie_down_bands, chamber_straps, drum_straps, hose_strain_relief
+    why_it_matters_computationally: determines restraint loading under motion
+    variable_type: computed_later
+
+  - variable_name: anchor_load
+    computational_domain: structural
+    applies_to: tie_down_points, manifold_mounts, strain_relief_points, tow_points
+    why_it_matters_computationally: identifies localized hardware stress
+    variable_type: derived
+
+  - variable_name: bending_moment
+    computational_domain: structural
+    applies_to: frame_members, deck_spans, grating_panels, cradles
+    why_it_matters_computationally: supports bending and failure analysis
+    variable_type: computed_later
+
+  - variable_name: shear_load
+    computational_domain: structural
+    applies_to: deck_panels, frame_joints, fasteners, manifold_mounts, tie_downs
+    why_it_matters_computationally: constrains connection strength
+    variable_type: computed_later
+
+  - variable_name: deflection
+    computational_domain: structural
+    applies_to: deck, grating, frame_members, chamber_cradles
+    why_it_matters_computationally: determines sag, misalignment, and serviceability
+    variable_type: measurable
+
+  - variable_name: fatigue_cycles
+    computational_domain: structural
+    applies_to: straps, cradles, fasteners, hose_connections, drum_supports, grating
+    why_it_matters_computationally: tracks repeated loading and wear accumulation
+    variable_type: measurable
+
+  - variable_name: impact_load
+    computational_domain: structural
+    applies_to: intake_interface, chambers, drum_rows, boat_barge_interface
+    why_it_matters_computationally: captures collision, wave slap, and handling shocks
+    variable_type: computed_later
+
+  - variable_name: vibration_load
+    computational_domain: structural
+    applies_to: boat_power_zone, PMA_generator, electrolysis_bays, manifolds
+    why_it_matters_computationally: affects mounting, fatigue, and connection reliability
+    variable_type: measurable
+
+
+  # FLUID
+
+  - variable_name: fill_percent
+    computational_domain: fluid
+    applies_to: chambers, electrolysis_cells, chemical_storage, trays, hoses
+    why_it_matters_computationally: determines fluid mass, headspace, and containment margin
+    variable_type: measurable
+
+  - variable_name: fluid_volume
+    computational_domain: fluid
+    applies_to: chambers, hoses, trays, electrolysis_cells, storage_locker, manifolds
+    why_it_matters_computationally: determines mass, transfer demand, and containment capacity
+    variable_type: measurable
+
+  - variable_name: drainage_rate
+    computational_domain: fluid
+    applies_to: grated_tile_panels, drain_zone, intake_zone
+    why_it_matters_computationally: determines how quickly wet biomass mass changes
+    variable_type: measurable
+
+  - variable_name: flow_rate
+    computational_domain: fluid
+    applies_to: hoses, manifolds, chamber_ports, electrolysis_inputs, storage_outputs
+    why_it_matters_computationally: supports transfer timing and pressure calculations
+    variable_type: measurable
+
+  - variable_name: pressure
+    computational_domain: fluid
+    applies_to: chambers, hoses, manifolds, electrolysis_cells, storage_vessels
+    why_it_matters_computationally: determines containment load and leak risk
+    variable_type: measurable
+
+  - variable_name: head_pressure
+    computational_domain: fluid
+    applies_to: chambers, storage, hoses, electrolysis_cells
+    why_it_matters_computationally: depends on vertical fluid column and affects fittings
+    variable_type: derived
+
+  - variable_name: leak_rate
+    computational_domain: fluid
+    applies_to: chamber_hatches, hoses, quick_connects, trays, manifolds
+    why_it_matters_computationally: quantifies containment failure
+    variable_type: measurable
+
+  - variable_name: tray_capacity
+    computational_domain: fluid
+    applies_to: drip_trays, electrolysis_trays, lab_containment
+    why_it_matters_computationally: determines spill capture limit
+    variable_type: measurable
+
+  - variable_name: residual_fluid_volume
+    computational_domain: fluid
+    applies_to: hoses, chambers, trays, manifolds
+    why_it_matters_computationally: affects cleaning, contamination, and reset state
+    variable_type: measurable
+
+  - variable_name: viscosity
+    computational_domain: fluid
+    applies_to: process_fluids, slurry, hose_transfer
+    why_it_matters_computationally: affects pumpability, flow rate, and pressure loss
+    variable_type: measurable
+
+  - variable_name: sediment_fraction
+    computational_domain: fluid
+    applies_to: chamber_contents, drain_zone, hoses, manifolds
+    why_it_matters_computationally: affects clogging, abrasion, and flow resistance
+    variable_type: measurable
+
+
+  # GAS
+
+  - variable_name: gas_volume
+    computational_domain: gas
+    applies_to: chamber_headspace, hoses, manifolds, electrolysis_cells, vent_path
+    why_it_matters_computationally: defines containment and transfer quantity
+    variable_type: measurable
+
+  - variable_name: headspace_volume
+    computational_domain: gas
+    applies_to: digestion_chambers, electrolysis_cells, storage_vessels
+    why_it_matters_computationally: affects pressure, gas accumulation, and safety margin
+    variable_type: derived
+
+  - variable_name: gas_pressure
+    computational_domain: gas
+    applies_to: chambers, gas_hoses, manifolds, vent_path
+    why_it_matters_computationally: determines containment force and leak risk
+    variable_type: measurable
+
+  - variable_name: gas_flow_rate
+    computational_domain: gas
+    applies_to: gas_hoses, manifolds, chamber_ports, vent_path
+    why_it_matters_computationally: supports transfer and venting calculations
+    variable_type: measurable
+
+  - variable_name: gas_composition
+    computational_domain: gas
+    applies_to: chamber_headspace, electrolysis_outputs, gas_hose_path, vent_path
+    why_it_matters_computationally: determines hazard classification and routing requirements
+    variable_type: measurable
+
+  - variable_name: vent_rate
+    computational_domain: gas
+    applies_to: lab_vent_path, gas_routing, electrolysis_bays
+    why_it_matters_computationally: determines gas accumulation risk
+    variable_type: measurable
+
+  - variable_name: gas_accumulation_zone_volume
+    computational_domain: gas
+    applies_to: lab_zone, chamber_area, manifold_area, boat_deck
+    why_it_matters_computationally: identifies spaces where gases could collect
+    variable_type: derived
+
+
+  # ELECTRICAL
+
+  - variable_name: voltage
+    computational_domain: electrical
+    applies_to: battery_bank, electrolysis_cells, monitoring_panel, PMA_generator, solar_input
+    why_it_matters_computationally: supports electrical sizing and safety calculations
+    variable_type: measurable
+
+  - variable_name: amperage
+    computational_domain: electrical
+    applies_to: battery_bank, electrolysis_cells, PMA_generator, solar_input, wiring
+    why_it_matters_computationally: determines conductor sizing, heat, and power delivery
+    variable_type: measurable
+
+  - variable_name: power_draw
+    computational_domain: electrical
+    applies_to: electrolysis_A, electrolysis_B, monitoring_panel, pumps, ventilation, controls
+    why_it_matters_computationally: determines energy demand and load hierarchy
+    variable_type: measurable
+
+  - variable_name: battery_capacity
+    computational_domain: electrical
+    applies_to: battery_block
+    why_it_matters_computationally: determines stored electrical energy available
+    variable_type: measurable
+
+  - variable_name: state_of_charge
+    computational_domain: electrical
+    applies_to: battery_block
+    why_it_matters_computationally: determines current usable energy
+    variable_type: measurable
+
+  - variable_name: charge_rate
+    computational_domain: electrical
+    applies_to: solar_input, PMA_generator, battery_block
+    why_it_matters_computationally: determines replenishment rate
+    variable_type: measurable
+
+  - variable_name: discharge_rate
+    computational_domain: electrical
+    applies_to: battery_block, capacitor_bank_if_added, electrolysis_cells
+    why_it_matters_computationally: determines usable power delivery over time
+    variable_type: measurable
+
+  - variable_name: duty_cycle
+    computational_domain: electrical
+    applies_to: electrolysis_cells, pumps, PMA_generator, ventilation, monitoring
+    why_it_matters_computationally: relates active runtime to thermal and energy load
+    variable_type: measurable
+
+  - variable_name: conductor_length
+    computational_domain: electrical
+    applies_to: wiring_between_power_control_and_lab
+    why_it_matters_computationally: affects voltage drop and routing
+    variable_type: measurable
+
+  - variable_name: voltage_drop
+    computational_domain: electrical
+    applies_to: wiring, electrolysis_power_lines, control_lines
+    why_it_matters_computationally: affects delivered power and heating
+    variable_type: computed_later
+
+  - variable_name: electrical_isolation_distance
+    computational_domain: electrical
+    applies_to: power_zone, chemistry_lab, wet_transfer_interface
+    why_it_matters_computationally: constrains safe placement of wet and energized systems
+    variable_type: computed_later
+
+  - variable_name: grounding_continuity
+    computational_domain: electrical
+    applies_to: boat_power_zone, lab_frame, electrolysis_cells
+    why_it_matters_computationally: affects electrical safety
+    variable_type: measurable
+
+
+  # THERMAL
+
+  - variable_name: operating_temperature
+    computational_domain: thermal
+    applies_to: batteries, electrolysis_cells, PMA_generator, lab_zone, hoses, chemical_storage
+    why_it_matters_computationally: affects performance, material limits, and safety
+    variable_type: measurable
+
+  - variable_name: ambient_temperature
+    computational_domain: thermal
+    applies_to: full_system
+    why_it_matters_computationally: establishes environmental thermal load
+    variable_type: measurable
+
+  - variable_name: solar_heat_gain
+    computational_domain: thermal
+    applies_to: deck, HDPE_drums, chambers, chemical_storage, lab_zone, batteries
+    why_it_matters_computationally: affects temperature rise and material degradation
+    variable_type: computed_later
+
+  - variable_name: heat_generation
+    computational_domain: thermal
+    applies_to: batteries, electrolysis_cells, PMA_generator, electronics_panel
+    why_it_matters_computationally: determines cooling and spacing requirements
+    variable_type: measurable
+
+  - variable_name: cooling_requirement
+    computational_domain: thermal
+    applies_to: batteries, electrolysis_cells, PMA_generator, lab_zone
+    why_it_matters_computationally: determines ventilation and heat rejection needs
+    variable_type: computed_later
+
+  - variable_name: thermal_expansion
+    computational_domain: thermal
+    applies_to: HDPE_drums, HDPE_chambers, hoses, aluminum_frame, stainless_manifold
+    why_it_matters_computationally: affects fit, seal compression, and material stress
+    variable_type: computed_later
+
+  - variable_name: max_material_temperature
+    computational_domain: thermal
+    applies_to: HDPE, hoses, batteries, seals, electrical_components
+    why_it_matters_computationally: constrains allowable operating conditions
+    variable_type: measurable
+
+
+  # MARINE / ENVIRONMENTAL LOAD
+
+  - variable_name: splash_exposure
+    computational_domain: marine
+    applies_to: barge_deck, chambers, hoses, manifolds, boat_lab_edges, power_enclosures
+    why_it_matters_computationally: affects corrosion, electrical protection, and contamination
+    variable_type: measurable
+
+  - variable_name: immersion_exposure
+    computational_domain: marine
+    applies_to: flotation_drums, underdeck_frame, lower_hoses_if_any
+    why_it_matters_computationally: affects buoyancy, corrosion, and material degradation
+    variable_type: measurable
+
+  - variable_name: UV_exposure_hours
+    computational_domain: marine
+    applies_to: HDPE_drums, chambers, hoses, deck_panels, lab_enclosure
+    why_it_matters_computationally: affects polymer degradation
+    variable_type: measurable
+
+  - variable_name: salinity
+    computational_domain: marine
+    applies_to: full_marine_exposed_system
+    why_it_matters_computationally: affects corrosion and material compatibility
+    variable_type: measurable
+
+  - variable_name: sea_state_limit
+    computational_domain: marine
+    applies_to: barge, boat, interface
+    why_it_matters_computationally: constrains operating envelope
+    variable_type: measurable
+
+  - variable_name: wave_height
+    computational_domain: marine
+    applies_to: barge, boat, interface, flotation
+    why_it_matters_computationally: drives motion, splash, impact, and hose strain
+    variable_type: measurable
+
+  - variable_name: current_speed
+    computational_domain: marine
+    applies_to: barge, boat, intake_interface, hose_span
+    why_it_matters_computationally: affects drag, station keeping, and line loads
+    variable_type: measurable
+
+  - variable_name: wind_speed
+    computational_domain: marine
+    applies_to: barge, boat, lab_enclosure, vent_path
+    why_it_matters_computationally: affects drift, ventilation, and stability
+    variable_type: measurable
+
+  - variable_name: hydrodynamic_drag
+    computational_domain: marine
+    applies_to: barge, drum_rows, intake_interface, hoses, boat
+    why_it_matters_computationally: affects towing force and maneuvering
+    variable_type: computed_later
+
+  - variable_name: wave_force
+    computational_domain: marine
+    applies_to: drum_rows, barge_frame, intake_interface, hose_interface
+    why_it_matters_computationally: affects structural loading and interface strain
+    variable_type: computed_later
+
+  - variable_name: relative_platform_motion
+    computational_domain: marine
+    applies_to: boat_barge_interface, hoses, disconnects, manifolds
+    why_it_matters_computationally: determines slack, bend, and strain requirements
+    variable_type: measurable
+
+
+  # HUMAN / ERGONOMIC
+
+  - variable_name: walkway_width
+    computational_domain: human
+    applies_to: barge_side_lanes, rear_service_corridor, boat_escape_lane, lab_service_aisle
+    why_it_matters_computationally: constrains operator movement and emergency access
+    variable_type: measurable
+
+  - variable_name: reach_distance
+    computational_domain: human
+    applies_to: chamber_hatches, valves, quick_connects, controls, electrolysis_cells, storage
+    why_it_matters_computationally: determines whether operators can access components safely
+    variable_type: measurable
+
+  - variable_name: lift_height
+    computational_domain: human
+    applies_to: intake_zone, drainage_tiles, chambers, hoses, storage, removable_panels
+    why_it_matters_computationally: affects handling effort and fatigue
+    variable_type: measurable
+
+  - variable_name: step_height
+    computational_domain: human
+    applies_to: barge_deck, boat_deck, interface, lab_zone
+    why_it_matters_computationally: affects movement risk and access
+    variable_type: measurable
+
+  - variable_name: visibility_line
+    computational_domain: human
+    applies_to: operator_positions, intake_zone, manifolds, monitoring_panel, escape_routes
+    why_it_matters_computationally: affects supervision, hazard detection, and control
+    variable_type: computed_later
+
+  - variable_name: escape_clearance
+    computational_domain: human
+    applies_to: barge_lanes, boat_escape_lane, lab_exit, interface_access
+    why_it_matters_computationally: constrains emergency movement
+    variable_type: measurable
+
+  - variable_name: service_clearance
+    computational_domain: human
+    applies_to: chambers, electrolysis_bays, batteries, manifolds, storage_locker, drum_rows
+    why_it_matters_computationally: determines maintenance feasibility
+    variable_type: measurable
+
+  - variable_name: operator_count
+    computational_domain: human
+    applies_to: barge, boat, interface
+    why_it_matters_computationally: affects live load, crowding, and workflow timing
+    variable_type: assumed
+
+  - variable_name: operator_live_load
+    computational_domain: human
+    applies_to: barge_deck, boat_deck
+    why_it_matters_computationally: adds moving load to stability and structural analysis
+    variable_type: computed_later
+
+  - variable_name: manual_handling_force
+    computational_domain: human
+    applies_to: panels, hoses, chambers, intake_interface, storage_blocks
+    why_it_matters_computationally: determines whether objects can be moved safely
+    variable_type: measurable
+
+  - variable_name: fatigue_cycle_count
+    computational_domain: human
+    applies_to: manual_raking, hose_handling, chamber_service, panel_removal
+    why_it_matters_computationally: supports labor and safety modeling
+    variable_type: measurable
+
+
+  # INTERFACE / TRANSFER
+
+  - variable_name: hose_length
+    computational_domain: interface
+    applies_to: gas_hose_path, fluid_hose_path, flush_sample_path
+    why_it_matters_computationally: affects pressure drop, slack, routing, and snag risk
+    variable_type: measurable
+
+  - variable_name: hose_bend_radius
+    computational_domain: interface
+    applies_to: all_hose_paths
+    why_it_matters_computationally: constrains safe routing and kink prevention
+    variable_type: measurable
+
+  - variable_name: hose_tension_load
+    computational_domain: interface
+    applies_to: hose_paths, strain_relief, manifolds, quick_connects
+    why_it_matters_computationally: determines strain relief and disconnect loading
+    variable_type: measurable
+
+  - variable_name: slack_loop_volume
+    computational_domain: interface
+    applies_to: slack_loop_envelope
+    why_it_matters_computationally: defines motion allowance between boat and barge
+    variable_type: derived
+
+  - variable_name: disconnect_force
+    computational_domain: interface
+    applies_to: emergency_disconnect, quick_connects
+    why_it_matters_computationally: determines manual and emergency separation feasibility
+    variable_type: measurable
+
+  - variable_name: quick_connect_leak_rate
+    computational_domain: interface
+    applies_to: barge_quick_connect, boat_quick_connect
+    why_it_matters_computationally: quantifies interface containment performance
+    variable_type: measurable
+
+  - variable_name: transfer_rate
+    computational_domain: interface
+    applies_to: gas_hose, fluid_hose, manifolds
+    why_it_matters_computationally: determines time and load state during transfers
+    variable_type: measurable
+
+  - variable_name: strain_relief_capacity
+    computational_domain: interface
+    applies_to: strain_relief_barge, strain_relief_boat
+    why_it_matters_computationally: constrains allowable platform motion before fitting stress
+    variable_type: measurable
+
+  - variable_name: boundary_distance
+    computational_domain: interface
+    applies_to: dirty_clean_boundary, manifolds, lab_zone, barge_process_zone
+    why_it_matters_computationally: defines separation between dirty biomass and clean chemistry
+    variable_type: measurable
+
+  - variable_name: cross_connection_risk
+    computational_domain: interface
+    applies_to: gas_lines, fluid_lines, electrolysis_A, electrolysis_B, manifolds
+    why_it_matters_computationally: identifies routing conflicts and incorrect connection paths
+    variable_type: computed_later
+
+
+  # PROCESS / CONTAINMENT
+
+  - variable_name: chamber_fill_volume
+    computational_domain: process_containment
+    applies_to: digestion_chambers
+    why_it_matters_computationally: determines biomass/fluid load and headspace
+    variable_type: measurable
+
+  - variable_name: chamber_headspace
+    computational_domain: process_containment
+    applies_to: digestion_chambers
+    why_it_matters_computationally: affects gas accumulation and pressure behavior
+    variable_type: derived
+
+  - variable_name: hatch_seal_compression
+    computational_domain: process_containment
+    applies_to: chamber_hatches
+    why_it_matters_computationally: affects leak resistance
+    variable_type: measurable
+
+  - variable_name: seal_cycle_count
+    computational_domain: process_containment
+    applies_to: chamber_hatches, quick_connects, valves, storage_lids
+    why_it_matters_computationally: tracks wear and replacement need
+    variable_type: measurable
+
+  - variable_name: valve_count
+    computational_domain: process_containment
+    applies_to: chambers, manifolds, electrolysis_inputs, storage_outputs
+    why_it_matters_computationally: affects routing, isolation, and failure points
+    variable_type: measurable
+
+  - variable_name: valve_state
+    computational_domain: process_containment
+    applies_to: all_valves
+    why_it_matters_computationally: defines open/closed containment path states
+    variable_type: measurable
+
+  - variable_name: containment_volume
+    computational_domain: process_containment
+    applies_to: trays, lab_zone, storage_locker, chambers
+    why_it_matters_computationally: determines spill or fluid holding capacity
+    variable_type: derived
+
+  - variable_name: residual_solid_volume
+    computational_domain: process_containment
+    applies_to: chambers, drain_zone, intake_zone
+    why_it_matters_computationally: affects cleaning, payload, and reset requirements
+    variable_type: measurable
+
+  - variable_name: clogging_index
+    computational_domain: process_containment
+    applies_to: grating, chamber_strainers, hoses, manifolds
+    why_it_matters_computationally: supports flow restriction and maintenance modeling
+    variable_type: computed_later
+
+
+  # SPATIAL RELATIONSHIPS
+
+  - variable_name: object_location_x
+    computational_domain: spatial_relationship
+    applies_to: all_objects
+    why_it_matters_computationally: defines placement for center-of-mass and collision calculations
+    variable_type: measurable
+
+  - variable_name: object_location_y
+    computational_domain: spatial_relationship
+    applies_to: all_objects
+    why_it_matters_computationally: defines lateral balance and boundary placement
+    variable_type: measurable
+
+  - variable_name: object_location_z
+    computational_domain: spatial_relationship
+    applies_to: all_objects
+    why_it_matters_computationally: defines vertical mass distribution and access height
+    variable_type: measurable
+
+  - variable_name: adjacency
+    computational_domain: spatial_relationship
+    applies_to: all_objects
+    why_it_matters_computationally: defines which objects interact physically or operationally
+    variable_type: computed_later
+
+  - variable_name: collision_overlap
+    computational_domain: spatial_relationship
+    applies_to: all_objects
+    why_it_matters_computationally: detects impossible placements
+    variable_type: computed_later
+
+  - variable_name: service_path_blockage
+    computational_domain: spatial_relationship
+    applies_to: walkways, lab_aisle, chamber_rows, interface_area
+    why_it_matters_computationally: detects blocked access and emergency route conflicts
+    variable_type: computed_later
+
+  - variable_name: dirty_clean_separation_distance
+    computational_domain: spatial_relationship
+    applies_to: barge_process_zone, boat_lab, interface, storage
+    why_it_matters_computationally: quantifies separation between contamination zones
+    variable_type: derived
+
+  - variable_name: symmetry_error_y
+    computational_domain: spatial_relationship
+    applies_to: chamber_rows, flotation_rows, deck_loads
+    why_it_matters_computationally: quantifies port/starboard imbalance
+    variable_type: computed_later
+
+  - variable_name: symmetry_error_x
+    computational_domain: spatial_relationship
+    applies_to: deck_loads, chamber_layout, flotation_layout
+    why_it_matters_computationally: quantifies front/rear imbalance
+    variable_type: computed_later

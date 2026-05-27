@@ -1,0 +1,714 @@
+# Boat.Prototype_1 Compressed YAML Substrate
+
+```yaml
+Boat_Prototype_1_Substrate:
+  document_status:
+    object: Boat.Prototype_1
+    document_type: compressed_operational_substrate
+    repository_status: active_working_file
+    validation_state: "[PENDING VALIDATION]"
+    purpose: >
+      Preserve durable operational truth, measurement workflow, unknown structure,
+      interface logic, inspection philosophy, repository workflow doctrine, and
+      non-canonical exploratory pressure discoveries without preserving narrative
+      history, speculative reasoning chains, or final vessel design claims.
+
+  layer_separation:
+    canonical_operational_layer:
+      stores:
+        - accepted_operational_truths
+        - object_structure
+        - payload_categories
+        - interfaces
+        - constraints
+        - unknowns
+        - measurements
+        - validation_posture
+        - prohibited_claims
+      must_not_store:
+        - exploratory_reasoning
+        - narrative_identity
+        - speculative_geometry
+        - final_layout
+        - validated_payload_claims
+        - operating_envelope_claims
+
+    repository_workflow_layer:
+      stores:
+        - compression_loop
+        - update_packet_logic
+        - unknown_handling_rules
+        - measurement_acceptance_logic
+        - dependency_progression
+        - validation_vocabulary
+        - patch_discipline
+      role: governs_how_the_object_evolves
+
+    exploratory_narrative_layer:
+      stores:
+        - pressure_discoveries
+        - operator_psychology
+        - contamination_boundary_intuition
+        - geometry_pressure_intuition
+        - resilience_metaphors
+        - maintenance_behavior_insights
+        - spatial_topology_intuitions
+      status: non_canonical_pressure_only
+      must_not_promote_to_canon_without:
+        - field_owner
+        - explicit_unknown
+        - measurement_unlock
+        - validation_state
+        - prohibited_inference_review
+
+  validation_vocabulary:
+    canonical_tags:
+      - "[VERIFIED]"
+      - "[ASSUMPTION]"
+      - "[HYPOTHESIS]"
+      - "[ESTIMATED BEHAVIOR]"
+      - "[PENDING VALIDATION]"
+      - "[UNRESOLVED ENGINEERING VARIABLE]"
+    rule: "No claim is promoted without documented empirical evidence and review."
+
+  canonical_operational_layer:
+    accepted_truths:
+      clean_dirty_architecture:
+        boat_role:
+          - clean_support_vessel
+          - process_control_platform
+          - electrolysis_support_platform
+        barge_role:
+          - dirty_modular_sargassum_handling_platform
+          - digestion_platform
+        separation_basis: between_vessels
+        validation_state: "[PENDING VALIDATION]"
+
+      prototype_boundary:
+        Prototype_1_is:
+          - measurement_first_structure
+          - recoverability_first_structure
+          - payload_constraint_discovery_platform
+          - flotation_load_tow_inspection_stability_measurement_platform
+        Prototype_1_is_not:
+          - final_vessel_design
+          - final_boat_geometry
+          - finalized_layout
+          - validated_payload_platform
+          - operational_processing_vessel
+          - dirty_sargassum_processing_surface
+          - wet_biomass_workspace
+          - digestion_platform
+        validation_state: "[PENDING VALIDATION]"
+
+    object:
+      id: Boat.Prototype_1
+      object_type: clean_support_process_control_electrolysis_support_platform_candidate
+      current_test_function:
+        - flotation_measurement
+        - load_response_measurement
+        - tow_behavior_measurement
+        - inspection_access_measurement
+        - stability_measurement
+        - recoverability_measurement
+        - payload_to_geometry_pressure_discovery
+      validation_state: "[PENDING VALIDATION]"
+
+    payload:
+      rule: "Boat geometry must emerge from measured payload and access pressure, not arbitrary vessel dimensions."
+      validation_state: "[PENDING VALIDATION]"
+      categories:
+        electrolysis_systems:
+          quantity: 2
+          validation_state: "[PENDING VALIDATION]"
+          unresolved:
+            - electrolysis_system_dimensions
+            - electrolysis_system_mass
+            - service_clearance_required
+            - power_control_location
+        electrical_controls:
+          validation_state: "[PENDING VALIDATION]"
+          unresolved:
+            - electrical_control_mass
+            - electrical_control_location
+            - electrical_isolation_requirements
+        chemical_handling_supplies:
+          validation_state: "[PENDING VALIDATION]"
+          unresolved:
+            - chemical_storage_volume
+            - containment_requirement
+            - handling_clearance
+        operator_space:
+          validation_state: "[PENDING VALIDATION]"
+          unresolved:
+            - required_operator_clearance
+            - clean_access_path
+            - emergency_egress_clearance
+        monitoring_logging_equipment:
+          validation_state: "[PENDING VALIDATION]"
+          unresolved:
+            - monitoring_equipment_volume
+            - logging_equipment_location
+            - sensor_or_manual_log_interface
+        clean_barge_interface_hardware:
+          validation_state: "[PENDING VALIDATION]"
+          unresolved:
+            - clean_interface_hardware_geometry
+            - hose_pass_through_location
+            - drip_control_method
+            - isolation_valve_location
+        emergency_shutdown_isolation_equipment:
+          validation_state: "[PENDING VALIDATION]"
+          unresolved:
+            - shutdown_hardware_location
+            - isolation_access_clearance
+            - manual_shutdown_reachability
+      prohibited_inferences:
+        - does_not_define_final_boat_size
+        - does_not_validate_safe_payload
+        - does_not_define_operating_envelope
+        - does_not_define_final_layout
+
+    interfaces:
+      dirty_barge_interface:
+        purpose: boundary_between_clean_boat_functions_and_dirty_barge_functions
+        status: "[UNRESOLVED ENGINEERING VARIABLE]"
+        relationship:
+          clean_side: Boat.Prototype_1
+          dirty_side: BARGE_dirty_modular_handling_and_digestion_platform
+        unresolved:
+          - clean_dirty_transfer_method
+          - hose_pass_through_location
+          - drip_control_method
+          - isolation_valve_location
+          - contamination_boundary_method
+          - minimum_clean_side_interface_hardware_envelope
+        blocked_by:
+          - PMU_001_electrolysis_system_mockup_measurement
+          - PMU_003_operator_clearance_mockup
+          - PMU_005_emergency_shutdown_reachability_check
+          - PMU_004_clean_barge_interface_hardware_mockup
+        may_unlock_after_measurement:
+          - interface_geometry_candidate
+          - hose_routing_pressure
+          - interface_location_candidate
+        does_not_unlock:
+          - validated_clean_dirty_isolation
+          - leak_safe_transfer
+          - final_interface_design
+          - final_layout
+
+    constraints:
+      permanent_current_constraints:
+        - clean_dirty_separation_between_vessels
+        - no_dirty_processing_on_boat
+        - measurement_first_prototype
+        - recoverability_required
+        - inspection_first_discipline
+        - no_final_geometry_claim
+        - no_operating_envelope_claim
+        - no_safe_payload_claim
+      temporary_or_pressure_constraints:
+        - payload_categories_drive_geometry_pressure
+        - central_lab_room_remains_future_pressure
+        - dirty_barge_interface_remains_unresolved_until_measurement
+        - hose_paths_remain_candidate_pressure_until_mockup
+
+    prohibited_claims:
+      - final_boat_size
+      - final_layout
+      - safe_payload
+      - operating_envelope
+      - validated_clean_lab_platform
+      - finalized_dirty_barge_interface
+      - leak_safe_transfer
+      - finished_vessel_status
+      - payload_capacity
+      - seaworthiness
+      - stable_platform
+      - operational_readiness
+      - final_tow_system
+      - reserve_buoyancy
+      - dirty_processing_capability
+
+    unknowns:
+      active:
+        - id: BOAT-P1-U001
+          field: payload.electrolysis_systems
+          unknown: electrolysis_dimensions
+          blocks:
+            - payload_space_allocation
+            - service_clearance
+            - future_lab_room_geometry
+          measurement_unlock: PMU-001
+          validation_state: "[UNRESOLVED ENGINEERING VARIABLE]"
+
+        - id: BOAT-P1-U002
+          field: payload.electrolysis_systems
+          unknown: electrolysis_mass
+          blocks:
+            - flotation_margin
+            - center_of_mass_estimate
+            - payload_distribution
+          measurement_unlock: PMU-002
+          validation_state: "[UNRESOLVED ENGINEERING VARIABLE]"
+
+        - id: BOAT-P1-U003
+          field: interfaces.dirty_barge_interface
+          unknown: clean_dirty_transfer_method
+          blocks:
+            - interface_geometry
+            - contamination_control
+            - transfer_workflow
+          measurement_unlock: PMU-004
+          validation_state: "[UNRESOLVED ENGINEERING VARIABLE]"
+
+        - id: BOAT-P1-U004
+          field: prototype_boundary
+          unknown: actual_flotation_and_load_response
+          blocks:
+            - reserve_buoyancy_claim
+            - payload_capacity_claim
+            - stable_platform_claim
+          measurement_unlock: empty_float_and_incremental_ballast_tests
+          validation_state: "[UNRESOLVED ENGINEERING VARIABLE]"
+
+        - id: BU-PMU-001
+          field: payload.electrolysis_systems.geometry_envelope
+          unknown: measured_two_system_electrolysis_footprint_and_service_envelope
+          blocks:
+            - geometry_sizing
+            - clean_space_area_estimate
+          measurement_unlock: PMU-001
+          validation_state: "[UNRESOLVED ENGINEERING VARIABLE]"
+
+        - id: BU-PMU-002
+          field: payload.electrolysis_systems.mass
+          unknown: measured_or_bounded_mass_of_two_electrolysis_systems
+          blocks:
+            - flotation_load_budget
+            - center_mass_mockup
+          measurement_unlock: PMU-002
+          validation_state: "[UNRESOLVED ENGINEERING VARIABLE]"
+
+        - id: BU-PMU-003
+          field: payload.operator_space.clearance_requirement
+          unknown: minimum_serviceable_occupied_clean_space_clearance
+          blocks:
+            - usable_clean_support_space
+            - layout_acceptability
+          measurement_unlock: PMU-003
+          validation_state: "[UNRESOLVED ENGINEERING VARIABLE]"
+
+        - id: BU-PMU-004
+          field: interfaces.dirty_barge_interface.geometry_candidate
+          unknown: minimum_clean_side_interface_hardware_envelope
+          blocks:
+            - hose_routing
+            - valve_access
+            - contamination_boundary_design
+          measurement_unlock: PMU-004
+          validation_state: "[UNRESOLVED ENGINEERING VARIABLE]"
+
+        - id: BU-PMU-005
+          field: payload.emergency_shutdown_isolation_equipment.access_requirement
+          unknown: minimum_reachable_shutdown_isolation_control_envelope
+          blocks:
+            - layout_acceptability
+            - safety_access_constraint
+          measurement_unlock: PMU-005
+          validation_state: "[UNRESOLVED ENGINEERING VARIABLE]"
+
+        - id: BOAT-P1-U008
+          field: measurements.payload_measurement_unlocks.execution_dependencies
+          unknown: minimum_dependency_chain_required_before_interface_geometry_stabilization
+          blocks:
+            - dirty_barge_interface_stabilization
+            - payload_driven_geometry_constraints
+          measurement_unlock: execution_order_completion
+          validation_state: "[UNRESOLVED ENGINEERING VARIABLE]"
+
+        - id: BOAT-P1-U009
+          field: interfaces.dirty_barge_interface.geometry_candidate
+          unknown: minimum_measured_interface_envelope_after_payload_and_access_constraints_exist
+          blocks:
+            - interface_placement_pressure
+            - routing_constraints
+          measurement_unlock: PMU-004
+          validation_state: "[UNRESOLVED ENGINEERING VARIABLE]"
+
+        - id: BOAT-P1-U010
+          field: payload.electrolysis_systems.geometry_envelope
+          unknown: whether_recorded_electrolysis_envelope_remains_serviceable_when_combined_with_operator_clearance_emergency_access_and_interface_hardware_constraints
+          blocks:
+            - minimum_clean_equipment_floor_area_candidate
+            - payload_to_geometry_pressure
+          measurement_unlock: combined_review_after_PMU_001_PMU_003_PMU_004_PMU_005
+          validation_state: "[UNRESOLVED ENGINEERING VARIABLE]"
+
+    measurements:
+      payload_measurement_unlocks:
+        validation_state: "[PENDING VALIDATION]"
+        execution_order:
+          - order: 1
+            id: PMU-001
+            name: electrolysis_system_mockup_measurement
+            target_payload_category: electrolysis_systems
+            required_outputs:
+              - length
+              - width
+              - height
+              - service_access_sides
+              - required_clearance_envelope
+            unlocks_candidate_fields:
+              - payload.electrolysis_systems.geometry_envelope
+            must_precede:
+              - minimum_clean_equipment_floor_area_candidate
+              - payload_driven_geometry_pressure
+              - dirty_barge_interface_stabilization
+            does_not_unlock_claims:
+              - final_boat_size
+              - final_layout
+              - safe_payload
+              - operating_envelope
+
+          - order: 2
+            id: PMU-003
+            name: operator_clearance_mockup
+            target_payload_category: operator_space
+            required_outputs:
+              - minimum_walk_clearance
+              - service_clearance_required
+              - reach_conflict_points
+              - blocked_access_conditions
+            unlocks_candidate_fields:
+              - payload.operator_space.clearance_requirement
+            must_precede:
+              - occupied_clean_space_candidate
+              - layout_acceptability
+              - dirty_barge_interface_access_assumptions
+            does_not_unlock_claims:
+              - final_cabin_geometry
+              - safe_crew_operation
+              - operating_envelope
+
+          - order: 3
+            id: PMU-005
+            name: emergency_shutdown_reachability_check
+            target_payload_category: emergency_shutdown_isolation_equipment
+            required_outputs:
+              - reachable_shutdown_locations
+              - maximum_reach_distance
+              - access_blockers
+              - minimum_clear_path
+            unlocks_candidate_fields:
+              - payload.emergency_shutdown_isolation_equipment.access_requirement
+            must_precede:
+              - acceptable_equipment_access_conditions
+              - layout_safety_assumptions
+            does_not_unlock_claims:
+              - emergency_ready_vessel
+              - validated_safety_system
+              - operational_readiness
+
+          - order: 4
+            id: PMU-004
+            name: clean_barge_interface_hardware_mockup
+            target_payload_category: clean_barge_interface_hardware
+            required_outputs:
+              - interface_panel_width
+              - interface_panel_height
+              - hose_bend_clearance
+              - valve_reach_clearance
+              - drip_containment_space
+            unlocks_candidate_fields:
+              - interfaces.dirty_barge_interface.geometry_candidate
+            must_precede:
+              - dirty_barge_interface_geometry_candidate
+              - hose_routing_pressure
+              - interface_location_candidate
+            does_not_unlock_claims:
+              - validated_clean_dirty_isolation
+              - leak_safe_transfer
+              - final_interface_design
+
+          - order: 5
+            id: PMU-002
+            name: electrolysis_system_weight_measurement
+            target_payload_category: electrolysis_systems
+            required_outputs:
+              - mass_each
+              - total_mass_for_two_units
+              - estimated_mounting_load
+            unlocks_candidate_fields:
+              - payload.electrolysis_systems.mass
+              - payload.total_known_mass_partial
+            must_precede:
+              - flotation_load_budget_candidate
+              - center_mass_mockup_requirement
+            does_not_unlock_claims:
+              - validated_buoyancy_margin
+              - stable_platform
+              - safe_payload
+
+        interface_stabilization_prerequisites:
+          dirty_barge_interface_requires:
+            - PMU-001
+            - PMU-003
+            - PMU-005
+            - PMU-004
+          rule: "Interface geometry may become a candidate only after payload envelope, operator clearance, emergency access, and interface hardware mockup outputs exist. Candidate geometry is not final geometry."
+
+        recording_template_minimum:
+          fields_required_per_measurement:
+            - measurement_id
+            - date
+            - context
+            - recorded_values
+            - evidence_reference
+            - unknowns_resolved
+            - unknowns_created
+            - fields_unlocked
+            - claims_still_prohibited
+          context_minimum:
+            - mockup_configuration
+            - measurement_method
+            - equipment_state
+            - operator_assumptions
+            - environmental_conditions
+          recorded_value_rule: "Recorded values remain [PENDING VALIDATION] until reviewed; single measurements do not create validated capability."
+          evidence_reference_minimum:
+            - photo_log_reference
+            - sketch_reference
+            - measurement_sheet_reference
+
+        example_submission_status:
+          PMU_001_example:
+            status: example_only
+            rule: "Placeholder values are not measurements and do not resolve unknowns."
+            fields_unlocked_status: example_only_not_unlocked
+
+      flotation_and_load_tests:
+        status: retained_future_measurement_family
+        minimum_tests:
+          - empty_float_test
+          - incremental_ballast_test
+          - forward_aft_trim_test
+          - port_starboard_side_load_test
+          - low_speed_unloaded_tow_test
+          - post_test_inspection_log
+        blocked_claims:
+          - payload_capacity
+          - reserve_buoyancy
+          - stable_platform
+          - seaworthiness
+          - safe_operating_envelope
+
+  repository_workflow_layer:
+    compression_loop:
+      sequence:
+        - need_appears
+        - field_required
+        - field_added
+        - unknown_identified
+        - measurement_planned
+        - truth_stabilized
+      rule: "If an update does not produce an object, field, constraint, interface, unknown, measurement, validation state, or prohibited claim, it does not enter the canonical object."
+
+    update_packet_logic:
+      required_shape:
+        target_object:
+        update_type:
+        target_field:
+        proposed_patch:
+        validation_state:
+        unknowns_created:
+        measurement_unlock:
+        prohibited_inferences:
+      accepted_update_types:
+        - field_update
+        - constraint_update
+        - interface_update
+        - unknown_registration
+        - measurement_registration
+        - measurement_execution_order_update
+        - measurement_template_update
+        - measurement_result_submission_format_update
+        - measurement_result_submission
+        - validation_state_update
+        - prohibited_claim_update
+        - future_pressure_update
+      rejected_update_types:
+        - narrative_as_canon
+        - speculative_geometry_lock
+        - duplicate_definition
+        - validation_promotion_without_evidence
+
+    unknown_handling:
+      qualifies_if_blocks:
+        - object_field_completion
+        - interface_definition
+        - measurement_design
+        - safety_boundary
+        - payload_placement
+        - geometry_decision
+        - validation_state_promotion
+        - claim_permission
+        - Prototype_2_branch_decision
+      template:
+        id:
+        field:
+        unknown:
+        blocks:
+        measurement_unlock:
+        validation_state:
+        remove_when:
+      removal_requires:
+        - measured_value_exists
+        - owning_field_updated
+        - validation_state_attached
+        - blocked_claims_reviewed
+        - decision_history_entry_if_architectural
+
+    measurement_acceptance_logic:
+      actual_submission_gate:
+        required_before_acceptance:
+          - non_placeholder_values
+          - measurement_context
+          - evidence_reference
+          - matching_measurement_id
+          - recorded_units
+          - claims_still_prohibited
+        rejection_conditions:
+          - placeholder_values
+          - missing_context
+          - missing_evidence_reference
+          - implied_final_geometry
+          - implied_safe_payload
+          - implied_operating_envelope
+          - validation_promotion_without_review
+        validation_effect: "Accepting a result records evidence and may candidate-unlock fields; it does not automatically verify capability."
+
+    field_growth_rules:
+      new_field_allowed_when:
+        - repeated_updates_need_same_storage_location
+        - field_has_clear_authority
+        - field_stores_operational_state_not_reasoning
+        - field_does_not_duplicate_existing_field
+        - field_has_validation_state_or_unknowns
+      split_field_when:
+        - field_has_more_than_5_active_unknowns
+        - field_has_multiple_interfaces
+        - field_has_independent_measurements
+        - field_has_distinct_validation_state
+        - field_can_fail_independently
+      keep_external_if:
+        - exploratory
+        - future_architecture_pressure
+        - not_needed_for_current_Prototype_1_tests
+        - not_measurable_yet
+        - not_tied_to_current_field
+        - likely_to_change_after_first_float_load_tow_data
+
+    duplicate_control:
+      preferred_identity_field: identity.current_roles
+      avoid_parallel_fields:
+        - role
+        - mission
+        - purpose
+        - function
+        - operational_identity
+      placeholder_fields_rejected:
+        - propulsion_TBD
+        - gas_handling_TBD
+        - chemical_storage_TBD
+        - upper_deck_TBD
+      rule: "Unknowns are stored as unknowns, not as empty placeholder fields."
+
+  exploratory_narrative_layer:
+    status: non_canonical_pressure_discovery
+    conversion_rule: "Exploratory pressure may only become canonical after it is normalized into a field, constraint, interface, unknown, measurement, validation state, or prohibited claim."
+
+    preserved_pressure_discoveries:
+      clean_dirty_psychology:
+        - clean_space_must_feel_defended_not_merely_defined
+        - dirty_space_must_be_allowed_to_be_dirty_without_shame
+        - contamination_boundary_failure_feels_like_identity_failure
+        - dirty_tool_resting_places_may_prevent_boundary_drift
+      operator_trust:
+        - operator_trust_depends_on_visibility_more_than_polish
+        - visible_systems_calm_operators
+        - hidden_systems_create_suspicion
+        - operator_annoyance_may_predict_future_maintenance_noncompliance
+        - shutdown_access_should_be_tested_under_cluttered_not_clean_conditions
+      maintenance_and_inspection:
+        - inspection_speed_may_become_primary_geometry_pressure
+        - sacrificial_parts_need_obvious_inspection_paths
+        - labels_and_markers_must_survive_water_sun_glare_and_boots
+        - removable_panels_signal_inspection_priority
+        - visible_flotation_may_build_operator_trust_early
+      geometry_pressure_intuition:
+        - geometry_should_emerge_from_blocked_reach_blocked_view_and_blocked_recovery
+        - hose_visibility_may_compete_with_hose_trip_risk
+        - hose_paths_should_be_traceable_without_crossing_primary_shutdown_or_walk_paths
+        - boat_barge_gap_should_remain_visually_readable_not_cluttered
+        - clean_vessel_should_read_visually_higher_and_more_protected_than_dirty_barge
+        - dirty_barge_should_read_lower_wider_and_more_sacrificial
+        - central_protected_volume_should_not_dominate_before_payload_measurements_exist
+      sacrificial_vs_protected_systems:
+        - dirty_barge_surfaces_are_sacrificial_contact_surfaces
+        - clean_vessel_systems_are_protected_judgment_and_control_surfaces
+        - sacrificial_surfaces_should_look_replaceable_not_permanent
+        - load_bearing_paths_should_look_obvious_even_before_measurement
+      environmental_pressure_intuition:
+        - ocean_tests_recoverability_visibility_slack_and_humility
+        - sargassum_behaves_as_mass_odor_chemistry_ecology_and_labor_burden
+        - corner_freeboard_may_drive_trust_more_than_average_freeboard
+        - waterline_markers_should_be_readable_from_clean_vessel_and_barge_positions
+
+    candidate_metaphors:
+      status: non_canonical_language_only
+      useful_images:
+        - paired_working_organism
+        - floating_workshop_with_detachable_wet_stomach
+        - clean_nervous_system_and_dirty_contact_body
+        - mangrove_root_like_boundary_system
+      prohibited_use: "Metaphors must not define engineering architecture or validation state."
+
+  permanent_vs_temporary_concepts:
+    permanent_current_doctrine:
+      - clean_dirty_separation_between_vessels
+      - measurement_first_progression
+      - explicit_unknown_tracking
+      - recoverability_priority
+      - inspection_first_discipline
+      - validation_state_visibility
+      - prohibited_claim_guardrails
+      - patch_based_repository_evolution
+    temporary_or_unresolved_concepts:
+      - final_boat_geometry
+      - final_layout
+      - central_lab_room_geometry
+      - upper_storage_platform
+      - final_clean_vessel_layout
+      - permanent_cabin_structure
+      - dirty_barge_interface_geometry
+      - hose_routing_geometry
+      - payload_capacity
+      - operating_envelope
+      - safe_payload
+      - reserve_buoyancy
+      - stable_platform_claim
+
+  top_level_guardrails:
+    - do_not_finalize_geometry
+    - do_not_finalize_layout
+    - do_not_validate_safe_payload
+    - do_not_define_operating_envelope
+    - do_not_lock_central_lab_room_geometry
+    - do_not_silently_convert_exploratory_narrative_into_canon
+    - preserve_measurement_first_progression
+    - preserve_explicit_unknown_handling
+    - preserve_clean_dirty_vessel_separation
+    - preserve_payload_to_geometry_dependency_logic
+```

@@ -1,0 +1,482 @@
+Machine.yaml:
+  authority: operational_state_governance
+  uses:
+    - Values.yaml
+    - Operators.yaml
+    - Formats.yaml
+  must_not_define:
+    - new_values
+    - new_operator_equations
+    - new_format_templates
+    - subsystem_mechanics
+
+  governance_rule:
+    states_emerge_from: margins
+    margins_emerge_from: operators
+    operators_bind: values
+    values_become_usable_through: measurements
+    validation_controls_confidence: true
+
+  top_level_state_machine:
+    idle:
+      required_formats:
+        - lifecycle_degradation
+        - containment_leak_overflow
+      required_margins:
+        - maintenance_margin
+        - containment_margin_if_loaded
+      transition_out:
+        to: deployment
+        threshold: readiness_checks_complete AND buoyancy_margin >= deployment_threshold
+      blocking_unknowns:
+        - unknown_component_status
+        - unresolved_containment_state
+      validation_status: bounded_operation
+
+    deployment:
+      required_formats:
+        - buoyancy_payload_support
+        - towing_drag_resistance
+        - mooring_environmental_load
+      required_margins:
+        - buoyancy_margin
+        - tow_or_positioning_margin
+        - workforce_margin
+        - environmental_operating_margin
+      transition_out:
+        to: interception
+        threshold: anchor_margin >= holding_threshold AND environmental_load <= deployment_limit
+      fallback:
+        to: environmental_hold
+        threshold: environmental_load >= hold_threshold
+      validation_status: modeled_until_deployment_measurements_exist
+
+    interception:
+      required_formats:
+        - mooring_environmental_load
+        - buoyancy_payload_support
+        - stability_center_of_mass
+      required_margins:
+        - mooring_margin
+        - environmental_operating_margin
+        - buoyancy_margin
+        - connection_margin
+      transition_out:
+        to: drainage
+        threshold: buoyancy_margin >= drainage_threshold AND stability_margin >= access_threshold
+      fallback:
+        to: emergency_retrieval
+        threshold: anchor_margin < retrieval_threshold
+      validation_status: bounded_after_environmental_load_measurements
+
+    drainage:
+      required_formats:
+        - drainage_retained_water
+        - buoyancy_payload_support
+      required_margins:
+        - payload_margin
+        - drainage_capacity_margin
+        - buoyancy_margin
+      transition_out:
+        to: separation
+        threshold: retained_water_mass <= retained_water_threshold AND access_margin >= threshold
+      fallback:
+        to: degraded_operation
+        threshold: drainage_rate < minimum_drainage_rate
+      validation_status: measurement_blocked_until_drainage_curve
+
+    separation:
+      required_formats:
+        - stability_center_of_mass
+        - workforce_reset_flow
+      required_margins:
+        - workforce_margin
+        - operator_access_margin
+        - stability_margin
+      transition_out:
+        to: digestion
+        threshold: batch_ready AND chamber_fill_margin >= threshold AND seal_margin >= containment_threshold
+      fallback:
+        to: degraded_operation
+        threshold: manpower_ratio < workflow_requirement
+      validation_status: operationally_measurable_after_repeated_logs
+
+    digestion:
+      required_formats:
+        - digestion_timing
+        - containment_leak_overflow
+        - gas_pressure_venting
+      required_margins:
+        - chamber_capacity_margin
+        - seal_margin
+        - gas_headspace_margin
+        - process_margin
+      transition_out:
+        to: transfer
+        threshold: pressure_margin >= transfer_threshold AND transfer_capacity_margin >= threshold
+      fallback:
+        to: containment_hold
+        threshold: gas_pressure > venting_limit OR seal_margin < containment_threshold
+      validation_status: experimental_only_after_batch_and_pressure_tests
+
+    transfer:
+      required_formats:
+        - containment_leak_overflow
+        - gas_pressure_venting
+      required_margins:
+        - transfer_capacity_margin
+        - seal_margin
+        - receiving_capacity_margin
+        - containment_margin
+      transition_out:
+        to: recovery_testing
+        threshold: receiving_capacity_margin >= transfer_volume AND energy_margin >= testing_requirement
+      fallback:
+        to: containment_hold
+        threshold: leak_rate > acceptable_leak_rate OR containment_volume >= warning_threshold
+      validation_status: bounded_after_interface_tests
+
+    recovery_testing:
+      required_formats:
+        - power_energy_margin
+        - gas_pressure_venting
+        - containment_leak_overflow
+      required_margins:
+        - energy_margin
+        - containment_margin
+        - measurement_quality_margin
+      transition_out:
+        to: reset
+        threshold: testing_stopped AND residuals_contained
+      fallback:
+        to: shutdown
+        threshold: power_margin < safe_shutdown_requirement OR containment_margin < threshold
+      validation_status: feasibility_evaluation_only
+
+    reset:
+      required_formats:
+        - workforce_reset_flow
+        - lifecycle_degradation
+      required_margins:
+        - reset_capacity_margin
+        - workforce_margin
+        - ready_inventory_margin
+        - runoff_containment_margin
+      transition_out:
+        to: idle
+        threshold: cleaned AND inspected AND ready_status_logged
+      fallback:
+        to: maintenance
+        threshold: failed_inspection OR unknown_component_status
+      validation_status: bounded_after_repeated_reset_logs
+
+    degraded_operation:
+      required_formats:
+        - lifecycle_degradation
+        - containment_leak_overflow
+        - safe_state_operator
+      required_margins:
+        - positive_minimum_safety_margin
+        - containment_margin_not_negative
+        - recovery_path_available
+      transition_out:
+        to: maintenance
+        threshold: remaining_capacity < degraded_operation_threshold
+      fallback:
+        to: shutdown
+        threshold: safety_critical_margin < zero
+      validation_status: only_allowed_if_degraded_thresholds_defined
+
+    environmental_hold:
+      required_formats:
+        - mooring_environmental_load
+        - towing_drag_resistance
+      required_margins:
+        - holding_margin
+        - retrieval_margin
+        - containment_margin
+      transition_out:
+        to: emergency_retrieval
+        threshold: anchor_margin < retrieval_threshold OR wave_loading > retrieval_threshold
+      fallback:
+        to: shutdown
+        threshold: retrieval_not_safe AND assets_secured
+      validation_status: modeled_until_environmental_thresholds_measured
+
+    containment_hold:
+      required_formats:
+        - containment_leak_overflow
+        - gas_pressure_venting
+      required_margins:
+        - seal_margin
+        - secondary_containment_margin
+        - venting_margin
+      transition_out:
+        to: reset
+        threshold: source_isolated AND leaked_material_contained
+      fallback:
+        to: shutdown
+        threshold: gas_pressure > venting_limit OR leak_volume >= tray_capacity
+      validation_status: safety_hold_not_processing_state
+
+    maintenance:
+      required_formats:
+        - lifecycle_degradation
+      required_margins:
+        - isolation_margin
+        - replacement_inventory_margin
+        - restored_capacity_margin
+      transition_out:
+        to: idle
+        threshold: repaired_or_replaced AND inspected AND logged
+      validation_status: required_when_margin_cannot_be_confirmed
+
+    emergency_retrieval:
+      required_formats:
+        - towing_drag_resistance
+        - mooring_environmental_load
+      required_margins:
+        - retrieval_margin
+        - tow_margin
+        - connection_margin
+        - personnel_safety_margin
+      transition_out:
+        to: idle
+        threshold: assets_recovered AND inspection_required
+      fallback:
+        to: shutdown
+        threshold: retrieval_not_safe
+      validation_status: requires_retrieval_trials_under_bounded_conditions
+
+    shutdown:
+      required_formats:
+        - containment_leak_overflow
+        - power_energy_margin
+      required_margins:
+        - isolation_margin
+        - residual_containment_margin
+        - safe_shutdown_energy_margin
+      transition_out:
+        to: maintenance
+        threshold: system_stabilized AND lockout_logged
+      validation_status: conservative_default_state
+
+  critical_margin_dashboard:
+    buoyancy_margin:
+      format: buoyancy_payload_support
+      governs:
+        - deployment
+        - interception
+        - drainage
+        - towing
+      blocking_unknowns:
+        - submerged_volume_under_load
+        - loaded_weight
+        - retained_water_mass
+
+    stability_margin:
+      format: stability_center_of_mass
+      governs:
+        - drainage
+        - separation
+        - degraded_operation
+      blocking_unknowns:
+        - mass_distribution
+        - metacentric_behavior
+        - trim_limit
+        - list_limit
+
+    containment_margin:
+      format: containment_leak_overflow
+      governs:
+        - digestion
+        - transfer
+        - containment_hold
+        - shutdown
+      blocking_unknowns:
+        - seal_capacity
+        - leak_rate
+        - cycle_degradation
+        - gas_pressure
+
+    gas_pressure_margin:
+      format: gas_pressure_venting
+      governs:
+        - digestion
+        - transfer
+        - containment_hold
+      blocking_unknowns:
+        - gas_generation_rate
+        - gas_composition
+        - venting_capacity
+        - headspace_volume
+
+    environmental_margin:
+      format: mooring_environmental_load
+      governs:
+        - deployment
+        - interception
+        - towing
+        - environmental_hold
+        - emergency_retrieval
+      blocking_unknowns:
+        - wave_height
+        - current_speed
+        - wind_speed
+        - drag_coefficient
+        - anchor_capacity
+
+    energy_margin:
+      format: power_energy_margin
+      governs:
+        - transfer
+        - recovery_testing
+        - shutdown
+      blocking_unknowns:
+        - transient_load_profile
+        - battery_capacity
+        - capacitor_capacity
+        - duty_cycle
+
+    workforce_margin:
+      format: workforce_reset_flow
+      governs:
+        - drainage
+        - separation
+        - reset
+        - emergency_response
+      blocking_unknowns:
+        - operator_cycle_time
+        - manpower_ratio
+        - reset_time
+
+  minimum_measurement_unlocks:
+    - measurement: wet_biomass_retained_water_curve
+      unlocks:
+        - retained_water_mass
+        - drainage_rate
+        - payload_mass
+      formats_unlocked:
+        - drainage_retained_water
+        - buoyancy_payload_support
+
+    - measurement: loaded_float_draft_freeboard_test
+      unlocks:
+        - submerged_volume_under_load
+        - freeboard
+        - buoyancy_margin
+      formats_unlocked:
+        - buoyancy_payload_support
+        - stability_center_of_mass_partial
+
+    - measurement: loaded_trim_list_test
+      unlocks:
+        - stability_margin
+        - operator_access_margin
+      formats_unlocked:
+        - stability_center_of_mass
+
+    - measurement: pressure_hold_leak_cycle_test
+      unlocks:
+        - seal_capacity
+        - leak_rate
+        - containment_margin
+      formats_unlocked:
+        - containment_leak_overflow
+
+    - measurement: digestion_batch_generation_curve
+      unlocks:
+        - digestion_rate
+        - batch_timing
+        - gas_generation_rate
+      formats_unlocked:
+        - digestion_timing
+        - gas_pressure_venting_partial
+
+    - measurement: gas_pressure_composition_vent_flow_test
+      unlocks:
+        - gas_pressure
+        - gas_composition
+        - venting_capacity
+      formats_unlocked:
+        - gas_pressure_venting
+
+    - measurement: tow_drag_and_mooring_tension_trial
+      unlocks:
+        - drag_coefficient_candidate
+        - tow_margin
+        - mooring_margin
+        - anchor_margin
+      formats_unlocked:
+        - towing_drag_resistance
+        - mooring_environmental_load
+
+    - measurement: transient_power_load_log
+      unlocks:
+        - required_energy
+        - energy_margin
+        - load_shed_threshold
+      formats_unlocked:
+        - power_energy_margin
+
+    - measurement: workforce_and_reset_timing_log
+      unlocks:
+        - operator_cycle_time
+        - reset_cycle_time
+        - workforce_margin
+        - ready_inventory_rate
+      formats_unlocked:
+        - workforce_reset_flow
+
+    - measurement: material_lifecycle_baseline
+      unlocks:
+        - degradation_rate
+        - capacity_loss
+        - maintenance_interval_candidate
+      formats_unlocked:
+        - lifecycle_degradation
+
+  validation_gates:
+    modeled_operation:
+      allowed_when:
+        - operator_structure_exists
+        - variables_identified
+        - margins_not_measured
+      allowed_use:
+        - worksheet_reasoning
+        - simulation_candidate
+        - validation_planning
+      prohibited:
+        - deployment_readiness
+        - operational_capability_claim
+        - throughput_claim
+
+    bounded_operation:
+      allowed_when:
+        - critical_variables_measured_or_conservatively_bounded
+        - safety_margins_positive_under_bounded_conditions
+        - recovery_path_identified
+      prohibited:
+        - broad_operating_envelope_claim
+        - industrial_scale_claim
+        - autonomous_operation_claim
+
+    experimentally_supported_operation:
+      allowed_when:
+        - required_operator_margins_tested_under_controlled_conditions
+        - thresholds_logged
+        - hold_or_shutdown_transitions_defined
+      prohibited:
+        - long_duration_reliability_claim
+        - commercial_readiness
+        - validated_yield_claim
+
+    operationally_validated_operation:
+      allowed_when:
+        - repeated_real_world_cycles_logged
+        - margins_positive_within_documented_envelope
+        - anomaly_and_negative_result_records_preserved
+        - repeatability_threshold_defined
+      prohibited:
+        - extrapolation_beyond_tested_conditions
+        - guaranteed_environmental_or_economic_outcomes

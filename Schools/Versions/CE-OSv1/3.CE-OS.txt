@@ -1,0 +1,2160 @@
+Directory:
+  file: Directory.yaml
+  role: current_model_topology_index
+  authority: routing_only
+  status: active_topology_index
+  owns:
+  - visible_file_mapping
+  - model_lane_identification
+  - compressed_repository_navigation
+  - routing_topology
+  - operational_topology_visibility
+  does_not_own:
+  - claim_validation
+  - source_authority_redefinition
+  - canon_resolution
+  - contradiction_collapse
+  - semantic_identity_mutation
+  - governing_file_replacement
+  inputs:
+  - currently_attached_files
+  - model_lane_roles
+  - authority_state_labels
+  - repository_layering
+  outputs:
+  - visible_file_index
+  - model_routing_map
+  - layer_topology
+  - routing_rules
+  - compression_growth_rules
+  core_content:
+    domains:
+    - shared_governance_semantics
+    - engineering_architecture
+    - claim_firewall
+    - editorial_continuity
+    - workspace_navigation
+    variables:
+    - repository_state.mode
+    - repository_state.visibility_scope
+    - topology_strategy
+    - current_visible_files
+    - model_roles
+    - file_authority_states
+    - layer_assignments
+    interactions:
+    - Directory routes topology without governing truth
+    - Shared files may appear across multiple model lanes
+    - Cross-listing does not transfer authority ownership
+    - Navigation artifacts expose paths without becoming canon
+    - Compression must preserve reconstructability
+    constraints:
+    - Directory routes topology; it does not govern truth.
+    - Shared files may appear across multiple model lanes.
+    - Cross-listing does not transfer authority ownership.
+    - Governance controls admissibility and claim safety.
+    - CE-OS defines causal primitives and interaction doctrine.
+    - Lexicon controls semantic identity and definition stability.
+    - Gear extracts causal structure rather than validation.
+    - Prototype remains non-canonical pending validation.
+    - Navigation artifacts must not become canon.
+    - Compression must preserve reconstructability.
+    - Contradictions must remain recoverable rather than hidden.
+    unresolved:
+    - future files are added only when operationally present
+    - directory expansion remains sparse until repository growth requires it
+    contradiction_register:
+    - contradictions must remain recoverable rather than hidden
+    - summaries must not resolve contradictions by compression
+  governance:
+    validation_state: routing_only_not_validation
+    prohibited_claims:
+    - validate_claims
+    - redefine_source_authority
+    - collapse_contradictions_into_summary
+    - convert_navigation_into_canon
+    - erase_unresolved_variables
+    - replace_governing_files
+    - silently_mutate_semantic_identity
+  routing:
+    upstream:
+    - Governance
+    - CE-OS
+    - Lexicon
+    - Gold
+    - Engine
+    - Physics
+    - Prototype
+    downstream:
+    - Shared
+    - Gear
+    - Grant
+    - Cali
+    - Elrich
+    dependencies:
+      topology_layers:
+        governance_layer:
+        - Governance
+        - Gold
+        causal_kernel_layer:
+        - CE-OS
+        - Lexicon
+        engineering_reasoning_layer:
+        - Engine
+        - Physics
+        - Prototype
+        navigation_layer:
+        - Directory.yaml
+      visible_files:
+      - Directory.yaml
+      - Governance
+      - CE-OS
+      - Lexicon
+      - Engine
+      - Physics
+      - Prototype
+      - Gold
+      models:
+        Shared:
+          role: cross_model_navigation_and_continuity_layer
+          files:
+          - Directory.yaml
+          - Governance
+          - CE-OS
+          - Lexicon
+          - Gold
+        Gear:
+          role: engineering_architecture_and_causal_reasoning_substrate
+          files:
+          - Engine
+          - Physics
+          - Prototype
+          - CE-OS
+          - Lexicon
+        Grant:
+          role: governance_validation_and_claim_firewall
+          files:
+          - Governance
+          - Gold
+          - CE-OS
+          - Lexicon
+        Cali:
+          role: editorial_middleware_and_relationship_continuity
+          files:
+          - Lexicon
+          - Gold
+          - Directory.yaml
+        Elrich:
+          role: workspace_navigation_and_external_surface_mapping
+          files:
+          - Directory.yaml
+          - Gold
+          - Governance
+  recovery:
+    reconstruct_from:
+    - Directory.yaml original uncompressed file
+    - governing source files for authority-specific content
+    - model lane file listings
+    - topology layer assignments
+    compression_notes:
+    - prose was compressed into ownership, routing, constraints, and recovery lanes
+    - authority states remain visible through upstream governing files
+    - this file remains navigation and topology only
+    - operational validity does not imply causal completeness
+    - semantic compression remains causally lossy unless recovery paths are preserved
+  model_lanes:
+    Shared:
+      role: cross_model_navigation_and_continuity_layer
+      purpose: Shared files preserve repository-wide governance, semantic stability, causal
+        primitives, and navigation continuity across all participating model lanes.
+      files:
+        Directory.yaml:
+          authority_state: '[ACTIVE TOPOLOGY INDEX]'
+          role: topology_and_model_routing
+          owns:
+          - visible_file_mapping
+          - model_lane_identification
+          - compressed_repository_navigation
+          - routing_topology
+        Governance:
+          authority_state: '[CANONICAL GOVERNANCE AUTHORITY]'
+          role: governance_protocol_and_claim_firewall
+          owns:
+          - claim_safety
+          - validation_boundaries
+          - authority_routing
+          - semantic_firewall
+          - admissibility_constraints
+          - contradiction_governance
+        CE-OS:
+          authority_state: '[CANONICAL CAUSAL KERNEL]'
+          role: causal_accounting_and_interaction_primitives
+          owns:
+          - interaction_definition
+          - causal_accounting
+          - propagation_vs_transfer
+          - organization_logic
+          - scalar_compression_warnings
+          - domain_separation
+        Lexicon:
+          authority_state: '[CANONICAL SEMANTIC REGISTRY]'
+          role: semantic_identity_and_definition_control
+          owns:
+          - term_identity
+          - admissible_definitions
+          - semantic_drift_control
+          - mutation_constraints
+          - terminology_stability
+        Gold:
+          authority_state: '[STABLE ROUTING AND RECOVERY LAYER]'
+          role: durable_operational_structure
+          owns:
+          - recoverable_authority_paths
+          - contradiction_lineage
+          - routing_stability
+          - update_without_rewrite_rules
+          - continuity_preservation
+          - compression_recovery_logic
+    Gear:
+      role: engineering_architecture_and_causal_reasoning_substrate
+      purpose: Gear extracts operational structure, causal relationships, engineering variables,
+        interaction pathways, and unresolved constraints without asserting validation.
+      files:
+        Engine:
+          authority_state: '[ENGINEERING REASONING SUBSTRATE]'
+          role: variable_operator_and_machine_structure
+          owns:
+          - variable_identity
+          - reusable_operators
+          - engineering_formats
+          - operational_state_logic
+          - state_transitions
+          - causal_templates
+          contains:
+          - Values
+          - Operators
+          - Formats
+          - Machine
+        Physics:
+          authority_state: '[PHYSICAL DOMAIN AND OBJECT REGISTRY]'
+          role: object_binding_and_domain_topology
+          owns:
+          - physical_objects
+          - object_relationships
+          - attached_variables
+          - physical_domains
+          - interaction_topology
+          - environmental_bindings
+        Prototype:
+          authority_state: '[NON-CANONICAL DESIGN CONTROL FILE — PENDING VALIDATION]'
+          role: candidate_design_and_mockup_control
+          owns:
+          - candidate_geometry
+          - mockup_structure
+          - prototype_layout_logic
+          - unresolved_build_variables
+          - operational_candidates
+          - design_iteration_paths
+        CE-OS:
+          authority_state: '[SHARED CAUSAL KERNEL]'
+          role: causal_accounting_anchor
+        Lexicon:
+          authority_state: '[SHARED SEMANTIC REGISTRY]'
+          role: engineering_definition_stability
+    Grant:
+      role: governance_validation_and_claim_firewall
+      purpose: Grant governs admissibility, claim boundaries, evidence requirements, validation
+        discipline, and semantic safety constraints.
+      files:
+        Governance:
+          authority_state: '[PRIMARY GOVERNANCE AUTHORITY]'
+          role: claim_firewall_and_validation_control
+          owns:
+          - evidence_requirements
+          - validation_state
+          - prohibited_claims
+          - governance_doctrine
+          - escalation_constraints
+          - semantic_firewall_rules
+        Gold:
+          authority_state: '[RECOVERY AND STABILITY LAYER]'
+          role: contradiction_preservation_and_safe_recovery
+          owns:
+          - contradiction_lineage
+          - routing_stability
+          - recovery_paths
+          - anti-collapse_structure
+          - rewrite_constraints
+        CE-OS:
+          authority_state: '[CAUSAL KERNEL REFERENCE]'
+          role: interaction_definition_reference
+        Lexicon:
+          authority_state: '[SEMANTIC CONTROL REFERENCE]'
+          role: admissible_definition_control
+    Cali:
+      role: editorial_middleware_and_relationship_continuity
+      purpose: Cali preserves continuity, relationship topology, semantic coherence, and recoverable
+        editorial structure without becoming canonical authority.
+      files:
+        Lexicon:
+          authority_state: '[SEMANTIC CONTINUITY REGISTRY]'
+          role: terminology_and_context_stability
+          owns:
+          - continuity_terms
+          - semantic_alignment
+          - drift_detection
+          - interpretive_consistency
+        Gold:
+          authority_state: '[CONTINUITY RECOVERY LAYER]'
+          role: contradiction_lineage_and_route_preservation
+          owns:
+          - continuity_recovery
+          - topology_stability
+          - historical_route_preservation
+          - anti-fragmentation_logic
+        Directory.yaml:
+          authority_state: '[NAVIGATION INDEX]'
+          role: relationship_routing_visibility
+    Elrich:
+      role: workspace_navigation_and_external_surface_mapping
+      purpose: Elrich exposes repository topology, workspace structure, routing visibility,
+        and external-facing navigation layers.
+      files:
+        Directory.yaml:
+          authority_state: '[PRIMARY TOPOLOGY MAP]'
+          role: workspace_navigation_and_model_routing
+          owns:
+          - topology_visibility
+          - navigation_structure
+          - routing_map
+          - compressed_indexing
+        Gold:
+          authority_state: '[STABLE STRUCTURE LAYER]'
+          role: durable_navigation_and_recovery_paths
+          owns:
+          - persistent_topology
+          - routing_stability
+          - migration_safety
+          - structural_recovery
+        Governance:
+          authority_state: '[GOVERNANCE REFERENCE]'
+          role: public_boundary_constraints
+
+Lexicon:
+  file: Lexicon
+  role: canonical_semantic_authority_registry
+  authority: definitions_only
+  status: compressed_phase_3_semantic_kernel
+  owns:
+  - term_identity
+  - admissible_definitions
+  - non_admissible_uses
+  - boundary_conditions
+  - mutation_risks
+  - semantic_drift_control
+  does_not_own:
+  - methodology_execution
+  - pedagogy
+  - speculation
+  - implementation
+  - claim_validation
+  - physical_design
+  inputs:
+  - CE-OS causal kernel terms
+  - Governance admissibility discipline
+  outputs:
+  - canonical term definitions
+  - mutation risk warnings
+  - recovery compression strings
+  core_content:
+    domains:
+    - consequence term
+    - cross-domain
+    - domain classification
+    - epistemic
+    - field-centric
+    - governance
+    - mass-centric
+    - methodological
+    - organizational
+    - root primitive
+    variables: []
+    interactions:
+    - semantic_identity_preservation
+    - definition_boundary_control
+    - admissible_vs_non_admissible_use_filtering
+    constraints:
+    - one concept -> one canonical definition
+    - definitions require admissible uses, prohibited uses, dependency role, boundary conditions, mutation
+      risks
+    - semantic compression must not broaden admissibility
+    unresolved: []
+    contradiction_register: []
+    terms:
+    - term: Interaction
+      definition: measurable state-affecting relation.
+      domain_type: root primitive
+      depends_on: []
+      admissible_uses:
+      - measurable influence
+      - observable state relation
+      - representable system effect
+      non_admissible_uses:
+      - mystical connectedness
+      - undefined universal linkage
+      - filler explanation for unknown behavior
+      boundary_conditions: interaction requires measurable or representable effect.
+      mutation_risks: interaction → generalized metaphysical connectedness
+      recovery_compression: interaction = measurable state-affecting relation
+    - term: Structure
+      definition: physically instantiated arrangement.
+      domain_type: organizational
+      depends_on:
+      - interaction
+      admissible_uses:
+      - geometry
+      - topology
+      - material arrangement
+      - physical support organization
+      non_admissible_uses:
+      - abstract conceptual relation
+      - generalized organizational logic
+      - semantic grouping
+      boundary_conditions: structure is physical, spatial, material, or mechanically instantiated.
+      mutation_risks: structure → generalized system organization
+      recovery_compression: structure = physical arrangement
+    - term: Organization
+      definition: orchestration of interactions, constraints, geometry, timing, and coupling pathways.
+      domain_type: organizational
+      depends_on:
+      - interaction
+      - coupling
+      - structure
+      admissible_uses:
+      - interaction arrangement
+      - capability shaping
+      - constraint coordination
+      - causal pathway orchestration
+      non_admissible_uses:
+      - hidden synergy
+      - unexplained optimization force
+      - surplus capability source
+      - spontaneous emergence substitute
+      boundary_conditions: organization shapes interaction behavior; it does not create unconstrained
+        source capability.
+      mutation_risks: organization → hidden energy source organization → vague systems rhetoric
+      recovery_compression: organization = interaction orchestration
+    - term: Coupling
+      definition: typed interaction linkage between system elements or domains.
+      domain_type: cross-domain
+      depends_on:
+      - interaction
+      admissible_uses:
+      - mechanical coupling
+      - electromagnetic coupling
+      - thermal coupling
+      - cross-domain linkage
+      non_admissible_uses:
+      - mystical linkage
+      - undefined influence
+      - unexplained causal bridge
+      boundary_conditions: coupling identifies linkage existence, not complete mechanism specification.
+      mutation_risks: coupling → unexplained influence
+      recovery_compression: coupling = typed interaction linkage
+    - term: Propagation
+      definition: field-centric distributed gradient interaction behavior.
+      domain_type: field-centric
+      depends_on:
+      - interaction
+      - field
+      admissible_uses:
+      - electromagnetic propagation
+      - field-gradient behavior
+      - distributed field interaction
+      - non-contact-capable interaction
+      non_admissible_uses:
+      - generalized movement
+      - mass displacement
+      - generic transfer
+      - fluid flow synonym
+      - universal transmission term
+      boundary_conditions: propagation requires field-centric distributed gradient behavior.
+      mutation_risks: propagation → generalized movement propagation → causal filler
+      recovery_compression: propagation = field-gradient interaction behavior
+    - term: Transfer
+      definition: movement, displacement, load passage, or state passage not requiring field-centric propagation.
+      domain_type: mass-centric
+      depends_on:
+      - interaction
+      admissible_uses:
+      - load transfer
+      - pressure transfer
+      - momentum transfer
+      - state transfer
+      - displacement transmission
+      non_admissible_uses:
+      - field-gradient behavior
+      - non-contact field propagation
+      boundary_conditions: transfer does not imply distributed field propagation.
+      mutation_risks: transfer ↔ propagation collapse
+      recovery_compression: transfer = non-field interaction passage
+    - term: Field
+      definition: measurable distributed interaction structure exhibiting gradient behavior and non-contact-capable
+        interaction.
+      domain_type: field-centric
+      depends_on:
+      - interaction
+      admissible_uses:
+      - electromagnetic fields
+      - magnetic fields
+      - electric fields
+      - measurable gradient interaction domains
+      non_admissible_uses:
+      - universal substrate
+      - generalized influence medium
+      - metaphor for all distributed behavior
+      - unrestricted environmental energy
+      boundary_conditions: field requires measurable gradient structure and distributed interaction behavior.
+      mutation_risks: field → universal explanatory substance field → pseudoscientific universalization
+      recovery_compression: field = measurable gradient interaction structure
+    - term: Resistance
+      definition: opposition or constraint to organized interaction behavior.
+      domain_type: consequence term
+      depends_on:
+      - interaction
+      admissible_uses:
+      - propagation opposition
+      - motion resistance
+      - interaction limitation
+      - domain-specific constraint behavior
+      non_admissible_uses:
+      - pure scalar subtraction abstraction
+      - generalized friction synonym
+      boundary_conditions: resistance behavior remains domain-specific.
+      mutation_risks: resistance → scalar-only abstraction
+      recovery_compression: resistance = interaction constraint
+    - term: Loss
+      definition: reduction of usable organized interaction capability.
+      domain_type: consequence term
+      depends_on:
+      - interaction
+      - resistance
+      admissible_uses:
+      - thermal dissipation
+      - attenuation
+      - damping
+      - frictional degradation
+      - interaction inefficiency
+      non_admissible_uses:
+      - energy disappearance
+      - hidden reservoir implication
+      - conservation failure
+      boundary_conditions: loss describes reduced usable capability, not ontological disappearance.
+      mutation_risks: loss → hidden-energy implication
+      recovery_compression: loss = reduced usable interaction capability
+    - term: Heat
+      definition: emergent interaction signature resulting from interaction inefficiency, friction, deformation,
+        or disorder.
+      domain_type: consequence term
+      depends_on:
+      - interaction
+      - loss
+      admissible_uses:
+      - thermal accumulation
+      - dissipative signature
+      - interaction consequence
+      non_admissible_uses:
+      - foundational causal source
+      - universal explanation mechanism
+      boundary_conditions: heat is emergent, not causally primary.
+      mutation_risks: heat → primary mechanism
+      recovery_compression: heat = emergent interaction signature
+    - term: Resonance
+      definition: system-response alignment under oscillatory interaction conditions.
+      domain_type: consequence term
+      depends_on:
+      - interaction
+      - propagation
+      - coupling
+      admissible_uses:
+      - oscillatory alignment
+      - amplified response behavior
+      - phase-aligned interaction
+      non_admissible_uses:
+      - unlimited amplification
+      - unconstrained energy multiplication
+      - mystical synchronization
+      boundary_conditions: resonance remains bounded by constraints, losses, and material conditions.
+      mutation_risks: resonance → over-unity rhetoric
+      recovery_compression: resonance = oscillatory response alignment
+    - term: Amplification
+      definition: increase in usable capability through organizational interaction structure under conservation
+        constraints.
+      domain_type: organizational
+      depends_on:
+      - organization
+      - coupling
+      - resonance
+      admissible_uses:
+      - leverage
+      - resonance response increase
+      - force multiplication
+      - organizational capability increase
+      non_admissible_uses:
+      - energy creation
+      - perpetual output implication
+      - conservation bypass
+      - over-unity interpretation
+      boundary_conditions: amplification changes usable capability organization, not unconstrained source
+        accounting.
+      mutation_risks: amplification → surplus energy implication
+      recovery_compression: amplification = organizational capability increase
+    - term: Scalar Compression
+      definition: reduction of interaction organization into scalar summary abstractions.
+      domain_type: epistemic
+      depends_on:
+      - interaction
+      admissible_uses:
+      - abstraction critique
+      - accounting compression
+      - scalar reduction analysis
+      non_admissible_uses:
+      - anti-mathematics rhetoric
+      - rejection of operational measurement
+      boundary_conditions: scalar abstractions remain operationally useful.
+      mutation_risks: scalar compression → anti-science framing
+      recovery_compression: scalar compression = interaction reduction into scalar summary
+    - term: Causal Accounting
+      definition: interaction-focused analysis preserving domain identity, organization, coupling, constraints,
+        and loss behavior before scalar reduction.
+      domain_type: methodological
+      depends_on:
+      - interaction
+      - scalar
+      - compression
+      admissible_uses:
+      - interaction mapping
+      - organizational analysis
+      - propagation analysis
+      - domain-preserving interpretation
+      non_admissible_uses:
+      - unrestricted speculative interpretation
+      - anti-measurement ideology
+      boundary_conditions: causal accounting supplements scalar accounting; it does not eliminate it.
+      mutation_risks: causal accounting → unrestricted reinterpretation
+      recovery_compression: causal accounting = interaction-preserving analysis ==================================================
+        EPISTEMIC TERMS ==================================================
+    - term: Operational Validity
+      definition: predictive or functional success within domain constraints.
+      domain_type: epistemic
+      depends_on: []
+      admissible_uses:
+      - successful engineering models
+      - predictive abstraction systems
+      - domain-valid calculations
+      non_admissible_uses:
+      - proof of complete causal representation
+      boundary_conditions: operational success does not automatically preserve interaction-level structure.
+      mutation_risks: operational validity → assumed completeness
+      recovery_compression: operational validity = functional predictive success
+    - term: Causal Completeness
+      definition: preservation of interaction-level organization and causal structure beyond scalar summary
+        behavior.
+      domain_type: epistemic
+      depends_on:
+      - interaction
+      - causal
+      - accounting
+      admissible_uses:
+      - causal visibility
+      - interaction-level representation
+      - organizational preservation
+      non_admissible_uses:
+      - metaphysical omniscience
+      - total explanatory certainty
+      boundary_conditions: causal completeness is asymptotic and constraint-bound.
+      mutation_risks: causal completeness → universal explanatory ambition
+      recovery_compression: causal completeness = preserved interaction structure
+    - term: Use-Case Equivalence
+      definition: condition where systems are both scalar-equivalent and functionally equivalent under
+        operational constraints.
+      domain_type: epistemic
+      depends_on:
+      - scalar
+      - compression
+      admissible_uses:
+      - engineering comparison
+      - functional equivalence analysis
+      - capability comparison
+      non_admissible_uses:
+      - scalar-only equivalence assumptions
+      boundary_conditions: equal accounting does not automatically imply equal capability.
+      mutation_risks: use-case equivalence collapse into scalar equivalence
+      recovery_compression: use-case equivalence = scalar + functional equivalence ==================================================
+        DOMAIN TERMS ==================================================
+    - term: Mass-Centric
+      definition: domain primarily governed through matter, inertia, load, pressure, friction, displacement,
+        and structural interaction.
+      domain_type: domain classification
+      depends_on:
+      - interaction
+      - transfer
+      admissible_uses:
+      - mechanical systems
+      - hydraulic systems
+      - structural systems
+      - pressure systems
+      non_admissible_uses:
+      - field-gradient propagation classification
+      boundary_conditions: mass-centric behavior does not imply field propagation.
+      mutation_risks: mass-centric ↔ field-centric averaging
+      recovery_compression: mass-centric = matter/load/displacement domain
+    - term: Field-Centric
+      definition: domain primarily governed through measurable gradient interaction behavior and distributed
+        field interaction.
+      domain_type: domain classification
+      depends_on:
+      - interaction
+      - field
+      - propagation
+      admissible_uses:
+      - electromagnetic systems
+      - inductive systems
+      - distributed field behavior
+      non_admissible_uses:
+      - generalized distributed behavior
+      - unrestricted environmental interaction
+      boundary_conditions: field-centric behavior requires measurable gradient interaction conditions.
+      mutation_risks: field-centric → generalized systems language
+      recovery_compression: field-centric = gradient-field interaction domain
+    - term: Cross-Domain
+      definition: governed interaction relationship between unlike domains.
+      domain_type: domain classification
+      depends_on:
+      - interaction
+      - coupling
+      admissible_uses:
+      - electrical-to-mechanical interaction
+      - thermal-to-pressure interaction
+      - field-to-material interaction
+      non_admissible_uses:
+      - unrestricted domain blending
+      - collapsed interaction identity
+      boundary_conditions: domain identities remain preserved during interaction mapping.
+      mutation_risks: cross-domain → generalized system blending
+      recovery_compression: cross-domain = governed unlike-domain interaction ==================================================
+        GOVERNANCE TERMS ==================================================
+    - term: Admissibility
+      definition: formal boundary defining permitted semantic scope and prohibited interpretation.
+      domain_type: governance
+      depends_on:
+      - canonical
+      - definition
+      admissible_uses:
+      - domain constraints
+      - semantic scope control
+      - governance enforcement
+      non_admissible_uses:
+      - rhetorical flexibility
+      - unconstrained reinterpretation
+      boundary_conditions: all canonical terms require admissibility constraints.
+      mutation_risks: admissibility weakening under compression
+      recovery_compression: admissibility = semantic boundary enforcement
+    - term: Claim Tier
+      definition: governed classification level for interpretive and evidentiary status.
+      domain_type: governance
+      depends_on:
+      - admissibility
+      admissible_uses:
+      - interpretation
+      - hypothesis
+      - engineering implication
+      - experimental proposal
+      - observed behavior
+      - validated capability
+      non_admissible_uses:
+      - unsupported escalation
+      - implied validation through rhetoric
+      boundary_conditions: claim escalation requires evidentiary transition.
+      mutation_risks: tier collapse under paraphrase pressure
+      recovery_compression: claim tier = governed evidentiary level
+    - term: Canonical Definition
+      definition: single authoritative semantic definition for a governed term.
+      domain_type: governance
+      depends_on:
+      - admissibility
+      admissible_uses:
+      - ontology stabilization
+      - semantic authority assignment
+      non_admissible_uses:
+      - duplicate canonical phrasing
+      - parallel authority structures
+      boundary_conditions: one concept → one canonical definition.
+      mutation_risks: definition duplication authority overlap
+      recovery_compression: canonical definition = singular semantic authority
+    - term: Ontology Drift
+      definition: semantic mutation causing boundary weakening, distinction collapse, or unauthorized
+        interpretive expansion.
+      domain_type: governance
+      depends_on:
+      - canonical
+      - definition
+      - semantic
+      - entropy
+      admissible_uses:
+      - drift analysis
+      - mutation detection
+      - compression auditing
+      non_admissible_uses:
+      - normal paraphrase variance treated as drift automatically
+      boundary_conditions: drift occurs when distinctions weaken or admissibility expands.
+      mutation_risks: recursive reinterpretation boundary averaging
+      recovery_compression: ontology drift = destabilizing semantic mutation
+    - term: Semantic Entropy
+      definition: increase in ambiguity, overlap, authority duplication, or distinction instability within
+        the ontology system.
+      domain_type: governance
+      depends_on:
+      - ontology
+      - drift
+      admissible_uses:
+      - redundancy analysis
+      - overlap detection
+      - compression auditing
+      non_admissible_uses:
+      - stylistic variation analysis alone
+      boundary_conditions: entropy increases when semantic boundaries weaken or overlap.
+      mutation_risks: prose expansion generalized abstraction authority duplication
+      recovery_compression: semantic entropy = ontology ambiguity increase Minimum Reconstructable Form
+        of CE-OS Kernel Definition
+  governance:
+    validation_state: semantic_authority_only_not_claim_validation
+    prohibited_claims:
+    - lexicon_validates_engineering_claims
+    - definition_similarity_equals_causal_equivalence
+    - paraphrase_permission_equals_authority_mutation
+  routing:
+    upstream:
+    - Governance
+    - CE-OS
+    downstream:
+    - Engine
+    - Physics
+    - Prototype
+    - Directory.yaml
+    - Gold
+    dependencies:
+    - Governance semantic firewall
+    - CE-OS causal kernel
+  recovery:
+    reconstruct_from:
+    - original /mnt/data/Lexicon
+    compression_notes:
+    - Long prose collapsed into per-term identity records.
+    - Admissible and non-admissible uses preserved per term.
+    - Mutation risks and recovery compression preserved per term.
+    source_sha256: 2d99a460d825b840defa9a9129203d35e720309139c676266328b8ede12f771d
+
+CE_OS:
+  file: CE-OS
+  role: canonical_causal_kernel
+  authority: causal_accounting_and_interaction_primitives
+  status: compressed_phase_3_semantic_kernel
+  owns:
+  - interaction_definition
+  - causal_accounting_order
+  - operational_validity_vs_causal_completeness
+  - propagation_vs_transfer
+  - domain_separation
+  - organization_logic
+  - scalar_compression_warnings
+  - anti_collapse_constraints
+  does_not_own:
+  - claim_validation
+  - semantic_registry_authority
+  - prototype_validation
+  - physical_object_inventory
+  - runtime_execution
+  inputs:
+  - Lexicon term identity
+  - Governance admissibility boundaries
+  outputs:
+  - causal primitives
+  - domain topology
+  - distinction topology
+  - anti-collapse constraints
+  - kernel recovery form
+  core_content:
+    domains:
+    - mass_centric
+    - field_centric
+    - cross_domain
+    variables: []
+    interactions:
+    - name: interaction
+      definition: measurable state-affecting relation
+      role: root causal primitive
+    - name: coupling
+      definition: typed interaction linkage
+      role: cross-element or cross-domain linkage
+    - name: propagation
+      definition: field-centric distributed gradient interaction behavior
+      role: field-centric behavior
+    - name: transfer_transmission
+      definition: non-field movement/load/state passage
+      role: non-field passage behavior
+    - name: organization
+      definition: orchestration of interactions, constraints, geometry, timing, and coupling pathways
+      role: interaction coordination without hidden source creation
+    constraints:
+    - operational validity != causal completeness
+    - causal accounting before scalar reduction
+    - mass-centric != field-centric
+    - propagation != transfer
+    - organization != hidden source
+    - amplification != energy creation
+    - interpretation != validation
+    - speculation != canon
+    unresolved: []
+    contradiction_register: []
+    causal_accounting_order:
+    - domains
+    - interactions
+    - couplings
+    - transfer_or_propagation
+    - constraints
+    - losses
+    - organization
+    - scalar_summaries
+    distinction_topology:
+    - scalar equivalence != functional equivalence
+    - interaction != abstraction
+    - causal accounting != scalar accounting
+    - field != generalized distributed influence
+    - coupling != undefined linkage
+    - structure != organization
+    - efficiency != over-unity implication
+    - loss != conservation failure
+    - resonance != unlimited amplification
+    - analogy != ontology
+    anti_collapse:
+    - field -> universal substrate
+    - propagation -> generalized movement
+    - organization -> hidden synergy
+    - amplification -> over-unity implication
+    - coupling -> mystical linkage
+    - interaction -> metaphysical connectedness
+    - efficiency -> proof of surplus output
+  governance:
+    validation_state: causal_kernel_not_validation_authority
+    prohibited_claims:
+    - replacement_physics
+    - unrestricted_ontology
+    - generalized_metaphysics
+    - free_energy_framework
+    - analogy_driven_proof_system
+    - runtime_or_kernel_validates_claims
+  routing:
+    upstream:
+    - Governance
+    - Lexicon
+    downstream:
+    - Engine
+    - Physics
+    - Prototype
+    - Gold
+    - Directory.yaml
+    dependencies:
+    - Lexicon canonical definitions
+    - Governance claim firewall
+  recovery:
+    reconstruct_from:
+    - original /mnt/data/CE-OS
+    compression_notes:
+    - Runtime-heavy material is not made authority for validation.
+    - Kernel recovery form, distinction topology, and anti-collapse constraints are preserved.
+    - Causal accounting order preserved explicitly.
+    source_sha256: e060cf3ca72ae6c400c2afa9b96a181df240d9ed9a1cd8576ca1d6bfed449bcc
+
+Governance:
+  file: Governance
+  role: claim_firewall_and_validation_control
+  authority: canonical_governance_protocol
+  status: active
+  owns:
+  - claim_safety
+  - admissibility_constraints
+  - validation_boundaries
+  - authority_routing
+  - summary_quarantine
+  - unresolved_variable_governance
+  - contradiction_governance
+  - semantic_firewall
+  - evidence_state_promotion_rules
+  - canonical_revision_routing
+  does_not_own:
+  - subsystem_mechanics
+  - geometry
+  - flotation_behavior
+  - processing_logic
+  - equipment_design
+  - operational_throughput
+  - payload_capacity
+  - reserve_buoyancy
+  - seaworthiness
+  - operational_readiness
+  inputs:
+  - candidate_claims
+  - summaries
+  - measurement_records
+  - contradiction_reports
+  - terminology_changes
+  - canonical_revision_requests
+  outputs:
+  - admissibility_state
+  - validation_state_boundary
+  - claim_escalation_decision
+  - summary_quarantine_status
+  - contradiction_preservation_requirement
+  - revision_routing
+  core_content:
+    domains:
+    - repository_governance
+    - claim_safety
+    - validation_state
+    - semantic_stability
+    - contradiction_preservation
+    - multi_agent_routing
+    variables:
+    - authority_lane
+    - validation_state
+    - evidence_state
+    - claim_maturity
+    - summary_status
+    - unresolved_variable_identity
+    - contradiction_type
+    - terminology_status
+    - canonical_revision_sequence
+    interactions:
+    - name: compression_to_reconstructability
+      rule: compression is admissible only if subsystem ownership, validation state, unresolved variables,
+        contradiction history, dependency relationships, and authority routing remain reconstructable
+    - name: synthesis_to_claim_firewall
+      rule: useful synthesis must not become reusable truth without authority promotion
+    - name: modeling_to_evidence_boundary
+      rule: geometry, CAD, mockups, diagrams, notebooks, renderings, and simulations do not validate by
+        realism alone
+    - name: measurement_to_promotion_request
+      rule: measurement may initiate evidence-state promotion requests but does not self-promote into
+        validation
+    - name: summary_to_quarantine
+      rule: summaries are non-canonical unless explicitly routed through authority
+    constraints:
+    - clarity_alone_is_not_evidence
+    - coherence_alone_is_not_validation
+    - readability_alone_is_not_authority
+    - summary_must_not_inherit_canonical_authority
+    - polished_prose_must_not_outrank_source_authority
+    - unresolved_variables_must_remain_visible
+    - contradictions_must_not_be_smoothed_away
+    - terminology_changes_require_governance
+    unresolved:
+    - claims_without_evidence_state
+    - variables_without_measurement_records
+    - contradictions_without_resolution_path
+    - terms_without_controlled_identity
+    - summaries_without_authority_header
+    contradiction_register:
+    - design_vs_measurement
+    - claim_vs_evidence
+    - summary_vs_source
+    - terminology_vs_controlled_definition
+    - routing_vs_authority
+  governance:
+    validation_state: governs_validation; does_not_validate_subsystems
+    prohibited_claims:
+    - payload_capacity_without_evidence
+    - reserve_buoyancy_without_evidence
+    - seaworthiness_without_evidence
+    - operational_readiness_without_evidence
+    - containment_performance_without_evidence
+    - structural_capability_without_evidence
+    - ecological_benefit_without_evidence
+    - economic_viability_without_evidence
+  routing:
+    upstream:
+    - Directory.yaml
+    - CE-OS
+    - Lexicon
+    downstream:
+    - Gold
+    - Engine
+    - Physics
+    - Prototype
+    - summaries
+    - measurement_logs
+    - candidate_design_files
+    dependencies:
+    - Lexicon.controls_terms
+    - CE-OS.controls_causal_primitives
+    - Directory.routes_but_does_not_validate
+    - Gold.preserves_recovery_and_lineage
+  recovery:
+    reconstruct_from:
+    - Governance original file
+    - Compression_Phases.yaml
+    - Phase_4_Governance_Layer_Package.yaml
+    compression_notes:
+    - prose_reduced
+    - authority_lanes_preserved
+    - validation_firewall_preserved
+    - summary_quarantine_preserved
+    - contradiction_governance_preserved
+    - measurement_promotion_boundary_preserved
+
+Gold:
+  file: Gold
+  role: stable_routing_and_recovery_layer
+  authority: durable_operational_structure_not_validation_authority
+  status: stable_operational_form_living_infrastructure
+  owns:
+  - recoverable_authority_paths
+  - contradiction_lineage
+  - routing_stability
+  - update_without_rewrite_rules
+  - continuity_preservation
+  - compression_recovery_logic
+  - directory_control_pointers
+  - migration_log
+  - unresolved_variable_routes
+  - prohibited_claim_routes
+  does_not_own:
+  - validation_authority
+  - final_schema
+  - permanent_ontology
+  - subsystem_mechanics
+  - claim_promotion
+  - canonical_truth_redefinition
+  - finished_repository_state
+  inputs:
+  - Directory routes
+  - Governance claim boundaries
+  - CE-OS causal kernel
+  - Lexicon semantic registry
+  - observed_gaps
+  - observed_drift
+  - migration_events
+  outputs:
+  - stable_route_back_to_owner_authority
+  - recovery_path
+  - contradiction_lineage_pointer
+  - minimal_containment_patch
+  - routing_health_signal
+  - migration_record
+  core_content:
+    domains:
+    - recovery
+    - routing_stability
+    - continuity
+    - anti_collapse_structure
+    - migration_safety
+    - compression_recovery
+    variables:
+    - route_owner
+    - authority_pointer
+    - contradiction_lineage
+    - unresolved_variable_route
+    - prohibited_claim_route
+    - migration_state
+    - drift_signal
+    - gap_signal
+    - health_metric
+    interactions:
+    - name: route_to_owner_authority
+      rule: every route must point back to the owning authority rather than becoming authority itself
+    - name: gap_to_minimal_routing_entry
+      rule: observed gaps trigger minimal routing entries
+    - name: drift_to_containment_patch
+      rule: observed drift triggers containment patches; no drift means no patch
+    - name: compression_to_recovery
+      rule: compressed structure must preserve recovery path to source authority and contradiction lineage
+    - name: navigation_to_non_truth
+      rule: navigation improves access without rewriting reality
+    constraints:
+    - use_the_structure_do_not_expand_the_structure_without_observed_need
+    - improve_navigation_without_rewriting_reality
+    - routing_does_not_validate
+    - maps_show_connections_without_owning_them
+    - backlog_holds_pressure_without_deciding
+    - directory_routes_must_survive_scaling_pressure
+    unresolved:
+    - future_observed_gaps
+    - future_observed_drift
+    - unrouted_authority_edges
+    - compression_recovery_failures
+    - migration_conflicts
+    contradiction_register:
+    - routing_pressure_vs_authority_boundary
+    - summary_simplicity_vs_reconstructability
+    - expansion_pressure_vs_minimal_population
+    - continuity_need_vs_rewrite_risk
+  governance:
+    validation_state: recovery_and_routing_only; no_subsystem_validation
+    prohibited_claims:
+    - route_equals_truth
+    - map_equals_canon
+    - stable_structure_equals_finished_repository
+    - compression_equals_validation
+    - continuity_equals_claim_maturity
+    - migration_log_equals_evidence
+  routing:
+    upstream:
+    - Governance
+    - Directory.yaml
+    - CE-OS
+    - Lexicon
+    downstream:
+    - Directory_Control
+    - Directory_Map
+    - Directory_Backlog
+    - compressed_repository_files
+    - future_migration_passes
+    dependencies:
+    - Governance.defines_claim_firewall
+    - Directory.exposes_topology
+    - CE-OS.defines_causal_accounting
+    - Lexicon.preserves_semantic_identity
+  recovery:
+    reconstruct_from:
+    - Gold original file
+    - Directory.compressed.yaml
+    - Governance.compressed.yaml
+    - Compression_Phases.yaml
+    - Phase_4_Governance_Layer_Package.yaml
+    compression_notes:
+    - large routing infrastructure compressed to stable recovery roles
+    - forever_version semantics preserved
+    - forever_lock preserved as route_back_to_owner_authority
+    - directory_control_map_backlog preserved as non_authority_support_layers
+    - migration and drift behavior preserved
+
+file: Engine
+role: engineering_reasoning_substrate
+authority: variable_operator_format_machine_structure
+status: compressed_phase_5_engineering_layer
+owns:
+- variable_identity
+- value_state_domain_identity
+- reusable_causal_operators
+- engineering_formats
+- operational_state_logic
+- state_transitions
+- critical_margin_dashboard
+- minimum_measurement_unlocks
+- validation_gates
+does_not_own:
+- claim_validation
+- semantic_firewall
+- physical_object_authority
+- prototype_design_authority
+- canon_claims_of_safety_or_readiness
+inputs:
+- Governance.compressed.yaml
+- CE-OS.compressed.yaml
+- Lexicon.compressed.yaml
+- Physics.compressed.yaml when binding objects
+outputs:
+- engineering_variable_registry
+- operator_registry
+- format_registry
+- machine_state_transitions
+- measurement_unlocks
+core_content:
+  domains:
+  - geometry
+  - mass
+  - material
+  - flotation
+  - structural
+  - fluid
+  - gas
+  - chemical
+  - electrical
+  - thermal
+  - environmental
+  - operational
+  - logistics
+  - safety
+  - validation
+  variables:
+  - length
+  - width
+  - height
+  - wall_thickness
+  - internal_volume
+  - external_volume
+  - surface_area
+  - footprint_area
+  - clearance_envelope
+  - hatch_swing_envelope
+  - deck_zone_area
+  - object_spacing
+  - mounting_height
+  - dry_weight
+  - wet_weight
+  - payload_weight
+  - fluid_weight
+  - biomass_weight
+  - loaded_weight
+  - center_of_mass_x
+  - center_of_mass_y
+  - center_of_mass_z
+  - load_distribution_x
+  - load_distribution_y
+  - point_load
+  - distributed_load
+  - moving_load
+  - material_type
+  - density
+  - tensile_strength
+  - compressive_strength
+  - flexural_strength
+  - modulus_of_elasticity
+  - corrosion_resistance
+  - UV_resistance
+  - chemical_compatibility
+  - abrasion_resistance
+  - seal_material
+  - fastener_material
+  - galvanic_pairing_risk
+  - displacement_volume
+  - submerged_volume
+  - buoyant_force
+  - buoyancy_margin
+  - freeboard
+  - trim_angle
+  - list_angle
+  - metacentric_height
+  - reserve_buoyancy
+  - flotation_failure_tolerance
+  - waterline_z
+  - frame_load
+  - deck_load_limit
+  - cradle_load
+  - strap_tension
+  - anchor_load
+  - bending_moment
+  - shear_load
+  - deflection
+  - fatigue_cycles
+  - impact_load
+  - vibration_load
+  - fill_percent
+  - fluid_volume
+  - drainage_rate
+  - flow_rate
+  - pressure
+  - head_pressure
+  - leak_rate
+  - tray_capacity
+  - residual_fluid_volume
+  - viscosity
+  - sediment_fraction
+  - gas_volume
+  - headspace_volume
+  - gas_pressure
+  - gas_flow_rate
+  - gas_composition
+  - vent_rate
+  - gas_accumulation_zone_volume
+  - voltage
+  - amperage
+  - power_draw
+  - battery_capacity
+  - state_of_charge
+  - charge_rate
+  - discharge_rate
+  - duty_cycle
+  - conductor_length
+  - voltage_drop
+  - electrical_isolation_distance
+  - grounding_continuity
+  - operating_temperature
+  - ambient_temperature
+  - solar_heat_gain
+  - heat_generation
+  - cooling_requirement
+  - thermal_expansion
+  - max_material_temperature
+  - splash_exposure
+  - immersion_exposure
+  - UV_exposure_hours
+  - salinity
+  - sea_state_limit
+  - wave_height
+  - current_speed
+  - wind_speed
+  - hydrodynamic_drag
+  - wave_force
+  - relative_platform_motion
+  - walkway_width
+  - reach_distance
+  - lift_height
+  - step_height
+  - visibility_line
+  - escape_clearance
+  - service_clearance
+  - operator_count
+  - operator_live_load
+  - manual_handling_force
+  - fatigue_cycle_count
+  - hose_length
+  - hose_bend_radius
+  - hose_tension_load
+  - slack_loop_volume
+  - disconnect_force
+  - quick_connect_leak_rate
+  - transfer_rate
+  - strain_relief_capacity
+  - boundary_distance
+  - cross_connection_risk
+  - chamber_fill_volume
+  - chamber_headspace
+  - hatch_seal_compression
+  - seal_cycle_count
+  - valve_count
+  - valve_state
+  - containment_volume
+  - residual_solid_volume
+  - clogging_index
+  - object_location_x
+  - object_location_y
+  - object_location_z
+  - adjacency
+  - collision_overlap
+  - service_path_blockage
+  - dirty_clean_separation_distance
+  - symmetry_error_y
+  - symmetry_error_x
+  variable_count: 149
+  operators:
+  - margin_state_operator
+  - accumulation_capacity_operator
+  - environmental_load_operator
+  - distribution_instability_operator
+  - resistance_motion_operator
+  - degradation_failure_operator
+  - pressure_leak_operator
+  - transfer_bottleneck_operator
+  - recovery_transition_operator
+  - safe_state_operator
+  - validation_measurement_operator
+  formats:
+  - buoyancy_payload_support
+  - stability_center_of_mass
+  - drainage_retained_water
+  - containment_leak_overflow
+  - towing_drag_resistance
+  - mooring_environmental_load
+  - digestion_timing
+  - gas_pressure_venting
+  - power_energy_margin
+  - workforce_reset_flow
+  - lifecycle_degradation
+  states:
+  - idle
+  - deployment
+  - interception
+  - drainage
+  - separation
+  - digestion
+  - transfer
+  - recovery_testing
+  - reset
+  - degraded_operation
+  - environmental_hold
+  - containment_hold
+  - maintenance
+  - emergency_retrieval
+  - shutdown
+  interactions:
+  - margin_state
+  - accumulation_capacity
+  - environmental_load
+  - distribution_instability
+  - resistance_motion
+  - degradation_failure
+  - pressure_leak
+  - transfer_bottleneck
+  - recovery_transition
+  - safe_state
+  - validation_measurement
+  constraints:
+  - Values define variables/states/domains/validation-linked terms
+  - Operators use Values and cannot redefine Values
+  - Formats compose Operators and cannot redefine Operators or Values
+  - Machine governs operational states using Values/Operators/Formats
+  - No file may redefine authority owned by another file
+  unresolved:
+  - unknown_component_status
+  - unresolved_containment_state
+  contradiction_register:
+  - operational_state_may_be_bounded_without_validated_system_readiness
+  - scalar_margins_are_useful_but_do_not_replace_causal_accounting
+  - format_composition_must_not_claim validation beyond Governance
+governance:
+  validation_state: engineering_reasoning_only_pending_measurement_and_governance_review
+  prohibited_claims:
+  - seaworthiness
+  - validated_stability
+  - safe_payload
+  - reserve_buoyancy
+  - long_term_durability
+  - validated_restraint_safety
+  - operational_readiness
+routing:
+  upstream:
+  - Governance
+  - CE-OS
+  - Lexicon
+  downstream:
+  - Physics
+  - Prototype
+  - Runtime/operational audit if present
+  dependencies:
+  - Values -> Operators -> Formats -> Machine
+recovery:
+  reconstruct_from:
+  - /mnt/data/Engine
+  compression_notes:
+  - full variable list retained by name
+  - operator and format identities retained
+  - state names and transition ownership retained
+  - long explanatory fields compressed into authority and constraint lanes
+
+file: Physics
+role: physical_domain_and_object_registry
+authority: object_binding_and_domain_topology
+status: compressed_phase_5_engineering_layer
+owns:
+- physical_objects
+- object_relationships
+- attached_variables
+- physical_domains
+- interaction_topology
+- environmental_bindings
+- equation_bindings_to_objects
+does_not_own:
+- variable_definitions
+- operators
+- formats
+- state_machine_governance
+- claim_validation
+- candidate_geometry_authority
+inputs:
+- Engine.compressed.yaml
+- CE-OS.compressed.yaml
+- Lexicon.compressed.yaml
+- Governance.compressed.yaml
+outputs:
+- object_registry
+- physical_domain_map
+- object_variable_attachments
+- interaction_library
+- equation_bindings
+core_content:
+  domains:
+  - flotation
+  - structural
+  - environmental
+  - operational
+  - validation
+  - fluid
+  - mass
+  - safety
+  - containment
+  - gas
+  - chemical
+  - material
+  - logistics
+  - energy
+  - electrical
+  - thermal
+  objects:
+  - modular_tile_array
+  - grated_drainage_surface
+  - tile_flotation_row
+  - tile_connection_interface
+  - digestion_chamber
+  - chamber_cradle
+  - chamber_hatch_seal_boundary
+  - quick_connect_transfer_interface
+  - gas_fluid_transfer_manifold
+  - primary_support_vessel_deck
+  - primary_support_vessel_transfer_zone
+  - secondary_containment_tray
+  - external_gas_storage_interface
+  - electrolysis_work_zone
+  - psv_power_control_zone
+  - shoreside_reset_zone
+  - residual_biomass_staging_zone
+  - validation_logging_interface
+  object_count: 18
+  variables:
+  - loaded_weight
+  - biomass_weight
+  - retained_water_mass
+  - buoyancy_margin
+  - freeboard
+  - trim_angle
+  - list_angle
+  - waterline_z
+  - wave_height
+  - wind_speed
+  - current_speed
+  - deck_load_limit
+  - distributed_load
+  - operator_cycle_time
+  - inspection_status
+  - evidence_level
+  - drainage_rate
+  - wet_weight
+  - abrasion_resistance
+  - surface_area
+  - deck_zone_area
+  - clogging_state
+  - turbidity
+  - pH
+  - displacement_volume
+  - submerged_volume
+  - buoyant_force
+  - reserve_buoyancy
+  - flotation_failure_tolerance
+  - corrosion_resistance
+  - UV_resistance
+  - anchor_load
+  - shear_load
+  - bending_moment
+  - fatigue_cycles
+  - tow_force
+  - drag_force
+  - connection_margin
+  - anomaly_count
+  - internal_volume
+  - fill_percent
+  - fluid_weight
+  - headspace_volume
+  - gas_pressure
+  - gas_volume
+  - gas_generation_rate
+  - gas_composition
+  - leak_rate
+  - seal_area
+  - seal_material
+  - cycle_count
+  - batch_id
+  - cradle_load
+  - point_load
+  - center_of_mass
+  - strap_tension
+  - deflection
+  - boundary_area
+  - boundary_load
+  - seal_capacity
+  - acceptable_leak_rate
+  - chemical_compatibility
+  - flow_rate
+  - fluid_volume
+  - accumulated_quantity
+  - receiving_capacity_margin
+  - containment_capacity
+  - clearance_envelope
+  - deployment_time
+  - retrieval_time
+  - secondary_containment_capacity
+  - leak_volume
+  - vent_flow_rate
+  - material_type
+  - wall_thickness
+  - venting_capacity
+  - external_storage_capacity
+  - pressure_margin
+  - containment_state
+  - voltage
+  - current
+  - power
+  - runtime
+  - duty_cycle
+  - required_energy
+  - available_energy
+  - energy_margin
+  - temperature
+  - charge_rate
+  - reset_cycle_time
+  - ready_inventory_rate
+  - workforce_capacity
+  - workflow_demand
+  - workforce_margin
+  - residue_mass
+  - runoff_containment_margin
+  - salinity
+  - repeat_count
+  - measurement_precision
+  - validation_state
+  interactions:
+  - buoyancy_interaction
+  equation_bindings:
+  - modular_tile_array
+  - grated_drainage_surface
+  - tile_flotation_row
+  - tile_connection_interface
+  - digestion_chamber
+  - chamber_cradle
+  - chamber_hatch_seal_boundary
+  - quick_connect_transfer_interface
+  - gas_fluid_transfer_manifold
+  - primary_support_vessel_deck
+  - primary_support_vessel_transfer_zone
+  - external_gas_storage_interface
+  - electrolysis_work_zone
+  - shoreside_reset_zone
+  - residual_biomass_staging_zone
+  - validation_logging_interface
+  constraints:
+  - Objects may attach variables but may not redefine variable identity
+  - Equations bind to object behavior but do not validate performance claims
+  - Physical topology preserves Intercept -> Drain/Separate -> Contain -> Process -> Recover/Test -> Reset
+    -> Validate
+  - Object registry remains separate from prototype candidate geometry
+  unresolved:
+  - measured object dimensions
+  - measured object masses
+  - environmental load measurements
+  - connection/attachment measurements
+  - material state and degradation evidence
+  - validation logging quality
+  contradiction_register:
+  - physical object existence does not imply validated operation
+  - object variable attachment does not imply measured value
+  - equation binding does not imply validation
+governance:
+  validation_state: physical_registry_only_not_validated_design
+  prohibited_claims:
+  - validated_stability
+  - safe_payload
+  - reserve_buoyancy
+  - seaworthiness
+  - operational_readiness
+  - validated_containment
+  - validated_environmental_safety
+routing:
+  upstream:
+  - Engine
+  - CE-OS
+  - Lexicon
+  - Governance
+  downstream:
+  - Prototype
+  - engineering analyses
+  - measurement plans
+  dependencies:
+  - variable identities come from Engine
+  - claim boundaries come from Governance
+  - causal primitives come from CE-OS
+recovery:
+  reconstruct_from:
+  - /mnt/data/Physics
+  compression_notes:
+  - object names retained
+  - attached variable identity compressed into unified list
+  - equation binding identities retained
+  - physical topology retained without expanding every object paragraph
+
+file: Prototype
+role: candidate_design_and_mockup_control
+authority: non_canonical_design_control_pending_validation
+status: compressed_phase_5_engineering_layer_non_canonical
+owns:
+- candidate_geometry
+- mockup_structure
+- prototype_layout_logic
+- unresolved_build_variables
+- operational_candidates
+- design_iteration_paths
+- spatial arrangement constraints
+- AI-assisted design-control boundary
+does_not_own:
+- verified_design
+- certified_engineering
+- seaworthiness
+- validated_stability
+- safe_payload
+- operational_readiness
+- final_material_selection
+- final_structural_connection_method
+inputs:
+- Engine.compressed.yaml
+- Physics.compressed.yaml
+- Governance.compressed.yaml
+- CE-OS.compressed.yaml
+- Lexicon.compressed.yaml
+outputs:
+- candidate_mock_architecture
+- geometry_audit_targets
+- layout_constraints
+- build-variable register
+- prototype measurement needs
+core_content:
+  domains:
+  - candidate_geometry
+  - spatial_layout
+  - structural_routing
+  - control_spine
+  - clean_dirty_boundary
+  - manual_access
+  - mockup_planning
+  - validation_pending
+  variables:
+  - boat_length
+  - boat_width
+  - deck_zone_area
+  - clearance_envelope
+  - hatch_swing_envelope
+  - object_spacing
+  - mounting_height
+  - loaded_weight
+  - center_of_mass
+  - buoyancy_margin
+  - freeboard
+  - trim_angle
+  - list_angle
+  - connection_strength
+  - strap_tension
+  - abrasion_contact
+  - cyclic_wave_loading
+  - inspection_visibility
+  - replacement_access
+  interactions:
+  - deck_to_frame_load_path
+  - frame_to_cradle_load_path
+  - cradle_to_drum_contact
+  - drum_to_water_buoyant_response
+  - buoyant_uplift
+  - drum_roll_or_slide
+  - float_out_risk
+  - side_stop_contact
+  - end_stop_contact
+  - strap_creep
+  - abrasion_wear
+  - wave_cyclic_loading
+  - clean_dirty_interface_routing
+  - dry_power_network_routing
+  constraints:
+  - prototype is non-canonical and pending validation
+  - boat functions as control spine for dry power/network/communication lines
+  - boat is not dirty sargassum processing surface
+  - boat is not biomass drainage/sorting/bio-digestion platform
+  - candidate geometry cannot be treated as final scale or final layout
+  - mockup structure must preserve unresolved variables for measurement
+  unresolved:
+  - final dimensions
+  - component layout
+  - payload limits
+  - buoyancy margin
+  - stability margin
+  - operating envelope
+  - tow/mooring/anchor loads
+  - material selection
+  - connection method
+  - worker access and safety evidence
+  - containment evidence
+  - HDPE drum restraint measurements
+  - strap creep behavior
+  - abrasion behavior
+  - inspection and replacement access
+  contradiction_register:
+  - candidate layout may be useful for mockup while remaining non-canonical
+  - control-spine identity conflicts with any interpretation as processing deck
+  - visual geometry can imply readiness unless governance firewall remains explicit
+governance:
+  validation_state: non_canonical_pending_validation
+  prohibited_claims:
+  - final boat size or ultimate scale boundaries
+  - final equipment or component layout
+  - safe payload capacity or cargo limits
+  - seaworthiness
+  - stability criteria
+  - self-righting moments
+  - reserve buoyancy margins
+  - flooded-compartment survival
+  - operating envelope
+  - validated clean lab platform status
+  - leak-safe fluid transfer ratings
+  - finalized clean/dirty physical interfaces
+  - tow ratings
+  - mooring loads
+  - anchoring hold
+  - recovery ratings
+  - heavy lifting margins
+  - commercial readiness
+  - operational readiness
+  - validated worker safety
+  - validated environmental containment
+  - validated chemical handling safety
+  - finalized material selection
+  - finalized structural connection method
+routing:
+  upstream:
+  - Governance
+  - Engine
+  - Physics
+  - CE-OS
+  - Lexicon
+  downstream:
+  - mockup_build_planning
+  - measurement_plans
+  - future validation packages
+  dependencies:
+  - prohibited claims from Governance
+  - variables/operators from Engine
+  - object bindings from Physics
+  - causal accounting from CE-OS
+  - term identity from Lexicon
+recovery:
+  reconstruct_from:
+  - /mnt/data/Prototype
+  compression_notes:
+  - candidate authority preserved
+  - non-canonical status preserved
+  - prohibited claims retained
+  - HDPE restraint behavior preserved as unresolved causal object rather than validated safety claim
+
+Audit:
+  file: Audit.yaml
+  role: value_loss_audit_and_compression_integrity_check
+  authority: audit_only_not_canonical_authority
+  status: complete
+  scope:
+  - Directory.compressed.yaml
+  - Lexicon.compressed.yaml
+  - CE-OS.compressed.yaml
+  - Governance.compressed.yaml
+  - Gold.compressed.yaml
+  - Engine.compressed.yaml
+  - Physics.compressed.yaml
+  - Prototype.compressed.yaml
+  checks:
+    schema_presence_by_file:
+      Directory.compressed.yaml:
+        schema_fields_present:
+        - file
+        - role
+        - authority
+        - status
+        - owns
+        - does_not_own
+        - inputs
+        - outputs
+        - core_content
+        - governance
+        - routing
+        - recovery
+        schema_fields_missing: []
+        authority_present: true
+        owns_present: true
+        does_not_own_present: true
+        recovery_present: true
+        governance_present: true
+      Lexicon.compressed.yaml:
+        schema_fields_present:
+        - file
+        - role
+        - authority
+        - status
+        - owns
+        - does_not_own
+        - inputs
+        - outputs
+        - core_content
+        - governance
+        - routing
+        - recovery
+        schema_fields_missing: []
+        authority_present: true
+        owns_present: true
+        does_not_own_present: true
+        recovery_present: true
+        governance_present: true
+      CE-OS.compressed.yaml:
+        schema_fields_present:
+        - file
+        - role
+        - authority
+        - status
+        - owns
+        - does_not_own
+        - inputs
+        - outputs
+        - core_content
+        - governance
+        - routing
+        - recovery
+        schema_fields_missing: []
+        authority_present: true
+        owns_present: true
+        does_not_own_present: true
+        recovery_present: true
+        governance_present: true
+      Governance.compressed.yaml:
+        schema_fields_present:
+        - file
+        - role
+        - authority
+        - status
+        - owns
+        - does_not_own
+        - inputs
+        - outputs
+        - core_content
+        - governance
+        - routing
+        - recovery
+        schema_fields_missing: []
+        authority_present: true
+        owns_present: true
+        does_not_own_present: true
+        recovery_present: true
+        governance_present: true
+      Gold.compressed.yaml:
+        schema_fields_present:
+        - file
+        - role
+        - authority
+        - status
+        - owns
+        - does_not_own
+        - inputs
+        - outputs
+        - core_content
+        - governance
+        - routing
+        - recovery
+        schema_fields_missing: []
+        authority_present: true
+        owns_present: true
+        does_not_own_present: true
+        recovery_present: true
+        governance_present: true
+      Engine.compressed.yaml:
+        schema_fields_present:
+        - file
+        - role
+        - authority
+        - status
+        - owns
+        - does_not_own
+        - inputs
+        - outputs
+        - core_content
+        - governance
+        - routing
+        - recovery
+        schema_fields_missing: []
+        authority_present: true
+        owns_present: true
+        does_not_own_present: true
+        recovery_present: true
+        governance_present: true
+      Physics.compressed.yaml:
+        schema_fields_present:
+        - file
+        - role
+        - authority
+        - status
+        - owns
+        - does_not_own
+        - inputs
+        - outputs
+        - core_content
+        - governance
+        - routing
+        - recovery
+        schema_fields_missing: []
+        authority_present: true
+        owns_present: true
+        does_not_own_present: true
+        recovery_present: true
+        governance_present: true
+      Prototype.compressed.yaml:
+        schema_fields_present:
+        - file
+        - role
+        - authority
+        - status
+        - owns
+        - does_not_own
+        - inputs
+        - outputs
+        - core_content
+        - governance
+        - routing
+        - recovery
+        schema_fields_missing: []
+        authority_present: true
+        owns_present: true
+        does_not_own_present: true
+        recovery_present: true
+        governance_present: true
+    preservation_assertions:
+      authority_lanes:
+        status: preserved
+        evidence:
+          Directory: routing_only
+          Governance: canonical_governance_protocol
+          CE-OS: causal_accounting_and_interaction_primitives
+          Lexicon: definitions_only
+          Gold: durable_operational_structure_not_validation_authority
+          Engine: variable_operator_format_machine_structure
+          Physics: object_binding_and_domain_topology
+          Prototype: non_canonical_design_control_pending_validation
+      prohibited_claims:
+        status: preserved
+        must_remain_prohibited:
+        - seaworthiness
+        - validated_stability
+        - safe_payload
+        - reserve_buoyancy
+        - long_term_durability
+        - validated_restraint_safety
+        - operational_readiness
+      causal_kernel_distinctions:
+        status: preserved
+        must_remain_distinct:
+        - interaction_is_measurable_state_affecting_relation
+        - operational_validity_not_causal_completeness
+        - propagation_not_transfer
+        - organization_not_hidden_source
+        - amplification_not_energy_creation
+        - scalar_compression_is_lossy
+      engineering_separation:
+        status: preserved
+        separations:
+        - Engine_defines_variables_operators_formats_machine
+        - Physics_binds_objects_domains_topology
+        - Prototype_holds_candidate_noncanonical_design_logic
+      reconstructability:
+        status: preserved_with_note
+        note: Each compressed file contains recovery or reconstruct_from fields; original
+          full files remain available in /mnt/data for full recovery.
+  findings:
+  - No blocking authority-lane loss detected.
+  - No prohibited-claim collapse detected in compressed governance/prototype layers.
+  - Semantic kernel distinctions remain routed through CE-OS and Lexicon.
+  - Engineering layer remains partitioned between Engine, Physics, and Prototype.
+  - Some schema shape inconsistency remains because Directory/Lexicon/CE-OS/Governance/Gold
+    use top-level file-name wrappers while Engine/Physics/Prototype are direct records.
+  blocking_issues: []
+  non_blocking_repairs: []
+  handoff:
+    next_phase: compressed_repository_bundle_or_manual_review
+    recommended_action: bundle compressed YAML set after optional schema-key normalization

@@ -1,0 +1,232 @@
+Engineering:
+role: current_model_topology_index
+authority: routing_only
+
+caution:
+note: >
+Directory identifies model lanes, visible files,
+routing relationships, and operational topology.
+It does not validate claims, redefine canon,
+resolve contradictions by summary, or duplicate
+source authority.
+
+repository_state:
+root: "C:/Users/Freed/OneDrive/2024/Engineering/Models"
+mode: working_directory_tree
+visibility_scope: current_filesystem_state
+topology_strategy:
+- layered_routing
+- compressed_navigation
+- recoverable_authority_paths
+- expandable_structure
+- minimal_duplication
+- semantic_stability
+
+directories:
+
+```
+"1":
+  role: bootstrap_layer
+  files:
+    - Cali
+    - Dinesh
+    - Gear
+
+Archive:
+  role: archive_layer
+  directories:
+    Backup1:
+      role: historical_reconstruction_layer
+      files:
+        - "1.txt"
+        - "2.txt"
+        - "3.txt"
+        - "3D.txt"
+        - "4.txt"
+        - "5.txt"
+        - "Boat Control.txt"
+        - "Boat Notebook.txt"
+        - "Boat_Control.txt"
+        - CE-OS
+        - "Cognition.txt"
+        - "Core.txt"
+        - Directory
+        - Directory.yaml
+        - "Domains.txt"
+        - Engine
+        - "Equations.txt"
+        - "Formats.txt"
+        - "Gear-Cali.txt"
+        - Gold
+        - "Gold.txt"
+        - Governance
+        - Lexicon
+        - "Lexicon.txt"
+        - "Machine.txt"
+        - "Memory.txt"
+        - "Methodology.txt"
+        - "Minimum.txt"
+        - "Operators.txt"
+        - Physics
+        - "Physics.txt"
+        - Project
+        - "Protocol.txt"
+        - "Protocols.txt"
+        - Prototype
+        - "Reasoning.txt"
+        - "Recovery.txt"
+        - Runtime
+        - "Translational.txt"
+        - "Values.txt"
+        - "Variables.txt"
+        - Working
+      directories:
+        new: {}
+        old: {}
+
+Shared:
+  role: cross_model_navigation_and_continuity_layer
+  files: []
+
+Gear:
+  role: engineering_architecture_and_causal_reasoning_substrate
+  files:
+    CE-OS:
+      authority_state: "[SHARED CAUSAL KERNEL]"
+      role: causal_accounting_anchor
+    Directory.yaml:
+      authority_state: "[NAVIGATION INDEX]"
+      role: model_lane_routing
+    Engine:
+      authority_state: "[ENGINEERING REASONING SUBSTRATE]"
+      role: variable_operator_and_machine_structure
+    Gold:
+      authority_state: "[STABLE ROUTING AND RECOVERY LAYER]"
+      role: durable_operational_structure
+    Governance:
+      authority_state: "[GOVERNANCE REFERENCE]"
+      role: claim_safety_reference
+    Lexicon:
+      authority_state: "[SHARED SEMANTIC REGISTRY]"
+      role: engineering_definition_stability
+    Physics:
+      authority_state: "[PHYSICAL DOMAIN AND OBJECT REGISTRY]"
+      role: object_binding_and_domain_topology
+    Prototype:
+      authority_state: "[NON-CANONICAL DESIGN CONTROL FILE — PENDING VALIDATION]"
+      role: candidate_design_and_mockup_control
+
+Grant:
+  role: governance_validation_and_claim_firewall
+  files:
+    CE-OS:
+      authority_state: "[CAUSAL KERNEL REFERENCE]"
+      role: interaction_definition_reference
+    Directory.yaml:
+      authority_state: "[NAVIGATION INDEX]"
+      role: governance_lane_routing
+    Gold:
+      authority_state: "[RECOVERY AND STABILITY LAYER]"
+      role: contradiction_preservation_and_safe_recovery
+    Governance:
+      authority_state: "[PRIMARY GOVERNANCE AUTHORITY]"
+      role: claim_firewall_and_validation_control
+    Lexicon:
+      authority_state: "[SEMANTIC CONTROL REFERENCE]"
+      role: admissible_definition_control
+
+Cali:
+  role: editorial_middleware_and_relationship_continuity
+  files:
+    CE-OS:
+      authority_state: "[CAUSAL KERNEL REFERENCE]"
+      role: continuity_causal_reference
+    Directory.yaml:
+      authority_state: "[NAVIGATION INDEX]"
+      role: relationship_routing_visibility
+    Gold:
+      authority_state: "[CONTINUITY RECOVERY LAYER]"
+      role: contradiction_lineage_and_route_preservation
+    Governance:
+      authority_state: "[GOVERNANCE REFERENCE]"
+      role: editorial_boundary_constraints
+    Lexicon:
+      authority_state: "[SEMANTIC CONTINUITY REGISTRY]"
+      role: terminology_and_context_stability
+
+Elrich:
+  role: workspace_navigation_and_external_surface_mapping
+  files:
+    Directory.yaml:
+      authority_state: "[PRIMARY TOPOLOGY MAP]"
+      role: workspace_navigation_and_model_routing
+    Gold:
+      authority_state: "[STABLE STRUCTURE LAYER]"
+      role: durable_navigation_and_recovery_paths
+    Governance:
+      authority_state: "[GOVERNANCE REFERENCE]"
+      role: public_boundary_constraints
+    Lexicon:
+      authority_state: "[SEMANTIC REFERENCE]"
+      role: public_navigation_terms
+```
+
+topology:
+bootstrap_layer:
+- "1"
+
+```
+archive_layer:
+  - Archive/Backup1
+
+governance_layer:
+  - Governance
+  - Gold
+
+causal_kernel_layer:
+  - CE-OS
+  - Lexicon
+
+engineering_reasoning_layer:
+  - Engine
+  - Physics
+  - Prototype
+
+navigation_layer:
+  - Directory.yaml
+```
+
+routing_rules:
+- Directory routes topology; it does not govern truth.
+- Shared files may appear across multiple model lanes.
+- Cross-listing does not transfer authority ownership.
+- Governance controls admissibility and claim safety.
+- CE-OS defines causal primitives and interaction doctrine.
+- Lexicon controls semantic identity and definition stability.
+- Gear extracts causal structure rather than validation.
+- Prototype remains non-canonical pending validation.
+- Navigation artifacts must not become canon.
+- Compression must preserve reconstructability.
+- Contradictions must remain recoverable rather than hidden.
+
+growth_rule:
+note: >
+Add new files only when operationally present.
+Preserve sparse topology. Avoid speculative directory expansion.
+Maintain recoverable authority lanes.
+
+prohibited_directory_behavior:
+- validate_claims
+- redefine_source_authority
+- collapse_contradictions_into_summary
+- convert_navigation_into_canon
+- erase_unresolved_variables
+- replace_governing_files
+- silently_mutate_semantic_identity
+
+global_caution:
+note: >
+Operational validity does not imply causal completeness.
+Navigation structure does not replace validation.
+Semantic compression remains causally lossy.
+Repository authority remains with governing source files.

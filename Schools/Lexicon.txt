@@ -1,0 +1,917 @@
+CE-OS :: CANONICAL_LEXICON
+Role: canonical semantic authority registry
+Authority Scope: definitions only
+Non-Authority: methodology / pedagogy / speculation / implementation
+
+==================================================
+ROOT TERMS
+==================================================
+
+--------------------------------------------------
+TERM: Interaction
+--------------------------------------------------
+
+Definition:
+measurable state-affecting relation.
+
+Purpose:
+root causal primitive for all CE-OS interaction analysis.
+
+Dependencies:
+none
+
+Admissible Uses:
+- measurable influence
+- observable state relation
+- representable system effect
+
+Non-Admissible Uses:
+- mystical connectedness
+- undefined universal linkage
+- filler explanation for unknown behavior
+
+Domain Type:
+root primitive
+
+Boundary Conditions:
+interaction requires measurable or representable effect.
+
+Mutation Risks:
+interaction → generalized metaphysical connectedness
+
+Recovery Compression:
+interaction = measurable state-affecting relation
+
+--------------------------------------------------
+TERM: Structure
+--------------------------------------------------
+
+Definition:
+physically instantiated arrangement.
+
+Purpose:
+preserve distinction between physical arrangement and interaction orchestration.
+
+Dependencies:
+interaction
+
+Admissible Uses:
+- geometry
+- topology
+- material arrangement
+- physical support organization
+
+Non-Admissible Uses:
+- abstract conceptual relation
+- generalized organizational logic
+- semantic grouping
+
+Domain Type:
+organizational
+
+Boundary Conditions:
+structure is physical, spatial, material, or mechanically instantiated.
+
+Mutation Risks:
+structure → generalized system organization
+
+Recovery Compression:
+structure = physical arrangement
+
+--------------------------------------------------
+TERM: Organization
+--------------------------------------------------
+
+Definition:
+orchestration of interactions, constraints, geometry, timing, and coupling pathways.
+
+Purpose:
+preserve interaction coordination without implying hidden source generation.
+
+Dependencies:
+interaction
+coupling
+structure
+
+Admissible Uses:
+- interaction arrangement
+- capability shaping
+- constraint coordination
+- causal pathway orchestration
+
+Non-Admissible Uses:
+- hidden synergy
+- unexplained optimization force
+- surplus capability source
+- spontaneous emergence substitute
+
+Domain Type:
+organizational
+
+Boundary Conditions:
+organization shapes interaction behavior; it does not create unconstrained source capability.
+
+Mutation Risks:
+organization → hidden energy source
+organization → vague systems rhetoric
+
+Recovery Compression:
+organization = interaction orchestration
+
+--------------------------------------------------
+TERM: Coupling
+--------------------------------------------------
+
+Definition:
+typed interaction linkage between system elements or domains.
+
+Purpose:
+preserve explicit interaction relationships without undefined influence assumptions.
+
+Dependencies:
+interaction
+
+Admissible Uses:
+- mechanical coupling
+- electromagnetic coupling
+- thermal coupling
+- cross-domain linkage
+
+Non-Admissible Uses:
+- mystical linkage
+- undefined influence
+- unexplained causal bridge
+
+Domain Type:
+cross-domain
+
+Boundary Conditions:
+coupling identifies linkage existence, not complete mechanism specification.
+
+Mutation Risks:
+coupling → unexplained influence
+
+Recovery Compression:
+coupling = typed interaction linkage
+
+--------------------------------------------------
+TERM: Propagation
+--------------------------------------------------
+
+Definition:
+field-centric distributed gradient interaction behavior.
+
+Purpose:
+preserve distinction between field behavior and non-field transfer behavior.
+
+Dependencies:
+interaction
+field
+
+Admissible Uses:
+- electromagnetic propagation
+- field-gradient behavior
+- distributed field interaction
+- non-contact-capable interaction
+
+Non-Admissible Uses:
+- generalized movement
+- mass displacement
+- generic transfer
+- fluid flow synonym
+- universal transmission term
+
+Domain Type:
+field-centric
+
+Boundary Conditions:
+propagation requires field-centric distributed gradient behavior.
+
+Mutation Risks:
+propagation → generalized movement
+propagation → causal filler
+
+Recovery Compression:
+propagation = field-gradient interaction behavior
+
+--------------------------------------------------
+TERM: Transfer
+--------------------------------------------------
+
+Definition:
+movement, displacement, load passage, or state passage not requiring field-centric propagation.
+
+Purpose:
+preserve distinction between field propagation and non-field interaction passage.
+
+Dependencies:
+interaction
+
+Admissible Uses:
+- load transfer
+- pressure transfer
+- momentum transfer
+- state transfer
+- displacement transmission
+
+Non-Admissible Uses:
+- field-gradient behavior
+- non-contact field propagation
+
+Domain Type:
+mass-centric
+
+Boundary Conditions:
+transfer does not imply distributed field propagation.
+
+Mutation Risks:
+transfer ↔ propagation collapse
+
+Recovery Compression:
+transfer = non-field interaction passage
+
+--------------------------------------------------
+TERM: Field
+--------------------------------------------------
+
+Definition:
+measurable distributed interaction structure exhibiting gradient behavior and non-contact-capable interaction.
+
+Purpose:
+stabilize field-centric ontology boundaries.
+
+Dependencies:
+interaction
+
+Admissible Uses:
+- electromagnetic fields
+- magnetic fields
+- electric fields
+- measurable gradient interaction domains
+
+Non-Admissible Uses:
+- universal substrate
+- generalized influence medium
+- metaphor for all distributed behavior
+- unrestricted environmental energy
+
+Domain Type:
+field-centric
+
+Boundary Conditions:
+field requires measurable gradient structure and distributed interaction behavior.
+
+Mutation Risks:
+field → universal explanatory substance
+field → pseudoscientific universalization
+
+Recovery Compression:
+field = measurable gradient interaction structure
+
+--------------------------------------------------
+TERM: Resistance
+--------------------------------------------------
+
+Definition:
+opposition or constraint to organized interaction behavior.
+
+Purpose:
+preserve resistance as interaction constraint rather than scalar-only reduction.
+
+Dependencies:
+interaction
+
+Admissible Uses:
+- propagation opposition
+- motion resistance
+- interaction limitation
+- domain-specific constraint behavior
+
+Non-Admissible Uses:
+- pure scalar subtraction abstraction
+- generalized friction synonym
+
+Domain Type:
+consequence term
+
+Boundary Conditions:
+resistance behavior remains domain-specific.
+
+Mutation Risks:
+resistance → scalar-only abstraction
+
+Recovery Compression:
+resistance = interaction constraint
+
+--------------------------------------------------
+TERM: Loss
+--------------------------------------------------
+
+Definition:
+reduction of usable organized interaction capability.
+
+Purpose:
+preserve measurable degradation without conservation collapse.
+
+Dependencies:
+interaction
+resistance
+
+Admissible Uses:
+- thermal dissipation
+- attenuation
+- damping
+- frictional degradation
+- interaction inefficiency
+
+Non-Admissible Uses:
+- energy disappearance
+- hidden reservoir implication
+- conservation failure
+
+Domain Type:
+consequence term
+
+Boundary Conditions:
+loss describes reduced usable capability, not ontological disappearance.
+
+Mutation Risks:
+loss → hidden-energy implication
+
+Recovery Compression:
+loss = reduced usable interaction capability
+
+--------------------------------------------------
+TERM: Heat
+--------------------------------------------------
+
+Definition:
+emergent interaction signature resulting from interaction inefficiency, friction, deformation, or disorder.
+
+Purpose:
+preserve heat as consequence term rather than root causal mechanism.
+
+Dependencies:
+interaction
+loss
+
+Admissible Uses:
+- thermal accumulation
+- dissipative signature
+- interaction consequence
+
+Non-Admissible Uses:
+- foundational causal source
+- universal explanation mechanism
+
+Domain Type:
+consequence term
+
+Boundary Conditions:
+heat is emergent, not causally primary.
+
+Mutation Risks:
+heat → primary mechanism
+
+Recovery Compression:
+heat = emergent interaction signature
+
+--------------------------------------------------
+TERM: Resonance
+--------------------------------------------------
+
+Definition:
+system-response alignment under oscillatory interaction conditions.
+
+Purpose:
+preserve resonance as constrained response behavior.
+
+Dependencies:
+interaction
+propagation
+coupling
+
+Admissible Uses:
+- oscillatory alignment
+- amplified response behavior
+- phase-aligned interaction
+
+Non-Admissible Uses:
+- unlimited amplification
+- unconstrained energy multiplication
+- mystical synchronization
+
+Domain Type:
+consequence term
+
+Boundary Conditions:
+resonance remains bounded by constraints, losses, and material conditions.
+
+Mutation Risks:
+resonance → over-unity rhetoric
+
+Recovery Compression:
+resonance = oscillatory response alignment
+
+--------------------------------------------------
+TERM: Amplification
+--------------------------------------------------
+
+Definition:
+increase in usable capability through organizational interaction structure under conservation constraints.
+
+Purpose:
+preserve capability improvement without surplus-energy interpretation.
+
+Dependencies:
+organization
+coupling
+resonance
+
+Admissible Uses:
+- leverage
+- resonance response increase
+- force multiplication
+- organizational capability increase
+
+Non-Admissible Uses:
+- energy creation
+- perpetual output implication
+- conservation bypass
+- over-unity interpretation
+
+Domain Type:
+organizational
+
+Boundary Conditions:
+amplification changes usable capability organization, not unconstrained source accounting.
+
+Mutation Risks:
+amplification → surplus energy implication
+
+Recovery Compression:
+amplification = organizational capability increase
+
+--------------------------------------------------
+TERM: Scalar Compression
+--------------------------------------------------
+
+Definition:
+reduction of interaction organization into scalar summary abstractions.
+
+Purpose:
+identify primary CE-OS interpretive failure mode.
+
+Dependencies:
+interaction
+
+Admissible Uses:
+- abstraction critique
+- accounting compression
+- scalar reduction analysis
+
+Non-Admissible Uses:
+- anti-mathematics rhetoric
+- rejection of operational measurement
+
+Domain Type:
+epistemic
+
+Boundary Conditions:
+scalar abstractions remain operationally useful.
+
+Mutation Risks:
+scalar compression → anti-science framing
+
+Recovery Compression:
+scalar compression = interaction reduction into scalar summary
+
+--------------------------------------------------
+TERM: Causal Accounting
+--------------------------------------------------
+
+Definition:
+interaction-focused analysis preserving domain identity, organization, coupling, constraints, and loss behavior before scalar reduction.
+
+Purpose:
+define CE-OS primary analytical method.
+
+Dependencies:
+interaction
+scalar compression
+
+Admissible Uses:
+- interaction mapping
+- organizational analysis
+- propagation analysis
+- domain-preserving interpretation
+
+Non-Admissible Uses:
+- unrestricted speculative interpretation
+- anti-measurement ideology
+
+Domain Type:
+methodological
+
+Boundary Conditions:
+causal accounting supplements scalar accounting; it does not eliminate it.
+
+Mutation Risks:
+causal accounting → unrestricted reinterpretation
+
+Recovery Compression:
+causal accounting = interaction-preserving analysis
+
+==================================================
+EPISTEMIC TERMS
+==================================================
+
+--------------------------------------------------
+TERM: Operational Validity
+--------------------------------------------------
+
+Definition:
+predictive or functional success within domain constraints.
+
+Purpose:
+preserve operational usefulness distinction from causal completeness.
+
+Dependencies:
+none
+
+Admissible Uses:
+- successful engineering models
+- predictive abstraction systems
+- domain-valid calculations
+
+Non-Admissible Uses:
+- proof of complete causal representation
+
+Domain Type:
+epistemic
+
+Boundary Conditions:
+operational success does not automatically preserve interaction-level structure.
+
+Mutation Risks:
+operational validity → assumed completeness
+
+Recovery Compression:
+operational validity = functional predictive success
+
+--------------------------------------------------
+TERM: Causal Completeness
+--------------------------------------------------
+
+Definition:
+preservation of interaction-level organization and causal structure beyond scalar summary behavior.
+
+Purpose:
+preserve CE-OS interpretive objective.
+
+Dependencies:
+interaction
+causal accounting
+
+Admissible Uses:
+- causal visibility
+- interaction-level representation
+- organizational preservation
+
+Non-Admissible Uses:
+- metaphysical omniscience
+- total explanatory certainty
+
+Domain Type:
+epistemic
+
+Boundary Conditions:
+causal completeness is asymptotic and constraint-bound.
+
+Mutation Risks:
+causal completeness → universal explanatory ambition
+
+Recovery Compression:
+causal completeness = preserved interaction structure
+
+--------------------------------------------------
+TERM: Use-Case Equivalence
+--------------------------------------------------
+
+Definition:
+condition where systems are both scalar-equivalent and functionally equivalent under operational constraints.
+
+Purpose:
+preserve distinction between scalar equality and engineering behavior.
+
+Dependencies:
+scalar compression
+
+Admissible Uses:
+- engineering comparison
+- functional equivalence analysis
+- capability comparison
+
+Non-Admissible Uses:
+- scalar-only equivalence assumptions
+
+Domain Type:
+epistemic
+
+Boundary Conditions:
+equal accounting does not automatically imply equal capability.
+
+Mutation Risks:
+use-case equivalence collapse into scalar equivalence
+
+Recovery Compression:
+use-case equivalence = scalar + functional equivalence
+
+==================================================
+DOMAIN TERMS
+==================================================
+
+--------------------------------------------------
+TERM: Mass-Centric
+--------------------------------------------------
+
+Definition:
+domain primarily governed through matter, inertia, load, pressure, friction, displacement, and structural interaction.
+
+Purpose:
+stabilize non-field interaction classification.
+
+Dependencies:
+interaction
+transfer
+
+Admissible Uses:
+- mechanical systems
+- hydraulic systems
+- structural systems
+- pressure systems
+
+Non-Admissible Uses:
+- field-gradient propagation classification
+
+Domain Type:
+domain classification
+
+Boundary Conditions:
+mass-centric behavior does not imply field propagation.
+
+Mutation Risks:
+mass-centric ↔ field-centric averaging
+
+Recovery Compression:
+mass-centric = matter/load/displacement domain
+
+--------------------------------------------------
+TERM: Field-Centric
+--------------------------------------------------
+
+Definition:
+domain primarily governed through measurable gradient interaction behavior and distributed field interaction.
+
+Purpose:
+stabilize field-domain classification.
+
+Dependencies:
+interaction
+field
+propagation
+
+Admissible Uses:
+- electromagnetic systems
+- inductive systems
+- distributed field behavior
+
+Non-Admissible Uses:
+- generalized distributed behavior
+- unrestricted environmental interaction
+
+Domain Type:
+domain classification
+
+Boundary Conditions:
+field-centric behavior requires measurable gradient interaction conditions.
+
+Mutation Risks:
+field-centric → generalized systems language
+
+Recovery Compression:
+field-centric = gradient-field interaction domain
+
+--------------------------------------------------
+TERM: Cross-Domain
+--------------------------------------------------
+
+Definition:
+governed interaction relationship between unlike domains.
+
+Purpose:
+preserve explicit domain-transition analysis.
+
+Dependencies:
+interaction
+coupling
+
+Admissible Uses:
+- electrical-to-mechanical interaction
+- thermal-to-pressure interaction
+- field-to-material interaction
+
+Non-Admissible Uses:
+- unrestricted domain blending
+- collapsed interaction identity
+
+Domain Type:
+domain classification
+
+Boundary Conditions:
+domain identities remain preserved during interaction mapping.
+
+Mutation Risks:
+cross-domain → generalized system blending
+
+Recovery Compression:
+cross-domain = governed unlike-domain interaction
+
+==================================================
+GOVERNANCE TERMS
+==================================================
+
+--------------------------------------------------
+TERM: Admissibility
+--------------------------------------------------
+
+Definition:
+formal boundary defining permitted semantic scope and prohibited interpretation.
+
+Purpose:
+prevent ontology expansion and semantic drift.
+
+Dependencies:
+canonical definition
+
+Admissible Uses:
+- domain constraints
+- semantic scope control
+- governance enforcement
+
+Non-Admissible Uses:
+- rhetorical flexibility
+- unconstrained reinterpretation
+
+Domain Type:
+governance
+
+Boundary Conditions:
+all canonical terms require admissibility constraints.
+
+Mutation Risks:
+admissibility weakening under compression
+
+Recovery Compression:
+admissibility = semantic boundary enforcement
+
+--------------------------------------------------
+TERM: Claim Tier
+--------------------------------------------------
+
+Definition:
+governed classification level for interpretive and evidentiary status.
+
+Purpose:
+prevent interpretation-to-validation escalation.
+
+Dependencies:
+admissibility
+
+Admissible Uses:
+- interpretation
+- hypothesis
+- engineering implication
+- experimental proposal
+- observed behavior
+- validated capability
+
+Non-Admissible Uses:
+- unsupported escalation
+- implied validation through rhetoric
+
+Domain Type:
+governance
+
+Boundary Conditions:
+claim escalation requires evidentiary transition.
+
+Mutation Risks:
+tier collapse under paraphrase pressure
+
+Recovery Compression:
+claim tier = governed evidentiary level
+
+--------------------------------------------------
+TERM: Canonical Definition
+--------------------------------------------------
+
+Definition:
+single authoritative semantic definition for a governed term.
+
+Purpose:
+prevent multi-authority semantic drift.
+
+Dependencies:
+admissibility
+
+Admissible Uses:
+- ontology stabilization
+- semantic authority assignment
+
+Non-Admissible Uses:
+- duplicate canonical phrasing
+- parallel authority structures
+
+Domain Type:
+governance
+
+Boundary Conditions:
+one concept → one canonical definition.
+
+Mutation Risks:
+definition duplication
+authority overlap
+
+Recovery Compression:
+canonical definition = singular semantic authority
+
+--------------------------------------------------
+TERM: Ontology Drift
+--------------------------------------------------
+
+Definition:
+semantic mutation causing boundary weakening, distinction collapse, or unauthorized interpretive expansion.
+
+Purpose:
+identify framework destabilization conditions.
+
+Dependencies:
+canonical definition
+semantic entropy
+
+Admissible Uses:
+- drift analysis
+- mutation detection
+- compression auditing
+
+Non-Admissible Uses:
+- normal paraphrase variance treated as drift automatically
+
+Domain Type:
+governance
+
+Boundary Conditions:
+drift occurs when distinctions weaken or admissibility expands.
+
+Mutation Risks:
+recursive reinterpretation
+boundary averaging
+
+Recovery Compression:
+ontology drift = destabilizing semantic mutation
+
+--------------------------------------------------
+TERM: Semantic Entropy
+--------------------------------------------------
+
+Definition:
+increase in ambiguity, overlap, authority duplication, or distinction instability within the ontology system.
+
+Purpose:
+identify compression instability sources.
+
+Dependencies:
+ontology drift
+
+Admissible Uses:
+- redundancy analysis
+- overlap detection
+- compression auditing
+
+Non-Admissible Uses:
+- stylistic variation analysis alone
+
+Domain Type:
+governance
+
+Boundary Conditions:
+entropy increases when semantic boundaries weaken or overlap.
+
+Mutation Risks:
+prose expansion
+generalized abstraction
+authority duplication
+
+Recovery Compression:
+semantic entropy = ontology ambiguity increase

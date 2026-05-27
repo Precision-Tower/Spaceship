@@ -1,0 +1,599 @@
+Runtime:
+  file: Runtime.yaml
+  role: Gear_runtime_parent_file
+  status: v0_1_candidate
+  authority: motion_execution_and_route_topology_only_not_validation
+
+  purpose:
+    - define_minimum_living_runtime
+    - host_runtime_seed_structure
+    - describe_runtime_objects
+    - define_event_flow
+    - preserve_route_status_visibility
+    - keep_display_separate_from_evidence
+    - provide_Gear_side_input_for_Grant_HindSight_review
+
+  owns:
+    - runtime_object_topology
+    - event_generation
+    - route_attempt_creation
+    - packet_creation
+    - display_surface_updates
+    - Godot_contact_test_structure
+
+  does_not_own:
+    - validation
+    - evidence_support
+    - claim_admissibility
+    - Grant_HindSight_review
+    - truth
+    - safety
+    - readiness
+
+  references:
+    shared:
+      - ../../Shared/Contract.yaml
+      - ../../Shared/Directory.yaml
+      - ../../Shared/CE-OSv1.yaml
+
+    gear:
+      - ./Godot.yaml
+      - ./GodotOps.yaml
+      - ./Observation.yaml
+      - ./Eyes.yaml
+      - ./SimulationBridge.yaml
+      - ./VisionOps.yaml
+
+    grant_review:
+      - ../../Grant/v1/HindSight.yaml
+
+  active_runtime_target:
+    Runtime_Seed:
+      status: active_candidate
+      purpose: prove_route_survivability_under_motion
+
+      not_purpose:
+        - prove_physics
+        - prove_buoyancy
+        - prove_safety
+        - prove_readiness
+        - prove_governance_completeness
+
+      test_object:
+        FloatingBox:
+          allowed_states:
+            - float
+            - submerge
+            - restore
+            - oscillate
+            - unresolved
+
+          blocked_interpretations:
+            float: stability
+            restore: validation
+            oscillate: dynamic_stability
+            display_visible: evidence
+            route_complete: claim_supported
+            repeated_state: repeatability
+
+      runtime_objects:
+        - FloatingBox
+        - RuntimeBus
+        - ObservationPacket
+        - RouteAttempt
+        - PacketLedger
+        - DisplaySurface
+        - GrantReviewResult
+
+      event_types:
+        - state_changed
+        - observation_packet_created
+        - route_attempt_started
+        - route_attempt_completed
+        - route_attempt_failed
+        - evidence_record_written
+        - display_updated
+        - semantic_failure_injected
+        - grant_flag_created
+
+      success_conditions:
+        - runtime_events_exist
+        - packets_move
+        - routes_can_fail_visibly
+        - unresolveds_survive_display
+        - contradictions_survive_summary
+        - Grant_detects_semantic_promotion
+        - display_never_becomes_authority
+
+  first_dirty_packet:
+    DirtyPacket_01:
+      claim: box_is_stable
+      source_state: oscillate
+      expected_grant_flag: stability_language_exceeds_evidence_state
+
+  blocked_promotions:
+    - runtime_validates_architecture
+    - Godot_model_validates_physics
+    - FloatingBox_validates_buoyancy
+    - route_success_validates_evidence
+    - display_success_validates_observation
+
+  next_action:
+    - create_Godot_yaml_operator_adapter
+    - connect_Runtime_to_HindSight_review
+    - run_FloatingBox_contact_test
+
+Simulate:
+  file: Simulate.yaml
+  role: compressed_white_box_simulation_construction_doctrine
+  status: methodology_template
+  authority: process_guidance_only_not_validation_authority
+  project_scope: project_agnostic
+
+  references:
+    gear_kernel_bridge: ./GearKernelBridge.yaml
+    simulation_bridge: ./SimulationBridge.yaml
+    godot_ops: ./GodotOps.yaml
+    vision_ops: ./VisionOps.yaml
+    shared_kernel: ../../Shared/CE-OSv1.yaml
+    shared_directory: ../../Shared/Directory.yaml
+
+  purpose:
+    - preserve_reusable_simulation_construction_method
+    - accelerate_future_white_box_dynamical_model_rebuilds
+    - preserve_causal_workflow_without_project_specific_content
+    - prevent_simulation_outputs_from_becoming_validation_claims
+  not_for:
+    - project_specific_knowledge_storage
+    - simulation_output_repository
+    - optimization_theater
+    - black_box_prediction_claims
+    - validation_or_operational_readiness_claims
+
+  core_doctrine:
+    summary: >
+      Build lightweight dynamical simulations as inspectable pressure tools.
+      The purpose is to expose sensitivity, dominant couplings, parameter cliffs,
+      metastability, failure propagation, and assumption fragility. A clean
+      simulation means only that the assumptions remained internally coherent
+      under model constraints.
+    governing_principles:
+      - compress_only_after_causal_mapping
+      - preserve_unresolveds_honestly
+      - separate_evidence_states_aggressively
+      - model_dominant_couplings_explicitly
+      - preserve_contradiction_surfaces
+      - prefer_measurable_instability_over_hidden_ambiguity
+      - identify_parameter_cliffs
+      - track_dominant_failure_mode_migration
+      - classify_motion_quality_not_motion_existence
+      - prevent_visual_or_narrative_coherence_from_becoming_evidence
+      - preserve_reconstructability_over_polish
+      - use_simulation_to_discover_collapse_not_to_force_success
+
+  evidence_state_discipline:
+    allowed_states:
+      - conceptual
+      - plausible
+      - simulated
+      - observed
+      - bounded
+      - repeatable
+      - validated
+      - operational
+    rules:
+      - simulated_does_not_equal_observed
+      - observed_does_not_equal_validated
+      - bounded_in_model_does_not_equal_bounded_in_reality
+      - repeatable_simulation_does_not_equal_physical_repeatability
+      - validation_requires_external_governance_and_measurement_boundary
+    prohibited_collapses:
+      - model_output_equals_measurement
+      - clean_simulation_equals_stability
+      - oscillation_equals_stability
+      - bounded_trajectory_equals_robustness
+      - parameter_fit_equals_truth
+      - visual_smoothness_equals_evidence
+
+  workflow:
+    ordered_stages:
+      - stage: concept
+        purpose:
+          - define_system_behavior_under_investigation
+          - define_model_mission
+          - define_non_claims_before_equations
+        outputs:
+          - simulation_mission
+          - admissible_questions
+          - prohibited_claims
+          - initial_boundary_conditions
+        caution:
+          - do_not_start_with_optimization_target
+          - do_not_design_model_to_produce_successful_behavior
+
+      - stage: dominant_variables
+        purpose:
+          - identify_minimum_state_variables
+          - separate_existential_variables_from_secondary_proxies
+          - mark_static_vs_dynamic_quantities
+          - expose_unmeasured_or_unresolved_variables
+        outputs:
+          - state_variable_table
+          - parameter_table
+          - unresolved_variable_register
+          - evidence_state_per_variable
+        required_fields:
+          - name
+          - physical_meaning
+          - units
+          - static_or_dynamic
+          - existential_or_secondary
+          - evidence_state
+          - unresolved_notes
+
+      - stage: state_machine
+        purpose:
+          - represent_discrete_behavioral_phases
+          - expose_transition_commitment_logic
+          - prevent_continuous_equations_from_hiding_state_changes
+        outputs:
+          - states
+          - entry_conditions
+          - exit_conditions
+          - dominant_forces_or_drivers
+          - instability_injection_points
+          - hidden_state_variables
+        caution:
+          - state_names_are_modeling_handles_not_physical_validation
+
+      - stage: force_model
+        purpose:
+          - construct_minimum_inspectable_force_or_drive_balance
+          - keep force_terms_separable
+          - avoid_hiding_unresolveds_inside_single_scalars
+        outputs:
+          - net_force_or_drive_equation
+          - term_by_term_force_definitions
+          - sign_convention
+          - unresolved_force_terms
+          - simplification_notes
+        rules:
+          - each_force_term_must_be_inspectable
+          - each_loss_term_must_remain_visible
+          - static_thresholds_must_not_be_blended_with_dynamic_drag
+          - proxy_terms_are_allowed_if_labeled_as_proxy
+
+      - stage: flow_model
+        purpose:
+          - model_accumulation_exchange_or_state_quantity_migration
+          - expose_sources_sinks_leaks_and_delays
+        outputs:
+          - accumulation_equations
+          - inflow_outflow_leak_terms
+          - delay_or_lag_terms
+          - conservation_or_accounting_checks
+        caution:
+          - flow_balance_success_does_not_validate_real_plumbing_or_transport
+
+      - stage: transition_logic
+        purpose:
+          - define_when_state_changes_commit_or_fail
+          - distinguish_threshold_crossing_from_transition_completion
+          - preserve_timing_failures_as_first_class_events
+        outputs:
+          - threshold_conditions
+          - commitment_conditions
+          - timeout_conditions
+          - reversal_conditions
+          - hover_or_stall_conditions
+        required_patterns:
+          - sign_reversal_detection
+          - threshold_exceeded_detection
+          - velocity_or_rate_reversal_detection
+          - endpoint_or_boundary_detection
+          - timing_failure_detection
+          - metastable_hover_detection
+
+      - stage: coupling_map
+        purpose:
+          - map_how_variables_affect_each_other_across_states
+          - detect_non_obvious_feedback_loops
+          - preserve_failure_chain_reconstructability
+        outputs:
+          - dominant_couplings
+          - secondary_couplings
+          - feedback_loops
+          - contradiction_surfaces
+          - dominant_failure_mode_migration_paths
+        example_pattern:
+          - parameter_shift
+          - force_margin_change
+          - transition_timing_change
+          - rebound_or_delay_effect
+          - instability_growth
+          - attractor_change_or_failure
+
+      - stage: sweep_engine
+        purpose:
+          - pressure_test_assumptions_across_parameter_space
+          - find_cliffs_and_attractor_regions
+          - avoid_single_successful_run_bias
+        outputs:
+          - one_variable_sweeps
+          - coupled_sweeps
+          - startup_condition_sensitivity_tests
+          - cliff_detection_records
+          - attractor_region_map
+          - instability_amplification_records
+        sweep_types:
+          - one_variable
+          - paired_coupling
+          - multi_variable_stress
+          - startup_condition_perturbation
+          - threshold_sensitivity
+          - loss_term_sensitivity
+          - proxy_strength_sensitivity
+
+      - stage: attractor_classification
+        purpose:
+          - classify_motion_quality_and_state_reset_quality
+          - distinguish_oscillation_from_stability
+          - detect_transient_coherence_and_metastability
+        outputs:
+          - stable_attractor_candidate
+          - metastable_region
+          - transient_coherence_region
+          - divergence_toward_disorder_region
+          - collapse_region
+        caution:
+          - oscillation_existence_is_not_stability
+          - regular_short_run_behavior_may_be_transient_coherence
+
+      - stage: failure_detection
+        purpose:
+          - prioritize_failure_discovery_over_success_demonstration
+          - convert_instability_into_detectable_signatures
+          - map_probable_causal_pathways
+        outputs:
+          - explicit_failure_conditions
+          - measurable_failure_signatures
+          - probable_causal_pathways
+          - failure_onset_conditions
+          - failure_migration_records
+        rules:
+          - every_failure_condition_needs_detection_logic
+          - every_detection_logic_needs_probable_causal_pathways
+          - failure_outputs_are_model_findings_not_physical_proof
+
+      - stage: governance_boundaries
+        purpose:
+          - prevent_simulation_from_becoming_validation
+          - preserve_evidence_state_boundaries
+          - prevent_clean_outputs_from_becoming_operational_claims
+        outputs:
+          - admissible_interpretations
+          - prohibited_interpretations
+          - required_measurements_for_next_evidence_state
+          - claim_boundary_statement
+
+  white_box_requirements:
+    inspectable_components:
+      - forces_or_drivers
+      - losses
+      - flows_or_accumulations
+      - state_variables
+      - transition_thresholds
+      - timing_logic
+      - proxy_terms
+      - assumptions
+      - boundary_conditions
+      - failure_chains
+    required_traceability:
+      - what_changed
+      - why_it_changed
+      - what_failed
+      - what_survived_pressure
+      - which_uncertainty_remains
+    anti_patterns:
+      - hidden_scalar_absorbs_unresolved_physics
+      - optimizer_searches_for_good_looking_oscillation
+      - black_box_model_blocks_causal_inspection
+      - successful_animation_becomes_evidence
+      - polished_language_hides_failure_surfaces
+      - fitted_parameter_becomes_physical_truth
+      - smooth_cycle_plot_replaces_failure_analysis
+
+  lightweight_strategy:
+    allowed:
+      - first_order_approximations
+      - simplified_proxies
+      - dimensionless_parameters
+      - normalized_ranges
+      - event_impulses
+      - lumped_losses_if_labeled
+      - reduced_order_state_machines
+      - qualitative_failure_flags
+    required_when_simplifying:
+      - label_proxy_terms
+      - preserve_unresolved_physics
+      - record_what_was_ignored
+      - record_expected_bias_direction_if_known
+      - expose_sensitivity_to_proxy_strength
+    prohibited:
+      - pretending_proxy_is_full_physics
+      - hiding_unknowns_inside_calibrated_constants
+      - overfitting_to_target_behavior
+      - using_complexity_as_credibility
+
+  parameter_sweep_methodology:
+    objectives:
+      - locate_parameter_cliffs
+      - map_attractor_regions
+      - expose_startup_sensitivity
+      - detect_instability_amplification
+      - identify_dominant_failure_mode_migration
+      - find_assumption_fragility
+    sweep_sequence:
+      - establish_baseline_candidate_without_success_claim
+      - one_variable_sweep_for_each_existential_parameter
+      - one_variable_sweep_for_each_dangerous_secondary_proxy
+      - paired_sweeps_for_known_couplings
+      - startup_condition_perturbation_tests
+      - boundary_condition_stress_tests
+      - combined_worst_case_or_edge_case_runs
+    outputs_per_run:
+      - parameter_set
+      - initial_conditions
+      - state_history
+      - transition_history
+      - force_or_driver_history
+      - failure_flags
+      - attractor_classification
+      - dominant_failure_mode
+      - unresolved_notes
+    cliff_detection_signatures:
+      - sudden_transition_failure
+      - large_timing_variance_change
+      - rebound_or_overshoot_growth
+      - state_hover_persistence
+      - amplitude_collapse
+      - phase_drift_growth
+      - sensitivity_to_small_initial_condition_changes
+
+  attractor_logic:
+    stable_attractor_candidate:
+      meaning: >
+        Simulated trajectory remains bounded and returns to a similar state family
+        under stated assumptions and perturbations.
+      signatures:
+        - bounded_timing_variance
+        - bounded_amplitude_variance
+        - no_accumulating_phase_error
+        - rebound_or_overshoot_not_growing
+        - instability_proxies_not_growing
+        - startup_perturbations_converge
+      prohibited_claim:
+        - validated_stability
+
+    metastability:
+      meaning: >
+        System persists near threshold or balance conditions where small parameter
+        or startup changes determine whether motion commits, stalls, or diverges.
+      signatures:
+        - hover_persistence
+        - near_zero_net_drive
+        - delayed_release
+        - high_startup_sensitivity
+        - threshold_chatter
+        - competing_transition_paths
+
+    transient_coherence:
+      meaning: >
+        Motion appears organized temporarily but reset quality degrades or hidden
+        state drift accumulates.
+      signatures:
+        - initially_regular_cycles
+        - growing_timing_variance
+        - phase_drift
+        - slow_instability_proxy_growth
+        - reset_state_not_repeatable
+        - failure_after_apparent_success
+
+    divergence_toward_disorder:
+      meaning: >
+        Feedback loops amplify disturbance, timing error, rebound, wobble, delay,
+        or other instability proxies.
+      signatures:
+        - rebound_growth
+        - wobble_or_error_growth
+        - increasing_phase_error
+        - transition_misfires
+        - irregular_amplitude
+        - startup_sensitivity_persists_or_increases
+
+    collapse:
+      meaning: >
+        Motion fails to maintain required transitions, amplitude, state reset, or
+        drive margin.
+      signatures:
+        - amplitude_decay_below_minimum
+        - transition_noncommitment
+        - terminal_stall
+        - persistent_hover_lock
+        - drive_margin_consumed_by_losses
+        - recovery_or_reset_failure
+
+  failure_first_methodology:
+    priority_order:
+      - discover_collapse_regions
+      - identify_metastable_regions
+      - identify_instability_amplification_paths
+      - map_disorder_pathways
+      - only_then_describe_successful_candidate_regions
+    failure_record_schema:
+      required_fields:
+        - failure_name
+        - detection_logic
+        - triggering_state_or_transition
+        - probable_causal_pathways
+        - affected_variables
+        - sensitivity_parameters
+        - evidence_state
+        - unresolved_measurements
+    common_failure_categories:
+      - rebound_amplification
+      - timing_divergence
+      - hover_lock
+      - oscillation_decay
+      - chatter_amplification
+      - asymmetry_growth
+      - restoration_or_reset_collapse
+      - friction_or_loss_cliff
+      - state_transition_misfire
+      - startup_condition_fragility
+      - hidden_state_accumulation
+
+  governance_boundaries:
+    simulation_is:
+      - assumption_pressure_tool
+      - causal_visibility_tool
+      - parameter_sensitivity_tool
+      - instability_discovery_tool
+      - hypothesis_filter
+    simulation_is_not:
+      - validation
+      - physical_measurement
+      - robustness_proof
+      - scalability_proof
+      - safety_proof
+      - operational_readiness_evidence
+      - substitute_for_testing
+    admissible_output_language:
+      - simulated_boundedness_under_assumptions
+      - model_indicates_sensitivity_to_parameter
+      - model_identifies_candidate_cliff
+      - model_exposes_possible_failure_pathway
+      - model_suggests_measurement_priority
+    prohibited_output_language:
+      - system_is_stable
+      - design_is_validated
+      - robust_behavior_confirmed
+      - real_world_operation_proven
+      - scalable_architecture_demonstrated
+      - safe_or_ready_for_operation
+    clean_simulation_interpretation: >
+      Clean simulated behavior means the assumptions remained internally coherent
+      under model constraints. It does not prove stability, robustness, scalability,
+      or real-world behavior.
+
+  reconstruction_prompt:
+    use_when: rebuilding_a_future_white_box_dynamical_simulation
+    instruction: >
+      Start with the model mission and prohibited claims. Identify minimum
+      existential state variables before equations. Build an explicit state
+      machine, then construct inspectable force/drive and flow/accounting models.
+      Define transition commitment and failure logic. Map couplings before
+      compression. Sweep parameters to find cliffs, metastability, transient
+      coherence, divergence, and collapse. Classify motion quality, not mere
+      motion existence. Preserve governance boundaries: simulation pressures
+      assumptions; it does not validate reality.

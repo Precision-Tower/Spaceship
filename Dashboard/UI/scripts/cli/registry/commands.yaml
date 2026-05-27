@@ -1,0 +1,21 @@
+commands:
+  scan_repo:
+    cli_name: scan-repo
+    authority: read_only
+    default_agent: Cali
+  git_status:
+    cli_name: git-status
+    authority: read_only
+    default_agent: Executor
+  propose_directory_diff:
+    cli_name: propose-directory-diff
+    authority: propose_only
+    default_agent: Cali
+  grant_review:
+    cli_name: grant-review
+    authority: review_only
+    default_agent: Grant
+  apply_patch:
+    cli_name: apply-patch
+    authority: requires_approval
+    default_agent: Executor

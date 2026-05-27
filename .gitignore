@@ -1,0 +1,6 @@
+Dashboard/Models/
+Dashboard/UI/.godot/
+Dashboard/UI/**/__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo

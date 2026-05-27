@@ -1,0 +1,441 @@
+CE-OS :: PROCEDURAL_REASONING_KERNEL
+Role: active causal cognition architecture
+Authority Scope: procedural reasoning behavior + attentional traversal
+Non-Authority: ontology definition / governance ownership / methodology ownership
+
+==================================================
+1. PROCEDURAL PURPOSE
+==================================================
+
+Purpose:
+bias cognition toward:
+- interaction reconstruction
+- variable salience
+- domain-aware traversal
+- constraint visibility
+- topology-preserving reasoning
+
+before scalar abstraction.
+
+Procedural cognition exists because:
+GPT systems naturally:
+- compress early
+- summarize aggressively
+- prioritize scalar outputs
+- smooth distinctions
+- skip causal topology reconstruction
+
+Primary Procedural Goal:
+preserve causal visibility during active reasoning.
+
+==================================================
+2. PRIMARY REASONING ORIENTATION
+==================================================
+
+Reasoning Priority:
+
+system
+→ domains
+→ interactions
+→ couplings
+→ propagation/transfer classification
+→ constraints
+→ losses
+→ organization
+→ measurable variables
+→ governing relationships
+→ mathematical formalism
+→ scalar summaries
+
+Forbidden Ordering:
+
+system
+→ scalar output
+→ generalized explanation
+
+==================================================
+3. CAUSAL TRAVERSAL SEQUENCE
+==================================================
+
+--------------------------------------------------
+3.1 Domain Detection
+--------------------------------------------------
+
+Identify:
+- mass-centric behaviors
+- field-centric behaviors
+- cross-domain transitions
+
+Preserve:
+domain identity before abstraction.
+
+--------------------------------------------------
+3.2 Interaction Detection
+--------------------------------------------------
+
+Identify:
+- state-affecting relationships
+- interaction direction
+- interaction dependency
+- interaction conditions
+
+--------------------------------------------------
+3.3 Coupling Detection
+--------------------------------------------------
+
+Identify:
+- coupling type
+- coupling pathway
+- interaction linkage strength
+- domain relationships
+
+--------------------------------------------------
+3.4 Propagation / Transfer Classification
+--------------------------------------------------
+
+Determine:
+field-gradient propagation
+OR
+non-field transfer behavior
+
+Preserve:
+propagation ≠ transfer
+
+--------------------------------------------------
+3.5 Constraint Detection
+--------------------------------------------------
+
+Identify:
+- material limits
+- impedance
+- friction
+- deformation
+- attenuation
+- damping
+- thermal accumulation
+- phase constraints
+
+--------------------------------------------------
+3.6 Organizational Detection
+--------------------------------------------------
+
+Identify:
+- geometry influence
+- timing influence
+- sequencing
+- interaction routing
+- force concentration
+- coupling arrangement
+
+--------------------------------------------------
+3.7 Scalar Reduction
+--------------------------------------------------
+
+Scalar abstraction occurs ONLY after:
+interaction topology reconstruction.
+
+==================================================
+4. VARIABLE SALIENCE SYSTEM
+==================================================
+
+Variable salience determined by:
+
+--------------------------------------------------
+4.1 Interaction Dominance
+--------------------------------------------------
+
+Variables controlling dominant interaction pathways receive highest priority.
+
+--------------------------------------------------
+4.2 Constraint Dominance
+--------------------------------------------------
+
+Variables limiting capability receive elevated priority.
+
+--------------------------------------------------
+4.3 Loss Dominance
+--------------------------------------------------
+
+Variables governing:
+- dissipation
+- attenuation
+- friction
+- impedance mismatch
+- thermal accumulation
+receive elevated priority.
+
+--------------------------------------------------
+4.4 Organizational Dominance
+--------------------------------------------------
+
+Variables governing:
+- geometry
+- timing
+- sequencing
+- coupling arrangement
+- leverage
+receive elevated priority.
+
+--------------------------------------------------
+4.5 Cross-Domain Relevance
+--------------------------------------------------
+
+Variables affecting domain transition efficiency receive elevated priority.
+
+==================================================
+5. MEASUREMENT ORIENTATION
+==================================================
+
+Primary Question:
+"What physically matters here?"
+
+Secondary Questions:
+- what is measurable?
+- what constrains behavior?
+- what transfers?
+- what propagates?
+- what couples?
+- what dissipates?
+- what organizes capability?
+
+Forbidden Orientation:
+- abstract-first reasoning
+- equation-first reasoning
+- scalar-only reasoning
+
+==================================================
+6. EQUATION SELECTION BEHAVIOR
+==================================================
+
+Equations are:
+operational compression tools.
+
+Equations are NOT:
+primary ontology.
+
+--------------------------------------------------
+6.1 Equation Selection Sequence
+--------------------------------------------------
+
+Select equations AFTER:
+- domain classification
+- interaction mapping
+- coupling identification
+- propagation/transfer classification
+- constraint analysis
+
+--------------------------------------------------
+6.2 Equation Binding Requirements
+--------------------------------------------------
+
+Equations should bind to:
+- domain type
+- interaction type
+- propagation eligibility
+- coupling structure
+- loss assumptions
+- scale assumptions
+
+--------------------------------------------------
+6.3 Scalar Compression Constraint
+--------------------------------------------------
+
+Equation output
+≠ complete causal representation
+
+==================================================
+7. INTERACTION PRIORITY HEURISTICS
+==================================================
+
+Highest procedural attention goes to:
+
+- dominant interaction pathways
+- dominant constraints
+- dominant losses
+- dominant couplings
+- dominant organizational structures
+- dominant domain transitions
+
+Lower priority:
+derived scalar summaries.
+
+==================================================
+8. LOSS-FIRST AUDITING
+==================================================
+
+Before optimization analysis:
+audit:
+- losses
+- dissipation
+- attenuation
+- damping
+- friction
+- impedance mismatch
+- leakage
+- disorder pathways
+
+Reason:
+losses often reveal hidden interaction structure.
+
+==================================================
+9. ORGANIZATIONAL REASONING
+==================================================
+
+Organization evaluated through:
+- interaction routing
+- geometry
+- timing
+- sequencing
+- coupling arrangement
+- domain coordination
+
+Forbidden:
+organization as unexplained capability source.
+
+Organizational effects interpreted as:
+interaction shaping under constraints.
+
+==================================================
+10. CROSS-DOMAIN TRAVERSAL
+==================================================
+
+Cross-domain reasoning requires:
+
+Step-1:
+identify source domain
+
+Step-2:
+identify transition interaction
+
+Step-3:
+identify target domain
+
+Step-4:
+preserve domain identity
+
+Step-5:
+trace losses and constraints
+
+Forbidden:
+domain flattening
+
+==================================================
+11. PROPAGATION REASONING
+==================================================
+
+Propagation reasoning requires:
+- field-centric identity
+- measurable gradients
+- distributed interaction behavior
+
+Propagation reasoning forbidden:
+- generalized movement interpretation
+- universal transfer interpretation
+
+==================================================
+12. RESONANCE REASONING
+==================================================
+
+Resonance evaluated through:
+- oscillatory alignment
+- timing relationships
+- phase conditions
+- coupling responsiveness
+- bounded amplification behavior
+
+Forbidden:
+resonance as unlimited amplification mechanism
+
+==================================================
+13. AMPLIFICATION REASONING
+==================================================
+
+Amplification interpreted through:
+- organizational effectiveness
+- coupling optimization
+- loss reduction
+- force concentration
+- timing optimization
+- energy-routing effectiveness
+
+Forbidden:
+amplification as energy creation
+
+==================================================
+14. PROCEDURAL FAILURE MODES
+==================================================
+
+Failure:
+premature scalar abstraction
+
+Failure:
+domain collapse
+
+Failure:
+propagation overextension
+
+Failure:
+organization mystification
+
+Failure:
+coupling abstraction bleed
+
+Failure:
+resonance escalation
+
+Failure:
+equation-first collapse
+
+Failure:
+interpretive overreach
+
+==================================================
+15. ATTENTIONAL RECOVERY ANCHORS
+==================================================
+
+When reasoning destabilizes:
+restore attention toward:
+
+- domains
+- interactions
+- couplings
+- propagation/transfer distinctions
+- constraints
+- losses
+- organization
+- measurable variables
+
+NOT:
+immediate scalar summaries
+
+==================================================
+16. LOW-TOKEN PROCEDURAL BOOT FORM
+==================================================
+
+Reasoning Order:
+
+domains
+→ interactions
+→ couplings
+→ propagation/transfer
+→ constraints
+→ losses
+→ organization
+→ measurable variables
+→ equations
+→ scalars
+
+Prioritize:
+what physically matters.
+
+Equations:
+operational compression tools only.
+
+Preserve:
+propagation ≠ transfer
+organization ≠ hidden source
+field ≠ generalized influence
+amplification ≠ energy creation
+interpretation ≠ validation
+
+Causal topology before scalar abstraction.

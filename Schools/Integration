@@ -1,0 +1,211 @@
+Integration:
+  authority_state: NON_CANONICAL_SUPPORT_FILE
+  classification: INTERFACE_CONSTRAINT_REGISTRY
+  model: membrane_visibility_system
+
+  purpose:
+    note: >
+      Integration records and constrains cross-file boundary contact.
+      It exposes dependencies, handoffs, coupling points, reference survival
+      obligations, and authority implications without deciding outcomes,
+      resolving pressure, ranking authorities, validating claims, defining
+      terms, or coordinating repository state.
+
+  core_function:
+    expose_contact_without_control
+
+  preserved_property:
+    separability_without_isolation
+
+  governs:
+    - interface_visibility
+    - cross_file_contact_declarations
+    - dependency_exposure
+    - handoff_visibility
+    - coupling_risk_flags
+    - reference_survival_requirements
+    - boundary_contact_records
+
+  does_not_govern:
+    - truth
+    - validation
+    - admissibility
+    - semantic_identity
+    - causal_primitives
+    - canon
+    - topology
+    - authority_priority
+    - conflict_resolution
+    - transition_acceptance
+    - reconstruction_validity
+
+  source_authority_references:
+    claim_admissibility: Governance
+    causal_primitives: CE-OS
+    semantic_identity: Lexicon
+    durable_continuity: Gold
+    reconstruction_mechanics: Recovery
+    state_movement_constraints: Transition
+    topology_visibility: Directory
+    engineering_structure:
+      - Engine
+      - Physics
+      - Prototype
+
+  doctrine:
+    interface_pressure:
+      may:
+        - expose_pressure
+        - preserve_references
+        - show_coupling
+        - reveal_authority_implications
+        - constrain_boundary_behavior
+
+      may_not:
+        - resolve_pressure
+        - interpret_contacts
+        - recommend_paths
+        - prioritize_authorities
+        - clean_conflicts
+        - collapse_visibility
+
+      reason: >
+        Pressure resolution requires authority.
+        Integration has no authority.
+
+  interface_contact_record_schema:
+    contact_id:
+    files_touching:
+      - source_file:
+        contacted_file:
+
+    contact_description:
+
+    contact_kind:
+      allowed_values:
+        - reference
+        - dependency
+        - handoff
+        - constraint
+        - contradiction_exposure
+        - transition_contact
+        - recovery_contact
+        - semantic_contact
+        - causal_contact
+        - engineering_contact
+        - topology_contact
+
+    implicated_authorities:
+      - Governance
+      - CE-OS
+      - Lexicon
+      - Gold
+      - Recovery
+      - Transition
+      - Directory
+      - Engine
+      - Physics
+      - Prototype
+
+    boundary_rule:
+      note: >
+        State what this contact is allowed to expose or constrain.
+        Do not state which file wins.
+
+    prohibited_interpretations:
+      - this_contact_does_not_validate
+      - this_contact_does_not_resolve_conflict
+      - this_contact_does_not_transfer_authority
+      - this_contact_does_not_redefine_terms
+      - this_contact_does_not_prioritize_sources
+      - this_contact_does_not_clean_lineage
+
+    references_that_must_survive:
+      - source_file_paths
+      - contradiction_ids
+      - unresolved_variables
+      - authority_notes
+      - transition_records
+      - recovery_records
+      - failed_state_notes
+
+    coupling_risk:
+      level: low | medium | high
+      risk_reason:
+
+    required_followup:
+      governance_check_if_claim_boundary_touched:
+      lexicon_check_if_term_identity_touched:
+      ce_os_check_if_causal_primitive_touched:
+      transition_check_if_state_movement_touched:
+      recovery_check_if_reconstruction_path_touched:
+      directory_check_if_topology_visibility_touched:
+
+  contradiction_reference_survival_rule:
+    rule: >
+      Integration must preserve contradiction lineage by reference, not summary.
+      Boundary contact may expose contradiction pressure but may not resolve,
+      soften, merge, rename, or clean the contradiction.
+
+    required_preservation:
+      - contradiction_id
+      - source_location
+      - affected_files
+      - unresolved_variables
+      - authority_lane_implicated
+      - last_known_state
+      - failed_or_blocked_transition_if_present
+
+  prohibited_behavior_registry:
+    - arbitration
+    - priority_logic
+    - conflict_resolution
+    - automatic_conflict_handling
+    - automatic_forward_interpretation
+    - path_recommendation
+    - authority_ranking
+    - semantic_redefinition
+    - validation_generation
+    - canon_mutation
+    - topology_ownership
+    - handoff_cleanup
+    - contradiction_summary_as_resolution
+    - coordination_engine_behavior
+
+  expansion_gate:
+    current_state: frozen_after_minimal_draft
+
+    expansion_prohibited_until:
+      - measurable_boundary_density
+      - repeated_interface_pressure
+      - contradiction_lineage_load
+      - retrieval_stress
+      - transition_interface_coupling_pressure
+      - Governance_collision_check
+
+    prohibited_prebuild:
+      - interface_taxonomies
+      - contact_layers
+      - routing_priorities
+      - coordination_logic
+      - arbitration_helpers
+      - automatic_conflict_handling
+
+  meta_governance_drift_watch:
+    investigate_if_Integration_begins:
+      - interpreting_contacts
+      - recommending_paths
+      - resolving_pressure
+      - cleaning_conflicts
+      - prioritizing_authorities
+      - selecting_forward_interpretations
+      - collapsing_visibility
+
+    diagnosis_if_detected: >
+      Integration is exceeding interface constraint role
+      and drifting toward hidden meta-governance.
+
+  terminal_lock:
+    function: expose_contact_without_control
+    repository_core: interaction_without_collapse
+    preserved_property: separability_without_isolation

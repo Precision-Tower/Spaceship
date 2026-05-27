@@ -1,0 +1,178 @@
+BAS Test 0 — Phase 0 Findings Document
+
+Status: frozen pre-simulation state snapshot
+Purpose: preserve current BAS Test 0 configuration, claim boundaries, causal risks, unresolved variables, and simulation limits before numerical or physical iteration.
+
+1. Locked Test 0 Configuration
+BAS_Test_0_locked_configuration:
+  moving_body: HDPE_drum
+  water_depth: 4_ft
+  guide_system: single_vertical_stainless_rod
+  drum_interface: low_friction_sleeve_or_bushing
+  rocker_bar: removed
+  output_extraction: none
+  pump: externally_powered_AC_or_DC
+  pump_energy_constraint: ignored_for_Test_0
+  initial_stroke: 6_in
+  secondary_stroke: 12_in_only_after_6_in_bounded
+  motion: vertical_oscillation_only
+  objective: bounded_repeatable_vertical_buoyancy_state_cycling
+
+Test 0 is a falsification rig, not a prototype demonstration.
+
+2. Current Admissible Claims
+
+BAS Test 0 may currently claim only:
+
+A simplified test configuration has been defined.
+The test objective is bounded vertical oscillation of an HDPE drum under shallow-water conditions.
+External pump energy is allowed only to restore buoyancy state.
+Output extraction, efficiency, and power generation are outside scope.
+Initial testing is limited to a 6-inch stroke.
+Success, if observed, applies only to the locked Test 0 condition.
+
+Admissible wording:
+
+“BAS Test 0 is configured to test whether controlled buoyancy-state cycling can produce bounded repeated vertical motion under recorded 4 ft water-depth conditions.”
+
+3. Current Prohibited Claims
+
+The following remain inadmissible:
+
+BAS works.
+BAS is validated.
+BAS is stable in general.
+BAS is self-sustaining.
+BAS generates useful power.
+BAS is efficient.
+BAS is scalable.
+BAS is deployment-ready.
+BAS is dirty-water viable.
+BAS is durable.
+BAS is safe.
+BAS has operational reliability.
+Six-inch success implies twelve-inch success.
+Pump-driven motion equals buoyancy-state oscillation.
+Smooth motion equals attractor behavior.
+4. Dominant Causal Risks
+dominant_causal_risks:
+  - rod_bind
+  - sleeve_drag_growth
+  - pump_forced_motion
+  - partial_fill_lock
+  - metastable_hover
+  - trapped_air_shift
+  - slosh_tilt
+  - asymmetric_fill
+  - phase_drift
+  - restoration_lag
+  - rebound_reversal
+  - stroke_decay
+
+Primary risk concentration has shifted from rocker/output behavior to:
+
+rod/bushing friction,
+drum tilt,
+pump timing and forcing,
+fill-state ambiguity,
+trapped air,
+short-stroke false confidence.
+5. Highest-Leverage Unknowns
+
+Ranked by likelihood of determining success or falsification:
+
+Q_pump vs Q_leak under actual tubing/head conditions
+Determines whether restoration can dominate leakage.
+Rod/bushing friction under wet cyclic load
+Determines whether vertical motion is freely buoyancy-driven or guide-limited.
+Pump-forced-motion risk
+Determines whether the drum is actually moving by buoyancy transition or by pump thrust/tubing/vibration.
+Partial-fill behavior
+Determines whether the drum commits to state transitions or stalls in ambiguous buoyancy states.
+Trapped air migration
+Determines whether buoyancy state remains repeatable.
+Stroke timing variance
+Determines whether motion is bounded or drifting.
+Restoration lag
+Determines whether recovery phase remains phase-aligned.
+Slosh-induced tilt / asymmetric flooding
+Determines whether internal fluid motion causes side-load and rod bind.
+Rebound at stroke reversal
+Determines whether endpoint motion corrupts state separation.
+Six-inch masking effect
+Determines whether short-stroke success hides instability that would appear at larger stroke.
+6. Current Attractor Hypotheses
+Classification	Evidence signature
+Stable attractor candidate	Repeated cycles remain bounded in stroke, timing, restoration delay, friction, and fill state without manual intervention. Perturbations decay back toward the same envelope.
+Metastable behavior	Several cycles appear bounded, but partial-fill states, trapped air, timing drift, or friction sensitivity emerge intermittently. System survives temporarily but depends on narrow conditions.
+Transient coherence	Early cycles look rhythmic, then stroke, timing, restoration, or valve/fill state drifts. Motion appears organized but degrades.
+Divergence toward disorder	Rod bind, leakage growth, pump mismatch, partial-fill lock, rebound corruption, or side-load accumulation increases until cycling fails.
+
+Current evidence state does not select among these. Simulation may explore signatures, but physical measurement remains required.
+
+7. Experimental Governance Boundaries
+
+Mandatory boundaries:
+
+governance_boundaries:
+  no_hidden_intervention: true
+  no_manual_rescue_claimed_as_success: true
+  no_selective_cycle_reporting: true
+  no_edited_video_as_primary_evidence: true
+  no_output_claims: true
+  no_efficiency_claims: true
+  no_power_generation_claims: true
+  no_stability_claim_without_bounds: true
+  no_validation_from_simulation: true
+
+Required evidence discipline:
+
+log startup state,
+record full runs,
+preserve failed cycles,
+report variance, not just averages,
+separate clean runs from contaminated runs,
+document pump timing and behavior,
+document rod/bushing condition before and after,
+classify intervention-contaminated runs explicitly.
+8. Transition to Simulation Phase
+Simulation is allowed to explore
+expected stroke timing ranges,
+sensitivity of Q_pump vs Q_leak,
+restoration lag effects,
+rod friction thresholds,
+partial-fill and trapped-air sensitivity,
+phase drift signatures,
+rebound effects,
+stroke-length sensitivity between 6 inches and 12 inches,
+likely attractor/metastability/divergence signatures.
+Simulation cannot validate
+stable BAS behavior,
+repeatability,
+low-friction guide performance,
+dirty-water viability,
+pump restoration dominance,
+absence of trapped-air problems,
+absence of rod bind,
+physical durability,
+scalability,
+operational readiness.
+Physical measurements remain mandatory
+mandatory_physical_measurements:
+  - q_pump_under_actual_tubing_and_head
+  - q_leak_under_test_conditions
+  - stroke_position_over_time
+  - cycle_timing_variance
+  - restoration_delay
+  - rod_bushing_friction_pre_and_post_run
+  - pump_command_timing
+  - evidence_of_pump_forced_motion_or_absence
+  - fill_state_visual_record
+  - trapped_air_visual_record
+  - rebound_observation
+  - terminal_failure_state
+Phase 0 Boundary Statement
+
+BAS Test 0 is currently a locked, simplified falsification configuration for observing whether an HDPE drum can produce bounded repeated vertical buoyancy-state motion over an initial 6-inch stroke in 4 ft of water.
+
+Simulation may prepare expectations and identify sensitive variables. It may not promote BAS beyond conceptual/plausible experimental status. Only recorded physical runs with preserved evidence can advance the evidence state.

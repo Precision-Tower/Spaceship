@@ -1,0 +1,2369 @@
+# Objects.yaml
+# Physical operational topology registry for the Belize-based sargassum interception and processing system.
+# Authority: defines high-value physical project objects and their admissible variable attachments.
+# Boundary: does not redefine variables, equations, operators, formats, subsystem mechanics, or state machines.
+# Topology preserved: Intercept -> Drain/Separate -> Contain -> Process -> Recover/Test -> Reset -> Validate
+
+objects:
+
+  modular_tile_array:
+    object_type: modular_floating_work_platform
+    operational_role:
+      - Intercept
+      - Drain/Separate
+      - staging_interface
+      - offshore_manual_work_surface
+    physical_domains:
+      - flotation
+      - structural
+      - environmental
+      - operational
+      - validation
+    attached_variables:
+      - loaded_weight
+      - biomass_weight
+      - retained_water_mass
+      - buoyancy_margin
+      - freeboard
+      - trim_angle
+      - list_angle
+      - waterline_z
+      - wave_height
+      - wind_speed
+      - current_speed
+      - deck_load_limit
+      - distributed_load
+      - operator_cycle_time
+      - inspection_status
+      - evidence_level
+    governing_formats:
+      - buoyancy_payload_support
+      - stability_center_of_mass
+      - drainage_retained_water
+      - mooring_environmental_load
+      - towing_drag_resistance
+    governing_margins:
+      - buoyancy_margin
+      - stability_margin
+      - environmental_operating_margin
+      - connection_margin
+      - workforce_margin
+    interfaces:
+      - primary_support_vessel
+      - tile_connection_interface
+      - grated_drainage_surface
+      - digestion_chamber
+      - workforce_manual_handling
+      - validation_logging_interface
+    blocking_unknowns:
+      - submerged_volume_under_load
+      - retained_water_mass
+      - minimum_safe_freeboard
+      - trim_limit
+      - list_limit
+      - sea_state_limit
+      - tile_connection_durability
+      - labor_to_throughput_ratio
+    measurement_unlocks:
+      - loaded_freeboard_measurements
+      - trim_and_list_under_biomass_load
+      - drainage_curve
+      - sea_state_operating_logs
+      - tile_connection_cycle_observations
+      - operator_cycle_time_logs
+    validation_status: "[PENDING VALIDATION]"
+
+  grated_drainage_surface:
+    object_type: permeable_low_lift_biomass_work_surface
+    operational_role:
+      - Drain/Separate
+      - passive_dewatering
+      - marine_life_separation_support
+      - biomass_weight_reduction
+    physical_domains:
+      - fluid
+      - mass
+      - structural
+      - environmental
+      - operational
+      - validation
+    attached_variables:
+      - drainage_rate
+      - retained_water_mass
+      - biomass_weight
+      - wet_weight
+      - distributed_load
+      - abrasion_resistance
+      - surface_area
+      - deck_zone_area
+      - clogging_state
+      - turbidity
+      - pH
+      - evidence_level
+    governing_formats:
+      - drainage_retained_water
+      - buoyancy_payload_support
+      - workforce_reset_flow
+      - lifecycle_degradation
+    governing_margins:
+      - drainage_capacity_margin
+      - payload_margin
+      - buoyancy_margin
+      - operator_access_margin
+      - maintenance_margin
+    interfaces:
+      - modular_tile_array
+      - workforce_manual_handling
+      - environmental_observation_interface
+      - residual_biomass_path
+      - validation_logging_interface
+    blocking_unknowns:
+      - drainage_rate_curve
+      - retained_water_mass
+      - clogging_effect
+      - grate_spacing_effect_on_bycatch_return
+      - sediment_loading_effect
+    measurement_unlocks:
+      - time_to_drain_by_biomass_load
+      - retained_water_mass_before_after_drainage
+      - clogging_frequency_logs
+      - bycatch_observation_logs
+      - surface_wear_inspection_logs
+    validation_status: "[PENDING VALIDATION]"
+
+  tile_flotation_row:
+    object_type: distributed_buoyancy_support_structure
+    operational_role:
+      - Intercept
+      - Drain/Separate
+      - flotation_support
+      - payload_margin_provider
+    physical_domains:
+      - flotation
+      - mass
+      - structural
+      - environmental
+      - validation
+    attached_variables:
+      - displacement_volume
+      - submerged_volume
+      - buoyant_force
+      - buoyancy_margin
+      - reserve_buoyancy
+      - flotation_failure_tolerance
+      - freeboard
+      - waterline_z
+      - loaded_weight
+      - corrosion_resistance
+      - UV_resistance
+      - evidence_level
+    governing_formats:
+      - buoyancy_payload_support
+      - stability_center_of_mass
+      - lifecycle_degradation
+    governing_margins:
+      - buoyancy_margin
+      - reserve_buoyancy_margin
+      - flotation_failure_margin
+      - maintenance_margin
+    interfaces:
+      - modular_tile_array
+      - tile_connection_interface
+      - chamber_cradle
+      - validation_logging_interface
+    blocking_unknowns:
+      - submerged_volume_under_load
+      - minimum_buoyancy_margin
+      - minimum_safe_freeboard
+      - flotation_failure_tolerance
+      - material_degradation_rate
+    measurement_unlocks:
+      - static_load_float_tests
+      - incremental_payload_freeboard_curve
+      - single_unit_loss_response_test
+      - UV_and_salt_exposure_logs
+      - inspection_cycle_count
+    validation_status: "[PENDING VALIDATION]"
+
+  tile_connection_interface:
+    object_type: articulating_marine_connection_boundary
+    operational_role:
+      - Intercept
+      - deployment
+      - towing
+      - environmental_load_transfer
+      - emergency_retrieval
+    physical_domains:
+      - structural
+      - environmental
+      - flotation
+      - safety
+      - validation
+    attached_variables:
+      - anchor_load
+      - shear_load
+      - bending_moment
+      - fatigue_cycles
+      - tow_force
+      - drag_force
+      - wave_height
+      - wind_speed
+      - current_speed
+      - connection_margin
+      - inspection_status
+      - anomaly_count
+      - evidence_level
+    governing_formats:
+      - mooring_environmental_load
+      - towing_drag_resistance
+      - lifecycle_degradation
+      - stability_center_of_mass
+    governing_margins:
+      - connection_margin
+      - anchor_margin
+      - tow_margin
+      - retrieval_margin
+      - maintenance_margin
+    interfaces:
+      - modular_tile_array
+      - primary_support_vessel
+      - low_impact_mooring_or_tow_point
+      - emergency_retrieval_workflow
+      - validation_logging_interface
+    blocking_unknowns:
+      - connection_durability
+      - cyclic_loading_response
+      - tow_point_capacity
+      - drag_coefficient
+      - retrieval_threshold
+      - sea_state_limit
+    measurement_unlocks:
+      - cyclic_connection_load_tests
+      - tow_trial_force_measurements
+      - wave_condition_retrieval_logs
+      - failure_mode_observations
+      - post_retrieval_inspection_logs
+    validation_status: "[UNRESOLVED ENGINEERING VARIABLE]"
+
+  digestion_chamber:
+    object_type: sealed_horizontal_batch_processing_vessel
+    operational_role:
+      - Contain
+      - Process
+      - gas_generation_environment
+      - effluent_generation_environment
+      - batch_tracking_unit
+    physical_domains:
+      - containment
+      - fluid
+      - gas
+      - chemical
+      - mass
+      - structural
+      - operational
+      - validation
+    attached_variables:
+      - internal_volume
+      - fill_percent
+      - biomass_weight
+      - fluid_weight
+      - loaded_weight
+      - headspace_volume
+      - gas_pressure
+      - gas_volume
+      - gas_generation_rate
+      - gas_composition
+      - leak_rate
+      - seal_area
+      - seal_material
+      - cycle_count
+      - batch_id
+      - evidence_level
+    governing_formats:
+      - digestion_timing
+      - containment_leak_overflow
+      - gas_pressure_venting
+      - lifecycle_degradation
+      - workforce_reset_flow
+    governing_margins:
+      - chamber_capacity_margin
+      - seal_margin
+      - gas_headspace_margin
+      - pressure_margin
+      - process_margin
+      - maintenance_margin
+    interfaces:
+      - chamber_hatch_seal_boundary
+      - chamber_cradle
+      - quick_connect_transfer_interface
+      - gas_fluid_transfer_manifold
+      - grated_drainage_surface
+      - shoreside_reset_zone
+      - validation_logging_interface
+    blocking_unknowns:
+      - maximum_volumetric_capacity
+      - digestion_rate
+      - batch_timing
+      - gas_generation_rate
+      - gas_composition
+      - maximum_allowable_pressure
+      - agitation_efficiency
+      - seal_longevity
+    measurement_unlocks:
+      - batch_mass_and_fill_logs
+      - headspace_pressure_curve
+      - gas_composition_sampling
+      - effluent_volume_measurement
+      - seal_leak_tests
+      - cycle_count_to_failure_observations
+      - digestion_completion_threshold_trials
+    validation_status: "[PENDING VALIDATION]"
+
+  chamber_cradle:
+    object_type: chamber_support_and_restraint_structure
+    operational_role:
+      - Contain
+      - Process
+      - stabilization_of_loaded_chamber
+      - load_transfer_to_tile_or_vessel
+      - failure_prevention_boundary
+    physical_domains:
+      - structural
+      - mass
+      - flotation
+      - operational
+      - safety
+      - validation
+    attached_variables:
+      - cradle_load
+      - point_load
+      - loaded_weight
+      - center_of_mass
+      - trim_angle
+      - list_angle
+      - strap_tension
+      - anchor_load
+      - fatigue_cycles
+      - deflection
+      - inspection_status
+      - evidence_level
+    governing_formats:
+      - stability_center_of_mass
+      - buoyancy_payload_support
+      - lifecycle_degradation
+    governing_margins:
+      - stability_margin
+      - cradle_load_margin
+      - restraint_margin
+      - deck_load_margin
+      - maintenance_margin
+    interfaces:
+      - digestion_chamber
+      - modular_tile_array
+      - primary_support_vessel_deck
+      - tie_down_restraint_interface
+      - validation_logging_interface
+    blocking_unknowns:
+      - cradle_design
+      - chamber_mounting_method
+      - dynamic_shift_under_wave_loading
+      - strap_tension_limit
+      - localized_deck_stress_limit
+    measurement_unlocks:
+      - loaded_chamber_restraint_tests
+      - cradle_deflection_measurements
+      - strap_tension_measurements
+      - trim_and_list_with_chambers_loaded
+      - inspection_after_wave_exposure
+    validation_status: "[UNRESOLVED ENGINEERING VARIABLE]"
+
+  chamber_hatch_seal_boundary:
+    object_type: repeatable_access_and_containment_boundary
+    operational_role:
+      - Contain
+      - Process
+      - loading_unloading_access
+      - gas_tight_boundary
+      - maintenance_gate
+    physical_domains:
+      - containment
+      - gas
+      - fluid
+      - material
+      - operational
+      - safety
+      - validation
+    attached_variables:
+      - seal_area
+      - gas_pressure
+      - boundary_area
+      - boundary_load
+      - seal_capacity
+      - leak_rate
+      - acceptable_leak_rate
+      - cycle_count
+      - fatigue_cycles
+      - seal_material
+      - chemical_compatibility
+      - inspection_status
+      - evidence_level
+    governing_formats:
+      - containment_leak_overflow
+      - gas_pressure_venting
+      - lifecycle_degradation
+    governing_margins:
+      - seal_margin
+      - containment_margin
+      - pressure_margin
+      - maintenance_margin
+      - repeatability_margin
+    interfaces:
+      - digestion_chamber
+      - workforce_tactile_verification
+      - containment_hold_state
+      - maintenance_lockout_workflow
+      - validation_logging_interface
+    blocking_unknowns:
+      - hatch_sealing_method
+      - seal_capacity
+      - leak_rate
+      - cycle_degradation
+      - acceptable_leak_rate
+      - seal_longevity
+      - replacement_interval
+    measurement_unlocks:
+      - pressure_hold_tests
+      - leak_rate_measurements
+      - seal_cycle_degradation_curve
+      - tactile_inspection_correlation_logs
+      - post_cleaning_seal_integrity_logs
+    validation_status: "[PENDING VALIDATION]"
+
+  quick_connect_transfer_interface:
+    object_type: standardized_fluid_gas_tooling_boundary
+    operational_role:
+      - Transfer
+      - Contain
+      - Recover/Test
+      - subsystem_decoupling
+      - closed_or_pump_assisted_movement
+    physical_domains:
+      - fluid
+      - gas
+      - containment
+      - chemical
+      - material
+      - operational
+      - safety
+      - validation
+    attached_variables:
+      - flow_rate
+      - leak_rate
+      - acceptable_leak_rate
+      - gas_pressure
+      - fluid_volume
+      - seal_material
+      - chemical_compatibility
+      - abrasion_resistance
+      - fatigue_cycles
+      - cycle_count
+      - inspection_status
+      - evidence_level
+    governing_formats:
+      - containment_leak_overflow
+      - gas_pressure_venting
+      - lifecycle_degradation
+      - workforce_reset_flow
+    governing_margins:
+      - transfer_capacity_margin
+      - seal_margin
+      - containment_margin
+      - maintenance_margin
+      - operator_access_margin
+    interfaces:
+      - digestion_chamber
+      - gas_fluid_transfer_manifold
+      - primary_support_vessel_transfer_zone
+      - electrolysis_work_zone
+      - external_gas_storage_interface
+      - validation_logging_interface
+    blocking_unknowns:
+      - transfer_capacity
+      - leak_rate
+      - seal_capacity
+      - chemical_compatibility_under_process_fluids
+      - clogging_from_sargassum_fines
+      - cycle_degradation
+    measurement_unlocks:
+      - repeated_connect_disconnect_leak_tests
+      - transfer_flow_rate_measurements
+      - clogging_frequency_logs
+      - seal_wear_after_salt_sediment_exposure
+      - spill_or_drip_incident_logs
+    validation_status: "[PENDING VALIDATION]"
+
+  gas_fluid_transfer_manifold:
+    object_type: centralized_transfer_and_isolation_node
+    operational_role:
+      - Transfer
+      - Recover/Test
+      - containment_routing
+      - receiving_capacity_boundary
+      - isolation_point
+    physical_domains:
+      - fluid
+      - gas
+      - containment
+      - chemical
+      - structural
+      - safety
+      - validation
+    attached_variables:
+      - flow_rate
+      - gas_pressure
+      - gas_volume
+      - fluid_volume
+      - leak_rate
+      - accumulated_quantity
+      - receiving_capacity_margin
+      - containment_capacity
+      - anchor_load
+      - corrosion_resistance
+      - inspection_status
+      - evidence_level
+    governing_formats:
+      - containment_leak_overflow
+      - gas_pressure_venting
+      - lifecycle_degradation
+    governing_margins:
+      - transfer_capacity_margin
+      - receiving_capacity_margin
+      - containment_margin
+      - venting_margin
+      - maintenance_margin
+    interfaces:
+      - quick_connect_transfer_interface
+      - digestion_chamber
+      - external_gas_storage_interface
+      - electrolysis_work_zone
+      - secondary_containment_tray
+      - primary_support_vessel_transfer_zone
+      - validation_logging_interface
+    blocking_unknowns:
+      - manifold_routing_capacity
+      - venting_capacity
+      - external_storage_capacity
+      - acceptable_leak_rate
+      - corrosion_lifecycle
+      - isolation_valve_repeatability
+    measurement_unlocks:
+      - manifold_pressure_drop_measurements
+      - flow_capacity_tests
+      - valve_cycle_count_logs
+      - leak_detection_trials
+      - corrosion_inspection_logs
+      - receiving_capacity_transfer_logs
+    validation_status: "[PENDING VALIDATION]"
+
+  primary_support_vessel_deck:
+    object_type: mobile_logistics_and_staging_platform
+    operational_role:
+      - Intercept_support
+      - deployment_retrieval
+      - Transfer
+      - Recover/Test_support
+      - clean_dirty_zone_separation
+      - offshore_logistics_hub
+    physical_domains:
+      - structural
+      - logistics
+      - operational
+      - safety
+      - energy
+      - validation
+    attached_variables:
+      - deck_load_limit
+      - point_load
+      - distributed_load
+      - loaded_weight
+      - center_of_mass
+      - trim_angle
+      - list_angle
+      - clearance_envelope
+      - deck_zone_area
+      - deployment_time
+      - retrieval_time
+      - inspection_status
+      - evidence_level
+    governing_formats:
+      - stability_center_of_mass
+      - buoyancy_payload_support
+      - workforce_reset_flow
+      - power_energy_margin
+      - lifecycle_degradation
+    governing_margins:
+      - deck_load_margin
+      - stability_margin
+      - operator_access_margin
+      - deployment_margin
+      - retrieval_margin
+      - maintenance_margin
+    interfaces:
+      - modular_tile_array
+      - digestion_chamber
+      - chamber_cradle
+      - primary_support_vessel_transfer_zone
+      - psv_power_control_zone
+      - clean_zone
+      - dirty_zone
+      - validation_logging_interface
+    blocking_unknowns:
+      - deployment_retrieval_mechanism
+      - vessel_payload_limit
+      - deck_zone_clearance_requirements
+      - loaded_trim_response
+      - personnel_route_requirements
+      - sea_state_operating_limit
+    measurement_unlocks:
+      - deck_load_mapping
+      - chamber_and_tile_staging_trials
+      - deployment_retrieval_cycle_time_logs
+      - trim_and_list_under_staged_load
+      - operator_route_clearance_checks
+    validation_status: "[UNRESOLVED ENGINEERING VARIABLE]"
+
+  primary_support_vessel_transfer_zone:
+    object_type: onboard_contained_transfer_work_zone
+    operational_role:
+      - Transfer
+      - Recover/Test_support
+      - containment_interface
+      - hazard_isolation
+      - bridge_between_modular_generation_and_storage
+    physical_domains:
+      - containment
+      - fluid
+      - gas
+      - chemical
+      - operational
+      - safety
+      - validation
+    attached_variables:
+      - containment_capacity
+      - secondary_containment_capacity
+      - leak_rate
+      - leak_volume
+      - gas_pressure
+      - vent_flow_rate
+      - clearance_envelope
+      - operator_cycle_time
+      - inspection_status
+      - anomaly_count
+      - evidence_level
+    governing_formats:
+      - containment_leak_overflow
+      - gas_pressure_venting
+      - workforce_reset_flow
+      - lifecycle_degradation
+    governing_margins:
+      - containment_margin
+      - venting_margin
+      - operator_access_margin
+      - receiving_capacity_margin
+      - safe_shutdown_margin
+    interfaces:
+      - quick_connect_transfer_interface
+      - gas_fluid_transfer_manifold
+      - secondary_containment_tray
+      - electrolysis_work_zone
+      - external_gas_storage_interface
+      - clean_zone
+      - emergency_shutdown_interface
+      - validation_logging_interface
+    blocking_unknowns:
+      - transfer_zone_layout
+      - ventilation_capacity
+      - secondary_containment_capacity
+      - chemical_splash_control_requirements
+      - safe_operator_clearance
+      - evacuation_timeline
+    measurement_unlocks:
+      - transfer_event_leak_logs
+      - ventilation_observation_logs
+      - containment_tray_capacity_tests
+      - operator_access_timing
+      - emergency_clearance_drills
+    validation_status: "[PENDING VALIDATION]"
+
+  secondary_containment_tray:
+    object_type: spill_and_leak_capture_boundary
+    operational_role:
+      - Contain
+      - Transfer
+      - Recover/Test_support
+      - containment_hold_support
+      - environmental_release_prevention
+    physical_domains:
+      - containment
+      - fluid
+      - chemical
+      - safety
+      - environmental
+      - validation
+    attached_variables:
+      - internal_volume
+      - containment_capacity
+      - secondary_containment_capacity
+      - leak_volume
+      - leak_rate
+      - fill_percent
+      - chemical_compatibility
+      - material_type
+      - wall_thickness
+      - pH
+      - inspection_status
+      - evidence_level
+    governing_formats:
+      - containment_leak_overflow
+      - lifecycle_degradation
+    governing_margins:
+      - containment_margin
+      - secondary_containment_margin
+      - chemical_compatibility_margin
+      - maintenance_margin
+    interfaces:
+      - primary_support_vessel_transfer_zone
+      - electrolysis_work_zone
+      - gas_fluid_transfer_manifold
+      - shoreside_reset_zone
+      - environmental_chain_of_custody
+      - validation_logging_interface
+    blocking_unknowns:
+      - tray_capacity
+      - neutralization_ratio
+      - acceptable_leak_rate
+      - chemical_compatibility_under_target_effluents
+      - runoff_retention_requirement
+    measurement_unlocks:
+      - tray_fill_response_tests
+      - spill_capture_volume_tests
+      - neutralization_trials
+      - material_compatibility_observations
+      - cleanup_residue_chain_of_custody_logs
+    validation_status: "[PENDING VALIDATION]"
+
+  external_gas_storage_interface:
+    object_type: low_pressure_external_gas_receiving_boundary
+    operational_role:
+      - Transfer
+      - Recover/Test
+      - gas_accumulation_control
+      - chamber_pressure_reduction
+      - safety_isolation
+    physical_domains:
+      - gas
+      - containment
+      - safety
+      - chemical
+      - validation
+    attached_variables:
+      - gas_volume
+      - gas_pressure
+      - gas_composition
+      - gas_generation_rate
+      - vent_flow_rate
+      - venting_capacity
+      - external_storage_capacity
+      - leak_rate
+      - pressure_margin
+      - containment_state
+      - evidence_level
+    governing_formats:
+      - gas_pressure_venting
+      - containment_leak_overflow
+      - lifecycle_degradation
+    governing_margins:
+      - gas_headspace_margin
+      - pressure_margin
+      - venting_margin
+      - external_storage_margin
+      - containment_margin
+    interfaces:
+      - digestion_chamber
+      - quick_connect_transfer_interface
+      - gas_fluid_transfer_manifold
+      - primary_support_vessel_transfer_zone
+      - gas_scrubbing_or_ventilation_path
+      - validation_logging_interface
+    blocking_unknowns:
+      - external_storage_capacity
+      - maximum_allowable_pressure
+      - venting_capacity
+      - gas_composition
+      - leak_detection_threshold
+      - scrubbing_requirement
+    measurement_unlocks:
+      - gas_volume_transfer_logs
+      - pressure_relief_response_tests
+      - gas_composition_sampling
+      - leak_detection_trials
+      - storage_capacity_boundary_tests
+    validation_status: "[UNRESOLVED ENGINEERING VARIABLE]"
+
+  electrolysis_work_zone:
+    object_type: isolated_recovery_testing_and_power_delivery_zone
+    operational_role:
+      - Recover/Test
+      - chemical_recovery_evaluation
+      - capacitor_buffered_electrolysis_delivery_interface
+      - gas_byproduct_isolation
+      - measurement_workflow
+    physical_domains:
+      - electrical
+      - chemical
+      - gas
+      - containment
+      - thermal
+      - safety
+      - validation
+    attached_variables:
+      - voltage
+      - current
+      - power
+      - runtime
+      - duty_cycle
+      - required_energy
+      - available_energy
+      - energy_margin
+      - fluid_volume
+      - fill_percent
+      - gas_composition
+      - vent_flow_rate
+      - chemical_compatibility
+      - temperature
+      - evidence_level
+    governing_formats:
+      - power_energy_margin
+      - containment_leak_overflow
+      - gas_pressure_venting
+      - lifecycle_degradation
+    governing_margins:
+      - energy_margin
+      - containment_margin
+      - venting_margin
+      - measurement_quality_margin
+      - safe_shutdown_energy_margin
+    interfaces:
+      - psv_power_control_zone
+      - quick_connect_transfer_interface
+      - gas_fluid_transfer_manifold
+      - secondary_containment_tray
+      - primary_support_vessel_transfer_zone
+      - chemical_sample_handling_interface
+      - validation_logging_interface
+    blocking_unknowns:
+      - transient_load_profile
+      - capacitor_capacity
+      - battery_capacity
+      - duty_cycle
+      - electrolysis_throughput
+      - gas_byproduct_routing
+      - chemical_recovery_mass_balance
+      - material_compatibility_under_electrolysis_conditions
+    measurement_unlocks:
+      - energy_input_logs
+      - capacitor_discharge_profiles
+      - fluid_sample_mass_balance
+      - gas_byproduct_measurements
+      - temperature_rise_logs
+      - isolated_recovery_trial_results
+    validation_status: "[PENDING VALIDATION]"
+
+  psv_power_control_zone:
+    object_type: onboard_energy_storage_and_control_interface
+    operational_role:
+      - Recover/Test_support
+      - deployment_support
+      - monitoring_support
+      - safe_shutdown_support
+      - auxiliary_energy_buffer
+    physical_domains:
+      - electrical
+      - thermal
+      - operational
+      - safety
+      - validation
+    attached_variables:
+      - voltage
+      - current
+      - power
+      - runtime
+      - charge_rate
+      - duty_cycle
+      - available_energy
+      - required_energy
+      - energy_margin
+      - temperature
+      - inspection_status
+      - evidence_level
+    governing_formats:
+      - power_energy_margin
+      - lifecycle_degradation
+    governing_margins:
+      - energy_margin
+      - safe_shutdown_energy_margin
+      - monitoring_power_margin
+      - thermal_margin
+      - maintenance_margin
+    interfaces:
+      - primary_support_vessel_deck
+      - electrolysis_work_zone
+      - containment_monitoring_loads
+      - PMA_manual_charging_interface
+      - solar_battery_input_interface
+      - emergency_shutdown_interface
+      - validation_logging_interface
+    blocking_unknowns:
+      - battery_capacity
+      - solar_contribution
+      - transient_load_profile
+      - capacitor_capacity
+      - PMA_output_capacity
+      - duty_cycle
+      - safe_shutdown_requirement
+    measurement_unlocks:
+      - load_profile_logging
+      - charge_discharge_cycle_logs
+      - emergency_power_recovery_trials
+      - PMA_manual_charging_measurements
+      - safe_shutdown_energy_tests
+      - thermal_observation_logs
+    validation_status: "[PENDING VALIDATION]"
+
+  shoreside_reset_zone:
+    object_type: terrestrial_cleaning_maintenance_and_redeployment_hub
+    operational_role:
+      - Reset
+      - maintenance
+      - chamber_rotation
+      - residue_management
+      - validation_support
+      - reserve_inventory_support
+    physical_domains:
+      - logistics
+      - operational
+      - containment
+      - environmental
+      - material
+      - validation
+    attached_variables:
+      - reset_cycle_time
+      - operator_cycle_time
+      - ready_inventory_rate
+      - workforce_capacity
+      - workflow_demand
+      - workforce_margin
+      - residue_mass
+      - runoff_containment_margin
+      - inspection_status
+      - cycle_count
+      - anomaly_count
+      - evidence_level
+    governing_formats:
+      - workforce_reset_flow
+      - lifecycle_degradation
+      - containment_leak_overflow
+    governing_margins:
+      - reset_capacity_margin
+      - ready_inventory_margin
+      - workforce_margin
+      - runoff_containment_margin
+      - maintenance_margin
+    interfaces:
+      - digestion_chamber
+      - chamber_hatch_seal_boundary
+      - quick_connect_transfer_interface
+      - secondary_containment_tray
+      - residual_biomass_staging_zone
+      - primary_support_vessel
+      - validation_logging_interface
+    blocking_unknowns:
+      - facility_footprint
+      - offloading_mechanics
+      - reset_cycle_time
+      - ready_inventory_rate
+      - residue_volume
+      - runoff_retention_capacity
+      - workforce_ratio
+    measurement_unlocks:
+      - chamber_reset_cycle_logs
+      - inspection_failure_rate_logs
+      - residue_mass_per_batch
+      - runoff_capture_measurements
+      - ready_inventory_turnover_logs
+      - offloading_cycle_time_trials
+    validation_status: "[UNRESOLVED ENGINEERING VARIABLE]"
+
+  residual_biomass_staging_zone:
+    object_type: contained_processed_solid_residue_handling_area
+    operational_role:
+      - Reset
+      - residual_management
+      - environmental_containment
+      - post_processing_evaluation
+      - chain_of_custody_support
+    physical_domains:
+      - mass
+      - fluid
+      - chemical
+      - environmental
+      - logistics
+      - validation
+    attached_variables:
+      - residue_mass
+      - wet_weight
+      - retained_water_mass
+      - fluid_volume
+      - pH
+      - salinity
+      - turbidity
+      - runoff_containment_margin
+      - loaded_weight
+      - inspection_status
+      - evidence_level
+    governing_formats:
+      - containment_leak_overflow
+      - workforce_reset_flow
+      - lifecycle_degradation
+    governing_margins:
+      - runoff_containment_margin
+      - residue_storage_margin
+      - workforce_margin
+      - environmental_containment_margin
+    interfaces:
+      - shoreside_reset_zone
+      - digestion_chamber
+      - secondary_containment_tray
+      - environmental_chain_of_custody
+      - validation_logging_interface
+    blocking_unknowns:
+      - residue_volume
+      - long_term_leachate_profile
+      - residual_stabilization_requirement
+      - runoff_retention_capacity
+      - disposal_or_reuse_pathway
+    measurement_unlocks:
+      - residue_mass_per_batch
+      - leachate_sampling
+      - pH_and_salinity_tracking
+      - runoff_capture_measurements
+      - chain_of_custody_logs
+      - stabilization_timing_observations
+    validation_status: "[PENDING VALIDATION]"
+
+  validation_logging_interface:
+    object_type: cross_subsystem_measurement_and_evidence_capture_anchor
+    operational_role:
+      - Validate
+      - batch_tracking
+      - margin_evidence_capture
+      - anomaly_preservation
+      - validation_state_control
+      - reconstruction_support
+    physical_domains:
+      - validation
+      - operational
+      - logistics
+      - safety
+      - environmental
+    attached_variables:
+      - batch_id
+      - cycle_count
+      - repeat_count
+      - anomaly_count
+      - measurement_precision
+      - evidence_level
+      - validation_state
+      - operator_cycle_time
+      - reset_cycle_time
+      - inspection_status
+      - gas_composition
+      - drainage_rate
+      - leak_rate
+      - freeboard
+      - trim_angle
+      - list_angle
+    governing_formats:
+      - workforce_reset_flow
+      - lifecycle_degradation
+      - containment_leak_overflow
+      - drainage_retained_water
+      - gas_pressure_venting
+      - power_energy_margin
+      - validation_measurement_operator
+    governing_margins:
+      - measurement_quality_margin
+      - evidence_gap
+      - repeatability_margin
+      - maintenance_margin
+      - validation_state_margin
+    interfaces:
+      - modular_tile_array
+      - grated_drainage_surface
+      - digestion_chamber
+      - chamber_hatch_seal_boundary
+      - quick_connect_transfer_interface
+      - gas_fluid_transfer_manifold
+      - electrolysis_work_zone
+      - psv_power_control_zone
+      - shoreside_reset_zone
+      - residual_biomass_staging_zone
+    blocking_unknowns:
+      - sample_size_requirement
+      - repeatability_threshold
+      - measurement_precision_requirement
+      - operating_envelope_definition
+      - standardized_unit_of_measure
+      - naming_codes
+    measurement_unlocks:
+      - repeatable_batch_records
+      - anomaly_and_failure_logs
+      - measured_margin_history
+      - environmental_context_logs
+      - maintenance_cycle_records
+      - validation_state_update_evidence
+    validation_status: "[PENDING VALIDATION]"
+
+Equations.yaml:
+  authority: computable_causal_bridge_only
+  uses:
+  - Values.yaml
+  - Operators.yaml
+  - Formats.yaml
+  - Machine.yaml
+  - Objects.yaml
+  boundary:
+  - does_not_redefine_variables
+  - does_not_redefine_operators
+  - does_not_redefine_formats
+  - does_not_redefine_subsystem_mechanics
+  - preserves_validation_status_and_blocking_unknowns
+  purpose: extract margin-relevant computable relationships from object architecture for later Product
+    topology compression
+  excluded_from_first_pass:
+    secondary_containment_tray: nested containment support object retained as interface dependency
+    psv_power_control_zone: nested energy support object retained as interface dependency
+  equation_bindings:
+    modular_tile_array:
+      object_role:
+        type: modular_floating_work_platform
+        roles:
+        - Intercept
+        - Drain/Separate
+        - staging_interface
+        - offshore_manual_work_surface
+        validation_status: '[PENDING VALIDATION]'
+      active_margins:
+      - buoyancy_margin
+      - stability_margin
+      - environmental_operating_margin
+      - connection_margin
+      - workforce_margin
+      required_variables:
+      - loaded_weight
+      - biomass_weight
+      - retained_water_mass
+      - buoyancy_margin
+      - freeboard
+      - trim_angle
+      - list_angle
+      - waterline_z
+      - wave_height
+      - wind_speed
+      - current_speed
+      - deck_load_limit
+      - distributed_load
+      - operator_cycle_time
+      - inspection_status
+      - evidence_level
+      governing_operator:
+      - margin_state_operator
+      - accumulation_capacity_operator
+      - distribution_instability_operator
+      - safe_state_operator
+      - recovery_transition_operator
+      - environmental_load_operator
+      - resistance_motion_operator
+      governing_format:
+      - buoyancy_payload_support
+      - stability_center_of_mass
+      - drainage_retained_water
+      - mooring_environmental_load
+      - towing_drag_resistance
+      computable_relationship:
+      - 'buoyancy_payload_support: margin_state_operator: buoyant_force - loaded_weight -> buoyancy_margin
+        -> float_state; retained_water_mass affects demand.'
+      - 'stability_center_of_mass: distribution_instability_operator: mass_distribution + payload_location
+        -> center_of_mass -> trim/list risk; safe_state_operator gates instability.'
+      - 'drainage_retained_water: accumulation_capacity_operator + recovery_transition_operator: drainage_rate
+        over time -> retained_water_mass reduction -> restored buoyancy_margin.'
+      - 'mooring_environmental_load: environmental_load_operator + margin_state_operator: wave/current/wind
+        load -> anchor_load; anchor_capacity - transmitted_load -> anchor_margin/holding_state.'
+      - 'towing_drag_resistance: environmental_load_operator + resistance_motion_operator: environmental
+        input -> drag/resistance; tow_force - resistance_sum -> tow_margin/retrieval_state.'
+      blocking_unknowns:
+      - submerged_volume_under_load
+      - retained_water_mass
+      - minimum_safe_freeboard
+      - trim_limit
+      - list_limit
+      - sea_state_limit
+      - tile_connection_durability
+      - labor_to_throughput_ratio
+      required_measurements:
+      - loaded_freeboard_measurements
+      - trim_and_list_under_biomass_load
+      - drainage_curve
+      - sea_state_operating_logs
+      - tile_connection_cycle_observations
+      - operator_cycle_time_logs
+      product_relevance: Intercept/Drain platform; supports flotation, stability, environmental access,
+        and bounded-operation gates.
+    grated_drainage_surface:
+      object_role:
+        type: permeable_low_lift_biomass_work_surface
+        roles:
+        - Drain/Separate
+        - passive_dewatering
+        - marine_life_separation_support
+        - biomass_weight_reduction
+        validation_status: '[PENDING VALIDATION]'
+      active_margins:
+      - drainage_capacity_margin
+      - payload_margin
+      - buoyancy_margin
+      - operator_access_margin
+      - maintenance_margin
+      required_variables:
+      - drainage_rate
+      - retained_water_mass
+      - biomass_weight
+      - wet_weight
+      - distributed_load
+      - abrasion_resistance
+      - surface_area
+      - deck_zone_area
+      - clogging_state
+      - turbidity
+      - pH
+      - evidence_level
+      governing_operator:
+      - accumulation_capacity_operator
+      - recovery_transition_operator
+      - margin_state_operator
+      - validation_measurement_operator
+      - degradation_failure_operator
+      governing_format:
+      - drainage_retained_water
+      - buoyancy_payload_support
+      - workforce_reset_flow
+      - lifecycle_degradation
+      computable_relationship:
+      - 'drainage_retained_water: accumulation_capacity_operator + recovery_transition_operator: drainage_rate
+        over time -> retained_water_mass reduction -> restored buoyancy_margin.'
+      - 'buoyancy_payload_support: margin_state_operator: buoyant_force - loaded_weight -> buoyancy_margin
+        -> float_state; retained_water_mass affects demand.'
+      - 'workforce_reset_flow: recovery_transition_operator + margin_state_operator: reset_rate/workforce
+        capacity -> reset_capacity_margin/ready_inventory_margin; logs support validation_state.'
+      - 'lifecycle_degradation: degradation_failure_operator: exposure_or_cyclic_load + cycle_count ->
+        capacity_loss -> remaining_capacity vs demand -> failure_risk.'
+      blocking_unknowns:
+      - drainage_rate_curve
+      - retained_water_mass
+      - clogging_effect
+      - grate_spacing_effect_on_bycatch_return
+      - sediment_loading_effect
+      required_measurements:
+      - time_to_drain_by_biomass_load
+      - retained_water_mass_before_after_drainage
+      - clogging_frequency_logs
+      - bycatch_observation_logs
+      - surface_wear_inspection_logs
+      product_relevance: Drain/Separate surface; supports retained-water reduction, payload recovery,
+        and operator-access gates.
+    tile_flotation_row:
+      object_role:
+        type: distributed_buoyancy_support_structure
+        roles:
+        - Intercept
+        - Drain/Separate
+        - flotation_support
+        - payload_margin_provider
+        validation_status: '[PENDING VALIDATION]'
+      active_margins:
+      - buoyancy_margin
+      - reserve_buoyancy_margin
+      - flotation_failure_margin
+      - maintenance_margin
+      required_variables:
+      - displacement_volume
+      - submerged_volume
+      - buoyant_force
+      - buoyancy_margin
+      - reserve_buoyancy
+      - flotation_failure_tolerance
+      - freeboard
+      - waterline_z
+      - loaded_weight
+      - corrosion_resistance
+      - UV_resistance
+      - evidence_level
+      governing_operator:
+      - margin_state_operator
+      - accumulation_capacity_operator
+      - distribution_instability_operator
+      - safe_state_operator
+      - degradation_failure_operator
+      governing_format:
+      - buoyancy_payload_support
+      - stability_center_of_mass
+      - lifecycle_degradation
+      computable_relationship:
+      - 'buoyancy_payload_support: margin_state_operator: buoyant_force - loaded_weight -> buoyancy_margin
+        -> float_state; retained_water_mass affects demand.'
+      - 'stability_center_of_mass: distribution_instability_operator: mass_distribution + payload_location
+        -> center_of_mass -> trim/list risk; safe_state_operator gates instability.'
+      - 'lifecycle_degradation: degradation_failure_operator: exposure_or_cyclic_load + cycle_count ->
+        capacity_loss -> remaining_capacity vs demand -> failure_risk.'
+      blocking_unknowns:
+      - submerged_volume_under_load
+      - minimum_buoyancy_margin
+      - minimum_safe_freeboard
+      - flotation_failure_tolerance
+      - material_degradation_rate
+      required_measurements:
+      - static_load_float_tests
+      - incremental_payload_freeboard_curve
+      - single_unit_loss_response_test
+      - UV_and_salt_exposure_logs
+      - inspection_cycle_count
+      product_relevance: Distributed buoyancy object; supports float-state, reserve buoyancy, and failure-tolerance
+        topology.
+    tile_connection_interface:
+      object_role:
+        type: articulating_marine_connection_boundary
+        roles:
+        - Intercept
+        - deployment
+        - towing
+        - environmental_load_transfer
+        - emergency_retrieval
+        validation_status: '[UNRESOLVED ENGINEERING VARIABLE]'
+      active_margins:
+      - connection_margin
+      - anchor_margin
+      - tow_margin
+      - retrieval_margin
+      - maintenance_margin
+      required_variables:
+      - anchor_load
+      - shear_load
+      - bending_moment
+      - fatigue_cycles
+      - tow_force
+      - drag_force
+      - wave_height
+      - wind_speed
+      - current_speed
+      - connection_margin
+      - inspection_status
+      - anomaly_count
+      - evidence_level
+      governing_operator:
+      - environmental_load_operator
+      - margin_state_operator
+      - safe_state_operator
+      - resistance_motion_operator
+      - degradation_failure_operator
+      - distribution_instability_operator
+      governing_format:
+      - mooring_environmental_load
+      - towing_drag_resistance
+      - lifecycle_degradation
+      - stability_center_of_mass
+      computable_relationship:
+      - 'mooring_environmental_load: environmental_load_operator + margin_state_operator: wave/current/wind
+        load -> anchor_load; anchor_capacity - transmitted_load -> anchor_margin/holding_state.'
+      - 'towing_drag_resistance: environmental_load_operator + resistance_motion_operator: environmental
+        input -> drag/resistance; tow_force - resistance_sum -> tow_margin/retrieval_state.'
+      - 'lifecycle_degradation: degradation_failure_operator: exposure_or_cyclic_load + cycle_count ->
+        capacity_loss -> remaining_capacity vs demand -> failure_risk.'
+      - 'stability_center_of_mass: distribution_instability_operator: mass_distribution + payload_location
+        -> center_of_mass -> trim/list risk; safe_state_operator gates instability.'
+      blocking_unknowns:
+      - connection_durability
+      - cyclic_loading_response
+      - tow_point_capacity
+      - drag_coefficient
+      - retrieval_threshold
+      - sea_state_limit
+      required_measurements:
+      - cyclic_connection_load_tests
+      - tow_trial_force_measurements
+      - wave_condition_retrieval_logs
+      - failure_mode_observations
+      - post_retrieval_inspection_logs
+      product_relevance: Connection boundary; supports mooring/towing/retrieval topology and environmental
+        hold decisions.
+    digestion_chamber:
+      object_role:
+        type: sealed_horizontal_batch_processing_vessel
+        roles:
+        - Contain
+        - Process
+        - gas_generation_environment
+        - effluent_generation_environment
+        - batch_tracking_unit
+        validation_status: '[PENDING VALIDATION]'
+      active_margins:
+      - chamber_capacity_margin
+      - seal_margin
+      - gas_headspace_margin
+      - pressure_margin
+      - process_margin
+      - maintenance_margin
+      required_variables:
+      - internal_volume
+      - fill_percent
+      - biomass_weight
+      - fluid_weight
+      - loaded_weight
+      - headspace_volume
+      - gas_pressure
+      - gas_volume
+      - gas_generation_rate
+      - gas_composition
+      - leak_rate
+      - seal_area
+      - seal_material
+      - cycle_count
+      - batch_id
+      - evidence_level
+      governing_operator:
+      - accumulation_capacity_operator
+      - validation_measurement_operator
+      - pressure_leak_operator
+      - safe_state_operator
+      - degradation_failure_operator
+      - recovery_transition_operator
+      - margin_state_operator
+      governing_format:
+      - digestion_timing
+      - containment_leak_overflow
+      - gas_pressure_venting
+      - lifecycle_degradation
+      - workforce_reset_flow
+      computable_relationship:
+      - 'digestion_timing: accumulation_capacity_operator + validation_measurement_operator: digestion_rate
+        over time -> gas/effluent/residual accumulation -> batch_process_state.'
+      - 'containment_leak_overflow: pressure_leak_operator: gas_pressure * boundary_area -> seal_load;
+        leak_rate over time -> leak_volume; containment_capacity check -> containment_state.'
+      - 'gas_pressure_venting: accumulation_capacity_operator + pressure_leak_operator: gas_generation_rate
+        over time -> gas_volume/gas_pressure; headspace/vent/storage capacity -> venting_state.'
+      - 'lifecycle_degradation: degradation_failure_operator: exposure_or_cyclic_load + cycle_count ->
+        capacity_loss -> remaining_capacity vs demand -> failure_risk.'
+      - 'workforce_reset_flow: recovery_transition_operator + margin_state_operator: reset_rate/workforce
+        capacity -> reset_capacity_margin/ready_inventory_margin; logs support validation_state.'
+      blocking_unknowns:
+      - maximum_volumetric_capacity
+      - digestion_rate
+      - batch_timing
+      - gas_generation_rate
+      - gas_composition
+      - maximum_allowable_pressure
+      - agitation_efficiency
+      - seal_longevity
+      required_measurements:
+      - batch_mass_and_fill_logs
+      - headspace_pressure_curve
+      - gas_composition_sampling
+      - effluent_volume_measurement
+      - seal_leak_tests
+      - cycle_count_to_failure_observations
+      - digestion_completion_threshold_trials
+      product_relevance: Contain/Process vessel; supports batch capacity, pressure, gas headspace, and
+        process-readiness topology.
+    chamber_cradle:
+      object_role:
+        type: chamber_support_and_restraint_structure
+        roles:
+        - Contain
+        - Process
+        - stabilization_of_loaded_chamber
+        - load_transfer_to_tile_or_vessel
+        - failure_prevention_boundary
+        validation_status: '[UNRESOLVED ENGINEERING VARIABLE]'
+      active_margins:
+      - stability_margin
+      - cradle_load_margin
+      - restraint_margin
+      - deck_load_margin
+      - maintenance_margin
+      required_variables:
+      - cradle_load
+      - point_load
+      - loaded_weight
+      - center_of_mass
+      - trim_angle
+      - list_angle
+      - strap_tension
+      - anchor_load
+      - fatigue_cycles
+      - deflection
+      - inspection_status
+      - evidence_level
+      governing_operator:
+      - distribution_instability_operator
+      - safe_state_operator
+      - margin_state_operator
+      - accumulation_capacity_operator
+      - degradation_failure_operator
+      governing_format:
+      - stability_center_of_mass
+      - buoyancy_payload_support
+      - lifecycle_degradation
+      computable_relationship:
+      - 'stability_center_of_mass: distribution_instability_operator: mass_distribution + payload_location
+        -> center_of_mass -> trim/list risk; safe_state_operator gates instability.'
+      - 'buoyancy_payload_support: margin_state_operator: buoyant_force - loaded_weight -> buoyancy_margin
+        -> float_state; retained_water_mass affects demand.'
+      - 'lifecycle_degradation: degradation_failure_operator: exposure_or_cyclic_load + cycle_count ->
+        capacity_loss -> remaining_capacity vs demand -> failure_risk.'
+      blocking_unknowns:
+      - cradle_design
+      - chamber_mounting_method
+      - dynamic_shift_under_wave_loading
+      - strap_tension_limit
+      - localized_deck_stress_limit
+      required_measurements:
+      - loaded_chamber_restraint_tests
+      - cradle_deflection_measurements
+      - strap_tension_measurements
+      - trim_and_list_with_chambers_loaded
+      - inspection_after_wave_exposure
+      product_relevance: Loaded chamber restraint; supports center-of-mass, deck load, restraint, and
+        stability topology.
+    chamber_hatch_seal_boundary:
+      object_role:
+        type: repeatable_access_and_containment_boundary
+        roles:
+        - Contain
+        - Process
+        - loading_unloading_access
+        - gas_tight_boundary
+        - maintenance_gate
+        validation_status: '[PENDING VALIDATION]'
+      active_margins:
+      - seal_margin
+      - containment_margin
+      - pressure_margin
+      - maintenance_margin
+      - repeatability_margin
+      required_variables:
+      - seal_area
+      - gas_pressure
+      - boundary_area
+      - boundary_load
+      - seal_capacity
+      - leak_rate
+      - acceptable_leak_rate
+      - cycle_count
+      - fatigue_cycles
+      - seal_material
+      - chemical_compatibility
+      - inspection_status
+      - evidence_level
+      governing_operator:
+      - pressure_leak_operator
+      - accumulation_capacity_operator
+      - safe_state_operator
+      - degradation_failure_operator
+      governing_format:
+      - containment_leak_overflow
+      - gas_pressure_venting
+      - lifecycle_degradation
+      computable_relationship:
+      - 'containment_leak_overflow: pressure_leak_operator: gas_pressure * boundary_area -> seal_load;
+        leak_rate over time -> leak_volume; containment_capacity check -> containment_state.'
+      - 'gas_pressure_venting: accumulation_capacity_operator + pressure_leak_operator: gas_generation_rate
+        over time -> gas_volume/gas_pressure; headspace/vent/storage capacity -> venting_state.'
+      - 'lifecycle_degradation: degradation_failure_operator: exposure_or_cyclic_load + cycle_count ->
+        capacity_loss -> remaining_capacity vs demand -> failure_risk.'
+      blocking_unknowns:
+      - hatch_sealing_method
+      - seal_capacity
+      - leak_rate
+      - cycle_degradation
+      - acceptable_leak_rate
+      - seal_longevity
+      - replacement_interval
+      required_measurements:
+      - pressure_hold_tests
+      - leak_rate_measurements
+      - seal_cycle_degradation_curve
+      - tactile_inspection_correlation_logs
+      - post_cleaning_seal_integrity_logs
+      product_relevance: Access/seal boundary; supports containment, pressure, leak, maintenance, and
+        repeatability topology.
+    quick_connect_transfer_interface:
+      object_role:
+        type: standardized_fluid_gas_tooling_boundary
+        roles:
+        - Transfer
+        - Contain
+        - Recover/Test
+        - subsystem_decoupling
+        - closed_or_pump_assisted_movement
+        validation_status: '[PENDING VALIDATION]'
+      active_margins:
+      - transfer_capacity_margin
+      - seal_margin
+      - containment_margin
+      - maintenance_margin
+      - operator_access_margin
+      required_variables:
+      - flow_rate
+      - leak_rate
+      - acceptable_leak_rate
+      - gas_pressure
+      - fluid_volume
+      - seal_material
+      - chemical_compatibility
+      - abrasion_resistance
+      - fatigue_cycles
+      - cycle_count
+      - inspection_status
+      - evidence_level
+      governing_operator:
+      - pressure_leak_operator
+      - accumulation_capacity_operator
+      - safe_state_operator
+      - degradation_failure_operator
+      - recovery_transition_operator
+      - margin_state_operator
+      - validation_measurement_operator
+      governing_format:
+      - containment_leak_overflow
+      - gas_pressure_venting
+      - lifecycle_degradation
+      - workforce_reset_flow
+      computable_relationship:
+      - 'containment_leak_overflow: pressure_leak_operator: gas_pressure * boundary_area -> seal_load;
+        leak_rate over time -> leak_volume; containment_capacity check -> containment_state.'
+      - 'gas_pressure_venting: accumulation_capacity_operator + pressure_leak_operator: gas_generation_rate
+        over time -> gas_volume/gas_pressure; headspace/vent/storage capacity -> venting_state.'
+      - 'lifecycle_degradation: degradation_failure_operator: exposure_or_cyclic_load + cycle_count ->
+        capacity_loss -> remaining_capacity vs demand -> failure_risk.'
+      - 'workforce_reset_flow: recovery_transition_operator + margin_state_operator: reset_rate/workforce
+        capacity -> reset_capacity_margin/ready_inventory_margin; logs support validation_state.'
+      blocking_unknowns:
+      - transfer_capacity
+      - leak_rate
+      - seal_capacity
+      - chemical_compatibility_under_process_fluids
+      - clogging_from_sargassum_fines
+      - cycle_degradation
+      required_measurements:
+      - repeated_connect_disconnect_leak_tests
+      - transfer_flow_rate_measurements
+      - clogging_frequency_logs
+      - seal_wear_after_salt_sediment_exposure
+      - spill_or_drip_incident_logs
+      product_relevance: Transfer boundary; supports decoupled fluid/gas transfer, leak control, and containment
+        topology.
+    gas_fluid_transfer_manifold:
+      object_role:
+        type: centralized_transfer_and_isolation_node
+        roles:
+        - Transfer
+        - Recover/Test
+        - containment_routing
+        - receiving_capacity_boundary
+        - isolation_point
+        validation_status: '[PENDING VALIDATION]'
+      active_margins:
+      - transfer_capacity_margin
+      - receiving_capacity_margin
+      - containment_margin
+      - venting_margin
+      - maintenance_margin
+      required_variables:
+      - flow_rate
+      - gas_pressure
+      - gas_volume
+      - fluid_volume
+      - leak_rate
+      - accumulated_quantity
+      - receiving_capacity_margin
+      - containment_capacity
+      - anchor_load
+      - corrosion_resistance
+      - inspection_status
+      - evidence_level
+      governing_operator:
+      - pressure_leak_operator
+      - accumulation_capacity_operator
+      - safe_state_operator
+      - degradation_failure_operator
+      governing_format:
+      - containment_leak_overflow
+      - gas_pressure_venting
+      - lifecycle_degradation
+      computable_relationship:
+      - 'containment_leak_overflow: pressure_leak_operator: gas_pressure * boundary_area -> seal_load;
+        leak_rate over time -> leak_volume; containment_capacity check -> containment_state.'
+      - 'gas_pressure_venting: accumulation_capacity_operator + pressure_leak_operator: gas_generation_rate
+        over time -> gas_volume/gas_pressure; headspace/vent/storage capacity -> venting_state.'
+      - 'lifecycle_degradation: degradation_failure_operator: exposure_or_cyclic_load + cycle_count ->
+        capacity_loss -> remaining_capacity vs demand -> failure_risk.'
+      blocking_unknowns:
+      - manifold_routing_capacity
+      - venting_capacity
+      - external_storage_capacity
+      - acceptable_leak_rate
+      - corrosion_lifecycle
+      - isolation_valve_repeatability
+      required_measurements:
+      - manifold_pressure_drop_measurements
+      - flow_capacity_tests
+      - valve_cycle_count_logs
+      - leak_detection_trials
+      - corrosion_inspection_logs
+      - receiving_capacity_transfer_logs
+      product_relevance: Central transfer node; supports receiving capacity, routing isolation, venting,
+        and transfer bottleneck topology.
+    primary_support_vessel_deck:
+      object_role:
+        type: mobile_logistics_and_staging_platform
+        roles:
+        - Intercept_support
+        - deployment_retrieval
+        - Transfer
+        - Recover/Test_support
+        - clean_dirty_zone_separation
+        - offshore_logistics_hub
+        validation_status: '[UNRESOLVED ENGINEERING VARIABLE]'
+      active_margins:
+      - deck_load_margin
+      - stability_margin
+      - operator_access_margin
+      - deployment_margin
+      - retrieval_margin
+      - maintenance_margin
+      required_variables:
+      - deck_load_limit
+      - point_load
+      - distributed_load
+      - loaded_weight
+      - center_of_mass
+      - trim_angle
+      - list_angle
+      - clearance_envelope
+      - deck_zone_area
+      - deployment_time
+      - retrieval_time
+      - inspection_status
+      - evidence_level
+      governing_operator:
+      - distribution_instability_operator
+      - safe_state_operator
+      - margin_state_operator
+      - accumulation_capacity_operator
+      - recovery_transition_operator
+      - validation_measurement_operator
+      - degradation_failure_operator
+      governing_format:
+      - stability_center_of_mass
+      - buoyancy_payload_support
+      - workforce_reset_flow
+      - power_energy_margin
+      - lifecycle_degradation
+      computable_relationship:
+      - 'stability_center_of_mass: distribution_instability_operator: mass_distribution + payload_location
+        -> center_of_mass -> trim/list risk; safe_state_operator gates instability.'
+      - 'buoyancy_payload_support: margin_state_operator: buoyant_force - loaded_weight -> buoyancy_margin
+        -> float_state; retained_water_mass affects demand.'
+      - 'workforce_reset_flow: recovery_transition_operator + margin_state_operator: reset_rate/workforce
+        capacity -> reset_capacity_margin/ready_inventory_margin; logs support validation_state.'
+      - 'power_energy_margin: margin_state_operator: available_energy - required_energy -> energy_margin;
+        safe_shutdown_requirement gates low_power/load_shed state.'
+      - 'lifecycle_degradation: degradation_failure_operator: exposure_or_cyclic_load + cycle_count ->
+        capacity_loss -> remaining_capacity vs demand -> failure_risk.'
+      blocking_unknowns:
+      - deployment_retrieval_mechanism
+      - vessel_payload_limit
+      - deck_zone_clearance_requirements
+      - loaded_trim_response
+      - personnel_route_requirements
+      - sea_state_operating_limit
+      required_measurements:
+      - deck_load_mapping
+      - chamber_and_tile_staging_trials
+      - deployment_retrieval_cycle_time_logs
+      - trim_and_list_under_staged_load
+      - operator_route_clearance_checks
+      product_relevance: Mobile staging platform; supports deployment/retrieval, deck stability, access,
+        and maintenance topology.
+    primary_support_vessel_transfer_zone:
+      object_role:
+        type: onboard_contained_transfer_work_zone
+        roles:
+        - Transfer
+        - Recover/Test_support
+        - containment_interface
+        - hazard_isolation
+        - bridge_between_modular_generation_and_storage
+        validation_status: '[PENDING VALIDATION]'
+      active_margins:
+      - containment_margin
+      - venting_margin
+      - operator_access_margin
+      - receiving_capacity_margin
+      - safe_shutdown_margin
+      required_variables:
+      - containment_capacity
+      - secondary_containment_capacity
+      - leak_rate
+      - leak_volume
+      - gas_pressure
+      - vent_flow_rate
+      - clearance_envelope
+      - operator_cycle_time
+      - inspection_status
+      - anomaly_count
+      - evidence_level
+      governing_operator:
+      - pressure_leak_operator
+      - accumulation_capacity_operator
+      - safe_state_operator
+      - recovery_transition_operator
+      - margin_state_operator
+      - validation_measurement_operator
+      - degradation_failure_operator
+      governing_format:
+      - containment_leak_overflow
+      - gas_pressure_venting
+      - workforce_reset_flow
+      - lifecycle_degradation
+      computable_relationship:
+      - 'containment_leak_overflow: pressure_leak_operator: gas_pressure * boundary_area -> seal_load;
+        leak_rate over time -> leak_volume; containment_capacity check -> containment_state.'
+      - 'gas_pressure_venting: accumulation_capacity_operator + pressure_leak_operator: gas_generation_rate
+        over time -> gas_volume/gas_pressure; headspace/vent/storage capacity -> venting_state.'
+      - 'workforce_reset_flow: recovery_transition_operator + margin_state_operator: reset_rate/workforce
+        capacity -> reset_capacity_margin/ready_inventory_margin; logs support validation_state.'
+      - 'lifecycle_degradation: degradation_failure_operator: exposure_or_cyclic_load + cycle_count ->
+        capacity_loss -> remaining_capacity vs demand -> failure_risk.'
+      blocking_unknowns:
+      - transfer_zone_layout
+      - ventilation_capacity
+      - secondary_containment_capacity
+      - chemical_splash_control_requirements
+      - safe_operator_clearance
+      - evacuation_timeline
+      required_measurements:
+      - transfer_event_leak_logs
+      - ventilation_observation_logs
+      - containment_tray_capacity_tests
+      - operator_access_timing
+      - emergency_clearance_drills
+      product_relevance: Contained onboard transfer zone; supports transfer safety, venting, receiving
+        capacity, and shutdown topology.
+    external_gas_storage_interface:
+      object_role:
+        type: low_pressure_external_gas_receiving_boundary
+        roles:
+        - Transfer
+        - Recover/Test
+        - gas_accumulation_control
+        - chamber_pressure_reduction
+        - safety_isolation
+        validation_status: '[UNRESOLVED ENGINEERING VARIABLE]'
+      active_margins:
+      - gas_headspace_margin
+      - pressure_margin
+      - venting_margin
+      - external_storage_margin
+      - containment_margin
+      required_variables:
+      - gas_volume
+      - gas_pressure
+      - gas_composition
+      - gas_generation_rate
+      - vent_flow_rate
+      - venting_capacity
+      - external_storage_capacity
+      - leak_rate
+      - pressure_margin
+      - containment_state
+      - evidence_level
+      governing_operator:
+      - accumulation_capacity_operator
+      - pressure_leak_operator
+      - safe_state_operator
+      - degradation_failure_operator
+      governing_format:
+      - gas_pressure_venting
+      - containment_leak_overflow
+      - lifecycle_degradation
+      computable_relationship:
+      - 'gas_pressure_venting: accumulation_capacity_operator + pressure_leak_operator: gas_generation_rate
+        over time -> gas_volume/gas_pressure; headspace/vent/storage capacity -> venting_state.'
+      - 'containment_leak_overflow: pressure_leak_operator: gas_pressure * boundary_area -> seal_load;
+        leak_rate over time -> leak_volume; containment_capacity check -> containment_state.'
+      - 'lifecycle_degradation: degradation_failure_operator: exposure_or_cyclic_load + cycle_count ->
+        capacity_loss -> remaining_capacity vs demand -> failure_risk.'
+      blocking_unknowns:
+      - external_storage_capacity
+      - maximum_allowable_pressure
+      - venting_capacity
+      - gas_composition
+      - leak_detection_threshold
+      - scrubbing_requirement
+      required_measurements:
+      - gas_volume_transfer_logs
+      - pressure_relief_response_tests
+      - gas_composition_sampling
+      - leak_detection_trials
+      - storage_capacity_boundary_tests
+      product_relevance: Low-pressure gas receiving boundary; supports pressure reduction, storage, venting,
+        and gas isolation topology.
+    electrolysis_work_zone:
+      object_role:
+        type: isolated_recovery_testing_and_power_delivery_zone
+        roles:
+        - Recover/Test
+        - chemical_recovery_evaluation
+        - capacitor_buffered_electrolysis_delivery_interface
+        - gas_byproduct_isolation
+        - measurement_workflow
+        validation_status: '[PENDING VALIDATION]'
+      active_margins:
+      - energy_margin
+      - containment_margin
+      - venting_margin
+      - measurement_quality_margin
+      - safe_shutdown_energy_margin
+      required_variables:
+      - voltage
+      - current
+      - power
+      - runtime
+      - duty_cycle
+      - required_energy
+      - available_energy
+      - energy_margin
+      - fluid_volume
+      - fill_percent
+      - gas_composition
+      - vent_flow_rate
+      - chemical_compatibility
+      - temperature
+      - evidence_level
+      governing_operator:
+      - margin_state_operator
+      - accumulation_capacity_operator
+      - pressure_leak_operator
+      - safe_state_operator
+      - degradation_failure_operator
+      governing_format:
+      - power_energy_margin
+      - containment_leak_overflow
+      - gas_pressure_venting
+      - lifecycle_degradation
+      computable_relationship:
+      - 'power_energy_margin: margin_state_operator: available_energy - required_energy -> energy_margin;
+        safe_shutdown_requirement gates low_power/load_shed state.'
+      - 'containment_leak_overflow: pressure_leak_operator: gas_pressure * boundary_area -> seal_load;
+        leak_rate over time -> leak_volume; containment_capacity check -> containment_state.'
+      - 'gas_pressure_venting: accumulation_capacity_operator + pressure_leak_operator: gas_generation_rate
+        over time -> gas_volume/gas_pressure; headspace/vent/storage capacity -> venting_state.'
+      - 'lifecycle_degradation: degradation_failure_operator: exposure_or_cyclic_load + cycle_count ->
+        capacity_loss -> remaining_capacity vs demand -> failure_risk.'
+      blocking_unknowns:
+      - transient_load_profile
+      - capacitor_capacity
+      - battery_capacity
+      - duty_cycle
+      - electrolysis_throughput
+      - gas_byproduct_routing
+      - chemical_recovery_mass_balance
+      - material_compatibility_under_electrolysis_conditions
+      required_measurements:
+      - energy_input_logs
+      - capacitor_discharge_profiles
+      - fluid_sample_mass_balance
+      - gas_byproduct_measurements
+      - temperature_rise_logs
+      - isolated_recovery_trial_results
+      product_relevance: Recover/Test zone; supports energy-gated chemical recovery evaluation, byproduct
+        isolation, and measurement topology.
+    shoreside_reset_zone:
+      object_role:
+        type: terrestrial_cleaning_maintenance_and_redeployment_hub
+        roles:
+        - Reset
+        - maintenance
+        - chamber_rotation
+        - residue_management
+        - validation_support
+        - reserve_inventory_support
+        validation_status: '[UNRESOLVED ENGINEERING VARIABLE]'
+      active_margins:
+      - reset_capacity_margin
+      - ready_inventory_margin
+      - workforce_margin
+      - runoff_containment_margin
+      - maintenance_margin
+      required_variables:
+      - reset_cycle_time
+      - operator_cycle_time
+      - ready_inventory_rate
+      - workforce_capacity
+      - workflow_demand
+      - workforce_margin
+      - residue_mass
+      - runoff_containment_margin
+      - inspection_status
+      - cycle_count
+      - anomaly_count
+      - evidence_level
+      governing_operator:
+      - recovery_transition_operator
+      - margin_state_operator
+      - validation_measurement_operator
+      - degradation_failure_operator
+      - pressure_leak_operator
+      - accumulation_capacity_operator
+      - safe_state_operator
+      governing_format:
+      - workforce_reset_flow
+      - lifecycle_degradation
+      - containment_leak_overflow
+      computable_relationship:
+      - 'workforce_reset_flow: recovery_transition_operator + margin_state_operator: reset_rate/workforce
+        capacity -> reset_capacity_margin/ready_inventory_margin; logs support validation_state.'
+      - 'lifecycle_degradation: degradation_failure_operator: exposure_or_cyclic_load + cycle_count ->
+        capacity_loss -> remaining_capacity vs demand -> failure_risk.'
+      - 'containment_leak_overflow: pressure_leak_operator: gas_pressure * boundary_area -> seal_load;
+        leak_rate over time -> leak_volume; containment_capacity check -> containment_state.'
+      blocking_unknowns:
+      - facility_footprint
+      - offloading_mechanics
+      - reset_cycle_time
+      - ready_inventory_rate
+      - residue_volume
+      - runoff_retention_capacity
+      - workforce_ratio
+      required_measurements:
+      - chamber_reset_cycle_logs
+      - inspection_failure_rate_logs
+      - residue_mass_per_batch
+      - runoff_capture_measurements
+      - ready_inventory_turnover_logs
+      - offloading_cycle_time_trials
+      product_relevance: Reset hub; supports cleaning, inspection, ready inventory, runoff containment,
+        and redeployment topology.
+    residual_biomass_staging_zone:
+      object_role:
+        type: contained_processed_solid_residue_handling_area
+        roles:
+        - Reset
+        - residual_management
+        - environmental_containment
+        - post_processing_evaluation
+        - chain_of_custody_support
+        validation_status: '[PENDING VALIDATION]'
+      active_margins:
+      - runoff_containment_margin
+      - residue_storage_margin
+      - workforce_margin
+      - environmental_containment_margin
+      required_variables:
+      - residue_mass
+      - wet_weight
+      - retained_water_mass
+      - fluid_volume
+      - pH
+      - salinity
+      - turbidity
+      - runoff_containment_margin
+      - loaded_weight
+      - inspection_status
+      - evidence_level
+      governing_operator:
+      - pressure_leak_operator
+      - accumulation_capacity_operator
+      - safe_state_operator
+      - recovery_transition_operator
+      - margin_state_operator
+      - validation_measurement_operator
+      - degradation_failure_operator
+      governing_format:
+      - containment_leak_overflow
+      - workforce_reset_flow
+      - lifecycle_degradation
+      computable_relationship:
+      - 'containment_leak_overflow: pressure_leak_operator: gas_pressure * boundary_area -> seal_load;
+        leak_rate over time -> leak_volume; containment_capacity check -> containment_state.'
+      - 'workforce_reset_flow: recovery_transition_operator + margin_state_operator: reset_rate/workforce
+        capacity -> reset_capacity_margin/ready_inventory_margin; logs support validation_state.'
+      - 'lifecycle_degradation: degradation_failure_operator: exposure_or_cyclic_load + cycle_count ->
+        capacity_loss -> remaining_capacity vs demand -> failure_risk.'
+      blocking_unknowns:
+      - residue_volume
+      - long_term_leachate_profile
+      - residual_stabilization_requirement
+      - runoff_retention_capacity
+      - disposal_or_reuse_pathway
+      required_measurements:
+      - residue_mass_per_batch
+      - leachate_sampling
+      - pH_and_salinity_tracking
+      - runoff_capture_measurements
+      - chain_of_custody_logs
+      - stabilization_timing_observations
+      product_relevance: Residual management zone; supports contained residue storage, runoff control,
+        and reset completion topology.
+    validation_logging_interface:
+      object_role:
+        type: cross_subsystem_measurement_and_evidence_capture_anchor
+        roles:
+        - Validate
+        - batch_tracking
+        - margin_evidence_capture
+        - anomaly_preservation
+        - validation_state_control
+        - reconstruction_support
+        validation_status: '[PENDING VALIDATION]'
+      active_margins:
+      - measurement_quality_margin
+      - evidence_gap
+      - repeatability_margin
+      - maintenance_margin
+      - validation_state_margin
+      required_variables:
+      - batch_id
+      - cycle_count
+      - repeat_count
+      - anomaly_count
+      - measurement_precision
+      - evidence_level
+      - validation_state
+      - operator_cycle_time
+      - reset_cycle_time
+      - inspection_status
+      - gas_composition
+      - drainage_rate
+      - leak_rate
+      - freeboard
+      - trim_angle
+      - list_angle
+      governing_operator:
+      - recovery_transition_operator
+      - margin_state_operator
+      - validation_measurement_operator
+      - degradation_failure_operator
+      - pressure_leak_operator
+      - accumulation_capacity_operator
+      - safe_state_operator
+      governing_format:
+      - workforce_reset_flow
+      - lifecycle_degradation
+      - containment_leak_overflow
+      - drainage_retained_water
+      - gas_pressure_venting
+      - power_energy_margin
+      - validation_measurement_operator
+      computable_relationship:
+      - 'workforce_reset_flow: recovery_transition_operator + margin_state_operator: reset_rate/workforce
+        capacity -> reset_capacity_margin/ready_inventory_margin; logs support validation_state.'
+      - 'lifecycle_degradation: degradation_failure_operator: exposure_or_cyclic_load + cycle_count ->
+        capacity_loss -> remaining_capacity vs demand -> failure_risk.'
+      - 'containment_leak_overflow: pressure_leak_operator: gas_pressure * boundary_area -> seal_load;
+        leak_rate over time -> leak_volume; containment_capacity check -> containment_state.'
+      - 'drainage_retained_water: accumulation_capacity_operator + recovery_transition_operator: drainage_rate
+        over time -> retained_water_mass reduction -> restored buoyancy_margin.'
+      - 'gas_pressure_venting: accumulation_capacity_operator + pressure_leak_operator: gas_generation_rate
+        over time -> gas_volume/gas_pressure; headspace/vent/storage capacity -> venting_state.'
+      - 'power_energy_margin: margin_state_operator: available_energy - required_energy -> energy_margin;
+        safe_shutdown_requirement gates low_power/load_shed state.'
+      - 'validation_measurement_operator: operator-defined relationship'
+      blocking_unknowns:
+      - sample_size_requirement
+      - repeatability_threshold
+      - measurement_precision_requirement
+      - operating_envelope_definition
+      - standardized_unit_of_measure
+      - naming_codes
+      required_measurements:
+      - repeatable_batch_records
+      - anomaly_and_failure_logs
+      - measured_margin_history
+      - environmental_context_logs
+      - maintenance_cycle_records
+      - validation_state_update_evidence
+      product_relevance: Validation anchor; supports evidence capture, repeatability, margin history,
+        and Product reconstruction.
+
+Physics.yaml:
+  file_status: "[PHYSICS RELATIONSHIP LAYER — ACTIVE]"
+  role: causal_interaction_and_relationship_structure
+
+  authority:
+    owns:
+      - causal_relationships
+      - interaction_topology
+      - domain_relationships
+      - structured_equation_logic
+      - required_input_definitions
+      - candidate_output_definitions
+
+    must_not_own:
+      - validation
+      - Runtime_state_management
+      - executable_calculation_runtime
+      - semantic_governance
+      - payload_claims
+      - reserve_buoyancy
+      - stability_validation
+      - seaworthiness
+      - operational_readiness
+
+  interaction_library:
+
+    buoyancy_interaction:
+      interaction_status: "[PHYSICS RELATIONSHIP — CAUSAL STRUCTURE ONLY]"
+
+      governing_domains:
+        - flotation
+        - mass
+        - geometry
+        - validation
+
+      causal_relationships:
+        submerged_volume_to_displaced_water:
+          relationship: submerged_volume -> displaced_water
+          boundary: volume_displacement_relationship_only
+
+        displaced_water_to_buoyant_force:
+          relationship: displaced_water -> buoyant_force
+          boundary: force_relationship_only_not_validation
+
+        buoyant_force_to_observed_float_behavior:
+          relationship: buoyant_force -> observed_float_behavior
+          boundary: consistent_with_buoyant_support_under_test_condition_only
+
+        increased_load_to_increased_submergence:
+          relationship: increased_load -> increased_submergence
+          boundary: load_response_relationship_only
+
+        increased_submergence_to_reduced_freeboard:
+          relationship: increased_submergence -> reduced_freeboard
+          boundary: freeboard_change_not_reserve_buoyancy
+
+      structured_relationships:
+        buoyant_force_candidate_relationship:
+          relationship_form: buoyant_force = water_density * gravity * submerged_volume
+          required_inputs:
+            - water_density
+            - gravity
+            - submerged_volume_candidate_estimate
+          candidate_output:
+            - buoyant_force_candidate_estimate
+          boundary:
+            - not_validated_margin
+            - not_payload_capacity
+            - not_reserve_buoyancy
+
+        full_submergence_displacement_relationship:
+          relationship_form: displaced_water_mass = water_density * total_displacement_volume
+          required_inputs:
+            - water_density
+            - total_displacement_volume
+          candidate_output:
+            - maximum_displaced_water_mass_if_fully_submerged
+          boundary:
+            - theoretical_full_submergence_limit
+            - before_subtracting_drum_mass
+            - not_payload_capacity
+            - not_reserve_buoyancy
+
+        observed_float_consistency_relationship:
+          relationship_form: buoyant_force_candidate_estimate ~= total_supported_weight
+          required_inputs:
+            - buoyant_force_candidate_estimate
+            - total_supported_weight
+            - observed_afloat_under_static_water_condition
+          candidate_output:
+            - observed_float_behavior_consistent_with_buoyant_support
+          boundary:
+            - consistency_interpretation_only
+            - not_confirmed_equilibrium
+            - not_validation
+
+        incremental_displacement_relationship:
+          relationship_form: added_weight / water_density
+          required_inputs:
+            - added_weight
+            - water_density
+          candidate_output:
+            - additional_required_displacement_candidate
+          boundary:
+            - not_payload_capacity
+            - not_safe_load
+            - not_operational_margin
+
+        freeboard_response_relationship:
+          relationship_form: increased_added_load -> increased_submergence -> reduced_freeboard
+          required_inputs:
+            - added_load
+            - waterline_height
+            - freeboard
+          candidate_output:
+            - sink_depth_response_observed
+          boundary:
+            - observed_response_only
+            - not_reserve_buoyancy
+            - not_stability_validation
+
+      interaction_constraints:
+        - static_water_condition_only
+        - single_object_scope_only
+        - measurement_trace_required_for_measured_outputs
+        - assumption_trace_required_for_assumption_outputs
+        - candidate_estimate_language_required
+        - not_dynamic_wave_behavior
+        - not_tow_behavior
+        - not_system_behavior
+        - not_multi_drum_array_behavior
+        - not_operational_behavior
+
+      admissible_interpretations:
+        - observed_float_behavior_consistent_with_buoyant_support
+        - bounded_candidate_estimation
+        - measured_sink_depth_response
+        - assumed_theoretical_full_submergence_limit
+        - freeboard_change_under_this_test_condition
+        - single_object_buoyancy_characterization_pending_review
+
+      prohibited_interpretations:
+        - reserve_buoyancy_validation
+        - payload_capacity
+        - safe_payload
+        - raft_stability
+        - seaworthiness
+        - tow_readiness
+        - operational_readiness
+        - validated_margin
+        - validated_multi_drum_array_behavior

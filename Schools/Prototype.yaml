@@ -1,0 +1,554 @@
+Prototype:
+  file: Prototype.yaml
+  role: candidate_design_mockup_and_build_iteration_registry
+  authority: candidate_geometry_layout_constraints_unresolved_build_variables_and_iteration_records_only
+  status: phase_7_replacement_draft
+
+  caution:
+    note: >
+      Prototype.yaml records candidate designs, mockup logic, layout constraints,
+      unresolved build variables, access requirements, and iteration records.
+      Prototype does not validate claims, certify engineering performance, define physics,
+      own semantic definitions, govern bridges, compute operators, or assert operational readiness.
+
+  owns:
+    - candidate_design_records
+    - mockup_logic
+    - layout_constraints
+    - candidate_geometry
+    - unresolved_build_variables
+    - build_iteration_records
+    - access_and_inspection_requirements
+    - prototype_measurement_needs
+    - design_contradiction_register
+
+  does_not_own:
+    - validation_claims
+    - causal_definitions
+    - semantic_identity
+    - physical_domain_taxonomy
+    - bridge_contracts
+    - engineering_operators
+    - repository_topology
+    - operational_readiness
+    - seaworthiness
+    - safe_payload
+    - reserve_buoyancy
+    - validated_stability
+    - long_term_durability
+    - validated_restraint_safety
+
+  upstream:
+    - Structure.yaml
+    - CE-OS.yaml
+    - Physics.yaml
+    - Lexicon.yaml
+    - Interface.yaml
+    - Engine.yaml
+    - Governance.yaml
+
+  downstream:
+    - measurement_plans
+    - validation_requests
+    - build_notes
+    - future_Runtime.yaml
+
+  ce_os_pointer:
+    authority_source: CE-OS.yaml
+    governs:
+      - causal_accounting_order
+      - interaction_definition
+      - transfer_vs_propagation
+      - operational_validity_vs_causal_completeness
+    rule: >
+      Prototype may describe candidate interaction paths and load paths, but CE-OS
+      governs causal doctrine. Candidate layout coherence does not imply causal completeness.
+
+  physics_pointer:
+    authority_source: Physics.yaml
+    governs:
+      - physical_domains
+      - physical_objects
+      - attached_variables
+      - interaction_topology
+      - measurement_unlocks
+    rule: >
+      Prototype may instantiate candidate objects and arrangements, but Physics owns
+      physical domain and object registry structure.
+
+  lexicon_pointer:
+    authority_source: Lexicon.yaml
+    governs:
+      - term_identity
+      - definitions
+      - aliases
+      - admissible_uses
+      - mutation_risks
+    rule: >
+      Prototype may use controlled terms, but Lexicon owns meaning and alias control.
+
+  interface_pointer:
+    authority_source: Interface.yaml
+    governs:
+      - bridge_contracts
+      - translation_boundaries
+      - blocked_transfers
+      - drift_checks
+    rule: >
+      Prototype may identify cross-domain design crossings, but Interface owns bridge rules.
+
+  engine_pointer:
+    authority_source: Engine.yaml
+    governs:
+      - operators
+      - formats
+      - margin_logic
+      - measurement_transforms
+      - state_transition_templates
+    rule: >
+      Prototype may request operator application or measurement planning, but Engine owns
+      computable logic and formats.
+
+  governance_pointer:
+    authority_source: Governance.yaml
+    governs:
+      - claim_tiers
+      - evidence_states
+      - validation_boundaries
+      - prohibited_claims
+      - promotion_rules
+    rule: >
+      Prototype cannot promote candidate design logic into validated claims. Any claim
+      pressure routes to Governance.
+
+  evidence_states:
+    concept:
+      meaning: design idea exists without geometry or measurement record
+    sketch:
+      meaning: rough spatial or causal arrangement exists but is not measured
+    mockup_candidate:
+      meaning: candidate build arrangement exists for measurement planning
+    measured_mockup:
+      meaning: mockup has measurement records with context
+    bounded_candidate:
+      meaning: candidate behavior is bounded under limited test conditions
+    governance_review_required:
+      meaning: candidate evidence may support a claim and must route to Governance
+
+  candidate_design_schema:
+    required_fields:
+      - name
+      - role
+      - candidate_objects
+      - domains
+      - layout_constraints
+      - interaction_paths
+      - unresolved_build_variables
+      - required_measurements
+      - evidence_state
+      - prohibited_claims
+    optional_fields:
+      - geometry_notes
+      - materials_candidate
+      - access_requirements
+      - inspection_requirements
+      - replacement_requirements
+      - bridge_requirements
+      - operator_requests
+      - contradiction_register
+      - iteration_history
+
+  mockup_record_schema:
+    required_fields:
+      - name
+      - purpose
+      - candidate_design_reference
+      - measured_dimensions
+      - measured_masses
+      - unresolved_variables
+      - test_plan_needed
+      - evidence_state
+    optional_fields:
+      - photos_or_diagrams
+      - build_notes
+      - material_substitutions
+      - observed_behavior
+      - measurement_records
+      - anomaly_records
+
+  build_iteration_schema:
+    required_fields:
+      - iteration_id
+      - changed_element
+      - reason_for_change
+      - affected_variables
+      - affected_interactions
+      - new_unresolved_variables
+      - claim_pressure_check
+    optional_fields:
+      - measurement_before
+      - measurement_after
+      - contradiction_resolved
+      - contradiction_created
+      - governance_route
+
+  candidate_designs:
+
+    control_spine_platform:
+      role: candidate_support_and_control_routing_platform
+      evidence_state: concept
+      candidate_objects:
+        - primary_support_platform
+        - dry_power_route
+        - communication_route
+        - operator_access_zone
+      domains:
+        - ME
+        - EC
+        - FD
+        - TE
+      layout_constraints:
+        - dry_power_and_signal_routes_must_remain_separated_from_dirty_processing_surfaces
+        - operator_access_must_remain_visible_as_unresolved_until measured
+        - candidate_layout_cannot_be_treated_as_final_scale
+        - candidate_geometry_cannot_be_treated_as_safe_payload_or_stability
+      interaction_paths:
+        - deck_to_frame_load_path
+        - operator_live_load_to_structure
+        - electrical_route_to_control_components
+        - splash_exposure_to_electrical_isolation_requirement
+      unresolved_build_variables:
+        - final_dimensions
+        - loaded_weight
+        - center_of_mass
+        - access_clearance
+        - splash_exposure
+        - grounding_continuity
+        - deck_load_limit
+      required_measurements:
+        - platform_dimensions
+        - dry_weight
+        - loaded_weight
+        - center_of_mass
+        - operator_clearance
+        - electrical_isolation_distance
+      prohibited_claims:
+        - operational_readiness
+        - validated_worker_safety
+        - safe_payload
+        - seaworthiness
+        - validated_clean_lab_platform_status
+
+    HDPE_drum_restraint_candidate:
+      role: candidate_flotation_body_restraint_and_cradle_arrangement
+      evidence_state: mockup_candidate
+      candidate_objects:
+        - HDPE_drum
+        - cradle
+        - side_stop
+        - end_stop
+        - restraint_strap
+        - support_frame
+      domains:
+        - BC
+        - ME
+        - FD
+      layout_constraints:
+        - drum_roll_or_slide_must_remain_visible
+        - float_out_risk_must_remain_visible
+        - side_stop_and_end_stop_contacts_must_be_measurable
+        - strap_tension_and_creep_must_be_measurable
+        - abrasion_contact_must_be_inspectable
+        - replacement_access_must_be_preserved
+      interaction_paths:
+        - buoyant_uplift
+        - drum_to_water_buoyant_response
+        - drum_to_cradle_contact
+        - cradle_to_frame_load_path
+        - side_stop_contact
+        - end_stop_contact
+        - strap_tension_path
+        - cyclic_wave_loading_to_restraint_system
+        - abrasion_contact_path
+      unresolved_build_variables:
+        - drum_mass
+        - displaced_volume
+        - submerged_volume
+        - buoyant_force
+        - cradle_contact_area
+        - strap_tension
+        - side_stop_load
+        - end_stop_load
+        - abrasion_wear_rate
+        - strap_creep_behavior
+        - cyclic_wave_loading_response
+        - inspection_visibility
+        - replacement_access
+      required_measurements:
+        - actual_displacement_volume
+        - drum_loaded_mass
+        - waterline_z
+        - freeboard
+        - strap_initial_tension
+        - strap_tension_after_cycles
+        - side_stop_contact_load
+        - end_stop_contact_load
+        - contact_wear_depth
+        - cyclic_motion_record
+      operator_requests:
+        - HDPE_drum_restraint_format
+        - buoyancy_force_operator
+        - buoyancy_margin_operator
+        - abrasion_wear_operator
+        - strap_creep_operator
+      bridge_requirements:
+        - fluid_to_structural
+      prohibited_claims:
+        - validated_restraint_safety
+        - reserve_buoyancy
+        - safe_payload
+        - seaworthiness
+        - validated_stability
+        - long_term_durability
+        - operational_readiness
+
+    fluid_transfer_candidate:
+      role: candidate_fluid_transfer_interface_between_processing_or_storage_components
+      evidence_state: concept
+      candidate_objects:
+        - hose
+        - quick_connect
+        - pump
+        - receiving_container
+        - containment_tray
+      domains:
+        - FD
+        - FH
+        - ME
+      layout_constraints:
+        - hose_bend_radius_must_remain_visible
+        - disconnect_force_must_be_measurable
+        - leak_path_must_route_to_containment
+        - clean_dirty_boundary_must_remain_visible
+      interaction_paths:
+        - pump_to_hose_pressure_transfer
+        - hose_to_quick_connect_load_path
+        - quick_connect_to_receiving_container_flow_path
+        - leak_path_to_secondary_containment
+      unresolved_build_variables:
+        - hose_length
+        - hose_bend_radius
+        - pump_pressure
+        - flow_rate
+        - quick_connect_leak_rate
+        - disconnect_force
+        - containment_volume
+      required_measurements:
+        - pressure
+        - flow_rate
+        - leak_rate
+        - disconnect_force
+        - residual_fluid_volume
+        - containment_capacity
+      operator_requests:
+        - hydraulic_actuation_format
+        - measurement_capture_operator
+      bridge_requirements:
+        - mechanical_to_hydraulic
+        - hydraulic_to_mechanical
+      prohibited_claims:
+        - leak_safe_fluid_transfer_rating
+        - validated_containment
+        - operational_readiness
+        - environmental_safety_claim
+
+  design_formats:
+
+    candidate_to_measurement_plan:
+      role: convert candidate design pressure into measurement requirements
+      required_inputs:
+        - candidate_design_record
+        - unresolved_build_variables
+        - required_measurements
+        - prohibited_claims
+      outputs:
+        - measurement_plan_request
+        - Engine_operator_requests
+        - Governance_claim_pressure_check
+      blocked_outputs:
+        - validation_claim
+        - readiness_claim
+
+    restraint_behavior_decomposition:
+      role: preserve HDPE drum restraint behavior as unresolved causal structure
+      required_inputs:
+        - buoyant_uplift
+        - drum_roll_or_slide
+        - float_out_risk
+        - cradle_contact
+        - side_stop_contact
+        - end_stop_contact
+        - strap_tension
+        - strap_creep
+        - abrasion_contact
+        - cyclic_wave_loading
+      outputs:
+        - restraint_interaction_map
+        - measurement_unlocks
+        - unresolved_restraint_modes
+      blocked_outputs:
+        - validated_restraint_safety
+        - long_term_durability
+        - seaworthiness
+
+  measurement_unlocks:
+    geometry:
+      - length
+      - width
+      - height
+      - clearance_envelope
+      - hatch_swing_envelope
+      - service_access
+      - replacement_access
+
+    mass_and_loading:
+      - dry_weight
+      - loaded_weight
+      - center_of_mass
+      - load_distribution
+      - point_loads
+      - distributed_loads
+
+    flotation_and_fluid:
+      - displaced_volume
+      - submerged_volume
+      - buoyant_force
+      - waterline_z
+      - freeboard
+      - wave_height
+      - current_speed
+
+    restraint_and_contact:
+      - strap_tension
+      - side_stop_load
+      - end_stop_load
+      - contact_pressure
+      - wear_depth
+      - cyclic_motion
+      - creep_displacement
+
+    electrical_and_control:
+      - voltage
+      - current
+      - grounding_continuity
+      - isolation_distance
+      - splash_exposure
+      - temperature_rise
+
+    containment_and_transfer:
+      - flow_rate
+      - pressure
+      - leak_rate
+      - containment_volume
+      - residual_fluid_volume
+      - disconnect_force
+
+  claim_pressure_check:
+    if_phrase_appears:
+      safe:
+        route_to: Governance.yaml
+      validated:
+        route_to: Governance.yaml
+      ready:
+        route_to: Governance.yaml
+      stable:
+        route_to: Governance.yaml
+      seaworthy:
+        route_to: Governance.yaml
+      payload_capacity:
+        route_to: Governance.yaml
+      reserve_buoyancy:
+        route_to: Governance.yaml
+      durable:
+        route_to: Governance.yaml
+
+  unresolved:
+    - final_dimensions
+    - component_layout
+    - material_selection
+    - structural_connection_method
+    - load_paths_under_dynamic_conditions
+    - worker_access_and_safety_evidence
+    - containment_evidence
+    - restraint_measurements
+    - inspection_visibility
+    - replacement_access
+    - operating_envelope
+    - tow_mooring_anchor_loads
+
+  contradiction_register:
+    - candidate_layout_may_be_useful_without_being_validated
+    - visual_geometry_can_imply_readiness_unless_governance_firewall_remains_explicit
+    - mockup_measurement_can_improve_model_without_promoting_claim
+    - object_presence_does_not_equal_object_performance
+    - operator_request_does_not_equal_operator_result
+    - measured_mockup_does_not_equal_validated_system
+    - calm_condition_mockup_does_not_equal_environmental_operating_envelope
+
+  prohibited_claims:
+    - final_boat_size
+    - final_component_layout
+    - safe_payload_capacity
+    - seaworthiness
+    - validated_stability
+    - reserve_buoyancy
+    - flooded_compartment_survival
+    - operating_envelope
+    - tow_rating
+    - mooring_rating
+    - anchoring_rating
+    - recovery_rating
+    - validated_worker_safety
+    - validated_environmental_containment
+    - commercial_readiness
+    - operational_readiness
+    - finalized_material_selection
+    - finalized_structural_connection_method
+    - validated_restraint_safety
+    - long_term_durability
+
+  recovery:
+    reconstructable_from:
+      - Structure.yaml
+      - CE-OS.yaml
+      - Physics.yaml
+      - Lexicon.yaml
+      - Interface.yaml
+      - Engine.yaml
+      - Governance.yaml
+      - prior_Prototype_file
+      - phase_7_prototype_notes
+
+    recovery_requirements:
+      - every_candidate_design_lists_unresolved_variables
+      - every_candidate_design_lists_required_measurements
+      - every_operator_request_points_to_Engine
+      - every_bridge_requirement_points_to_Interface
+      - every_claim_pressure_routes_to_Governance
+      - every_physical_object_routes_to_Physics
+      - every_term_routes_to_Lexicon
+      - contradictions_remain_visible
+
+    compression_rule:
+      - candidate_designs_in
+      - mockup_logic_in
+      - unresolved_build_variables_in
+      - required_measurements_in
+      - access_requirements_in
+      - iteration_records_in
+      - validation_out
+      - causal_doctrine_out
+      - definitions_out
+      - bridge_authority_out
+      - computation_out
+      - topology_out

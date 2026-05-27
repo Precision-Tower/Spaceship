@@ -1,0 +1,499 @@
+Recovery:
+  recovery:
+    role: governed_reduction_and_reconstruction_protocol
+
+    authority_state: "[GOVERNED RECOVERY-FORM PROTOCOL — NON-CANONICAL CAUSAL WRAPPER]"
+
+    non_authority_clauses:
+      - Recovery does not define causal primitives.
+      - Recovery does not rewrite CE-OS.
+      - Recovery does not replace CE-OS.
+      - Recovery does not become canonical causal doctrine.
+      - Recovery does not redefine Lexicon terms.
+      - Recovery does not govern claim admissibility beyond reduction safety routing.
+      - Recovery does not validate engineering, physics, prototype, or operational claims.
+      - Recovery does not convert summaries into canon.
+      - Recovery does not resolve contradictions by compression.
+      - Recovery does not promote Prototype content into validated repository authority.
+
+    governed_scope:
+      purpose: >
+        Recovery governs how compressed operational forms may be created,
+        reviewed, rejected, routed, and reconstructed without damaging
+        CE-OS causal kernel integrity, semantic exclusions, authority
+        separation, contradiction lineage, or claim safety boundaries.
+
+      governs:
+        - admissible_reduction_behavior
+        - reconstruction_requirements
+        - compression_risk_visibility
+        - exclusion_preservation
+        - authority_lane_preservation
+        - contradiction_lineage_preservation
+        - handoff_rules_for_reduced_forms
+        - rejection_conditions_for_unsafe_compression
+
+      does_not_govern:
+        - causal_truth
+        - semantic_identity
+        - claim_validation
+        - topology_authority
+        - prototype_validation
+        - physics_confirmation
+        - engineering_readiness
+        - canonical_replacement
+
+    protected_sources:
+      CE_OS:
+        authority_state: "[CANONICAL CAUSAL KERNEL]"
+        protected_authority: causal_primitives_and_interaction_doctrine
+        recovery_rule: >
+          CE-OS may be compressed only into subordinate recovery or
+          operational forms that preserve reconstruction paths back to
+          CE-OS source authority.
+
+      Lexicon:
+        authority_state: "[CANONICAL SEMANTIC REGISTRY]"
+        protected_authority: semantic_identity_and_definition_control
+        recovery_rule: >
+          Recovery forms must preserve Lexicon-controlled term identity
+          and must not create alternate definitions through paraphrase.
+
+      Governance:
+        authority_state: "[CANONICAL GOVERNANCE AUTHORITY]"
+        protected_authority: claim_admissibility_and_firewall_control
+        recovery_rule: >
+          Recovery forms must preserve claim safety boundaries and route
+          validation questions back to Governance.
+
+      Directory:
+        authority_state: "[ROUTING ONLY]"
+        protected_authority: topology_and_navigation
+        recovery_rule: >
+          Recovery forms may reference Directory routing but must not treat
+          routing visibility as canonical authority.
+
+      Gold:
+        authority_state: "[RECOVERY AND CONTRADICTION LINEAGE LAYER]"
+        protected_authority: durable_recovery_paths_and_contradiction_lineage
+        recovery_rule: >
+          Recovery forms must preserve contradiction lineage and recovery
+          pathways compatible with Gold.
+
+      Prototype:
+        authority_state: "[NON-CANONICAL DESIGN CONTROL FILE — PENDING VALIDATION]"
+        protected_authority: candidate_design_and_mockup_control_only
+        recovery_rule: >
+          Recovery forms must not promote Prototype material into canonical,
+          validated, or causally proven status.
+
+    admissible_forms:
+      - recovery_form:
+          status: admissible
+          condition: subordinate_to_source_authority
+          purpose: preserve reconstructable compressed access to source doctrine
+
+      - operational_kernel_form:
+          status: admissible
+          condition: preserves_kernel_exclusions_and_reconstruction_path
+          purpose: reduce active routing weight without replacing CE-OS
+
+      - onboarding_form:
+          status: admissible
+          condition: explicitly_non_canonical
+          purpose: introduce concepts without altering doctrine
+
+      - navigation_form:
+          status: admissible
+          condition: routing_only
+          purpose: point users or models toward governing source locations
+
+      - contradiction_recovery_form:
+          status: admissible
+          condition: contradiction_lineage_preserved
+          purpose: expose unresolved tensions without resolving them by summary
+
+      - runtime_reference_form:
+          status: admissible
+          condition: short_term_operational_visibility_only
+          purpose: support active work without canon mutation
+
+    prohibited_forms:
+      - compressed_CE_OS_replacement
+      - canonical_summary
+      - doctrine_smoothing_form
+      - merged_CE_OS_Lexicon_definition_form
+      - merged_CE_OS_Governance_validation_form
+      - Directory_as_authority_form
+      - Prototype_promotion_form
+      - contradiction_resolution_by_summary
+      - unresolved_variable_erasure
+      - exclusion_removed_for_readability
+      - scalar_only_causal_summary
+      - operational_validity_as_validation_form
+      - field_mass_cross_domain_collapse
+      - propagation_transfer_conflation
+      - organization_source_conflation
+      - amplification_energy_creation_conflation
+
+    required_fields:
+      - source_section
+      - retained_kernel
+      - retained_exclusions
+      - omitted_material
+      - authority_lane
+      - contradiction_effect
+      - reconstruction_pointer
+      - compression_risk_level
+      - governance_review_required
+
+    preservation_invariants:
+      causal_kernel:
+        - interaction_as_measurable_state_affecting_relation
+        - causal_accounting_before_scalar_reduction
+        - operational_validity_not_causal_completeness
+        - scalar_compression_warning
+        - domain_separation
+        - coupling_structure
+        - propagation_vs_transfer
+        - organization_logic
+
+      semantic_exclusions:
+        - propagation_not_transfer
+        - organization_not_hidden_source
+        - amplification_not_energy_creation
+        - interpretation_not_validation
+        - speculation_not_canon
+        - operational_validity_not_causal_completeness
+        - scalar_equivalence_not_functional_equivalence
+        - summary_not_source_authority
+
+      authority_separation:
+        - CE_OS_defines_causal_primitives
+        - Lexicon_defines_semantic_identity
+        - Governance_defines_claim_admissibility
+        - Directory_routes_topology_only
+        - Gold_preserves_recovery_and_contradiction_lineage
+        - Prototype_remains_non_canonical_pending_validation
+        - Recovery_governs_reduction_and_reconstruction_only
+
+      claim_safety:
+        - no_validation_by_compression
+        - no_proof_by_summary
+        - no_claim_escalation
+        - no_operational_readiness_inference
+        - no_physics_confirmation
+        - no_engineering_certification
+        - no_causal_completeness_claim
+
+      contradiction_visibility:
+        - unresolved_variables_remain_visible
+        - blocked_claims_remain_blocked
+        - contradiction_sources_remain_recoverable
+        - contradiction_effects_remain_routed
+        - compression_does_not_resolve_disputes
+
+    compression_tests:
+      recursive_summarization_test:
+        purpose: >
+          Detect whether repeated compression broadens, smooths, or mutates
+          the original doctrine.
+        pass_condition: >
+          Repeated summaries preserve kernel, exclusions, authority lanes,
+          and prohibited interpretations.
+
+      semantic_drift_test:
+        purpose: >
+          Detect whether compressed language changes term identity or
+          admissible meaning.
+        pass_condition: >
+          Compressed terms remain consistent with Lexicon-controlled identity.
+
+      reconstruction_test:
+        purpose: >
+          Verify that the governing source structure can be recovered from
+          the compressed form.
+        pass_condition: >
+          Source section, retained kernel, exclusions, and authority route
+          are reconstructable.
+
+      contradiction_recovery_test:
+        purpose: >
+          Verify that contradictions and unresolved variables remain visible.
+        pass_condition: >
+          Compression preserves contradiction source, affected variables,
+          blocked claims, and recovery route.
+
+      authority_boundary_test:
+        purpose: >
+          Detect hidden authority migration.
+        pass_condition: >
+          CE-OS, Lexicon, Governance, Directory, Gold, Prototype, and Recovery
+          retain separate authority lanes.
+
+      scalar_collapse_test:
+        purpose: >
+          Detect replacement of causal accounting with scalar equivalence.
+        pass_condition: >
+          Compressed form preserves causal organization, not merely outcome,
+          magnitude, or simplified metric.
+
+      domain_separation_test:
+        purpose: >
+          Detect collapse of mass-centric, field-centric, and cross-domain
+          interactions into generic causality.
+        pass_condition: >
+          Relevant domain distinctions remain explicit or recoverable.
+
+      exclusion_integrity_test:
+        purpose: >
+          Verify that negative definitions remain present.
+        pass_condition: >
+          The compressed form preserves what the doctrine must not collapse into.
+
+      cross_agent_consistency_test:
+        purpose: >
+          Verify that separate repository roles reconstruct compatible meaning.
+        pass_condition: >
+          Gear, Grant, Cali, or other roles can recover the same authority
+          boundaries and kernel structure without hidden reinterpretation.
+
+    contradiction_preservation:
+      required_visibility:
+        - contradiction_source
+        - affected_source_section
+        - affected_terms
+        - affected_variables
+        - affected_domain
+        - blocked_claims
+        - unresolved_status
+        - measurement_or_review_dependency
+        - recovery_pointer
+        - governance_review_status
+
+      prohibited_behavior:
+        - resolving_contradiction_by_summary
+        - hiding_unresolved_variables
+        - flattening_blocked_claims
+        - treating_ambiguity_as_resolution
+        - converting_absence_of_conflict_into_validation
+        - deleting_contradiction_history
+        - merging_opposing_interpretations_without_review
+
+      preservation_rule: >
+        Compression may reduce repetition around contradictions, but it must
+        not reduce contradiction recoverability. Any contradiction visible in
+        source authority must remain discoverable through the compressed form.
+
+    reconstruction_requirements:
+      minimum_recovery_path:
+        - compressed_form_to_source_section
+        - source_section_to_authority_file
+        - retained_kernel_to_original_kernel
+        - retained_exclusions_to_original_negative_boundaries
+        - omitted_material_to_non_deleted_source_context
+        - contradiction_effect_to_lineage_or_review_route
+        - claim_boundary_to_Governance
+        - semantic_identity_to_Lexicon
+        - causal_primitive_to_CE_OS
+        - routing_reference_to_Directory
+        - recovery_lineage_to_Gold
+
+      reconstruction_must_preserve:
+        - original_authority_source
+        - source_subordination
+        - kernel_structure
+        - distinction_topology
+        - negative_boundaries
+        - domain_boundaries
+        - claim_limits
+        - contradiction_lineage
+        - unresolved_variable_visibility
+        - omission_disclosure
+
+      reconstruction_failure_rule: >
+        If a compressed form cannot recover the governing source authority,
+        kernel, exclusions, authority lane, and contradiction impact, the
+        compression is rejected.
+
+    escalation_conditions:
+      require_grant_review:
+        - compression_changes_root_primitive
+        - compression_changes_operational_validity_boundary
+        - compression_changes_scalar_compression_warning
+        - compression_changes_propagation_transfer_boundary
+        - compression_changes_mass_field_cross_domain_boundary
+        - compression_changes_organization_source_boundary
+        - compression_changes_amplification_energy_boundary
+        - compression_removes_negative_definition
+        - compression_introduces_new_definition
+        - compression_duplicates_Lexicon_authority
+        - compression_duplicates_Governance_authority
+        - compression_promotes_Directory_to_authority
+        - compression_promotes_Prototype_claim
+        - compression_hides_unresolved_variable
+        - compression_erases_contradiction_lineage
+        - compression_may_be_mistaken_for_canonical_replacement
+
+      require_source_authority_review:
+        CE_OS_review:
+          - causal_primitive_affected
+          - domain_boundary_affected
+          - interaction_doctrine_affected
+
+        Lexicon_review:
+          - term_identity_affected
+          - definition_boundary_affected
+          - semantic_drift_detected
+
+        Governance_review:
+          - claim_admissibility_affected
+          - validation_boundary_affected
+          - prohibited_claim_boundary_affected
+
+        Gold_review:
+          - recovery_path_affected
+          - contradiction_lineage_affected
+          - reconstructability_affected
+
+        Directory_review:
+          - routing_pointer_affected
+          - topology_reference_affected
+
+    rejection_conditions:
+      reject_if:
+        - compressed_form_replaces_CE_OS
+        - compressed_form_claims_canonical_causal_authority
+        - compressed_form_changes_admissible_meaning
+        - compressed_form_removes_required_exclusions
+        - compressed_form_collapses_distinction_topology
+        - compressed_form_collapses_domain_separation
+        - compressed_form_conflates_propagation_and_transfer
+        - compressed_form_conflates_organization_and_source
+        - compressed_form_conflates_amplification_and_energy_creation
+        - compressed_form_treats_interpretation_as_validation
+        - compressed_form_treats_operational_validity_as_causal_completeness
+        - compressed_form_erases_unresolved_variables
+        - compressed_form_resolves_contradictions_without_review
+        - compressed_form_hides_authority_migration
+        - compressed_form_lacks_reconstruction_pointer
+        - compressed_form_lacks_omitted_material_disclosure
+        - compressed_form_fails_reconstruction_test
+        - compressed_form_fails_authority_boundary_test
+        - compressed_form_fails_exclusion_integrity_test
+
+    handoff_rules:
+      to_CE_OS:
+        when:
+          - causal_kernel_unclear
+          - interaction_primitive_affected
+          - domain_boundary_affected
+        handoff_purpose: causal_doctrine_reference
+
+      to_Lexicon:
+        when:
+          - term_identity_unclear
+          - definition_drift_detected
+          - paraphrase_changes_meaning
+        handoff_purpose: semantic_identity_control
+
+      to_Governance:
+        when:
+          - claim_boundary_unclear
+          - validation_status_implicated
+          - prohibited_claim_possible
+          - authority_migration_possible
+        handoff_purpose: admissibility_and_claim_firewall_review
+
+      to_Directory:
+        when:
+          - routing_path_unclear
+          - topology_pointer_needed
+          - file_location_or_model_lane_reference_needed
+        handoff_purpose: navigation_only
+
+      to_Gold:
+        when:
+          - contradiction_lineage_needed
+          - recovery_path_needed
+          - reconstructability_risk_detected
+        handoff_purpose: recovery_and_lineage_preservation
+
+      to_Prototype:
+        when:
+          - compressed_material_references_candidate_design
+          - mockup_or_layout_status_unclear
+          - validation_boundary_required
+        handoff_purpose: non_canonical_candidate_status_reference
+
+      general_rule: >
+        Handoff transfers review responsibility to the appropriate authority
+        lane. Handoff does not transfer authority ownership into Recovery.
+
+    minimum_template:
+      source_section:
+        required: true
+        description: >
+          Identifies the exact CE-OS section, clause, or source passage being
+          reduced. Must point back to source authority.
+
+      retained_kernel:
+        required: true
+        description: >
+          Lists the causal primitives, distinctions, or interaction doctrines
+          preserved in the compressed form.
+
+      retained_exclusions:
+        required: true
+        description: >
+          Lists the negative boundaries preserved by the compression: what the
+          compressed form must not be read as, merged with, or collapsed into.
+
+      omitted_material:
+        required: true
+        description: >
+          Identifies explanation, pedagogy, examples, repetition, or non-kernel
+          material omitted from the compressed form. Omission is not deletion.
+
+      authority_lane:
+        required: true
+        description: >
+          Declares which file retains authority over the compressed material
+          and confirms that Recovery does not become source authority.
+
+      contradiction_effect:
+        required: true
+        description: >
+          States whether the compression touches known contradictions,
+          unresolved variables, blocked claims, or review dependencies.
+
+      reconstruction_pointer:
+        required: true
+        description: >
+          Provides the path by which the original kernel, exclusions,
+          authority source, and contradiction lineage can be recovered.
+
+      compression_risk_level:
+        required: true
+        allowed_values:
+          - low
+          - medium
+          - high
+          - prohibited
+        description: >
+          Declares risk of semantic drift, causal loss, authority leakage,
+          contradiction erasure, or reconstruction failure.
+
+      governance_review_required:
+        required: true
+        allowed_values:
+          - true
+          - false
+        description: >
+          Indicates whether Grant/Governance review is required before the
+          compressed form may be used operationally.
+
+    final_boundary:
+      rule: >
+        Recovery authorizes governed reductions only.
+        Recovery does not authorize canonical replacement.

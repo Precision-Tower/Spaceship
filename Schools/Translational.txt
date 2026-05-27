@@ -1,0 +1,347 @@
+PAGE 5 — FUNDING_TRANSLATION_LOGIC
+
+1. Purpose
+
+The FUNDING_TRANSLATION_LOGIC is a non-canonical governance translator established above the project repository. It exists as an institutional translation structure designed to stabilize funding communication, milestone framing, uncertainty translation, and claim-safe institutional interpretation.
+
+This logic acts as a safeguard to prevent startup-style narrative inflation, certainty laundering, scalability overclaiming, implied economic viability, ecological overstatement, and the reframing of conceptual architecture as validated operational capability.
+
+The subsystem files remain the sole canonical engineering authority, the VALIDATION_STATE_LEDGER remains the authority on evidence maturity, and the UNRESOLVED_VARIABLE_REGISTER remains the authority on technical unknowns.
+
+2. Translation Governance Principle
+
+Funding translation may compress complexity for institutional comprehension, but it may not promote evidence state, erase uncertainty, or substitute narrative coherence for measured operational proof.
+
+Engineering reality operates independently of funding schedules. While narrative translation is necessary to bridge the gap between technical complexity and non-technical stakeholders, the physical evidence state recorded in the repository must never be mutated, simplified, or accelerated to meet external financial expectations.
+
+3. Uncertainty-to-Funding Conversion Logic
+
+Unresolved engineering and operational variables in the repository are not liabilities to be hidden or minimized; they are structured validation priorities, primary prototype drivers, and clear, fundable targets for research and validation campaigns.
+
+Technical unknowns are systematically converted into clear, structured, and fundable validation work packages through the following translations:
+
+Marine Deployment Variables $\longrightarrow$ Surf-zone mooring and tension validation campaigns.
+
+Tile Stability Variables $\longrightarrow$ Hydrodynamic drag and connection shear stress physical trials.
+
+Chamber Mechanics Variables $\longrightarrow$ Rotary drum cyclic hatch-seal degradation and leak-detection studies.
+
+Digestion Timing Variables $\longrightarrow$ Multi-cycle pilot biological digestion rate characterization.
+
+Gas Yield Variables $\longrightarrow$ Staged headspace gas composition ($\text{CH}_4, \text{CO}_2, \text{H}_2\text{S}$) analytical measurement programs.
+
+Chemical Yield Variables $\longrightarrow$ Bench-scale hydroxide and sulfur recovery mass-balance validation work packages.
+
+Energy Demand Variables $\longrightarrow$ Real-world transient load logging and manual PMA capacitor charging trials.
+
+Workforce Ratio Variables $\longrightarrow$ Physical operator fatigue and cycle-time validation pathways.
+
+Environmental Baseline Variables $\longrightarrow$ Near-shore benthic, water-quality, and seasonal drift ecological baseline studies.
+
+Shoreside Reset Variables $\longrightarrow$ Logistical bottleneck analysis and runoff retention measurement programs.
+
+Corrosion / Material Lifecycle Variables $\longrightarrow$ Accelerated marine UV exposure and galvanic corrosion material studies.
+
+Economic Readiness Variables $\longrightarrow$ Logistics cost modeling, replacement parts frequency, and regional market analysis.
+
+4. Milestone Governance
+
+Funding and operational milestones must remain strictly tied to measurable engineering actions, evidence-state progression, physical operational testing, environmental characterization, and validation sequencing.
+
+Milestone definitions, descriptions, and progress reporting are strictly prohibited from implying:
+
+Commercial readiness
+
+Industrial scalability
+
+Autonomous deployment
+
+Economically validated throughput
+
+unless such claims are directly supported by verified evidence within the canonical VALIDATION_STATE_LEDGER.
+
+Every milestone achieved must be reported in terms of its verified evidence state (e.g., "tested behavior observed during 10 cycles"), preventing the institutional assumption that a completed work package equates to a universally validated capability.
+
+Funding attractiveness, institutional preference, or narrative visibility must not be treated as indicators of engineering priority, operational necessity, or subsystem criticality. Funding translation may organize validation work for funder comprehension, but it may not reorder engineering priorities unless supported by canonical subsystem authority and validation-state governance.
+
+5. Claim Translation Boundaries
+
+To maintain technical integrity, a strict boundary must be preserved between different levels of technical assertion. Narrative compression is permitted to simplify technical vocabulary for non-technical stakeholders, but it is strictly prohibited from escalating claim maturity or evidence-state classifications:
+
+Research Objectives must never be framed as Engineering Hypotheses.
+
+Engineering Hypotheses must never be framed as Operational Targets.
+
+Operational Targets must never be framed as Estimated Behaviors.
+
+Estimated Behaviors must never be framed as Tested Behaviors.
+
+Tested Behaviors must never be framed as Validated Capabilities.
+
+While a summary may simplify how a process is described, it must retain the baseline evidence classification of that process without exception.
+
+6. Institutional Compression Risk
+
+Document summaries, funding briefs, executive abstracts, and institutional presentations naturally tend to erase critical technical nuances. This narrative compression risk routinely washes away:
+
+Upstream and downstream dependency chains.
+
+Environmental assumptions (such as wave heights and UV limits).
+
+Continuous maintenance and replacement burdens.
+
+Manual workforce constraints and fatigue factors.
+
+Unresolved physical and chemical variables.
+
+Operational limitations.
+
+Compression-safe funding language must preserve these boundaries visibly in all external-facing materials. If a simplified description is written for non-technical comprehension, it must be accompanied by explicit visibility of the boundaries, constraints, and dependencies that govern its real-world execution.
+
+7. Ecological and Economic Claim Governance
+
+High-impact external assertions regarding environmental benefits and economic viability must remain strictly subordinate to measured evidence, empirical baselines, and validation-state governance.
+
+Environmental Claims: Environmental benefit assertions, sargassum removal expectations, and recovery efficiency projections must be framed as design intents or hypotheses until local benthic and pelagic baseline studies are completed and verified.
+
+Economic Claims: Estimated chemical, gas, or biomass recovery potentials must never be framed, formatted, or communicated as validated economic viability. Financial and feasibility projections are planning estimates; they require measured yields, actual processing costs, replacement schedules, local transport costs, and a physically validated operating envelope before they can be reported as economically viable outcomes.
+
+8. Anti-Hallucination Funding Controls
+
+To protect the single source of truth from automated drift and human optimism loops, external communication must enforce strict protections against cognitive narrative inflation. These controls must actively resist:
+
+AI-Generated Optimism Loops: Preventing automated writing tools from reading high-level grant summaries as proven facts and using them to escalate claims in subsequent drafts.
+
+Internally Coherent Funding Fiction: Preventing the generation of highly organized system descriptions from being treated as empirical evidence.
+
+Estimate-to-Capability Mutation: Preventing repeated theoretical estimates from slowly hardening into capability assertions in ongoing grant dialogues.
+
+Inferred Scalability: Preventing modular design from being communicated as verified industrial throughput without physical pilot validation data.
+
+A highly organized or internally coherent architecture does not constitute proof of feasibility, scalability, economic viability, or environmental benefit.
+
+9. Future Funding Translation Structure
+
+Future ledger entries translating technical milestones into funding pathways must conform to the following schema. No actual data variables are to be populated in this template:
+
+Funding Objective: [The institutional or grant program objective being targeted]
+
+Related Unresolved Variables: [Citations to the specific unknowns in the UNRESOLVED_VARIABLE_REGISTER that constrain this objective]
+
+Validation Dependencies: [Downstream technical subsystems or operating dimensions affected by this objective]
+
+Evidence-State Constraints: [The current maturity level of the target subsystems from the VALIDATION_STATE_LEDGER]
+
+Measurable Validation Actions: [The exact physical testing, characterization, or measurement sequences to be funded]
+
+Prohibited Claim Escalations: [Explicit rules defining how the funded work must not be exaggerated or overstated in narratives]
+
+Expected Operational Learnings: [The quantitative data, baseline metrics, or physical parameters expected to be logged]
+
+Environmental Dependencies: [Natural or sea-state constraints that govern the proposed validation work]
+
+Workforce Dependencies: [Operator skill levels, safety procedures, and manual labor inputs required]
+
+Economic Uncertainty Boundaries: [The operational cost unknowns and market variables that bound the target work package]
+
+10. Compression-Safe Funding Rule
+
+Summaries, abstracts, briefs, presentations, and institutional communications may compress the repository's detailed technical files for external stakeholders, but they are strictly prohibited from erasing unresolved engineering variables, flattening uncertainty boundaries, inflating evidence maturity, implying operational validation, implying economic viability, or converting planned validation pathways into proven capabilities.
+
+All external communications must visibly preserve the conditional nature of the project's technical assertions.
+
+The FUNDING_TRANSLATION_LOGIC must behave like a translation firewall between engineering uncertainty and institutional funding systems.
+
+PAGE 6 — CLAIM_BOUNDARY_GOVERNANCE
+
+1. Purpose
+
+The CLAIM_BOUNDARY_GOVERNANCE is a governance-layer linguistic containment structure established above the project repository. It exists to secure external technical language, preserve operational uncertainty, enforce evidence boundaries, and govern claim limits across all summaries, grants, presentations, collaborator briefings, and institutional communications.
+
+By defining how project claims are expressed externally, this document prevents startup-style overclaiming, implied scalability, inferred economic viability, ecological overstatement, autonomy inflation, narrative-driven maturity escalation, and the mistake of treating logical coherence as operational proof.
+
+2. Claim Governance Principle
+
+External communication is permitted to simplify wording and technical jargon to aid non-technical stakeholder comprehension, but it is strictly prohibited from escalating the project's evidence state or erasing operational uncertainty.
+
+No communication layer may promote conceptual architecture, operational theory, estimated behavior, or isolated testing into implied validated capability.
+
+3. Evidence-State Language Inheritance
+
+Every external claim, technical description, or operational profile must inherit its permitted linguistic boundaries directly from the evidence-state classifications defined in the VALIDATION_STATE_LEDGER.
+
+3.1 Design Intent
+
+Permitted Phrasing: "designed to", "intended to", "planned to support", "configured to allow", "aims to".
+
+Prohibited Escalation: Framing planning objectives as completed capabilities or observed states.
+
+Uncertainty Visibility: Must remain linked to the targeted engineering objective without implying current deployment.
+
+3.2 Operational Theory
+
+Permitted Phrasing: "based on", "expected mechanism", "operational theory", "the system logic assumes", "the workflow is structured around".
+
+Prohibited Escalation: Framing physical or biological expectations as tested processes.
+
+Uncertainty Visibility: Must visibly maintain that the pathway operates on theoretical models requiring physical verification.
+
+3.3 Assumption
+
+Permitted Phrasing: "assumes", "based on probable conditions", "planning assumption", "operational assumption", [ASSUMPTION].
+
+Prohibited Escalation: Referencing planning conditions repeatedly until they harden into accepted facts.
+
+Uncertainty Visibility: Every referenced assumption must carry a visible planning boundary warning of unmeasured local conditions.
+
+3.4 Hypothesis
+
+Permitted Phrasing: "test whether", "hypothesized", "to be evaluated", "subject to testing", [HYPOTHESIS].
+
+Prohibited Escalation: Framing an active test projection as an estimated or expected performance level.
+
+Uncertainty Visibility: Must explicitly state what specific measurement parameter is being verified.
+
+3.5 Estimated Behavior
+
+Permitted Phrasing: "estimated", "expected pending validation", "modeled as", "projected behavior", "anticipated", [ESTIMATED BEHAVIOR].
+
+Prohibited Escalation: Presenting modeled curves, calculations, or spreadsheet projections as physical baseline measurements.
+
+Uncertainty Visibility: Must explicitly state that behavior is calculated and subject to environmental variance.
+
+3.6 Pending Validation
+
+Permitted Phrasing: "awaiting validation", "requires testing", "planned validation", "validation pending", [PENDING VALIDATION].
+
+Prohibited Escalation: Presenting physical preparation or installation of a subsystem as evidence of operational readiness or capability.
+
+Uncertainty Visibility: Must specify the unresolved engineering variables constraining the subsystem.
+
+3.7 Tested Behavior
+
+Permitted Phrasing: "observed during trial", "recorded during cycle", "tested behavior", [TESTED BEHAVIOR].
+
+Prohibited Escalation: Generalizing a single successful field demonstration or bench test as a universally validated capability.
+
+Uncertainty Visibility: Must explicitly state the date, location, hardware version, operating conditions, and limitations of the trial.
+
+3.8 Validated Capability
+
+Permitted Phrasing: "validated under", "demonstrated across", "verified by", "repeatably observed", [VALIDATED CAPABILITY].
+
+Prohibited Escalation: Projecting a capability beyond the specific conditions, scale, and cycles under which it was repeatably proven.
+
+Uncertainty Visibility: Must state validated cycle counts, material exposure bounds, and operating limits.
+
+3.9 Unresolved Engineering Variable
+
+Permitted Phrasing: "unresolved", "requires specification", "not yet determined", "requires measurement", "requires engineering decision", [UNRESOLVED ENGINEERING VARIABLE].
+
+Prohibited Escalation: Hiding, softening, or omitting technical gaps inside generic system summaries or planning baselines.
+
+Uncertainty Visibility: Unknown parameters must remain explicitly exposed in all high-level system profiles.
+
+4. Scalability and Deployment Claim Governance
+
+To protect technical integrity under external review, all claims concerning system scaling, regional deployment, and automation are bound by the following prohibitions:
+
+No Implied Industrial Scale: Modular layouts, system flow diagrams, and 3D mockups must never be summarized or communicated in a manner that implies verified industrial-scale throughput.
+
+No Implied Operational Readiness: Projections or timelines for field deployment must be explicitly designated as planning estimates constrained by outstanding validation gates.
+
+No Implied Autonomy: Workflows involving manual intervention, operator inspections, and manual material handling must not be phrased as autonomous or automated. External text must detail the physical operator constraints and labor-to-throughput relationships.
+
+No Implied Economically Viable Deployment: Feasibility planning, logistics modeling, and estimated yield values must never be presented as economically validated deployments.
+
+5. Ecological and Environmental Claim Governance
+
+Linguistic boundaries regarding sargassum interception and regional ecosystem effects must remain subordinate to measured environmental baselines and direct empirical proof.
+
+Design Intent vs. Proof: Statements describing environmental benefits, benthic preservation, and sargassum collection must be framed as design intents or hypotheses until local baseline research and multi-cycle field impact data are collected.
+
+Sustainability and Interception Claims: Interception efficiency projections and local marine protection outcomes must not be presented as guaranteed or validated. They must remain explicitly conditional on localized drift behaviors, sea states, and manual retrieval limits.
+
+6. Economic and Recovery Claim Governance
+
+Linguistic containment must consistently preserve the distinction between evaluating potential recoverable outputs and demonstrating economically viable recovery systems.
+
+Distinction of Status:
+
+Estimated Recovery Pathways: Theoretical or modeled process yields ($\text{CH}_4$, $\text{CO}_2$, $\text{H}_2\text{S}$, process effluents, recovered sulfur) requiring physical verification.
+
+Measured Outputs: Physical yields documented under specific, non-continuous trial conditions.
+
+Operational Feasibility: Process behaviors observed within a bounded pilot operating envelope.
+
+Economically Validated Systems: Highly repeatable process setups backed by verified operations costs, maintenance schedules, replacement logistics, labor hours, transportation rates, and regional commodity pricing.
+
+Prohibited Escalation: Projections, feasibility calculations, and bench-scale mass-balance sheets are prohibited from being framed as validated commercial viability, guaranteed revenue streams, or proven throughput.
+
+7. Compression and Summary Governance
+
+While document summaries, slide decks, abstracts, partner briefings, and institutional presentations must reduce text density and simplify technical vocabulary, they are strictly prohibited from removing technical boundaries.
+
+7.1 Permitted Compression
+
+Shortening paragraph lengths and consolidating workflow descriptions.
+
+Simplifying mechanical sequencing descriptions for non-technical comprehension.
+
+Reducing terminology density where it does not alter the underlying technical meaning.
+
+7.2 Prohibited Compression (Laundering)
+
+Erasing unresolved engineering variables, physical bottlenecks, or technical gaps.
+
+Flattening upstream or downstream dependency chains.
+
+Removing environmental operating caveats, wave-height limits, or UV degradation limits.
+
+Implying broader validation or repeatability than documented in the repository.
+
+Substituting narrative coherence, grammatical polish, or neat formatting for empirical evidence.
+
+8. Anti-Hallucination Communication Controls
+
+To prevent automated AI tools and human optimism loops from generating unearned claim escalation through repeated iterations, all external text must adhere to strict containment controls:
+
+Prevention of Confidence Loops: Preventing summaries from being recycled as technical verification sources. Every external summary must cite the canonical repository files as its primary authority.
+
+Resistance to Coherent Fiction: Rejecting highly organized or grammatically flawless system profiles that omit structural gaps or physical validation constraints.
+
+Elimination of Citation Laundering: Prohibiting the reference of marketing slides, partner briefs, or grant narratives as evidence of subsystem performance.
+
+Repetition, presentation quality, narrative coherence, or institutional adoption must not be interpreted as evidence of validated capability.
+
+9. Future Claim Review Structure
+
+Future evaluations of proposed external claims, grant narratives, and institutional briefs must be structured using the following metadata schema. No actual claims are to be populated in this template:
+
+Claim Statement: [The exact statement or capacity claim proposed for external communication]
+
+Intended Audience: [The target stakeholder, funder, partner, or public group]
+
+Evidence-State Dependency: [Citation to the current state in the VALIDATION_STATE_LEDGER]
+
+Related Unresolved Variables: [Citations to the outstanding gaps in the UNRESOLVED_VARIABLE_REGISTER]
+
+Permitted Language Boundaries: [Approved phrasing options that align directly with the evidence-state]
+
+Prohibited Escalation Patterns: [Explicit wording and claims that must not be used]
+
+Environmental Dependencies: [Natural or localized constraints that bound this claim]
+
+Economic Dependencies: [Unmeasured financial, logistic, or market variables that affect this claim]
+
+Required Caveats: [Mandatory warning text regarding validation limits that must accompany the claim]
+
+Validation Limitations: [The physical thresholds where performance degrades or remains untested]
+
+10. Compression-Safe Claim Rule
+
+All future grants, presentations, summaries, public communications, institutional discussions, and partnership materials may compress repository complexity, but they must visibly preserve evidence-state integrity, uncertainty visibility, operational boundaries, and subsystem dependency awareness.
+
+No technical gap or unmeasured variable may be erased to improve readability, narrative flow, or funding eligibility.
+
+The CLAIM_BOUNDARY_GOVERNANCE functions as a linguistic firewall, preventing external communication pressure from mutating engineering uncertainty into implied operational proof.

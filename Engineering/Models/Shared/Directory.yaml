@@ -1,0 +1,617 @@
+Directory:
+  file: Models/Shared/Directory.yaml
+  role: shared_repository_navigation_index
+  authority: locator_not_validator
+  status: active
+
+  rules:
+    - directory_maps_locations_it_does_not_govern_them
+    - directory_does_not_duplicate_contract_rules
+    - directory_does_not_hold_runtime_preflight_machinery
+    - shared_files_are_cross_model_surfaces
+    - model_specific_files_stay_inside_model_lanes
+    - design_runtime_files_stay_inside_design_or_runtime_lanes
+    - archive_entries_do_not_override_active_files
+
+  shared:
+    path: Models/Shared/
+    role: cross_model_shared_layer
+    files:
+      CE-OSv1.yaml:
+        role: shared_operating_system_seed
+        status: active
+
+      Contract.yaml:
+        role: cross_system_contract_and_boundary_rules
+        status: active
+        recent_update:
+          added:
+            - runtime_execution_boundary
+          scope:
+            - cross_system_runtime_execution_boundary_only
+
+      Directory.yaml:
+        role: shared_repository_navigation_index
+        status: active
+
+      Seth.txt:
+        role: operator_context_or_notes_surface
+        status: active
+
+  model_lanes:
+    Models/Gear/:
+      role: engineering_architecture_and_causal_mapping
+      owns:
+        - runtime_architecture
+        - causal_structure
+        - SurfaceMap.yaml
+
+    Models/Grant/:
+      role: governance_and_claim_firewall
+      owns:
+        - admissibility_review
+        - evidence_boundaries
+        - claim_firewall
+
+    Models/Cali/:
+      role: continuity_and_context_stabilization
+      owns:
+        - organization
+        - continuity
+        - task_tracking
+
+    Models/Elrich/:
+      role: navigation_and_external_surfaces
+      owns:
+        - navigation_maps
+        - presentation_surfaces
+
+  active_runtime_work:
+    maneuver: DirtyPacketLoop_001
+    status: runtime_contact_not_started
+    owning_lane: Models/Gear/
+    surface_map:
+      path: Models/Gear/v1/SurfaceMap.yaml
+      status: active_or_pending_creation
+    result_record:
+      path: RuntimeRecords/DirtyPacketLoop_001/RuntimeResultRecord_001.yaml
+      status: prepared_not_filled
+    next_feature_allowed: false
+
+  archive:
+    role: retrospective_lineage_and_recovery
+    rule:
+      - archive_preserves_past_material
+      - archive_does_not_override_active_authority
+      - reactivation_requires_review
+      
+```yaml
+Directory:
+  file: Directory.yaml
+  role: living_repository_routing_structure_and_human_limitation_map
+  status: active_living_map
+  authority: navigation_only_not_canon
+
+  prime_directive: >
+    Directory.yaml exists because Seth is human. The repository must remain
+    visible, bounded, and survivable to operate. Perfect abstraction loses if
+    Seth cannot hold the structure in working memory.
+
+  human_restraints:
+    operator: Seth
+    core_problem: human_navigation_collapse_under_context_sprawl
+
+    constraints:
+      - too_many_active_files_causes_operational_chaos
+      - duplicate_names_with_unclear_purpose_cause_cognitive_collision
+      - hidden_authority_routes_create_overload
+      - archive_material_can_overwhelm_active_work_if_not_contained
+      - summaries_can_become_false_authority_when_source_paths_are_hidden
+      - perfect_normalization_can_destroy_human_readability
+
+    design_priority_order:
+      - human_survivability
+      - readable_topology
+      - authority_lane_visibility
+      - reconstructability
+      - model_efficiency
+      - theoretical_elegance
+
+    hard_limits:
+      model_active_file_limit: 20
+      rule: each_model_lane_may_hold_no_more_than_20_active_files_at_once
+      reason: preserve_Seth_navigation_and_operational_control
+
+    file_count_rules:
+      Shared_files:
+        count_against_model_limit: false
+        reason: Shared_files_are_common_context_known_by_all_models
+
+      model_local_files:
+        count_against_model_limit: true
+        reason: model_local_files_are_active_lane_loadout
+
+      Archive_files:
+        count_against_model_limit: false
+        reason: Archive_is_recovery_lineage_not_active_model_loadout
+
+      Tools:
+        count_against_model_limit: false
+        reason: tools_are_external_support_not_model_context
+
+    overload_signal:
+      - model_requires_more_than_20_files
+      - Seth_cannot_explain_what_a_file_does_in_one_sentence
+      - same_filename_appears_in_multiple_places_without_clear_local_reason
+      - Archive_material_is_needed_constantly_for_active_reasoning
+      - directory_requires_cross_reference_hunting_to_understand_basic_routes
+
+    overload_response:
+      - compress_or_merge_files
+      - move_nonactive_files_to_Archive
+      - promote_common_context_to_Shared
+      - create_or_update_a_Sheet_for_human_readability
+      - split_active_project_from_historical_lineage
+      - do_not_add_more_files_until_route_is_clean
+
+  purpose:
+    - provide_shared_workspace_map
+    - preserve_authority_lanes
+    - separate_active_vs_archive_material
+    - support_multi_agent_coordination
+    - preserve_reconstructability
+    - keep_the_repo_human_navigable
+    - attach_briefs_to_major_structures
+    - enforce_20_file_model_limit
+    - prevent_context_sprawl_from_becoming_operational_failure
+
+  root:
+    path: Engineering/
+
+  topology_rules:
+    Shared:
+      meaning: guaranteed_common_context_for_all_models
+      rule:
+        - every_model_reads_Shared
+        - Shared_files_do_not_count_against_model_20_file_limit
+        - Shared_names_are_global
+        - Shared_must_stay_small
+        - Shared_is_not_a_dumping_ground
+
+    Model_Lanes:
+      meaning: local_operational_context_for_each_model
+      rule:
+        - each_model_lane_has_max_20_active_files
+        - model_files_may_overlap_names_when_local_purpose_is_clear
+        - overlap_requires_local_brief
+        - local_files_do_not_replace_Shared_authority
+
+    Archive:
+      meaning: preserved_retrospective_lineage
+      rule:
+        - archive_material_is_not_active_authority
+        - archive_material_remains_recoverable
+        - archive_requires_review_before_reactivation
+        - archive_does_not_count_against_model_limits
+
+    Sheets:
+      meaning: human_readable_role_cards
+      rule:
+        - Sheets_help_Seth_understand_roles
+        - Sheets_do_not_replace_Shells
+        - Sheets_should_be_shorter_and_clearer_than_Shells
+
+    Shells:
+      meaning: operational_behavior_contracts
+      rule:
+        - Shells_drive_model_behavior
+        - Shells_preserve_machine_facing_contracts
+        - Shells_may_be_more_formal_than_Sheets
+
+  active_spaces:
+
+    Shared:
+      role: shared_cross_agent_authority_layer
+      brief: guaranteed common context known by every model
+      count_against_model_file_limit: false
+      contains:
+        CE-OSv1.yaml:
+          brief: causal kernel and interaction discipline reference
+        Contract.yaml:
+          brief: operational relationship and repository contract
+        Directory.yaml:
+          brief: living repository map and Seth limitation structure
+        Seth.txt:
+          brief: operator lineage and mission pressure origin
+
+    Models:
+      role: specialized_agent_operational_lanes
+      brief: model-specific active loadouts with a hard 20-file cap per lane
+
+      Cali:
+        role: continuity_and_context_stabilization
+        brief: organization memory and continuity lane
+        active_file_count: 1
+        file_limit: 20
+        contains:
+          CaliShell.yaml:
+            brief: Cali operational shell
+
+      Elrich:
+        role: navigation_and_external_surface_mapping
+        brief: navigation and presentation lane
+        active_file_count: 1
+        file_limit: 20
+        contains:
+          ElrichShell.yaml:
+            brief: Elrich operational shell
+
+      Gear:
+        role: engineering_architecture_and_causal_reasoning
+        brief: builds inspectable topology runtime structure and causal maps
+        active_file_count: 16
+        file_limit: 20
+        count_note: Shared_files_do_not_count
+        contains:
+          Codex.yaml:
+            brief: implementation and build handoff layer
+          GearShell.yaml:
+            brief: parent operational Gear shell
+          v1:
+            brief: active Gear experimental runtime lane
+            contains:
+              Contact.yaml:
+                brief: runtime contact and meaning-shaping pressure boundary
+              Directory.yaml:
+                brief: Gear-local routing map
+              Eyes.yaml:
+                brief: observation packet contracts
+              Float.yaml:
+                brief: buoyancy observation specialization for Gear runtime use
+              GearKernelBridge.yaml:
+                brief: Gear authority boundary adapter
+              GearSheet.yaml:
+                brief: human-readable Gear role card
+              GearShell.yaml:
+                brief: local Gear runtime shell
+              Godot.yaml:
+                brief: operator interface adapter that makes Godot usable without trusting Godot
+              GodotOps.yaml:
+                brief: Godot topology and runtime doctrine
+              Interrogate.yaml:
+                brief: try-before-asking reasoning layer
+              Observation.yaml:
+                brief: observation lineage and route integrity
+              Senses:
+                brief: sensory/runtime observation intake surface for Gear
+              Simulate.yaml:
+                brief: white-box simulation construction doctrine
+              SimulationBridge.yaml:
+                brief: runtime and simulation translation boundary
+              VisionOps.yaml:
+                brief: visual runtime and interpretation doctrine
+              Runtime:
+                role: motion_execution_and_runtime_topology
+                brief: Gear-owned runtime seed where objects move routes fire packets form and displays update without becoming truth
+                purpose: prove_route_survivability_under_motion
+                not_purpose:
+                  - prove_physics
+                  - prove_buoyancy
+                  - prove_safety
+                  - prove_readiness
+                  - prove_governance_completeness
+                contains:
+                  RuntimeSeed.yaml:
+                    brief: minimum viable living runtime plan
+                  FloatingBox.yaml:
+                    brief: first test object with float submerge restore oscillate unresolved states
+                  RuntimeBus.yaml:
+                    brief: signal and event routing surface
+                  PacketLedger.yaml:
+                    brief: runtime packet collection and route identity surface
+                  DisplaySurface.yaml:
+                    brief: inspection display layer explicitly not evidence
+
+      Grant:
+        role: governance_and_claim_firewall
+        brief: admissibility evidence and contradiction lane
+        active_file_count: 10
+        file_limit: 20
+        count_note: Shared_files_do_not_count
+        contains:
+          GrantSheet.yaml:
+            brief: human-readable Grant role card
+          GrantShell.yaml:
+            brief: parent operational Grant shell
+          v1:
+            brief: active Grant governance lane
+            contains:
+              Imagination.yaml:
+                brief: causal completion and belief-binding pressure boundary
+              Evidence.yaml:
+                brief: operational evidence ledger architecture
+              Float.yaml:
+                brief: buoyancy claim-boundary review surface for Grant
+              Grant.v1.yaml:
+                brief: Grant local governance doctrine
+              GrantBridge.yaml:
+                brief: Grant authority boundary and dependency adapter
+              Instinct.yaml:
+                brief: anomaly and intuition capture layer
+              Physics.yaml:
+                brief: physics and admissibility review mirror
+              Senses:
+                brief: sensory/admissibility review surface for Grant
+              HindSight:
+                role: runtime_claim_firewall_and_retrospective_admissibility_review
+                brief: Grant-owned post-motion review layer that inspects what runtime outputs try to mean
+                purpose:
+                  - detect_semantic_promotion_under_motion
+                  - separate_route_mechanics_from_claim_support
+                  - preserve_unresolveds_after_display
+                  - preserve_contradictions_after_summary
+                  - quarantine_clean_runtime_language_that_overclaims
+                asks:
+                  - what_changed
+                  - where_did_it_come_from
+                  - what_route_did_it_travel
+                  - what_evidence_state_does_it_have
+                  - what_is_it_trying_to_become
+                  - what_unresolveds_remain_visible
+                  - what_contradictions_survive
+                  - which_lane_owns_next_pressure
+                contains:
+                  RuntimeClaimFirewall.yaml:
+                    brief: review frame for runtime outputs and hidden claim promotions
+                  GrantReviewResult.yaml:
+                    brief: bounded review output from Grant after runtime events
+                  AdmissibilityFlags.yaml:
+                    brief: standard flags for unsupported promotion or missing lineage
+                  SemanticPromotionReview.yaml:
+                    brief: detects simulation observation route display and summary laundering
+                  ContradictionLedger.yaml:
+                    brief: tracks contradictions that survive runtime and display transforms
+
+    Designs:
+      role: candidate_system_workspace
+      brief: design candidates and subsystem architecture records
+      contains:
+        Buoyancy Actuator:
+          brief: active buoyancy actuator design workspace
+          contains:
+            BAS:
+              brief: buoyancy actuator source material
+            Findings:
+              brief: observations and candidate lessons
+            Framework:
+              brief: subsystem and architecture organization
+            visuals.yaml:
+              brief: visual references and render notes
+
+    Projects:
+      role: applied_mission_space
+      brief: active projects consuming designs and measurements
+      contains:
+        Sargassum Project:
+          brief: environmental and operational project workspace
+
+    Tools:
+      role: external_tools_and_installers
+      brief: tooling support not authority
+      contains:
+        Godot_v4.6.3:
+          brief: Godot engine and related research material
+          contains:
+            DeepResearch:
+              brief: Godot research notes
+            Godot_v4.6.3-stable_win64.exe:
+              brief: Godot executable
+            Godot_v4.6.3-stable_win64_console.exe:
+              brief: Godot console executable
+
+  Archive:
+    role: retrospective_lineage_and_recovery_space
+    brief: preserved history fossils backups and reconstruction material
+    count_against_model_file_limit: false
+
+    rules:
+      - archive_material_is_not_active_authority
+      - archive_material_remains_recoverable
+      - archive_requires_review_before_reactivation
+      - preserve_lineage_without_cluttering_active_routes
+
+    Backup1:
+      brief: original recovery-era archive and semantic fossil layer
+      contains:
+        1.txt:
+          brief: raw reconstruction fragment
+        2.txt:
+          brief: raw reconstruction fragment
+        3.txt:
+          brief: raw reconstruction fragment
+        3D.txt:
+          brief: early modeling and spatial reasoning notes
+        4.txt:
+          brief: raw reconstruction fragment
+        5.txt:
+          brief: raw reconstruction fragment
+        BAS:
+          brief: archived buoyancy actuator material
+        Boat Control.txt:
+          brief: early boat control concepts
+        Boat Notebook.txt:
+          brief: exploratory boat notebook and design thinking
+        Boat_Control.txt:
+          brief: alternate boat control lineage file
+        Cali.Directory.yaml:
+          brief: archived Cali routing map
+        CE-OS:
+          brief: archived CE-OS source material
+        CE-OS.yaml:
+          brief: archived CE-OS yaml version
+        CE-OSv1.txt:
+          brief: archived CE-OSv1 text snapshot
+        CE-OSv1.yaml:
+          brief: archived CE-OSv1 yaml snapshot
+        Cognition.txt:
+          brief: cognition and systems-thinking notes
+        Core.txt:
+          brief: early core doctrine notes
+        Directory:
+          brief: archived directory structure
+        Domains.txt:
+          brief: domain organization notes
+        Elrich.Directory.yaml:
+          brief: archived Elrich routing map
+        Engine:
+          brief: archived engine material
+        Engine.yaml:
+          brief: archived engine yaml
+        Equations.txt:
+          brief: equations and mathematical notes
+        Formats.txt:
+          brief: formatting and schema experimentation
+        Gear-Cali.txt:
+          brief: Gear and Cali interaction notes
+        GearShell.yaml:
+          brief: archived Gear shell snapshot
+        Gold:
+          brief: archived recovery material
+        Gold.txt:
+          brief: recovery and lineage notes
+        Gold.yaml:
+          brief: archived Gold yaml
+        Governance:
+          brief: archived governance material
+        Governance.yaml:
+          brief: archived governance yaml
+        Grant.Directory.yaml:
+          brief: archived Grant routing map
+        Integration:
+          brief: integration and merge notes
+        Interface.yaml:
+          brief: archived interface boundary file
+        Lexicon:
+          brief: archived lexicon material
+        Lexicon.txt:
+          brief: terminology and semantic notes
+        Lexicon.yaml:
+          brief: archived lexicon yaml
+        Machine.txt:
+          brief: machine behavior and architecture notes
+        Memory.txt:
+          brief: continuity and memory structure notes
+        Methodology.txt:
+          brief: methodology and process thinking
+        Minimum.txt:
+          brief: minimal viable doctrine notes
+        Operators.txt:
+          brief: operator role and function notes
+        Physics:
+          brief: archived physics material
+        Physics.txt:
+          brief: physics and interaction notes
+        Physics.yaml:
+          brief: archived physics yaml
+        Project:
+          brief: archived project material
+        Protocol.txt:
+          brief: protocol draft notes
+        Protocols.txt:
+          brief: protocol variant collection
+        Prototype:
+          brief: archived prototype material
+        Prototype.yaml:
+          brief: archived prototype yaml
+        Reasoning.txt:
+          brief: reasoning architecture notes
+        Recovery:
+          brief: archived recovery material
+        Recovery.txt:
+          brief: recovery process notes
+        Runtime:
+          brief: archived runtime material
+        Runtime.yaml:
+          brief: archived runtime yaml
+        Structure.yaml:
+          brief: earlier structure and topology map
+        Transition:
+          brief: transition-state notes and migration concepts
+        Translational.txt:
+          brief: translation and bridge reasoning notes
+        Values.txt:
+          brief: value hierarchy and decision pressure notes
+        Variables.txt:
+          brief: variable catalogs and dependency notes
+        Working:
+          brief: archived scratch workspace
+
+    Backup2:
+      brief: reserved secondary backup space
+
+    Versions:
+      brief: historical snapshots and version lineage
+      contains:
+        CE-OSv1:
+          brief: historical CE-OSv1 snapshot set
+          contains:
+            1.Governance.txt:
+              brief: older governance fragment
+            2.Directory.txt:
+              brief: older directory fragment
+            2.Lexicon.txt:
+              brief: older lexicon fragment
+            3.CE-OS.txt:
+              brief: older CE-OS fragment
+            CE-OSv1.txt:
+              brief: CE-OSv1 text snapshot
+            Gold.yaml.yaml:
+              brief: duplicated-extension Gold snapshot
+            Governance.txt:
+              brief: governance text snapshot
+        Gear:
+          brief: historical Gear version lineage
+          contains:
+            v1:
+              brief: reserved historical Gear v1 space
+
+  active_rules:
+    - Directory_routes_but_does_not_validate
+    - Directory_is_Seth_limitation_map
+    - each_model_lane_max_20_active_files
+    - Shared_files_do_not_count_against_model_limits
+    - Sheets_help_humans
+    - Shells_drive_operational_behavior
+    - unresolved_variables_remain_visible
+    - contradictions_are_preserved
+    - active_projects_are_separate_from_archive
+    - runtime_state_does_not_equal_readiness
+    - visualization_does_not_equal_evidence
+    - archive_does_not_override_active_authority
+
+  prohibited_claims:
+    - topology_equals_truth
+    - summary_equals_validation
+    - archive_equals_authority
+    - prototype_equals_readiness
+    - routing_equals_canon
+    - visualization_equals_evidence
+    - model_file_limit_equals_truth_limit
+
+  recovery:
+    reconstructable_from:
+      - Archive
+      - Designs
+      - Models
+      - Projects
+      - Tools
+      - Shared
+
+    recovery_rule:
+      - preserve_authority_routes
+      - preserve_archive_visibility
+      - preserve_contradiction_history
+      - preserve_agent_lane_identity
+      - preserve_human_readability
+      - preserve_Seth_operational_control
+```
