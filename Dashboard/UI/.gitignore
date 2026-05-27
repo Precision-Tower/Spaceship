@@ -10,3 +10,5 @@ scripts/patches/*
 !scripts/patches/.keep
 scripts/sessions/*
 !scripts/sessions/.keep
+Dashboard/Tools/
+Dashboard/Models/
