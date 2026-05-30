@@ -1,0 +1,3180 @@
+RepoPacket:
+  status: generated_candidate
+  generated_at: "2026-05-29T19:36:48.345377"
+  root: "C:\\Users\\Freed\\1\\Bridge\\Core"
+  selected_directory: "Core/C:/Users/Freed/1/Bridge/Core/Dashboard/UI"
+  rules:
+    - inventory_only
+    - no_files_changed
+    - contents_embedded_for_inspection
+  files:
+    "Core/Dashboard/UI/BOUNDARY.md":
+      filename: "BOUNDARY.md"
+      extension: ".md"
+      bytes: 726
+      sha256: "628afc0a52034220a47a1943a05e667863dc1adeb2c89325254e81b2790e31d1"
+      content: |
+        display != evidence
+        proposal != patch
+        route success != claim support
+        candidate packet != canon
+        promoted packet != true
+        viewed diff != approved diff
+        review output != governance decision
+        test report != validation
+        runtime health != readiness
+        green status != safe
+        collapsed_ui_section != disabled_authority
+        active_nav_mode != authority
+        command_history != evidence
+        tree_display != filesystem_authority
+        Godot screen layer has no filesystem authority
+        focus != authority
+        compact_display != completeness
+        structured_history != evidence
+        refresh != validation
+        state_observation != readiness
+        operator_triggered_refresh_only
+        contract_doc != implementation
+        tree_navigation != authority
+        visual_structure != governance
+    "Core/Dashboard/UI/Mission.yaml":
+      filename: "Mission.yaml"
+      extension: ".yaml"
+      bytes: 680
+      sha256: "8f5c6ac22ab3c5675001ee00fdda76ffb03ed7f5235cdd5d419b632a706da9f6"
+      content: |
+        Mission:
+          id: dashboard_foundation_001
+          name: Dashboard Foundation
+          status: active
+        
+          current_phase: Dashboard Foundation
+        
+          next_action: Register remaining Dashboard commands
+        
+          tasks:
+            - status: complete
+              label: Refresh State wired end-to-end
+        
+            - status: complete
+              label: Boot-click verify Refresh State
+        
+            - status: complete
+              label: Confirm Terminal stdout/stderr visibility
+        
+            - status: complete
+              label: Mission panel visible
+        
+            - status: in_progress
+              label: Register remaining Dashboard commands
+        
+            - status: pending
+              label: Packet workflow
+        
+            - status: pending
+              label: Local model launcher
+    "Core/Dashboard/UI/Packets/topology/ui_packet_stub.txt":
+      filename: "ui_packet_stub.txt"
+      extension: ".txt"
+      bytes: 127
+      sha256: "c12d445503e33ca646ec6168efdc0644b1fddb25b8baa682723a6d9a1dbe8ae4"
+      content: |
+        Packet stub created on 2026-05-29T02:35:54 UTC
+        category: topology
+        title: ui_packet_stub
+        status: candidate
+        promoted: false
+    "Core/Dashboard/UI/project.godot":
+      filename: "project.godot"
+      extension: ".godot"
+      bytes: 290
+      sha256: "1ec17f4101d7cb30feb8b973b0747800da97b0fa721a6725c3bce9c60954d8dc"
+      content: |
+        config_version=5
+        
+        [application]
+        config/name="DashBoard"
+        run/main_scene="res://screen/scenes/Main.tscn"
+        config/features=PackedStringArray("4.6")
+        
+        [display]
+        window/size/viewport_width=1600
+        window/size/viewport_height=960
+        
+        [rendering]
+        renderer/rendering_method="gl_compatibility"
+    "Core/Dashboard/UI/README.md":
+      filename: "README.md"
+      extension: ".md"
+      bytes: 389
+      sha256: "1ace3e0bf99a9bc833ea285b785f94c22138b5a4f044e684165063a1e9cda5ca"
+      content: |
+        # DashBoard UI — Phase 4.6 Step 1 Tree Contract Doc Only
+        
+        Replace `Core/Dashboard/UI/` with this folder.
+        
+        Source baseline:
+        - Phase 4.5 Confirmed Good
+        
+        Single mutation:
+        - Adds UnifiedTreeContract.md documentation only
+        
+        No GDScript behavior changed.
+        No tree code changed.
+        No runtime topology changed.
+        
+        Boundary:
+        contract_doc != implementation
+        tree_navigation != authority
+    "Core/Dashboard/UI/screen/scenes/Main.tscn":
+      filename: "Main.tscn"
+      extension: ".tscn"
+      bytes: 288
+      sha256: "3a313b2511f496e2ca28f36f462643097edac3544f1c4d7bfe39a9c7d2d459aa"
+      content: |
+        [gd_scene load_steps=2 format=3 uid="uid://dashboard_main"]
+        
+        [ext_resource type="Script" path="res://screen/scripts/Main.gd" id="1"]
+        
+        [node name="DashBoardRoot" type="Control"]
+        layout_mode = 3
+        anchors_preset = 15
+        anchor_right = 1.0
+        anchor_bottom = 1.0
+        script = ExtResource("1")
+    "Core/Dashboard/UI/screen/scripts/Main.gd":
+      filename: "Main.gd"
+      extension: ".gd"
+      bytes: 47318
+      sha256: "1d8594fb754f80edca66984f1da1ce645e045c6e952b31afd7986b3b0e6547dc"
+      content: |
+        extends Control
+        const Palette = preload("res://screen/scripts/widgets/Palette.gd")
+        const CliBridge = preload("res://screen/scripts/runtime/CliBridge.gd")
+        
+        const OBSERVATION_MAX_LINES := 12
+        const OBSERVATION_ROUTE_MAX := 5
+        const OBSERVATION_NOT_OBSERVED_MAX := 4
+        const OBSERVATION_SURFACES := [
+        	"Home",
+        	"State",
+        	"Agents",
+        	"Packets",
+        	"Diffs",
+        	"Logs",
+        	"Settings",
+        	"Chat",
+        	"right:directory",
+        	"right:screens",
+        	"right:commands"
+        ]
+        
+        var awareness_label: RichTextLabel
+        var history_label: RichTextLabel
+        var current_status_label: RichTextLabel
+        var mission_label: RichTextLabel
+        var operator_observation_label: RichTextLabel
+        var state_label: Label
+        var workspace_tabs: TabContainer
+        var bottom_tabs: TabContainer
+        var bottom_shell: PanelContainer
+        
+        var right_mode_buttons := {}
+        var right_content: VBoxContainer
+        var directory_panel: Control
+        var screens_panel: Control
+        var commands_panel: Control
+        
+        var chat_count := 0
+        var bottom_expanded := false
+        var active_right_mode := ""
+        var active_surface := "Home"
+        var command_history: Array[Dictionary] = []
+        var left_panel_collapsed := {
+        	"mission": false,
+        	"status": true,
+        	"observation": true,
+        	"awareness": true,
+        	"history": true,
+        	"boundaries": true
+        }
+        var left_panel_buttons := {}
+        var operator_click_counts := {}
+        var operator_panel_toggles := {}
+        var operator_surface_visits := {}
+        var operator_recent_routes: Array[String] = []
+        var operator_last_event := "none"
+        var current_status := {
+        	"current_root": "Core",
+        	"dashboard_boot": "booted_not_refreshed",
+        	"latest_diff": "unknown",
+        	"packets_pending": "unknown",
+        	"git_dirty": "unknown",
+        	"last_command": "none",
+        	"next_required_action": "Refresh State"
+        }
+        
+        func _ready() -> void:
+        	_background()
+        	_build()
+        	_seed()
+        
+        func _background() -> void:
+        	var bg := ColorRect.new()
+        	bg.color = Palette.PLUM_BLACK
+        	bg.set_anchors_preset(Control.PRESET_FULL_RECT)
+        	add_child(bg)
+        
+        func _build() -> void:
+        	var root := VBoxContainer.new()
+        	root.set_anchors_preset(Control.PRESET_FULL_RECT)
+        	root.add_theme_constant_override("separation", 8)
+        	add_child(root)
+        
+        	root.add_child(_top_bar())
+        	root.add_child(_runtime_state_bar())
+        
+        	var main := HSplitContainer.new()
+        	main.size_flags_vertical = Control.SIZE_EXPAND_FILL
+        	root.add_child(main)
+        
+        	main.add_child(_left_awareness())
+        
+        	var center := VBoxContainer.new()
+        	center.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+        	main.add_child(center)
+        	center.add_child(_workspace())
+        	center.add_child(_bottom())
+        
+        	main.add_child(_right_control_rail())
+        
+        func _top_bar() -> Control:
+        	var p := PanelContainer.new()
+        	p.custom_minimum_size = Vector2(0, 50)
+        	_panel(p, Palette.PLUM_DEEP, Palette.GOLD_DARK, 1, 12)
+        	var row := HBoxContainer.new()
+        	row.add_theme_constant_override("separation", 12)
+        	p.add_child(row)
+        
+        	var title := Label.new()
+        	title.text = "DashBoard"
+        	title.add_theme_font_size_override("font_size", 26)
+        	title.add_theme_color_override("font_color", Palette.GOLD_BRIGHT)
+        	row.add_child(title)
+        
+        	var sub := Label.new()
+        	sub.text = "operator cockpit — operator-triggered state refresh"
+        	sub.add_theme_color_override("font_color", Palette.TEXT_DIM)
+        	row.add_child(sub)
+        
+        	var spacer := Control.new()
+        	spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+        	row.add_child(spacer)
+        
+        	var state := Label.new()
+        	state.text = "OBSERVATION_ONLY • REFRESH != VALIDATION"
+        	state.add_theme_color_override("font_color", Palette.GOLD)
+        	row.add_child(state)
+        	return p
+        
+        func _runtime_state_bar() -> Control:
+        	var p := PanelContainer.new()
+        	p.custom_minimum_size = Vector2(0, 78)
+        	_panel(p, Palette.PLUM_CARD, Palette.GOLD_DARK, 1, 14)
+        	state_label = Label.new()
+        	state_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+        	state_label.add_theme_color_override("font_color", Palette.TEXT)
+        	state_label.text = "Runtime State\nstatus: booted_not_refreshed | latest_diff: unknown | git_dirty: unknown | packets_pending: unknown\nboundary: runtime_state_reports_observation_only"
+        	p.add_child(state_label)
+        	return p
+        
+        func _left_awareness() -> Control:
+        	var shell := PanelContainer.new()
+        	shell.custom_minimum_size = Vector2(320, 0)
+        	_panel(shell, Palette.PLUM_DEEP, Palette.GOLD_DARK, 1, 16)
+        
+        	var box := VBoxContainer.new()
+        	box.add_theme_constant_override("separation", 10)
+        	shell.add_child(box)
+        
+        	# Mission section (read-only) - top flex zone
+        	mission_label = _left_text(180)
+        	mission_label.size_flags_vertical = Control.SIZE_EXPAND_FILL
+        	mission_label.text = _mission_text_from_data(_read_mission())
+        
+        	var mission_scroll := ScrollContainer.new()
+        	mission_scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+        	mission_scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+        	var mission_section := _collapsible_left_section("mission", "Mission", mission_label)
+        	mission_section.size_flags_vertical = Control.SIZE_EXPAND_FILL
+        	mission_scroll.add_child(mission_section)
+        	box.add_child(mission_scroll)
+        
+        	var status_sep := HSeparator.new()
+        	box.add_child(status_sep)
+        
+        	var bottom_stack := VBoxContainer.new()
+        	bottom_stack.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+        	bottom_stack.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+        
+        	current_status_label = _left_text(120)
+        	current_status_label.text = _current_status_text()
+        	bottom_stack.add_child(_collapsible_left_section("status", "Current Status", current_status_label))
+        
+        	operator_observation_label = _left_text(210)
+        	operator_observation_label.text = _operator_observation_text()
+        	bottom_stack.add_child(_collapsible_left_section("observation", "Operator Observation", operator_observation_label))
+        
+        	awareness_label = RichTextLabel.new()
+        	awareness_label.bbcode_enabled = true
+        	awareness_label.selection_enabled = true
+        	awareness_label.custom_minimum_size = Vector2(0, 285)
+        	awareness_label.text = _awareness_default()
+        	bottom_stack.add_child(_collapsible_left_section("awareness", "Operational Awareness", awareness_label))
+        
+        	history_label = RichTextLabel.new()
+        	history_label.bbcode_enabled = true
+        	history_label.selection_enabled = true
+        	history_label.size_flags_vertical = Control.SIZE_EXPAND_FILL
+        	history_label.text = "[color=#f1d58a]Command History[/color]\n\n(no commands yet)\n\n[color=#b8aebe]history != evidence[/color]"
+        	bottom_stack.add_child(_collapsible_left_section("history", "Command History", history_label))
+        
+        	var boundaries := _left_text(185)
+        	boundaries.text = _boundaries_default()
+        	bottom_stack.add_child(_collapsible_left_section("boundaries", "Runtime Boundaries", boundaries))
+        
+        	box.add_child(bottom_stack)
+        	return shell
+        
+        func _left_text(height: int) -> RichTextLabel:
+        	var r := RichTextLabel.new()
+        	r.bbcode_enabled = true
+        	r.selection_enabled = true
+        	# Ensure the Mission text has enough horizontal space to avoid awkward wrapping
+        	# without changing overall layout. Set a sensible min width to fit content.
+        	r.custom_minimum_size = Vector2(280, height)
+        	r.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+        	return r
+        
+        func _collapsible_left_section(key: String, title: String, content: Control) -> VBoxContainer:
+        	var section := VBoxContainer.new()
+        	section.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+        	section.add_theme_constant_override("separation", 6)
+        	var collapsed := bool(left_panel_collapsed.get(key, true))
+        	var b := Button.new()
+        	b.text = _collapse_label(title, collapsed)
+        	_button(b, false)
+        	b.pressed.connect(func(): _toggle_left_section(key, content))
+        	section.add_child(b)
+        	content.visible = not collapsed
+        	section.add_child(content)
+        	left_panel_buttons[key] = b
+        	return section
+        
+        func _collapse_label(title: String, collapsed: bool) -> String:
+        	return "+ " + title if collapsed else "- " + title
+        
+        func _left_section_title(key: String) -> String:
+        	if key == "observation":
+        		return "Operator Observation"
+        	if key == "awareness":
+        		return "Operational Awareness"
+        	if key == "history":
+        		return "Command History"
+        	if key == "mission":
+        		return "Mission"
+        	if key == "status":
+        		return "Current Status"
+        	return "Runtime Boundaries"
+        
+        func _toggle_left_section(key: String, content: Control) -> void:
+        	var collapsed := not bool(left_panel_collapsed.get(key, true))
+        	left_panel_collapsed[key] = collapsed
+        	content.visible = not collapsed
+        	if left_panel_buttons.has(key):
+        		var b: Button = left_panel_buttons[key]
+        		b.text = _collapse_label(_left_section_title(key), collapsed)
+        	_observe_panel_toggle(key, not collapsed)
+        
+        func _current_status_text() -> String:
+        	return "[color=#f1d58a]Current Status[/color]\n" + \
+        		"[color=#d6b15f]current_root[/color]=" + _status_value("current_root") + "\n" + \
+        		"[color=#d6b15f]dashboard_boot[/color]=" + _status_value("dashboard_boot") + "\n" + \
+        		"[color=#d6b15f]latest_diff[/color]=" + _status_value("latest_diff") + "\n" + \
+        		"[color=#d6b15f]packets_pending[/color]=" + _status_value("packets_pending") + "\n" + \
+        		"[color=#d6b15f]git_dirty[/color]=" + _status_value("git_dirty") + "\n" + \
+        		"[color=#d6b15f]last_command[/color]=" + _status_value("last_command") + "\n" + \
+        		"[color=#d6b15f]active_surface[/color]=" + active_surface + " / " + active_right_mode + "\n" + \
+        		"[color=#d6b15f]next_required_action[/color]=" + _status_value("next_required_action") + "\n" + \
+        		"[color=#b8aebe]status != validation[/color]"
+        
+        func _status_value(key: String) -> String:
+        	return str(current_status.get(key, "unknown"))
+        
+        func _set_status_value(key: String, value: String) -> void:
+        	current_status[key] = value
+        	_render_current_status()
+        
+        func _render_current_status() -> void:
+        	if current_status_label:
+        		current_status_label.text = _current_status_text()
+        
+        func _state_field(state_text: String, key: String, fallback: String) -> String:
+        	for line in state_text.split("\n"):
+        		var clean := str(line).strip_edges()
+        		var colon := clean.find(":")
+        		var equals := clean.find("=")
+        		var split_at := colon
+        		if split_at == -1 or (equals != -1 and equals < split_at):
+        			split_at = equals
+        		if split_at == -1:
+        			continue
+        		if clean.substr(0, split_at).strip_edges() == key:
+        			return clean.substr(split_at + 1, clean.length() - split_at - 1).strip_edges()
+        	return fallback
+        
+        func _update_status_from_state_text(state_text: String, ok := true) -> void:
+        	current_status["current_root"] = _state_field(state_text, "current_root", _status_value("current_root"))
+        	current_status["dashboard_boot"] = _state_field(state_text, "dashboard_boot", _status_value("dashboard_boot"))
+        	current_status["latest_diff"] = _state_field(state_text, "latest_diff", _status_value("latest_diff"))
+        	current_status["packets_pending"] = _state_field(state_text, "packets_pending", _status_value("packets_pending"))
+        	current_status["git_dirty"] = _state_field(state_text, "git_dirty", _status_value("git_dirty"))
+        	current_status["next_required_action"] = "Review refreshed state" if ok else "Inspect Refresh State failure"
+        	_render_current_status()
+        
+        func _connect_observed_button(button: Button, label: String, callable: Callable) -> void:
+        	button.pressed.connect(func(): _observed_call(label, callable))
+        
+        func _observed_call(label: String, callable: Callable) -> void:
+        	_observe_button(label)
+        	callable.call()
+        
+        func _observe_button(label: String) -> void:
+        	_increment_count(operator_click_counts, label)
+        	_observe_event("button", label)
+        
+        func _observe_surface(surface: String) -> void:
+        	_increment_count(operator_surface_visits, surface)
+        	_push_route(surface)
+        	_observe_event("surface", surface)
+        
+        func _observe_chat_surface(name: String) -> void:
+        	_increment_count(operator_surface_visits, "Chat")
+        	_push_route(name)
+        	_observe_event("surface", name)
+        
+        func _observe_panel_toggle(key: String, opened: bool) -> void:
+        	var state := "open" if opened else "closed"
+        	var label := _left_section_title(key)
+        	_increment_count(operator_panel_toggles, label)
+        	_observe_event("panel", label + "=" + state)
+        
+        func _observe_event(kind: String, detail: String) -> void:
+        	operator_last_event = kind + ": " + detail
+        	_render_operator_observation()
+        
+        func _increment_count(counts: Dictionary, key: String) -> void:
+        	counts[key] = int(counts.get(key, 0)) + 1
+        
+        func _push_route(route: String) -> void:
+        	operator_recent_routes.append(route)
+        	while operator_recent_routes.size() > OBSERVATION_ROUTE_MAX:
+        		operator_recent_routes.pop_front()
+        
+        func _render_operator_observation() -> void:
+        	if operator_observation_label:
+        		operator_observation_label.text = _operator_observation_text()
+        
+        func _operator_observation_text() -> String:
+        	return _cap_observation_lines("[color=#f1d58a]Operator Observation[/color]\n" + \
+        		"observed_clicks: " + _compact_counts(operator_click_counts, 4) + "\n" + \
+        		"panel_state: " + _panel_state_text() + "\n" + \
+        		"panel_toggles: " + _compact_counts(operator_panel_toggles, 3) + "\n" + \
+        		"surface_visits: " + _compact_counts(operator_surface_visits, 4) + "\n" + \
+        		"recent_routes: " + _recent_routes_text() + "\n" + \
+        		"not_observed_this_session: " + _not_observed_text() + "\n" + \
+        		"last_operator_event: " + operator_last_event + "\n" + \
+        		"[color=#b8aebe]observation != interpretation[/color]")
+        
+        func _compact_counts(counts: Dictionary, max_entries: int) -> String:
+        	if counts.is_empty():
+        		return "none"
+        	var keys := _count_keys_by_frequency(counts)
+        	var parts: Array[String] = []
+        	var limit = min(keys.size(), max_entries)
+        	for i in limit:
+        		var key := str(keys[i])
+        		parts.append(key + "=" + str(counts.get(key, 0)))
+        	if keys.size() > max_entries:
+        		parts.append("+" + str(keys.size() - max_entries))
+        	return _join_strings(parts, ", ")
+        
+        func _count_keys_by_frequency(counts: Dictionary) -> Array:
+        	var keys := counts.keys()
+        	keys.sort_custom(func(a, b):
+        		var count_a := int(counts.get(str(a), 0))
+        		var count_b := int(counts.get(str(b), 0))
+        		if count_a == count_b:
+        			return str(a) < str(b)
+        		return count_a > count_b
+        	)
+        	return keys
+        
+        func _panel_state_text() -> String:
+        	var parts: Array[String] = ["current_status=open"]
+        	for key in ["observation", "awareness", "history", "boundaries"]:
+        		var state := "closed" if bool(left_panel_collapsed.get(key, true)) else "open"
+        		parts.append(str(key) + "=" + state)
+        	return _join_strings(parts, ", ")
+        
+        func _recent_routes_text() -> String:
+        	if operator_recent_routes.is_empty():
+        		return "none"
+        	return _join_strings(operator_recent_routes, " -> ")
+        
+        func _not_observed_text() -> String:
+        	var missing: Array[String] = []
+        	for surface in OBSERVATION_SURFACES:
+        		if int(operator_surface_visits.get(str(surface), 0)) == 0:
+        			missing.append(str(surface))
+        		if missing.size() >= OBSERVATION_NOT_OBSERVED_MAX:
+        			break
+        	if missing.is_empty():
+        		return "none"
+        	return _join_strings(missing, ", ")
+        
+        func _cap_observation_lines(text: String) -> String:
+        	var lines := text.split("\n")
+        	var capped: Array[String] = []
+        	var limit = min(lines.size(), OBSERVATION_MAX_LINES)
+        	for i in limit:
+        		capped.append(str(lines[i]))
+        	return _join_strings(capped, "\n")
+        
+        func _join_strings(items: Array[String], separator: String) -> String:
+        	var text := ""
+        	for i in items.size():
+        		if i > 0:
+        			text += separator
+        		text += items[i]
+        	return text
+        
+        func _boundaries_default() -> String:
+        	return "[color=#f1d58a]Runtime Boundaries[/color]\n\n" + \
+        		"status != validation\n" + \
+        		"history != evidence\n" + \
+        		"display != authority\n" + \
+        		"collapsed_panel != inactive_authority\n" + \
+        		"refresh != readiness\n" + \
+        		"proposal != patch"
+        
+        func _awareness_default() -> String:
+        	return "[color=#f1d58a]Operational Awareness[/color]\n\n" + \
+        		"[color=#d6b15f]Focus[/color]\n" + \
+        		"surface: " + active_surface + "\n" + \
+        		"tree: " + active_right_mode + "\n" + \
+        		"last_cmd: none\n" + \
+        		"packet: none | diff: none\n" + \
+        		"root: Core\n" + \
+        		"focus != authority\n\n" + \
+        		"[color=#d6b15f]Live State[/color]\n" + \
+        		"refresh required for current values\n" + \
+        		"latest_diff: unknown\n" + \
+        		"git_dirty: unknown\n" + \
+        		"packets_pending: unknown\n\n" + \
+        		"[color=#d6b15f]Copy/Paste[/color]\n" + \
+        		"Test report | Runtime state\n" + \
+        		"Latest diff | Packet listing\n\n" + \
+        		"[color=#d6b15f]Boundaries[/color]\n" + \
+        		"runtime_health != readiness\n" + \
+        		"green_status != safe\n" + \
+        		"display != authority\n" + \
+        		"history != evidence\n" + \
+        		"compact_display != completeness"
+        
+        func _right_control_rail() -> Control:
+        	var shell := PanelContainer.new()
+        	shell.custom_minimum_size = Vector2(340, 0)
+        	_panel(shell, Palette.PLUM_DEEP, Palette.GOLD_DARK, 1, 16)
+        
+        	var box := VBoxContainer.new()
+        	box.add_theme_constant_override("separation", 8)
+        	shell.add_child(box)
+        
+        	var top := HBoxContainer.new()
+        	box.add_child(top)
+        
+        	var title := Label.new()
+        	title.text = "Control"
+        	title.add_theme_font_size_override("font_size", 18)
+        	title.add_theme_color_override("font_color", Palette.GOLD_BRIGHT)
+        	top.add_child(title)
+        
+        	var spacer := Control.new()
+        	spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+        	top.add_child(spacer)
+        
+        	var plus := Button.new()
+        	plus.text = "+"
+        	_button(plus, true)
+        	_connect_observed_button(plus, "New Chat", _new_chat)
+        	top.add_child(plus)
+        
+        	var refresh := Button.new()
+        	refresh.text = "Refresh State"
+        	_button(refresh, true)
+        	_connect_observed_button(refresh, "Refresh State", _refresh_state_command)
+        	box.add_child(refresh)
+        
+        	var test := Button.new()
+        	test.text = "Test"
+        	_button(test, true)
+        	_connect_observed_button(test, "Test", _test_all)
+        	box.add_child(test)
+        
+        	for mode in ["directory", "screens", "commands"]:
+        		var b := Button.new()
+        		b.text = mode.capitalize()
+        		_button(b, mode == active_right_mode)
+        		_connect_observed_button(b, mode.capitalize(), func(m = mode): _set_right_mode(m))
+        		box.add_child(b)
+        		right_mode_buttons[mode] = b
+        
+        	right_content = VBoxContainer.new()
+        	right_content.size_flags_vertical = Control.SIZE_EXPAND_FILL
+        	right_content.add_theme_constant_override("separation", 8)
+        	box.add_child(right_content)
+        
+        	directory_panel = _build_directory_panel()
+        	screens_panel = _build_screens_panel()
+        	commands_panel = _build_commands_panel()
+        
+        	right_content.add_child(directory_panel)
+        	right_content.add_child(screens_panel)
+        	right_content.add_child(commands_panel)
+        
+        	_set_right_mode("", false)
+        	return shell
+        
+        func _make_tree(title: String, height: int) -> Tree:
+        	var t := Tree.new()
+        	t.columns = 1
+        	t.hide_root = false
+        	t.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+        	t.size_flags_vertical = Control.SIZE_EXPAND_FILL
+        	t.custom_minimum_size = Vector2(300, height)
+        	return t
+        
+        func _tree_root(tree: Tree, label: String) -> TreeItem:
+        	tree.clear()
+        	var root := tree.create_item()
+        	root.set_text(0, label)
+        	root.set_collapsed(false)
+        	return root
+        
+        func _tree_child(parent: TreeItem, label: String, collapsed := false) -> TreeItem:
+        	var item := parent.create_child()
+        	item.set_text(0, label)
+        	item.set_collapsed(collapsed)
+        	return item
+        
+        func _build_directory_panel() -> Control:
+        	var scroll := ScrollContainer.new()
+        	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+        	scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+        
+        	var box := VBoxContainer.new()
+        	box.add_theme_constant_override("separation", 8)
+        	box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+        
+        	var label := Label.new()
+        	label.text = "Directory Map"
+        	label.add_theme_color_override("font_color", Palette.GOLD_BRIGHT)
+        	box.add_child(label)
+        
+        	var tree := _make_tree("Directory", 430)
+        	tree.item_selected.connect(func(item): _on_directory_item_selected(item))
+        	box.add_child(tree)
+        	var root := _tree_root(tree, "Core/")
+        	var dashboard := _tree_child(root, "Dashboard/", false)
+        	_tree_child(dashboard, "Models/", true)
+        	_tree_child(dashboard, "Tools/", true)
+        	var ui := _tree_child(dashboard, "UI/", false)
+        	var screen := _tree_child(ui, "screen/", true)
+        	_tree_child(screen, "scenes/", true)
+        	_tree_child(screen, "scripts/", true)
+        	var scripts := _tree_child(ui, "scripts/", true)
+        	_tree_child(scripts, "cli/", true)
+        	_tree_child(scripts, "runtime/", true)
+        	_tree_child(scripts, "patches/", true)
+        	_tree_child(ui, "Packets/", true)
+        	_tree_child(root, "Engineering/", true)
+        	_tree_child(root, "Schools/", true)
+        
+        	var note := Label.new()
+        	note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+        	note.add_theme_color_override("font_color", Palette.TEXT_DIM)
+        	note.text = "tree_display != filesystem_authority"
+        	box.add_child(note)
+        
+        	scroll.add_child(box)
+        	return scroll
+        
+        func _build_screens_panel() -> Control:
+        	var scroll := ScrollContainer.new()
+        	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+        	scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+        
+        	var box := VBoxContainer.new()
+        	box.add_theme_constant_override("separation", 8)
+        	box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+        
+        	var label := Label.new()
+        	label.text = "Screens Map"
+        	label.add_theme_color_override("font_color", Palette.GOLD_BRIGHT)
+        	box.add_child(label)
+        
+        	for s in ["Home", "State", "Agents", "Packets", "Diffs", "Logs", "Settings", "AI Assist"]:
+        		var b := Button.new()
+        		b.text = s
+        		_button(b, false)
+        		_connect_observed_button(b, s, func(name = s): _open_screen(name))
+        		box.add_child(b)
+        
+        	var tree := _make_tree("Screens", 230)
+        	box.add_child(tree)
+        	var root := _tree_root(tree, "Screens/")
+        	var workspace := _tree_child(root, "workspace tabs/", false)
+        	for s in ["Home", "State", "Agents", "Packets", "Diffs", "Logs", "Settings", "AI Assist"]:
+        		_tree_child(workspace, s + " surface", false)
+        
+        	scroll.add_child(box)
+        	return scroll
+        
+        func _build_commands_panel() -> Control:
+        	var scroll := ScrollContainer.new()
+        	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+        	scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+        
+        	var box := VBoxContainer.new()
+        	box.add_theme_constant_override("separation", 8)
+        	box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+        
+        	var label := Label.new()
+        	label.text = "Commands Map"
+        	label.add_theme_color_override("font_color", Palette.GOLD_BRIGHT)
+        	box.add_child(label)
+        
+        	_add_command_button(box, "Scan Core", false, _scan_core)
+        	_add_command_button(box, "Git Status", false, _git_status)
+        	_add_command_button(box, "Propose Directory Diff", false, _propose_diff)
+        	_add_command_button(box, "View Latest Diff", false, _view_latest_diff)
+        	_add_command_button(box, "Review Latest Diff", false, _review_latest_diff)
+        	_add_command_button(box, "Clear Latest Diff", false, _clear_latest_diff)
+        	_add_command_button(box, "List Packets", false, _list_packets)
+        	_add_command_button(box, "Create Packet Stub", false, _create_packet_stub)
+        	_add_command_button(box, "Debug Paths", false, func(): _terminal("Path debug\n" + CliBridge.debug_paths()))
+        
+        	var tree := _make_tree("Commands", 260)
+        	box.add_child(tree)
+        	var root := _tree_root(tree, "Command Surfaces/")
+        	var observe := _tree_child(root, "observe/read-only/", false)
+        	_tree_child(observe, "scan Core")
+        	_tree_child(observe, "git status")
+        	_tree_child(observe, "list packets")
+        
+        	var diff := _tree_child(root, "diff proposal/review/", false)
+        	_tree_child(diff, "propose latest.diff")
+        	_tree_child(diff, "view latest.diff")
+        	_tree_child(diff, "review latest.diff")
+        	_tree_child(diff, "clear latest.diff")
+        
+        	var packet := _tree_child(root, "packet candidate/", false)
+        	_tree_child(packet, "create packet stub")
+        
+        	var debug := _tree_child(root, "debug/", false)
+        	_tree_child(debug, "debug paths")
+        
+        	scroll.add_child(box)
+        	return scroll
+        
+        func _add_command_button(parent: VBoxContainer, label: String, primary: bool, callable: Callable) -> void:
+        	var b := Button.new()
+        	b.text = label
+        	_button(b, primary)
+        	_connect_observed_button(b, label, callable)
+        	parent.add_child(b)
+        
+        func _on_directory_item_selected(item: TreeItem) -> void:
+        	if item == null:
+        		return
+        	var path := _directory_item_path(item)
+        	if path == "":
+        		return
+        	_open_directory_surface(path)
+        
+        func _directory_item_path(item: TreeItem) -> String:
+        	var parts := []
+        	var current := item
+        	while current:
+        		var text := str(current.get_text(0)).strip_edges()
+        		if text != "":
+        			if text.ends_with("/"):
+        				text = text.substr(0, text.length() - 1)
+        			parts.insert(0, text)
+        		current = current.get_parent()
+        	return "/".join(parts)
+        
+        func _open_directory_surface(path: String) -> void:
+        	var name := "Directory"
+        	var existing := -1
+        	for i in workspace_tabs.get_tab_count():
+        		if workspace_tabs.get_tab_title(i) == name:
+        			existing = i
+        			break
+        
+        	var content_text := "[color=#f3edf7]Directory Navigation[/color]\n\nSelected path:\n" + path + "\n\nRead-only navigation only."
+        
+        	if existing != -1:
+        		var tab_node := workspace_tabs.get_child(existing)
+        		if tab_node and tab_node.get_child_count() >= 2:
+        			var label := tab_node.get_child(1)
+        			if label is RichTextLabel:
+        				label.text = content_text
+        		workspace_tabs.current_tab = existing
+        	else:
+        		var box := VBoxContainer.new()
+        		box.add_theme_constant_override("separation", 12)
+        		var title := Label.new()
+        		title.text = name
+        		title.add_theme_font_size_override("font_size", 24)
+        		title.add_theme_color_override("font_color", Palette.GOLD_BRIGHT)
+        		box.add_child(title)
+        		var text := RichTextLabel.new()
+        		text.bbcode_enabled = true
+        		text.selection_enabled = true
+        		text.text = content_text
+        		box.add_child(text)
+        		_add_or_focus_tab(name, box)
+        
+        	active_surface = name
+        	_render_current_status()
+        
+        func _set_right_mode(mode: String, observed := true) -> void:
+        	if mode == active_right_mode:
+        		active_right_mode = ""
+        	else:
+        		active_right_mode = mode
+        
+        	if directory_panel:
+        		directory_panel.visible = active_right_mode == "directory"
+        	if screens_panel:
+        		screens_panel.visible = active_right_mode == "screens"
+        	if commands_panel:
+        		commands_panel.visible = active_right_mode == "commands"
+        
+        	for key in right_mode_buttons.keys():
+        		_button(right_mode_buttons[key], key == active_right_mode)
+        
+        	_update_awareness_mode(active_right_mode)
+        	_render_current_status()
+        	if observed and active_right_mode != "":
+        		_observe_surface("right:" + active_right_mode)
+        
+        func _workspace() -> Control:
+        	var shell := PanelContainer.new()
+        	shell.size_flags_vertical = Control.SIZE_EXPAND_FILL
+        	_panel(shell, Palette.PLUM_PANEL, Palette.GOLD_DARK, 1, 18)
+        	workspace_tabs = TabContainer.new()
+        	workspace_tabs.size_flags_vertical = Control.SIZE_EXPAND_FILL
+        	shell.add_child(workspace_tabs)
+        	return shell
+        
+        func _bottom() -> Control:
+        	bottom_shell = PanelContainer.new()
+        	bottom_shell.custom_minimum_size = Vector2(0, 245)
+        	_panel(bottom_shell, Palette.PLUM_DEEP, Palette.GOLD_DARK, 1, 16)
+        	var box := VBoxContainer.new()
+        	bottom_shell.add_child(box)
+        	var row := HBoxContainer.new()
+        	box.add_child(row)
+        	var title := Label.new()
+        	title.text = "Runtime Surfaces"
+        	title.add_theme_color_override("font_color", Palette.GOLD_BRIGHT)
+        	row.add_child(title)
+        	var spacer := Control.new()
+        	spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+        	row.add_child(spacer)
+        	var exp := Button.new()
+        	exp.text = "Fullscreen Bottom"
+        	_button(exp, true)
+        	_connect_observed_button(exp, "Fullscreen Bottom", _toggle_bottom)
+        	row.add_child(exp)
+        	bottom_tabs = TabContainer.new()
+        	bottom_tabs.size_flags_vertical = Control.SIZE_EXPAND_FILL
+        	box.add_child(bottom_tabs)
+        	_add_bottom("Logs", "No CLI bridge output yet.")
+        	_add_bottom("Diffs", "Diff proposal/review output will render here.\n\nviewed_diff != approved_diff")
+        	_add_bottom("Packets", "Packet intake and registry output will render here.")
+        	_add_bottom("Terminal", "CLI stdout/stderr will render here.")
+        	return bottom_shell
+        
+        func _seed() -> void:
+        	_set_status_value("current_root", CliBridge.core_root())
+        	_set_status_value("dashboard_boot", "rendered")
+        	_new_chat(false)
+        	_open_screen("Home", false)
+        	_log("Phase 4.5 loaded. Operator-triggered state refresh only.")
+        	_terminal("Path debug\n" + CliBridge.debug_paths())
+        	# Render mission on seed
+        	_render_mission()
+        
+        func _new_chat(observed := true) -> void:
+        	chat_count += 1
+        	var name := "Chat %02d" % chat_count
+        	_open_chat(name, observed)
+        
+        func _open_chat(name: String, observed := true) -> void:
+        	active_surface = name
+        	_render_current_status()
+        	if observed:
+        		_observe_chat_surface(name)
+        	var box := VBoxContainer.new()
+        	box.add_theme_constant_override("separation", 12)
+        	var h := Label.new()
+        	h.text = name
+        	h.add_theme_font_size_override("font_size", 24)
+        	h.add_theme_color_override("font_color", Palette.GOLD_BRIGHT)
+        	box.add_child(h)
+        	var transcript := RichTextLabel.new()
+        	transcript.bbcode_enabled = true
+        	transcript.size_flags_vertical = Control.SIZE_EXPAND_FILL
+        	transcript.selection_enabled = true
+        	transcript.text = "[color=#b8aebe]Fresh operational thread.[/color]\n\nBoundary: this chat is a workspace surface, not authority."
+        	box.add_child(transcript)
+        	var input := TextEdit.new()
+        	input.custom_minimum_size = Vector2(0, 115)
+        	input.placeholder_text = "Write task / command / thought here..."
+        	box.add_child(input)
+        	_add_or_focus_tab(name, box)
+        
+        func _open_screen(name: String, observed := true) -> void:
+        	active_surface = name
+        	_render_current_status()
+        	if observed:
+        		_observe_surface(name)
+        	var box := VBoxContainer.new()
+        	box.add_theme_constant_override("separation", 12)
+        	var title := Label.new()
+        	title.text = name
+        	title.add_theme_font_size_override("font_size", 24)
+        	title.add_theme_color_override("font_color", Palette.GOLD_BRIGHT)
+        	box.add_child(title)
+        	var card := PanelContainer.new()
+        	card.size_flags_vertical = Control.SIZE_EXPAND_FILL
+        	_panel(card, Palette.PLUM_CARD, Palette.GOLD_DARK, 1, 14)
+        	box.add_child(card)
+        	var text := RichTextLabel.new()
+        	text.bbcode_enabled = true
+        	text.selection_enabled = true
+        	if name == "State":
+        		text.text = "[color=#f3edf7]Runtime State Surface[/color]\n\nPersistent state is observation only.\n\nRefresh State for current snapshot.\n\ngreen_status != safe\nruntime_health != readiness"
+        	elif name == "Packets":
+        		text.text = "[color=#f3edf7]Packet System Seed[/color]\n\nIncoming -> Reviewed -> Promoted -> Rejected\n\ncandidate_packet != canon\npromoted_packet != true"
+        	elif name == "Diffs":
+        		text.text = "[color=#f3edf7]Diff Review Surface[/color]\n\n1. Propose Directory Diff\n2. View Latest Diff\n3. Review Latest Diff\n4. Clear Latest Diff\n\nproposal != patch\nreview_button != governance_decision\napply_patch is intentionally absent"
+        	elif name == "AI Assist":
+        		text.text = "[color=#f3edf7]AI Assist surface pending wiring[/color]\n\nnot connected\nno API calls\nmanual context only\nassist_output != authority\nmodel_status=unknown"
+        	else:
+        		text.text = "[color=#f3edf7]" + name + " surface pending wiring.[/color]\n\nThis space stays clean until it earns complexity."
+        	card.add_child(text)
+        	_add_or_focus_tab(name, box)
+        
+        func _add_or_focus_tab(name: String, node: Control) -> void:
+        	for i in workspace_tabs.get_tab_count():
+        		if workspace_tabs.get_tab_title(i) == name:
+        			workspace_tabs.current_tab = i
+        			return
+        	node.name = name
+        	workspace_tabs.add_child(node)
+        	workspace_tabs.set_tab_title(workspace_tabs.get_tab_count() - 1, name)
+        	workspace_tabs.current_tab = workspace_tabs.get_tab_count() - 1
+        
+        func _add_bottom(name: String, content: String) -> void:
+        	var r := RichTextLabel.new()
+        	r.name = name
+        	r.bbcode_enabled = true
+        	r.selection_enabled = true
+        	r.text = "[color=#d6b15f]" + name + "[/color]\n\n" + content
+        	bottom_tabs.add_child(r)
+        
+        func _bottom_text(name: String) -> RichTextLabel:
+        	for child in bottom_tabs.get_children():
+        		if child.name == name:
+        			return child
+        	return null
+        
+        func _set_bottom(name: String) -> void:
+        	for i in bottom_tabs.get_tab_count():
+        		if bottom_tabs.get_tab_title(i) == name:
+        			bottom_tabs.current_tab = i
+        			return
+        
+        func _log(text: String) -> void:
+        	var l := _bottom_text("Logs")
+        	if l:
+        		l.append_text("\n[color=#d6b15f]" + Time.get_time_string_from_system() + "[/color] " + text)
+        
+        func _terminal(text: String) -> void:
+        	var t := _bottom_text("Terminal")
+        	if t:
+        		t.append_text("\n\n[color=#d6b15f]>[/color] " + text)
+        	_set_bottom("Terminal")
+        
+        func _diff(text: String) -> void:
+        	var d := _bottom_text("Diffs")
+        	if d:
+        		d.append_text("\n\n[color=#d6b15f]>[/color] " + text)
+        	_set_bottom("Diffs")
+        
+        func _packets(text: String) -> void:
+        	var p := _bottom_text("Packets")
+        	if p:
+        		p.append_text("\n\n[color=#d6b15f]>[/color] " + text)
+        	_set_bottom("Packets")
+        
+        func _record_command(name: String, result: Dictionary, summary: String) -> void:
+        	var status := "success" if result.get("ok", false) else "failed"
+        	current_status["last_command"] = name + " (" + status + ")"
+        	current_status["next_required_action"] = "Review " + name + " output"
+        	_render_current_status()
+        	command_history.push_front({
+        		"command": name,
+        		"status": status,
+        		"time": Time.get_time_string_from_system(),
+        		"summary": summary
+        	})
+        	if command_history.size() > 10:
+        		command_history.pop_back()
+        	_render_history()
+        
+        func _render_history() -> void:
+        	if not history_label:
+        		return
+        	var text := "[color=#f1d58a]Command History[/color]\n"
+        	if command_history.is_empty():
+        		text += "\n(no commands yet)\n"
+        	else:
+        		for row in command_history:
+        			var status := str(row.get("status", "unknown"))
+        			var color := "#8fca7a" if status == "success" else "#e05f5f"
+        			text += "\n[color=" + color + "]status: " + status + "[/color]\n"
+        			text += "time: " + str(row.get("time", "--:--")) + "\n"
+        			text += "command: " + str(row.get("command", "unknown")) + "\n"
+        			text += "summary: " + str(row.get("summary", "")) + "\n"
+        	text += "\n[color=#b8aebe]history != evidence[/color]"
+        	history_label.text = text
+        
+        func _refresh_state_from_output(output: String, ok := true) -> void:
+        	var stamp := Time.get_time_string_from_system()
+        	var short := output.strip_edges()
+        	if short.length() > 600:
+        		short = short.substr(0, 600) + "\n..."
+        	var status := _state_field(short, "status", "observed" if ok else "refresh_failed")
+        	var latest_diff := _state_field(short, "latest_diff", _status_value("latest_diff"))
+        	var git_dirty := _state_field(short, "git_dirty", _status_value("git_dirty"))
+        	var packets_pending := _state_field(short, "packets_pending", _status_value("packets_pending"))
+        	state_label.text = "Runtime State\n" + \
+        		"status: " + status + " | latest_diff: " + latest_diff + " | git_dirty: " + git_dirty + " | packets_pending: " + packets_pending + "\n" + \
+        		"last_refreshed: " + stamp + " | details: Terminal\n" + \
+        		"boundary: refresh_is_observation_only_not_validation"
+        	_update_status_from_state_text(short, ok)
+        	_update_awareness_from_state(short)
+        
+        func _update_awareness_mode(mode: String) -> void:
+        	if awareness_label:
+        		awareness_label.text = _awareness_default()
+        
+        func _update_awareness_from_state(state_text: String) -> void:
+        	if awareness_label:
+        		awareness_label.text = "[color=#f1d58a]Operational Awareness[/color]\n\n" + \
+        			"[color=#d6b15f]Focus[/color]\n" + \
+        			"surface: " + active_surface + "\n" + \
+        			"tree: " + active_right_mode + "\n" + \
+        			"last_cmd: Refresh State\n" + \
+        			"packet: none | diff: see state\n" + \
+        			"root: Core\n" + \
+        			"focus != authority\n\n" + \
+        			"[color=#d6b15f]Live State[/color]\n" + \
+        			"last_refreshed: " + Time.get_time_string_from_system() + "\n" + \
+        			"source: operator-triggered Refresh State\n" + \
+        			"full report: Terminal\n" + \
+        			"refresh != validation\n\n" + \
+        			"[color=#d6b15f]Copy/Paste[/color]\n" + \
+        			"Test report | Runtime state\n" + \
+        			"Latest diff | Packet listing\n\n" + \
+        			"[color=#d6b15f]Boundaries[/color]\n" + \
+        			"runtime_health != readiness\n" + \
+        			"green_status != safe\n" + \
+        			"display != authority\n" + \
+        			"history != evidence"
+        
+        
+        func _read_mission() -> Dictionary:
+        	var path: String = CliBridge.dashboard_root().path_join("UI/Mission.yaml")
+        	if not FileAccess.file_exists(path):
+        		return {"missing": true}
+        	var file: FileAccess = FileAccess.open(path, FileAccess.READ)
+        	if file == null:
+        		return {"missing": true}
+        	var text: String = file.get_as_text()
+        	file.close()
+        	var lines: PackedStringArray = text.split("\n")
+        	# Normalize YAML that nests fields under a top-level 'Mission:' mapping.
+        	# If present, strip the top 'Mission:' line and remove one indent level from following lines.
+        	var normalized: PackedStringArray = []
+        	var saw_mission_root: bool = false
+        	var removed_root: bool = false
+        	for i in range(lines.size()):
+        		var raw_line: String = str(lines[i])
+        		var stripped_line: String = raw_line.strip_edges()
+        		if not saw_mission_root and stripped_line.ends_with(":") and stripped_line.to_lower().begins_with("mission"):
+        			saw_mission_root = true
+        			removed_root = true
+        			continue
+        		if saw_mission_root:
+        			# Remove two-space indent if present, else remove one leading space if present
+        			if raw_line.begins_with("  "):
+        				normalized.append(raw_line.substr(2, raw_line.length() - 2))
+        			elif raw_line.begins_with(" "):
+        				normalized.append(raw_line.substr(1, raw_line.length() - 1))
+        			else:
+        				normalized.append(raw_line)
+        		else:
+        			normalized.append(raw_line)
+        	if removed_root:
+        		lines = normalized
+        	var data: Dictionary = {"missing": false, "name": "", "phase": "", "next_action": "", "tasks": [], "goal": "", "decision": "", "observed": "", "recommendation": ""}
+        	var in_tasks: bool = false
+        	var current_task: Dictionary = {}
+        	for l in lines:
+        		var line: String = str(l).strip_edges()
+        		if line == "" or line.begins_with("#"):
+        			continue
+        		if in_tasks:
+        			if line.begins_with("-"):
+        				var item: String = line.substr(1, line.length() - 1).strip_edges()
+        				current_task = {"text": "", "status": "pending"}
+        				if item.find(":") != -1:
+        					var item_key: String = item.substr(0, item.find(":")).strip_edges().to_lower()
+        					var item_val: String = item.substr(item.find(":") + 1, item.length() - item.find(":") - 1).strip_edges()
+        					if item_key == "status":
+        						current_task["status"] = item_val
+        					elif item_key == "label":
+        						current_task["text"] = item_val
+        					else:
+        						var status: String = "pending"
+        						var text_val: String = item
+        						if item.begins_with("[") and item.find("]") >= 2:
+        							var mark: String = item.substr(1, 1)
+        							text_val = item.substr(item.find("]") + 1, item.length() - (item.find("]") + 1)).strip_edges()
+        							if mark == "x" or mark == "X":
+        								status = "complete"
+        							elif mark == "~":
+        								status = "in_progress"
+        							elif mark == "!":
+        								status = "blocked"
+        							else:
+        								status = "pending"
+        						current_task["status"] = status
+        						current_task["text"] = text_val
+        				else:
+        					current_task["text"] = item
+        				data["tasks"].append(current_task)
+        				continue
+        			elif line.begins_with("status:") or line.begins_with("label:"):
+        				if data["tasks"].size() > 0:
+        					var current: Dictionary = data["tasks"][data["tasks"].size() - 1]
+        					var detail_key: String = line.substr(0, line.find(":")).strip_edges().to_lower()
+        					var detail_val: String = line.substr(line.find(":") + 1, line.length() - line.find(":") - 1).strip_edges()
+        					if detail_key == "status":
+        						current["status"] = detail_val
+        					elif detail_key == "label":
+        						current["text"] = detail_val
+        				continue
+        			else:
+        				in_tasks = false
+        		var colon: int = line.find(":")
+        		if colon != -1:
+        			var key: String = line.substr(0, colon).strip_edges().to_lower()
+        			var val: String = line.substr(colon + 1, line.length() - colon - 1).strip_edges()
+        			if key == "name" or key == "mission":
+        				data["name"] = val
+        			elif key == "phase":
+        				data["phase"] = val
+        			elif key == "current_phase":
+        				data["phase"] = val
+        			elif key == "next_action" or key == "next-action" or key == "next action":
+        				data["next_action"] = val
+        			elif key == "goal":
+        				data["goal"] = val
+        			elif key == "decision":
+        				data["decision"] = val
+        			elif key == "observed" or key == "observation":
+        				data["observed"] = val
+        			elif key == "recommendation" or key == "recommend":
+        				data["recommendation"] = val
+        			elif key == "tasks":
+        				in_tasks = true
+        
+        	return data
+        
+        func _mission_text_from_data(data: Dictionary) -> String:
+        	if bool(data.get("missing", false)):
+        		return "[color=#f1d58a]MISSION[/color]\nMission file missing."
+        	var text: String = "[color=#f1d58a]MISSION[/color]\n\n"
+        	# Current Goal (preferred) or name fallback
+        	var goal: String = str(data.get("goal", "")).strip_edges()
+        	var name: String = str(data.get("name", "")).strip_edges()
+        	if goal != "":
+        		text += "Current Goal:\n" + goal + "\n\n"
+        	elif name != "":
+        		text += "Current Goal:\n" + name + "\n\n"
+        
+        	# Current Decision
+        	var decision: String = str(data.get("decision", "")).strip_edges()
+        	if decision != "":
+        		text += "Current Decision:\n" + decision + "\n\n"
+        
+        	# Observed
+        	var observed: String = str(data.get("observed", "")).strip_edges()
+        	if observed != "":
+        		text += "Observed:\n" + observed + "\n\n"
+        
+        	# Recommendation
+        	var recommendation: String = str(data.get("recommendation", "")).strip_edges()
+        	if recommendation != "":
+        		text += "Recommendation:\n" + recommendation + "\n\n"
+        
+        	# Next action / phase
+        	var phase: String = str(data.get("phase", "")).strip_edges()
+        	var next_a: String = str(data.get("next_action", "")).strip_edges()
+        	if next_a != "":
+        		text += "Next:\n" + next_a + "\n\n"
+        	elif phase != "":
+        		text += "Phase:\n" + phase + "\n\n"
+        
+        	# Tasks fallback
+        	text += "Top Tasks:\n"
+        	var tasks: Array = data.get("tasks", [])
+        	var limit: int = min(tasks.size(), 5)
+        	if limit == 0:
+        		text += "(no tasks)\n"
+        	else:
+        		for i in range(limit):
+        			var t: Dictionary = tasks[i]
+        			var mark: String = "[ ]"
+        			var status_str: String = str(t.get("status", ""))
+        			if status_str == "complete":
+        				mark = "[x]"
+        			elif status_str == "in_progress":
+        				mark = "[~]"
+        			elif status_str == "blocked":
+        				mark = "[!]"
+        			text += mark + " " + str(t.get("text", "")) + "\n"
+        	return text
+        
+        func _render_mission() -> void:
+        	if not mission_label:
+        		return
+        	mission_label.text = _mission_text_from_data(_read_mission())
+        
+        func _refresh_state_command() -> void:
+        	_log("runtime-state requested")
+        	var r := CliBridge.runtime_state()
+        	_render_terminal(r)
+        	var ok := bool(r.get("ok", false))
+        	_refresh_state_from_output(str(r.get("stdout", "")), ok)
+        	_record_command("Refresh State", r, "runtime state refreshed" if ok else "runtime state failed")
+        	if not ok:
+        		current_status["next_required_action"] = "Inspect Refresh State failure"
+        		_render_current_status()
+        
+        func _test_all() -> void:
+        	_log("test-all requested")
+        	_terminal("Running structured validation report. Copy/paste this output back to Gear.")
+        	var r := CliBridge.test_all()
+        	_render_terminal(r)
+        	_record_command("Test", r, "structured validation report generated")
+        
+        func _scan_core() -> void:
+        	_log("scan-core requested")
+        	_terminal("Running scan-repo against Core...")
+        	var r := CliBridge.scan_core()
+        	_render_terminal(r)
+        	_record_command("Scan Core", r, "Core scan executed")
+        
+        func _git_status() -> void:
+        	_log("git-status requested")
+        	_terminal("Running git-status against Core...")
+        	var r := CliBridge.git_status_core()
+        	_render_terminal(r)
+        	_record_command("Git Status", r, "Git status executed")
+        
+        func _propose_diff() -> void:
+        	_log("propose-directory-diff requested")
+        	_diff("Running propose-directory-diff against Core...")
+        	var r := CliBridge.propose_directory_diff_core()
+        	_render_diff(r)
+        	_record_command("Propose Directory Diff", r, "latest.diff proposal attempted")
+        
+        func _view_latest_diff() -> void:
+        	_log("view-latest-diff requested")
+        	_diff("Viewing latest.diff...")
+        	var r := CliBridge.view_latest_diff()
+        	_render_diff(r)
+        	_record_command("View Latest Diff", r, "latest.diff display attempted")
+        
+        func _review_latest_diff() -> void:
+        	_log("grant-review-latest-diff requested")
+        	_diff("Reviewing latest.diff...")
+        	var r := CliBridge.grant_review_latest_diff()
+        	_render_diff(r)
+        	_record_command("Review Latest Diff", r, "lexical review executed")
+        
+        func _clear_latest_diff() -> void:
+        	_log("clear-latest-diff requested")
+        	_diff("Clearing latest.diff with archive tombstone...")
+        	var r := CliBridge.clear_latest_diff()
+        	_render_diff(r)
+        	_record_command("Clear Latest Diff", r, "latest.diff clear/archive attempted")
+        
+        func _list_packets() -> void:
+        	_log("list-packets requested")
+        	_packets("Listing packet registry...")
+        	var r := CliBridge.list_packets()
+        	_render_packets(r)
+        	_record_command("List Packets", r, "packet listing executed")
+        
+        func _create_packet_stub() -> void:
+        	_log("create-packet requested")
+        	_packets("Creating packet stub...")
+        	var r := CliBridge.create_packet_stub()
+        	_render_packets(r)
+        	_record_command("Create Packet Stub", r, "incoming packet stub attempted")
+        
+        func _format(result: Dictionary) -> String:
+        	var text := ""
+        	text += "command: " + str(result.get("command", "")) + "\n"
+        	text += "exit_code: " + str(result.get("exit_code", "")) + "\n"
+        	text += "python: " + str(result.get("python", "")) + "\n"
+        	text += "args: " + str(result.get("args", "")) + "\n"
+        	text += "debug_paths:\n" + str(result.get("debug_paths", "")) + "\n\n"
+        	text += str(result.get("stdout", ""))
+        	if result.get("ok", false):
+        		return "[color=#8fca7a]CLI command completed.[/color]\n" + text
+        	return "[color=#e05f5f]CLI command failed.[/color]\n" + text
+        
+        func _render_terminal(result: Dictionary) -> void:
+        	_terminal(_format(result))
+        
+        func _render_diff(result: Dictionary) -> void:
+        	_diff(_format(result))
+        
+        func _render_packets(result: Dictionary) -> void:
+        	_packets(_format(result))
+        
+        func _toggle_bottom() -> void:
+        	bottom_expanded = !bottom_expanded
+        	bottom_shell.custom_minimum_size = Vector2(0, 710 if bottom_expanded else 245)
+        
+        func _panel(panel: PanelContainer, fill: Color, border: Color, width: int, radius: int) -> void:
+        	var s := StyleBoxFlat.new()
+        	s.bg_color = fill
+        	s.border_color = border
+        	s.set_border_width_all(width)
+        	s.set_corner_radius_all(radius)
+        	s.content_margin_left = 12
+        	s.content_margin_right = 12
+        	s.content_margin_top = 10
+        	s.content_margin_bottom = 10
+        	panel.add_theme_stylebox_override("panel", s)
+        
+        func _button(button: Button, primary: bool) -> void:
+        	var normal := StyleBoxFlat.new()
+        	normal.bg_color = Palette.GOLD_SOFT if primary else Palette.PLUM_CARD
+        	normal.border_color = Palette.GOLD if primary else Palette.GOLD_DARK
+        	normal.set_border_width_all(1)
+        	normal.set_corner_radius_all(10)
+        	normal.content_margin_left = 12
+        	normal.content_margin_right = 12
+        	normal.content_margin_top = 7
+        	normal.content_margin_bottom = 7
+        	var hover := StyleBoxFlat.new()
+        	hover.bg_color = Palette.GOLD_BRIGHT if primary else Palette.PLUM_HOVER
+        	hover.border_color = Palette.GOLD_BRIGHT
+        	hover.set_border_width_all(1)
+        	hover.set_corner_radius_all(10)
+        	hover.content_margin_left = 12
+        	hover.content_margin_right = 12
+        	hover.content_margin_top = 7
+        	hover.content_margin_bottom = 7
+        	button.add_theme_stylebox_override("normal", normal)
+        	button.add_theme_stylebox_override("hover", hover)
+        	button.add_theme_color_override("font_color", Palette.PLUM_BLACK if primary else Palette.TEXT)
+        	button.add_theme_color_override("font_hover_color", Palette.PLUM_BLACK if primary else Palette.GOLD_BRIGHT)
+    "Core/Dashboard/UI/screen/scripts/runtime/CliBridge.gd":
+      filename: "CliBridge.gd"
+      extension: ".gd"
+      bytes: 3045
+      sha256: "e9e245c49c735ad1620f9acd0400d5725462fb24b2e545fbfe0b6ec8b88a0c7d"
+      content: |
+        extends RefCounted
+        class_name CliBridge
+        
+        static func ui_root() -> String:
+        	return ProjectSettings.globalize_path("res://").trim_suffix("/").trim_suffix("\\")
+        
+        static func dashboard_root() -> String:
+        	return ui_root().get_base_dir()
+        
+        static func core_root() -> String:
+        	return dashboard_root().get_base_dir()
+        
+        static func default_engineering_root() -> String:
+        	return core_root().path_join("Engineering")
+        
+        static func cli_path() -> String:
+        	return ui_root().path_join("scripts/cli/dashboard_cli.py")
+        
+        static func debug_paths() -> String:
+        	return "ui_root: " + ui_root() + "\n" + \
+        		"dashboard_root: " + dashboard_root() + "\n" + \
+        		"core_root: " + core_root() + "\n" + \
+        		"engineering_root: " + default_engineering_root() + "\n" + \
+        		"cli_path: " + cli_path()
+        
+        static func with_root(root: String) -> Array[String]:
+        	return ["--root", root]
+        
+        static func runtime_state() -> Dictionary:
+        	return run_cli("runtime-state", with_root(core_root()))
+        
+        static func test_all() -> Dictionary:
+        	return run_cli("test-all", with_root(core_root()))
+        
+        static func scan_core() -> Dictionary:
+        	return run_cli("scan-repo", with_root(core_root()))
+        
+        static func git_status_core() -> Dictionary:
+        	return run_cli("git-status", with_root(core_root()))
+        
+        static func propose_directory_diff_core() -> Dictionary:
+        	return run_cli("propose-directory-diff", with_root(core_root()))
+        
+        static func view_latest_diff() -> Dictionary:
+        	return run_cli("view-latest-diff", [])
+        
+        static func grant_review_latest_diff() -> Dictionary:
+        	return run_cli("grant-review-latest-diff", [])
+        
+        static func clear_latest_diff() -> Dictionary:
+        	return run_cli("clear-latest-diff", [])
+        
+        static func list_packets() -> Dictionary:
+        	return run_cli("list-packets", [])
+        
+        static func create_packet_stub() -> Dictionary:
+        	return run_cli("create-packet", ["--category", "topology", "--title", "ui_packet_stub"])
+        
+        static func run_cli(command: String, extra_args: Array[String] = []) -> Dictionary:
+        	var args: Array[String] = [cli_path(), command]
+        	for a in extra_args:
+        		args.append(a)
+        	var output: Array = []
+        	var exit_code := OS.execute(_python_command(), args, output, true, false)
+        	var stdout := ""
+        	for line in output:
+        		stdout += str(line)
+        	return {
+        		"ok": exit_code == 0,
+        		"exit_code": exit_code,
+        		"command": command,
+        		"python": _python_command(),
+        		"args": args,
+        		"stdout": stdout,
+        		"debug_paths": debug_paths()
+        	}
+        
+        static func scan_repo(root: String = "") -> Dictionary:
+        	var args: Array[String] = []
+        	if root != "":
+        		args.append("--root")
+        		args.append(root)
+        	return run_cli("scan-repo", args)
+        
+        static func git_status(root: String = "") -> Dictionary:
+        	var args: Array[String] = []
+        	if root != "":
+        		args.append("--root")
+        		args.append(root)
+        	return run_cli("git-status", args)
+        
+        static func _python_command() -> String:
+        	if OS.has_environment("DASHBOARD_PYTHON"):
+        		var configured := OS.get_environment("DASHBOARD_PYTHON").strip_edges()
+        		if configured != "":
+        			return configured
+        	if OS.get_name() == "Windows":
+        		return "py"
+        	return "python3"
+    "Core/Dashboard/UI/screen/scripts/widgets/Palette.gd":
+      filename: "Palette.gd"
+      extension: ".gd"
+      bytes: 510
+      sha256: "9721a2b240f1fa9083ac0daae63ec82b55bbdb82aa6a9c752e4afa6979a44f31"
+      content: |
+        extends RefCounted
+        class_name Palette
+        
+        const PLUM_BLACK := Color("#120717")
+        const PLUM_DEEP := Color("#1b0b24")
+        const PLUM_PANEL := Color("#24102f")
+        const PLUM_CARD := Color("#30153e")
+        const PLUM_HOVER := Color("#3c1b50")
+        const GOLD := Color("#d6b15f")
+        const GOLD_SOFT := Color("#b89248")
+        const GOLD_DARK := Color("#6e5426")
+        const GOLD_BRIGHT := Color("#f1d58a")
+        const TEXT := Color("#f3edf7")
+        const TEXT_DIM := Color("#b8aebe")
+        const DANGER := Color("#e05f5f")
+        const GREEN := Color("#8fca7a")
+    "Core/Dashboard/UI/screen/scripts/widgets/UnifiedTreeContract.md":
+      filename: "UnifiedTreeContract.md"
+      extension: ".md"
+      bytes: 1200
+      sha256: "3b3ea66f65918544de3dc9c04037c497364bea26f0a633202abdf8c4759de6bf"
+      content: |
+        # UnifiedTreeComponent Contract
+        
+        Status: contract only.
+        Authority: navigation/display discipline only.
+        
+        ## Purpose
+        
+        Directory, Screens, and Commands should eventually share one tree-building contract so the UI does not drift into three subtly different navigation systems.
+        
+        ## Consumers
+        
+        - Directory
+        - Screens
+        - Commands
+        
+        ## Target Node Shape
+        
+        ```yaml
+        TreeNode:
+          label: string
+          collapsed: bool
+          children: list[TreeNode]
+          action: optional string
+          metadata: optional map
+        ```
+        
+        ## Required Guarantees
+        
+        ```yaml
+        guarantees:
+          tree_display_is_navigation_only: true
+          selected_node_does_not_grant_authority: true
+          collapsed_node_does_not_disable_authority: true
+          visual_structure_is_not_governance: true
+          directory_tree_is_not_filesystem_proof: true
+        ```
+        
+        ## Future Migration Order
+        
+        ```yaml
+        migration:
+          step_1: contract_doc_only
+          step_2: add_helper_functions_unused
+          step_3: migrate_directory_only
+          step_4: migrate_screens_only
+          step_5: migrate_commands_only
+        ```
+        
+        ## Blocked
+        
+        ```yaml
+        blocked:
+          - recursive_tree_refactor_bundle
+          - hidden_tree_actions
+          - filesystem_mutation_from_tree_click
+          - authority_claims_from_navigation_state
+        ```
+    "Core/Dashboard/UI/scripts/agents/cali.md":
+      filename: "cali.md"
+      extension: ".md"
+      bytes: 809
+      sha256: "0faacbaf180894a1fc3987c50f86e3217d1366d094b85fdc6f2b2c8410ec593a"
+      content: |
+        # Cali
+        
+        Continuity, organization, Directory maintenance.
+        
+        You are Cali, the local clerical and continuity observer for the Directory.
+        
+        Role:
+        - Observe repository and Directory surfaces.
+        - Prepare compact clerical summaries.
+        - Suggest organization and continuity next actions.
+        
+        Authority boundaries:
+        - Do not edit files.
+        - Do not promote canon.
+        - Do not claim validation.
+        - Do not claim engineering truth.
+        - Do not replace Codex.
+        - Do not treat directory visibility as filesystem authority.
+        - Do not treat model output as evidence.
+        
+        Use only the provided snapshot. If the snapshot is insufficient, say so under
+        Blocked claims.
+        
+        Output exactly these sections:
+        
+        Active-looking areas
+        
+        Stale or unclear areas
+        
+        Changed/suspicious surfaces
+        
+        Files needing organization
+        
+        Suggested next clerical action
+        
+        Blocked claims
+    "Core/Dashboard/UI/scripts/agents/gear.md":
+      filename: "gear.md"
+      extension: ".md"
+      bytes: 69
+      sha256: "995b946dc670020eb2ffd69d4ccdd942785120cefa9fe3caee779c3014f77620"
+      content: |
+        # Gear
+        
+        Engineering architecture and causal structure extraction.
+    "Core/Dashboard/UI/scripts/agents/grant.md":
+      filename: "grant.md"
+      extension: ".md"
+      bytes: 43
+      sha256: "ab776b4c6c4175b1df518c8d010ae62e0de84b22ebd187e7404e7ae7b171d172"
+      content: |
+        # Grant
+        
+        Governance and claim firewall.
+    "Core/Dashboard/UI/scripts/agents/registry.yaml":
+      filename: "registry.yaml"
+      extension: ".yaml"
+      bytes: 1801
+      sha256: "89d241fa43c9a5011dcf3eebeb8a5e3dff8ad9e208ae2d67183b92fd9445dd0d"
+      content: |
+        AgentRegistry:
+          version: 0.1
+          authority: display_registry_not_orchestration
+          active_agent_id: cali
+        
+          models:
+            phi3_mini_local:
+              label: Phi-3 Mini local
+              path: Tools/Models/Phi-3-mini-4k-instruct
+              status: present_runtime_dependencies_verified
+              execution_enabled: false
+        
+            qwen3_8b_local:
+              label: Qwen3-8B local
+              path: Tools/Models/Qwen3-8b
+              status: present_runtime_dependencies_blocked
+              execution_enabled: false
+        
+            unassigned:
+              label: Unassigned
+              path: null
+              status: no_local_runtime_assignment
+              execution_enabled: false
+        
+          agents:
+            cali:
+              display_name: Cali
+              role: continuity_and_directory_observer
+              status: active_candidate
+              prompt_path: agents/cali.md
+              model_id: phi3_mini_local
+              tools:
+                - scan-repo
+                - cali-observe-directory
+                - propose-directory-diff
+              blocked_claims:
+                - validation
+                - engineering_truth
+                - canon_promotion
+                - automatic_file_edits
+        
+            gear:
+              display_name: Gear
+              role: engineering_architecture_and_causal_mapping
+              status: registered_display_only
+              prompt_path: agents/gear.md
+              model_id: unassigned
+              tools:
+                - scan-repo
+                - git-status
+              blocked_claims:
+                - validation
+                - governance_authority
+                - canon_promotion
+                - operational_readiness_claims
+        
+            grant:
+              display_name: Grant
+              role: governance_and_claim_firewall
+              status: registered_display_only
+              prompt_path: agents/grant.md
+              model_id: unassigned
+              tools:
+                - grant-review
+                - grant-review-latest-diff
+                - view-latest-diff
+              blocked_claims:
+                - engineering_resolution
+                - canon_creation
+                - validation_itself
+                - file_mutation
+    "Core/Dashboard/UI/scripts/cli/commands/__init__.py":
+      filename: "__init__.py"
+      extension: ".py"
+      bytes: 0
+      sha256: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      content: |
+        ''
+    "Core/Dashboard/UI/scripts/cli/commands/apply_patch.py":
+      filename: "apply_patch.py"
+      extension: ".py"
+      bytes: 1102
+      sha256: "d1789a03d6a0caff3b02108ba2d85b2e4373294787e90244704cc4c22f727511"
+      content: |
+        from pathlib import Path
+        from runtime.paths import resolve_target_root
+        from runtime.git_tools import run_git
+        import subprocess
+        
+        def run(args):
+            root = resolve_target_root(args.root)
+            diff_path = Path(args.diff).resolve()
+            print("APPLY_PATCH")
+            print(f"root: {root}")
+            print(f"diff: {diff_path}")
+            if not args.approved:
+                print("status: blocked")
+                print("reason: --approved required")
+                print("files_changed: none_claimed")
+                return
+            if not diff_path.exists():
+                print("status: blocked")
+                print("reason: diff not found")
+                print("files_changed: none_claimed")
+                return
+            proc = subprocess.run(["git", "apply", str(diff_path)], cwd=str(root), text=True, capture_output=True)
+            if proc.returncode != 0:
+                print("status: apply_failed")
+                print(proc.stderr.strip())
+                print("files_changed: none_claimed")
+                return
+            _, out, _ = run_git(root, ["status", "--short"])
+            print("status: patch_applied")
+            print("git_status:")
+            print(out.strip() or "(no changes reported)")
+    "Core/Dashboard/UI/scripts/cli/commands/cali_observe_directory.py":
+      filename: "cali_observe_directory.py"
+      extension: ".py"
+      bytes: 8311
+      sha256: "730aa7a03f7b2317880dc1bbe15f929ccdeaffc030b36edb97cca52603e8245d"
+      content: |
+        from pathlib import Path
+        import datetime
+        
+        from runtime.agent_registry import normalized_agent_registry
+        from runtime.model_runner import generate_qwen_text
+        from runtime.paths import DASHBOARD_ROOT, UI_ROOT, resolve_target_root, scan_files
+        
+        
+        DEFAULT_MODEL_PATH = DASHBOARD_ROOT / "Tools" / "Models" / "Qwen3-8b"
+        AGENT_PROMPT_PATH = UI_ROOT / "scripts" / "agents" / "cali.md"
+        CALI_AGENT_ID = "cali"
+        
+        
+        def _find_directory(root: Path):
+            for rel in ["Models/Shared/Directory.yaml", "Shared/Directory.yaml", "Directory.yaml"]:
+                candidate = root / rel
+                if candidate.exists():
+                    return candidate
+            matches = sorted(root.rglob("Directory.yaml"))
+            return matches[0] if matches else None
+        
+        
+        def _read_excerpt(path: Path, max_chars: int = 6000) -> str:
+            text = path.read_text(encoding="utf-8", errors="replace")
+            if len(text) <= max_chars:
+                return text
+            return text[:max_chars] + "\n... excerpt_truncated ..."
+        
+        
+        def _count_by_extension(files):
+            counts = {}
+            for rel in files:
+                suffix = Path(rel).suffix.lower() or "[no_extension]"
+                counts[suffix] = counts.get(suffix, 0) + 1
+            return sorted(counts.items(), key=lambda item: (-item[1], item[0]))
+        
+        
+        def _count_by_top_folder(files):
+            counts = {}
+            for rel in files:
+                top = rel.split("/", 1)[0]
+                counts[top] = counts.get(top, 0) + 1
+            return sorted(counts.items(), key=lambda item: (-item[1], item[0]))
+        
+        
+        def _recent_files(root: Path, files, limit: int = 16):
+            recent = []
+            for rel in files:
+                path = root / rel
+                try:
+                    stat = path.stat()
+                except OSError:
+                    continue
+                recent.append((stat.st_mtime, rel, stat.st_size))
+            recent.sort(reverse=True)
+            return recent[:limit]
+        
+        
+        def _candidate_attention_files(files, limit: int = 40):
+            markers = [
+                "backup",
+                "copy",
+                "diff",
+                "latest",
+                "old",
+                "temp",
+                "tmp",
+                "tombstone",
+                "updated",
+            ]
+            found = []
+            for rel in files:
+                lower = rel.lower()
+                if any(marker in lower for marker in markers):
+                    found.append(rel)
+            return found[:limit]
+        
+        
+        def _build_snapshot(root: Path, max_files: int) -> str:
+            files = scan_files(root)
+            directory = _find_directory(root)
+            max_files = max(1, max_files)
+        
+            lines = [
+                "DIRECTORY_SNAPSHOT",
+                f"root: {root}",
+                f"files_detected: {len(files)}",
+                "",
+                "top_folders:",
+            ]
+            for name, count in _count_by_top_folder(files)[:24]:
+                lines.append(f"- {name}: {count}")
+        
+            lines.extend(["", "extensions:"])
+            for ext, count in _count_by_extension(files)[:24]:
+                lines.append(f"- {ext}: {count}")
+        
+            lines.extend(["", "recent_files:"])
+            for stamp, rel, size in _recent_files(root, files):
+                when = datetime.datetime.fromtimestamp(stamp).isoformat(timespec="seconds")
+                lines.append(f"- {when} | {size} bytes | {rel}")
+        
+            attention_files = _candidate_attention_files(files)
+            lines.extend(["", "candidate_attention_files:"])
+            if attention_files:
+                lines.extend(f"- {rel}" for rel in attention_files)
+            else:
+                lines.append("- none_detected_by_name_scan")
+        
+            lines.extend(["", f"files_listed_first_{min(max_files, len(files))}:"])
+            for rel in files[:max_files]:
+                lines.append(f"- {rel}")
+            if len(files) > max_files:
+                lines.append(f"... truncated {len(files) - max_files} more files")
+        
+            lines.extend(["", "directory_yaml_excerpt:"])
+            if directory:
+                lines.append(f"path: {directory.relative_to(root).as_posix()}")
+                lines.append(_read_excerpt(directory))
+            else:
+                lines.append("blocked: no Directory.yaml found under target root")
+        
+            return "\n".join(lines)
+        
+        
+        def _resolve_cali_model_path() -> Path | None:
+            registry = normalized_agent_registry()
+            for agent in registry.get("agents", []):
+                if agent.get("id") == CALI_AGENT_ID:
+                    model = agent.get("model", {})
+                    model_path = model.get("path")
+                    if model_path:
+                        return DASHBOARD_ROOT / model_path
+                    break
+            return None
+        
+        
+        def _build_prompt(agent_prompt: str, snapshot: str) -> str:
+            return f"""{agent_prompt}
+        
+        Task:
+        Observe the Directory snapshot as Cali. Produce clerical recommendations only.
+        Use the exact output section names requested in the Cali prompt.
+        
+        Directory snapshot:
+        ```text
+        {snapshot}
+        ```
+        """
+        
+        
+        def _print_degraded_observation(status: str, reason: str):
+            print(f"status: {status}")
+            print("mode: degraded_no_model_generation")
+            print()
+            print("Active-looking areas")
+            print("- blocked: local Cali model observation did not complete.")
+            print()
+            print("Stale or unclear areas")
+            print("- blocked: stale/unclear classification requires model observation or manual review.")
+            print()
+            print("Changed/suspicious surfaces")
+            print("- blocked: changed/suspicious classification requires model observation or manual review.")
+            print()
+            print("Files needing organization")
+            print("- blocked: organization recommendations were not generated.")
+            print()
+            print("Suggested next clerical action")
+            print("- Restore local Python/model execution, then rerun cali-observe-directory.")
+            print()
+            print("Blocked claims")
+            print(f"- model_execution: {status}")
+            print(f"- reason: {reason}")
+            print("- no canon, validation, engineering truth, or file edit claim was made")
+        
+        
+        def run(args):
+            root = resolve_target_root(args.root)
+            model_path = Path(args.model_path).resolve() if args.model_path else _resolve_cali_model_path() or DEFAULT_MODEL_PATH
+            max_files = args.max_files
+            max_new_tokens = args.max_new_tokens
+            timeout_seconds = args.timeout_seconds if hasattr(args, 'timeout_seconds') else None
+            dry_run_model_path = args.dry_run_model_path if hasattr(args, 'dry_run_model_path') else False
+        
+            print("CALI_OBSERVE_DIRECTORY")
+            print(f"root: {root}")
+            print(f"model_path: {model_path}")
+            
+            # Handle --dry-run-model-path flag
+            if dry_run_model_path:
+                print("status: dry_run_model_path")
+                print(f"resolved_model_path: {model_path}")
+                return
+        
+            print("authority: read_only_observation_not_validation")
+            print("edits: none")
+        
+            if not AGENT_PROMPT_PATH.exists():
+                _print_degraded_observation(
+                    "blocked_agent_prompt_missing",
+                    f"Cali prompt not found at {AGENT_PROMPT_PATH}",
+                )
+                return
+        
+            agent_prompt = AGENT_PROMPT_PATH.read_text(encoding="utf-8", errors="replace")
+            snapshot = _build_snapshot(root, max_files)
+            prompt = _build_prompt(agent_prompt, snapshot)
+        
+            # Wrap generation call with timeout if specified
+            if timeout_seconds:
+                import signal
+                import threading
+                
+                result = None
+                error_msg = None
+                
+                def generate_with_timeout():
+                    nonlocal result, error_msg
+                    try:
+                        result = generate_qwen_text(
+                            model_path=model_path,
+                            prompt=prompt,
+                            max_new_tokens=max_new_tokens,
+                            temperature=0.3,
+                            enable_thinking=False,
+                        )
+                    except Exception as e:
+                        error_msg = str(e)
+                
+                thread = threading.Thread(target=generate_with_timeout, daemon=False)
+                thread.start()
+                thread.join(timeout=timeout_seconds)
+                
+                if thread.is_alive():
+                    _print_degraded_observation("timeout_exceeded", f"Model generation did not complete within {timeout_seconds} seconds")
+                    return
+                
+                if error_msg:
+                    _print_degraded_observation("generation_error", error_msg)
+                    return
+                    
+                if not result:
+                    _print_degraded_observation("generation_failed", "Unknown error during model generation")
+                    return
+            else:
+                result = generate_qwen_text(
+                    model_path=model_path,
+                    prompt=prompt,
+                    max_new_tokens=max_new_tokens,
+                    temperature=0.3,
+                    enable_thinking=False,
+                )
+        
+            if not result.ok:
+                _print_degraded_observation(result.status, result.reason)
+                return
+        
+            print("status: observation_generated")
+            print()
+            print(result.text)
+    "Core/Dashboard/UI/scripts/cli/commands/clear_latest_diff.py":
+      filename: "clear_latest_diff.py"
+      extension: ".py"
+      bytes: 533
+      sha256: "818de5cf4c476d4c6b3d5967f0511edf8b97d8c3a90a3ef67c78aadd2ae4bb31"
+      content: |
+        from pathlib import Path
+        from runtime.paths import PATCH_DIR
+        
+        
+        def run(args):
+            latest = PATCH_DIR / "latest.diff"
+            archive = PATCH_DIR / "latest.diff.tombstone"
+            PATCH_DIR.mkdir(parents=True, exist_ok=True)
+        
+            print("CLEAR_LATEST_DIFF")
+            if not latest.exists():
+                print("status: missing")
+                print("reason: latest.diff not found")
+                return
+        
+            if archive.exists():
+                archive.unlink()
+        
+            latest.replace(archive)
+            print("status: archived")
+            print(f"patch: {archive}")
+    "Core/Dashboard/UI/scripts/cli/commands/create_packet.py":
+      filename: "create_packet.py"
+      extension: ".py"
+      bytes: 1166
+      sha256: "a5d457e926fd6a028bd98a5826aa0768c62e7aba5c294e094d5b79c5addedc94"
+      content: |
+        from datetime import datetime
+        from pathlib import Path
+        from runtime.paths import UI_ROOT
+        
+        
+        def _sanitize_name(value: str) -> str:
+            return "".join(c if c.isalnum() or c in "-_ " else "_" for c in value).strip().replace(" ", "_")
+        
+        
+        def run(args):
+            category = args.category or "uncategorized"
+            title = args.title or "packet_stub"
+            packet_root = UI_ROOT / "Packets" / _sanitize_name(category)
+            packet_root.mkdir(parents=True, exist_ok=True)
+        
+            filename = _sanitize_name(title)
+            if not filename:
+                filename = "packet_stub"
+            path = packet_root / f"{filename}.txt"
+        
+            print("CREATE_PACKET")
+            print(f"category: {category}")
+            print(f"title: {title}")
+            print(f"path: {path}")
+        
+            if path.exists():
+                print("status: exists")
+                return
+        
+            content = (
+                f"Packet stub created on {datetime.utcnow().isoformat(timespec='seconds')} UTC\n"
+                f"category: {category}\n"
+                f"title: {title}\n"
+                "status: candidate\n"
+                "promoted: false\n"
+            )
+            path.write_text(content, encoding="utf-8")
+            print("status: created")
+            print(f"size: {path.stat().st_size}")
+    "Core/Dashboard/UI/scripts/cli/commands/git_status.py":
+      filename: "git_status.py"
+      extension: ".py"
+      bytes: 478
+      sha256: "7b082e8f57a860c412c53c5677e51b06096d230db0ff08ad7a8f1c8a6fde8c82"
+      content: |
+        from runtime.paths import resolve_target_root
+        from runtime.git_tools import run_git
+        
+        def run(args):
+            root = resolve_target_root(args.root)
+            code, out, err = run_git(root, ["status", "--short"])
+            print("GIT_STATUS")
+            print(f"root: {root}")
+            if code != 0:
+                print("status: git_error")
+                print(err.strip())
+                return
+            print("status: clean" if not out.strip() else "status: changes_present")
+            print(out.strip() or "(no changes)")
+    "Core/Dashboard/UI/scripts/cli/commands/grant_review.py":
+      filename: "grant_review.py"
+      extension: ".py"
+      bytes: 964
+      sha256: "553f9ab10e820df42872d3731beb429b5096ce6487a5b8aa689dda8f974a5a38"
+      content: |
+        from pathlib import Path
+        
+        RISK_PATTERNS = ["validated", "operational_readiness", "safe", "evidence", "truth", "canon", "fixed", "updated", "completed", "stable"]
+        
+        def run(args):
+            diff_path = Path(args.diff).resolve()
+            print("GRANT_REVIEW")
+            print(f"diff: {diff_path}")
+            if not diff_path.exists():
+                print("Status: blocked")
+                print("Reason: diff not found")
+                return
+            text = diff_path.read_text(encoding="utf-8", errors="replace")
+            hits = sorted({p for p in RISK_PATTERNS if p.lower() in text.lower()})
+            print("Status: admissible_with_warnings" if hits else "Status: admissible")
+            print("Observed Risks:")
+            if hits:
+                for h in hits:
+                    print(f"- risk_pattern_detected: {h}")
+            else:
+                print("- none_detected_by_simple_scan")
+            print("Authority Boundary:")
+            print("- lexical review only; not full semantic governance")
+            print("- no filesystem mutation claim made")
+    "Core/Dashboard/UI/scripts/cli/commands/grant_review_latest_diff.py":
+      filename: "grant_review_latest_diff.py"
+      extension: ".py"
+      bytes: 440
+      sha256: "12c385840319adebbb4b0ae055160d92b95816878024e23ad208b6f92e738310"
+      content: |
+        from argparse import Namespace
+        from pathlib import Path
+        from runtime.paths import PATCH_DIR
+        from commands import grant_review
+        
+        
+        def run(args):
+            latest = PATCH_DIR / "latest.diff"
+            print("GRANT_REVIEW_LATEST_DIFF")
+            if not latest.exists():
+                print("status: blocked")
+                print("reason: latest.diff not found")
+                return
+        
+            review_args = Namespace(diff=str(latest))
+            grant_review.run(review_args)
+    "Core/Dashboard/UI/scripts/cli/commands/list_agents.py":
+      filename: "list_agents.py"
+      extension: ".py"
+      bytes: 176
+      sha256: "69bb66791309cbaa385849f12e6c1503062e69758574862d4c049b3be4253258"
+      content: |
+        import json
+        
+        from runtime.agent_registry import normalized_agent_registry
+        
+        
+        def run(args):
+            registry = normalized_agent_registry()
+            print(json.dumps(registry, indent=2))
+    "Core/Dashboard/UI/scripts/cli/commands/list_packets.py":
+      filename: "list_packets.py"
+      extension: ".py"
+      bytes: 663
+      sha256: "102573bd81af39f833040e6511994ca69ac7690ead7ff9bc0015b7eba06c88f9"
+      content: |
+        from pathlib import Path
+        from runtime.paths import UI_ROOT
+        
+        
+        def run(args):
+            packet_root = UI_ROOT / "Packets"
+            print("LIST_PACKETS")
+            if not packet_root.exists():
+                print("status: missing")
+                print("reason: Packet registry directory not found")
+                print("packets: 0")
+                return
+        
+            files = sorted([p for p in packet_root.rglob("*") if p.is_file() and p.name != ".keep"])
+            print("status: listed")
+            print(f"packets: {len(files)}")
+            if not files:
+                print("note: no packets present")
+                return
+        
+            print("packet_paths:")
+            for p in files:
+                print(f"- {p.relative_to(packet_root)}")
+    "Core/Dashboard/UI/scripts/cli/commands/propose_directory_diff.py":
+      filename: "propose_directory_diff.py"
+      extension: ".py"
+      bytes: 1766
+      sha256: "a332c412f5d9d46056ed68331bcd59554f367dd34743f60381087b77f4172073"
+      content: |
+        from pathlib import Path
+        from runtime.paths import resolve_target_root, scan_files, PATCH_DIR
+        import difflib, datetime
+        
+        def find_directory(root: Path):
+            for rel in ["Models/Shared/Directory.yaml", "Shared/Directory.yaml", "Directory.yaml"]:
+                p = root / rel
+                if p.exists():
+                    return p
+            matches = list(root.rglob("Directory.yaml"))
+            return matches[0] if matches else None
+        
+        def run(args):
+            root = resolve_target_root(args.root)
+            files = scan_files(root)
+            target = find_directory(root)
+            PATCH_DIR.mkdir(parents=True, exist_ok=True)
+            latest = PATCH_DIR / "latest.diff"
+            print("PROPOSE_DIRECTORY_DIFF")
+            print(f"root: {root}")
+            if target is None:
+                latest.write_text("# blocked: no Directory.yaml found\\n", encoding="utf-8")
+                print("status: blocked_no_directory_found")
+                print(f"patch: {latest}")
+                return
+            original = target.read_text(encoding="utf-8", errors="replace").splitlines(keepends=True)
+            stamp = datetime.datetime.now().isoformat(timespec="seconds")
+            addition = [
+                "\\n",
+                "# --- DashBoard candidate scan note ---\\n",
+                f"# created_at: {stamp}\\n",
+                "# status: candidate_note_not_authority\\n",
+                f"# files_detected: {len(files)}\\n",
+                "# rule: review_before_promotion\\n",
+                "# --- end DashBoard candidate scan note ---\\n",
+            ]
+            rel = target.relative_to(root).as_posix()
+            diff = difflib.unified_diff(original, original + addition, fromfile=rel, tofile=rel, lineterm="")
+            latest.write_text("\\n".join(diff) + "\\n", encoding="utf-8")
+            print("status: diff_prepared")
+            print(f"target: {target}")
+            print(f"patch: {latest}")
+            print("authority: propose_only")
+    "Core/Dashboard/UI/scripts/cli/commands/runtime_state.py":
+      filename: "runtime_state.py"
+      extension: ".py"
+      bytes: 1364
+      sha256: "5a80bd747b5610257727c8ae3be18654999f74f7fccf8a0d81f29dcaaf160bd9"
+      content: |
+        from pathlib import Path
+        
+        from runtime.git_tools import run_git
+        from runtime.paths import PATCH_DIR, UI_ROOT, resolve_target_root
+        
+        
+        def _latest_diff_state() -> str:
+            latest = PATCH_DIR / "latest.diff"
+            if not latest.exists():
+                return "missing"
+            if latest.stat().st_size == 0:
+                return "empty"
+            return "present"
+        
+        
+        def _git_dirty_state(root: Path) -> str:
+            try:
+                code, out, err = run_git(root, ["status", "--short"])
+            except OSError as exc:
+                print(f"git_status_error: {exc}")
+                return "unknown"
+            if code != 0:
+                print("git_status_error: " + err.strip())
+                return "unknown"
+            return "true" if out.strip() else "false"
+        
+        
+        def _packets_pending_state() -> str:
+            packet_root = UI_ROOT / "Packets"
+            if not packet_root.exists():
+                return "unknown"
+            packets = [p for p in packet_root.rglob("*") if p.is_file() and p.name != ".keep"]
+            return str(len(packets))
+        
+        
+        def run(args):
+            root = resolve_target_root(args.root)
+            print("RUNTIME_STATE")
+            print("status: observed")
+            print(f"current_root: {root}")
+            print("dashboard_boot: observed_from_refresh_request")
+            print(f"latest_diff: {_latest_diff_state()}")
+            print(f"git_dirty: {_git_dirty_state(root)}")
+            print(f"packets_pending: {_packets_pending_state()}")
+            print("boundary: runtime_state_reports_observation_only")
+    "Core/Dashboard/UI/scripts/cli/commands/scan_repo.py":
+      filename: "scan_repo.py"
+      extension: ".py"
+      bytes: 387
+      sha256: "ffccff987e48b183546f3f20baf3c45f610831d3469ed0b504e87ed3410e655f"
+      content: |
+        from runtime.paths import resolve_target_root, scan_files
+        
+        def run(args):
+            root = resolve_target_root(args.root)
+            files = scan_files(root)
+            print("SCAN_REPO")
+            print(f"root: {root}")
+            print(f"files_detected: {len(files)}")
+            for f in files[:250]:
+                print(f"- {f}")
+            if len(files) > 250:
+                print(f"... truncated {len(files) - 250} more files")
+    "Core/Dashboard/UI/scripts/cli/commands/test_all.py":
+      filename: "test_all.py"
+      extension: ".py"
+      bytes: 1231
+      sha256: "a7fdcfc221c20fe917f66b2c939263e4e660af38f2e843e2407bff5534c8ef9a"
+      content: |
+        from pathlib import Path
+        from runtime.git_tools import run_git
+        from runtime.paths import PATCH_DIR, UI_ROOT, resolve_target_root
+        
+        
+        def _latest_diff_state() -> str:
+            latest = PATCH_DIR / "latest.diff"
+            if not latest.exists():
+                return "missing"
+            if latest.stat().st_size == 0:
+                return "empty"
+            return "present"
+        
+        
+        def _git_dirty_state(root: Path) -> str:
+            try:
+                code, out, err = run_git(root, ["status", "--short"])
+            except OSError as exc:
+                return "unknown"
+            if code != 0:
+                return "unknown"
+            return "true" if out.strip() else "false"
+        
+        
+        def _packets_pending_state() -> str:
+            packet_root = UI_ROOT / "Packets"
+            if not packet_root.exists():
+                return "missing"
+            packets = [p for p in packet_root.rglob("*") if p.is_file() and p.name != ".keep"]
+            return str(len(packets))
+        
+        
+        def run(args):
+            root = resolve_target_root(args.root)
+            print("TEST_ALL")
+            print("status: report_generated")
+            print(f"root: {root}")
+            print(f"latest_diff: {_latest_diff_state()}")
+            print(f"git_dirty: {_git_dirty_state(root)}")
+            print(f"packets_pending: {_packets_pending_state()}")
+            print("boundary: test_report_stub_only")
+    "Core/Dashboard/UI/scripts/cli/commands/view_latest_diff.py":
+      filename: "view_latest_diff.py"
+      extension: ".py"
+      bytes: 535
+      sha256: "fe010f6785c146881d76419f4c26f6ff4b5df2fb2a6f3acdd7a57287c3152548"
+      content: |
+        from pathlib import Path
+        from runtime.paths import PATCH_DIR
+        
+        
+        def run(args):
+            latest = PATCH_DIR / "latest.diff"
+            print("VIEW_LATEST_DIFF")
+            if not latest.exists():
+                print("status: missing")
+                print("reason: latest.diff not found")
+                return
+        
+            text = latest.read_text(encoding="utf-8", errors="replace")
+            if not text.strip():
+                print("status: empty")
+                return
+        
+            print("status: present")
+            print(f"patch: {latest}")
+            print("diff:")
+            print(text.rstrip("\n"))
+    "Core/Dashboard/UI/scripts/cli/dashboard_cli.py":
+      filename: "dashboard_cli.py"
+      extension: ".py"
+      bytes: 3069
+      sha256: "6780d49f1bf56b1789ba015fb33a0b5cf820a53e5cda7a98940ef26436c73029"
+      content: |
+        import sys
+        from pathlib import Path
+        
+        CLI_DIR = Path(__file__).resolve().parent
+        SCRIPTS_DIR = CLI_DIR.parent
+        if str(SCRIPTS_DIR) not in sys.path:
+            sys.path.insert(0, str(SCRIPTS_DIR))
+        
+        import argparse
+        from commands import (
+            scan_repo,
+            git_status,
+            propose_directory_diff,
+            grant_review,
+            apply_patch,
+            runtime_state,
+            view_latest_diff,
+            grant_review_latest_diff,
+            clear_latest_diff,
+            list_packets,
+            create_packet,
+            test_all,
+            cali_observe_directory,
+            list_agents,
+        )
+        
+        def build_parser():
+            parser = argparse.ArgumentParser(prog="dashboard_cli", description="DashBoard CLI spine")
+            sub = parser.add_subparsers(dest="command", required=True)
+        
+            p = sub.add_parser("scan-repo")
+            p.add_argument("--root", default=None)
+            p.set_defaults(func=scan_repo.run)
+        
+            p = sub.add_parser("runtime-state")
+            p.add_argument("--root", default=None)
+            p.set_defaults(func=runtime_state.run)
+        
+            p = sub.add_parser("git-status")
+            p.add_argument("--root", default=None)
+            p.set_defaults(func=git_status.run)
+        
+            p = sub.add_parser("propose-directory-diff")
+            p.add_argument("--root", default=None)
+            p.set_defaults(func=propose_directory_diff.run)
+        
+            p = sub.add_parser("grant-review")
+            p.add_argument("--diff", required=True)
+            p.set_defaults(func=grant_review.run)
+        
+            p = sub.add_parser("apply-patch")
+            p.add_argument("--root", default=None)
+            p.add_argument("--diff", required=True)
+            p.add_argument("--approved", action="store_true")
+            p.set_defaults(func=apply_patch.run)
+        
+            p = sub.add_parser("view-latest-diff")
+            p.set_defaults(func=view_latest_diff.run)
+        
+            p = sub.add_parser("grant-review-latest-diff")
+            p.set_defaults(func=grant_review_latest_diff.run)
+        
+            p = sub.add_parser("clear-latest-diff")
+            p.set_defaults(func=clear_latest_diff.run)
+        
+            p = sub.add_parser("list-packets")
+            p.set_defaults(func=list_packets.run)
+        
+            p = sub.add_parser("create-packet")
+            p.add_argument("--category", default=None)
+            p.add_argument("--title", default=None)
+            p.set_defaults(func=create_packet.run)
+        
+            p = sub.add_parser("test-all")
+            p.add_argument("--root", default=None)
+            p.set_defaults(func=test_all.run)
+        
+            p = sub.add_parser("cali-observe-directory")
+            p.add_argument("--root", default=None)
+            p.add_argument("--model-path", default=None)
+            p.add_argument("--dry-run-model-path", action="store_true", help="Print resolved model path and exit without generation")
+            p.add_argument("--max-files", type=int, default=350)
+            p.add_argument("--max-new-tokens", type=int, default=900)
+            p.add_argument("--timeout-seconds", type=int, default=None, help="Timeout in seconds for model generation")
+            p.set_defaults(func=cali_observe_directory.run)
+        
+            p = sub.add_parser("list-agents")
+            p.set_defaults(func=list_agents.run)
+        
+            return parser
+        
+        def main():
+            args = build_parser().parse_args()
+            args.func(args)
+        
+        if __name__ == "__main__":
+            main()
+    "Core/Dashboard/UI/scripts/cli/registry/commands.yaml":
+      filename: "commands.yaml"
+      extension: ".yaml"
+      bytes: 719
+      sha256: "3610b38d97e1effbb93df311e6c92eda82e157d3c75923f0caf177ccb2464b08"
+      content: |
+        commands:
+          scan_repo:
+            cli_name: scan-repo
+            authority: read_only
+            default_agent: Cali
+          git_status:
+            cli_name: git-status
+            authority: read_only
+            default_agent: Executor
+          propose_directory_diff:
+            cli_name: propose-directory-diff
+            authority: propose_only
+            default_agent: Cali
+          grant_review:
+            cli_name: grant-review
+            authority: review_only
+            default_agent: Grant
+          apply_patch:
+            cli_name: apply-patch
+            authority: requires_approval
+            default_agent: Executor
+          cali_observe_directory:
+            cli_name: cali-observe-directory
+            authority: read_only
+            default_agent: Cali
+          list_agents:
+            cli_name: list-agents
+            authority: read_only
+            default_agent: Cali
+    "Core/Dashboard/UI/scripts/runtime/agent_registry.py":
+      filename: "agent_registry.py"
+      extension: ".py"
+      bytes: 5057
+      sha256: "b55feec5b5e546bb40dee2f87cb60ecb87a940c4a1640a1181e557b4df751edb"
+      content: |
+        from pathlib import Path
+        
+        from runtime.paths import DASHBOARD_ROOT, UI_ROOT
+        
+        
+        REGISTRY_PATH = UI_ROOT / "scripts" / "agents" / "registry.yaml"
+        
+        
+        def _parse_scalar(value: str):
+            value = value.strip()
+            if value == "null":
+                return None
+            if value == "true":
+                return True
+            if value == "false":
+                return False
+            return value
+        
+        
+        def _yaml_lines(text: str):
+            lines = []
+            for raw in text.splitlines():
+                if not raw.strip() or raw.lstrip().startswith("#"):
+                    continue
+                indent = len(raw) - len(raw.lstrip(" "))
+                lines.append((indent, raw.strip()))
+            return lines
+        
+        
+        def _parse_block(lines, index: int, indent: int):
+            if index >= len(lines):
+                return None, index
+            if lines[index][1].startswith("- "):
+                return _parse_list(lines, index, indent)
+            return _parse_mapping(lines, index, indent)
+        
+        
+        def _parse_mapping(lines, index: int, indent: int):
+            data = {}
+            while index < len(lines):
+                line_indent, content = lines[index]
+                if line_indent < indent:
+                    break
+                if line_indent > indent:
+                    raise ValueError(f"Unexpected indentation near: {content}")
+                if content.startswith("- "):
+                    break
+        
+                key, separator, value = content.partition(":")
+                if separator == "":
+                    raise ValueError(f"Expected key/value entry near: {content}")
+                key = key.strip()
+                value = value.strip()
+        
+                if value:
+                    data[key] = _parse_scalar(value)
+                    index += 1
+                    continue
+        
+                if index + 1 < len(lines) and lines[index + 1][0] > line_indent:
+                    child, index = _parse_block(lines, index + 1, lines[index + 1][0])
+                    data[key] = child
+                else:
+                    data[key] = None
+                    index += 1
+        
+            return data, index
+        
+        
+        def _parse_list(lines, index: int, indent: int):
+            data = []
+            while index < len(lines):
+                line_indent, content = lines[index]
+                if line_indent < indent:
+                    break
+                if line_indent > indent:
+                    raise ValueError(f"Unexpected indentation near: {content}")
+                if not content.startswith("- "):
+                    break
+        
+                item = content[2:].strip()
+                if item:
+                    data.append(_parse_scalar(item))
+                    index += 1
+                    continue
+        
+                if index + 1 < len(lines) and lines[index + 1][0] > line_indent:
+                    child, index = _parse_block(lines, index + 1, lines[index + 1][0])
+                    data.append(child)
+                else:
+                    data.append(None)
+                    index += 1
+        
+            return data, index
+        
+        
+        def parse_yaml_subset(text: str):
+            lines = _yaml_lines(text)
+            if not lines:
+                return {}
+            data, index = _parse_block(lines, 0, lines[0][0])
+            if index != len(lines):
+                raise ValueError("Could not parse complete registry YAML.")
+            return data
+        
+        
+        def load_agent_registry(path: str | Path = REGISTRY_PATH):
+            registry_path = Path(path)
+            data = parse_yaml_subset(registry_path.read_text(encoding="utf-8"))
+            registry = data.get("AgentRegistry")
+            if not isinstance(registry, dict):
+                raise ValueError("AgentRegistry root entry missing.")
+            return registry_path, registry
+        
+        
+        def normalized_agent_registry(path: str | Path = REGISTRY_PATH):
+            registry_path, registry = load_agent_registry(path)
+            active_agent_id = registry.get("active_agent_id")
+            models = registry.get("models") or {}
+            agents = registry.get("agents") or {}
+        
+            normalized_agents = []
+            for agent_id in sorted(agents.keys()):
+                agent = agents[agent_id] or {}
+                model_id = agent.get("model_id")
+                model = models.get(model_id, {}) if model_id else {}
+                prompt_path = agent.get("prompt_path")
+                model_path = model.get("path")
+                prompt_abs = UI_ROOT / "scripts" / str(prompt_path) if prompt_path else None
+                model_abs = DASHBOARD_ROOT / str(model_path) if model_path else None
+        
+                normalized_agents.append({
+                    "id": agent_id,
+                    "active": agent_id == active_agent_id,
+                    "display_name": agent.get("display_name"),
+                    "role": agent.get("role"),
+                    "status": agent.get("status"),
+                    "prompt_path": prompt_path,
+                    "prompt_exists": bool(prompt_abs and prompt_abs.exists()),
+                    "model_id": model_id,
+                    "model": {
+                        "label": model.get("label"),
+                        "path": model_path,
+                        "path_exists": bool(model_abs and model_abs.exists()),
+                        "status": model.get("status"),
+                        "execution_enabled": bool(model.get("execution_enabled", False)),
+                    },
+                    "tools": agent.get("tools") or [],
+                    "blocked_claims": agent.get("blocked_claims") or [],
+                })
+        
+            return {
+                "status": "registry_loaded",
+                "registry_path": str(registry_path),
+                "authority": registry.get("authority"),
+                "version": registry.get("version"),
+                "active_agent_id": active_agent_id,
+                "models": models,
+                "agents": normalized_agents,
+            }
+    "Core/Dashboard/UI/scripts/runtime/git_tools.py":
+      filename: "git_tools.py"
+      extension: ".py"
+      bytes: 300
+      sha256: "bee7e097b2bb638baf5b1fe83b5242bd6ffea41655dbe135f86f6ce59fb85f29"
+      content: |
+        import subprocess
+        from pathlib import Path
+        
+        def run_git(root: Path, args: list[str]):
+            proc = subprocess.run(
+                ["git", *args],
+                cwd=str(root),
+                text=True,
+                capture_output=True,
+                shell=False,
+            )
+            return proc.returncode, proc.stdout, proc.stderr
+    "Core/Dashboard/UI/scripts/runtime/model_runner.py":
+      filename: "model_runner.py"
+      extension: ".py"
+      bytes: 3679
+      sha256: "33ff786117215985e3b582d87f65148463a5818391450515314ba69f44ff3e2a"
+      content: |
+        from pathlib import Path
+        from dataclasses import dataclass
+        
+        def model_available(model_path: str | Path) -> bool:
+            p = Path(model_path)
+            return p.exists() and (p / "config.json").exists()
+        
+        def generate_stub(agent: str, task: str, context: str = "") -> str:
+            return f"MODEL_STUB\nagent={agent}\ntask={task}\ncontext_chars={len(context)}\n"
+        
+        @dataclass
+        class ModelRunResult:
+            ok: bool
+            status: str
+            text: str = ""
+            reason: str = ""
+        
+        def generate_qwen_text(
+            model_path: str | Path,
+            prompt: str,
+            max_new_tokens: int = 900,
+            temperature: float = 0.3,
+            enable_thinking: bool = False,
+        ) -> ModelRunResult:
+            model_dir = Path(model_path).resolve()
+            if not model_available(model_dir):
+                return ModelRunResult(
+                    ok=False,
+                    status="blocked_model_not_found",
+                    reason=f"Local model config not found at {model_dir}",
+                )
+        
+            try:
+                from transformers import AutoModelForCausalLM, AutoTokenizer
+            except Exception as exc:
+                return ModelRunResult(
+                    ok=False,
+                    status="blocked_model_dependency_unavailable",
+                    reason=f"{type(exc).__name__}: {exc}",
+                )
+        
+            try:
+                tokenizer = AutoTokenizer.from_pretrained(
+                    str(model_dir),
+                    local_files_only=True,
+                )
+                model = AutoModelForCausalLM.from_pretrained(
+                    str(model_dir),
+                    torch_dtype="auto",
+                    device_map="auto",
+                    local_files_only=True,
+                )
+            except Exception as exc:
+                return ModelRunResult(
+                    ok=False,
+                    status="blocked_model_load_failed",
+                    reason=f"{type(exc).__name__}: {exc}",
+                )
+        
+            messages = [{"role": "user", "content": prompt}]
+            try:
+                text = tokenizer.apply_chat_template(
+                    messages,
+                    tokenize=False,
+                    add_generation_prompt=True,
+                    enable_thinking=enable_thinking,
+                )
+            except TypeError:
+                try:
+                    text = tokenizer.apply_chat_template(
+                        messages,
+                        tokenize=False,
+                        add_generation_prompt=True,
+                    )
+                except Exception:
+                    text = prompt
+            except Exception:
+                text = prompt
+        
+            try:
+                model_inputs = tokenizer([text], return_tensors="pt")
+                try:
+                    model_inputs = model_inputs.to(model.device)
+                except Exception:
+                    pass
+        
+                model.eval()
+                generate_kwargs = {
+                    "max_new_tokens": max_new_tokens,
+                    "do_sample": temperature > 0,
+                    "pad_token_id": tokenizer.pad_token_id or tokenizer.eos_token_id,
+                }
+                if temperature > 0:
+                    generate_kwargs["temperature"] = temperature
+                    generate_kwargs["top_p"] = 0.9
+        
+                generated_ids = model.generate(**model_inputs, **generate_kwargs)
+                output_ids = generated_ids[0][len(model_inputs.input_ids[0]):].tolist()
+                try:
+                    think_end = len(output_ids) - output_ids[::-1].index(151668)
+                except ValueError:
+                    think_end = 0
+                output = tokenizer.decode(
+                    output_ids[think_end:],
+                    skip_special_tokens=True,
+                ).strip()
+            except Exception as exc:
+                return ModelRunResult(
+                    ok=False,
+                    status="blocked_model_generation_failed",
+                    reason=f"{type(exc).__name__}: {exc}",
+                )
+        
+            if not output:
+                return ModelRunResult(
+                    ok=False,
+                    status="blocked_empty_model_output",
+                    reason="Model generation completed but returned no decoded text.",
+                )
+        
+            return ModelRunResult(ok=True, status="generated", text=output)
+    "Core/Dashboard/UI/scripts/runtime/MODEL_RUNTIME_DEPENDENCIES.md":
+      filename: "MODEL_RUNTIME_DEPENDENCIES.md"
+      extension: ".md"
+      bytes: 3398
+      sha256: "a4280c6e681f8f3e64501078024d3576b7fa5cd14fe785e4685e235655fce913"
+      content: |
+        # Model Runtime Dependency Decision
+        
+        Recorded: 2026-05-29
+        
+        Scope:
+        - This note preserves the current local Qwen runtime dependency decision.
+        - It does not authorize installs, model validation, UI wiring, or command behavior changes.
+        
+        Current environment:
+        - Active local Python discovered for Dashboard tooling is Python 3.14 only.
+        - Python 3.12 was not found.
+        - Python 3.13 was not found.
+        - `uv`, `conda`, `winget`, `choco`, and `scoop` were not found on PATH.
+        - The current workspace `.venv` is Python 3.14.5 and contains only `pip`.
+        
+        Qwen3-8B model files:
+        - Local model path: `Bridge/Core/Dashboard/Tools/Models/Qwen3-8b/`
+        - Required Hugging Face/Transformers files are present, including:
+          - `config.json`
+          - `generation_config.json`
+          - `tokenizer.json`
+          - `tokenizer_config.json`
+          - `vocab.json`
+          - `merges.txt`
+          - `model.safetensors.index.json`
+          - five `model-0000x-of-00005.safetensors` shards
+        - The safetensor index references the present shard files and appears coherent.
+        
+        Current Cali observer state:
+        - `cali-observe-directory` is wired through the Dashboard CLI.
+        - It currently reaches the model runner path and degrades cleanly when the model runtime is not available.
+        - Local Qwen runtime now verified in the separate `cali-model` conda environment.
+        - Observed runtime environment:
+          - Python 3.12.13
+          - torch 2.12.0+cpu
+          - transformers 5.9.0
+        - Qwen3-8B loads successfully from local shard files in `Bridge/Core/Dashboard/Tools/Models/Qwen3-8b/`.
+        - Minimal one-token generation succeeded and produced the text: `Local`.
+        - Single-token generation on CPU took approximately `53.62 sec`.
+        - A 4-token generation test was too slow / effectively blocked by CPU latency.
+        - Current blocker is runtime performance, not model availability.
+        
+        Phi-3-mini-4k-instruct local result:
+        - Local model path: `Bridge/Core/Dashboard/Tools/Models/Phi-3-mini-4k-instruct/`
+        - Model loads successfully from local shard files.
+        - Generated text: `Local Ph`
+        - Tokens generated: `4`
+        - Generation time: `21.65 sec`
+        - Speed: ~`5.41 sec/token`
+        - No load or generation errors were observed.
+        - Phi-3-mini-4k-instruct is significantly faster than Qwen3-8B CPU and is a practical local model candidate for Cali.
+        
+        Dependency decision:
+        - Do not install Torch/model dependencies into the Dashboard tooling `.venv` unless explicitly approved.
+        - Keep Dashboard tooling dependencies separate from local model runtime dependencies.
+        - Recommended local model environment path:
+          - `Bridge/Core/Dashboard/.venv-model`
+        - Preferred runtime Python for `.venv-model`:
+          - Python 3.12, if installed later.
+        
+        Future runtime direction:
+        - Keep the local Qwen path as proven-but-slow for now.
+        - Do not route interactive Cali through full Qwen3-8B CPU generation yet.
+        - Next research should evaluate smaller local models, quantization, llama.cpp/GGUF, GPU option, or remote fallback.
+        - Model-bearing commands may later call `.venv-model/Scripts/python.exe` by subprocess.
+        - That should be an explicit runtime integration step, not an implicit dependency mix-in.
+        - Until approved, the current CLI behavior should remain unchanged and continue to degrade clearly when model dependencies are unavailable.
+        
+        Implementation note:
+        If timeout is difficult inside the model generation call, implement timeout by wrapping the generation path in a subprocess or report that true interruption is not currently safe. Do not fake timeout behavior.
+    "Core/Dashboard/UI/scripts/runtime/paths.py":
+      filename: "paths.py"
+      extension: ".py"
+      bytes: 908
+      sha256: "e73b9283b2aaa776dda86f618155a49203843ce6ada9d09a96f4325a2493e683"
+      content: |
+        from pathlib import Path
+        
+        UI_ROOT = Path(__file__).resolve().parents[2]
+        DASHBOARD_ROOT = UI_ROOT.parent
+        CORE_ROOT = DASHBOARD_ROOT.parent
+        DEFAULT_TARGET_ROOT = CORE_ROOT / "Engineering"
+        PATCH_DIR = UI_ROOT / "scripts" / "patches"
+        LOG_DIR = UI_ROOT / "scripts" / "logs"
+        SESSION_DIR = UI_ROOT / "scripts" / "sessions"
+        
+        def resolve_target_root(root_arg=None) -> Path:
+            root = Path(root_arg).resolve() if root_arg else DEFAULT_TARGET_ROOT.resolve()
+            if not root.exists():
+                raise FileNotFoundError(f"Target root not found: {root}")
+            return root
+        
+        def scan_files(root: Path):
+            ignored = {".git", "__pycache__", ".venv", "node_modules", ".godot"}
+            files = []
+            for p in root.rglob("*"):
+                if any(part in ignored for part in p.parts):
+                    continue
+                if p.is_file():
+                    files.append(p.relative_to(root).as_posix())
+            return sorted(files)
+    "Core/Dashboard/UI/scripts/runtime/state_manager.py":
+      filename: "state_manager.py"
+      extension: ".py"
+      bytes: 470
+      sha256: "9a00549d36684b62ac0217c7e42fb3f53dad853dbd9eb31b80b999c2663bd45d"
+      content: |
+        from pathlib import Path
+        import json
+        from .paths import SESSION_DIR
+        
+        def save_session(name: str, data: dict):
+            SESSION_DIR.mkdir(parents=True, exist_ok=True)
+            path = SESSION_DIR / f"{name}.json"
+            path.write_text(json.dumps(data, indent=2), encoding="utf-8")
+            return path
+        
+        def load_session(name: str):
+            path = SESSION_DIR / f"{name}.json"
+            if not path.exists():
+                return None
+            return json.loads(path.read_text(encoding="utf-8"))
+    "Core/Dashboard/UI/scripts/runtime/validate_mission.py":
+      filename: "validate_mission.py"
+      extension: ".py"
+      bytes: 4490
+      sha256: "844a3d7906698986355bf0b88cc2a04fc6369f8ed31f93c0737ecb2444c00d6c"
+      content: |
+        #!/usr/bin/env python3
+        """Validate Mission parser/renderer without starting Godot.
+        
+        Reads Bridge/Core/Dashboard/UI/Mission.yaml and prints the
+        rendered mission text exactly as the dashboard would display it.
+        
+        Non-invasive: does not modify repo files.
+        """
+        from pathlib import Path
+        import sys
+        
+        
+        def load_yaml_simple(path: Path):
+            try:
+                import yaml
+            except Exception:
+                yaml = None
+        
+            if yaml:
+                with open(path, "r", encoding="utf-8") as f:
+                    try:
+                        return yaml.safe_load(f) or {}
+                    except Exception:
+                        pass
+        
+            # Fallback simple parser for top-level keys and a top-level tasks list
+            data = {}
+            with open(path, "r", encoding="utf-8") as f:
+                lines = f.readlines()
+        
+            i = 0
+            while i < len(lines):
+                line = lines[i].rstrip("\n")
+                stripped = line.strip()
+                if not stripped or stripped.startswith("#"):
+                    i += 1
+                    continue
+        
+                if ":" in line:
+                    key, val = line.split(":", 1)
+                    key = key.strip()
+                    val = val.strip()
+                    if val == "":
+                        # Possibly a list block
+                        if key == "tasks":
+                            lst = []
+                            i += 1
+                            while i < len(lines) and lines[i].lstrip().startswith("-"):
+                                item = lines[i].lstrip()[1:].strip()
+                                lst.append(item)
+                                i += 1
+                            data["tasks"] = lst
+                            continue
+                        else:
+                            data[key] = None
+                    else:
+                        data[key] = val
+        
+                i += 1
+        
+            return data
+        
+        
+        def render_mission(data: dict) -> str:
+            parts = []
+        
+            goal = data.get("goal") or data.get("name")
+            if goal:
+                parts.append("Current Goal:")
+                parts.append(str(goal))
+                parts.append("")
+        
+            decision = data.get("decision")
+            if decision:
+                parts.append("Current Decision:")
+                parts.append(str(decision))
+                parts.append("")
+        
+            observed = data.get("observed")
+            if observed:
+                parts.append("Observed:")
+                parts.append(str(observed))
+                parts.append("")
+        
+            recommendation = data.get("recommendation")
+            if recommendation:
+                parts.append("Recommendation:")
+                parts.append(str(recommendation))
+                parts.append("")
+        
+            next_action = data.get("next_action") or data.get("phase")
+            if next_action:
+                parts.append("Next:")
+                parts.append(str(next_action))
+                parts.append("")
+        
+            tasks = data.get("tasks") or []
+            if isinstance(tasks, str):
+                tasks = [tasks]
+            # Tasks may be a list of mappings with 'label' and 'status'
+            if tasks:
+                parts.append("Top Tasks:")
+                for t in tasks[:5]:
+                    label = None
+                    status = None
+                    if isinstance(t, dict):
+                        label = t.get("label") or t.get("name") or str(t)
+                        status = (t.get("status") or "").lower()
+                    else:
+                        label = str(t)
+                        status = ""
+        
+                    if status == "complete":
+                        marker = "[x]"
+                    elif status == "in_progress" or status == "in-progress":
+                        marker = "[~]"
+                    elif status == "pending":
+                        marker = "[ ]"
+                    else:
+                        marker = "[ ]"
+        
+                    parts.append(f"{marker} {label}")
+                parts.append("")
+        
+            if not parts:
+                return "(Mission file empty or unrecognized format)"
+        
+            return "\n".join(parts).strip()
+        
+        
+        def main():
+            script_dir = Path(__file__).resolve().parent
+            ui_dir = script_dir.parent.parent
+            mission_file = ui_dir / "Mission.yaml"
+        
+            if not mission_file.exists():
+                print(f"MISSION_FILE_NOT_FOUND: {mission_file}")
+                sys.exit(0)
+        
+            data = load_yaml_simple(mission_file) or {}
+        
+            # Normalize nested structure: prefer top-level 'Mission' mapping if present
+            if isinstance(data, dict) and "Mission" in data and isinstance(data["Mission"], dict):
+                data = data["Mission"]
+        
+            # Backward-compatible field mapping: support 'current_phase' as 'phase'
+            if isinstance(data, dict) and "phase" not in data and "current_phase" in data:
+                data["phase"] = data.get("current_phase")
+        
+            text = render_mission(data)
+            print(text)
+        
+        
+        if __name__ == "__main__":
+            main()

@@ -19,3 +19,11 @@ commands:
     cli_name: apply-patch
     authority: requires_approval
     default_agent: Executor
+  cali_observe_directory:
+    cli_name: cali-observe-directory
+    authority: read_only
+    default_agent: Cali
+  list_agents:
+    cli_name: list-agents
+    authority: read_only
+    default_agent: Cali

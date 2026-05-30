@@ -1,0 +1,71 @@
+AgentRegistry:
+  version: 0.1
+  authority: display_registry_not_orchestration
+  active_agent_id: cali
+
+  models:
+    phi3_mini_local:
+      label: Phi-3 Mini local
+      path: Tools/Models/Phi-3-mini-4k-instruct
+      status: present_runtime_dependencies_verified
+      execution_enabled: false
+
+    qwen3_8b_local:
+      label: Qwen3-8B local
+      path: Tools/Models/Qwen3-8b
+      status: present_runtime_dependencies_blocked
+      execution_enabled: false
+
+    unassigned:
+      label: Unassigned
+      path: null
+      status: no_local_runtime_assignment
+      execution_enabled: false
+
+  agents:
+    cali:
+      display_name: Cali
+      role: continuity_and_directory_observer
+      status: active_candidate
+      prompt_path: agents/cali.md
+      model_id: phi3_mini_local
+      tools:
+        - scan-repo
+        - cali-observe-directory
+        - propose-directory-diff
+      blocked_claims:
+        - validation
+        - engineering_truth
+        - canon_promotion
+        - automatic_file_edits
+
+    gear:
+      display_name: Gear
+      role: engineering_architecture_and_causal_mapping
+      status: registered_display_only
+      prompt_path: agents/gear.md
+      model_id: unassigned
+      tools:
+        - scan-repo
+        - git-status
+      blocked_claims:
+        - validation
+        - governance_authority
+        - canon_promotion
+        - operational_readiness_claims
+
+    grant:
+      display_name: Grant
+      role: governance_and_claim_firewall
+      status: registered_display_only
+      prompt_path: agents/grant.md
+      model_id: unassigned
+      tools:
+        - grant-review
+        - grant-review-latest-diff
+        - view-latest-diff
+      blocked_claims:
+        - engineering_resolution
+        - canon_creation
+        - validation_itself
+        - file_mutation

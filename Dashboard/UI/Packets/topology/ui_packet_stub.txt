@@ -1,0 +1,5 @@
+Packet stub created on 2026-05-29T02:35:54 UTC
+category: topology
+title: ui_packet_stub
+status: candidate
+promoted: false

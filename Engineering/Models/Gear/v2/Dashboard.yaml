@@ -1,0 +1,574 @@
+metadata:
+  role: dashboard_runtime_design_snapshot
+  authority: design_snapshot_only_not_runtime_authority
+  canon: false
+  validation_authority: false
+  source_report: before_snapshot_report_reviewed
+  target_file_confirmed_by_operator: Engineering/Models/Gear/v2/Dashboard.yaml
+
+inspected_files:
+  - C:\Users\Freed\1\Bridge\Core\Run.py
+  - C:\Users\Freed\1\Bridge\Core\Dashboard\UI\project.godot
+  - C:\Users\Freed\1\Bridge\Core\Dashboard\UI\screen\scenes\Main.tscn
+  - C:\Users\Freed\1\Bridge\Core\Dashboard\UI\screen\scripts\Main.gd
+  - C:\Users\Freed\1\Bridge\Core\Dashboard\UI\screen\scripts\runtime\CliBridge.gd
+  - C:\Users\Freed\1\Bridge\Core\Dashboard\UI\scripts\cli\dashboard_cli.py
+  - C:\Users\Freed\1\Bridge\Core\Dashboard\UI\scripts\cli\registry\commands.yaml
+  - C:\Users\Freed\1\Bridge\Core\Dashboard\UI\scripts\cli\commands\*.py
+  - C:\Users\Freed\1\Bridge\Core\Dashboard\UI\scripts\runtime\*.py
+
+observed_current_state:
+  launch_chain:
+    - Run.py discovers Core from __file__.
+    - Run.py launches Dashboard/UI/project.godot with Godot --path Dashboard/UI.
+    - project.godot runs res://screen/scenes/Main.tscn.
+    - Main.tscn attaches res://screen/scripts/Main.gd.
+    - Main.gd builds the dashboard UI in _ready() via _background(), _build(), _seed().
+
+  ui_layout:
+    header:
+      title: DashBoard
+      subtitle_observed: operator cockpit ... operator-triggered state refresh
+      banner: OBSERVATION_ONLY ... REFRESH != VALIDATION
+    runtime_state_banner:
+      initial_status: booted_not_refreshed
+      visible_unknowns:
+        - latest_diff: unknown
+        - git_dirty: unknown
+        - packets_pending: unknown
+      boundary: runtime_state_reports_observation_only
+    left_operator_surface:
+      mission:
+        default: open
+      current_status:
+        default: closed
+        always_visible: true
+        fields:
+          - current_root
+          - dashboard_boot
+          - latest_diff
+          - packets_pending
+          - git_dirty
+          - last_command
+          - active_surface
+          - next_required_action
+      operator_observation:
+        default: collapsed
+      operational_awareness:
+        default: collapsed
+      command_history:
+        default: collapsed
+      runtime_boundaries:
+        default: collapsed
+    center_workspace_tabs:
+      control_type: TabContainer
+      seed_tabs:
+        - Chat 01
+        - Home
+      screen_tabs_opened_by: _open_screen()
+    bottom_runtime_surfaces:
+      tabs:
+        - Logs
+        - Diffs
+        - Packets
+        - Terminal
+      fullscreen_bottom_behavior: toggles bottom height only
+    right_rail_modes:
+      - directory
+      - screens
+      - commands
+
+  screens:
+    - Home
+    - State
+    - Agents
+    - Packets
+    - Diffs
+    - Logs
+    - Settings
+    - AI Assist
+
+  commands:
+    buttons:
+      top_control:
+        - "+"
+        - Refresh State
+        - Test
+        - Directory
+        - Screens
+        - Commands
+      commands_panel:
+        - Scan Core
+        - Git Status
+        - Propose Directory Diff
+        - View Latest Diff
+        - Review Latest Diff
+        - Clear Latest Diff
+        - List Packets
+        - Create Packet Stub
+        - Debug Paths
+    map_grouping:
+      observe_read_only:
+        - scan Core
+        - git status
+        - list packets
+      diff_proposal_review:
+        - propose latest.diff
+        - view latest.diff
+        - review latest.diff
+        - clear latest.diff
+      packet_candidate:
+        - create packet stub
+      debug:
+        - debug paths
+    cli_registered:
+      - scan-repo
+      - git-status
+      - propose-directory-diff
+      - grant-review
+      - apply-patch
+      - runtime-state
+      - test-all
+      - view-latest-diff
+      - grant-review-latest-diff
+      - clear-latest-diff
+      - list-packets
+      - create-packet
+    ui_wrapper_commands:
+      - runtime-state
+      - test-all
+      - scan-repo
+      - git-status
+      - propose-directory-diff
+      - view-latest-diff
+      - grant-review-latest-diff
+      - clear-latest-diff
+      - list-packets
+      - create-packet
+    cli_ui_mismatch_explicit:
+      observed: false
+      registered_in_ui_not_dashboard_cli: []
+
+  runtime_surfaces:
+    - Logs
+    - Diffs
+    - Packets
+    - Terminal
+
+  observation_operator_tracking_behavior:
+    persistence: false
+    reset_on_app_restart: true
+    tracked:
+      - explicit button clicks
+      - panel toggle counts
+      - panel open/closed state
+      - surface visits
+      - recent routes
+      - not_observed_this_session
+      - last operator event
+    caps:
+      max_rendered_lines: 12
+      recent_routes_max: 5
+      not_observed_this_session_max: 4
+    boot_seed_excluded_from_observed_actions:
+      - Chat 01
+      - Home
+
+  ai_assist_current_status:
+    present_in_screens_list: true
+    implementation: static_tab_only
+    displayed_text:
+      - AI Assist surface pending wiring
+      - not connected
+      - no API calls
+      - manual context only
+      - assist_output != authority
+      - model_status=unknown
+    no_ai_implementation_observed: true
+
+  explicit_boundaries_and_warnings_displayed:
+    - OBSERVATION_ONLY ... REFRESH != VALIDATION
+    - status != validation
+    - runtime_state_reports_observation_only
+    - observation != interpretation
+    - history != evidence
+    - display != authority
+    - collapsed_panel != inactive_authority
+    - refresh != readiness
+    - proposal != patch
+    - focus != authority
+    - green_status != safe
+    - compact_display != completeness
+    - assist_output != authority
+    - model_status=unknown
+
+  known_unknowns_still_visible:
+    - latest_diff: unknown
+    - git_dirty: unknown
+    - packets_pending: unknown
+    - model_status=unknown
+
+  command_execution_boundaries:
+    observed:
+      - Godot UI calls CliBridge.run_cli() through static wrappers.
+      - CliBridge executes python dashboard_cli.py <command>.
+      - dashboard_cli.py registers scan-repo, git-status, propose-directory-diff, grant-review, and apply-patch.
+      - propose-directory-diff writes Dashboard/UI/scripts/patches/latest.diff if executed.
+    inferred_from_parser_mismatch:
+      - UI wrapper commands absent from dashboard_cli.py will not resolve through the current parser.
+
+  dashboard_runtime_snapshot:
+    refresh_state_route_verified:
+      - Refresh State button
+      - Main.gd
+      - CliBridge.gd
+      - dashboard_cli.py
+      - commands/runtime_state.py
+    refresh_state_status:
+      wired: true
+      boot_tested: true
+      observed_updating_runtime_state_banner: true
+      observed_updating_current_status: true
+      observed_writing_terminal_output: true
+      not_validation: true
+    mission_panel_status:
+      mission_yaml_backed_display_added: true
+      left_panel_accordion_added: true
+      mission_open_by_default: true
+      other_sections_collapsed_by_default: true
+      mission_parsing_imperfect: true
+    current_known_issue:
+      - Mission task parser currently renders task YAML incorrectly, e.g. "[ ] status: complete" instead of task label/status.
+    current_next_action: Fix Mission parser/rendering.
+    boundary:
+      - Dashboard remains observation/runtime surface only.
+      - Refresh success is not validation.
+      - Mission display is operator orchestration, not authority.
+
+  mission_runtime_state:
+    mission_file: Core/Dashboard/UI/Mission.yaml
+    render_location:
+      script: Main.gd
+      surface: left_operator_surface
+    default_state:
+      mission: open
+      current_status: closed
+      operator_observation: closed
+      operational_awareness: closed
+      command_history: closed
+      runtime_boundaries: closed
+    current_verified_screenshot_state:
+      dashboard_boots: true
+      mission_visible: true
+      accordion_behavior_confirmed: true
+      refresh_state_button_observed_working: true
+      current_visual_issue: >
+        Mission task rendering currently displays YAML field text
+        instead of task labels and status markers.
+    next_agent_instruction:
+      immediate_task: Fix Mission parser/rendering only
+    do_not_touch:
+      - layout
+      - Refresh State
+      - CLI
+      - Mission accordion behavior
+      - Dashboard.yaml structure
+      - Mission.yaml unless parser validation requires it
+
+  no_persistence_boundaries:
+    observed:
+      - Main UI state is in-memory.
+      - operator observation is in-memory.
+      - command history is in-memory.
+      - chat text is not saved by observed UI code.
+    present_but_not_observed_as_active_ui_path:
+      - state_manager.py can save sessions.
+
+fragile_surfaces:
+  - CliBridge._python_command() is hardcoded to python.
+  - UI exposes commands not registered by dashboard_cli.py.
+  - right rail directory tree is static and may drift from filesystem.
+  - AI Assist is not currently listed in OBSERVATION_SURFACES, so it may not appear under not_observed_this_session.
+  - command buttons can run real CLI effects; propose-directory-diff can create or update latest.diff.
+  - most UI topology is concentrated in Main.gd.
+
+rollback_sensitive_files:
+  - Dashboard/UI/screen/scripts/Main.gd
+  - Dashboard/UI/screen/scripts/runtime/CliBridge.gd
+  - Run.py
+  - Dashboard/UI/project.godot
+  - Dashboard/UI/screen/scenes/Main.tscn
+  - Dashboard/UI/scripts/cli/dashboard_cli.py
+
+uncertain_or_unverified:
+  - Boot was not run during this snapshot.
+  - Header dash/bullet characters appeared mojibake in shell output; actual Godot rendering not verified.
+  - Runtime behavior of unregistered UI commands is inferred from parser mismatch, not boot-click tested.
+
+recommended_dashboard_yaml_schema:
+  metadata:
+    role: dashboard_runtime_design_snapshot
+    authority: design_snapshot_only_not_runtime_authority
+    canon: false
+    validation_authority: false
+    captured_from_files: []
+  launch_chain: {}
+  ui_topology:
+    header: {}
+    runtime_state_banner: {}
+    left_operator_surface: {}
+    center_workspace: {}
+    bottom_runtime_surfaces: {}
+    right_rail: {}
+  screens: []
+  commands:
+    buttons: []
+    groups: {}
+    cli_registered: []
+    ui_wrapper_commands: []
+    mismatches: []
+  observation:
+    in_memory_only: true
+    tracked_fields: []
+    caps: {}
+  boundaries:
+    displayed: []
+    command_execution: []
+    no_persistence: []
+  known_unknowns: []
+  fragile_surfaces: []
+  rollback_sensitive_files: []
+
+questions_for_operator:
+  - Should future snapshots keep using Engineering/Models/Gear/v2/Dashboard.yaml?
+  - Should command parser mismatches remain documented as fragile_surfaces until directly tested?
+  - Should AI Assist be added to OBSERVATION_SURFACES later, or left untracked for now?
+
+checkpoint_2026_05_29_cali_runtime_v1:
+  role: runtime_design_checkpoint_and_reentry_packet
+  authority: observation_snapshot_only_not_runtime_authority
+  canon: false
+  validation_authority: false
+  source: operator_codex_session_reports_and_visual_dashboard_screenshots
+  purpose:
+    - preserve_completed_dashboard_mission_panel_stabilization
+    - preserve_cali_runtime_v1_identity_foundation_progress
+    - preserve_qwen_runtime_dependency_boundary
+    - provide_reentry_state_after_codex_credit_exhaustion
+
+  dashboard_mission_panel_stabilization:
+    status: visually_confirmed_usable
+    changed_surfaces:
+      - Dashboard/UI/screen/scripts/Main.gd
+      - Dashboard/UI/scripts/runtime/validate_mission.py
+    observed_result:
+      - Mission_panel_renders_current_goal_next_and_top_tasks
+      - Mission_yaml_nested_under_top_level_Mission_is_supported
+      - current_phase_maps_as_phase_fallback
+      - tasks_render_as_status_symbols_and_labels_not_raw_dicts
+      - Mission_section_expands_horizontally
+      - Mission_label_and_Mission_section_expand_vertically
+      - Mission_uses_available_left_rail_space_above_bottom_collapsed_sections
+      - lower_accordion_sections_remain_compact
+    task_symbol_mapping:
+      complete: "[x]"
+      in_progress: "[~]"
+      pending: "[ ]"
+    validated_helper_output: |
+      Current Goal:
+      Dashboard Foundation
+
+      Next:
+      Register remaining Dashboard commands
+
+      Top Tasks:
+      [x] Refresh State wired end-to-end
+      [x] Boot-click verify Refresh State
+      [x] Confirm Terminal stdout/stderr visibility
+      [x] Mission panel visible
+      [~] Register remaining Dashboard commands
+    visual_confirmation:
+      status: screenshot_confirmed_readable_and_operationally_useful
+      limitation: screenshot_confirmation_is_not_validation_or_runtime_authority
+    boundary:
+      - Mission_panel_stabilized_does_not_validate_dashboard
+      - readable_UI_does_not_equal_evidence
+      - render_success_does_not_equal_system_readiness
+
+  cali_local_observer_cli:
+    status: implemented_degraded_by_missing_model_dependencies
+    role: first_local_cali_directory_observer_loop
+    files_changed_or_created:
+      - Dashboard/UI/scripts/runtime/model_runner.py
+      - Dashboard/UI/scripts/agents/cali.md
+      - Dashboard/UI/scripts/cli/commands/cali_observe_directory.py
+      - Dashboard/UI/scripts/cli/dashboard_cli.py
+      - Dashboard/UI/scripts/cli/registry/commands.yaml
+    command:
+      name: cali-observe-directory
+      mode: cli_only_read_only
+    behavior:
+      - reads_or_generates_compact_directory_snapshot
+      - loads_cali_prompt
+      - routes_through_model_runner
+      - prints_cali_observation_or_clean_degraded_status
+    degraded_status_observed:
+      status: blocked_model_dependency_unavailable
+      reason: "ModuleNotFoundError: No module named 'transformers'"
+    boundaries:
+      - no_Godot_UI_changes
+      - no_automatic_file_edits
+      - no_validation_claims
+      - no_engineering_truth_claims
+      - no_canon_promotion
+      - no_replacement_of_Codex_yet
+
+  model_runtime_dependency_record:
+    status: documented
+    file_created:
+      - Dashboard/MODEL_RUNTIME_DEPENDENCIES.md
+    observed_environment:
+      active_python: "3.14_only"
+      current_venv: ".venv"
+      current_venv_packages:
+        - pip_only
+      missing_dependencies:
+        - transformers
+        - torch
+        - accelerate
+        - tokenizers
+        - safetensors
+        - numpy
+        - huggingface_hub
+      missing_launchers:
+        - python_on_PATH
+        - py_on_PATH
+        - python3_on_PATH
+        - uv
+        - conda
+        - winget
+        - choco
+        - scoop
+    qwen3_8b_local_model:
+      path: Dashboard/Tools/Models/Qwen3-8b
+      status: files_present_and_coherent
+      shards: 5
+      approximate_model_index_bytes: 16381470720
+      execution_status: not_yet_running
+    recommended_boundary:
+      - do_not_pollute_dashboard_tooling_venv_with_heavy_model_stack_without_approval
+      - prefer_separate_model_venv
+      - proposed_location_Dashboard_dot_venv_model
+      - preferred_runtime_python_3_12_if_available_later
+      - model_bearing_commands_may_later_subprocess_through_model_venv_python
+
+  agent_registry_foundation:
+    status: implemented_and_cli_readable
+    role: Cali_Runtime_v1_identity_foundation
+    files_created_or_changed:
+      - Dashboard/UI/scripts/agents/registry.yaml
+      - Dashboard/UI/scripts/runtime/agent_registry.py
+      - Dashboard/UI/scripts/cli/commands/list_agents.py
+      - Dashboard/UI/scripts/cli/dashboard_cli.py
+      - Dashboard/UI/scripts/cli/registry/commands.yaml
+    command:
+      name: list-agents
+      output: normalized_JSON
+    registry_contains:
+      active_agent_id: cali
+      agents:
+        - cali
+        - gear
+        - grant
+      models:
+        - qwen3_8b_local
+        - unassigned
+    verified:
+      - py_compile_passed
+      - dashboard_cli_help_includes_list_agents
+      - list_agents_outputs_agents_active_agent_model_status_tools_prompt_existence_model_path_existence_and_blocked_claims
+    boundaries:
+      - registry_is_display_config_identity_only
+      - registry_is_not_orchestration
+      - registry_does_not_grant_authority
+      - no_model_execution_changes
+      - no_installs
+      - no_Godot_UI_changes
+      - no_Mission_yaml_changes
+
+  current_architecture_read:
+    statement: >
+      The project is transitioning from Dashboard-as-tool toward Cali Runtime v1.
+      Dashboard is one surface, CLI is one surface, and future voice/desktop control may become another surface.
+      Cali identity should remain portable through the agent registry rather than being trapped inside one UI.
+    layers:
+      identity:
+        - agents/cali.md
+        - agents/registry.yaml
+      model:
+        - Qwen3-8B_local_candidate
+      memory_and_context:
+        - Directory
+        - Mission
+        - packets
+        - logs
+      tools:
+        - scan_repo
+        - observe_directory
+        - propose_directory_diff
+        - git_status
+        - future_launch_dashboard
+        - future_apply_patch_with_approval
+      surfaces:
+        - CLI
+        - Dashboard
+        - future_voice
+        - future_desktop_control
+
+  next_frontier_options:
+    option_A_agents_page_reads_registry:
+      description: Make the Godot Agents page display real agent cards from list-agents output.
+      value: makes_Cali_Gear_Grant_visible_as_runtime_entities_before_model_execution
+      blocked_by: none_known_but_requires_UI_work
+    option_B_qwen_runtime_breathes:
+      description: Establish model execution environment and get Qwen3-8B to generate text locally.
+      value: turns_Cali_observer_from_degraded_stub_into_real_local_generation_loop
+      blocked_by: missing_transformers_torch_model_runtime_environment
+    recommended_next_when_codex_returns:
+      primary: decide_between_option_A_and_option_B_based_on_operator_energy
+      conservative_default: option_B_qwen_runtime_breathes
+      reason: local_Cali_agent_value_depends_on_model_execution_eventually
+
+  unresolved:
+    - Qwen3_8B_has_not_generated_text_locally_yet
+    - model_runtime_environment_not_installed
+    - Python_3_12_not_available_on_machine_at_time_of_check
+    - Agent_page_does_not_yet_read_registry
+    - Cali_can_observe_directory_only_as_command_route_with_degraded_model_dependency_status
+    - future_voice_desktop_control_not_started
+    - patch_application_authority_gate_not_formalized_for_Cali_desktop_runtime
+
+  prohibited_promotions:
+    - Mission_panel_readable_equals_dashboard_validated
+    - cali_observe_directory_route_exists_equals_Cali_operational
+    - AgentRegistry_exists_equals_orchestration
+    - Qwen_files_present_equals_model_execution_working
+    - clean_JSON_output_equals_agent_authority
+    - future_voice_control_equals_safe_autonomy
+    - proposed_patch_equals_applied_change
+    - local_model_output_equals_truth
+
+  reentry_packet:
+    last_known_good_state:
+      - Dashboard_Mission_panel_is_usable
+      - Cali_observer_CLI_path_exists
+      - Qwen_dependency_blocker_is_explicit
+      - model_runtime_dependency_decision_record_exists
+      - AgentRegistry_exists_and_list_agents_works
+    next_prompt_seed: |
+      Resume from Dashboard/Gear v2 checkpoint.
+      Do not rework Mission panel unless regression is observed.
+      Current fork:
+      A) wire Agents page to list-agents registry output,
+      B) make Qwen3-8B generate locally through a separated model runtime.
+      Preserve boundaries: no validation claims, no autonomous edits, no UI expansion unless explicitly selected.

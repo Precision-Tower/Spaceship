@@ -1,0 +1,30 @@
+Mission:
+  id: dashboard_foundation_001
+  name: Dashboard Foundation
+  status: active
+
+  current_phase: Dashboard Foundation
+
+  next_action: Register remaining Dashboard commands
+
+  tasks:
+    - status: complete
+      label: Refresh State wired end-to-end
+
+    - status: complete
+      label: Boot-click verify Refresh State
+
+    - status: complete
+      label: Confirm Terminal stdout/stderr visibility
+
+    - status: complete
+      label: Mission panel visible
+
+    - status: in_progress
+      label: Register remaining Dashboard commands
+
+    - status: pending
+      label: Packet workflow
+
+    - status: pending
+      label: Local model launcher
