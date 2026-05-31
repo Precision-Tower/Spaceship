@@ -22,7 +22,9 @@ from commands import (
     test_all,
     cali_observe_directory,
     list_agents,
+    propose_diff,
 )
+from registry import propose_task_packet
 
 def build_parser():
     parser = argparse.ArgumentParser(prog="dashboard_cli", description="DashBoard CLI spine")
@@ -86,6 +88,15 @@ def build_parser():
 
     p = sub.add_parser("list-agents")
     p.set_defaults(func=list_agents.run)
+
+    p = sub.add_parser("propose-task-packet")
+    p.add_argument("--intent", required=True)
+    p.set_defaults(func=propose_task_packet.run)
+
+    p = sub.add_parser("propose-diff")
+    p.add_argument("--intent", required=True)
+    p.add_argument("--scope", default="Dashboard/")
+    p.set_defaults(func=propose_diff.run)
 
     return parser
 

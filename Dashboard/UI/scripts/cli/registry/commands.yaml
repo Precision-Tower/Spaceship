@@ -27,3 +27,11 @@ commands:
     cli_name: list-agents
     authority: read_only
     default_agent: Cali
+  propose_task_packet:
+    cli_name: propose-task-packet
+    authority: propose_only
+    default_agent: Cali
+  propose_diff:
+    cli_name: propose-diff
+    authority: propose_only
+    default_agent: Cali

@@ -13,6 +13,12 @@ static func core_root() -> String:
 static func cali_observe_directory() -> Dictionary:
 	return run_cli("cali-observe-directory", ["--max-new-tokens", "1", "--timeout-seconds", "120"])
 	
+static func propose_task_packet(intent: String) -> Dictionary:
+	return run_cli("propose-task-packet", ["--intent", intent])
+
+static func propose_diff(intent: String, scope: String) -> Dictionary:
+	return run_cli("propose-diff", ["--intent", intent, "--scope", scope])
+
 static func default_engineering_root() -> String:
 	return core_root().path_join("Engineering")
 

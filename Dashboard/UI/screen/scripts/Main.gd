@@ -40,6 +40,9 @@ var bottom_expanded := false
 var active_right_mode := ""
 var active_surface := "Home"
 var command_history: Array[Dictionary] = []
+var terminal_input: LineEdit
+var approve_button: Button
+var last_proposal_intent: String = ""
 var left_panel_collapsed := {
 	"mission": false,
 	"status": true,
@@ -84,19 +87,30 @@ func _build() -> void:
 	root.add_child(_top_bar())
 	root.add_child(_runtime_state_bar())
 
-	var main := HSplitContainer.new()
-	main.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	root.add_child(main)
+	# Total Layout Split (Top: Work, Bottom: Logs)
+	var v_split := VSplitContainer.new()
+	v_split.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	root.add_child(v_split)
 
-	main.add_child(_left_awareness())
+	# Main Workspace Split (Left: Display, Right: Controls)
+	var top_h_split := HSplitContainer.new()
+	top_h_split.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	v_split.add_child(top_h_split)
 
-	var center := VBoxContainer.new()
-	center.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	main.add_child(center)
-	center.add_child(_workspace())
-	center.add_child(_bottom())
+	# Display Zone (Left Sidebar + Main Tabbed Workspace)
+	var display_box := HBoxContainer.new()
+	display_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	display_box.add_theme_constant_override("separation", 0)
+	top_h_split.add_child(display_box)
+	
+	display_box.add_child(_left_awareness())
+	display_box.add_child(_workspace())
 
-	main.add_child(_right_control_rail())
+	# Control Zone
+	top_h_split.add_child(_right_control_rail())
+
+	# Bottom Surface
+	v_split.add_child(_bottom())
 
 func _top_bar() -> Control:
 	var p := PanelContainer.new()
@@ -765,6 +779,20 @@ func _bottom() -> Control:
 	bottom_tabs = TabContainer.new()
 	bottom_tabs.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	box.add_child(bottom_tabs)
+
+	approve_button = Button.new()
+	approve_button.text = "Approve Proposal"
+	approve_button.visible = false
+	approve_button.pressed.connect(_on_approve_task_pressed)
+	_button(approve_button, true)
+	box.add_child(approve_button)
+
+	terminal_input = LineEdit.new()
+	terminal_input.placeholder_text = "Type operational intent (e.g., 'connect Gear to Dashboard')..."
+	terminal_input.focus_mode = Control.FOCUS_ALL
+	terminal_input.text_submitted.connect(_on_terminal_input_submitted)
+	box.add_child(terminal_input)
+
 	_add_bottom("Logs", "No CLI bridge output yet.")
 	_add_bottom("Diffs", "Diff proposal/review output will render here.\n\nviewed_diff != approved_diff")
 	_add_bottom("Packets", "Packet intake and registry output will render here.")
@@ -1222,6 +1250,38 @@ func _create_packet_stub() -> void:
 	_render_packets(r)
 	_record_command("Create Packet Stub", r, "incoming packet stub attempted")
 
+func _input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed:
+		if event.keycode == KEY_ENTER or event.keycode == KEY_KP_ENTER:
+			if terminal_input and terminal_input.has_focus() and terminal_input.text != "":
+				_on_terminal_input_submitted(terminal_input.text)
+				get_viewport().set_input_as_handled()
+
+func _on_terminal_input_submitted(text: String) -> void:
+	if text.strip_edges() == "":
+		return
+	terminal_input.clear()
+	approve_button.visible = false
+	
+	_log("intent-bridge: " + text)
+	_terminal("Proposing task packet for intent: " + text)
+	
+	var r := CliBridge.propose_task_packet(text)
+	if r.get("ok", false) and r.has("stdout"):
+		var out_raw = r.get("stdout", "")
+		# Attempt to find JSON in stdout
+		var start = out_raw.find("{")
+		var end = out_raw.rfind("}")
+		if start != -1 and end != -1:
+			var json_str = out_raw.substr(start, end - start + 1)
+			var json = JSON.parse_string(json_str)
+			if json and json.has("proposal"):
+				_render_task_proposal(json.get("proposal"), text)
+				return
+	
+	_render_terminal(r)
+	_record_command("Propose Task", r, "Intent processed")
+
 func _format(result: Dictionary) -> String:
 	var text := ""
 	text += "command: " + str(result.get("command", "")) + "\n"
@@ -1242,6 +1302,28 @@ func _render_diff(result: Dictionary) -> void:
 
 func _render_packets(result: Dictionary) -> void:
 	_packets(_format(result))
+
+func _render_task_proposal(proposal: Dictionary, intent: String) -> void:
+	last_proposal_intent = intent
+	approve_button.visible = true
+	var t := "[color=#f1d58a]CALI PROPOSED TASK PACKET[/color]\n\n"
+	t += "[color=#d6b15f]OBJECTIVE:[/color]\n" + str(proposal.get("OBJECTIVE", "")) + "\n\n"
+	t += "[color=#d6b15f]INSPECT:[/color]\n" + str(proposal.get("INSPECT", [])) + "\n\n"
+	t += "[color=#d6b15f]ALLOWED:[/color]\n" + str(proposal.get("ALLOWED", [])) + "\n\n"
+	t += "[color=#d6b15f]FORBIDDEN:[/color]\n" + str(proposal.get("FORBIDDEN", [])) + "\n\n"
+	t += "[color=#d6b15f]TEST:[/color]\n" + str(proposal.get("TEST", [])) + "\n\n"
+	t += "[color=#d6b15f]SUCCESS:[/color]\n" + str(proposal.get("SUCCESS", [])) + "\n\n"
+	t += "[color=#d6b15f]REPORT:[/color]\n" + str(proposal.get("REPORT", "")) + "\n\n"
+	t += "[color=#b8aebe]APPROVAL BOUNDARY: review != authority • type 'confirm' to accept (placeholder)[/color]"
+	_terminal(t)
+
+func _on_approve_task_pressed() -> void:
+	approve_button.visible = false
+	_log("Approving task: " + last_proposal_intent)
+	_terminal("Generating diff proposal for: " + last_proposal_intent)
+	var r := CliBridge.propose_diff(last_proposal_intent, "Dashboard/")
+	_render_diff(r)
+	_record_command("Approve Task", r, "Diff proposal generated")
 
 func _toggle_bottom() -> void:
 	bottom_expanded = !bottom_expanded
