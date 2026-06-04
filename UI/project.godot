@@ -1,0 +1,13 @@
+config_version=5
+
+[application]
+config/name="DashBoard"
+run/main_scene="res://screen/scenes/Main.tscn"
+config/features=PackedStringArray("4.6")
+
+[display]
+window/size/viewport_width=1600
+window/size/viewport_height=960
+
+[rendering]
+renderer/rendering_method="gl_compatibility"

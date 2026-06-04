@@ -1,0 +1,77 @@
+commands:
+  scan_repo:
+    cli_name: scan-repo
+    authority: read_only
+    default_agent: Cali
+  git_status:
+    cli_name: git-status
+    authority: read_only
+    default_agent: Executor
+  propose_directory_diff:
+    cli_name: propose-directory-diff
+    authority: propose_only
+    default_agent: Cali
+  grant_review:
+    cli_name: grant-review
+    authority: review_only
+    default_agent: Grant
+  apply_patch:
+    cli_name: apply-patch
+    authority: requires_approval
+    default_agent: Executor
+  cali_observe_directory:
+    cli_name: cali-observe-directory
+    authority: read_only
+    default_agent: Cali
+  list_agents:
+    cli_name: list-agents
+    authority: read_only
+    default_agent: Cali
+  propose_task_packet:
+    cli_name: propose-task-packet
+    authority: propose_only
+    default_agent: Cali
+  propose_diff:
+    cli_name: propose-diff
+    authority: propose_only
+    default_agent: Cali
+  runtime_state:
+    cli_name: runtime-state
+    authority: read_only
+    default_agent: Cali
+  view_latest_diff:
+    cli_name: view-latest-diff
+    authority: read_only
+    default_agent: Cali
+  grant_review_latest_diff:
+    cli_name: grant-review-latest-diff
+    authority: review_only
+    default_agent: Grant
+  clear_latest_diff:
+    cli_name: clear-latest-diff
+    authority: read_only
+    default_agent: Cali
+  list_packets:
+    cli_name: list-packets
+    authority: read_only
+    default_agent: Cali
+  create_packet:
+    cli_name: create-packet
+    authority: propose_only
+    default_agent: Cali
+  test_all:
+    cli_name: test-all
+    authority: read_only
+    default_agent: Executor
+  gemini_analyze:
+    cli_name: gemini-analyze
+    authority: propose_only
+    default_agent: Cali
+  gemini_list_models:
+    cli_name: gemini-list-models
+    authority: read_only
+    default_agent: Cali
+  update_state:
+    cli_name: update-state
+    authority: propose_only
+    default_agent: Cali

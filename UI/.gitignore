@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+*.pyo
+.env
+.venv/
+.godot/
+scripts/logs/*
+!scripts/logs/.keep
+scripts/patches/*
+!scripts/patches/.keep
+scripts/sessions/*
+!scripts/sessions/.keep
+Dashboard/Tools/
+Dashboard/Models/
