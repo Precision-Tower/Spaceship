@@ -1,0 +1,1 @@
+# Package for shared identity and context models (e.g., Seth, Directory).

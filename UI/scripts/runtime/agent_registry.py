@@ -157,3 +157,4 @@ def normalized_agent_registry(path: str | Path = REGISTRY_PATH):
         "models": models,
         "agents": normalized_agents,
     }
+

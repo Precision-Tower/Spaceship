@@ -1,7 +1,7 @@
 import json
 import os
 import sys
-from UI.scriptshlib import Path
+from pathlib import Path
 
 # ---------------------------------------------------------------------
 # Path setup
@@ -17,7 +17,7 @@ if str(SCRIPT_DIR) not in sys.path:
 # Imports
 # ---------------------------------------------------------------------
 
-from UI.scriptse import PathResolver, WeeboMemory, WeeboAgent, CaliBridge
+from UI.scripts.agents.core import PathResolver, WeeboMemory, WeeboAgent, CaliBridge
 from UI.scripts.UI.scripts.agents.reasoners.gguf import CodeReasoner as Reasoner
 
 # ---------------------------------------------------------------------
@@ -222,3 +222,4 @@ if __name__ == "__main__":
     except Exception as exc:
         print(f"{CLR_RED}[WEEBO BOOT FAILURE]{CLR_RESET} {exc}")
         raise
+

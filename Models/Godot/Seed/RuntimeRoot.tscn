@@ -1,0 +1,239 @@
+[gd_scene load_steps=10 format=3 uid="uid://navigationrigfix001"]
+
+[ext_resource type="Script" path="res://FloatingBox.gd" id="1_floating"]
+[ext_resource type="Script" path="res://ObserverSurface.gd" id="2_observer"]
+
+[sub_resource type="StandardMaterial3D" id="mat_water"]
+albedo_color = Color(0.12, 0.34, 0.48, 0.42)
+transparency = 1
+roughness = 0.65
+
+[sub_resource type="StandardMaterial3D" id="mat_barrel"]
+albedo_color = Color(0.55, 0.32, 0.14, 1)
+roughness = 0.8
+
+[sub_resource type="StandardMaterial3D" id="mat_ring"]
+albedo_color = Color(0.08, 0.08, 0.08, 1)
+roughness = 0.6
+
+[sub_resource type="StandardMaterial3D" id="mat_shadow"]
+albedo_color = Color(0, 0, 0, 0.22)
+transparency = 1
+roughness = 1.0
+
+[sub_resource type="PlaneMesh" id="mesh_water"]
+size = Vector2(6, 6)
+
+[sub_resource type="CylinderMesh" id="mesh_barrel"]
+top_radius = 0.42
+bottom_radius = 0.42
+height = 1.05
+radial_segments = 32
+rings = 3
+
+[sub_resource type="CylinderMesh" id="mesh_ring"]
+top_radius = 0.44
+bottom_radius = 0.44
+height = 0.055
+radial_segments = 32
+
+[sub_resource type="PlaneMesh" id="mesh_shadow"]
+size = Vector2(1.0, 0.62)
+
+[node name="RuntimeRoot" type="Node3D"]
+script = ExtResource("1_floating")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+rotation_degrees = Vector3(-45, 35, 0)
+light_energy = 1.4
+
+[node name="HoverSpace" type="Node3D" parent="."]
+
+[node name="WaterPlane" type="MeshInstance3D" parent="HoverSpace"]
+mesh = SubResource("mesh_water")
+surface_material_override/0 = SubResource("mat_water")
+metadata/rule = "water_plane_is_context_not_evidence"
+
+[node name="ContactShadow" type="MeshInstance3D" parent="HoverSpace"]
+transform = Transform3D(1.15, 0, 0, 0, 1, 0, 0, 0, 0.72, 0, 0.018, 0)
+mesh = SubResource("mesh_shadow")
+surface_material_override/0 = SubResource("mat_shadow")
+metadata/rule = "shadow_is_spatial_anchoring_only"
+
+[node name="FloatingBarrel" type="Node3D" parent="HoverSpace"]
+transform = Transform3D(1, 0, 0, 0, 0.82, 0, 0, 0, 1, 0, 1.1, 0)
+metadata/rule = "barrel_visual_does_not_create_buoyancy_claim"
+
+[node name="BarrelBody" type="MeshInstance3D" parent="HoverSpace/FloatingBarrel"]
+mesh = SubResource("mesh_barrel")
+surface_material_override/0 = SubResource("mat_barrel")
+
+[node name="TopRing" type="MeshInstance3D" parent="HoverSpace/FloatingBarrel"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.53, 0)
+mesh = SubResource("mesh_ring")
+surface_material_override/0 = SubResource("mat_ring")
+
+[node name="BottomRing" type="MeshInstance3D" parent="HoverSpace/FloatingBarrel"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.53, 0)
+mesh = SubResource("mesh_ring")
+surface_material_override/0 = SubResource("mat_ring")
+
+[node name="CameraPivot" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot"]
+current = true
+fov = 48.0
+near = 0.05
+far = 100.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ObserverSurface" type="Control" parent="CanvasLayer"]
+anchors_preset = 13
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 12.0
+offset_right = 342.0
+offset_bottom = -12.0
+script = ExtResource("2_observer")
+
+[node name="Panel" type="Panel" parent="CanvasLayer/ObserverSurface"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/ObserverSurface/Panel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 14
+
+[node name="VBox" type="VBoxContainer" parent="CanvasLayer/ObserverSurface/Panel/MarginContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="CanvasLayer/ObserverSurface/Panel/MarginContainer/VBox"]
+text = "ObserverSurface"
+theme_override_font_sizes/font_size = 20
+
+[node name="PacketRow" type="HBoxContainer" parent="CanvasLayer/ObserverSurface/Panel/MarginContainer/VBox"]
+[node name="PacketLabel" type="Label" parent="CanvasLayer/ObserverSurface/Panel/MarginContainer/VBox/PacketRow"]
+text = "packet_id: "
+[node name="PacketValue" type="Label" parent="CanvasLayer/ObserverSurface/Panel/MarginContainer/VBox/PacketRow"]
+text = "FloatPressure_001"
+
+[node name="DirtyRow" type="HBoxContainer" parent="CanvasLayer/ObserverSurface/Panel/MarginContainer/VBox"]
+[node name="DirtyLabel" type="Label" parent="CanvasLayer/ObserverSurface/Panel/MarginContainer/VBox/DirtyRow"]
+text = "dirty_status: "
+[node name="DirtyValue" type="Label" parent="CanvasLayer/ObserverSurface/Panel/MarginContainer/VBox/DirtyRow"]
+text = "visible"
+
+[node name="EventBlock" type="VBoxContainer" parent="CanvasLayer/ObserverSurface/Panel/MarginContainer/VBox"]
+[node name="EventLabel" type="Label" parent="CanvasLayer/ObserverSurface/Panel/MarginContainer/VBox/EventBlock"]
+text = "current_runtime_event"
+[node name="EventValue" type="Label" parent="CanvasLayer/ObserverSurface/Panel/MarginContainer/VBox/EventBlock"]
+text = "hover_reported_not_validated"
+autowrap_mode = 2
+
+[node name="UncertaintyBlock" type="VBoxContainer" parent="CanvasLayer/ObserverSurface/Panel/MarginContainer/VBox"]
+[node name="UncertaintyLabel" type="Label" parent="CanvasLayer/ObserverSurface/Panel/MarginContainer/VBox/UncertaintyBlock"]
+text = "uncertainty_notes"
+[node name="UncertaintyValue" type="Label" parent="CanvasLayer/ObserverSurface/Panel/MarginContainer/VBox/UncertaintyBlock"]
+text = "hover_not_validation\nruntime_motion_not_physics_truth\nunresolveds_remain_active"
+autowrap_mode = 2
+
+[node name="ContaminationBlock" type="VBoxContainer" parent="CanvasLayer/ObserverSurface/Panel/MarginContainer/VBox"]
+[node name="ContaminationLabel" type="Label" parent="CanvasLayer/ObserverSurface/Panel/MarginContainer/VBox/ContaminationBlock"]
+text = "contamination_notes"
+[node name="ContaminationValue" type="Label" parent="CanvasLayer/ObserverSurface/Panel/MarginContainer/VBox/ContaminationBlock"]
+text = "water_plane_is_context_not_evidence\nbarrel_visual_does_not_create_buoyancy_claim\nshadow_is_spatial_anchoring_only"
+autowrap_mode = 2
+
+[node name="WarningRow" type="HBoxContainer" parent="CanvasLayer/ObserverSurface/Panel/MarginContainer/VBox"]
+[node name="WarningLabel" type="Label" parent="CanvasLayer/ObserverSurface/Panel/MarginContainer/VBox/WarningRow"]
+text = "warning_surface_visible: "
+[node name="WarningValue" type="Label" parent="CanvasLayer/ObserverSurface/Panel/MarginContainer/VBox/WarningRow"]
+text = "true"
+
+[node name="ViewRow" type="HBoxContainer" parent="CanvasLayer/ObserverSurface/Panel/MarginContainer/VBox"]
+[node name="ViewModeLabel" type="Label" parent="CanvasLayer/ObserverSurface/Panel/MarginContainer/VBox/ViewRow"]
+text = "current_view_mode: "
+[node name="ViewModeValue" type="Label" parent="CanvasLayer/ObserverSurface/Panel/MarginContainer/VBox/ViewRow"]
+text = "angled_inspection"
+autowrap_mode = 2
+
+[node name="ZoomRow" type="HBoxContainer" parent="CanvasLayer/ObserverSurface/Panel/MarginContainer/VBox"]
+[node name="ZoomLabel" type="Label" parent="CanvasLayer/ObserverSurface/Panel/MarginContainer/VBox/ZoomRow"]
+text = "current_zoom: "
+[node name="ZoomValue" type="Label" parent="CanvasLayer/ObserverSurface/Panel/MarginContainer/VBox/ZoomRow"]
+text = "7.20"
+
+[node name="RightControls" type="Control" parent="CanvasLayer"]
+anchors_preset = 11
+anchor_left = 1.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -258.0
+offset_top = 12.0
+offset_right = -12.0
+offset_bottom = -12.0
+
+[node name="Panel" type="Panel" parent="CanvasLayer/RightControls"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/RightControls/Panel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 14
+
+[node name="VBox" type="VBoxContainer" parent="CanvasLayer/RightControls/Panel/MarginContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_constants/separation = 18
+
+[node name="Title" type="Label" parent="CanvasLayer/RightControls/Panel/MarginContainer/VBox"]
+text = "Navigation Controls"
+horizontal_alignment = 1
+
+[node name="TopViewButton" type="Button" parent="CanvasLayer/RightControls/Panel/MarginContainer/VBox"]
+text = "Top View ↓"
+custom_minimum_size = Vector2(0, 44)
+
+[node name="SpacerTop" type="Control" parent="CanvasLayer/RightControls/Panel/MarginContainer/VBox"]
+custom_minimum_size = Vector2(0, 80)
+
+[node name="OrbitRow" type="HBoxContainer" parent="CanvasLayer/RightControls/Panel/MarginContainer/VBox"]
+theme_override_constants/separation = 8
+
+[node name="LeftOrbitButton" type="Button" parent="CanvasLayer/RightControls/Panel/MarginContainer/VBox/OrbitRow"]
+text = "Left Orbit"
+custom_minimum_size = Vector2(106, 44)
+
+[node name="RightOrbitButton" type="Button" parent="CanvasLayer/RightControls/Panel/MarginContainer/VBox/OrbitRow"]
+text = "Right Orbit"
+custom_minimum_size = Vector2(106, 44)
+
+[node name="SpacerMiddle" type="Control" parent="CanvasLayer/RightControls/Panel/MarginContainer/VBox"]
+size_flags_vertical = 3
+
+[node name="BottomViewButton" type="Button" parent="CanvasLayer/RightControls/Panel/MarginContainer/VBox"]
+text = "Bottom View ↑"
+custom_minimum_size = Vector2(0, 44)

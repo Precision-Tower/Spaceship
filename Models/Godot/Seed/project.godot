@@ -1,0 +1,12 @@
+; Engine configuration file.
+; Minimal Godot 4 project.
+
+config_version=5
+
+[application]
+config/name="NavigationRig_Fix_001"
+run/main_scene="res://RuntimeRoot.tscn"
+
+[rendering]
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"

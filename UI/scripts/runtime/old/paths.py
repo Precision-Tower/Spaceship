@@ -23,3 +23,4 @@ def scan_files(root: Path):
         if p.is_file():
             files.append(p.relative_to(root).as_posix())
     return sorted(files)
+

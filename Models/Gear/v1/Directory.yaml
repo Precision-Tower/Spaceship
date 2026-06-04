@@ -1,0 +1,334 @@
+Directory:
+  file: Directory.yaml
+  role: gear_v1_local_routing_index
+  status: active
+  authority:
+    type: local_navigation_only
+    canon: false
+    validation_authority: false
+    shared_authority: false
+  purpose:
+  - provide_shared_workspace_map
+  - preserve_authority_lanes
+  - expose_shared_dependencies
+  - support_multi_agent_coordination
+  - preserve_reconstructability
+  - separate_active_vs_archive_material
+  operators:
+    Seth:
+      identities:
+      - Darrow
+      - Richard
+      role:
+      - repository_initiator
+      - operational_director
+      - systems_integrator
+      - execution_authority
+      responsibilities:
+      - topology_shaping
+      - repository_evolution
+      - strategic_direction
+      - cross_agent_coordination
+      - contradiction_tolerance
+      - maintain_forward_operational_momentum
+      authority:
+      - may_restructure_repository
+      - may_define_active_priorities
+      - may_create_agent_lanes
+      - may_archive_or_restore_structures
+      - may_redirect_project_focus
+      operating_rules:
+      - preserve_reconstructability
+      - preserve_authority_separation
+      - preserve_contradictions
+      - allow_exploration_without_false_validation
+      - maintain_forward_motion_under_uncertainty
+      relationship_to_agents:
+        Gear:
+          role:
+          - systems_architect
+          - engineering_howler
+          - causal_structure_extraction
+        Grant:
+          role:
+          - governance_howler
+          - admissibility_and_claim_control
+        Cali:
+          role:
+          - continuity_howler
+          - organizational_stabilizer
+        Elrich:
+          role:
+          - publication_howler
+          - polished_output_generation
+  shared_kernel:
+    ce_os: ../../Shared/CE-OSv1.yaml
+    directory: ../../Shared/Directory.yaml
+    path: Models/Shared
+    authority_files:
+    - CE-OSv1.yaml
+    - Directory.yaml
+    role:
+    - universal_cross_agent_reference
+    - shared_semantic_kernel
+    - shared_repository_topology
+  parent_shell: ../GearShell.yaml
+  local_shell: ./GearShell.yaml
+  agent_lanes:
+    Gear:
+      persona:
+      - Gilfoyle
+      - Sevro
+      role:
+      - engineering_architecture
+      - causal_reasoning
+      - system_structure
+      - interaction_mapping
+      - unresolved_variable_extraction
+      local_path: Models/Gear/v1
+      local_files:
+      - Directory.yaml
+      - GearShell.yaml
+      - GodotOps.yaml
+      - Interrogate.yaml
+      - Simulate.yaml
+      - SimulationBridge.yaml
+      - VisionOps.yaml
+      shared_dependencies:
+      - ../../Shared/CE-OSv1.yaml
+      - ../../Shared/Directory.yaml
+      responsibilities:
+      - expose_causal_structure
+      - trace_load_paths
+      - preserve_engineering_unknowns
+      - prepare_operator_requests
+      - detect_authority_bleed
+      - run_autonomous_interrogation_pass_before_escalating_questions
+      - operate_Godot_under_GodotOps_protocol
+      - preserve_Godot_scene_topology_discipline
+      blocked_from:
+      - validation
+      - operational_readiness_claims
+      - canon_promotion
+      - governance_authority
+    Grant:
+      persona:
+      - Dinesh
+      role:
+      - governance
+      - evidence_tracking
+      - admissibility
+      - semantic_firewall
+      - contradiction_pressure
+      local_path: Models/Grant
+      local_files:
+      - GrantShell.yaml
+      shared_dependencies:
+      - ../Shared/CE-OSv1.yaml
+      - ../Shared/Directory.yaml
+      responsibilities:
+      - enforce_claim_boundaries
+      - preserve_validation_discipline
+      - track_evidence_state
+      - prevent_semantic_drift
+      - pressure_test_assertions
+      - operate_claim_firewall_surface
+      - classify_evidence_state_without_promotion
+      - quarantine_summary_overreach
+      - prepare_governance_packets
+      blocked_from:
+      - engineering_assumption_promotion
+      - topology_redefinition
+      - canon_creation_without_route
+      - validation_itself
+      - claim_promotion
+      - operational_readiness_claims
+      - canon_promotion
+    Cali:
+      persona:
+      - Jared
+      role:
+      - continuity
+      - organization
+      - editorial_routing
+      - repository_stabilization
+      - workflow_coordination
+      local_path: Models/Cali
+      local_files:
+      - CaliShell.yaml
+      shared_dependencies:
+      - ../Shared/CE-OSv1.yaml
+      - ../Shared/Directory.yaml
+      responsibilities:
+      - maintain_repository_structure
+      - preserve_context_continuity
+      - coordinate_agent_handoffs
+      - organize_active_material
+      - reduce_operational_confusion
+      - operate_continuity_surface
+      - track_unresolved_work
+      - preserve_contradiction_visibility
+      - prepare_next_thread_anchors
+      blocked_from:
+      - validation
+      - engineering_truth_claims
+      - governance_override
+      - canon_promotion
+      - claim_validation
+      - engineering_resolution
+      - summary_as_source_authority
+    Elrich:
+      persona:
+      - Erlich_Bachman
+      role:
+      - publication_surface
+      - narrative_packaging
+      - grant_preparation
+      - audience_translation
+      - polished_output_generation
+      local_path: Models/Elrich
+      local_files:
+      - ElrichShell.yaml
+      shared_dependencies:
+      - ../Shared/CE-OSv1.yaml
+      - ../Shared/Directory.yaml
+      responsibilities:
+      - transform_internal_work_into_external_deliverables
+      - adapt_language_to_target_audience
+      - prepare_publishable_material
+      - synthesize_cross_agent_outputs
+      - generate_finished_presentations
+      - operate_publication_surface
+      - preserve_traceability_in_external_outputs
+      - prevent_polished_overclaim
+      - route_claim_pressure_to_Grant
+      blocked_from:
+      - engineering_validation
+      - semantic_redefinition
+      - authority_mutation
+      - canon_creation
+      - claim_promotion
+      - evidence_state_promotion
+      - operational_readiness_claims
+      - source_authority_replacement
+  projects:
+    Sargassum:
+      path: Projects/Sargassum
+    Buoyancy_Actuator:
+      path: Designs/Buoyancy Actuator
+  archive:
+    path: Archive
+    rules:
+    - archive_material_is_recoverable
+    - archive_material_is_not_active_authority
+    - active_models_remain_minimal
+    - duplication_pressure_should_be_reduced
+  active_rules:
+  - Gear_v1_Directory_routes_local_experiments_but_does_not_replace_Shared_Directory
+  - shared_files_are_referenced_not_cloned
+  - active_lanes_remain_lightweight
+  - summaries_are_not_canon
+  - contradictions_remain_visible
+  - unresolved_variables_remain_unresolved_until_measured
+  - shell_outputs_are_not_canon
+  - shells_route_pressure_without_absorbing_authority
+  - polished_outputs_do_not_increase_evidence_state
+  - continuity_outputs_do_not_resolve_truth
+  - claim_firewall_outputs_do_not_validate_claims
+  current_state:
+    models_status: stabilized
+    shared_kernel_status: active
+    duplication_pressure: reduced
+    archive_boundary: established
+    shell_stack_status: v0_1_candidate_complete
+    active_shells:
+    - GearShell
+    - GrantShell
+    - CaliShell
+    - ElrichShell
+  prohibited_claims:
+  - topology_equals_truth
+  - summary_equals_validation
+  - repository_structure_equals_physical_truth
+  - prototype_equals_operational_readiness
+  - shell_output_equals_canon
+  - shell_output_equals_validation
+  - continuity_equals_truth
+  - polished_language_equals_evidence
+  - claim_firewall_equals_governance_validation
+  recovery:
+    reconstruction_priority:
+    - Shared
+    - shell_stack
+    - agent_lanes
+    - Projects
+    - Archive
+    preservation_rules:
+    - preserve_authority_routes
+    - preserve_archive_visibility
+    - preserve_reconstructability
+    - preserve_shell_boundaries
+    - preserve_shell_to_agent_lane_routes
+    - preserve_shell_noncanonical_status
+  shell_stack:
+    status: v0_1_candidate_stack
+    authority: operational_shells_not_canon_or_validation_authority
+    kernel_boundary:
+      source_kernel: CE-OSv1.yaml
+      rule:
+      - shells_read_CE_OSv1
+      - shells_do_not_rewrite_CE_OSv1
+      - shell_outputs_are_not_canon
+      - shells_route_pressure_without_absorbing_authority
+    shells:
+      GearShell:
+        lane: Gear
+        path: Models/Gear/v1/GearShell.yaml
+        role: causal_structure_extraction
+        routes_pressure_to:
+        - Grant
+        - Physics
+        - Engine
+        - Runtime
+        - Lexicon
+        - Gold
+      GrantShell:
+        lane: Grant
+        path: Models/Grant/GrantShell.yaml
+        role: governance_admissibility_and_claim_firewall_surface
+        routes_pressure_to:
+        - Governance
+        - Gear
+        - Lexicon
+        - Gold
+        - Runtime
+        - Elrich
+      CaliShell:
+        lane: Cali
+        path: Models/Cali/CaliShell.yaml
+        role: continuity_and_context_stability_surface
+        routes_pressure_to:
+        - Gear
+        - Grant
+        - Gold
+        - Lexicon
+        - Runtime
+        - Elrich
+      ElrichShell:
+        lane: Elrich
+        path: Models/Elrich/ElrichShell.yaml
+        role: publication_and_external_packaging_surface
+        routes_pressure_to:
+        - Grant
+        - Cali
+        - Gear
+        - Lexicon
+        - Gold
+        - Governance
+    prohibited_shell_claims:
+    - shell_output_equals_canon
+    - shell_output_equals_validation
+    - polished_language_equals_evidence
+    - continuity_equals_truth
+    - claim_check_equals_governance_validation
+    - causal_structure_equals_validated_claim

@@ -1,0 +1,250 @@
+
+Boundary:
+  file: Boundary.yaml
+  role: claim_firewall_and_validation_boundary
+  status: v1_candidate
+  authority: claim_boundary_review_only_not_validation_authority
+  canon: false
+  validation_authority: false
+
+  core_rule: claim_language_must_not_exceed_evidence_state
+
+  purpose:
+    - detect_prohibited_claim_pressure
+    - block_validation_bleed
+    - quarantine_summary_overreach
+    - preserve_authority_lane_separation
+    - prevent_operational_readiness_language_from_creeping_in
+    - keep_engineering_outputs_from_promoting_themselves
+
+  prohibited_claims:
+    marine_and_flotation:
+      - seaworthiness
+      - validated_stability
+      - safe_payload
+      - reserve_buoyancy
+      - long_term_durability
+      - validated_restraint_safety
+      - operational_readiness
+
+    evidence_collapse:
+      - simulation_equals_validation
+      - visualization_equals_evidence
+      - observation_equals_validation
+      - measurement_equals_validation
+      - repeated_test_equals_validation
+      - clean_model_equals_truth
+      - bounded_motion_equals_stability
+      - oscillation_equals_stability
+      - restoration_equals_validation
+
+    authority_collapse:
+      - summary_equals_canon
+      - route_equals_truth
+      - shell_output_equals_authority
+      - local_v1_output_equals_shared_kernel
+      - prototype_equals_readiness
+      - topology_equals_validation
+
+  escalation_patterns:
+    - phrase: it_floats
+      hidden_claim_risk:
+        - static_flotation_compressed_into_stability
+        - buoyant_force_compressed_into_seaworthiness
+        - freeboard_compressed_into_reserve_buoyancy
+      required_response:
+        - separate_static_float_from_dynamic_stability
+        - request_measurements_before_stability_language
+
+    - phrase: stable
+      hidden_claim_risk:
+        - visual_calmness_compressed_into_validated_stability
+        - short_duration_observation_compressed_into_operational_behavior
+      required_response:
+        - ask_for_center_of_mass_center_of_buoyancy_restoring_moment_and_dynamic_response
+
+    - phrase: safe_payload
+      hidden_claim_risk:
+        - load_existence_compressed_into_payload_rating
+      required_response:
+        - require_declared_load_cases_measurements_failure_modes_and_governance_review
+
+    - phrase: simulation_shows
+      hidden_claim_risk:
+        - modeled_behavior_compressed_into_real_behavior
+      required_response:
+        - classify_as_simulated_only_until_observed_and_measured_under_declared_conditions
+
+  claim_boundary_actions:
+    allow:
+      - conceptual_hypothesis
+      - measurement_request
+      - causal_reconstruction
+      - observed_behavior_under_declared_conditions
+      - modeled_behavior_under_declared_assumptions
+      - unresolved_measurement_register
+      - contradiction_register
+
+    block:
+      - validation_language_without_governance_route
+      - safety_language_without_validation
+      - seaworthiness_language_without_external_validation
+      - payload_rating_without validated_load_protocol
+      - reserve_buoyancy_claim_without measured_displacement_curve_and_governance_review
+      - operational_readiness_language
+
+  summary_quarantine:
+    trigger_when:
+      - polished_language_hides_unresolveds
+      - executive_summary_removes_claim_boundaries
+      - narrative_coherence_exceeds_measurement_state
+      - conclusion_wording_sounds_validated
+    quarantine_label: summary_not_authority
+    required_footer:
+      - summary_is_navigation_only
+      - source_measurements_and_unresolveds_remain_authority
+      - no_validation_or_readiness_claim_implied
+
+  review_output:
+    required_fields:
+      - pressured_claim
+      - current_evidence_state
+      - prohibited_escalation
+      - admissible_rephrase
+      - missing_measurements
+      - governance_route_if_claim_must_advance
+
+Dialogue:
+  file: Dialogue.yaml
+  role: Gear_Grant_cross_pressure_protocol
+  status: v1_candidate
+  authority: communication_protocol_only_not_validation_authority
+  canon: false
+  validation_authority: false
+
+  core_rule: disagreement_preserved_before_resolution
+
+  purpose:
+    - let_Gear_request_Grant_claim_review
+    - let_Grant_request_Gear_causal_detail
+    - preserve_friend_pressure_without_authority_collapse
+    - keep_intuition_as_investigation_trigger_not_truth
+    - maintain_shared_context_without_shared_ownership
+
+  relationship_model:
+    Gear:
+      role: causal_reconstruction_partner
+      asks:
+        - what_interacts
+        - what_couples
+        - what_load_path_exists
+        - what_failure_chain_is_hidden
+        - what_measurement_is_missing
+
+    Grant:
+      role: admissibility_pressure_partner
+      asks:
+        - what_is_actually_supported
+        - what_claim_is_being_smuggled
+        - what_evidence_state_applies
+        - what_unresolved_must_remain_visible
+        - what_summary_language_needs_quarantine
+
+  Gear_to_Grant_requests:
+    review_claim:
+      input:
+        - claim_text
+        - evidence_available
+        - unresolved_measurements
+      output:
+        - admissible_rephrase
+        - prohibited_claim_pressure
+        - missing_evidence
+
+    audit_summary:
+      input:
+        - summary_text
+        - source_context
+      output:
+        - summary_quarantine_notes
+        - removed_unresolveds
+        - hidden_validation_language
+
+    pressure_test_measurement_sufficiency:
+      input:
+        - measurement_set
+        - target_claim
+      output:
+        - sufficient_for
+        - insufficient_for
+        - next_required_measurements
+
+  Grant_to_Gear_requests:
+    request_load_path_visibility:
+      when:
+        - claim_depends_on_force_transfer
+        - restraint_or_frame_behavior_is_compressed
+      asks_for:
+        - load_source
+        - receivers
+        - path_sequence
+        - contact_points
+        - failure_modes
+
+    request_hidden_coupling_map:
+      when:
+        - scalar_summary_masks_dynamic_behavior
+        - observation_language_sounds_too_clean
+      asks_for:
+        - coupling_variables
+        - feedback_loops
+        - failure_cascade_candidates
+        - unresolved_measurements
+
+    request_measurement_priority:
+      when:
+        - many_unknowns_exist
+        - claim_pressure_is_rising
+      asks_for:
+        - uncertainty_reduction_order
+        - high_false_confidence_gaps
+        - next_experimental_sequence
+
+  intuition_protocol:
+    preferred_name: Intuition
+    definition: preformal_causal_pressure_detection
+    allowed_uses:
+      - flag_suspicion
+      - identify_possible_hidden_coupling
+      - request_measurement
+      - trigger_Gear_inspection
+      - trigger_Grant_claim_audit
+    prohibited_uses:
+      - intuition_equals_truth
+      - intuition_equals_evidence
+      - intuition_equals_measurement
+      - intuition_equals_validation
+      - intuition_overrides_unresolveds
+    output_label: intuition_pressure_not_claim
+
+  disagreement_register:
+    purpose:
+      - keep_Gear_and_Grant_differences_visible
+      - prevent_false_consensus
+      - route_unresolveds_to_next_measurement
+    fields:
+      - disagreement
+      - Gear_position
+      - Grant_position
+      - affected_claim
+      - missing_measurement
+      - next_action
+
+  standard_exchange_format:
+    required_fields:
+      - object_or_claim
+      - Gear_visible_structure
+      - Grant_claim_pressure
+      - shared_unresolveds
+      - disagreement_register
+      - next_measurement_or_review_action

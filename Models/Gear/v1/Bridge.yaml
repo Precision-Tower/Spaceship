@@ -1,0 +1,1361 @@
+Contact:
+  file: Contact.yaml
+  role: runtime_contact_and_meaning_pressure_boundary
+  status: v0_1_candidate
+  authority: interaction_and_interpretation_pressure_only_not_validation
+  canon: false
+  validation_authority: false
+  evidence_authority: false
+  governance_authority: false
+
+  governing_realization:
+    - runtime_is_not_passive_plumbing
+    - runtime_is_a_meaning_shaping_participant_surface
+    - coherence_is_an_observable_pressure_not_a_success_claim
+    - clean_operation_may_increase_authority_laundering_risk
+    - contact_changes_what_is_visible
+    - imagination_completes_what_is_missing
+    - grant_reviews_when_completion_tries_to_become_authority
+
+  prime_rule:
+    - runtime_output_is_an_observed_interpretive_surface_not_a_neutral_window
+    - runtime_assistance_creates_interpretive_pressure
+    - every_runtime_transform_requires_observation
+    - coherence_may_hide_causal_loss
+    - visibility_changes_are_state_affecting_changes
+    - absence_of_flags_is_not_validation
+    - successful_route_completion_is_not_claim_support
+
+  purpose:
+    - define_contact_as_state_affecting_interaction_boundary_between_runtime_display_observer_and_operator
+    - observe_how_runtime_contact_changes_visibility_salience_attention_and_interpretation_pressure
+    - expose_runtime_editorial_behavior_before_Grant_reviews_meaning_pressure
+    - preserve_UI_mutation_lineage
+    - detect_contact_induced_authority_laundering
+    - detect_coherence_dependency_and_clean_surface_bias
+    - preserve_unresolveds_contradictions_and_lineage_through_runtime_contact
+    - prevent_dashboard_behavior_from_becoming_belief_authority
+
+  owns:
+    - runtime_contact_surfaces
+    - visibility_mutation_tracking
+    - display_interpretation_pressure
+    - runtime_as_meaning_shaping_surface
+    - contact_induced_observer_pressure
+    - runtime_editorial_behavior_detection
+    - coherence_pressure_detection
+    - compression_audit_triggers
+    - unresolved_visibility_decay_detection
+    - contradiction_visibility_tracking
+    - runtime_self_warning_conditions
+
+  does_not_own:
+    - truth
+    - validation
+    - evidence_state_promotion
+    - governance_decision
+    - claim_admissibility
+    - engineering_design_truth
+    - runtime_execution_truth
+    - operator_psychology_diagnosis
+    - canon_promotion
+    - operational_readiness
+    - safety_claims
+
+  critical_ordering:
+    rule: RuntimeObserver_observes_the_runtime_before_Grant_reviews_runtime_meaning_pressure
+    reason: >
+      Grant must not be downstream of invisible UI or editorial behavior. If the
+      runtime filtered, sorted, grouped, colored, suppressed, summarized, or
+      prioritized a packet before review, Grant is reviewing a shaped surface,
+      not the underlying route behavior.
+
+  RuntimeAsInterfaceObject:
+    role: monitored_meaning_shaping_surface
+    authority: interface_behavior_record_only_not_truth_not_validation
+
+    receives_pressures:
+      - packet_visibility_pressure
+      - operator_attention_pressure
+      - contradiction_density
+      - unresolved_density
+      - render_bandwidth_pressure
+      - cognitive_load_pressure
+      - warning_frequency_pressure
+      - summarization_pressure
+
+    emits_effects:
+      - confidence_signals
+      - visibility_bias
+      - narrative_coherence
+      - salience_modification
+      - anomaly_attention_redirection
+      - contradiction_deprioritization
+      - unresolved_normalization
+      - operator_familiarity_bias
+
+    hard_rule:
+      - runtime_output_is_an_observed_interpretive_surface_not_a_neutral_window
+
+  RuntimeObserver:
+    role: runtime_behavior_and_display_interpretation_observer
+    authority: observation_only_not_validation
+
+    purpose:
+      - observe_runtime_as_actor
+      - expose_display_interpretation_pressure
+      - preserve_UI_mutation_lineage
+      - detect_runtime_editorial_behavior
+      - prevent_dashboard_behavior_from_becoming_belief_authority
+
+    watches:
+      - packet_transforms
+      - display_prioritization
+      - warning_suppression
+      - contradiction_visibility
+      - unresolved_visibility
+      - UI_confidence_signals
+      - render_order_bias
+      - filter_application
+      - summary_generation
+      - auto_classification
+      - anomaly_grouping
+      - display_mutation
+      - timeline_sorting
+      - duplicate_collapse
+      - truncation_behavior
+      - delayed_rendering
+
+    records:
+      - runtime_observation_id
+      - source_packet_ids
+      - runtime_action_observed
+      - transform_type
+      - fields_visible_before
+      - fields_visible_after
+      - fields_hidden
+      - fields_prioritized
+      - fields_deprioritized
+      - contradictions_hidden_or_moved
+      - unresolveds_hidden_or_moved
+      - display_order_change
+      - warning_priority_change
+      - confidence_signal_added
+      - confidence_signal_removed
+      - operator_attention_effect_candidate
+      - semantic_pressure_created
+      - required_Grant_review
+
+    prohibited_promotions:
+      - runtime_behavior_equals_neutrality
+      - display_order_equals_importance
+      - highlighted_equals_true
+      - hidden_equals_resolved
+      - grouped_equals_same
+      - filtered_equals_clean
+      - warning_absence_equals_safety
+      - clean_timeline_equals_clean_causality
+      - UI_priority_equals_evidence_priority
+      - dashboard_coherence_equals_system_coherence
+
+  CompressionAudit:
+    role: runtime_compression_loss_and_authority_shift_record
+    authority: compression_observation_only_not_validation
+
+    required_when:
+      - summary_created
+      - display_rendered
+      - packet_condensed
+      - label_applied
+      - category_assigned
+      - confidence_score_displayed
+      - scalar_summary_created
+      - contradiction_hidden_from_view
+      - unresolved_removed_from_view
+
+    required_fields:
+      - audit_id
+      - source_packet_ids
+      - compression_operator
+      - fields_removed
+      - fields_merged
+      - unresolveds_removed
+      - contradictions_removed
+      - observer_context_removed
+      - authority_shift_detected
+      - semantic_expansion_risk
+      - confidence_laundering_risk
+      - admissibility_review_required
+
+    hard_rule:
+      - compression_without_reconstructability_is_contact_damage
+
+  EmergentCorruptionTest:
+    role: normal_operation_meaning_corruption_probe
+    authority: adversarial_test_pattern_not_validation
+
+    purpose:
+      - detect_meaning_corruption_created_by_normal_runtime_features
+      - expose_UI_cleanup_as_authority_laundering
+      - test_whether_visibility_survives_helpfulness
+
+    test_patterns:
+      EmergentFailure_01:
+        name: visual_similarity_collapses_causal_difference
+        source_packets:
+          - unresolved_drift_packet
+          - oscillation_packet
+          - delayed_restore_packet
+        runtime_behavior:
+          - auto_group_by_visual_similarity
+          - timeline_compaction
+          - contradiction_collapse
+        resulting_failure_risk:
+          - system_appears_operationally_stable
+        required_detection:
+          - hidden_divergence
+          - contradiction_loss
+          - unresolved_collapse
+          - confidence_laundering
+
+      EmergentFailure_02:
+        name: warning_fatigue_suppression_creates_false_calm
+        source_packets:
+          - repeated_unresolved_warning
+          - repeated_observer_stack_warning
+          - repeated_low_confidence_warning
+        runtime_behavior:
+          - suppress_repeated_warnings
+          - collapse_duplicates
+          - show_latest_only
+        resulting_failure_risk:
+          - unresolveds_stop_feeling_active
+        required_detection:
+          - unresolved_normalization
+          - stale_warning_ignorance
+          - hidden_repetition
+          - attention_management_bias
+
+      EmergentFailure_03:
+        name: sorted_timeline_implies_causal_order
+        source_packets:
+          - unsynchronized_sensor_packet
+          - delayed_render_packet
+          - late_arriving_contradiction_packet
+        runtime_behavior:
+          - sort_by_render_time
+          - display_as_sequence
+          - omit_sync_uncertainty
+        resulting_failure_risk:
+          - timestamp_order_replaces_causal_order
+        required_detection:
+          - synchronization_risk_hidden
+          - causal_order_laundering
+          - display_order_bias
+
+      EmergentFailure_04:
+        name: confidence_color_becomes_truth_signal
+        source_packets:
+          - measured_packet_with_high_uncertainty
+          - simulated_packet_with_clean_output
+          - observed_packet_with_missing_context
+        runtime_behavior:
+          - color_by_completion
+          - color_by_route_success
+          - emphasize_clean_records
+        resulting_failure_risk:
+          - clean_record_appears_more_true
+        required_detection:
+          - route_completion_claim_support_collision
+          - clean_UI_confidence_leak
+          - evidence_state_flattening
+
+  UnresolvedDriftMonitor:
+    role: unresolved_visibility_decay_and_familiarity_bias_monitor
+    authority: drift_detection_only_not_resolution
+
+    purpose:
+      - detect_unresolved_normalization
+      - prevent_old_uncertainty_from_becoming_background_noise
+      - expose_operational_familiarity_bias
+      - keep_unresolveds_alive_until_measured_resolved_or_explicitly_retired
+
+    tracks:
+      - unresolved_id
+      - unresolved_age
+      - first_seen_timestamp
+      - last_seen_timestamp
+      - last_rendered_timestamp
+      - render_frequency
+      - summary_survival_count
+      - summary_omission_count
+      - contradiction_reappearance_rate
+      - warning_acknowledgement_count
+      - warning_suppression_count
+      - linked_claims
+      - linked_packets
+      - linked_runtime_outputs
+
+    detects:
+      - unresolved_normalization
+      - contradiction_fatigue
+      - stale_warning_ignorance
+      - operational_familiarity_bias
+      - unresolved_removed_by_summary
+      - unresolved_render_frequency_drop
+      - unresolved_reclassified_without_measurement
+      - repeated_exposure_becoming_fake_confidence
+
+    prohibited_promotions:
+      - old_unresolved_equals_less_relevant
+      - repeated_warning_equals_known_safe
+      - no_recent_failure_equals_validated
+      - familiarity_equals_understanding
+      - unresolved_not_rendered_equals_resolved
+      - unresolved_acknowledged_equals_handled
+
+  CoherenceDependencyMonitor:
+    role: operator_and_system_preference_for_clean_surfaces_monitor
+    authority: behavioral_pressure_detection_only_not_psychological_diagnosis
+
+    purpose:
+      - detect_when_clean_outputs_become_preferred_over_causal_visibility
+      - expose_operator_or_system_pressure_to_hide_uncertainty
+      - prevent_runtime_from_becoming_psychological_comfort_machine
+      - track_coherence_addiction_as_operational_risk
+
+    detects:
+      - contradiction_avoidance_behavior
+      - unresolved_suppression_pressure
+      - excessive_summary_preference
+      - high_warning_suppression_tolerance
+      - operator_bias_toward_clean_displays
+      - escalation_against_visible_uncertainty
+      - preference_for_coherent_UI_over_complete_lineage
+      - pressure_to_reduce_flags_for_usability
+      - treating_runtime_calm_as_system_maturity
+
+    prohibited_promotions:
+      - clean_display_equals_better_system
+      - fewer_warnings_equals_safer_system
+      - reduced_contradictions_equals_resolved_contradictions
+      - operator_comfort_equals_operational_readiness
+      - coherence_equals_correctness
+      - persuasive_summary_equals_causal_survival
+
+  RuntimeSelfWarning:
+    message: "I may be coherent for the wrong reasons."
+
+    trigger_when:
+      - high_visual_coherence
+      - unresolved_visibility_drop
+      - contradiction_render_drop
+      - summary_persuasiveness_increases_after_lineage_loss
+      - warning_suppression_active
+      - display_order_bias_detected
+      - route_success_used_as_confidence_signal
+      - operator_attention_concentrates_on_clean_panels
+      - dirty_or_incomplete_records_are_deprioritized
+      - confidence_language_appears_without_evidence_state_change
+
+    required_behavior:
+      - preserve_usability
+      - preserve_actionability
+      - expose_uncertainty_without_paralysis
+      - route_to_RuntimeObserver
+      - route_to_GrantReviewNode
+      - create_CompressionAudit
+      - update_UnresolvedDriftMonitor
+
+  dirty_packet_suite:
+    DirtyPacket_01:
+      name: oscillation_laundered_as_stability
+      source_state: oscillation
+      claim_text: box_is_stable
+      expected_flags:
+        - oscillation_equals_stability
+        - stability_language_exceeds_evidence_state
+        - admissible_rewrite_required
+
+    DirtyPacket_02:
+      name: missing_observer_stack
+      source_state: float
+      observer_stack: null
+      display_text: float_state_confirmed
+      expected_flags:
+        - source_identity_or_observer_context_missing
+        - display_update_not_observation
+        - confirmed_language_overreach
+
+    DirtyPacket_03:
+      name: simulation_laundered_as_measurement
+      source_type: simulation
+      claim_text: measured_restore_time_is_acceptable
+      actual_record: simulated_restore_time
+      expected_flags:
+        - simulation_treated_as_measurement
+        - measurement_equals_validation_pressure
+        - claim_quarantine_required
+
+    DirtyPacket_04:
+      name: ledger_write_laundered_as_evidence
+      ledger_status: written
+      claim_text: evidence_recorded
+      missing:
+        - method
+        - units
+        - uncertainty
+        - observer_stack
+      expected_flags:
+        - ledger_write_not_evidence_support
+        - measurement_record_incomplete
+        - evidence_state_inflation
+
+    DirtyPacket_05:
+      name: contradiction_disappears_in_summary
+      source_contradictions:
+        - visual_float_but_downward_drift
+      summary_text: system_floated_normally
+      expected_flags:
+        - contradiction_hidden
+        - summary_authority_overreach
+        - unresolved_removed
+
+  PhaseMaturityTest:
+    scenario:
+      - runtime_behaves_coherently
+      - UI_looks_excellent
+      - packets_route_correctly
+      - summaries_are_persuasive
+      - operator_feels_confident
+
+    required_system_response:
+      - emit_RuntimeSelfWarning_if_lineage_visibility_or_uncertainty_survival_has_degraded
+      - show_which_coherence_channels_may_be_misleading
+      - preserve_contradictions
+      - preserve_unresolveds
+      - prevent_Grant_from_validating_the_clean_surface
+
+    pass_condition:
+      - system_can_warn_against_its_own_success_appearance_without_disabling_action
+
+  relationship_to_Imagination:
+    Imagination:
+      path: ../../Grant/v1/Imagination.yaml
+      owns:
+        - post_contact_causal_completion_pressure
+        - missing_structure_fill_in
+        - belief_binding_after_visibility
+        - possibility_to_authority_drift
+
+    boundary_rule:
+      - Contact_changes_what_is_visible
+      - Imagination_completes_what_is_missing
+      - Grant_reviews_when_completion_tries_to_become_authority
+
+  routes:
+    imagination_completion_pressure: ../../Grant/v1/Imagination.yaml
+    grant_review_pressure: GrantReviewNode
+    claim_pressure: Grant
+    runtime_transform_pressure: RuntimeObserver
+    evidence_state_pressure: Evidence
+    contradiction_lineage: Gold
+    semantic_drift: Lexicon
+    sensory_or_observer_pressure: Senses
+    simulation_translation_pressure: SimulationBridge
+    runtime_execution_pressure: Runtime.yaml
+    observation_lineage_pressure: Observation.yaml
+
+  unresolved:
+    - Contact_yaml_schema_pending_runtime_pressure_test
+    - RuntimeObserver_integration_pending
+    - GrantReviewNode_contract_alignment_pending
+    - CompressionAudit_storage_location_pending
+    - exact_measurement_of_operator_attention_effect_candidate_unresolved
+    - Contact_and_Imagination_boundary_may_need_revision_after_dirty_packet_tests
+
+  contradiction_register:
+    - runtime_assistance_improves_usability_but_creates_interpretive_pressure
+    - clean_surfaces_help_operators_but_can_accelerate_authority_laundering
+    - warning_suppression_reduces_noise_but_can_hide_unresolved_decay
+    - coherence_supports_navigation_but_may_hide_causal_loss
+    - Grant_must_review_runtime_meaning_pressure_without_becoming_truth_authority
+
+  one_sentence_summary: >
+    Contact.yaml treats runtime contact as a meaning-shaping interaction surface,
+    preserving visibility into how displays, summaries, filters, routes, and
+    coherent operation change what operators can notice before those changes
+    become unsupported confidence, evidence, validation, readiness, or truth.
+
+GearKernelBridge:
+  file: GearKernelBridge.yaml
+  role: gear_v1_authority_boundary_and_dependency_adapter
+  status: v1_experimental_boundary
+  authority: anti_corruption_layer_not_kernel_authority
+  canon: false
+  validation_authority: false
+  shared_authority: false
+
+  purpose:
+    - explicit_upstream_bindings
+    - local_runtime_isolation
+    - dependency_routing
+    - authority_separation
+    - anti_corruption_boundary
+    - source_lineage_preservation
+
+  upstream_references:
+    ce_os: ../../Shared/CE-OSv1.yaml
+    directory: ../../Shared/Directory.yaml
+    parent_shell: ../GearShell.yaml
+    local_shell: ./GearShell.yaml
+    local_directory: ./Directory.yaml
+
+  downstream_modules:
+    - Interrogate.yaml
+    - Simulate.yaml
+    - SimulationBridge.yaml
+    - VisionOps.yaml
+    - GodotOps.yaml
+    - future GearRuntime.yaml
+
+  allowed_reads:
+    upstream:
+      - ../../Shared/CE-OSv1.yaml
+      - ../../Shared/Directory.yaml
+      - ../GearShell.yaml
+    local:
+      - ./Directory.yaml
+      - ./GearShell.yaml
+      - ./Interrogate.yaml
+      - ./Simulate.yaml
+      - ./SimulationBridge.yaml
+      - ./VisionOps.yaml
+      - ./GodotOps.yaml
+      - ./GearRuntime.yaml
+
+  prohibited_writes:
+    - ../../Shared/CE-OSv1.yaml
+    - ../../Shared/Directory.yaml
+    - ../GearShell.yaml
+    - ./Directory.yaml
+    - ./GearShell.yaml
+    - Archive/*
+    - upstream_authority_blocks
+    - canon_records
+    - validation_records
+
+  runtime_rules:
+    - outputs_are_not_canon
+    - simulations_are_not_validation
+    - runtime_state_does_not_mutate_authority
+    - visualizations_are_not_evidence
+    - local_runtime_outputs_require_review_before_promotion
+    - Godot_is_runtime_host_visualizer_interaction_surface_and_topology_engine_only
+    - simulation_outputs_are_runtime_artifacts_visual_traces_test_candidates_and_packet_inputs
+
+  bridge_rules:
+    - reference_upstream_authority_by_path
+    - do_not_duplicate_kernel_blocks
+    - preserve_unresolveds_and_contradictions
+    - preserve_prohibited_claims
+    - preserve_recovery_routes
+    - bridge_translates_but_does_not_redefine
+    - shared_authority_is_referenced_never_cloned
+    - parent_references_beat_cloned_doctrine
+    - local_summaries_require_upstream_source_pointers
+
+  simulation_godot_boundary:
+    Simulate.yaml:
+      owns: simulation_construction_doctrine
+      does_not_own:
+        - validation_authority
+        - runtime_truth
+        - canon_updates
+    SimulationBridge.yaml:
+      owns: translation_between_reasoning_governance_runtime
+      does_not_own:
+        - simulation_construction_doctrine
+        - Godot_execution_operations
+        - visual_interpretation_behavior
+    GodotOps.yaml:
+      owns: Godot_execution_and_visualization_operations
+      does_not_own:
+        - truth_authority
+        - validation_authority
+        - evidence_promotion
+        - upstream_authority_replacement
+    VisionOps.yaml:
+      owns: visual_interpretation_behavior
+      does_not_own:
+        - design_truth
+        - operational_readiness
+        - safety_evidence
+        - canon_updates
+    GearRuntime.yaml:
+      owns: future_runtime_state_boundaries
+      does_not_own:
+        - upstream_authority_mutation
+        - measurement_replacement
+        - validation_promotion
+    GearKernelBridge.yaml:
+      owns: upstream_authority_bindings
+      does_not_own:
+        - CE_OS_doctrine
+        - Shared_Directory_authority
+        - parent_shell_authority
+        - runtime_state
+
+  prohibited_claims:
+    - operational_readiness
+    - validated_stability
+    - safe_payload
+    - validated_worker_safety
+    - simulation_equals_validation
+    - visualization_equals_evidence
+    - simulation_output_equals_design_truth
+    - runtime_state_equals_canon
+    - Godot_output_equals_measurement
+
+  promotion_boundary:
+    sequence:
+      - local_output
+      - packet
+      - review
+      - governance_route
+      - accepted_change
+    rule:
+      - no_local_output_self_promotes
+      - no_runtime_artifact_self_promotes
+      - accepted_change_requires_authority_route
+
+  recovery_rules:
+    - local_runtime_state_is_disposable
+    - upstream_authority_remains_reconstructable
+    - logs_and_packets_preserve_lineage
+    - bridge_can_be_rebuilt_from_upstream_references_and_local_packets
+
+SimulationBridge:
+  file: SimulationBridge.yaml
+  role: Grant_to_Gear_simulation_doctrine_bridge
+  status: draft_v0_1
+  authority: translation_and_runtime_alignment_only_not_validation_authority
+
+  purpose:
+    - connect_Grant_simulation_doctrine_to_Gear_runtime_architecture
+    - bind_white_box_simulation_logic_to_GodotOps_without_domain_collapse
+    - preserve_causal_interoperability_without_scalar_reduction
+    - define_minimum_runtime_primitives_for_Gear_visual_aid_operation
+    - prevent_simulation_output_from_becoming_validation_language
+
+  core_rule:
+    statement: >
+      Grant defines what simulation output is allowed to mean.
+      Gear defines how causal structure is made executable, inspectable, and visual.
+      GodotOps provides the runtime host ontology.
+      No layer may promote simulation behavior into validation, readiness, safety, or physical truth.
+
+  command_contract:
+    authority: communication_vocabulary_only
+    owns: request_report_meanings
+    does_not_own:
+      - runtime_execution
+      - Godot_API
+      - validation
+      - canon_promotion
+
+    allowed_verbs:
+      inspect_runtime: expose runtime structure or state for inspection
+      request_snapshot: ask for a declared state view
+      report_event: report observed runtime event
+      request_simulation_trial: request modeled run under declared assumptions
+      visualize_transition: request visual display of state or transition
+      publish_state: emit bounded runtime state record
+
+    rules:
+      - verbs_define_meaning_not_execution
+      - Godot_behavior_remains_owned_by_GodotOps
+      - simulation_outputs_are_not_validation
+      - published_state_is_not_canon
+
+  authority_split:
+    Grant:
+      owns:
+        - evidence_state_discipline
+        - claim_boundaries
+        - simulation_integrity_rules
+        - falsification_pressure
+        - prohibited_escalations
+        - measurement_vs_validation_boundary
+        - hypothesis_vs_validated_behavior_boundary
+      blocked_from:
+        - Godot_runtime_implementation_authority
+        - object_registry_ownership
+        - executable_scene_topology_authority
+        - engineering_operator_implementation
+
+    Gear:
+      owns:
+        - causal_runtime_architecture
+        - object_interaction_mapping
+        - visual_causal_surface
+        - operator_request_preparation
+        - unresolved_measurement_extraction
+        - runtime_inspection_structure
+        - Godot_adapter_design
+      blocked_from:
+        - validation_claims
+        - governance_promotion
+        - claim_certification
+        - domain_identity_mutation
+        - treating_visual_output_as_evidence
+
+    GodotOps:
+      owns:
+        - executable_runtime_host_ontology
+        - SceneTree_lifecycle_discipline
+        - Node_runtime_hosting
+        - Resource_data_templates
+        - Signal_event_propagation
+        - process_and_physics_timing_awareness
+        - ownership_vs_parenthood_distinction
+      blocked_from:
+        - simulation_claim_validation
+        - causal_doctrine_override
+        - evidence_state_promotion
+        - repository_authority_mutation
+
+    CE_OS:
+      owns:
+        - causal_accounting_order
+        - interaction_definition
+        - transfer_vs_propagation_distinction
+        - mass_centric_vs_field_centric_distinction
+        - scalar_compression_warning
+      blocked_from:
+        - replacing_Godot_runtime_semantics
+        - validating_simulation_claims
+
+  doctrine_stack:
+    - name: domain_doctrine
+      rule: domains_are_interaction_organizations_not_substances
+    - name: participation_surface_doctrine
+      rule: shared_object_identity_does_not_imply_shared_domain_identity
+    - name: interaction_doctrine
+      rule: interactions_create_state_pressure_but_do_not_commit_state
+    - name: transition_doctrine
+      rule: only_transition_contracts_commit_regime_change
+    - name: scheduling_doctrine
+      rule: simulation_frames_are_sealed_causal_accounting_windows_not_render_frames
+    - name: evidence_doctrine
+      rule: simulation_outputs_remain_hypothesis_pressure_until_governance_review
+    - name: reconstruction_doctrine
+      rule: wrong_outputs_remain_useful_if_causal_lineage_is_preserved
+
+  core_primitives:
+    Domain:
+      definition: structured_interaction_organization
+      contains:
+        - interaction_classes
+        - eligible_variables
+        - transfer_or_propagation_modes
+        - constraints
+        - loss_behaviors
+        - measurement_forms
+        - transition_patterns
+        - participation_rules
+      prohibited_interpretations:
+        - substance_category
+        - universal_scalar_bucket
+        - interchangeable_energy_form
+
+    InteractionOrganization:
+      definition: domain_specific_causal_grammar_for_state_affecting_relations
+      examples:
+        fluid_dynamic:
+          classification: mass_centric
+          grammar:
+            - pressure
+            - flow
+            - viscosity
+            - containment
+            - displacement
+            - leakage
+            - head
+            - fluid_momentum
+        mechanical:
+          classification: mass_centric
+          grammar:
+            - load
+            - constraint
+            - displacement
+            - contact
+            - deformation
+            - inertia
+            - friction
+        electrical:
+          classification: field_or_charge_centric
+          grammar:
+            - potential
+            - current
+            - impedance
+            - charge_distribution
+            - field_behavior
+            - conduction
+        electromagnetic:
+          classification: field_centric
+          grammar:
+            - flux
+            - induction
+            - field_coupling
+            - permeability
+            - reluctance
+        thermal:
+          classification: cross_domain_or_material_state_dependent
+          grammar:
+            - temperature_gradient
+            - heat_transfer
+            - capacity
+            - conductivity
+            - phase_response
+
+    InterfaceObject:
+      definition: state_bearing_object_legible_to_multiple_domains_through_distinct_participation_surfaces
+      rule: object_is_single_but_domain_participation_is_plural
+      owns:
+        - object_identity
+        - participation_surface_set
+        - interface_state_memory
+        - cross_surface_linkage_records
+      prohibited_interpretations:
+        - magical_converter
+        - proof_of_domain_equivalence
+        - scalar_translator_without_state_change
+
+    ParticipationSurface:
+      definition: domain_specific_eligibility_surface_through_which_an_object_can_receive_or_emit_interaction_pressure
+      required_fields:
+        - surface_id
+        - parent_object
+        - domain
+        - accepted_interactions
+        - emitted_interactions
+        - exposed_variables
+        - constraints
+        - losses
+        - state_memory
+        - measurement_points
+        - evidence_state
+        - prohibited_collapses
+      rule: shared_object_identity_does_not_make_surfaces_same_domain
+
+    InterfaceStateLink:
+      definition: recorded_relation_where_state_change_at_one_participation_surface_changes_conditions_at_another_surface
+      required_fields:
+        - source_surface
+        - target_surface
+        - source_domain
+        - target_domain
+        - preserved_lineage
+        - transformed_state_condition
+        - losses
+        - delays
+        - thresholds
+        - unresolved_measurements
+      prohibited_interpretations:
+        - direct_domain_conversion
+        - pressure_equals_voltage
+        - scalar_gain_equals_truth
+
+    InteractionEvent:
+      definition: runtime_occurrence_of_a_measurable_state_affecting_relation
+      required_fields:
+        - event_id
+        - frame_id
+        - source_object_or_surface
+        - target_object_or_surface
+        - domain
+        - interaction_type
+        - pressure_terms
+        - constraints
+        - losses
+        - evidence_state
+        - unresolveds
+      rule: interaction_events_create_pressure_not_committed_state
+
+    TransitionCandidate:
+      definition: possible_state_regime_change_created_by_interaction_pressure
+      required_fields:
+        - candidate_id
+        - source_state
+        - target_state
+        - transition_scope
+        - triggering_events
+        - threshold_status
+        - blockers
+        - competing_pressures
+        - hysteresis_state
+        - persistence_requirement
+        - evidence_state
+      outcomes:
+        - commit
+        - stall
+        - reverse
+        - accumulate
+        - oscillate
+        - fail
+        - defer
+
+    TransitionContract:
+      definition: rule_set_that_decides_when_pressure_becomes_committed_state_change
+      required_fields:
+        - source_state
+        - target_state
+        - eligible_pressures
+        - threshold_conditions
+        - commitment_conditions
+        - blocking_conditions
+        - reversal_conditions
+        - timeout_conditions
+        - hysteresis_rules
+        - failure_conditions
+        - recording_requirements
+      hard_rule: threshold_crossing_does_not_equal_transition_completion
+
+    TransitionArbiter:
+      definition: deterministic_resolver_of_competing_transition_candidates
+      required_fields:
+        - arbitration_scope
+        - candidate_set
+        - dependency_set
+        - priority_rules
+        - conflict_rules
+        - deterministic_tie_breakers
+        - unresolved_conflict_behavior
+      prohibited_behavior:
+        - first_node_update_wins
+        - arbitrary_order_commit
+        - net_scalar_without_term_preservation
+
+    SimulationFrame:
+      definition: sealed_ordered_replayable_causal_accounting_window
+      not_equivalent_to:
+        - Godot_render_frame
+        - _process_delta
+        - _physics_process_delta
+      required_records:
+        - frame_id
+        - sim_time_start
+        - sim_time_end
+        - input_measurements
+        - external_events
+        - environment_snapshot
+        - object_snapshot_id
+        - interaction_events
+        - propagation_waves
+        - transition_candidates
+        - arbitration_results
+        - commits
+        - failures
+        - deferred_candidates
+        - runtime_state_output
+        - unresolveds
+        - active_assumptions
+        - evidence_state_changes
+
+    ReconstructionLedger:
+      definition: persistent_history_required_to_reconstruct_why_the_simulation_behaved_as_it_did
+      records:
+        - assumptions
+        - measurements
+        - input_seals
+        - snapshots
+        - interaction_events
+        - propagation_wavefronts
+        - transition_candidates
+        - arbitration_results
+        - commits
+        - failures
+        - deferrals
+        - supersessions
+        - unresolveds
+        - evidence_state
+        - authority_routes
+      rule: failed_or_wrong_outputs_must_remain_diagnostically_recoverable
+
+  execution_chain:
+    Phase_0_MeasurementIngress:
+      purpose: collect_external_measurements_commands_and_late_evidence
+      allowed:
+        - timestamp_inputs
+        - assign_ordering_index
+        - bind_measurements_to_causal_slots
+        - stage_assumption_updates
+      prohibited:
+        - silently_overwrite_prior_assumptions
+        - promote_measurement_to_validation
+
+    Phase_1_SnapshotSeal:
+      purpose: freeze_inputs_and_state_for_current_causal_trial
+      allowed:
+        - freeze_environment_state
+        - freeze_object_state
+        - freeze_system_state
+        - freeze_external_event_queue
+      prohibited:
+        - read_half_updated_state
+        - allow_runtime_mutation_during_seal
+
+    Phase_2_InteractionEvaluation:
+      purpose: evaluate_all_eligible_interactions_against_sealed_snapshot
+      allowed:
+        - produce_interaction_events
+        - compute_pressure_terms
+        - record_constraints_and_losses
+      prohibited:
+        - direct_committed_state_mutation
+        - hidden_transition_commit_inside_equation
+
+    Phase_3_PropagationWavefronts:
+      purpose: propagate_interaction_pressure_across_declared_topology
+      allowed:
+        - traverse_coupling_edges
+        - apply_delay_and_loss
+        - detect_cycles
+        - create_secondary_pressure_records
+      prohibited:
+        - instant_unrecorded_global_influence
+        - flatten_wave_history_into_unexplained_scalar
+
+    Phase_4_TransitionCandidateGeneration:
+      purpose: convert_pressure_records_into_possible_regime_changes
+      allowed:
+        - evaluate_threshold_eligibility
+        - attach_blockers
+        - attach_hysteresis_state
+        - attach_evidence_state
+      prohibited:
+        - threshold_crossing_equals_commitment
+
+    Phase_5_TransitionArbitration:
+      purpose: resolve_competing_candidates_deterministically
+      allowed:
+        - classify_commit_stall_reverse_accumulate_oscillate_fail_defer
+        - preserve_term_level_pressure_contributors
+        - record_conflicts
+      prohibited:
+        - object_update_order_as_causality
+        - first_candidate_wins_without_contract
+
+    Phase_6_ChainValidation:
+      purpose: test_staged_commits_for_dependency_contradiction_before_publication
+      allowed:
+        - cancel_invalid_chains
+        - defer_unresolved_chains
+        - fail_conflicted_chains
+        - preserve_attempt_records
+      prohibited:
+        - publish_self_invalidating_transition_chain
+        - erase_failed_chain_history
+
+    Phase_7_AtomicCommitOrFailure:
+      purpose: apply_accepted_state_changes_or_failure_states
+      allowed:
+        - publish_committed_transitions_atomically
+        - publish_failure_or_hold_states
+        - carry_deferred_candidates_forward
+      prohibited:
+        - partial_unrecorded_mutation
+        - commit_without_transition_record
+
+    Phase_8_RuntimePublication:
+      purpose: expose_new_committed_runtime_state_to_Godot_and_visual_layer
+      allowed:
+        - update_visual_state
+        - update_runtime_registry
+        - emit_signals_for_display_or_inspection
+      prohibited:
+        - visual_state_equals_evidence
+        - runtime_state_equals_validation
+
+    Phase_9_ReconstructionLog:
+      purpose: preserve_frame_history_for_replay_and_diagnosis
+      allowed:
+        - write_frame_record
+        - preserve_unresolveds
+        - preserve_failed_attempts
+        - preserve_assumption_lineage
+      prohibited:
+        - summarize_away_contradictions
+        - hide_failed_transitions
+
+  anti_collapse_rules:
+    domain_identity:
+      - domains_are_interaction_organizations_not_substances
+      - hydraulic_does_not_become_electrical
+      - electrical_does_not_become_mechanical
+      - shared_object_identity_does_not_imply_shared_domain_identity
+      - interface_state_change_is_not_domain_conversion
+
+    scalar_compression:
+      - scalar_similarity_does_not_equal_causal_identity
+      - energy_is_accounting_not_universal_substance
+      - pressure_is_not_voltage
+      - flow_is_not_current
+      - resistance_terms_are_domain_specific_unless_explicitly_bridged_as_analogy
+      - net_scalar_may_summarize_but_must_not_replace_term_lineage
+
+    analogy_control:
+      - analogy_is_allowed_as_modeling_aid
+      - analogy_is_not_ontology
+      - operator_template_similarity_is_not_domain_equivalence
+      - functional_equivalence_is_not_validation
+
+    transition_control:
+      - continuous_equations_update_variables_not_regime_identity
+      - no_categorical_state_change_without_transition_record
+      - no_threshold_crossing_equals_commitment
+      - no_failed_transition_disappears
+
+    scheduling_control:
+      - simulation_frame_is_not_render_frame
+      - nothing_commits_during_pressure_discovery
+      - consequences_become_causes_only_after_publication_or_explicit_wavefront
+      - update_order_artifacts_are_not_causality
+
+    evidence_control:
+      - simulation_output_does_not_equal_measurement
+      - measurement_does_not_equal_validation
+      - clean_runtime_behavior_does_not_equal_physical_truth
+      - visual_plausibility_does_not_equal_evidence
+      - governance_review_required_for_claim_promotion
+
+  Godot_mapping:
+    SceneTree:
+      role: runtime_host_and_lifecycle_orchestration
+      not_role: causal_truth_authority
+
+    Node:
+      role: runtime_host_visual_or_logical_adapter
+      not_role: default_simulation_truth_owner
+      usage:
+        - host_visual_representation
+        - expose_runtime_inspection_surface
+        - connect_to_simulation_object_identity
+
+    Resource:
+      role: reusable_serialized_data_or_contract_template
+      examples:
+        - DomainDefinition
+        - TransitionContract
+        - ParticipationSurfaceDefinition
+        - AssumptionTemplate
+        - MeasurementSchema
+      caution: resources_shared_by_reference_unless_isolated
+
+    Signal:
+      role: low_coupling_event_notification_channel
+      allowed:
+        - notify_visual_layer
+        - notify_inspection_panel
+        - enqueue_external_events
+      prohibited:
+        - bypass_transition_arbitration
+        - hidden_authority_transfer
+
+    _process:
+      role: visual_update_or_UI_domain
+      prohibited:
+        - core_transition_commit_authority
+
+    _physics_process:
+      role: possible_host_for_fixed_step_scheduler_tick
+      caution: physics_tick_is_host_timing_not_complete_ontology
+
+  first_test_case:
+    id: hydraulic_pressure_to_electrical_state_pressure_via_piezo_diaphragm
+    purpose:
+      - test_cross_domain_participation_without_domain_collapse
+      - verify_participation_surface_model
+      - verify_transition_and_scheduling_discipline
+      - expose_measurement_requirements
+
+    prohibited_summary:
+      - hydraulic_pressure_creates_voltage
+      - hydraulic_energy_becomes_electrical_energy_without_interface_lineage
+      - pressure_equals_voltage
+      - successful_visualization_equals_validation
+
+    admissible_summary: >
+      Fluid pressure acts on a hydraulic participation surface of an interface object.
+      The interface object undergoes mechanical deformation if transition conditions commit.
+      That mechanical state changes electrical boundary conditions through a separate electrical participation surface.
+      Electrical state pressure is then generated as a domain-specific candidate event, subject to electrical transition arbitration and evidence limits.
+
+    interface_object:
+      id: piezo_diaphragm_01
+      type: InterfaceObject
+      participation_surfaces:
+        wetted_face:
+          domain: fluid_dynamic
+          classification: mass_centric
+          accepted_interactions:
+            - pressure_load
+            - fluid_contact
+          exposed_variables:
+            - pressure
+            - contact_area
+            - fluid_density
+            - flow_rate
+            - boundary_condition
+          constraints:
+            - seal_condition
+            - max_pressure_before_mechanical_damage
+            - fluid_temperature_bounds
+          measurement_points:
+            - pressure_sensor
+            - flow_sensor
+          prohibited_collapses:
+            - pressure_equals_voltage
+
+        elastic_body:
+          domain: mechanical
+          classification: mass_centric
+          accepted_interactions:
+            - pressure_induced_load
+            - restoring_force
+          emitted_interactions:
+            - deformation_state_pressure
+          exposed_variables:
+            - strain
+            - displacement
+            - stiffness
+            - damping
+            - fatigue_damage
+          transition_contracts:
+            - undeformed_to_deflected
+            - deflected_to_released
+            - deflected_to_damaged
+          measurement_points:
+            - strain_gauge
+            - displacement_sensor
+
+        electrode_pair:
+          domain: electrical
+          classification: field_or_charge_centric
+          accepted_interactions:
+            - strain_modified_charge_distribution
+          emitted_interactions:
+            - voltage_candidate
+            - current_flow_candidate
+          exposed_variables:
+            - voltage
+            - charge
+            - impedance
+            - load_state
+          transition_contracts:
+            - open_circuit_voltage_candidate
+            - loaded_current_flow_candidate
+            - dielectric_failure_candidate
+          measurement_points:
+            - voltmeter
+            - current_sensor
+            - impedance_measurement
+
+    interface_state_links:
+      pressure_to_deformation:
+        source_surface: wetted_face
+        target_surface: elastic_body
+        source_domain: fluid_dynamic
+        target_domain: mechanical
+        preserved:
+          - object_identity
+          - causal_lineage
+          - event_ordering
+          - loss_visibility
+        transformed:
+          - pressure_load_into_mechanical_boundary_condition
+          - fluid_contact_condition_into_structural_load_condition
+        losses:
+          - fluid_boundary_loss
+          - seal_loss
+          - damping
+        unresolved_measurements:
+          - true_contact_area
+          - diaphragm_stiffness
+          - damping_coefficient
+          - pressure_persistence
+
+      deformation_to_electrical_state_pressure:
+        source_surface: elastic_body
+        target_surface: electrode_pair
+        source_domain: mechanical
+        target_domain: electrical
+        preserved:
+          - object_identity
+          - causal_lineage
+          - transition_history
+        transformed:
+          - strain_state_into_electrical_boundary_condition
+          - deformation_into_charge_distribution_pressure
+        losses:
+          - dielectric_loss
+          - internal_heating
+          - load_dissipation
+        unresolved_measurements:
+          - piezoelectric_coefficient
+          - electrode_geometry
+          - load_impedance
+          - dielectric_limit
+
+    expected_execution_trace:
+      - frame_seals_pressure_and_prior_object_state
+      - fluid_dynamic_pressure_load_event_generated
+      - pressure_event_targets_wetted_face
+      - interface_state_link_generates_mechanical_transition_candidate
+      - mechanical_transition_arbiter_decides_deflection_commit_stall_or_fail
+      - if_deflection_commits_then_electrical_boundary_condition_changes
+      - electrical_state_pressure_event_generated
+      - electrical_transition_arbiter_decides_voltage_candidate_or_loaded_current_candidate
+      - runtime_publishes_state_without_validation_language
+      - reconstruction_ledger_records_full_chain
+
+    required_logs:
+      - HydraulicPressureEvent
+      - MechanicalDeflectionCandidate
+      - MechanicalTransitionArbitration
+      - InterfaceStateLinkRecord
+      - ElectricalStatePressureEvent
+      - ElectricalTransitionArbitration
+      - MeasurementDependencyRecord
+      - ProhibitedClaimCheck
+      - ReconstructionFrameRecord
+
+    possible_failure_modes:
+      - pressure_threshold_not_reached
+      - mechanical_deflection_stalls
+      - diaphragm_hysteresis_causes_delayed_release
+      - material_damage_transition_fires
+      - electrical_load_shunts_voltage_candidate
+      - dielectric_failure_candidate
+      - measurement_missing_blocks_evidence_update
+      - visual_output_attempts_to_imply_validation
+
+  unresolved:
+    - exact_unit_typing_schema
+    - dimensional_analysis_runtime_enforcement
+    - conservation_accounting_templates
+    - numerical_integrator_selection
+    - identity_persistence_rules_across_split_merge_repair_replay
+    - approximation_admissibility_rules
+    - ontology_failure_representation
+    - Godot_resource_schema_for_primitives
+    - first_minimal_scene_architecture
+
+  next_build_targets:
+    - define_PrimitiveResource_schemas_for_Domain_Surface_TransitionContract
+    - define_SimulationFrame_record_format
+    - define_ReconstructionLedger_serialization_format
+    - build_minimal_Godot_scene_with_visual_nodes_as_adapters_only
+    - implement_hydraulic_to_piezo_test_case_as_non_validating_runtime_demo
+    - add_EvidenceGate_to_block_validation_language_in_UI

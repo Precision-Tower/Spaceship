@@ -150,6 +150,44 @@ def main():
     text = render_mission(data)
     print(text)
 
+class MissionValidator:
+    def __init__(self, mission_path: Path | None = None):
+        if mission_path is None:
+            script_dir = Path(__file__).resolve().parent
+            ui_dir = script_dir.parent.parent
+            mission_path = ui_dir / "Mission.yaml"
+
+        self.mission_path = Path(mission_path)
+
+    def load(self) -> dict:
+        if not self.mission_path.exists():
+            return {}
+
+        data = load_yaml_simple(self.mission_path) or {}
+
+        if isinstance(data, dict) and "Mission" in data and isinstance(data["Mission"], dict):
+            data = data["Mission"]
+
+        if isinstance(data, dict) and "phase" not in data and "current_phase" in data:
+            data["phase"] = data.get("current_phase")
+
+        return data
+
+    def render(self) -> str:
+        return render_mission(self.load())
+
+    def validate(self) -> dict:
+        exists = self.mission_path.exists()
+        data = self.load() if exists else {}
+
+        return {
+            "ok": exists and bool(data),
+            "mission_path": str(self.mission_path),
+            "exists": exists,
+            "recognized": bool(data),
+            "rendered": render_mission(data) if data else "",
+        }
 
 if __name__ == "__main__":
     main()
+

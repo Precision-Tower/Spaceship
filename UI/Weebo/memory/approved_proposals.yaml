@@ -1,0 +1,23 @@
+approved_proposals:
+  - id: WEBO-DECISION-MEMORY-001
+    title: Add decision memory to UI/Weebo
+    date: 2026-06-04
+    rationale: Surface prior approved and rejected decisions before new proposals so Weebo reduces repeated architecture work.
+    affected_files:
+      - UI/Weebo/memory/approved_proposals.yaml
+      - UI/Weebo/memory/rejected_proposals.yaml
+      - UI/Weebo/memory/decision_memory.py
+      - UI/Weebo/weebo.py
+    status: APPROVED
+
+  - id: WEBO-PROPOSAL-PRESSURE-TESTER-001
+    title: Proposal pressure tester belongs in supervised decision checks
+    date: 2026-06-04
+    rationale: Repeated proposal pressure should be handled by checking existing files, authority boundaries, and prior decisions before suggesting new architecture.
+    affected_files:
+      - UI/Weebo/memory/approved_proposals.yaml
+      - UI/Weebo/memory/rejected_proposals.yaml
+      - UI/Weebo/memory/decision_memory.py
+      - UI/Weebo/weebo.py
+    status: APPROVED
+

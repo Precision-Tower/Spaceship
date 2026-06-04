@@ -1,0 +1,1 @@
+# Package for Gear-specific agent models and logic.

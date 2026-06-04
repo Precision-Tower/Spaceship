@@ -1,0 +1,75 @@
+core_memory:
+  - Models/Shared/CE-OSv1.yaml
+  - Models/Shared/Contract.yaml
+  - Models/Shared/Directory.yaml
+  - Models/Shared/Seth.txt
+  - UI/Mission.yaml
+  - UI/BOUNDARY.md
+
+gear_memory:
+  - Models/Gear/GearShell.yaml
+  - Models/Gear/AuthoritySurface.yaml
+  - Models/Gear/Codex.yaml
+  - Models/Gear/v1/Directory.yaml
+  - Models/Gear/v1/GearShell.yaml
+  - Models/Gear/v1/Interrogate.yaml
+  - Models/Gear/v1/Runtime.yaml
+  - Models/Gear/v1/Observation.yaml
+  - Models/Gear/v1/GodotOps.yaml
+  - Models/Gear/v1/SurfaceMap.yaml
+  - Models/Gear/v2/Dashboard.yaml
+  - Models/Gear/v2/Spine.yaml
+
+godot_memory:
+  - Models/Godot/MANIFEST.yaml
+  - Models/Godot/GodotShell.yaml
+  - Models/Godot/Godot.yaml
+  - Models/Godot/SceneTopology.yaml
+  - Models/Godot/RuntimeBus.yaml
+  - Models/Godot/FloatingBoxLoop.yaml
+  - Models/Godot/RuntimeResultRecord_001.yaml
+
+grant_boundary_memory:
+  - Models/Grant/GrantShell.yaml
+  - Models/Grant/AuthoritySurface.yaml
+  - Models/Grant/v1/Evidence.yaml
+  - Models/Grant/v1/Hindsight.yaml
+  - Models/Grant/v1/GrantBridge.yaml
+
+active_ui_runtime:
+  - UI/screen/scripts/Main.gd
+  - UI/screen/scripts/CommandRouter.gd
+  - UI/screen/scripts/MissionReader.gd
+  - UI/screen/scripts/OperatorObserver.gd
+  - UI/screen/scripts/layout/Dashboard_Layout.gd
+  - UI/screen/scripts/runtime/CliBridge.gd
+  - UI/screen/scripts/runtime/SurfaceRender.gd
+  - UI/screen/scripts/widgets/UnifiedTreeContract.md
+
+active_weebo_runtime:
+  - UI/scripts/agents/core/memory.py
+  - UI/scripts/agents/core/engine.py
+  - UI/scripts/agents/core/bridge.py
+  - UI/scripts/agents/core/paths.py
+  - UI/scripts/agents/core/persona.py
+  - UI/scripts/agents/core/tooling.py
+  - UI/scripts/agents/reasoners/gguf.py
+  - UI/scripts/agents/listeners/controller.py
+  - UI/scripts/agents/weebo_console.py
+
+legacy_or_review_before_use:
+  - UI/scripts/runtime/model_runner.py
+  - UI/scripts/runtime/phi_engine.py
+  - UI/scripts/runtime/serve.py
+  - UI/scripts/runtime/client.py
+  - UI/scripts/runtime/_inference_map.md
+  - UI/scripts/patches/latest_agent_proposal.txt
+  - UI/scripts/patches/repo_file_inventory.txt
+  - UI/scripts/patches/memory_candidate_inventory.txt
+
+blocked_from_memory_ingestion:
+  - local/
+  - .git/
+  - .godot/
+  - __pycache__/
+  - UI/scripts/agents/persistence/sessions/

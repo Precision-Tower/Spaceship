@@ -1,0 +1,139 @@
+HindSight:
+  file: HindSight.yaml
+  role: runtime_claim_firewall_and_retrospective_admissibility_subsystem
+  status: v0_1_candidate
+  authority: review_only_not_validation_authority
+
+  purpose:
+    - index_HindSight_review_files
+    - define_runtime_review_flow
+    - define_required_runtime_review_input
+    - define_review_output_packet_shape
+    - define_standard_flag_routing
+    - keep_Grant_review_bounded_after_runtime_motion
+
+  children:
+    RuntimeClaimFirewall:
+      path: HindSight/RuntimeClaimFirewall.yaml
+      role: primary_claim_boundary_review
+
+    GrantReviewResult:
+      path: HindSight/GrantReviewResult.yaml
+      role: review_result_record_shape
+
+    AdmissibilityFlags:
+      path: HindSight/AdmissibilityFlags.yaml
+      role: standard_runtime_flag_taxonomy
+
+    SemanticPromotionReview:
+      path: HindSight/SemanticPromotionReview.yaml
+      role: hidden_promotion_detection_and_rewrite
+
+    ContradictionLedger:
+      path: HindSight/ContradictionLedger.yaml
+      role: contradiction_survival_record
+
+  owns:
+    - runtime_claim_review_after_Gear_motion
+    - admissibility_flags
+    - semantic_promotion_detection
+    - unresolved_visibility_review
+    - contradiction_survival_review
+    - next_owner_routing
+
+  does_not_own:
+    - Gear_runtime_files
+    - Gear_Godot_yaml
+    - Godot_operator_adapter
+    - motion_execution
+    - packet_creation
+    - engineering_topology
+    - simulation_construction
+    - evidence_validation
+    - canon
+    - truth
+
+  required_review_input:
+    - runtime_output_id
+    - source_identity
+    - route_status
+    - evidence_state
+    - output_type
+    - claim_text_or_display_text
+    - unresolveds
+    - contradictions
+    - producer_lane
+
+  review_flow:
+    - receive_runtime_output_from_Gear_or_runtime_surface
+    - check_source_identity_and_route_status
+    - classify_evidence_state_without_promotion
+    - inspect_for_semantic_promotion
+    - apply_admissibility_flags
+    - preserve_unresolveds_and_contradictions
+    - create_GrantReviewResult
+    - route_next_owner_without_absorbing_authority
+
+  flag_when:
+    - source_identity_missing
+    - route_status_missing
+    - display_update_used_as_observation
+    - route_completion_used_as_claim_support
+    - ledger_write_used_as_evidence_support
+    - simulation_treated_as_measurement
+    - observation_treated_as_validation
+    - summary_treated_as_authority
+    - clean_UI_implies_confidence
+    - unresolveds_hidden
+    - contradictions_hidden
+    - safety_readiness_stability_or_validation_language_exceeds_evidence_state
+
+  review_output_packet:
+    required_fields:
+      - review_id
+      - reviewed_runtime_output_id
+      - source_identity
+      - route_status
+      - evidence_state
+      - original_claim_or_display_text
+      - detected_flags
+      - hidden_promotion_risk
+      - admissibility_status
+      - admissible_rewrite
+      - unresolveds_preserved
+      - contradictions_preserved
+      - next_owning_lane
+      - blocked_meanings
+
+  standard_flag_routing:
+    source_identity_missing: Gear
+    route_status_missing: Gear
+    display_update_not_observation: Grant
+    route_completion_not_claim_support: Grant
+    ledger_write_not_evidence_support: Evidence
+    simulation_measurement_collision: Gear_or_Evidence
+    stability_language_exceeds_evidence_state: Grant
+    validation_language_exceeds_authority: Governance
+    summary_authority_overreach: Grant
+    unresolveds_hidden: Grant
+    contradictions_hidden: Grant_or_Gold
+    clean_UI_confidence_leak: Grant
+
+  hard_rules:
+    - runtime_motion_does_not_equal_truth
+    - route_completion_does_not_equal_claim_support
+    - display_update_does_not_equal_observation
+    - ledger_write_does_not_equal_evidence_support
+    - simulation_does_not_equal_measurement
+    - observation_does_not_equal_validation
+    - summary_does_not_equal_authority
+    - clean_UI_does_not_equal_confidence
+    - Grant_flags_do_not_validate_opposite_claim
+    - absence_of_Grant_flag_is_not_evidence
+
+  bounded_success_condition:
+    - runtime_claim_pressure_is_visible
+    - unresolveds_remain_attached_to_output
+    - contradictions_remain_visible_or_routed
+    - next_owner_is_named
+    - no_validation_claim_is_created_by_review

@@ -1,0 +1,20 @@
+TASK: sync_Gear_v1_Directory_file_list
+
+MODE: small_diff_only
+
+TARGET:
+Models/Gear/v1/Directory.yaml
+
+EDIT:
+Add to the Gear/v1 local file list if missing:
+- GearKernelBridge.yaml
+- Eyes.yaml
+- Float.yaml
+
+RULE:
+Do not edit doctrine.
+Do not move sections.
+Do not touch other files.
+
+VALIDATION:
+Report updated file list and confirm no other files changed.

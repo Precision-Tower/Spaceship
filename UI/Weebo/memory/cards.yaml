@@ -1,0 +1,150 @@
+- id: ce_os
+  source: Models/Shared/CE-OSv1.yaml
+  role: Active CE-OS repository snapshot and lane-preserving causal memory.
+  owns:
+    - authority lane visibility
+    - causal accounting order
+    - validation boundary reminders
+    - prohibited claim boundaries
+    - unresolved and contradiction visibility
+  does_not_own:
+    - final human acceptance
+    - operational validation
+    - runtime readiness
+    - CE-OS source mutation by Weebo
+    - replacement of original source authority
+  keywords:
+    - CE-OS
+    - authority lanes
+    - causal accounting
+    - validation boundaries
+    - prohibited claims
+    - unresolveds
+    - contradictions
+  summary: >
+    Source-grounded summary of the active CE-OS snapshot. This card tells Weebo
+    that CE-OSv1 preserves lane-scoped authority, causal accounting discipline,
+    global prohibited claims, validation limits, unresolveds, and contradiction
+    registers. The card is navigation memory only; if this summary conflicts
+    with Models/Shared/CE-OSv1.yaml, the source file remains authoritative.
+
+- id: contract
+  source: Models/Shared/Contract.yaml
+  role: Operational relationship and authority-boundary contract.
+  owns:
+    - Seth final human authority
+    - approval boundaries
+    - runtime authority limits
+    - model role limits
+    - prohibited promotions from summary, display, runtime, or proposal into truth
+  does_not_own:
+    - implementation changes
+    - CE-OS source mutation by Weebo
+    - validation claims
+    - autonomous edit authority
+    - Jarvis construction authority
+  keywords:
+    - contract
+    - Seth approval
+    - human authority
+    - runtime boundary
+    - model limits
+    - proposal is not patch
+    - display is not evidence
+  summary: >
+    Source-grounded summary of the shared contract. This card tells Weebo that
+    Seth owns final acceptance, irreversible decisions, priority resolution, and
+    canon promotion. Models may observe, draft, simulate, organize, or propose
+    within their lanes, but runtime display, clean UI, route success, and proposal
+    text do not become validation or evidence. The card is summary only; if it
+    conflicts with Models/Shared/Contract.yaml, the source file remains
+    authoritative.
+
+- id: directory
+  source: UI/Weebo/memory/SpaceshipDirectory.yaml
+  role: Curated Weebo map of repository topology and supervised memory scope.
+  owns:
+    - repository topology hints for Weebo
+    - active system pointers
+    - memory lane pointers
+    - blocked and careful path reminders
+    - current Weebo target scope
+  does_not_own:
+    - source validation
+    - CE-OS authority
+    - runtime behavior
+    - source replacement
+    - hidden authority promotion
+  keywords:
+    - directory
+    - topology
+    - active systems
+    - memory lanes
+    - blocked paths
+    - current targets
+    - repository map
+  summary: >
+    Source-grounded summary of Weebo's curated repository map. This card tells
+    Weebo where the active systems, memory lanes, current Weebo files, and
+    blocked or careful paths are. It helps Weebo answer what already exists and
+    which files matter before proposing work. The card is a summary only; if it
+    conflicts with UI/Weebo/memory/SpaceshipDirectory.yaml, the source file
+    remains authoritative.
+
+- id: approved
+  source: UI/Weebo/memory/approved_proposals.yaml
+  role: Approved decision memory for continuity and implementation history.
+  owns:
+    - accepted decisions
+    - project continuity hints
+    - implementation history pointers
+    - prior approval reminders
+  does_not_own:
+    - new approval authority
+    - CE-OS source authority
+    - automatic implementation
+    - validation claims
+    - rejection records
+  keywords:
+    - approved
+    - accepted decisions
+    - continuity
+    - implementation history
+    - prior approval
+    - decisions
+  summary: >
+    Source-grounded summary of approved proposal memory. This card tells Weebo
+    to check accepted decisions before inventing fresh architecture, so previous
+    approved work remains visible and repeated implementation churn is reduced.
+    The card is summary only; if it conflicts with
+    UI/Weebo/memory/approved_proposals.yaml, the source file remains
+    authoritative.
+
+- id: rejected
+  source: UI/Weebo/memory/rejected_proposals.yaml
+  role: Rejected decision memory for dead-path and anti-loop protection.
+  owns:
+    - rejected directions
+    - known dead paths
+    - anti-loop reminders
+    - blocked proposal memory
+  does_not_own:
+    - approved decisions
+    - new rejection authority
+    - CE-OS source authority
+    - autonomous prevention beyond reporting
+    - final human decision-making
+  keywords:
+    - rejected
+    - dead paths
+    - anti-loop
+    - Jarvis not yet
+    - autonomous edits blocked
+    - model training blocked
+    - decisions
+  summary: >
+    Source-grounded summary of rejected proposal memory. This card tells Weebo
+    to surface rejected directions such as premature Jarvis work, autonomous
+    edits, and model training before suggesting related work again. The card is
+    summary only; if it conflicts with UI/Weebo/memory/rejected_proposals.yaml,
+    the source file remains authoritative.

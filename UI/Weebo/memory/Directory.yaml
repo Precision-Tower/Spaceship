@@ -1,0 +1,149 @@
+SpaceshipDirectory:
+  file: UI/Weebo/memory/SpaceshipDirectory.yaml
+  role: curated_repository_memory_map_for_Weebo
+  status: v0_1_candidate
+  authority: navigation_only_not_validation
+  canon: false
+
+  purpose:
+    - help_Weebo_understand_existing_repository_structure
+    - prevent_rebuilding_existing_work
+    - identify_active_paths_before_proposing_new_work
+    - preserve_boundary_between_memory_map_and_source_authority
+
+  prime_rule:
+    - this_directory_points_to_sources_it_does_not_replace_them
+
+  root:
+    path: C:/Users/Freed/1/Spaceship
+
+  primary_memory_sources:
+    ce_os_kernel:
+      path: Models/Shared/CE-OSv1.yaml
+      role: compressed_active_CE_OS_snapshot
+      use_for:
+        - authority_lanes
+        - causal_accounting_rules
+        - prohibited_claims
+        - unresolveds
+        - validation_boundaries
+
+    shared_directory:
+      path: Models/Shared/Directory.yaml
+      role: existing_shared_repository_navigation_authority
+      use_for:
+        - shared_topology
+        - model_lanes
+        - active_vs_archive_rules
+
+    contract:
+      path: Models/Shared/Contract.yaml
+      role: authority_and_boundary_contract
+      use_for:
+        - human_authority
+        - runtime_authority
+        - model_limits
+        - no_false_validation
+
+  active_systems:
+    weebo_current_runtime:
+      path: UI/scripts/agents/
+      role: existing_local_model_agent_runtime
+      important_files:
+        - UI/scripts/agents/core/engine.py
+        - UI/scripts/agents/core/memory.py
+        - UI/scripts/agents/core/bridge.py
+        - UI/scripts/agents/core/paths.py
+        - UI/scripts/agents/reasoners/gguf.py
+        - UI/scripts/agents/weebo_console.py
+
+    weebo_new_memory_seed:
+      path: UI/Weebo/
+      role: clean_supervised_memory_and_proposal_architecture
+      status: under_construction
+      important_files:
+        - UI/Weebo/memory/memory_sources.yaml
+        - UI/Weebo/memory/ceos_memory.py
+        - UI/Weebo/weebo.py
+
+    godot_dashboard:
+      path: UI/
+      role: operator_dashboard_and_future_Jarvis_surface
+      important_files:
+        - UI/project.godot
+        - UI/screen/scenes/Main.tscn
+        - UI/screen/scripts/Main.gd
+        - UI/screen/scripts/CommandRouter.gd
+        - UI/screen/scripts/MissionReader.gd
+        - UI/screen/scripts/OperatorObserver.gd
+        - UI/screen/scripts/runtime/CliBridge.gd
+        - UI/screen/scripts/runtime/SurfaceRender.gd
+
+  model_memory_lanes:
+    shared:
+      path: Models/Shared/
+      role: common_authority_and_context
+      preload_priority: highest
+
+    gear:
+      path: Models/Gear/
+      role: engineering_architecture_and_runtime_reasoning
+      preload_priority: high
+
+    godot:
+      path: Models/Godot/
+      role: Godot_runtime_topology_and_seed_scene_memory
+      preload_priority: medium_high
+
+    grant:
+      path: Models/Grant/
+      role: governance_claim_firewall_and_evidence_boundary
+      preload_priority: medium
+
+    cali:
+      path: Models/Cali/
+      role: continuity_and_context_stabilization
+      preload_priority: low_currently
+
+    elrich:
+      path: Models/Elrich/
+      role: external_surface_and_presentation
+      preload_priority: low_currently
+
+  blocked_or_careful_paths:
+    local:
+      path: local/
+      rule: contains_models_and_binaries_do_not_ingest
+
+    legacy_runtime:
+      path: UI/scripts/runtime/
+      rule: review_before_use_some_paths_are_legacy_or_replaced
+
+    generated_cache:
+      paths:
+        - .git/
+        - .godot/
+        - __pycache__/
+      rule: never_memory_ingest
+
+  build_direction:
+    weebo:
+      role: supervised_repository_observer_and_proposal_worker
+      allowed:
+        - observe
+        - summarize
+        - check_existing_memory
+        - propose
+        - explain_uncertainty
+      blocked:
+        - autonomous_repo_edits
+        - validation_claims
+        - direct_mutation_without_operator_approval
+
+    jarvis:
+      role: future_Godot_CE_OS_operating_cockpit
+      depends_on:
+        - stable_Weebo_memory
+        - proposal_contracts
+        - approval_boundary
+        - Godot_runtime_surface

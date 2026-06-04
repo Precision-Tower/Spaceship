@@ -1,0 +1,72 @@
+RuntimeBus:
+  file: Models/Godot/v1/RuntimeBus.yaml
+  role: Godot_event_and_packet_routing_surface
+  status: v1_package_candidate
+  authority: runtime_signal_and_route_visibility_only_not_evidence
+
+  purpose:
+    - define_minimum_runtime_event_bus_pattern
+    - preserve_event_route_visibility
+    - separate_signal_fired_from_route_completed
+    - carry_observation_packet_references_without_promoting_claims
+    - expose failed dropped or mutated route hops
+
+  owns:
+    - event_names
+    - signal_route_patterns
+    - packet_reference_flow
+    - route_attempt_visibility
+    - runtime_failure_surface_labels
+
+  does_not_own:
+    - observation_truth
+    - evidence_support
+    - validation
+    - governance_review
+    - physics_truth
+    - operational_readiness
+
+  core_rule: Signal_fired_does_not_equal_route_completed
+
+  event_types:
+    - runtime_event_started
+    - runtime_event_failed
+    - observation_packet_created
+    - route_attempt_started
+    - route_attempt_completed
+    - route_attempt_failed
+    - display_updated
+    - warning_surface_updated
+    - lineage_loss_detected
+
+  required_fields_for_route_attempt:
+    - route_attempt_id
+    - source_event_id
+    - source_surface
+    - destination_surface
+    - packet_id_if_any
+    - fields_sent
+    - fields_received
+    - dropped_fields
+    - transformed_fields
+    - route_status
+    - unresolveds_carried
+    - contradictions_carried
+    - prohibited_promotions_blocked
+
+  route_status_allowed:
+    - draft
+    - started
+    - signal_emitted
+    - packet_created
+    - received
+    - display_updated_only
+    - failed
+    - completed_without_claim_support
+
+  prohibited_promotions:
+    - signal_emitted_equals_route_completed
+    - packet_created_equals_evidence_record
+    - display_updated_equals_observed_truth
+    - completed_route_equals_claim_support
+    - no_warning_equals_safe

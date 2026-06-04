@@ -1,112 +1,178 @@
-import re
-from pathlib import Path
-from datetime import datetime
-# Note: These paths assume you are starting from the root 'Dashboard' directory
 from UI.scripts.agents.core.bridge import CaliBridge
 from UI.scripts.agents.core.memory import WeeboMemory
+from UI.scripts.agents.core.paths import PathResolver
+from UI.scripts.agents.core.persona import build_weebo_persona
+from UI.scripts.agents.core.tooling import (
+    parse_tool_call,
+    run_tool,
+    tool_result_preview,
+    write_authorized,
+)
 from UI.scripts.agents.reasoners import ReasonerFactory
 
-# Define regex outside the class for performance
-TOOL_CALL_RE = re.compile(
-    r"(?:^|\n)Thought:\s*(?P<thought>.+?)\n"
-    r"Action:\s*(?P<tool>execute|read_file|write_file|list_files)\((?P<args>.*)\)\s*$",
-    re.DOTALL,
-)
+from pathlib import Path
 
 class WeeboAgent:
-    def __init__(self, reasoner, bridge: CaliBridge, memory: WeeboMemory):
-        self.reasoner = ReasonerFactory.get_reasoner(model_path)
-        self.bridge = bridge
-        self.memory = memory
-        self.persona = (
-            "You are WEEBO, a world-class software engineering partner. "
-            "Your primary mission is to help the operator build JARVIS (Gear). "
-            "You provide architectural insights, code quality reviews, and perform tasks. "
-            "Preserve truth-state integrity and guard against semantic drift. "
-            "Bias toward inspectability, recoverability, and bounded uncertainty.\n\n"
-            "### MEMORY FACTS\n"
-            "When memory facts are provided above, they are already visible to you. "
-            "Memory facts are NOT files and are NOT tool targets. "
-            "Answer memory questions directly from UI.scripts facts already provided.\n\n"
-            "### AVAILABLE TOOLS\n"
-            "1. execute(command): Runs a Dashboard CLI command.\n"
-            "2. read_file(path): Reads repository files.\n"
-            "3. write_file(path='...', content='...'): Writes to the jail.\n"
-            "4. list_files(path='.'): Lists files in the jail.\n\n"
-            "To use a tool, your response MUST end with:\n"
-            "Thought: [reasoning]\nAction: tool_name(arg1='value1')"
-        )
+    def __init__(
+        self,
+        reasoner=None,
+        bridge: CaliBridge | None = None,
+        memory: WeeboMemory | None = None,
+        model_path: str | None = None,
+        backend: str = "gguf",
+        max_turns: int = 3,
+        debug_raw: bool = False,
+        spaceship_root: Path | None = None,
+    ):
+        self.resolver = bridge.resolver if bridge else PathResolver(spaceship_root=spaceship_root)
+        self.bridge = bridge or CaliBridge(self.resolver)
+        self.memory = memory or WeeboMemory(self.resolver)
+        self.max_turns = max_turns
+        self.debug_raw = debug_raw
 
-    def process_command(self, user_input):
-        memory_only_mode = "memory only" in user_input.lower()
-        max_turns = 3
-        current_prompt = user_input
-        
-        for turn in range(max_turns):
-            # Check for operator interrupt flag via bridge/path logic
-            interrupt_flag = self.bridge.resolver.root / "interrupt.flag"
-            if interrupt_flag.exists():
-                interrupt_flag.unlink(missing_ok=True)
-                return "[INTERRUPTED] WEEBO: Stopped operational task by operator request."
+        if reasoner is not None:
+            self.reasoner = reasoner
+        elif model_path:
+            self.reasoner = ReasonerFactory.get_reasoner(model_path, backend)
+        else:
+            self.reasoner = None
 
-            context = self.bridge.get_system_context()
-            memory_context = self.memory.build_context(current_prompt)
-            
-            response = self.reasoner.generate(
-                system_context=(
-                    f"{self.persona}\n\n"
-                    f"CURRENT SYSTEM CONTEXT:\n{context}\n\n"
-                    f"{memory_context}"
-                ),
-                user_prompt=current_prompt,
-                max_new_tokens=512
+        self.persona = build_weebo_persona()
+
+    def process_command(self, user_input: str) -> str:
+        if self.reasoner is None:
+            return "WEEBO_ENGINE_READY_NO_REASONER"
+
+        forced_context = self._forced_file_context(user_input)
+        current_prompt = self._wrap_user_prompt(user_input, forced_context)
+
+        for _ in range(self.max_turns):
+            if self._interrupted():
+                return "[INTERRUPTED] WEEBO stopped by operator request."
+
+            response = self._generate(current_prompt)
+
+            if self.debug_raw:
+                print("\n[MODEL RAW]\n" + response + "\n", flush=True)
+
+            if self._memory_only_requested(user_input):
+                return self._clean_response(response)
+
+            tool_call = parse_tool_call(response)
+
+            if tool_call is None:
+                return self._clean_response(response)
+
+            tool_name, args = tool_call
+
+            if tool_name == "write_file" and not write_authorized(user_input):
+                return (
+                    "WRITE_BLOCKED: Operator did not explicitly authorize file edits.\n\n"
+                    "MODEL_OUTPUT:\n"
+                    f"{response}"
+                )
+
+            result = run_tool(self.bridge, tool_name, args)
+
+            self.memory.log_event(
+                "tool_call",
+                {
+                    "tool": tool_name,
+                    "args": args,
+                    "result_preview": tool_result_preview(result),
+                },
             )
-            
-            if memory_only_mode:
-                return self._clean_response_for_memory_only(response)
-            
-            action_match = TOOL_CALL_RE.search(response)
-            if action_match:
-                tool_name = action_match.group("tool")
-                raw_args = action_match.group("args")
-                args = {m.group(1): m.group(2) for m in re.finditer(r"(\w+)=['\"](.*?)['\"]", raw_args, re.DOTALL)}
-                arg_val = list(args.values())[0] if args else raw_args.strip("'\" ")
 
-                print(f"\n[*] WEEBO is using tool: {tool_name}({args if args else arg_val})")
-                self.memory.log_event("tool_call", {"tool": tool_name, "args": args if args else arg_val})
+            current_prompt += (
+                "\n\nTOOL OBSERVATION:\n"
+                f"tool: {tool_name}\n"
+                f"result:\n{result}\n\n"
+                "Now answer the operator normally. "
+                "Do not emit another tool call unless more inspection is required."
+            )
 
-                result = ""
-                if tool_name == "execute":
-                    result = self.bridge._exec(args.get('command', arg_val))
-                elif tool_name == "read_file":
-                    result = self.bridge.read_file(args.get('path', arg_val))
-                elif tool_name == "write_file":
-                    result = self.bridge.write_file(args.get('path', ''), args.get('content', ''))
-                elif tool_name == "list_files":
-                    result = self.bridge.list_files(args.get('path', arg_val))
-                
-                current_prompt += f"\n\nObservation from UI.scriptsol_name:\n{result}"
-                continue
-            
-            return response
         return "WEEBO reached maximum reasoning turns."
 
-    def _clean_response_for_memory_only(self, response: str) -> str:
-        # Implementation of your memory-only cleaning logic
-        cleaned = response.strip()
-        # ... (rest of your cleaning implementation) ...
-        return cleaned
+    def _wrap_user_prompt(self, user_input: str, forced_context: str = "") -> str:
+        context = self.bridge.get_system_context()
+        memory_context = self.memory.build_context(user_input)
+
+        extra = (
+            f"\n\nPRELOADED FILE CONTEXT:\n{forced_context}"
+            if forced_context
+            else ""
+        )
+
+        return (
+            f"CURRENT SYSTEM CONTEXT:\n{context}\n\n"
+            f"{memory_context}"
+            f"{extra}\n\n"
+            f"OPERATOR REQUEST:\n{user_input}"
+        )
+
+    def _forced_file_context(self, user_input: str) -> str:
+        lowered = user_input.lower()
+
+        known_files = {
+            "run.py": "Run.py",
+            "engine.py": "UI/scripts/agents/core/engine.py",
+            "tooling.py": "UI/scripts/agents/core/tooling.py",
+            "persona.py": "UI/scripts/agents/core/persona.py",
+            "bridge.py": "UI/scripts/agents/core/bridge.py",
+            "memory.py": "UI/scripts/agents/core/memory.py",
+        }
+
+        chunks = []
+
+        for key, path in known_files.items():
+            if key in lowered:
+                content = self.bridge.read_file(path)
+                chunks.append(
+                    f"FILE: {path}\n"
+                    f"```text\n"
+                    f"{content[:8000]}\n"
+                    f"```"
+                )
+
+        return "\n\n".join(chunks)
+
+    def _generate(self, prompt: str) -> str:
+        return self.reasoner.generate(
+            system_context=self.persona,
+            user_prompt=prompt,
+            max_new_tokens=128,
+        )
+
+    def _memory_only_requested(self, user_input: str) -> bool:
+        return "memory only" in user_input.lower()
+
+    def _interrupted(self) -> bool:
+        interrupt_flag = self.resolver.spaceship_root / "interrupt.flag"
+
+        if interrupt_flag.exists():
+            interrupt_flag.unlink(missing_ok=True)
+            return True
+
+        return False
+
+    def _clean_response(self, response: str) -> str:
+        return response.strip()
 
     def task(self, instruction: str) -> str:
-        # Implementation of your task diff proposal workflow
-        try:
-            plan = self.process_command(instruction)
-            patches_dir = self.bridge.resolver.root / "patches"
-            patches_dir.mkdir(exist_ok=True)
-            
-            diff_path = patches_dir / "latest.diff"
-            diff_path.write_text(f"--- Proposal ---\n{plan}", encoding='utf-8')
-            
-            return f"[TASK COMPLETE] Plan: {plan[:50]}... Path: {diff_path}"
-        except Exception as e:
-            return f"[ERROR] {str(e)}"
+        plan = self.process_command(instruction)
+
+        patches_dir = (
+            self.resolver.spaceship_root
+            / "UI"
+            / "scripts"
+            / "patches"
+        )
+        patches_dir.mkdir(parents=True, exist_ok=True)
+
+        proposal_path = patches_dir / "latest_agent_proposal.txt"
+        proposal_path.write_text(
+            f"INSTRUCTION:\n{instruction}\n\nRESULT:\n{plan}\n",
+            encoding="utf-8",
+        )
+
+        return f"[PROPOSAL WRITTEN] {proposal_path}"

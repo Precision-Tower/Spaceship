@@ -1,0 +1,68 @@
+SceneTopology:
+  file: Models/Godot/v1/SceneTopology.yaml
+  role: Godot_scene_tree_and_lifecycle_topology_map
+  status: v1_package_candidate
+  authority: scene_topology_guidance_only_not_runtime_confirmation
+
+  purpose:
+    - preserve_Godot_scene_tree_discipline
+    - track_parent_owner_lifecycle_boundaries
+    - prevent_scene_structure_from_becoming_cosmetic
+    - expose runtime topology mutations
+    - preserve reconstructability across scene reloads
+
+  core_rules:
+    - SceneTree_is_runtime_authority
+    - Parent_is_runtime_hierarchy
+    - Owner_is_persistence_authority
+    - Parent_is_not_Owner
+    - Resources_are_shared_by_reference
+    - children_ready_before_parent_ready
+    - parent_enters_tree_before_children
+    - runtime_created_nodes_require_owner_visibility_if_persistence_is_expected
+    - scene_topology_changes_are_behavior_changes
+
+  minimum_runtime_root_pattern:
+    RuntimeRoot:
+      role: central_runtime_coordination_node
+      children:
+        RuntimeBus:
+          role: event_and_packet_distribution
+        ObservationSurface:
+          role: runtime_observation_visibility
+        DisplaySurface:
+          role: visualization_only_surface
+        WarningSurface:
+          role: unresolved_and_contradiction_visibility
+        TestObjectRoot:
+          role: runtime_test_object_container
+
+  lifecycle_watchpoints:
+    _init:
+      risks:
+        - assuming_tree_context_exists
+        - required_constructor_parameters_breaking_PackedScene_instancing
+    _enter_tree:
+      risks:
+        - assuming_children_are_ready
+        - early_signal_connections_without_dependency_visibility
+    _ready:
+      risks:
+        - hidden_dependency_order
+        - missing_child_paths
+        - owner_parent_confusion
+    _process:
+      risks:
+        - visual_smoothness_hiding_route_failure
+        - frame_order_becoming_causal_order
+    _physics_process:
+      risks:
+        - Godot_physics_becoming_real_world_physics_claim
+        - bounded_motion_becoming_stability_claim
+
+  prohibited_promotions:
+    - scene_runs_equals_system_validated
+    - node_visible_equals_record_exists
+    - owner_set_equals_lineage_preserved
+    - no_error_equals_no_failure
+    - smooth_motion_equals_stability

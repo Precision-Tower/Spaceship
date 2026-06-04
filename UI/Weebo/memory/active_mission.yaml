@@ -1,0 +1,22 @@
+mission_id: WEBO-ACTIVE-MISSION-001
+current_goal: Build UI/Weebo as supervised repository memory and proposal layer before building Jarvis.
+active_phase: Weebo memory stabilization
+near_term_objective: Reduce repeated architecture work by surfacing existing files, boundaries, decisions, and current mission before proposing new work.
+blocked_work:
+  - Build Jarvis prematurely
+  - Wire autonomous edits
+  - Mutate CE-OS source files
+  - Train model weights
+allowed_work:
+  - Improve UI/Weebo memory
+  - Improve proposal checks
+  - Add curated memory cards
+  - Add inspection commands
+next_safe_step: Add source-grounded memory cards for CE-OSv1, SpaceshipDirectory, Contract, and proposal decisions.
+source_notes:
+  - Seth requested active mission memory for UI/Weebo.
+  - Weebo remains supervised memory and proposal support only.
+  - Do not build Jarvis yet.
+  - Do not modify CE-OS source files.
+  - Do not add autonomous edits.
+

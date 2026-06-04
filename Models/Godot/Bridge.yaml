@@ -1,0 +1,80 @@
+Bridge:
+  file: Models/Godot/v1/Bridge.yaml
+  role: Godot_lane_local_navigation_and_authority_bridge
+  status: v1_package_candidate
+  authority: local_routing_only_not_validation
+
+  purpose:
+    - replace_local_Directory_yaml_for_Godot_lane
+    - map_Godot_v1_files_without_becoming_shared_authority
+    - preserve_parentage_to_Gear
+    - keep_Godot_runtime_specialization_bounded
+    - expose_routes_to_Shared_Gear_Grant_and_Runtime_surfaces
+
+  rules:
+    - Bridge_maps_routes_it_does_not_govern_truth
+    - Bridge_does_not_duplicate_Shared_Directory_authority
+    - Bridge_does_not_promote_Godot_outputs_to_evidence
+    - local_navigation_does_not_equal_canon
+    - parent_reference_beats_duplicate_doctrine
+    - route_completion_does_not_equal_claim_support
+
+  local_lane:
+    path: Models/Godot/v1
+    files:
+      Godot.yaml:
+        role: Godot_runtime_and_scene_topology_lane
+        status: active_candidate
+      GodotShell.yaml:
+        role: Godot_runtime_adapter_shell
+        status: active_candidate
+      Bridge.yaml:
+        role: local_navigation_and_authority_bridge
+        status: active_candidate
+      RuntimeBus.yaml:
+        role: Godot_event_and_packet_routing_surface
+        status: active_candidate
+      SceneTopology.yaml:
+        role: Godot_scene_tree_and_lifecycle_topology_map
+        status: active_candidate
+
+  upstream:
+    Gear:
+      path: ../../Gear/v1
+      owns:
+        - causal_structure
+        - engineering_architecture
+        - GodotOps_doctrine
+        - runtime_observation_patterns
+    Shared:
+      path: ../../Shared
+      owns:
+        - CE_OS_kernel
+        - Directory_topology
+        - Contract_boundaries
+    Grant:
+      path: ../../Grant/v1
+      owns:
+        - claim_firewall
+        - admissibility_review
+        - prohibited_claim_pressure
+
+  routing:
+    runtime_packet_loop:
+      route_to: Godot/FloatingBoxLoop.yaml
+    Godot_runtime_behavior: ./Godot.yaml
+    Godot_shell_behavior: ./GodotShell.yaml
+    event_packet_routing: ./RuntimeBus.yaml
+    scene_tree_topology: ./SceneTopology.yaml
+    causal_architecture: ../../Gear/v1/GearShell.yaml
+    Godot_doctrine: ../../Gear/v1/GodotOps.yaml
+    observation_lineage: ../../Gear/v1/Observation.yaml
+    runtime_contact_pressure: ../../Gear/v1/Contact.yaml
+    claim_review: ../../Grant/v1/HindSight.yaml
+
+  prohibited_promotions:
+    - local_bridge_equals_shared_directory
+    - route_visibility_equals_authority
+    - Godot_lane_exists_equals_runtime_confirmed
+    - clean_file_layout_equals_clean_runtime
+    - Godot_output_equals_evidence

@@ -1,0 +1,27 @@
+status: "PROPOSED_ONLY"
+task: "Add memory card for patch packet planning"
+created_at: "2026-06-04T14:40:35Z"
+target_files:
+  - "UI/Weebo/memory/cards.yaml"
+rationale:
+  - "Run existing-file, authority-boundary, prior-decision, active-mission, memory-card, and inspection checks before planning edits."
+  - "Create a reviewable packet for Seth without mutating target files or applying patches."
+risks:
+  - "Packet is review-only; treating it as approval would violate Weebo boundaries."
+  - "Any listed CE-OS source path must remain read-only unless Seth explicitly approves a separate edit."
+  - "Any existing runtime/dashboard file listed in target_files requires Seth approval before editing."
+uncertainties:
+  - "Exact implementation remains undecided until Seth reviews the packet."
+  - "Target files are inferred from indexed memory matches and may need human pruning."
+  - "No patch contents have been generated or applied."
+proposed_changes:
+  - "Review the preflight output for existing source matches and authority limits."
+  - "If Seth approves, prepare a separate supervised implementation pass scoped to approved files."
+  - "Keep this packet in PROPOSED_ONLY status until explicit approval is recorded elsewhere."
+approval_required: true
+blocked_actions:
+  - "no_direct_edit"
+  - "no_apply"
+  - "no_commit"
+  - "no_CE_OS_source_mutation"
+  - "no_Jarvis_build"

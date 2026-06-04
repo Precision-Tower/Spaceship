@@ -1,0 +1,42 @@
+Models:
+  Cali:
+    CaliShell.yaml: null
+  Elrich:
+    ElrichShell.yaml: null
+  Gear:
+    Codex.yaml: null
+    GearShell.yaml: null
+    v1:
+      Directory.yaml: null
+      Eyes.yaml: null
+      Float.yaml: null
+      GearKernelBridge.yaml: null
+      GearSheet.yaml: null
+      GearShell.yaml: null
+      GodotOps.yaml: null
+      Interrogate.yaml: null
+      Observation.yaml: null
+      Simulate.yaml: null
+      SimulationBridge.yaml: null
+      VisionOps.yaml: null
+  Grant:
+    GrantSheet.yaml: null
+    GrantShell.yaml: null
+    v1:
+      Evidence.yaml: null
+      Eyes.yaml: null
+      Float.yaml: null
+      GearKernelBridge.yaml: null
+      Grant.v1.yaml: null
+      Instinct.yaml: null
+      Observation.yaml: null
+      Physics.yaml: null
+      Senses: null
+      Simulate.yaml: null
+      SimulationBridge.yaml: null
+      VisionOps.yaml: null
+  Shared:
+    CE-OSv1.yaml: null
+    Contract.yaml: null
+    Directory.yaml: null
+    Seth.txt: null

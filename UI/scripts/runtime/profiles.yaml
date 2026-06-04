@@ -1,0 +1,30 @@
+RuntimeProfiles:
+
+  active_profile: silver
+
+  profiles:
+
+    silver:
+      platform: windows
+      role: development_workstation
+
+      model_execution:
+        preferred_backend: gguf
+        cuda: false
+
+      paths:
+        qwen_1_5b_gguf: local/qwen2.5-coder-1.5b-instruct-q4_k_m.gguf
+        qwen3_8b: local/Qwen3-8b
+        phi3: local/Phi-3-mini-4k-instruct
+
+    black:
+      platform: ubuntu
+      role: cuda_inference_node
+
+      model_execution:
+        preferred_backend: gpu
+        cuda: true
+
+      paths:
+        qwen3_8b: local/Qwen3-8b
+        phi3: local/Phi-3-mini-4k-instruct

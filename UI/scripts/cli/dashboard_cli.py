@@ -1,7 +1,7 @@
 import sys
-from UI.scriptshlib import Path
+from pathlib import Path
 
-from UI.scriptsmands import apply_patch, cali_observe_directory, clear_latest_diff, create_packet, gemini_analyze, gemini_list_models, git_status, grant_review, grant_review_latest_diff, list_agents, list_packets, propose_diff, propose_directory_diff, runtime_state, scan_repo, test_all, update_state
+from UI.scripts.cli.commands import apply_patch, cali_observe_directory, clear_latest_diff, create_packet, gemini_analyze, gemini_list_models, git_status, grant_review, grant_review_latest_diff, list_agents, list_packets, propose_diff, propose_directory_diff, runtime_state, scan_repo, test_all, update_state
 
 CLI_DIR = Path(__file__).resolve().parent
 SCRIPTS_DIR = CLI_DIR.parent
@@ -9,10 +9,10 @@ if str(SCRIPTS_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPTS_DIR))
 
 import argparse
-from UI.scriptsmands import (
+from UI.scripts.cli.commands import (
     view_latest_diff,
 )
-from UI.scriptsistry import propose_task_packet
+from UI.scripts.cli.registry import propose_task_packet
 
 class CommandValidator:
     """
@@ -161,3 +161,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

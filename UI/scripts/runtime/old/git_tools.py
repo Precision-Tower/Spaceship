@@ -10,3 +10,4 @@ def run_git(root: Path, args: list[str]):
         shell=False,
     )
     return proc.returncode, proc.stdout, proc.stderr
+

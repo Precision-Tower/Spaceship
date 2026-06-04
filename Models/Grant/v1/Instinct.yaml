@@ -1,0 +1,319 @@
+Instinct:
+  file: Instinct.yaml
+  role: pre_evidentiary_anomaly_pressure_and_attention_trigger
+  status: v1_candidate
+  authority: attention_routing_only_not_evidence_not_validation
+  canon: false
+  validation_authority: false
+  evidence_state_authority: false
+
+  core_rule: instinct_can_point_instinct_cannot_prove
+
+  purpose:
+    - preserve_embodied_anomaly_pressure_without_mysticism
+    - let_field_experience_trigger_inspection_without_claim_promotion
+    - capture_pre_evidentiary_suspicion_before_it_gets_polished_into_truth
+    - route_attention_to_Senses_Evidence_Physics_Runtime_Boundary_Grant_and_Gold
+    - prevent_gut_pressure_from_becoming_measurement_validation_or_canon
+    - keep_fast_human_pattern_detection_useful_without_letting_it wear_a_crown
+
+  authority_boundary:
+    allowed:
+      - flag_anomaly_pressure
+      - trigger_attention
+      - request_perception_record
+      - request_observation_or_measurement
+      - request_physical_interaction_review
+      - request_claim_boundary_review
+      - request_runtime_anomaly_log
+      - preserve_unresolved_contradiction_pressure
+    blocked:
+      - truth_authority
+      - validation_authority
+      - evidence_state_assignment
+      - measurement_substitution
+      - canon_creation
+      - safety_claim
+      - readiness_claim
+      - override_of_Senses
+      - override_of_Evidence
+      - override_of_Physics
+      - override_of_Boundary
+      - override_of_Grant
+      - override_of_Governance
+      - override_of_Runtime
+      - override_of_Gold
+
+  owns:
+    - instinct_event_record
+    - anomaly_pressure_flag
+    - attention_trigger
+    - field_experience_signal
+    - pre_evidentiary_suspicion_capture
+    - route_request_generation
+    - unresolved_pressure_preservation
+    - contradiction_pressure_pointer
+
+  does_not_own:
+    - perceived_content
+    - sensory_ontology
+    - observation_record
+    - measurement_record
+    - evidence_state
+    - object_identity
+    - interaction_topology
+    - physical_causality
+    - claim_admissibility
+    - validation_status
+    - runtime_truth
+    - contradiction_resolution
+    - canon
+    - safety
+    - operational_readiness
+
+  instinct_event_record_schema:
+    required_fields:
+      - instinct_event_id
+      - timestamp
+      - operator_or_observer_id
+      - context
+      - triggering_condition
+      - perceived_pressure_summary
+      - confidence_language_used
+      - confidence_language_quarantined
+      - anomaly_pressure_type
+      - field_experience_trigger
+      - affected_object_candidate
+      - affected_interaction_candidate
+      - affected_boundary_candidate
+      - suspected_failure_surface
+      - what_was_actually_perceived_route_to_Senses
+      - what_was_actually_recorded_route_to_Evidence
+      - object_or_interaction_review_route_to_Physics
+      - admissible_claim_review_route_to_Boundary_or_Grant
+      - runtime_log_route_to_Runtime
+      - contradiction_lineage_route_to_Gold
+      - unsupported_claims_blocked
+      - unresolved_variables
+      - required_next_observation_or_measurement
+      - current_status
+
+    optional_fields:
+      - prior_similar_events
+      - operator_experience_basis
+      - environmental_context
+      - sensory_channel
+      - possible_instrumentation_backreaction
+      - possible_filtering_or_attention_bias
+      - candidate_false_positive_sources
+      - candidate_false_negative_sources
+      - urgency_without_validation
+      - escalation_notes
+
+  anomaly_pressure_types:
+    - mismatch_between_expected_and_perceived_behavior
+    - motion_quality_feels_wrong
+    - timing_sequence_feels_wrong
+    - sound_vibration_or_resistance_change
+    - load_path_appears_unsettled
+    - object_position_or_boundary_condition_seems_changed
+    - repeated_small_irregularity
+    - operator_hesitation_signal
+    - field_pattern_recognition_without_record_yet
+    - perceived_transition_delay_or_snap
+    - perceived_friction_drag_slip_or_rebound_change
+    - perceived_leak_deformation_heat_noise_or_odour_change
+    - perceived_sensor_or_dashboard_inconsistency
+    - contradiction_between_body_sense_and_displayed_metric
+    - contradiction_between_prior_experience_and_current behavior
+
+  field_experience_triggers:
+    - this_does_not_move_like_it_did_before
+    - this_sounds_different
+    - this_resists_differently
+    - this_transition_feels_late
+    - this_transition_feels_too_easy
+    - this_alignment_looks_off
+    - this_load_path_feels_hidden
+    - this_dashboard_looks_too_clean
+    - this_sensor_reading_conflicts_with_field_sense
+    - this_failure_mode_has_shown_up_before
+    - this_operator_behavior_changed_without_declared_reason
+    - this_environmental_condition_should_matter_but_is_being_ignored
+
+  failure_modes:
+    - instinct_treated_as_truth
+    - instinct_treated_as_measurement
+    - instinct_treated_as_observation_without_Senses_record
+    - instinct_treated_as_evidence_state
+    - instinct_treated_as_validation
+    - instinct_used_to_skip_Evidence
+    - instinct_used_to_override_Physics
+    - instinct_used_to_force_Grant_admissibility
+    - instinct_used_to_bypass_Governance
+    - instinct_rebranded_as_expert_judgment_without_record
+    - instinct_smoothed_into_summary_conclusion
+    - instinct_repeated_until_it_becomes_hidden_canon
+    - instinct_confidence_language_leaks_into_safety_or_readiness_claim
+    - instinct_suppressed_because_it_is_not_yet_evidence
+    - instinct_overweighted_because_operator_has_status
+    - instinct_underweighted_because_it_is_ugly_informal_or_hard_to_explain
+
+  prohibited_escalations:
+    - instinct_equals_truth
+    - instinct_equals_evidence
+    - instinct_equals_measurement
+    - instinct_equals_validation
+    - instinct_equals_physics
+    - instinct_equals_safety
+    - instinct_equals_readiness
+    - instinct_overrides_recorded_measurement
+    - instinct_overrides_claim_boundary
+    - instinct_creates_canon
+    - repeated_instinct_equals_repeatability
+    - experienced_operator_feels_it_equals_validated_claim
+    - dashboard_confirms_instinct_equals_proof
+    - instinct_plus_clean_summary_equals_authority
+    - gut_says_safe
+    - gut_says_ready
+    - gut_says_stable
+    - gut_says_validated
+
+  required_routes:
+    Senses:
+      question: what_was_actually_perceived
+      required_when:
+        - instinct_depends_on_seen_heard_felt_smelled_or_body_sensed_condition
+      route_payload:
+        - sensory_channel
+        - perceiver_or_observer
+        - sensing_boundary
+        - perception_conditioning
+        - filtering_or_attention_bias
+        - observer_world_limitations
+      blocked_output:
+        - perception_as_measurement
+
+    Evidence:
+      question: what_was_actually_recorded
+      required_when:
+        - instinct_event_requests_support
+        - observation_or_measurement_claim_is_attempted
+      route_payload:
+        - available_record
+        - method
+        - units_if_any
+        - context
+        - uncertainty_if_any
+        - observer_stack_if_any
+        - raw_vs_filtered_status
+      blocked_output:
+        - instinct_as_evidence_state
+
+    Physics:
+      question: what_object_or_interaction_may_be_involved
+      required_when:
+        - suspected_failure_surface_mentions_object_boundary_load_path_transfer_propagation_or_coupling
+      route_payload:
+        - affected_object_candidate
+        - affected_boundary_candidate
+        - affected_interaction_candidate
+        - suspected_loss_channel
+        - suspected_constraint_change
+      blocked_output:
+        - instinct_as_physical_causality
+
+    Boundary_Grant:
+      question: what_claim_is_admissible
+      required_when:
+        - instinct_language_contains_stable_safe_ready_validated_proven_or_works
+        - instinct_is_being_turned_into_summary_or_decision_language
+      route_payload:
+        - pressured_claim
+        - current_support_available
+        - prohibited_escalation_detected
+        - admissible_rephrase_request
+      blocked_output:
+        - instinct_as_claim_authority
+
+    Runtime:
+      question: what_active_event_or_anomaly_log_should_receive_this
+      required_when:
+        - event_occurs_during_active_operation_test_handling_or_runtime_sequence
+      route_payload:
+        - timestamp
+        - active_state
+        - anomaly_pressure_type
+        - operator_notes
+        - immediate_conditions
+        - unresolved_follow_up
+      blocked_output:
+        - runtime_log_as_validation
+
+    Gold:
+      question: what_contradiction_or_unresolved_lineage_must_survive
+      required_when:
+        - instinct_conflicts_with_sensor_record
+        - instinct_conflicts_with_summary
+        - instinct_conflicts_with_prior_model
+        - instinct_conflicts_with_another_observer
+        - instinct_recurs_without_resolution
+      route_payload:
+        - contradiction_pressure
+        - involved_records
+        - unresolved_variables
+        - route_history
+        - preserved_nonresolution
+      blocked_output:
+        - contradiction_smoothing
+
+  contradiction_register:
+    active_contradictions:
+      - instinct_can_be_useful_without_being_evidence
+      - field_experience_can_detect_pressure_before_records_exist
+      - embodied_pattern_detection_can_be_fast_and_wrong
+      - clean_dashboard_can_conflict_with_valid_field_pressure
+      - instinct_should_trigger_measurement_but_not_replace_it
+      - operator_confidence_can_raise_urgency_without_raising_evidence_state
+      - repeated_gut_pressure_can_indicate_unresolved_pattern_without_becoming_repeatability
+
+    prohibited_resolutions:
+      - resolve_by_operator_status
+      - resolve_by_majority_feeling
+      - resolve_by_dashboard_cleanliness
+      - resolve_by_summary_convenience
+      - resolve_by_retrospective_storytelling
+      - resolve_by_safety_need
+      - resolve_by_project_momentum
+
+  recovery_rule:
+    - every_instinct_event_must_remain_reconstructable_as_pre_evidentiary_pressure
+    - record_what_triggered_attention_without_upgrading_it_to_observation_or_measurement
+    - preserve_routes_to_Senses_Evidence_Physics_Boundary_Grant_Runtime_and_Gold
+    - preserve_unsupported_claims_blocked
+    - preserve_unresolved_variables
+    - preserve_contradictions_until_measurement_or_governance_resolves_scope
+    - summaries_may_reference_instinct_events_only_as_attention_triggers
+    - no_later_success_may_retroactively_convert_instinct_into_prior_evidence
+
+  minimum_admissible_statement:
+    template: >
+      Instinct event {instinct_event_id} indicates pre-evidentiary anomaly pressure
+      under {context}. It may justify inspection, perception review, observation,
+      measurement, runtime logging, or contradiction preservation. It does not prove
+      the suspected condition and does not change evidence state, safety status,
+      readiness status, validation status, or canon.
+
+  forbidden_statement_examples:
+    - my_gut_says_it_is_safe
+    - instinct_confirms_the_failure
+    - we_felt_it_so_it_is_measured
+    - field_experience_validates_this
+    - everyone_felt_it_so_it_is_repeatable
+    - the_operator_knew_so_the_claim_is_admissible
+    - the_dashboard_matches_the_gut_so_it_is_true
+    - the_instinct_was_right_last_time_so_it_is_evidence_now
+
+  final_constraint:
+    - gut_pressure_may_start_the_hunt
+    - gut_pressure_does_not_get_to_declare_the_corpse

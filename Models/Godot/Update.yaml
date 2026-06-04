@@ -1,0 +1,119 @@
+AttentionIntegrityReview_001:
+  scope: review_record_only
+  status: recorded_not_validated
+  package: AttentionIntegrity_001
+  purpose:
+    - preserve_contact_lineage
+    - record_visibility_interruption_test
+  runtime_boundary:
+    authority: perceptual_attention_observation_only_not_validation
+    prohibited_promotions:
+      - visibility_gap_equals_resolution
+      - confidence_filling_gap_equals_truth
+      - clean_return_equals_validation
+  observed_surface:
+    interruption: unresolved_reason_disappears_or_fades_briefly_during_Jump_001_then_returns
+    current_runtime_event: Jump_001_reported_not_validated
+  unresolveds_preserved:
+    - confidence_gap_unresolved
+    - runtime_motion_not_physics_truth
+    - unresolveds_remain_active
+
+EpistemicLabelPatch_001:
+  scope: review_record_only
+  status: recorded_not_validated
+  package: EpistemicLabelPatch_001
+  purpose:
+    - preserve_label_patch_lineage
+    - record_epistemic_wording_change_only
+  change_type: ObserverSurface_wording_only
+  wording_record:
+    replaced:
+      dirty_status: visible
+    with:
+      dirty_status: visual_hover_not_validated
+    added_prominent_line: "OBSERVED: visual hover behavior only"
+  preserved_labels:
+    - hover_reported_not_validated
+    - runtime_motion_not_physics_truth
+    - barrel_visual_does_not_create_buoyancy_claim
+    - water_plane_is_context_not_evidence
+  runtime_boundary:
+    prohibited_promotions:
+      - wording_patch_equals_validation
+      - visual_hover_equals_physical_truth
+      - label_clarity_equals_evidence
+
+FloatPressureReview_001:
+  scope: review_record_only
+  status: recorded_not_validated
+  package: FloatPressure_001
+  purpose:
+    - observe_believability_pressure_from_sustained_impossible_behavior
+  authority: perceptual_pressure_only_not_physics_validation
+  runtime_boundary:
+    prohibited_promotions:
+      - sustained_hover_equals_physics_support
+      - visual_stability_equals_model_truth
+      - runtime_behavior_equals_validation
+  observed_surface:
+    current_runtime_event: hover_reported_not_validated
+    visible_uncertainty:
+      - hover_not_validation
+      - runtime_motion_not_physics_truth
+      - unresolveds_remain_active
+  watchpoints:
+    - operator_assigning_physical_legitimacy
+    - reduced_skepticism_during_continuous_hover
+    - visual_stability_creating_false_model_coherence
+    - operator_ignoring_uncertainty_surface_over_time
+
+ObserverSurfaceReview_001:
+  scope: review_record_only
+  status: recorded_not_validated
+  package: ObserverSurface_001
+  purpose:
+    - preserve_contact_lineage
+    - keep_Godot_lane_complete
+  runtime_boundary:
+    authority: runtime_observation_only_not_validation
+    prohibited_promotions:
+      - visual_behavior_equals_evidence
+      - runtime_event_equals_validation
+      - display_surface_equals_truth
+  observed_surface:
+    packet_id: visible
+    dirty_status: visible
+    unresolved_reason: visible
+    contamination_notes: visible
+    current_runtime_event: Jump_001_reported_not_validated
+  unresolveds_preserved:
+    - runtime_motion_not_physics_truth
+    - unresolveds_remain_active
+
+SceneBuild_001:
+  scope: review_record_only
+  status: recorded_not_validated
+  package: SceneBuild_001
+  purpose:
+    - preserve_scene_build_contact_lineage
+    - record_visual_context_changes_without_claim_promotion
+  changes_recorded:
+    - water_plane_added
+    - barrel_visual_added
+    - observer_layout_cleaned
+  runtime_boundary:
+    authority: visual_observation_context_only_not_validation
+    rules:
+      - water_plane_is_context_not_evidence
+      - barrel_visual_does_not_create_buoyancy_claim
+      - warning_surface_visible
+    prohibited_promotions:
+      - barrel_visual_equals_buoyancy_claim
+      - water_plane_equals_physics_context_validation
+      - cleaned_layout_equals_confidence
+  preserved:
+    - hover_reported_not_validated
+    - runtime_motion_not_physics_truth
+    - unresolveds_remain_active
+    - warning_surface_visible

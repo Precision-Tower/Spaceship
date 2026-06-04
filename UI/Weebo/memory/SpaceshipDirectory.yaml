@@ -1,0 +1,234 @@
+SpaceshipDirectory:
+  file: UI/Weebo/memory/SpaceshipDirectory.yaml
+  role: curated_repository_memory_map_for_Weebo
+  status: v0_2_supervised_memory_seed
+  authority: navigation_only_not_validation
+  canon: false
+
+  purpose:
+    - help_Weebo_answer_what_already_exists
+    - identify_which_files_matter_before_new_work_is_proposed
+    - preserve_authority_boundaries_between_memory_runtime_and_source
+    - prevent_rebuilding_existing_work
+    - keep_CE_OS_source_files_read_only_from_Weebo
+
+  prime_rules:
+    - this_directory_points_to_sources_it_does_not_replace_them
+    - this_directory_is_not_validation_authority
+    - proposal_is_not_patch
+    - no_autonomous_edits
+    - do_not_build_Jarvis_yet
+
+  root:
+    path: C:/Users/Freed/1/Spaceship
+    portable_reference: repository_root
+
+  weebo_current_scope:
+    role: supervised_memory_and_proposal_layer
+    allowed_now:
+      - observe_repository_memory
+      - summarize_existing_surfaces
+      - identify_relevant_files
+      - report_authority_boundaries
+      - draft_proposals_for_Seth_review
+      - name_uncertainty_and_missing_sources
+    blocked_now:
+      - Jarvis_construction
+      - autonomous_repo_edits
+      - autonomous_patch_application
+      - CE_OS_source_file_mutation
+      - runtime_readiness_or_validation_claims
+      - hidden_authority_promotion
+
+  immediate_write_targets:
+    rule: current_build_work_is_limited_to_these_paths
+    files:
+      - UI/Weebo/memory/SpaceshipDirectory.yaml
+      - UI/Weebo/memory/cards.yaml
+      - UI/Weebo/memory/ceos_memory.py
+      - UI/Weebo/contracts/proposal_contract.yaml
+      - UI/Weebo/weebo.py
+
+  primary_memory_sources:
+    ce_os_kernel:
+      path: Models/Shared/CE-OSv1.yaml
+      role: compressed_active_CE_OS_snapshot
+      use_for:
+        - authority_lanes
+        - causal_accounting_rules
+        - prohibited_claims
+        - unresolveds
+        - validation_boundaries
+      weebo_mutation: blocked_read_only_source
+
+    shared_directory:
+      path: Models/Shared/Directory.yaml
+      role: existing_shared_repository_navigation_authority
+      use_for:
+        - shared_topology
+        - model_lanes
+        - active_vs_archive_rules
+        - human_navigation_limits
+      weebo_mutation: blocked_read_only_source
+
+    contract:
+      path: Models/Shared/Contract.yaml
+      role: authority_and_boundary_contract
+      use_for:
+        - human_authority
+        - runtime_authority
+        - model_limits
+        - no_false_validation
+      weebo_mutation: blocked_read_only_source
+
+    boundary:
+      path: UI/BOUNDARY.md
+      role: dashboard_and_runtime_claim_boundary
+      use_for:
+        - proposal_not_patch
+        - display_not_evidence
+        - viewed_diff_not_approved_diff
+      weebo_mutation: blocked_read_only_source
+
+    memory_source_index:
+      path: UI/Weebo/memory/memory_sources.yaml
+      role: read_list_for_memory_context
+      use_for:
+        - existing_file_inventory
+        - category_to_file_mapping
+        - blocked_ingestion_paths
+
+  active_systems:
+    existing_weebo_runtime:
+      path: UI/scripts/agents/
+      role: existing_local_model_agent_runtime
+      status: exists_before_new_Weebo_layer
+      important_files:
+        - UI/scripts/agents/core/engine.py
+        - UI/scripts/agents/core/memory.py
+        - UI/scripts/agents/core/bridge.py
+        - UI/scripts/agents/core/paths.py
+        - UI/scripts/agents/core/persona.py
+        - UI/scripts/agents/core/tooling.py
+        - UI/scripts/agents/reasoners/gguf.py
+        - UI/scripts/agents/listeners/controller.py
+        - UI/scripts/agents/weebo_console.py
+      weebo_mutation: requires_Seth_approval
+
+    supervised_weebo_layer:
+      path: UI/Weebo/
+      role: clean_supervised_memory_and_proposal_architecture
+      status: under_construction
+      important_files:
+        - UI/Weebo/memory/memory_sources.yaml
+        - UI/Weebo/memory/SpaceshipDirectory.yaml
+        - UI/Weebo/memory/cards.yaml
+        - UI/Weebo/memory/ceos_memory.py
+        - UI/Weebo/contracts/proposal_contract.yaml
+        - UI/Weebo/weebo.py
+      weebo_mutation: current_target_only
+
+    godot_dashboard:
+      path: UI/
+      role: operator_dashboard_and_future_Jarvis_surface
+      status: active_dashboard_foundation
+      important_files:
+        - UI/project.godot
+        - UI/Mission.yaml
+        - UI/BOUNDARY.md
+        - UI/screen/scenes/Main.tscn
+        - UI/screen/scripts/Main.gd
+        - UI/screen/scripts/CommandRouter.gd
+        - UI/screen/scripts/MissionReader.gd
+        - UI/screen/scripts/OperatorObserver.gd
+        - UI/screen/scripts/runtime/CliBridge.gd
+        - UI/screen/scripts/runtime/SurfaceRender.gd
+      weebo_mutation: requires_Seth_approval
+
+  model_memory_lanes:
+    shared:
+      path: Models/Shared/
+      role: common_authority_and_context
+      preload_priority: highest
+      weebo_mutation: blocked_read_only_source
+
+    gear:
+      path: Models/Gear/
+      role: engineering_architecture_and_runtime_reasoning
+      preload_priority: high
+      weebo_mutation: blocked_read_only_source
+
+    godot:
+      path: Models/Godot/
+      role: Godot_runtime_topology_and_seed_scene_memory
+      preload_priority: medium_high
+      weebo_mutation: blocked_read_only_source
+
+    grant:
+      path: Models/Grant/
+      role: governance_claim_firewall_and_evidence_boundary
+      preload_priority: medium
+      weebo_mutation: blocked_read_only_source
+
+    cali:
+      path: Models/Cali/
+      role: continuity_and_context_stabilization
+      preload_priority: low_currently
+      weebo_mutation: blocked_read_only_source
+
+    elrich:
+      path: Models/Elrich/
+      role: external_surface_and_presentation
+      preload_priority: low_currently
+      weebo_mutation: blocked_read_only_source
+
+  blocked_or_careful_paths:
+    local:
+      path: local/
+      rule: contains_models_and_binaries_do_not_ingest
+
+    legacy_runtime:
+      path: UI/scripts/runtime/
+      rule: review_before_use_some_paths_are_legacy_or_replaced
+
+    generated_cache:
+      paths:
+        - .git/
+        - .godot/
+        - __pycache__/
+      rule: never_memory_ingest
+
+  answer_contract:
+    what_already_exists:
+      sources:
+        - active_systems
+        - memory_source_index
+        - Models/Shared/Directory.yaml
+      output_rule: list_existing_surfaces_before_any_new_proposal
+
+    which_files_matter:
+      sources:
+        - primary_memory_sources
+        - active_systems.important_files
+        - UI/Weebo/memory/cards.yaml
+      output_rule: return_paths_with_roles_and_mutation_status
+
+    authority_boundaries:
+      sources:
+        - Models/Shared/Contract.yaml
+        - UI/BOUNDARY.md
+        - UI/Weebo/contracts/proposal_contract.yaml
+      output_rule: preserve_human_approval_and_no_validation_claims
+
+    safe_proposal:
+      sources:
+        - UI/Weebo/contracts/proposal_contract.yaml
+        - UI/Weebo/memory/cards.yaml
+      output_rule: proposal_only_no_patch_no_autonomous_action
+
+    waits_for_seth:
+      sources:
+        - Models/Shared/Contract.yaml
+        - UI/Weebo/contracts/proposal_contract.yaml
+      output_rule: any_mutation_authority_or_acceptance_waits_for_Seth
+

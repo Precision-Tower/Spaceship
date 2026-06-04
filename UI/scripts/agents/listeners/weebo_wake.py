@@ -4,7 +4,7 @@ import sys
 import queue
 import sounddevice as sd
 import vosk
-from UI.scriptshlib import Path
+from lib import Path
 
 # Package Imports
 from UI.scripts.agents.core import WeeboAgent, CaliBridge, WeeboMemory, PathResolver

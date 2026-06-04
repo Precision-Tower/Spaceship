@@ -1,5 +1,5 @@
 # scripts/cli/commands/file_tools.py
-from UI.scriptshlib import Path
+from pathlib import Path
 from UI.scripts.cli.commands.base import Command
 
 class ApplyCodeCommand(Command):
@@ -46,3 +46,4 @@ class ReadFileCommand(Command):
             
         print("status: success")
         print(f"content:\n{target_path.read_text(encoding='utf-8', errors='replace')}")
+

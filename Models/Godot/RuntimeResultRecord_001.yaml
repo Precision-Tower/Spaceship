@@ -1,0 +1,36 @@
+file: Godot/RuntimeResultRecord_001.yaml
+
+result: pass_with_boundary_preserved
+
+proof_answer: motion_can_happen_without_epistemic_fraud_if_reported_only_as_runtime_behavior_not_validation
+
+runtime_maneuver_record:
+  origin_packet_id: dirty_packet_001
+  dirty_status: preserved
+  unresolved_reason:
+    - motion_does_not_validate_physics
+    - display_does_not_equal_evidence
+    - unresolveds_remained_unresolved
+
+  bridge_entry: RuntimeRoot/RuntimeBus -> FloatingBox
+
+  bridge_exit: FloatingBox -> DisplaySurface + WarningSurface
+
+  runtime_contact_observation: FloatingBox_position_changes_during_runtime_tick
+
+  contamination_notes:
+    - visual_smoothness_not_evidence
+    - signal_emitted_not_route_completed
+    - motion_not_validation
+
+boundary_held:
+  - godot_owns_runtime_topology_and_motion_not_validation
+  - runtimebus_requires_route_visibility_not_completed_truth
+  - scenetopology_blocks_smooth_motion_equals_stability
+  - floatingboxloop_passed_with_dirty_status_and_unresolveds_preserved
+
+status: contact_recorded_not_validated
+motion_status: motion_reported_not_validated
+integrity: unresolveds_remained_unresolved
+next_feature_allowed: false
+default_unlock: no_unlock

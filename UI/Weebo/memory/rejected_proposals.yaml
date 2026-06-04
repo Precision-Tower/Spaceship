@@ -1,0 +1,19 @@
+rejected_proposals:
+  - id: WEBO-JARVIS-NOT-YET-001
+    title: Build Jarvis now
+    date: 2026-06-04
+    rejection_reason: Jarvis is explicitly out of scope until Seth approves it after Weebo memory and proposal boundaries stabilize.
+    status: REJECTED
+
+  - id: WEBO-AUTONOMOUS-EDITS-001
+    title: Add autonomous edits to Weebo
+    date: 2026-06-04
+    rejection_reason: Weebo has no autonomous mutation authority; proposal is not patch and direct edits wait for Seth approval.
+    status: REJECTED
+
+  - id: WEBO-MODEL-TRAINING-001
+    title: Add model training to decision memory
+    date: 2026-06-04
+    rejection_reason: Decision memory is file-backed supervised memory only; model training is explicitly out of scope.
+    status: REJECTED
+
