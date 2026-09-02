@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -30,6 +31,13 @@ class MainScreenViewModel : ViewModel() {
 
     init {
         refresh()
+
+        viewModelScope.launch {
+            while (true) {
+                delay(5_000)
+                refresh()
+            }
+        }
     }
 
     fun refresh() {
