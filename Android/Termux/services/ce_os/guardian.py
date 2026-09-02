@@ -65,7 +65,7 @@ def evaluate_state(state: CeOsState) -> CeOsState:
             mode_denied = True
             _append_once(reasons, "usb_power_mobile")
 
-    thermal_denied = THERMAL_SEVERITY.get(state.thermal_state, 99) >= THERMAL_SEVERITY["MODERATE"]
+    thermal_denied = THERMAL_SEVERITY.get(state.thermal_state, 99) >= THERMAL_SEVERITY["SEVERE"]
     if thermal_denied:
         compute_denied = True
         _append_once(reasons, f"thermal_{state.thermal_state.lower()}")
