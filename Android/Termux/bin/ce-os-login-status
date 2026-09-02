@@ -50,9 +50,22 @@ else
     echo "CE-OS     tree=calculating"
 fi
 
-# Refresh only when cache is older than 30 minutes.
-if [[ ! -f "$SIZE_CACHE" ]] ||
-   [[ $(find "$SIZE_CACHE" -mmin +30 -print 2>/dev/null) ]]; then
+# Refresh only when CE-OS permits compute, and never more than once
+# every six hours. SSH login must not create background work while
+# the guardian is shedding compute.
+ALLOW_REFRESH="$(
+    "$CEOS" --json status 2>/dev/null |
+    python3 -c 'import json,sys
+try:
+    print(json.load(sys.stdin)["state"]["allow_compute"])
+except Exception:
+    print(0)
+' 2>/dev/null
+)"
+
+if [[ "$ALLOW_REFRESH" == "1" ]] &&
+   { [[ ! -f "$SIZE_CACHE" ]] ||
+     [[ -n "$(find "$SIZE_CACHE" -mmin +360 -print 2>/dev/null)" ]]; }; then
     (
         nice -n 19 du -sh "$ROOT" 2>/dev/null |
         awk '{print $1}' > "$SIZE_CACHE.tmp" &&

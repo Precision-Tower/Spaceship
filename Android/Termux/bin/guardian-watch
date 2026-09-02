@@ -1,6 +1,9 @@
 #!/data/data/com.termux/files/usr/bin/bash
+set -euo pipefail
+
+ROOT="/data/data/com.termux/files/home/ce-os"
 
 while true; do
-    "$HOME/ce-os/bin/guardian-log"
+    "$ROOT/Android/Termux/bin/guardian-log"
     sleep 60
 done

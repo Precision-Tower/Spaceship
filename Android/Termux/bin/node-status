@@ -1,4 +1,8 @@
 #!/data/data/com.termux/files/usr/bin/bash
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ROOT="$(cd "$SCRIPT_DIR/../../.." && pwd)"
 
 export SVDIR="$PREFIX/var/service"
 
@@ -8,5 +12,6 @@ echo "build=$(getprop ro.build.id)"
 echo "boot_completed=$(getprop sys.boot_completed)"
 echo "sshd=$(sv status sshd 2>&1)"
 echo "guardian=$(sv status ce-os-guardian 2>&1)"
-echo "watcher=$(pgrep -f guardian-watch | wc -l)"
-"$HOME/ce-os/bin/power-state"
+echo "watcher=$(pgrep -f guardian-watch-root | wc -l)"
+
+"$ROOT/Android/Termux/bin/power-state"

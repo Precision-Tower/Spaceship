@@ -1,23 +1,16 @@
 #!/data/data/com.termux/files/usr/bin/bash
+set -euo pipefail
 
-LOG="$HOME/ce-os/logs/power.csv"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ROOT="$(cd "$SCRIPT_DIR/../../.." && pwd)"
+LOG="$ROOT/logs/power.csv"
+
+# Compatibility command only.
+# guardian-watch-root is the sole writer of privileged power telemetry.
 
 if [[ ! -f "$LOG" ]]; then
-    echo "timestamp,mode,allow_compute,battery,battery_temp_c,thermal_status" > "$LOG"
+    echo "NO POWER LOG"
+    exit 1
 fi
 
-OUT="$("$HOME/ce-os/bin/guardian")"
-
-MODE="$(printf '%s\n' "$OUT" | awk -F= '/^mode=/{print $2}')"
-ALLOW="$(printf '%s\n' "$OUT" | awk -F= '/^allow_compute=/{print $2}')"
-BATTERY="$(printf '%s\n' "$OUT" | awk -F= '/^battery=/{print $2}')"
-TEMP="$(printf '%s\n' "$OUT" | awk -F= '/^battery_temp_c=/{print $2}')"
-THERMAL="$(printf '%s\n' "$OUT" | awk -F= '/^thermal_status=/{print $2}')"
-
-printf '%s,%s,%s,%s,%s,%s\n' \
-    "$(date '+%Y-%m-%d %H:%M:%S')" \
-    "$MODE" \
-    "$ALLOW" \
-    "$BATTERY" \
-    "$TEMP" \
-    "$THERMAL" >> "$LOG"
+tail -n 20 "$LOG"

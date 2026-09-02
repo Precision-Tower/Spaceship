@@ -1,38 +1,48 @@
 #!/data/data/com.termux/files/usr/bin/bash
+set -euo pipefail
 
-POWER="$("$HOME/ce-os/bin/power-state")"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ROOT="$(cd "$SCRIPT_DIR/../../.." && pwd)"
+CEOS="$ROOT/Android/Termux/bin/ce-os"
+LIVE="$ROOT/state/runtime/live.env"
 
-STATE="$(printf '%s\n' "$POWER" | awk -F= '/^state=/{print $2}')"
-THERMAL_STATUS="$(printf '%s\n' "$POWER" | awk -F= '/^thermal_status=/{print $2}')"
-BATTERY="$(printf '%s\n' "$POWER" | awk -F= '/^battery=/{print $2}')"
-TEMP="$(printf '%s\n' "$POWER" | awk -F= '/^battery_temp_c=/{print $2}')"
+STATUS="$("$CEOS" --json status)"
 
-case "$STATE:$THERMAL_STATUS" in
-    SURVIVAL:*)
-        MODE="SURVIVAL"
-        ALLOW_COMPUTE=0
-        ;;
-    MOBILE:*)
-        MODE="MOBILE"
-        ALLOW_COMPUTE=0
-        ;;
-    POWERED:0|POWERED:1)
-        MODE="POWERED"
-        ALLOW_COMPUTE=1
-        ;;
-    POWERED:*)
-        MODE="THERMAL_SHED"
-        ALLOW_COMPUTE=0
-        ;;
-    *)
-        MODE="SAFE"
-        ALLOW_COMPUTE=0
-        ;;
-esac
+python3 - "$STATUS" "$LIVE" <<'PY'
+import json
+import sys
+from pathlib import Path
 
-echo "node=pixel"
-echo "mode=$MODE"
-echo "allow_compute=$ALLOW_COMPUTE"
-echo "battery=$BATTERY"
-echo "battery_temp_c=$TEMP"
-echo "thermal_status=$THERMAL_STATUS"
+state = json.loads(sys.argv[1])["state"]
+live_path = Path(sys.argv[2])
+
+live = {}
+
+if live_path.exists():
+    for line in live_path.read_text(encoding="utf-8").splitlines():
+        if "=" in line:
+            key, value = line.split("=", 1)
+            live[key] = value
+
+power = state.get("power_state", "SURVIVAL")
+thermal = state.get("thermal_state", "MODERATE")
+allow = int(state.get("allow_compute", 0))
+
+if power == "SURVIVAL":
+    mode = "SURVIVAL"
+elif power == "MOBILE":
+    mode = "MOBILE"
+elif allow:
+    mode = "POWERED"
+else:
+    mode = "THERMAL_SHED"
+
+print("node=pixel")
+print(f"mode={mode}")
+print(f"allow_compute={allow}")
+print(f"battery={live.get('battery', 'unknown')}")
+print(f"battery_temp_c={live.get('battery_temp_c', 'unknown')}")
+print(f"thermal_status={live.get('thermal_status', 'unknown')}")
+print(f"thermal_state={thermal}")
+print(f"effective_mode={state.get('effective_mode', 'conserve')}")
+PY
