@@ -1,0 +1,25 @@
+#!/data/data/com.termux/files/usr/bin/bash
+set -euo pipefail
+
+export SVDIR="$PREFIX/var/service"
+
+services=(
+  ce-os-api
+  ce-os-live-sync
+  ce-os-guardian
+  ce-os-privileged-broker
+)
+
+ok=1
+
+for service in "${services[@]}"; do
+    if sv status "$service" 2>/dev/null | grep -q '^run:'; then
+        echo "OK  $service"
+    else
+        echo "BAD $service"
+        sv status "$service" 2>&1 || true
+        ok=0
+    fi
+done
+
+exit $(( ok ? 0 : 1 ))

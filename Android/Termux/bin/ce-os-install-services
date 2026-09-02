@@ -10,6 +10,11 @@ install_service() {
     local template="$2"
     local dir="$SVDIR/$name"
 
+    if [[ ! -f "$template" ]]; then
+        echo "ERROR: missing service template: $template" >&2
+        exit 2
+    fi
+
     mkdir -p "$dir"
     cp "$template" "$dir/run"
     chmod +x "$dir/run"
