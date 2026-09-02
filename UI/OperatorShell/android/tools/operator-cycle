@@ -1,0 +1,24 @@
+#!/data/data/com.termux/files/usr/bin/bash
+set -euo pipefail
+
+ROOT="$HOME/ce-os"
+TOOLS="$ROOT/UI/OperatorShell/android/tools"
+
+"$TOOLS/operator-preflight"
+
+echo
+echo "=== BUILD ==="
+
+if [[ -x "$TOOLS/operator-build" ]]; then
+    "$TOOLS/operator-build"
+else
+    echo "ERROR: operator-build is not implemented yet."
+    echo "Codex must establish the Godot Android export pipeline."
+    exit 2
+fi
+
+echo
+"$TOOLS/operator-install"
+
+echo
+"$TOOLS/operator-observe"

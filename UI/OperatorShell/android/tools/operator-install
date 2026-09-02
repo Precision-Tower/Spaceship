@@ -1,0 +1,29 @@
+#!/data/data/com.termux/files/usr/bin/bash
+set -euo pipefail
+
+ROOT="$HOME/ce-os"
+ENV="$ROOT/UI/OperatorShell/android/operator.env"
+
+source "$ENV"
+
+if [[ ! -f "$CEOS_OPERATOR_APK" ]]; then
+    echo "ERROR: OperatorShell APK does not exist:"
+    echo "  $CEOS_OPERATOR_APK"
+    exit 1
+fi
+
+TMP="/data/local/tmp/ceos-operatorshell.apk"
+
+su -c "cp '$CEOS_OPERATOR_APK' '$TMP'"
+su -c "chmod 644 '$TMP'"
+
+# Remove signature-incompatible development install only when required.
+if ! su -c "pm install -r '$TMP'"; then
+    echo "Update failed. Attempting clean development reinstall."
+    su -c "pm uninstall --user 0 '$CEOS_OPERATOR_PACKAGE'" || true
+    su -c "pm install '$TMP'"
+fi
+
+su -c "rm -f '$TMP'"
+
+echo "INSTALLED $CEOS_OPERATOR_PACKAGE"

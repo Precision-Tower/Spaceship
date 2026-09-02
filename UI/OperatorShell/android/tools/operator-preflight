@@ -1,0 +1,35 @@
+#!/data/data/com.termux/files/usr/bin/bash
+set -euo pipefail
+
+ROOT="$HOME/ce-os"
+CEOS="$ROOT/Android/Termux/bin/ce-os"
+
+echo "=== CE-OS ==="
+"$CEOS" --json status
+
+echo
+echo "=== OPERATORSHELL ==="
+
+test -f "$ROOT/UI/OperatorShell/project.godot"
+echo "project.godot: OK"
+
+test -f "$ROOT/UI/OperatorShell/scenes/Main.tscn"
+echo "Main.tscn: OK"
+
+test -f "$ROOT/UI/OperatorShell/_index.qps"
+echo "_index.qps: OK"
+
+if grep -RIl 'res://OperatorShell/' \
+    "$ROOT/UI/OperatorShell" \
+    --include='*.gd' \
+    --include='*.tscn' \
+    --include='*.tres' \
+    2>/dev/null | grep -q .; then
+    echo "ERROR: stale res://OperatorShell/ paths exist"
+    exit 1
+fi
+
+echo "resource namespace: OK"
+
+echo
+echo "PREFLIGHT OK"

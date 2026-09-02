@@ -1,0 +1,72 @@
+#!/data/data/com.termux/files/usr/bin/bash
+set -euo pipefail
+
+ROOT="$HOME/ce-os"
+OBS="$ROOT/state/ui-observation"
+
+source "$ROOT/UI/OperatorShell/android/operator.env"
+
+mkdir -p \
+  "$OBS/screenshots" \
+  "$OBS/logs" \
+  "$OBS/ui"
+
+STAMP="$(date '+%Y%m%d-%H%M%S')"
+
+SCREEN="$OBS/screenshots/$STAMP.png"
+LOG="$OBS/logs/$STAMP.log"
+UIXML="$OBS/ui/$STAMP.xml"
+
+LATEST_SCREEN="$OBS/latest.png"
+LATEST_LOG="$OBS/latest.log"
+LATEST_UI="$OBS/latest.xml"
+
+echo "=== LAUNCH ==="
+su -c "am force-stop '$CEOS_OPERATOR_PACKAGE'" || true
+
+su -c "logcat -c" || true
+
+su -c "am start --user 0 -W \
+  -n '$CEOS_OPERATOR_PACKAGE/$CEOS_OPERATOR_ACTIVITY'"
+
+sleep "$CEOS_OPERATOR_SETTLE_SECONDS"
+
+echo
+echo "=== SCREENSHOT ==="
+
+TMP_SCREEN="/data/local/tmp/ceos-operatorshell-$STAMP.png"
+
+su -c "screencap -p '$TMP_SCREEN'"
+su -c "cp '$TMP_SCREEN' '$SCREEN'"
+su -c "chown $(id -u):$(id -g) '$SCREEN'" || true
+su -c "rm -f '$TMP_SCREEN'"
+
+cp "$SCREEN" "$LATEST_SCREEN"
+
+echo
+echo "=== UI HIERARCHY ==="
+
+uiautomator dump "$UIXML" >/dev/null 2>&1 || true
+
+if [[ -f "$UIXML" ]]; then
+    cp "$UIXML" "$LATEST_UI"
+else
+    : > "$LATEST_UI"
+fi
+
+echo
+echo "=== LOGCAT ==="
+
+su -c "logcat -d -v threadtime" > "$LOG" || true
+cp "$LOG" "$LATEST_LOG"
+
+echo
+echo "=== CLOSE ==="
+
+su -c "am force-stop '$CEOS_OPERATOR_PACKAGE'" || true
+
+echo
+echo "OBSERVATION COMPLETE"
+echo "SCREENSHOT=$LATEST_SCREEN"
+echo "UI=$LATEST_UI"
+echo "LOG=$LATEST_LOG"

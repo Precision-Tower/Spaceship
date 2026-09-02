@@ -55,7 +55,7 @@ class CeOsTileService : TileService() {
                     subtitle = status.requestedMode.uppercase()
 
                     state =
-                        if (status.requestedMode == "node")
+                        if (status.effectiveMode == "node")
                             Tile.STATE_ACTIVE
                         else
                             Tile.STATE_INACTIVE

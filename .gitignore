@@ -79,3 +79,12 @@ Thumbs.db
 # Agent runtime logs / sessions
 /Agency/Agents/*/runtime/logs/
 /Agency/Agents/*/runtime/sessions/
+
+# CE-OS automated UI observation
+/state/ui-observation/
+
+# OperatorShell Android generated build output
+/UI/OperatorShell/android/build/
+
+# Pixel-local Android SDK/toolchain
+/Android/SDK/

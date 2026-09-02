@@ -179,22 +179,42 @@ fun MainScreen(
 
             Spacer(Modifier.height(4.dp))
 
+            val effectiveMode = ui.status?.effectiveMode
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                Button(
-                    modifier = Modifier.weight(1f),
-                    onClick = { vm.setMode("node") }
-                ) {
-                    Text("NODE")
+                if (effectiveMode == "node") {
+                    Button(
+                        modifier = Modifier.weight(1f),
+                        onClick = { vm.setMode("node") }
+                    ) {
+                        Text("NODE")
+                    }
+                } else {
+                    OutlinedButton(
+                        modifier = Modifier.weight(1f),
+                        onClick = { vm.setMode("node") }
+                    ) {
+                        Text("NODE")
+                    }
                 }
 
-                OutlinedButton(
-                    modifier = Modifier.weight(1f),
-                    onClick = { vm.setMode("conserve") }
-                ) {
-                    Text("CONSERVE")
+                if (effectiveMode == "conserve") {
+                    Button(
+                        modifier = Modifier.weight(1f),
+                        onClick = { vm.setMode("conserve") }
+                    ) {
+                        Text("CONSERVE")
+                    }
+                } else {
+                    OutlinedButton(
+                        modifier = Modifier.weight(1f),
+                        onClick = { vm.setMode("conserve") }
+                    ) {
+                        Text("CONSERVE")
+                    }
                 }
             }
 

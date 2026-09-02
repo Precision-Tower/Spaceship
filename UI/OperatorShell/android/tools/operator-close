@@ -1,0 +1,8 @@
+#!/data/data/com.termux/files/usr/bin/bash
+set -euo pipefail
+
+ROOT="$HOME/ce-os"
+source "$ROOT/UI/OperatorShell/android/operator.env"
+
+su -c "am force-stop '$CEOS_OPERATOR_PACKAGE'" || true
+echo "CLOSED $CEOS_OPERATOR_PACKAGE"

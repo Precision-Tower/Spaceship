@@ -1,0 +1,26 @@
+#!/data/data/com.termux/files/usr/bin/bash
+set -euo pipefail
+
+cat >&2 <<'MSG'
+OperatorShell Android export is not wired yet.
+
+Codex mission:
+  Establish a reproducible Pixel-local Godot Android export for:
+
+    ~/ce-os/UI/OperatorShell
+
+The resulting APK must be placed at the path configured in:
+
+    UI/OperatorShell/android/operator.env
+
+Do not depend on manual interaction with the Godot Android editor.
+
+Once implemented, this script must:
+  1. inspect CE-OS compute/thermal state,
+  2. validate Godot project files,
+  3. export/build OperatorShell,
+  4. return nonzero on failure,
+  5. leave the APK at CEOS_OPERATOR_APK.
+MSG
+
+exit 2
