@@ -156,3 +156,41 @@ Never leave a broken test application running.
 
 The UI must reflect real CE-OS backend state.
 Do not fabricate backend state to make screenshots look correct.
+
+## Remote Access Contract
+
+The canonical Pixel CE-OS node is reached from Windows with:
+
+    ssh 69
+
+`69` is the CE-OS-facing SSH identity for the Pixel.
+
+When operating from Windows, use:
+
+    ssh 69
+
+Do not use ADB as the normal control/development transport.
+Do not substitute a hard-coded Pixel IP.
+Do not modify the Windows SSH configuration unless the mission explicitly
+requires transport maintenance.
+
+Once connected and the prompt is already on PIXEL, execute commands locally.
+Do not recursively run `ssh 69` from inside the Pixel.
+
+Normal development transport:
+
+    Windows / Codex
+          |
+        ssh 69
+          |
+          v
+    Pixel ~/ce-os
+          |
+          +-- source editing
+          +-- builds
+          +-- Android control
+          +-- runtime observation
+          +-- screenshots/logs
+
+ADB is optional Android maintenance/debugging only.
+Fastboot is provisioning/recovery only.
