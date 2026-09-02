@@ -53,3 +53,25 @@ edit/build/launch/observe loop.
 
 An item is complete only when validated by source inspection, build/test,
 or runtime observation appropriate to the item.
+
+## Cross-Platform OperatorShell
+
+- [ ] Define shared OperatorShell platform-service interface.
+- [ ] Inventory current runtime scripts for Linux/Termux assumptions.
+- [ ] Separate Linux-specific behavior from shared UI code.
+- [ ] Separate Android/Termux-specific behavior from shared UI code.
+- [ ] Establish runtime/platform/linux adapters.
+- [ ] Establish runtime/platform/android adapters.
+- [ ] Keep scenes/layout/widgets platform-neutral.
+- [ ] Ensure Pixel Android UI communicates with Termux through CE-OS bridge.
+- [ ] Verify same Godot project remains runnable on Linux and Android.
+
+## Godot Android Toolchain
+
+- [x] Download official Godot 4.7.2 export-template package.
+- [x] Verify export-template archive.
+- [x] Locate Android debug template.
+- [x] Locate Android release template.
+- [x] Locate Android source template.
+- [ ] Determine noninteractive project packaging/PCK generation path.
+- [ ] Wire Godot Android resources into operator-build.

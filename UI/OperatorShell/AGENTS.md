@@ -73,3 +73,84 @@ Do not design around the landscape orientation of the Godot Android editor.
 
 The editor itself is tooling.
 The exported OperatorShell application is the product.
+
+## Cross-Platform Contract
+
+OperatorShell is one shared Godot application targeting:
+
+    Nitro -> Linux
+    Pixel -> Android
+
+The visual/UI layer must remain platform-neutral wherever practical.
+
+Shared code includes:
+
+    project.godot
+    scenes/
+    layout/
+    widgets/
+    resources/
+
+Platform-specific operating-system behavior must be isolated behind
+runtime adapters.
+
+Do not scatter checks such as:
+
+    OS.get_name() == "Android"
+
+through UI/layout/widget code.
+
+Do not hard-code Termux paths such as:
+
+    /data/data/com.termux/files/home
+
+inside shared OperatorShell UI code.
+
+Termux is part of the Pixel CE-OS backend/control substrate.
+It is not OperatorShell itself.
+
+Preferred architecture:
+
+    runtime/
+      platform/
+        Platform.gd
+        linux/
+        android/
+
+Shared OperatorShell code should call abstract services such as:
+
+    terminal
+    filesystem
+    process
+    ce_os_status
+    workbench
+    model_service
+
+Linux adapters may communicate directly with the Linux host.
+
+Android adapters should communicate with CE-OS Android/Termux services
+through a defined bridge/API.
+
+The same OperatorShell project should remain usable on both Nitro and Pixel.
+
+## Godot Android Export Resources
+
+Official Godot 4.7.2 Android export resources are available at:
+
+    ~/ce-os/Android/Godot/4.7.2.stable/
+
+Contents:
+
+    android_debug.apk
+    android_release.apk
+    android_source.zip
+    version.txt
+
+These are tooling inputs, not OperatorShell source.
+
+The automated OperatorShell build pipeline should use these resources where
+appropriate rather than requiring manual operation of the Godot Android editor.
+
+Canonical OperatorShell source remains:
+
+    ~/ce-os/UI/OperatorShell

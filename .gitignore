@@ -88,3 +88,6 @@ Thumbs.db
 
 # Pixel-local Android SDK/toolchain
 /Android/SDK/
+
+# Godot platform/export toolchain binaries
+/Android/Godot/
