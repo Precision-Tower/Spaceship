@@ -13,7 +13,8 @@ from pathlib import Path
 HOME = Path("/data/data/com.termux/files/home")
 ROOT = HOME / "ce-os"
 
-sys.path.insert(0, str(ROOT))
+TERMUX_ROOT = ROOT / "Android/Termux"
+sys.path.insert(0, str(TERMUX_ROOT))
 
 from services.ce_os.guardian import evaluate_state
 from services.ce_os.state import load_state, request_mode, save_state
