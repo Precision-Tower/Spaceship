@@ -26,11 +26,15 @@ edit/build/launch/observe loop.
 
 ## OperatorShell Bring-Up
 
-- [ ] Enforce portrait orientation in OperatorShell project/export contract.
+- [x] Extend operator-build from PCK generation into generated-template APK packaging.
+- [ ] Patch generated Android package to load operatorshell.pck through GodotApp --main-pack.
+- [x] Isolate Godot Android editor rotation workaround inside operator-build tooling.
+- [x] Keep fallback PCK reuse guarded by source freshness while editor export-pack crash is investigated.
+- [x] Enforce portrait orientation in OperatorShell project/export contract.
 - [ ] Validate all Godot resources and scene references.
-- [ ] Establish Android export/build path for OperatorShell.
-- [ ] Define OperatorShell Android package identity.
-- [ ] Build first OperatorShell APK.
+- [x] Establish Android export/build path for OperatorShell.
+- [x] Define OperatorShell Android package identity.
+- [x] Build first OperatorShell APK.
 - [ ] Install OperatorShell APK on Pixel.
 - [ ] Launch OperatorShell through scripted harness.
 - [ ] Capture first OperatorShell screenshot.
@@ -74,15 +78,15 @@ or runtime observation appropriate to the item.
 - [x] Locate Android release template.
 - [x] Locate Android source template.
 - [ ] Determine noninteractive project packaging/PCK generation path.
-- [ ] Wire Godot Android resources into operator-build.
+- [x] Wire Godot Android resources into operator-build.
 
 ## OperatorShell Android Template
 
 - [x] Inspect Godot 4.7.2 android_source.zip.
 - [x] Confirm Gradle wrapper and Android template project exist.
 - [x] Confirm debug/release Godot engine AARs exist.
-- [ ] Identify how exported project payload/PCK is injected.
-- [ ] Set OperatorShell package/application metadata.
+- [x] Identify how exported project payload/PCK is injected.
+- [x] Set OperatorShell package/application metadata.
 - [ ] Wire template build into operator-build.
 
 ## Confirmed Export Boundary
@@ -92,4 +96,5 @@ or runtime observation appropriate to the item.
 - [x] Prebuilt android_debug.apk contains no OperatorShell/project payload.
 - [ ] Reproduce Godot project export/packaging step noninteractively.
 - [ ] Populate Android template assets with generated Godot payload.
-- [ ] Build standalone OperatorShell APK from populated template.
+- [x] Populate Android template assets with generated Godot payload.
+- [x] Build standalone OperatorShell APK from populated template.

@@ -4,6 +4,12 @@ set -euo pipefail
 ROOT="$HOME/ce-os"
 TOOLS="$ROOT/UI/OperatorShell/android/tools"
 
+cleanup() {
+    "$TOOLS/operator-close" >/dev/null 2>&1 || true
+}
+
+trap cleanup EXIT
+
 "$TOOLS/operator-preflight"
 
 echo
@@ -18,7 +24,12 @@ else
 fi
 
 echo
+echo "=== INSTALL ==="
 "$TOOLS/operator-install"
 
 echo
+echo "=== OBSERVE ==="
+echo "launch -> wait -> screenshot -> UI hierarchy -> logs -> close"
 "$TOOLS/operator-observe"
+
+trap - EXIT
