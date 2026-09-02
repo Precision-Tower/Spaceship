@@ -1,0 +1,42 @@
+#!/data/data/com.termux/files/usr/bin/bash
+set -euo pipefail
+
+ROOT="/data/data/com.termux/files/home/ce-os"
+TEMPLATES="$ROOT/Android/Termux/services/runtime"
+SVDIR="$PREFIX/var/service"
+
+install_service() {
+    local name="$1"
+    local template="$2"
+    local dir="$SVDIR/$name"
+
+    mkdir -p "$dir"
+    cp "$template" "$dir/run"
+    chmod +x "$dir/run"
+}
+
+install_service \
+    ce-os-api \
+    "$TEMPLATES/ce-os-api.run"
+
+install_service \
+    ce-os-live-sync \
+    "$TEMPLATES/ce-os-live-sync.run"
+
+install_service \
+    ce-os-guardian \
+    "$TEMPLATES/ce-os-guardian.run"
+
+install_service \
+    ce-os-privileged-broker \
+    "$TEMPLATES/ce-os-privileged-broker.run"
+
+echo "CE-OS services installed:"
+for service in \
+    ce-os-api \
+    ce-os-live-sync \
+    ce-os-guardian \
+    ce-os-privileged-broker
+do
+    echo "  $service"
+done
