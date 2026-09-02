@@ -150,6 +150,16 @@ fun MainScreen(
                 )
 
                 StatusRow(
+                    "Requested Mode",
+                    status.requestedMode.uppercase()
+                )
+
+                StatusRow(
+                    "Effective Mode",
+                    status.effectiveMode.uppercase()
+                )
+
+                StatusRow(
                     "Thermal",
                     status.thermalState.uppercase()
                 )

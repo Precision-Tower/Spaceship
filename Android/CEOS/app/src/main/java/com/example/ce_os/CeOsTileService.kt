@@ -52,7 +52,16 @@ class CeOsTileService : TileService() {
 
                 qsTile?.apply {
                     label = "CE-OS"
-                    subtitle = status.requestedMode.uppercase()
+
+                    subtitle =
+                        when {
+                            status.effectiveMode == "node" &&
+                                !status.allowCompute ->
+                                "NODE • BLOCKED"
+
+                            else ->
+                                status.effectiveMode.uppercase()
+                        }
 
                     state =
                         if (status.effectiveMode == "node")
