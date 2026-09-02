@@ -1,0 +1,56 @@
+#!/data/data/com.termux/files/usr/bin/bash
+set -euo pipefail
+
+ROOT="/data/data/com.termux/files/home/ce-os"
+OBS="$ROOT/state/ui-observation"
+SHOT="${1:-$OBS/latest.png}"
+URL_FILE="$OBS/latest.url"
+
+if [[ ! -s "$SHOT" ]]; then
+    echo "ERROR: screenshot missing or empty: $SHOT" >&2
+    exit 1
+fi
+
+echo "=== OPERATOR OBSERVATION SHARE ==="
+echo "file=$SHOT"
+echo "size=$(du -h "$SHOT" | awk '{print $1}')"
+
+RESPONSE="$(
+    curl \
+        --fail \
+        --silent \
+        --show-error \
+        -F "file=@$SHOT" \
+        https://tmpfiles.org/api/v1/upload
+)"
+
+URL="$(
+    printf '%s' "$RESPONSE" |
+    python3 -c '
+import json, sys
+
+payload = json.load(sys.stdin)
+
+if payload.get("status") != "success":
+    raise SystemExit("upload failed")
+
+url = payload["data"]["url"]
+
+# tmpfiles.org API returns a viewing page URL.
+# /dl/ provides the directly retrievable file.
+url = url.replace(
+    "https://tmpfiles.org/",
+    "https://tmpfiles.org/dl/",
+    1,
+)
+
+print(url)
+'
+)"
+
+mkdir -p "$OBS"
+printf '%s\n' "$URL" > "$URL_FILE"
+
+echo
+echo "share=$URL"
+echo "saved=$URL_FILE"

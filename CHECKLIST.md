@@ -35,12 +35,12 @@ edit/build/launch/observe loop.
 - [x] Establish Android export/build path for OperatorShell.
 - [x] Define OperatorShell Android package identity.
 - [x] Build first OperatorShell APK.
-- [ ] Install OperatorShell APK on Pixel.
-- [ ] Launch OperatorShell through scripted harness.
-- [ ] Capture first OperatorShell screenshot.
-- [ ] Capture Godot/runtime logs.
-- [ ] Close test application automatically.
-- [ ] Inspect first render and record defects.
+- [x] Install OperatorShell APK on Pixel.
+- [x] Launch OperatorShell through scripted harness.
+- [x] Capture first OperatorShell screenshot.
+- [x] Capture Godot/runtime logs.
+- [x] Close test application automatically.
+- [x] Inspect first render and record defects.
 - [ ] Iterate until initial shell renders correctly.
 
 ## UI Contract
@@ -77,7 +77,7 @@ or runtime observation appropriate to the item.
 - [x] Locate Android debug template.
 - [x] Locate Android release template.
 - [x] Locate Android source template.
-- [ ] Determine noninteractive project packaging/PCK generation path.
+- [x] Determine noninteractive project packaging/PCK generation path.
 - [x] Wire Godot Android resources into operator-build.
 
 ## OperatorShell Android Template
@@ -87,14 +87,13 @@ or runtime observation appropriate to the item.
 - [x] Confirm debug/release Godot engine AARs exist.
 - [x] Identify how exported project payload/PCK is injected.
 - [x] Set OperatorShell package/application metadata.
-- [ ] Wire template build into operator-build.
+- [x] Wire template build into operator-build.
 
 ## Confirmed Export Boundary
 
 - [x] Godot Android Gradle template does not generate project payload.
 - [x] src/main/assets is empty in the extracted template.
 - [x] Prebuilt android_debug.apk contains no OperatorShell/project payload.
-- [ ] Reproduce Godot project export/packaging step noninteractively.
-- [ ] Populate Android template assets with generated Godot payload.
+- [x] Reproduce Godot project export/packaging step noninteractively.
 - [x] Populate Android template assets with generated Godot payload.
 - [x] Build standalone OperatorShell APK from populated template.
