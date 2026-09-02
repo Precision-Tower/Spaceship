@@ -154,3 +154,24 @@ appropriate rather than requiring manual operation of the Godot Android editor.
 Canonical OperatorShell source remains:
 
     ~/ce-os/UI/OperatorShell
+
+## Confirmed Android Export Boundary
+
+The extracted Godot Android Gradle template is packaging infrastructure only.
+
+Its:
+
+    src/main/assets/
+
+directory is empty before export.
+
+The Gradle template does not convert .gd/.tscn/.tres/project.godot into a
+Godot runtime payload.
+
+Therefore the immediate engineering task is NOT to redesign Gradle.
+
+The missing step is to reproduce Godot's noninteractive project
+export/packing stage so that the generated project payload is placed into
+the Android template before Gradle packaging.
+
+Do not attempt to make Gradle parse Godot project source directly.

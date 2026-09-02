@@ -75,3 +75,21 @@ or runtime observation appropriate to the item.
 - [x] Locate Android source template.
 - [ ] Determine noninteractive project packaging/PCK generation path.
 - [ ] Wire Godot Android resources into operator-build.
+
+## OperatorShell Android Template
+
+- [x] Inspect Godot 4.7.2 android_source.zip.
+- [x] Confirm Gradle wrapper and Android template project exist.
+- [x] Confirm debug/release Godot engine AARs exist.
+- [ ] Identify how exported project payload/PCK is injected.
+- [ ] Set OperatorShell package/application metadata.
+- [ ] Wire template build into operator-build.
+
+## Confirmed Export Boundary
+
+- [x] Godot Android Gradle template does not generate project payload.
+- [x] src/main/assets is empty in the extracted template.
+- [x] Prebuilt android_debug.apk contains no OperatorShell/project payload.
+- [ ] Reproduce Godot project export/packaging step noninteractively.
+- [ ] Populate Android template assets with generated Godot payload.
+- [ ] Build standalone OperatorShell APK from populated template.
