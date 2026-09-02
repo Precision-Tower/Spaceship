@@ -13,6 +13,7 @@ run/main_scene="res://scenes/Main.tscn"
 window/size/viewport_width=1080
 window/size/viewport_height=2400
 window/stretch/mode="canvas_items"
+window/handheld/orientation=1
 
 [rendering]
 

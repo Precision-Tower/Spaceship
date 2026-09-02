@@ -91,3 +91,6 @@ Thumbs.db
 
 # Godot platform/export toolchain binaries
 /Android/Godot/
+
+# Extracted Godot Android vendor template
+/UI/OperatorShell/android/template/

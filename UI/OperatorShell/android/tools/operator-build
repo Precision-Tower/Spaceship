@@ -1,26 +1,95 @@
 #!/data/data/com.termux/files/usr/bin/bash
 set -euo pipefail
 
-cat >&2 <<'MSG'
-OperatorShell Android export is not wired yet.
+ROOT="/data/data/com.termux/files/home/ce-os"
+PROJECT="$ROOT/UI/OperatorShell"
+STAGING="/sdcard/CE-OS/OperatorShell"
+PCK="/sdcard/CE-OS/operatorshell.pck"
 
-Codex mission:
-  Establish a reproducible Pixel-local Godot Android export for:
+CEOS="$ROOT/Android/Termux/bin/ce-os"
+PACKAGE="org.godotengine.editor.v4"
+ACTIVITY="org.godotengine.editor.GodotEditor"
 
-    ~/ce-os/UI/OperatorShell
+echo "=== CE-OS STATUS ==="
+STATUS="$("$CEOS" --json status)"
 
-The resulting APK must be placed at the path configured in:
+printf '%s\n' "$STATUS"
 
-    UI/OperatorShell/android/operator.env
+ALLOW="$(
+    printf '%s\n' "$STATUS" |
+    python3 -c 'import json,sys; print(json.load(sys.stdin)["state"]["allow_compute"])'
+)"
 
-Do not depend on manual interaction with the Godot Android editor.
+if [[ "$ALLOW" != "1" ]]; then
+    echo "ERROR: CE-OS compute is not currently allowed."
+    exit 20
+fi
 
-Once implemented, this script must:
-  1. inspect CE-OS compute/thermal state,
-  2. validate Godot project files,
-  3. export/build OperatorShell,
-  4. return nonzero on failure,
-  5. leave the APK at CEOS_OPERATOR_APK.
-MSG
+echo
+echo "=== VALIDATE PROJECT ==="
 
-exit 2
+test -f "$PROJECT/project.godot"
+test -f "$PROJECT/export_presets.cfg"
+test -f "$PROJECT/scenes/Main.tscn"
+test -f "$PROJECT/_index.qps"
+
+echo "project: OK"
+
+echo
+echo "=== SYNC GODOT STAGING ==="
+
+rm -rf "$STAGING"
+mkdir -p "$(dirname "$STAGING")"
+cp -a "$PROJECT" "$STAGING"
+
+rm -f "$PCK"
+
+echo
+echo "=== GODOT EXPORT PACK ==="
+
+su -c "am force-stop '$PACKAGE'" || true
+su -c "logcat -c" || true
+
+su -c "am start --user 0 -W \
+  -n '$PACKAGE/$ACTIVITY' \
+  --esa command_line_params \
+  '--headless,--path,$STAGING,--export-pack,Android,$PCK'"
+
+echo
+echo "=== WAIT FOR PCK ==="
+
+for _ in $(seq 1 120); do
+    if [[ -s "$PCK" ]]; then
+        echo "PCK CREATED"
+        ls -lh "$PCK"
+        break
+    fi
+
+    sleep 1
+done
+
+if [[ ! -s "$PCK" ]]; then
+    echo "ERROR: Godot did not produce a PCK."
+
+    su -c "logcat -d -v brief" |
+    grep -Ei 'godot|export|savepack|error|failed' |
+    tail -120 || true
+
+    su -c "am force-stop '$PACKAGE'" || true
+    exit 21
+fi
+
+echo
+echo "=== EXPORT LOG ==="
+
+su -c "logcat -d -v brief" |
+grep -Ei 'savepack|export.*(complete|failed)|error.*export|failed.*export' |
+tail -80 || true
+
+su -c "am force-stop '$PACKAGE'" || true
+
+echo
+echo "OPERATORSHELL GODOT PACK READY"
+echo "PCK=$PCK"
+echo
+echo "NOTE: Android APK packaging is the next stage."
