@@ -150,13 +150,14 @@ def main():
         "usb_mode": current.usb_mode,
     }
 
-    LIVE.write_text(
-        "".join(
-            f"{key}={value}\n"
-            for key, value in telemetry.items()
-        ),
-        encoding="utf-8",
+    payload = "".join(
+        f"{key}={value}\n"
+        for key, value in telemetry.items()
     )
+
+    temp_live = LIVE.with_suffix(LIVE.suffix + ".tmp")
+    temp_live.write_text(payload, encoding="utf-8")
+    temp_live.replace(LIVE)
 
 
 if __name__ == "__main__":

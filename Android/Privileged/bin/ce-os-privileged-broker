@@ -74,7 +74,7 @@ def key_value_fields(text: str) -> dict[str, str]:
 def platform_verify():
     command = [
         sys.executable,
-        str(ROOT / "bin/ce-os"),
+        str(ROOT / "Android/Termux/bin/ce-os"),
         "--json",
         "verify",
     ]
@@ -114,7 +114,7 @@ def platform_verify():
 
 def bootstrap_preflight():
     command = [
-        str(ROOT / "bin/ce-os-usb-handoff"),
+        str(ROOT / "Android/Privileged/bin/ce-os-usb-handoff"),
         "preflight",
     ]
 
@@ -199,7 +199,7 @@ def dispatch(request):
             # Arm independent recovery before Android g1 loses the UDC.
             subprocess.Popen(
                 [
-                    str(ROOT / "bin/ce-os-usb-handoff"),
+                    str(ROOT / "Android/Privileged/bin/ce-os-usb-handoff"),
                     "watchdog",
                 ],
                 cwd=str(ROOT),
@@ -213,7 +213,7 @@ def dispatch(request):
         try:
             proc = subprocess.run(
                 [
-                    str(ROOT / "bin/ce-os-usb-handoff"),
+                    str(ROOT / "Android/Privileged/bin/ce-os-usb-handoff"),
                     helper_command,
                 ],
                 cwd=str(ROOT),
@@ -342,7 +342,7 @@ def main():
 
     # Broker runs as root, but the socket belongs to the CE-OS
     # operator UID so the ordinary Termux runtime can connect.
-    operator_ref = ROOT / "bin/ce-os"
+    operator_ref = ROOT / "Android/Termux/bin/ce-os"
     operator_stat = operator_ref.stat()
 
     os.chown(RUN_DIR, operator_stat.st_uid, operator_stat.st_gid)
