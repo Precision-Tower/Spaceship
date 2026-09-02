@@ -147,6 +147,7 @@ def cmd_verify(args: argparse.Namespace) -> int:
     platform = verify_from_config(allow_root_checks=True)
     state = load_state().with_updates(platform_state=platform.platform_state)
     evaluated = evaluate_state(state)
+    save_state(evaluated)
     ok = platform.ok and not evaluated.validation_errors
     payload = {
         "ok": ok,

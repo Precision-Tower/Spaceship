@@ -5,7 +5,8 @@ from __future__ import annotations
 import os
 from pathlib import Path
 
-PROJECT_ROOT = Path(__file__).resolve().parents[2]
+TERMUX_ROOT = Path(__file__).resolve().parents[2]
+CEOS_ROOT = Path(__file__).resolve().parents[4]
 
 
 def _path_from_env(name: str, default: Path) -> Path:
@@ -16,12 +17,12 @@ def _path_from_env(name: str, default: Path) -> Path:
 
 
 def state_file() -> Path:
-    return _path_from_env("CE_OS_STATE_FILE", PROJECT_ROOT / "state" / "runtime" / "state.json")
+    return _path_from_env("CE_OS_STATE_FILE", CEOS_ROOT / "state" / "runtime" / "state.json")
 
 
 def platform_manifest_file() -> Path:
-    return _path_from_env("CE_OS_PLATFORM_MANIFEST", PROJECT_ROOT / "config" / "approved-platform.json")
+    return _path_from_env("CE_OS_PLATFORM_MANIFEST", TERMUX_ROOT / "config" / "approved-platform.json")
 
 
 def platform_state_file() -> Path:
-    return _path_from_env("CE_OS_PLATFORM_STATE_FILE", PROJECT_ROOT / "state" / "platform-state.env")
+    return _path_from_env("CE_OS_PLATFORM_STATE_FILE", CEOS_ROOT / "state" / "platform-state.env")
