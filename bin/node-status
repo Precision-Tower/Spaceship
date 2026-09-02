@@ -1,12 +1,2 @@
 #!/data/data/com.termux/files/usr/bin/bash
-
-export SVDIR="$PREFIX/var/service"
-
-echo "node=pixel"
-echo "android=$(getprop ro.build.version.release)"
-echo "build=$(getprop ro.build.id)"
-echo "boot_completed=$(getprop sys.boot_completed)"
-echo "sshd=$(sv status sshd 2>&1)"
-echo "guardian=$(sv status ce-os-guardian 2>&1)"
-echo "watcher=$(pgrep -f guardian-watch | wc -l)"
-"$HOME/ce-os/bin/power-state"
+exec "/data/data/com.termux/files/home/ce-os/Android/Termux/bin/node-status" "$@"

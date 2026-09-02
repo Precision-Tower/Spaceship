@@ -1,14 +1,2 @@
 #!/data/data/com.termux/files/usr/bin/bash
-
-STATE="$("$HOME/ce-os/bin/power-state")"
-
-ALLOW="$(printf '%s\n' "$STATE" | awk -F= '/^thermal_status=/{print $2}')"
-POWER="$(printf '%s\n' "$STATE" | awk -F= '/^state=/{print $2}')"
-
-if [[ "$POWER" == "POWERED" && "$ALLOW" -le 1 ]]; then
-    echo "granted"
-    exit 0
-fi
-
-echo "denied"
-exit 1
+exec "/data/data/com.termux/files/home/ce-os/Android/Termux/bin/compute-lease" "$@"
