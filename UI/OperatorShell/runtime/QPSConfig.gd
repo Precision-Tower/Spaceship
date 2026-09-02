@@ -2,7 +2,7 @@ extends RefCounted
 class_name OperatorShellQPSConfig
 
 const QPS_EXECUTABLE := "qps/cpp/build/qps"
-const OPERATOR_SHELL_DOCUMENT := "UI/OperatorShell/<index.qps"
+const OPERATOR_SHELL_DOCUMENT := "UI/OperatorShell/_index.qps"
 
 var dashboard_root: String
 

@@ -32,7 +32,7 @@ qps_reference- "qps/docs/QPS.qps";
 configuration_bridge- "UI/OperatorShell/runtime/QPSConfig.gd";
 
 module.
-surface- "UI/OperatorShell/<index.qps";
+surface- "UI/OperatorShell/_index.qps";
 root- "UI/OperatorShell";
 role- "QPS-addressable structural surface for the live OperatorShell Godot subsystem";
 rule- ".gd owns behavior; QPS owns declarative structure configuration identity and relationships";
@@ -40,7 +40,7 @@ status- "active_semantic_surface";
 
 configuration.
 qps_consumed_by- "runtime/QPSConfig.gd";
-qps_document- "UI/OperatorShell/<index.qps";
+qps_document- "UI/OperatorShell/_index.qps";
 qps_runtime- "qps/cpp/build/qps";
 runtime_query- "terminal.density";
 fallback_resource- "resources/dashboard_config.tres";
@@ -193,7 +193,7 @@ environment_overrides- "OPERATOR_PTY_HOST OPERATOR_PTY_PORT";
 qps_runtime: (
 client- "UI/OperatorShell/runtime/QPSConfig.gd";
 executable- "qps/cpp/build/qps";
-document- "UI/OperatorShell/<index.qps";
+document- "UI/OperatorShell/_index.qps";
 query- "terminal.density";
 role- "shared QPS runtime scalar configuration bridge";
 );
@@ -373,7 +373,7 @@ evidence- "QPSConfig preload plus QPSConfig.new(CliBridge.dashboard_root()).appl
 );
 QPSConfig_QPSRuntime: (
 from- "runtime/QPSConfig.gd";
-to- "qps/cpp/build/qps and UI/OperatorShell/<index.qps";
+to- "qps/cpp/build/qps and UI/OperatorShell/_index.qps";
 kind- "scalar QPS query";
 evidence- "OS.execute executable document --get path";
 );
