@@ -1,8 +1,8 @@
 ﻿extends RefCounted
 class_name OperatorShellCommandActions
 
-const CommandPacket = preload("res://OperatorShell/runtime/CommandPacket.gd")
-const CliBridge = preload("res://OperatorShell/runtime/CliBridge.gd")
+const CommandPacket = preload("res://runtime/CommandPacket.gd")
+const CliBridge = preload("res://runtime/CliBridge.gd")
 
 static func refresh_state() -> Dictionary:
 	return CommandPacket.make(

@@ -1,8 +1,8 @@
 ﻿extends RefCounted
 class_name OperatorShellBottomDock
 
-const Palette = preload("res://OperatorShell/widgets/Palette.gd")
-const TerminalSurface = preload("res://OperatorShell/widgets/TerminalSurface.gd")
+const Palette = preload("res://widgets/Palette.gd")
+const TerminalSurface = preload("res://widgets/TerminalSurface.gd")
 
 var host
 var bottom_shell: PanelContainer

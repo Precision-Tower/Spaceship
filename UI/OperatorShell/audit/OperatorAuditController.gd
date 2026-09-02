@@ -1,8 +1,8 @@
 extends Node
 class_name OperatorShellAuditController
 
-const AUDIT_SCRIPT_PATH := "res://OperatorShell/audit/operator-shell-audit.sh"
-const STATE_PATH := "res://OperatorShell/audit/output/operator_shell_state.json"
+const AUDIT_SCRIPT_PATH := "res://audit/operator-shell-audit.sh"
+const STATE_PATH := "res://audit/output/operator_shell_state.json"
 
 var panel
 var audit_running := false

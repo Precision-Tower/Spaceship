@@ -1,0 +1,24 @@
+; CE-OS OperatorShell
+; Canonical Godot project root
+
+config_version=5
+
+[application]
+
+config/name="CE-OS OperatorShell"
+run/main_scene="res://scenes/Main.tscn"
+
+[display]
+
+window/size/viewport_width=1080
+window/size/viewport_height=2400
+window/stretch/mode="canvas_items"
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+
+[filesystem]
+
+import/blender/enabled=false

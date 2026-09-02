@@ -1,11 +1,11 @@
 extends RefCounted
 class_name OperatorShellLeftPanel
 
-const Palette = preload("res://OperatorShell/widgets/Palette.gd")
-const CliBridge = preload("res://OperatorShell/runtime/CliBridge.gd")
-const MissionService = preload("res://OperatorShell/runtime/MissionService.gd")
-const CapabilityPanel = preload("res://OperatorShell/audit/CapabilityPanel.gd")
-const DocsPanel = preload("res://OperatorShell/widgets/DocsPanel.gd")
+const Palette = preload("res://widgets/Palette.gd")
+const CliBridge = preload("res://runtime/CliBridge.gd")
+const MissionService = preload("res://runtime/MissionService.gd")
+const CapabilityPanel = preload("res://audit/CapabilityPanel.gd")
+const DocsPanel = preload("res://widgets/DocsPanel.gd")
 
 var host
 var missions_panel: Control

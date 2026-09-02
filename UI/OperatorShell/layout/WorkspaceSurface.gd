@@ -1,7 +1,7 @@
 ﻿extends RefCounted
 class_name OperatorShellWorkspaceSurface
 
-const Palette = preload("res://OperatorShell/widgets/Palette.gd")
+const Palette = preload("res://widgets/Palette.gd")
 
 var host
 var workspace_tabs: TabContainer

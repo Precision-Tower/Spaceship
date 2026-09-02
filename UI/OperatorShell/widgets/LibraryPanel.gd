@@ -1,8 +1,8 @@
 extends RefCounted
 class_name OperatorShellLibraryPanel
 
-const Palette = preload("res://OperatorShell/widgets/Palette.gd")
-const CliBridge = preload("res://OperatorShell/runtime/CliBridge.gd")
+const Palette = preload("res://widgets/Palette.gd")
+const CliBridge = preload("res://runtime/CliBridge.gd")
 
 var host
 var panel_container: VBoxContainer

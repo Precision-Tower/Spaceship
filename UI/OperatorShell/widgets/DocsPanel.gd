@@ -1,7 +1,7 @@
 extends RefCounted
 class_name OperatorShellDocsPanel
 
-const Palette = preload("res://OperatorShell/widgets/Palette.gd")
+const Palette = preload("res://widgets/Palette.gd")
 
 var host
 var shell_container: VBoxContainer

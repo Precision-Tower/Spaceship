@@ -1,10 +1,10 @@
 extends RefCounted
 class_name OperatorShellRightRail
 
-const Palette = preload("res://OperatorShell/widgets/Palette.gd")
-const CliBridge = preload("res://OperatorShell/runtime/CliBridge.gd")
-const ModelServerController = preload("res://OperatorShell/runtime/ModelServerController.gd")
-const LibraryPanel = preload("res://OperatorShell/widgets/LibraryPanel.gd")
+const Palette = preload("res://widgets/Palette.gd")
+const CliBridge = preload("res://runtime/CliBridge.gd")
+const ModelServerController = preload("res://runtime/ModelServerController.gd")
+const LibraryPanel = preload("res://widgets/LibraryPanel.gd")
 
 var host
 var right_mode_buttons := {}

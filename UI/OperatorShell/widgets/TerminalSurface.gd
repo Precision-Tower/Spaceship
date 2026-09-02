@@ -1,8 +1,8 @@
 extends RefCounted
 class_name OperatorShellTerminalSurface
 
-const Palette = preload("res://OperatorShell/widgets/Palette.gd")
-const TerminalClient = preload("res://OperatorShell/runtime/TerminalServiceClient.gd")
+const Palette = preload("res://widgets/Palette.gd")
+const TerminalClient = preload("res://runtime/TerminalServiceClient.gd")
 
 const SYSTEM_SESSION_ID := "system-log"
 const SYSTEM_LOG_PATH := "/home/spaztic/Core/Dashboard/dashboard.log"

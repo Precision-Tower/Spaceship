@@ -1,6 +1,6 @@
 extends Control
 
-const CliBridge = preload("res://OperatorShell/runtime/CliBridge.gd")
+const CliBridge = preload("res://runtime/CliBridge.gd")
 
 var intent_input
 var output
