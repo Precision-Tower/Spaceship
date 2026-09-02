@@ -1,0 +1,332 @@
+#!/data/data/com.termux/files/usr/bin/python
+
+from __future__ import annotations
+
+import hashlib
+import json
+import os
+import subprocess
+import sys
+import time
+import uuid
+from pathlib import Path
+
+HOME = Path("/data/data/com.termux/files/home")
+ROOT = HOME / "ce-os"
+
+GADGET = Path("/config/usb_gadget/g1")
+CONFIG = GADGET / "configs/b.1"
+FUNCTIONS = GADGET / "functions"
+UDC_FILE = GADGET / "UDC"
+
+IMAGE = ROOT / "usb/bootstrap/ce-os-bootstrap.img"
+SUMS = ROOT / "usb/bootstrap/SHA256SUMS"
+
+STATE_DIR = ROOT / "state/runtime"
+USB_STATE = STATE_DIR / "usb-bootstrap.json"
+
+UDC_NAME = "11110000.dwc3"
+ROLLBACK_SECONDS = 90
+
+
+def read(path: Path) -> str:
+    return path.read_text().strip()
+
+
+def write(path: Path, value: str) -> None:
+    with path.open("w") as handle:
+        handle.write(value)
+
+
+def sha256(path: Path) -> str:
+    h = hashlib.sha256()
+    with path.open("rb") as handle:
+        while True:
+            chunk = handle.read(1024 * 1024)
+            if not chunk:
+                break
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def expected_sha256() -> str | None:
+    if not SUMS.is_file():
+        return None
+    parts = SUMS.read_text().strip().split()
+    return parts[0] if parts else None
+
+
+def links() -> dict[str, str]:
+    result = {}
+    if CONFIG.is_dir():
+        for path in sorted(CONFIG.iterdir()):
+            if path.is_symlink():
+                result[path.name] = os.readlink(path)
+    return result
+
+
+def preflight() -> dict:
+    observed_links = links()
+    expected = expected_sha256()
+    actual = sha256(IMAGE) if IMAGE.is_file() else None
+
+    checks = []
+
+    def add(name, ok, observed=None):
+        checks.append({
+            "name": name,
+            "ok": bool(ok),
+            "observed": observed,
+        })
+
+    add("running_as_root", os.geteuid() == 0, os.geteuid())
+    add("gadget_exists", GADGET.is_dir(), str(GADGET))
+    add("config_exists", CONFIG.is_dir(), str(CONFIG))
+    add("functions_exists", FUNCTIONS.is_dir(), str(FUNCTIONS))
+    add("expected_udc", read(UDC_FILE) == UDC_NAME, read(UDC_FILE))
+    add("image_exists", IMAGE.is_file(), str(IMAGE))
+    add("image_checksum", expected == actual, actual)
+    add(
+        "adb_function_active",
+        any("ffs.adb" in v for v in observed_links.values()),
+        observed_links,
+    )
+    add(
+        "mtp_function_active",
+        any("ffs.mtp" in v for v in observed_links.values()),
+        observed_links,
+    )
+    add("configfs_writable", os.access(FUNCTIONS, os.W_OK), str(FUNCTIONS))
+
+    return {
+        "ok": all(item["ok"] for item in checks),
+        "operation": "bootstrap.preflight",
+        "live_usb_mutation": False,
+        "udc": read(UDC_FILE),
+        "active_links": observed_links,
+        "checks": checks,
+    }
+
+
+def save_snapshot(token: str) -> dict:
+    STATE_DIR.mkdir(parents=True, exist_ok=True)
+
+    snapshot = {
+        "token": token,
+        "active": True,
+        "created": time.time(),
+        "rollback_at": time.time() + ROLLBACK_SECONDS,
+        "udc": read(UDC_FILE),
+        "links": links(),
+    }
+
+    USB_STATE.write_text(
+        json.dumps(snapshot, indent=2, sort_keys=True) + "\n"
+    )
+
+    return snapshot
+
+
+def load_snapshot() -> dict:
+    if not USB_STATE.is_file():
+        raise RuntimeError("USB rollback state is missing")
+    return json.loads(USB_STATE.read_text())
+
+
+def unlink_config_functions() -> None:
+    for path in CONFIG.iterdir():
+        if path.is_symlink():
+            path.unlink()
+
+
+def ensure_mass_storage_function() -> Path:
+    function = FUNCTIONS / "mass_storage.ceos"
+
+    if not function.exists():
+        function.mkdir()
+
+    lun = function / "lun.0"
+
+    if not lun.is_dir():
+        raise RuntimeError("mass-storage lun.0 was not created")
+
+    if (lun / "ro").exists():
+        write(lun / "ro", "1")
+
+    if (lun / "removable").exists():
+        write(lun / "removable", "1")
+
+    write(lun / "file", str(IMAGE))
+
+    return function
+
+
+def restore(snapshot: dict) -> None:
+    subprocess.run(["sync"], check=False)
+
+    # Disconnect first.
+    write(UDC_FILE, "")
+
+    unlink_config_functions()
+
+    for name, target in snapshot["links"].items():
+        os.symlink(target, CONFIG / name)
+
+    write(UDC_FILE, snapshot.get("udc") or UDC_NAME)
+
+    snapshot["active"] = False
+    snapshot["restored"] = time.time()
+
+    USB_STATE.write_text(
+        json.dumps(snapshot, indent=2, sort_keys=True) + "\n"
+    )
+
+
+def enable_test() -> dict:
+    result = preflight()
+
+    if not result["ok"]:
+        return {
+            "ok": False,
+            "operation": "bootstrap.enable",
+            "error": "preflight_failed",
+            "preflight": result,
+        }
+
+    token = uuid.uuid4().hex
+    snapshot = save_snapshot(token)
+
+    # Arm rollback BEFORE disconnecting the current gadget.
+    subprocess.Popen(
+        [
+            sys.executable,
+            str(Path(__file__).resolve()),
+            "rollback-watch",
+            token,
+        ],
+        stdin=subprocess.DEVNULL,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+        start_new_session=True,
+    )
+
+    subprocess.run(["sync"], check=False)
+
+    function = ensure_mass_storage_function()
+
+    # Disconnect Android's current MTP + ADB gadget.
+    write(UDC_FILE, "")
+
+    unlink_config_functions()
+
+    # Expose only CE-OS read-only mass storage.
+    os.symlink(str(function), CONFIG / "function0")
+
+    write(UDC_FILE, UDC_NAME)
+
+    return {
+        "ok": True,
+        "operation": "bootstrap.enable",
+        "usb_mode": "bootstrap",
+        "read_only": True,
+        "automatic_rollback_seconds": ROLLBACK_SECONDS,
+        "rollback_token": token,
+    }
+
+
+def disable() -> dict:
+    # Idempotent disable:
+    # if BOOTSTRAP has never been enabled, Android USB is already
+    # the authoritative state and there is nothing to restore.
+    if not USB_STATE.is_file():
+        return {
+            "ok": True,
+            "operation": "bootstrap.disable",
+            "usb_mode": "android",
+            "already_restored": True,
+            "reason": "no_rollback_state",
+        }
+
+    snapshot = load_snapshot()
+
+    if not snapshot.get("active"):
+        return {
+            "ok": True,
+            "operation": "bootstrap.disable",
+            "usb_mode": "android",
+            "already_restored": True,
+        }
+
+    restore(snapshot)
+
+    return {
+        "ok": True,
+        "operation": "bootstrap.disable",
+        "usb_mode": "android",
+        "restored_links": snapshot["links"],
+    }
+
+
+def rollback_watch(token: str) -> int:
+    time.sleep(ROLLBACK_SECONDS)
+
+    try:
+        snapshot = load_snapshot()
+    except Exception:
+        return 0
+
+    if not snapshot.get("active"):
+        return 0
+
+    if snapshot.get("token") != token:
+        return 0
+
+    restore(snapshot)
+    return 0
+
+
+def status() -> dict:
+    snapshot = {}
+
+    if USB_STATE.is_file():
+        try:
+            snapshot = json.loads(USB_STATE.read_text())
+        except Exception:
+            snapshot = {}
+
+    return {
+        "ok": True,
+        "operation": "bootstrap.status",
+        "udc": read(UDC_FILE),
+        "active_links": links(),
+        "bootstrap_active": bool(snapshot.get("active")),
+        "rollback_at": snapshot.get("rollback_at"),
+    }
+
+
+def main() -> int:
+    command = sys.argv[1] if len(sys.argv) > 1 else "preflight"
+
+    if command == "preflight":
+        result = preflight()
+    elif command == "enable-test":
+        result = enable_test()
+    elif command == "disable":
+        result = disable()
+    elif command == "status":
+        result = status()
+    elif command == "rollback-watch":
+        return rollback_watch(sys.argv[2])
+    else:
+        result = {
+            "ok": False,
+            "error": "unknown_command",
+            "command": command,
+        }
+
+    print(json.dumps(result, indent=2, sort_keys=True))
+    return 0 if result.get("ok") else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

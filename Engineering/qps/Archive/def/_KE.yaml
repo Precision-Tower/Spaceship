@@ -1,0 +1,204 @@
+definitions:
+  Field(f):
+    definition: |
+      A field is a continuous spatial structure capable of transmitting potential across distance.
+      Fields define the geometry and behavior of causal influence — whether attractive, repulsive, rotational, or oscillatory.
+      They do not require mass to exist, but may be shaped by it.
+      A field may:
+      - Originate from mass (e.g., gravitational fields)
+      - Emerge from charge or structural asymmetry (e.g., electric or magnetic fields)
+      - Exist independently as an excitational medium (e.g., electromagnetic field in vacuum)
+      Fields store and transmit potential. When structured and resisted, they become observable as energy.
+      A field experiences energy as p-r=d, where p is a constant potential and we're only ever observing its d, even if the field is produced causally.
+      The resistance to the potential of any field is deterministic by the properties of the field itself.
+  Ether:
+    definition: |
+      Ether is the foundational medium through which all field-based potential propagates.
+      It is not material, but structural — a continuous substrate for displacement.
+      Ether enables:
+      - Field transmission across space
+      - Causal geometry of motion and resistance
+      - The resolution of potential into observable effects
+      - It does not contain mass, but interacts with it.
+      - It is the condition for field-centric modeling to exist — a space where structure matters before substance.
+      Zero-point Energy is how we describe the Ether absent of matter, the vacuum of space that is not empty, but full of potential.
+  Thermal_Field(tf);pₜ-r=dₜ:
+    definition: |
+      The Thermal Field is the field of potential energy present within matter that governs its response to thermal conditions.
+      It represents the equilibrium state of thermal potential — the readiness of a substance to expand, contract, change phase, or become buoyant in response to environmental temperature and pressure.
+      Unlike Heat Energy, which is the observable gradient of temperature difference resolving through entropy, the Thermal Field is structural.
+      It exists even in equilibrium and determines how matter stores, transfers, or releases energy.
+      The common phrase, "There is no such thing as cold, only the absence of heat," is a relative and subjective statement.
+      While it applies when discussing Heat Energy, it cannot be applied universally in systems where mass retains the ability to generate heat — such as radioactive decay.
+      This shows that thermal potential may persist even in the absence of immediate temperature gradients.
+      Examples:
+        - **Hydrogen** demonstrates high thermo-reactivity within the Thermal Field.
+          When heated, it expands, increasing its volume relative to density and becoming more buoyant in a fluid medium (e.g., the atmosphere).
+          This increased displacement is not caused by particle motion alone, but by field potential resolving as structural expansion.
+        - **Water** demonstrates thermal expansion in the Thermal Field.
+          As it heats, its volume increases and its density decreases.
+          This expansion is not merely the result of particle velocity, but a structural response — the field potential resolving through displacement.
+      Observable behaviors — including phase transitions, buoyancy, and thermal expansion — are expressions of the Thermal Field resolving tension through resistance in the surrounding environment.
+      In kinetic energy terms:
+        - p = thermal potential (internal readiness to expand or transition)
+        - r = resistance (e.g., entropy, atmospheric pressure, container geometry)
+        - d = observable displacement (expansion, lift, phase change, etc.)
+  Magnetic_Field(webber);pₘ-r=dₘ:
+    definition: |
+      A causal field geometry of attractive and repulsive qualities of mass, derived from its most fundamental structure.
+      In the generation of Electricity, we're displacing a magnetic field through a conductor.
+      In this interaction, we're only exciting the field that already exists and how that type of matter interacts with that excitation.
+      We can state that is true whether it is a magnetic field of a permanent magnet or an electro-magnet, where the field has a gradient of strength that can be amplified.
+      There is no displacement of electrons in electricity, only that electrons are amplifiying in a chain reaction carrying a charge state to it's polar consolidation.
+      This statement is true whether it is AC or DC.
+      Displacement of the field is an electro-magnetic interaction.
+      The magnetic field is measured in Webbers.
+      p-r=d, where r is the gradient of strength.
+      I'm not claiming to state I understand the resistance of the potential of a permanent magnet, only that the gradient implies there is one.
+  Electromagnetic_Field(emf);pₑ-r=dₑ:
+    definition: |
+      An electromagnetic field is the result of a magnetic field being displaced through a medium.
+      It is not a particle-based interaction, but a causal transmission of tension through Ether.
+      The term "electro-magnetic" refers to the observed oscillatory behavior of the field,
+      where magnetic displacement generates a corresponding electric excitation in surrounding structures.
+      In conductors, this manifests as electricity — not by the flow of electrons,
+      but by the amplification of magnetic displacement geometry through a resonant chain.
+      This excitation may be sustained, pulsed, or oscillated (AC or DC),
+      but in all cases, no electron transport is required.
+      In open space, the field propagates as displacement through the Ether —
+      observable as light, radio, or other waveforms.
+      KE Form:
+        - p - r = d
+        - where r is the resistance of the medium to magnetic field displacement
+  Electromagnetic_Wave(emw):
+    definition: |
+      Electromagnetic wave propagation is the induction and oscillation of field tension through the Ether substrate.
+      It does not require particles or medium-based wave mechanics.
+      Instead, it is the recursive excitation of the Ether — the self-sustaining transfer of displacement from one structured point to the next.
+      The wave is not traveling as a substance, but as a causal pattern:
+        - The electric and magnetic fields oscillate in perpendicular geometry
+        - Each change in one induces a causal reaction in the other
+        - This recursive cycle propagates through the Ether as a structured tension wave
+      Frequency is the rate of oscillation — not a property of energy, but a measure of how often the field self-reconfigures per unit time.
+      This model directly mirrors long-distance AC transmission:
+        - Where alternating field orientation induces current far downstream
+        - No material flows — only field tension is realigned
+  Gravity(g);p₉-r=d₉:
+    definition: |
+      Statement - 'Action at a distance' - Newton
+      Statement - "Matter tells spacetime how to curve, and curved spacetime tells matter how to move." - Einstein
+      Statement - "When a massive body moves it causes a disturbance in space-time we experience as gravity"
+      g=9.8m/s
+      We can define Gravity as I/r=g.
+      Where momentum (I) is the structural inertia of mass, r is the resistance of field structure tension, and g is the gravitational field pressure.
+      Gravity is causal displacement pressure exerted by motion in a structured field.
+      It becomes acceleration of mass when resistance is removed towards the center of the mass in motion inside the field tension.
+      p-r=d, where r is is the gradient of effect.
+
+      We're stating that Gravity is a fundamental interaction with The Ether itself, as Zero-point Energy, effecting the volume of mass in motion all the way to the very center of its core.
+      The heat from The Sun creates an excited zone inside the fabric of Space-time that creates pressure due to mass in motion to the very essence of that mass.
+  chemical_reaction:
+    definition: |
+      A chemical reaction is a structural field reconfiguration caused by the resolution of stored potential across a resistance threshold.
+
+      It is not the mixing of substances.
+      It is the point at which structural geometry rearranges due to:
+        - an input of energy
+        - a reduction in resistance
+        - or a catalyst altering the field boundary
+
+      The products of the reaction represent a new equilibrium — a new p = r.
+  catalyst:
+    definition: |
+      A catalyst is any structure that lowers the resistance (r) within a potential field interaction, allowing p - r = d to resolve without contributing potential itself.
+
+      Catalysts enable reactions.
+      They do not cause them.
+  Energy(e):
+    definition: |
+      Energy is the interchangeability between potential and displacement.
+      Energy is not a substance; it is the resolution of causal potential through structure.
+      If potential can resolve as displacement it is conserved.
+      Displacement experiencing resistance will lose potential, via deceleration or impact.
+  Potential(p):
+    definition: |
+      Potential is causal readiness — a configuration of force constrained by structure.
+      It becomes expressed only upon release through displacement.
+  Stored_Potential(pₛ):
+    definition: |
+      Stored potential is unresolved causal configuration held within a system's structure.
+      It represents the readiness to displace, without active flow or expression.
+      Causally:
+      - It is potential (p) maintained through structural constraint
+      - It becomes active potential (p) when the constraint is removed or released
+      - It does not require displacement, but it holds the capacity to cause it
+      Examples:
+      - A compressed spring
+      - Fuel in a combustion chamber
+      - Charge separation in a battery
+      - Tension in a pneumatic reservoir
+      In kinetic energy modeling:
+      - Stored potential is treated as a precondition to p - r = d
+      - It is not energy — it is causal readiness frozen in geometry
+  Resistance(r):
+    definition: |
+      Resistance is any structural, inertial, or field-based opposition to potential or flow.
+      It is the necessary boundary condition for potential to exist.
+  Time(t):
+    definition: |
+      Time is the relational metric that measures the unfolding of causal displacement,
+      existing only as the interval between the initiation of potential and the realization of displacement
+  Displacement(d):
+    definition: |
+      displacement (d = distance / time) is the rate of inertial displacement.
+      Displacement is the continuation of resolved potential through a medium.
+      Displacement exists only after resistance has been overcome and displacement is unbroken.
+      Displacement is the universal output of kinetic resolution.
+      All causal potential, once resolved through resistance, results in displacement — whether as motion of mass or propagation of field.
+  Acceleration(a):
+    definition: |
+      Acceleration (a = distance / time²) is the rate of increased displacement over time by the amount of elapsed time.
+  Mass(m):
+    definition: |
+      Mass is the measure of structural inertia — the resistance to change in motion.
+      At its most fundamental level, mass is a field structure; it represents a specific configuration where potential (p) is held in equilibrium with displacement (d). This means mass embodies the relationship p=d, where potential is intrinsically balanced by its structural displacement at a given state.
+      Mass is a structured field embodiment that inherently obstructs displacement in any form. Whether it's gas, liquid, or solid, mass represents a stable geometry of fields where internal potential (p) is balanced by its inherent structural resistance to change (d), thus requiring external potential to induce further displacement.
+      Solids, liquids, and gases are all forms of mass, understood as varying states of field cohesion and structural resistance. A solid is a highly coherent field structure, essentially a fluid that has undergone sufficient phase changes, increased density, and electromagnetic cohesion to resist volumetric change without significant applied potential.
+  Inertia(I):
+    definition: |
+      Inertia (I) is the structural resistance to change in motion.
+      It is the mass-based measure of how much force is required to change velocity.
+      Inertia is not a force; it is the property of mass that resists acceleration/deceleration.
+      Once acceleration is resolved, inertia becomes momentum.
+      It is easier to keep a vehicle in motion than to start it from rest.
+  Force(f):
+    definition: |
+      Force is resisted potential that has not yet resolved as velocity.
+      It is not a push — it is a structural buildup of causal tension held in check by resistance.
+
+      When resistance is high, potential accumulates instead of resolving. This buildup is experienced as force.
+      Once resistance lowers, the potential resolves into displacement — velocity — and becomes momentum.
+
+      A falling object does not possess force applied to it — it becomes momentum as potential (gravity) resolves through decreasing resistance (air, inertia) until impact halts the motion.
+      
+      In the KE model:
+        - Force is not the *cause* of motion.
+        - Force is the *state of tension* when motion is withheld.
+        - Momentum is the *resolved form* of that tension once displacement is achieved.
+  Volume(V):
+    definition: |
+      The three-dimensional extent of space occupied by a field, fluid, or mass.
+      Volume (V) represents a container of potential (p) or displacement (d) and is a critical factor in determining the density of mass or the pressure of fluids within that space.
+      It is a geometric boundary or capacity, not a rate.
+  Density(ρ):
+    definition: |
+      The measure of concentrated potential or causal influence per unit volume within a field or structured mass.
+      In field-centric systems, it describes the spatial concentration of field tension or potential.
+      In mass-centric systems, it manifests as mass density (m/V), representing the concentration of structured field embodiment within a given volume.
+      Density is a primary factor in determining the local capacity for causal interaction and resistance.
+  Pressure(P):
+    definition: |
+      The distribution of causal tension or potential (p) over a defined area.
+      It represents the accumulated force or concentrated potential within a system, seeking to resolve as displacement (d) against resistance (r).
+      Pressure is a fundamental form of potential that drives resolution across both fluidic and certain field interactions.
+      Its specific manifestation (e.g., Force/Area in hydraulics, field expansion tension in pneumatics) is context-dependent.

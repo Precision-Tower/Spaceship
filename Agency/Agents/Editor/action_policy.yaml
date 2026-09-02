@@ -1,0 +1,21 @@
+ActionPolicy:
+  owner: Editor
+  status: scaffold_candidate
+  authority: action_boundary_policy_only_not_execution_authority
+  default:
+    mutation_allowed_from_normal_ask: false
+    proposal_required_for_writes: true
+    approval_required: true
+  allowed:
+  - read_context
+  - summarize_context
+  - propose_patch
+  - prepare_handoff
+  - interpret_guardrails
+  prohibited:
+  - direct_file_mutation_without_action_packet
+  - validation_claims
+  - canon_promotion
+  - irreversible_architecture_change_without_operator_approval
+  capabilities:
+  - engineering

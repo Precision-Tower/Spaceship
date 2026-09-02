@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+SCRIPT_DIR="$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/../lib/common.sh"
+pt_initialize
+pt_print_line "Precision Tower operator commands"
+pt_print_line "help       Show this command list."
+pt_print_line "browser    Launch Brave from a local graphical session, or explain what is missing."
+pt_print_line "desktop    Start XFCE on demand for the local operator."
+pt_print_line "dashboard  Launch the existing Dashboard/Godot entry point."
+pt_print_line "status     Show repository, runtime, and package health."
+pt_print_line "doctor     Run read-only deployment diagnostics."
+pt_print_line "logs       Show known repository and future service log locations."
+pt_print_line "update     Report the unresolved update workflow without changing the machine."
+pt_print_line "restart    Restart selected runtime/application surfaces only with confirmation."
+pt_print_line "shutdown   Power off the machine only with explicit confirmation."

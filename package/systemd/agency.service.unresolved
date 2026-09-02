@@ -1,0 +1,18 @@
+# Non-installable Agency service draft.
+# Current repository evidence does not identify a persistent Agency runtime command.
+# Do not install this file as a systemd unit until AGENCY_COMMAND is backed by a real daemon-style repository entry point.
+
+[Unit]
+Description=UNRESOLVED Agency runtime for Precision Tower Node
+Documentation=file:Docs/PrecisionTowerNode.md
+Wants=network-online.target tailscaled.service
+After=network-online.target tailscaled.service
+
+[Service]
+Type=simple
+EnvironmentFile=-/etc/precision-tower-node/default.env
+ExecStart=/bin/bash -lc 'echo "AGENCY_COMMAND unresolved; no persistent Agency runtime has been selected"; exit 78'
+Restart=no
+
+[Install]
+WantedBy=multi-user.target

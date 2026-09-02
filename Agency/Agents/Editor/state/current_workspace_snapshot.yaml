@@ -1,0 +1,219 @@
+WorkspaceSnapshot:
+  timestamp_utc: 2026-08-01T03:19:26.650322+00:00
+  root: /home/spaztic/Core/Dashboard
+  authority: workspace_snapshot_not_validation
+  scanned:
+    Agency:
+      path: Agency
+      exists: true
+      file_count: 1828
+      files:
+        - 'Agency/unittest.py'
+        - 'Agency/README.md'
+        - 'Agency/Core/work/__init__.py'
+        - 'Agency/Core/work/planning/goals.py'
+        - 'Agency/Core/work/planning/memory.py'
+        - 'Agency/Core/work/planning/mission_planning.py'
+        - 'Agency/Core/work/planning/prompting.py'
+        - 'Agency/Core/work/planning/__init__.py'
+        - 'Agency/Core/work/planning/proposal_generation.py'
+        - 'Agency/Core/work/planning/tests/test_proposal_generation_extraction.py'
+        - 'Agency/Core/work/planning/tests/test_mission_planning_extraction.py'
+        - 'Agency/Core/work/planning/tests/__init__.py'
+        - 'Agency/Core/work/work_packets/proposals.py'
+        - 'Agency/Core/work/work_packets/contracts.py'
+        - 'Agency/Core/work/work_packets/persistence.py'
+        - 'Agency/Core/work/work_packets/__init__.py'
+        - 'Agency/Core/work/work_packets/execution.py'
+        - 'Agency/Core/work/work_packets/proposal_contracts.py'
+        - 'Agency/Core/work/work_packets/tests/test_dashboard_cli_routing.py'
+        - 'Agency/Core/work/work_packets/tests/test_create_proposal.py'
+        - 'Agency/Core/work/work_packets/tests/__init__.py'
+        - 'Agency/Core/work/work_packets/tests/test_work_packet_orchestration.py'
+        - 'Agency/Core/work/missions/mission_spec.py'
+        - 'Agency/Core/work/missions/mission_runtime.py'
+        - 'Agency/Core/work/missions/mission_factory.py'
+    UI:
+      path: UI
+      exists: true
+      file_count: 146
+      files:
+        - 'UI/project.godot'
+        - 'UI/Main/Main.tscn'
+        - 'UI/Main/Main.gd'
+        - 'UI/Workbench/Main/Main.tscn'
+        - 'UI/Workbench/Main/Main.gd'
+        - 'UI/Workbench/actions/ProjectActionController.gd'
+        - 'UI/Workbench/inspectors/ObjectInspectorPanel.gd'
+        - 'UI/Workbench/inspectors/ObjectInspector.gd'
+        - 'UI/Workbench/inspectors/PacketInspector.gd'
+        - 'UI/Workbench/inspectors/LeftPanel.gd'
+        - 'UI/Workbench/config/WorkbenchConstants.gd'
+        - 'UI/Workbench/config/WorkbenchPaths.gd'
+        - 'UI/Workbench/selection/HighlightController.gd'
+        - 'UI/Workbench/selection/ViewportSelectionController.gd'
+        - 'UI/Workbench/selection/SelectionRaycaster.gd'
+        - 'UI/Workbench/selection/SelectionManager.gd'
+        - 'UI/Workbench/contracts/WorkbenchObjectContract.yaml'
+        - 'UI/Workbench/contracts/EngineeringUIContractReference.yaml'
+        - 'UI/Workbench/contracts/PacketDisplayContract.yaml'
+        - 'UI/Workbench/interaction/CameraController.gd'
+        - 'UI/Workbench/interaction/GhostCommandController.gd'
+        - 'UI/Workbench/interaction/CreateContextMenu.gd'
+        - 'UI/Workbench/interaction/GhostCommandDialogs.gd'
+        - 'UI/Workbench/interaction/ViewportInputHelper.gd'
+        - 'UI/Workbench/interaction/SimulationPlaybackController.gd'
+    Engineering:
+      path: Engineering
+      exists: true
+      file_count: 94
+      files:
+        - 'Engineering/__init__.py'
+        - 'Engineering/Physics/export_workbench_primitives.py'
+        - 'Engineering/Physics/variables.py'
+        - 'Engineering/Physics/primitive_registry.py'
+        - 'Engineering/Physics/geometry.py'
+        - 'Engineering/Physics/primitives.py'
+        - 'Engineering/Physics/materials.py'
+        - 'Engineering/Physics/equations.py'
+        - 'Engineering/Physics/constants.py'
+        - 'Engineering/Physics/__init__.py'
+        - 'Engineering/Physics/workbench_primitives.json'
+        - 'Engineering/Physics/Domains/solids.py'
+        - 'Engineering/Physics/Domains/buoyancy.py'
+        - 'Engineering/Physics/Domains/fluids.py'
+        - 'Engineering/Physics/Domains/motion.py'
+        - 'Engineering/Physics/Domains/resistance.py'
+        - 'Engineering/Physics/Domains/domains.py'
+        - 'Engineering/Physics/Objects/objects.py'
+        - 'Engineering/Physics/Objects/__init__.py'
+        - 'Engineering/Physics/Objects/pipe/connections.py'
+        - 'Engineering/Physics/Objects/pipe/fittings.py'
+        - 'Engineering/Physics/Objects/pipe/pipe.py'
+        - 'Engineering/Physics/Objects/pipe/hollow_pipe.py'
+        - 'Engineering/Physics/Objects/pipe/routing.py'
+        - 'Engineering/Physics/Objects/pipe/catalog.py'
+    Workbench:
+      path: UI/Workbench
+      exists: true
+      file_count: 60
+      files:
+        - 'UI/Workbench/Main/Main.tscn'
+        - 'UI/Workbench/Main/Main.gd'
+        - 'UI/Workbench/actions/ProjectActionController.gd'
+        - 'UI/Workbench/inspectors/ObjectInspectorPanel.gd'
+        - 'UI/Workbench/inspectors/ObjectInspector.gd'
+        - 'UI/Workbench/inspectors/PacketInspector.gd'
+        - 'UI/Workbench/inspectors/LeftPanel.gd'
+        - 'UI/Workbench/config/WorkbenchConstants.gd'
+        - 'UI/Workbench/config/WorkbenchPaths.gd'
+        - 'UI/Workbench/selection/HighlightController.gd'
+        - 'UI/Workbench/selection/ViewportSelectionController.gd'
+        - 'UI/Workbench/selection/SelectionRaycaster.gd'
+        - 'UI/Workbench/selection/SelectionManager.gd'
+        - 'UI/Workbench/contracts/WorkbenchObjectContract.yaml'
+        - 'UI/Workbench/contracts/EngineeringUIContractReference.yaml'
+        - 'UI/Workbench/contracts/PacketDisplayContract.yaml'
+        - 'UI/Workbench/interaction/CameraController.gd'
+        - 'UI/Workbench/interaction/GhostCommandController.gd'
+        - 'UI/Workbench/interaction/CreateContextMenu.gd'
+        - 'UI/Workbench/interaction/GhostCommandDialogs.gd'
+        - 'UI/Workbench/interaction/ViewportInputHelper.gd'
+        - 'UI/Workbench/interaction/SimulationPlaybackController.gd'
+        - 'UI/Workbench/packet/PacketDisplayResolver.gd'
+        - 'UI/Workbench/packet/PacketLoader.gd'
+        - 'UI/Workbench/packet/GhostCommandExporter.gd'
+    Workbench_packet:
+      path: UI/Workbench/packet
+      exists: true
+      file_count: 4
+      files:
+        - 'UI/Workbench/packet/PacketDisplayResolver.gd'
+        - 'UI/Workbench/packet/PacketLoader.gd'
+        - 'UI/Workbench/packet/GhostCommandExporter.gd'
+        - 'UI/Workbench/packet/PacketLink.gd'
+    Workbench_rendering:
+      path: UI/Workbench/rendering
+      exists: true
+      file_count: 5
+      files:
+        - 'UI/Workbench/rendering/ViewportObjectRenderer.gd'
+        - 'UI/Workbench/rendering/GhostPrimitiveRenderer.gd'
+        - 'UI/Workbench/rendering/PacketGeometryRenderer.gd'
+        - 'UI/Workbench/rendering/CoordinateHelper.gd'
+        - 'UI/Workbench/rendering/PortMarkerRenderer.gd'
+    Workbench_viewport_interaction:
+      path: UI/Workbench/interaction
+      exists: true
+      file_count: 6
+      files:
+        - 'UI/Workbench/interaction/CameraController.gd'
+        - 'UI/Workbench/interaction/GhostCommandController.gd'
+        - 'UI/Workbench/interaction/CreateContextMenu.gd'
+        - 'UI/Workbench/interaction/GhostCommandDialogs.gd'
+        - 'UI/Workbench/interaction/ViewportInputHelper.gd'
+        - 'UI/Workbench/interaction/SimulationPlaybackController.gd'
+    Workbench_scenes:
+      path: UI/Workbench/scenes
+      exists: true
+      file_count: 4
+      files:
+        - 'UI/Workbench/scenes/ObjectInspector.tscn'
+        - 'UI/Workbench/scenes/PacketInspector.tscn'
+        - 'UI/Workbench/scenes/Workbench.tscn'
+        - 'UI/Workbench/scenes/Workbench.gd'
+    Workbench_primitives:
+      path: UI/Workbench/primitives
+      exists: false
+      file_count: 0
+      files:
+    Engineering_primitives:
+      path: Engineering/Physics
+      exists: true
+      file_count: 27
+      files:
+        - 'Engineering/Physics/export_workbench_primitives.py'
+        - 'Engineering/Physics/variables.py'
+        - 'Engineering/Physics/primitive_registry.py'
+        - 'Engineering/Physics/geometry.py'
+        - 'Engineering/Physics/primitives.py'
+        - 'Engineering/Physics/materials.py'
+        - 'Engineering/Physics/equations.py'
+        - 'Engineering/Physics/constants.py'
+        - 'Engineering/Physics/__init__.py'
+        - 'Engineering/Physics/workbench_primitives.json'
+        - 'Engineering/Physics/Domains/solids.py'
+        - 'Engineering/Physics/Domains/buoyancy.py'
+        - 'Engineering/Physics/Domains/fluids.py'
+        - 'Engineering/Physics/Domains/motion.py'
+        - 'Engineering/Physics/Domains/resistance.py'
+        - 'Engineering/Physics/Domains/domains.py'
+        - 'Engineering/Physics/Objects/objects.py'
+        - 'Engineering/Physics/Objects/__init__.py'
+        - 'Engineering/Physics/Objects/pipe/connections.py'
+        - 'Engineering/Physics/Objects/pipe/fittings.py'
+        - 'Engineering/Physics/Objects/pipe/pipe.py'
+        - 'Engineering/Physics/Objects/pipe/hollow_pipe.py'
+        - 'Engineering/Physics/Objects/pipe/routing.py'
+        - 'Engineering/Physics/Objects/pipe/catalog.py'
+        - 'Engineering/Physics/Objects/pipe/__init__.py'
+  git_observation:
+    authority: historical_git_observation_not_current_truth
+    observation_id: 'gitobs-fd0fefaa4ec51125'
+    observed_at: '2026-08-01T03:19:26Z'
+    git_command: ['git', 'status', '--porcelain=v1']
+    git_exit_code: 0
+    output_sha256: '9329f19c7f8b4d5aa79ea7d75f0eee2ca1863a37a401e41fa0e0dd128b4a6b15'
+    head_oid: 'd7ef7e176b2ff8aa74c31200ab252c9be6c32974'
+    modified_count: 2
+    untracked_count: 2
+    modified:
+      - 'Agency/Core/agents/tooling/Chroma/build_index.py'
+      - 'Agency/Core/agents/tooling/Chroma/query_index.py'
+    untracked:
+      - 'Agency/Agents/Editor/state/current_workspace_snapshot.yaml'
+      - 'intuitive-agent-action-help.patch'
+  action_packets:
+    authority: legacy_action_packet_workspace_observation
+    proposal_count: 0
+    result_count: 0

@@ -1,0 +1,6 @@
+#!/data/data/com.termux/files/usr/bin/bash
+
+while true; do
+    "$HOME/ce-os/bin/guardian-log"
+    sleep 60
+done

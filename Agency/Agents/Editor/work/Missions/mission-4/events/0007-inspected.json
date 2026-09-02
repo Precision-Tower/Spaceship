@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "mission_id": "mission-4",
+  "sequence": 7,
+  "event_type": "inspected",
+  "timestamp": "2026-08-13T10:19:34.468981+00:00",
+  "authority": "mission_event_log",
+  "payload": {
+    "command": "mission inspect",
+    "status": "inspection_complete",
+    "mission_id": "mission-4",
+    "pass": 2,
+    "files_inspected": [
+      "Agency/Core/runtime/commands.py",
+      "Agency/Core/work/missions/pipeline/implementation/__init__.py",
+      "Agency/Core/work/missions/pipeline/review/execution.py",
+      "Agency/Core/work/missions/pipeline/review/helpers.py",
+      "Agency/Core/work/missions/pipeline/review/state.py",
+      "Agency/Core/work/planning/__init__.py",
+      "Agency/Core/work/planning/mission_planning.py",
+      "Agency/Core/work/planning/proposal_generation.py"
+    ],
+    "files_remaining": 0,
+    "inspection_complete": true,
+    "source_files_modified": false,
+    "authority": "read_only_inspection"
+  }
+}

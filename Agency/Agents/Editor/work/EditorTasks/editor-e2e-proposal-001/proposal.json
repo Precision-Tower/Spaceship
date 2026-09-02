@@ -1,0 +1,73 @@
+{
+  "authority": "editor_patch_proposal_not_implementation",
+  "model_assistance_used": false,
+  "patch_construction_is_not_implementation": true,
+  "proposal_method": "deterministic_text_replacement",
+  "proposal_sha256": "b1dcef5f80372f1d02cb312e68f5e2df27acbd6369d3cc2afbda7a075df9ad36",
+  "proposed_changes": [
+    {
+      "assumptions": [
+        "The requested replacement is intentional and remains subject to Gear/Seth approval."
+      ],
+      "intended_change": "deterministic_text_replacement",
+      "supporting_evidence": [
+        {
+          "collection": "findings",
+          "end_line": 7,
+          "evidence_type": "text_search",
+          "path": "Agency/Agents/Editor/README.md",
+          "start_line": 7
+        },
+        {
+          "collection": "findings",
+          "end_line": 46,
+          "evidence_type": "text_search",
+          "path": "Agency/Agents/Editor/README.md",
+          "start_line": 46
+        },
+        {
+          "collection": "findings",
+          "end_line": 98,
+          "evidence_type": "text_search",
+          "path": "Agency/Agents/Editor/README.md",
+          "start_line": 98
+        }
+      ],
+      "target_file": "Agency/Agents/Editor/README.md",
+      "unresolveds": []
+    }
+  ],
+  "repository_mutation_performed": false,
+  "schema_version": 1,
+  "suggested_verification_commands": [
+    "Review proposed.patch before any application.",
+    "Apply only after explicit Gear PatchAuthorization.",
+    "Run verification after an authorized apply step."
+  ],
+  "supporting_evidence": [
+    {
+      "collection": "findings",
+      "end_line": 7,
+      "evidence_type": "text_search",
+      "path": "Agency/Agents/Editor/README.md",
+      "start_line": 7
+    },
+    {
+      "collection": "findings",
+      "end_line": 46,
+      "evidence_type": "text_search",
+      "path": "Agency/Agents/Editor/README.md",
+      "start_line": 46
+    },
+    {
+      "collection": "findings",
+      "end_line": 98,
+      "evidence_type": "text_search",
+      "path": "Agency/Agents/Editor/README.md",
+      "start_line": 98
+    }
+  ],
+  "target_files": [
+    "Agency/Agents/Editor/README.md"
+  ]
+}

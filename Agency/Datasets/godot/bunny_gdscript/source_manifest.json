@@ -1,0 +1,20 @@
+{
+  "dataset_id": "bunnycore/Gd-Script",
+  "authority": "retrieval_only_not_godot_authority",
+  "source_type": "external_huggingface_dataset",
+  "use_for": [
+    "gdscript_language_exposure",
+    "syntax_examples",
+    "retrieval_context",
+    "prompt_support"
+  ],
+  "blocked_from": [
+    "godot_api_truth",
+    "validation",
+    "automatic_code_editing",
+    "runtime_authority"
+  ],
+  "raw_files": [
+    "godot\\bunny_gdscript\\raw\\train.jsonl"
+  ]
+}

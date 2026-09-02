@@ -1,0 +1,177 @@
+{
+  "packet_type": "battery_packet",
+  "created_at": "2026-06-20T10:30:50.928017+00:00",
+  "evidence_state": "calculated_candidate",
+  "assembly": {
+    "assembly_id": "battery_pack_001",
+    "assembly_type": "battery_pack",
+    "hierarchy": {
+      "root_group": "power_system",
+      "groups": {
+        "power_system": {
+          "parent_group": "motor_assembly",
+          "status": "active",
+          "role": "electrical_power_storage"
+        },
+        "battery_pack": {
+          "parent_group": "power_system",
+          "status": "active",
+          "role": "series_battery_pack_candidate"
+        }
+      }
+    },
+    "objects": [
+      {
+        "object_id": "battery_12v_001",
+        "object_type": "battery",
+        "role": "power_storage",
+        "mass_kg": 18.0,
+        "volume_m3": 0.0,
+        "position_m": {
+          "x": -0.35,
+          "y": 0.55,
+          "z": 0.0
+        },
+        "dimensions_m": {
+          "x": 0.33,
+          "y": 0.24,
+          "z": 0.22
+        },
+        "electrical": {
+          "nominal_voltage_v": 12.0,
+          "connection_role": "series_member",
+          "series_index": 1
+        },
+        "render": {
+          "primitive": "box",
+          "size_m": {
+            "x": 0.33,
+            "y": 0.24,
+            "z": 0.22
+          },
+          "display_position_m": {
+            "x": -0.35,
+            "y": 0.55,
+            "z": 0.0
+          },
+          "material": {
+            "material_id": "battery_case_candidate"
+          }
+        },
+        "material": "lead_acid_battery_candidate",
+        "contributes_weight": true,
+        "contributes_buoyancy": false,
+        "assembly_group": "power_system",
+        "subsystem": "motor",
+        "parent_group": "motor_assembly",
+        "unresolved_variables": [
+          "actual_battery_type",
+          "actual_battery_mass",
+          "actual_battery_dimensions",
+          "battery_mounting_hardware",
+          "battery_box_mass",
+          "cable_mass",
+          "waterproofing",
+          "electrical_protection"
+        ],
+        "blocked_interpretations": [
+          "battery_candidate_equals_selected_battery",
+          "nominal_voltage_equals_runtime_voltage_under_load",
+          "battery_presence_equals_power_system_validated"
+        ]
+      },
+      {
+        "object_id": "battery_12v_002",
+        "object_type": "battery",
+        "role": "power_storage",
+        "mass_kg": 18.0,
+        "volume_m3": 0.0,
+        "position_m": {
+          "x": 0.35,
+          "y": 0.55,
+          "z": 0.0
+        },
+        "dimensions_m": {
+          "x": 0.33,
+          "y": 0.24,
+          "z": 0.22
+        },
+        "electrical": {
+          "nominal_voltage_v": 12.0,
+          "connection_role": "series_member",
+          "series_index": 2
+        },
+        "render": {
+          "primitive": "box",
+          "size_m": {
+            "x": 0.33,
+            "y": 0.24,
+            "z": 0.22
+          },
+          "display_position_m": {
+            "x": 0.35,
+            "y": 0.55,
+            "z": 0.0
+          },
+          "material": {
+            "material_id": "battery_case_candidate"
+          }
+        },
+        "material": "lead_acid_battery_candidate",
+        "contributes_weight": true,
+        "contributes_buoyancy": false,
+        "assembly_group": "power_system",
+        "subsystem": "motor",
+        "parent_group": "motor_assembly",
+        "unresolved_variables": [
+          "actual_battery_type",
+          "actual_battery_mass",
+          "actual_battery_dimensions",
+          "battery_mounting_hardware",
+          "battery_box_mass",
+          "cable_mass",
+          "waterproofing",
+          "electrical_protection"
+        ],
+        "blocked_interpretations": [
+          "battery_candidate_equals_selected_battery",
+          "nominal_voltage_equals_runtime_voltage_under_load",
+          "battery_presence_equals_power_system_validated"
+        ]
+      }
+    ],
+    "summary": {
+      "battery_count": 2,
+      "connection": "series_candidate",
+      "nominal_battery_voltage_v": 12.0,
+      "pack_voltage_v": 24.0,
+      "total_battery_mass_kg": 36.0,
+      "contributes_weight": true,
+      "contributes_buoyancy": false
+    },
+    "unresolved_variables": [
+      "actual_battery_type",
+      "actual_battery_mass",
+      "actual_battery_dimensions",
+      "battery_mounting_location",
+      "battery_box_mass",
+      "cable_mass",
+      "fuse_breaker_selection",
+      "waterproofing",
+      "runtime_current_draw",
+      "usable_capacity_ah"
+    ],
+    "blocked_interpretations": [
+      "two_12v_batteries_equals_validated_power_system",
+      "series_voltage_equals_motor_compatibility",
+      "battery_packet_equals_safe_electrical_design",
+      "battery_mass_candidate_equals_measured_mass"
+    ]
+  },
+  "prohibited_interpretations": [
+    "calculation_equals_validation",
+    "battery_candidate_equals_safe_installation",
+    "packet_equals_electrical_safety_review",
+    "nominal_voltage_equals_operational_readiness"
+  ]
+}

@@ -1,0 +1,8 @@
+gr. Gear: def"A mass-centric article that creates angular momentum.";
+dimensions: (
+radius-/n;
+width-/n;
+tooth_count-/n;
+tooth_depth-/n;
+material-/a;
+);

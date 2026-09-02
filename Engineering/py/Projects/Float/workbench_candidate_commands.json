@@ -1,0 +1,69 @@
+{
+	"commands": [
+		{
+			"category": "",
+			"command_type": "create_object",
+			"evidence_state": "ui_ghost_candidate",
+			"item": "",
+			"object_id": "ghost_pipe_001",
+			"position_m": {
+				"x": 3.26482605934143,
+				"y": -0.0000000596046447753906,
+				"z": -0.637608766555786
+			},
+			"rotation_degrees": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": 0.0
+			},
+			"scale_m": {
+				"x": 1.0,
+				"y": 1.0,
+				"z": 1.0
+			},
+			"source_state": "workbench_ghost",
+			"world_position": {
+				"x": 3.26482605934143,
+				"y": -0.0000000596046447753906,
+				"z": -0.637608766555786
+			}
+		},
+		{
+			"category": "",
+			"command_type": "create_object",
+			"evidence_state": "ui_ghost_candidate",
+			"item": "",
+			"object_id": "ghost_pipe_002",
+			"position_m": {
+				"x": 4.01482582092285,
+				"y": 0.749999940395355,
+				"z": -0.637608766555786
+			},
+			"rotation_degrees": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": 0.0
+			},
+			"scale_m": {
+				"x": 1.0,
+				"y": 1.0,
+				"z": 1.0
+			},
+			"source_state": "workbench_ghost",
+			"world_position": {
+				"x": 4.01482582092285,
+				"y": 0.749999940395355,
+				"z": -0.637608766555786
+			}
+		}
+	],
+	"evidence_state": "ui_ghost_candidate",
+	"packet_type": "workbench_candidate_commands",
+	"prohibited_interpretations": [
+		"ghost_candidate_equals_engineering_object",
+		"ui_position_equals_validated_geometry",
+		"candidate_command_equals_packet_mutation",
+		"visual_object_equals_physical_truth"
+	],
+	"source": "UI/Workbench"
+}

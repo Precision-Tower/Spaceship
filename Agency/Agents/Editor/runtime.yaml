@@ -1,0 +1,44 @@
+AgentRuntime:
+  owner: Editor
+
+  identity:
+    role: editor
+    description: "Repository engineering and implementation agent."
+
+  environment:
+    manifest: /home/spaztic/Core/Dashboard/Agency/Agents/Editor/runtime/environment_manifest.yaml
+    authority: EnvironmentManifest
+
+  RuntimeIdentity:
+    runtime:
+      backend: llama_server
+      accelerator: cuda
+      inference_route: local
+      execution_mode: local_gpu
+
+  model:
+    enabled: true
+    route: Agency/Core/runtime/model_service.py
+    backend: llama_server
+    accelerator: cuda
+    inference_route: local
+    execution_mode: local_gpu
+    router_runtime: "llama_server"
+    selection_mode: environment_manifest
+    authority: shared_runtime_not_agent_owned
+    runtime_authority: Agency/Agents/Editor/runtime/environment_manifest.yaml
+
+  environment_selection:
+    detected: true
+    reason: "CUDA available; llama-server detected"
+    authority: creation_time_observation_not_runtime_guarantee
+
+  compatibility:
+    deprecated_profile_alias: null
+    status: null
+
+  rules:
+    - model_output_is_draft
+    - model_output_is_not_source_authority
+    - model_output_requires_operator_or_action_route_before_mutation
+    - agent_does_not_own_model_runtime

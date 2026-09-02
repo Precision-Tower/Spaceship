@@ -1,0 +1,8 @@
+# Precision Tower Wine packages and unresolved application facts.
+
+wine
+
+UNRESOLVED wine_operator_application_installer
+UNRESOLVED wine_operator_application_architecture
+UNRESOLVED wine_operator_application_dependencies
+UNRESOLVED wine_operator_application_license

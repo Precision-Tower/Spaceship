@@ -1,0 +1,127 @@
+Cc. Charge-centric: def"
+A useful tool to be able to state the value of any amount of charge is a Coulumb and that we control the voltage as the amount of current going through a system.
+This is the belief that an electron carries a charge that equates joule/second.
+This is the stupidest shit I've ever heard in my life and I can disprove it 100 different ways.
+I'm not saying the entirety of Charge-centric methodology is the stupidest shit I've ever heard,
+only quantifying the Charge-centric model to model 'Conservation of Energy'.
+I don't think that can be proven.
+
+Fc. Field-centric: def"
+An interpretation that Electricity is only the voltage that is being displaced through a conductor.
+I believe this, and the reason why is that in an electric motor you have 2 opposing and attracting magnetics fields creating rotation.
+When you get into AC Motors this gets even more abstract because in a synchronous motor you're using Electromagnets in the rotor and an alternating current(AC) in the stator. How the Magnetic Fields(MF) interact isn't based on a mass-centric model where Momentum(mv) is conserved.
+I do agree that momentum is conserved, but when you define energy as n-m(Joule), which would imply that something was in motion, the field doesn't meet that criteria. The strength of the field is objectively a variable that can't be state to have the same amount of potential as an object in motion based on its velocity.
+In an Angular Momentum system we can state that something can be spinning slow and have a lot of force,
+but that's if you're measuring it as a Linear Velocity(v) or an Angular Velocity(av). Something with a circumference of 10m is going to make less revolutions of something with 1m with the same velocity.
+What my point is that in an Angular System you have Angular Momentum and Torque that manipulate the force based on the displacement, you can state that Mechanical Advantage(ma) is based on the displacement from pivot, how many meters(m) by how much force(n) gives you meter-newtons(m-n), just like ft-lbs.
+With Electric Motors(em) there is always the Mechanical Advantage of the displacement of the field creating rotation from the pivot point.
+It isn't like the Mass-centric(MC) interpretation is out of context, we're discussing how matter is interacting within Magnetic Fields(MF). The point is that the source of motion isn't from a physical object, and that the amount of force is a variable that doesn't have the same concept as f=ma, because the fields force isn't equivalent to ma, it was a constant potential if it's a Permanent Magnet(pm), and a variable potential if it's an Electromagnet(Em).
+Charge-centric works if we're discussing batteries and electronics.
+Field-centric is necessary if we're discussing AC or DC motors.
+
+Ec. Electricity: def"
+Electricity is the displacement of a magnetic field through a conductor.
+A conductive material is a Non-ferromagnetic material that doesn't create a closed-induction that amplifies the magnetic field, ex. Iron.
+Electricity, whether AC or DC, is the manipulation of a field through a mass.
+Wireless Electricity is the perpeputaion of an amplified Alternating Current that is able to induce voltage through a conductor based on the proximity of contact inside of the field.;
+
+I. Induction: def"
+'First Law of Electro-Magnetic Induction'
+"A changing Magnetic Flux will induce an Electro-Motive Force"
+- Michael Faraday
+When a Magnetic Field is carried by a conductive material, non-ferromagnetic material.
+Electro-magnetic Induction is when you use a Magnetic Field to generate a Current.
+
+cI. Closed Induction: def"
+When a Magnetic Field is absorbed by a ferromagnetic material and creates an Eddy Current that produces an amplified Magnetic Field. A sheet of copper will also create a Closed circuit and amplify the magnetic field produces by the displacement. By increasing the Magnetic Field in a circuit you increase the amount of Flux in the circuit that will put Mechanical Resistance on the Generator or Alternator.
+
+v. Voltage: def"
+With AC Electricity we would measure the change as hz, the rate of fluctuations per second, Magnetic Flux as the strength of the field, and the Electro-motive Force as the induced voltage.
+With DC Electricity the flux doesn't technically change, it can be a constantly moving field to induce a current.;
+
+c. Current: def"
+The relationship with a mass carrying a magnetic field, creating a charged state.
+The relationship of Ohm's Law: v/r=i*v=p
+Current is a broad term for Electricity, that enounciates the interaction inside of a conductor.;
+
+a. Amps: def"
+'V/R=A'
+"Voltage / Resistance = Amps"
+Throughout history we've been taught AR=V,
+and it isn't that it's wrong, it's just a misinterpretation of the dynamics.
+We can state that any amount of V is going to encounter R, and that is going to effect the V.
+'12v / 2r = 6a * 12v = 72p'
+'12v / 3r = 4a * 12v = 48p'
+When calculating amps in Ohm's Law you're making a prediction about how much voltage will be lost due to the resistance in the circuit. This has nothing to do with the draw of current when adding Magnetic Flux to a circuit. I am not going to define Charge-centricism terms in my model because I'm interpreting Field-centricism and how I can explain the phenomenon inside of a circuit that causes effects.
+Amps can't be a distinguishment for how much voltage is lost in a circuit and how much heat is generated based on draw.
+We think that resistance is a value that interprets how impedence is inside of a circuit, but they're different because of material.
+We're trying to get to the same place with both terms using the same word, but we lose interpretation if we don't exchange the terms between how ferro-magnetic and non-ferromagnetic material interact with voltage.
+If you run a DC current through iron it is going to act like an electro-magnet and introduce magnetic flux to the circuit and create draw.
+Draw is going to increase the amount of heat in the circuit and blow fuses.
+Understanding how draw works with a battery is a different interaction than if you're inducing a current with a generator or alternator.
+That value isn't as simple as just stating the resistance in the system is equivalent to the Permeability of the material.
+Caring about how we got the values is where the interpretation between Charge-centricism and Field-centricism clash.
+If you're only ever dealing with DC current the Charge-centric Theory holds true and allows us to manipulate the phenomenon we call Electricity.
+If you're trying to understand the fundamentals of 'Electro-magnetic Induction', Field-centricism is the only value that holds true.
+I'm not arguing with Ohm's Law, I'm arguing with the definitive terms we associate with Ohm's Law and our interpretation of Electro-magnetic Inudction where the interpretations clash. I would say that Field-centricism takes precedence over Charge-centricism, but that doesn't devalue Charge-centricism.
+The only fundamental shift is the interpretation of how Amps behave in Ohm's Law.
+We use the word amps as a universal term because we associate it with the flow of electrons,
+But I can explain every phenomenon that in implied inside of a Charge-centric interpretation through understanding the phenomon in different ways.;
+
+r. Resistance: def"
+Resistance in an electrical circuit is specifically measured as ohms and interacts with the voltage to lower the amount of power in a circuit, where it is most effective to DC, because AC induces itself down a conductor by rapidly fluctuating the magnetic poles.
+Resistance is always present inside of a conductor and produces more heat the more resistant the material is.
+Semi-conductive materials need heat syncs because of the heat generated proportional to the amount of voltage provided and their resistance to the displacement.
+
+p. Power: def"
+Measured as Watts, but I think that Watts should keep his name in mechanical power.
+'12v / 2r = 6a * 12v = 72p'
+'12v / 3r = 4a * 12v = 48p'
+We could even call it potential.
+The more resistance in circuit the less potential in the circuit.
+But in this circumstance r is ohms, the amount of electrical resistance in the circuit.
+This has nothing to do with mechanical resistance on your generator or alternator.
+
+ofx. Opposing Flux: def"
+Whenever you are generating a current through Electro-magnetic Induction, the magnet in motion doesn't create opposition on itself. If you have a really strong magnet in the circuit, like a Vehicle Start Motor that has super strong permanent magnets, whether the generator or alternator is spinning or not, the permanent magnets of the Starter Motor is going to be creating opposition based on the strength of the magnet in the circuit.
+I call that Opposing Flux. It is the Mechanical Resistance on your generator or alternator.
+
+d. Draw: def"
+Draw is caused by the amount of Magnetic Flux(fx) in a Battery circuit. A conductor, a non-ferromagnetic material, reflects Magnetic Flux and carries it down the outside of the material. Some materials, like iron, will induce a strong magnetic field, like an Electromagnet, and that flux will create mechanical resistance on a generator or alternator.
+In a DC circuit with a battery, Flux increases the draw of the battery, not effecting the voltage, but increasing the amount of heat in the circuit, amps. This isn't calculated with Ohm's Law.
+
+f. Fuse: def"
+A device in a circuit that is the lowest melting temperature.
+It isn't safe to say that that a fuse is ever the same temperature at the copper wires,
+but to keep other materials inside of a circuit safe we put different alloys that have a higher resistance to keep surges from affecting other components.
+A breaker is a type of fuse that uses a sensor to disconnect the line with a relay.
+
+cap. Capacitor: def"
+A capacitor is a device that holds a charge based on conductive materials.
+A battery specifically uses an electrolyte with high ionization capabilities.
+A capacitor uses material between 2 conductive plates to hold ionization.
+Capacitors in AC single phase motors is to offset the phase to a second coils to create the offset to create rotation.
+
+ca. Capacitance: def"
+Whether it's a battery or capacitor it is measured in capacitance.
+A battery is specifically measured in W/hr, and that is at 1amp/hr, make sense of that.
+When it comes to using capacitance in an AC circuit it behaves completely different.
+
+cw. Coil Wrap: def"
+In an electrical circuit, every wrap of a non-ferromagnetic material creates a centralized magnetic field that reflects outward. That amplified field is Magnetic Flux in a circuit and will create draw or opposing flux.
+By adding iron to the Coil Wrap you have an Electromagnet.
+
+fc. Field Coil: def"
+This shit gets confusing because a Permanent Magnet in a stator can be called a field coil.
+There is no reason to have such an open definition on this.
+Armatures are super special Electro-magnetic designs that amplify magnetic fields using DC.
+AC motors, specifically Synchronous Motors and Universal Motors, can use Armatures even though they're AC.
+I would really like it if we all agreed that a Field Coil is the coil wraps on a permanent magnet.
+I think we would all be happier people if we came to peace with this.
+Because an induction motors stator coils are called field coils and I'm never going to call it that..... They're stator coils.
+
+tf. Transformer: def"
+A device with a primary and secondary coil.
+If the primary has more wraps than the second it is a step down transformer.
+If the primary has less wraps than the second it is a step up transformer.
+It uses the principles of the Electromagnet and a closed induction amplification of a magnetic field to induce a changing magnetic flux into a larger field coil, inducing a higher voltage, proportionately.

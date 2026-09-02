@@ -1,0 +1,45 @@
+{
+  "authority": "editor_patch_proposal_not_implementation",
+  "model_assistance_used": false,
+  "patch_construction_is_not_implementation": true,
+  "proposal_method": "deterministic_text_replacement",
+  "proposal_sha256": "73f58b7d8dbab88f6ab67c9be81fd844ab97cb7e9bd1adddb200a11a6ea8f78c",
+  "proposed_changes": [
+    {
+      "assumptions": [
+        "The requested replacement is intentional and remains subject to Gear/Seth approval."
+      ],
+      "intended_change": "deterministic_text_replacement",
+      "supporting_evidence": [
+        {
+          "collection": "findings",
+          "end_line": 1,
+          "evidence_type": "text_search",
+          "path": "Agency/local/editor_acceptance/target.txt",
+          "start_line": 1
+        }
+      ],
+      "target_file": "Agency/local/editor_acceptance/target.txt",
+      "unresolveds": []
+    }
+  ],
+  "repository_mutation_performed": false,
+  "schema_version": 1,
+  "suggested_verification_commands": [
+    "Review proposed.patch before any application.",
+    "Apply only after explicit Gear PatchAuthorization.",
+    "Run verification after an authorized apply step."
+  ],
+  "supporting_evidence": [
+    {
+      "collection": "findings",
+      "end_line": 1,
+      "evidence_type": "text_search",
+      "path": "Agency/local/editor_acceptance/target.txt",
+      "start_line": 1
+    }
+  ],
+  "target_files": [
+    "Agency/local/editor_acceptance/target.txt"
+  ]
+}

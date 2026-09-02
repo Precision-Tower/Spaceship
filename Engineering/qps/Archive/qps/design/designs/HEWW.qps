@@ -1,0 +1,8 @@
+Hydro-Electric Water Wheel:
+(KE:
+HEWW: River: (FD), Water Wheel: (FD = ME), Alternator: (ME = AC);)
+(equation: {
+[1: River: (FD: Ambient Fluid: type: density, flow rate;)
+= Water Wheel: (details: dimensions, material, bearings, contact area; / output: mv, rpm;)
+= Alternator: (details: type, dimensions, poles; / output: vac, hz;)
+]})

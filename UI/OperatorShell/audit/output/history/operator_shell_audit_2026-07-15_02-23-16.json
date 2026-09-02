@@ -1,0 +1,388 @@
+{
+  "schema_version": 1,
+  "repository_root": "/home/spaztic/Core/Dashboard",
+  "generated_at": "2026-07-15T02:23:16.776820+00:00",
+  "rule": "Presence is not capability. Capability requires an observed end-to-end demonstration.",
+  "summary": {
+    "NONE": 0,
+    "PRESENT": 18,
+    "WIRED": 6,
+    "EXECUTABLE": 0,
+    "PASS": 4,
+    "PARTIAL": 0,
+    "FAIL": 0,
+    "UNTESTED": 14
+  },
+  "current_test": {
+    "id": "shell.05",
+    "step": "Open Terminal tab",
+    "pass_condition": "Terminal becomes active.",
+    "result": "UNTESTED",
+    "evidence": "",
+    "unresolved": []
+  },
+  "checks": [
+    {
+      "id": "shell.scene",
+      "category": "Runtime",
+      "capability": "OperatorShell main scene exists",
+      "evidence_level": "PRESENT",
+      "status": "FOUND",
+      "evidence": "UI/OperatorShell/scenes/Main.tscn",
+      "next_proof": "Launch through Dashboard Main."
+    },
+    {
+      "id": "shell.main",
+      "category": "Runtime",
+      "capability": "OperatorShell main controller exists",
+      "evidence_level": "PRESENT",
+      "status": "FOUND",
+      "evidence": "UI/OperatorShell/Main.gd",
+      "next_proof": "Confirm startup without fatal errors."
+    },
+    {
+      "id": "layout.left",
+      "category": "Layout",
+      "capability": "Left panel exists",
+      "evidence_level": "PRESENT",
+      "status": "FOUND",
+      "evidence": "UI/OperatorShell/layout/LeftPanel.gd",
+      "next_proof": "Render capability state here."
+    },
+    {
+      "id": "layout.top",
+      "category": "Layout",
+      "capability": "Top bars exist",
+      "evidence_level": "PRESENT",
+      "status": "FOUND",
+      "evidence": "UI/OperatorShell/layout/TopBars.gd",
+      "next_proof": "Confirm visible controls."
+    },
+    {
+      "id": "layout.bottom",
+      "category": "Layout",
+      "capability": "Bottom runtime dock exists",
+      "evidence_level": "PRESENT",
+      "status": "FOUND",
+      "evidence": "UI/OperatorShell/layout/BottomDock.gd",
+      "next_proof": "Open and test each tab."
+    },
+    {
+      "id": "layout.right",
+      "category": "Layout",
+      "capability": "Right rail exists",
+      "evidence_level": "PRESENT",
+      "status": "FOUND",
+      "evidence": "UI/OperatorShell/layout/RightRail.gd",
+      "next_proof": "Confirm visible controls."
+    },
+    {
+      "id": "layout.workspace",
+      "category": "Layout",
+      "capability": "Workspace surface exists",
+      "evidence_level": "PRESENT",
+      "status": "FOUND",
+      "evidence": "UI/OperatorShell/layout/WorkspaceSurface.gd",
+      "next_proof": "Enable and render workspace."
+    },
+    {
+      "id": "runtime.cli",
+      "category": "Runtime Services",
+      "capability": "CLI bridge exists",
+      "evidence_level": "PRESENT",
+      "status": "FOUND",
+      "evidence": "UI/OperatorShell/runtime/CliBridge.gd",
+      "next_proof": "Run one read-only command."
+    },
+    {
+      "id": "runtime.actions",
+      "category": "Runtime Services",
+      "capability": "Command actions exist",
+      "evidence_level": "PRESENT",
+      "status": "FOUND",
+      "evidence": "UI/OperatorShell/runtime/CommandActions.gd",
+      "next_proof": "Trigger one read-only action."
+    },
+    {
+      "id": "runtime.packet",
+      "category": "Runtime Services",
+      "capability": "Command packet exists",
+      "evidence_level": "PRESENT",
+      "status": "FOUND",
+      "evidence": "UI/OperatorShell/runtime/CommandPacket.gd",
+      "next_proof": "Generate and inspect one packet."
+    },
+    {
+      "id": "runtime.mission",
+      "category": "Runtime Services",
+      "capability": "Mission service exists",
+      "evidence_level": "PRESENT",
+      "status": "FOUND",
+      "evidence": "UI/OperatorShell/runtime/MissionService.gd",
+      "next_proof": "Render mission data."
+    },
+    {
+      "id": "runtime.observation",
+      "category": "Runtime Services",
+      "capability": "Observation tracker exists",
+      "evidence_level": "PRESENT",
+      "status": "FOUND",
+      "evidence": "UI/OperatorShell/runtime/ObservationTracker.gd",
+      "next_proof": "Record one observation."
+    },
+    {
+      "id": "runtime.result",
+      "category": "Runtime Services",
+      "capability": "Result renderer exists",
+      "evidence_level": "PRESENT",
+      "status": "FOUND",
+      "evidence": "UI/OperatorShell/runtime/ResultRenderer.gd",
+      "next_proof": "Render stdout and stderr."
+    },
+    {
+      "id": "runtime.status",
+      "category": "Runtime Services",
+      "capability": "Status service exists",
+      "evidence_level": "PRESENT",
+      "status": "FOUND",
+      "evidence": "UI/OperatorShell/runtime/StatusService.gd",
+      "next_proof": "Refresh and display status."
+    },
+    {
+      "id": "route.dashboard",
+      "category": "Routing",
+      "capability": "Godot boots Dashboard Main",
+      "evidence_level": "WIRED",
+      "status": "FOUND",
+      "evidence": "UI/project.godot",
+      "next_proof": "Launch and observe Dashboard Main."
+    },
+    {
+      "id": "route.operator",
+      "category": "Routing",
+      "capability": "Dashboard defaults to OperatorShell",
+      "evidence_level": "WIRED",
+      "status": "FOUND",
+      "evidence": "UI/Main/Main.gd",
+      "next_proof": "Launch and observe OperatorShell."
+    },
+    {
+      "id": "wire.cli",
+      "category": "Wiring",
+      "capability": "CLI bridge references exist",
+      "evidence_level": "WIRED",
+      "status": "FOUND",
+      "evidence": "CliBridge., const CliBridge",
+      "next_proof": "Run a read-only command."
+    },
+    {
+      "id": "wire.intent",
+      "category": "Wiring",
+      "capability": "Intent input routing exists",
+      "evidence_level": "WIRED",
+      "status": "FOUND",
+      "evidence": "terminal_input, _on_terminal_input_submitted",
+      "next_proof": "Submit harmless text."
+    },
+    {
+      "id": "wire.workspace",
+      "category": "Wiring",
+      "capability": "Workspace construction exists",
+      "evidence_level": "WIRED",
+      "status": "FOUND",
+      "evidence": "WorkspaceSurface.new, workspace_tabs",
+      "next_proof": "Enable workspace."
+    },
+    {
+      "id": "wire.density",
+      "category": "Wiring",
+      "capability": "Density control exists",
+      "evidence_level": "WIRED",
+      "status": "FOUND",
+      "evidence": "_cycle_terminal_density, apply_terminal_density",
+      "next_proof": "Cycle modes."
+    },
+    {
+      "id": "tab.logs",
+      "category": "Runtime Dock",
+      "capability": "Logs tab is declared",
+      "evidence_level": "PRESENT",
+      "status": "FOUND",
+      "evidence": "UI/OperatorShell/layout/BottomDock.gd",
+      "next_proof": "Open the Logs tab."
+    },
+    {
+      "id": "tab.diffs",
+      "category": "Runtime Dock",
+      "capability": "Diffs tab is declared",
+      "evidence_level": "PRESENT",
+      "status": "FOUND",
+      "evidence": "UI/OperatorShell/layout/BottomDock.gd",
+      "next_proof": "Open the Diffs tab."
+    },
+    {
+      "id": "tab.packets",
+      "category": "Runtime Dock",
+      "capability": "Packets tab is declared",
+      "evidence_level": "PRESENT",
+      "status": "FOUND",
+      "evidence": "UI/OperatorShell/layout/BottomDock.gd",
+      "next_proof": "Open the Packets tab."
+    },
+    {
+      "id": "tab.terminal",
+      "category": "Runtime Dock",
+      "capability": "Terminal tab is declared",
+      "evidence_level": "PRESENT",
+      "status": "FOUND",
+      "evidence": "UI/OperatorShell/layout/BottomDock.gd",
+      "next_proof": "Open the Terminal tab."
+    }
+  ],
+  "manual_demonstration": [
+    {
+      "id": "shell.01",
+      "step": "Launch OperatorShell",
+      "pass_condition": "Dashboard Main opens OperatorShell without fatal parser/runtime errors.",
+      "result": "PASS",
+      "evidence": "Dashboard Main launched OperatorShell without fatal parser or runtime errors.",
+      "unresolved": []
+    },
+    {
+      "id": "shell.02",
+      "step": "Host OperatorShell inside Dashboard Main",
+      "pass_condition": "OperatorShell is visibly contained in the route host.",
+      "result": "PASS",
+      "evidence": "OperatorShell visibly rendered inside Dashboard Main's route host.",
+      "unresolved": []
+    },
+    {
+      "id": "shell.03",
+      "step": "Force kiosk window",
+      "pass_condition": "Application occupies the full 1920x1080 display.",
+      "result": "PASS",
+      "evidence": "Dashboard Main occupied the full 1920x1080 black-laptop display.",
+      "unresolved": []
+    },
+    {
+      "id": "shell.04",
+      "step": "Capture screenshot with Alt+S",
+      "pass_condition": "A 1920x1080 PNG is written to ~/Core/Pictures.",
+      "result": "PASS",
+      "evidence": "Alt+S wrote a 1920x1080 PNG to /home/spaztic/Core/Pictures.",
+      "unresolved": []
+    },
+    {
+      "id": "shell.05",
+      "step": "Open Terminal tab",
+      "pass_condition": "Terminal becomes active.",
+      "result": "UNTESTED",
+      "evidence": "",
+      "unresolved": []
+    },
+    {
+      "id": "shell.06",
+      "step": "Open Logs tab",
+      "pass_condition": "Logs becomes active.",
+      "result": "UNTESTED",
+      "evidence": "",
+      "unresolved": []
+    },
+    {
+      "id": "shell.07",
+      "step": "Open Diffs tab",
+      "pass_condition": "Diffs becomes active.",
+      "result": "UNTESTED",
+      "evidence": "",
+      "unresolved": []
+    },
+    {
+      "id": "shell.08",
+      "step": "Open Packets tab",
+      "pass_condition": "Packets becomes active.",
+      "result": "UNTESTED",
+      "evidence": "",
+      "unresolved": []
+    },
+    {
+      "id": "shell.09",
+      "step": "Submit intent text",
+      "pass_condition": "Text is accepted and routed without crashing.",
+      "result": "UNTESTED",
+      "evidence": "",
+      "unresolved": []
+    },
+    {
+      "id": "shell.10",
+      "step": "Cycle terminal density",
+      "pass_condition": "All configured density modes visibly change.",
+      "result": "UNTESTED",
+      "evidence": "",
+      "unresolved": []
+    },
+    {
+      "id": "shell.11",
+      "step": "Collapse and restore dock",
+      "pass_condition": "Dock collapses and restores without losing state.",
+      "result": "UNTESTED",
+      "evidence": "",
+      "unresolved": []
+    },
+    {
+      "id": "shell.12",
+      "step": "Resolve CLI path",
+      "pass_condition": "Expected dashboard CLI path is reported.",
+      "result": "UNTESTED",
+      "evidence": "",
+      "unresolved": []
+    },
+    {
+      "id": "shell.13",
+      "step": "Run read-only CLI command",
+      "pass_condition": "Command executes and returns a result.",
+      "result": "UNTESTED",
+      "evidence": "",
+      "unresolved": []
+    },
+    {
+      "id": "shell.14",
+      "step": "Render stdout",
+      "pass_condition": "stdout appears in a result surface.",
+      "result": "UNTESTED",
+      "evidence": "",
+      "unresolved": []
+    },
+    {
+      "id": "shell.15",
+      "step": "Render stderr",
+      "pass_condition": "stderr appears distinctly.",
+      "result": "UNTESTED",
+      "evidence": "",
+      "unresolved": []
+    },
+    {
+      "id": "shell.16",
+      "step": "Expose exit status",
+      "pass_condition": "Success/failure is visible.",
+      "result": "UNTESTED",
+      "evidence": "",
+      "unresolved": []
+    },
+    {
+      "id": "shell.17",
+      "step": "Enable workspace surface",
+      "pass_condition": "Workspace tabs render above the dock.",
+      "result": "UNTESTED",
+      "evidence": "",
+      "unresolved": []
+    },
+    {
+      "id": "shell.18",
+      "step": "Host Workbench in workspace",
+      "pass_condition": "Workbench loads without killing OperatorShell.",
+      "result": "UNTESTED",
+      "evidence": "",
+      "unresolved": []
+    }
+  ]
+}

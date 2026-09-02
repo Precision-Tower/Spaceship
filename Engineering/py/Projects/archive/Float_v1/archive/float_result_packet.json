@@ -1,0 +1,46 @@
+{
+  "packet_id": "float_packet_ef4cae5a",
+  "packet_type": "runtime_report_packet",
+  "object_or_system": "FloatingBox",
+  "declared_state": "float",
+  "evidence_state": "simulated",
+  "measurements": {
+    "last_sample": {
+      "time": 10.000000000000007,
+      "z": -0.005223873206466248,
+      "vertical_velocity": 0.018823355127770384,
+      "vertical_acceleration": 0.11026886855681517,
+      "submerged_volume": 0.010123300819257094,
+      "flooded_volume": 0.0,
+      "buoyant_force": 99.27566797916758,
+      "weight": 98.06649999999999,
+      "net_force": 1.1026886855681517
+    },
+    "sample_count": 200,
+    "max_z": 0.3006410577745487,
+    "min_z": -0.3803867,
+    "max_vertical_velocity": 1.5675765250088711,
+    "state_history": [
+      "forced_submerge",
+      "overshoot_above_float_band",
+      "oscillation_or_transition",
+      "returned_to_float_band"
+    ]
+  },
+  "unresolved_variables": [
+    "real_object_geometry",
+    "actual_displaced_volume_curve",
+    "real_water_drag",
+    "center_of_mass",
+    "center_of_buoyancy",
+    "leak_behavior_if_any"
+  ],
+  "prohibited_interpretations": [
+    "simulation_equals_validation",
+    "float_equals_stability",
+    "oscillation_equals_stability",
+    "visualization_equals_evidence",
+    "route_completion_equals_claim_support"
+  ],
+  "created_at": "2026-06-14T16:54:58.679215+00:00"
+}

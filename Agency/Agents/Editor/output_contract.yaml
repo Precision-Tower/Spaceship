@@ -1,0 +1,19 @@
+AgentOutputContract:
+  owner: Editor
+  status: scaffold_candidate
+  authority: output_shape_only_not_truth
+
+  default_mode: basic_agent_response
+
+  modes:
+    basic_agent_response:
+      required_sections:
+        - Observed
+        - Inferred
+        - Unresolved
+        - Next action
+      constraints:
+        - do_not_invent_files_or_routes
+        - distinguish_observed_from_inferred
+        - no_completion_claim_without_execution
+        - preserve_authority_boundaries

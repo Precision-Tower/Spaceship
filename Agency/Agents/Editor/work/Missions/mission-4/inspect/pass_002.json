@@ -1,0 +1,810 @@
+{
+  "schema_version": 1,
+  "mission_id": "mission-4",
+  "pass": 2,
+  "timestamp": "2026-08-13T10:19:34.447579+00:00",
+  "files_inspected": [
+    {
+      "path": "Agency/Core/runtime/commands.py",
+      "bytes": 502,
+      "lines": 28,
+      "included_in_prompt": true,
+      "prompt_excerpt_chars": 502,
+      "evidence_terms": [],
+      "class": "primary"
+    },
+    {
+      "path": "Agency/Core/work/missions/pipeline/implementation/__init__.py",
+      "bytes": 39,
+      "lines": 1,
+      "included_in_prompt": true,
+      "prompt_excerpt_chars": 39,
+      "evidence_terms": [],
+      "class": "primary"
+    },
+    {
+      "path": "Agency/Core/work/missions/pipeline/review/execution.py",
+      "bytes": 7611,
+      "lines": 255,
+      "included_in_prompt": true,
+      "prompt_excerpt_chars": 859,
+      "evidence_terms": [],
+      "class": "primary"
+    },
+    {
+      "path": "Agency/Core/work/missions/pipeline/review/helpers.py",
+      "bytes": 2881,
+      "lines": 106,
+      "included_in_prompt": false,
+      "prompt_excerpt_chars": 0,
+      "evidence_terms": [],
+      "class": "primary"
+    },
+    {
+      "path": "Agency/Core/work/missions/pipeline/review/state.py",
+      "bytes": 4851,
+      "lines": 170,
+      "included_in_prompt": false,
+      "prompt_excerpt_chars": 0,
+      "evidence_terms": [],
+      "class": "primary"
+    },
+    {
+      "path": "Agency/Core/work/planning/__init__.py",
+      "bytes": 0,
+      "lines": 0,
+      "included_in_prompt": false,
+      "prompt_excerpt_chars": 0,
+      "evidence_terms": [],
+      "class": "primary"
+    },
+    {
+      "path": "Agency/Core/work/planning/mission_planning.py",
+      "bytes": 45142,
+      "lines": 684,
+      "included_in_prompt": false,
+      "prompt_excerpt_chars": 0,
+      "evidence_terms": [
+        "audit"
+      ],
+      "class": "primary"
+    },
+    {
+      "path": "Agency/Core/work/planning/proposal_generation.py",
+      "bytes": 27547,
+      "lines": 362,
+      "included_in_prompt": false,
+      "prompt_excerpt_chars": 0,
+      "evidence_terms": [
+        "verify"
+      ],
+      "class": "primary",
+      "inspection_note": "recorded_after_source_byte_limit"
+    }
+  ],
+  "file_classification": {
+    "Agency/Core/runtime/commands.py": "primary",
+    "Agency/Core/work/missions/pipeline/implementation/__init__.py": "primary",
+    "Agency/Core/work/missions/pipeline/review/execution.py": "primary",
+    "Agency/Core/work/missions/pipeline/review/helpers.py": "primary",
+    "Agency/Core/work/missions/pipeline/review/state.py": "primary",
+    "Agency/Core/work/planning/__init__.py": "primary",
+    "Agency/Core/work/planning/mission_planning.py": "primary",
+    "Agency/Core/work/planning/proposal_generation.py": "primary"
+  },
+  "symbols": [
+    {
+      "file": "Agency/Core/runtime/commands.py",
+      "line": 6,
+      "kind": "python_function",
+      "name": "agent_command"
+    },
+    {
+      "file": "Agency/Core/runtime/commands.py",
+      "line": 17,
+      "kind": "python_function",
+      "name": "mission_command"
+    },
+    {
+      "file": "Agency/Core/work/missions/pipeline/review/execution.py",
+      "line": 11,
+      "kind": "python_class",
+      "name": "ReviewExecutionDependencies"
+    },
+    {
+      "file": "Agency/Core/work/missions/pipeline/review/execution.py",
+      "line": 39,
+      "kind": "python_function",
+      "name": "run_mission_review"
+    },
+    {
+      "file": "Agency/Core/work/missions/pipeline/review/helpers.py",
+      "line": 8,
+      "kind": "python_function",
+      "name": "_real_operator_notes"
+    },
+    {
+      "file": "Agency/Core/work/missions/pipeline/review/helpers.py",
+      "line": 22,
+      "kind": "python_function",
+      "name": "_validate_review_request"
+    },
+    {
+      "file": "Agency/Core/work/missions/pipeline/review/helpers.py",
+      "line": 54,
+      "kind": "python_function",
+      "name": "_review_next_action"
+    },
+    {
+      "file": "Agency/Core/work/missions/pipeline/review/helpers.py",
+      "line": 79,
+      "kind": "python_function",
+      "name": "_render_review_markdown"
+    },
+    {
+      "file": "Agency/Core/work/missions/pipeline/review/state.py",
+      "line": 9,
+      "kind": "python_class",
+      "name": "ReviewStateDependencies"
+    },
+    {
+      "file": "Agency/Core/work/missions/pipeline/review/state.py",
+      "line": 24,
+      "kind": "python_function",
+      "name": "_load_operator_notes"
+    },
+    {
+      "file": "Agency/Core/work/missions/pipeline/review/state.py",
+      "line": 39,
+      "kind": "python_function",
+      "name": "_mission_review_decision_md_path"
+    },
+    {
+      "file": "Agency/Core/work/missions/pipeline/review/state.py",
+      "line": 46,
+      "kind": "python_function",
+      "name": "_load_proposal"
+    },
+    {
+      "file": "Agency/Core/work/missions/pipeline/review/state.py",
+      "line": 62,
+      "kind": "python_function",
+      "name": "_load_review_inputs"
+    },
+    {
+      "file": "Agency/Core/work/missions/pipeline/review/state.py",
+      "line": 79,
+      "kind": "python_function",
+      "name": "_update_state_after_review"
+    },
+    {
+      "file": "Agency/Core/work/missions/pipeline/review/state.py",
+      "line": 143,
+      "kind": "python_function",
+      "name": "_review_failure"
+    },
+    {
+      "file": "Agency/Core/work/planning/mission_planning.py",
+      "line": 28,
+      "kind": "python_class",
+      "name": "MissionPlanningDependencies"
+    },
+    {
+      "file": "Agency/Core/work/planning/mission_planning.py",
+      "line": 65,
+      "kind": "python_function",
+      "name": "_mission_plan_md_path"
+    },
+    {
+      "file": "Agency/Core/work/planning/mission_planning.py",
+      "line": 68,
+      "kind": "python_function",
+      "name": "_load_inspection_passes"
+    },
+    {
+      "file": "Agency/Core/work/planning/mission_planning.py",
+      "line": 83,
+      "kind": "python_function",
+      "name": "_load_optional_knowledge_artifacts"
+    },
+    {
+      "file": "Agency/Core/work/planning/mission_planning.py",
+      "line": 95,
+      "kind": "python_function",
+      "name": "_load_mission_artifacts"
+    },
+    {
+      "file": "Agency/Core/work/planning/mission_planning.py",
+      "line": 98,
+      "kind": "python_function",
+      "name": "_normalize_inspection_evidence"
+    },
+    {
+      "file": "Agency/Core/work/planning/mission_planning.py",
+      "line": 201,
+      "kind": "python_function",
+      "name": "_assess_planning_readiness"
+    },
+    {
+      "file": "Agency/Core/work/planning/mission_planning.py",
+      "line": 254,
+      "kind": "python_function",
+      "name": "_planning_system_context"
+    },
+    {
+      "file": "Agency/Core/work/planning/mission_planning.py",
+      "line": 257,
+      "kind": "python_function",
+      "name": "_build_planning_context"
+    },
+    {
+      "file": "Agency/Core/work/planning/mission_planning.py",
+      "line": 311,
+      "kind": "python_function",
+      "name": "_normalize_plan_payload"
+    },
+    {
+      "file": "Agency/Core/work/planning/mission_planning.py",
+      "line": 356,
+      "kind": "python_function",
+      "name": "normalize_assumptions"
+    },
+    {
+      "file": "Agency/Core/work/planning/mission_planning.py",
+      "line": 377,
+      "kind": "python_function",
+      "name": "normalize_unresolved"
+    },
+    {
+      "file": "Agency/Core/work/planning/mission_planning.py",
+      "line": 468,
+      "kind": "python_function",
+      "name": "_validate_plan_payload"
+    },
+    {
+      "file": "Agency/Core/work/planning/mission_planning.py",
+      "line": 492,
+      "kind": "python_function",
+      "name": "_render_plan_markdown"
+    },
+    {
+      "file": "Agency/Core/work/planning/mission_planning.py",
+      "line": 494,
+      "kind": "python_function",
+      "name": "lines_for"
+    },
+    {
+      "file": "Agency/Core/work/planning/mission_planning.py",
+      "line": 534,
+      "kind": "python_function",
+      "name": "_update_state_after_plan"
+    },
+    {
+      "file": "Agency/Core/work/planning/mission_planning.py",
+      "line": 554,
+      "kind": "python_function",
+      "name": "_planning_failure"
+    },
+    {
+      "file": "Agency/Core/work/planning/mission_planning.py",
+      "line": 563,
+      "kind": "python_function",
+      "name": "_execute_mission_planning"
+    },
+    {
+      "file": "Agency/Core/work/planning/mission_planning.py",
+      "line": 637,
+      "kind": "python_function",
+      "name": "run_mission_plan"
+    },
+    {
+      "file": "Agency/Core/work/planning/mission_planning.py",
+      "line": 651,
+      "kind": "python_function",
+      "name": "run_mission_replan"
+    },
+    {
+      "file": "Agency/Core/work/planning/mission_planning.py",
+      "line": 670,
+      "kind": "python_function",
+      "name": "execute_mission_planning"
+    },
+    {
+      "file": "Agency/Core/work/planning/proposal_generation.py",
+      "line": 13,
+      "kind": "python_class",
+      "name": "ProposalGenerationDependencies"
+    },
+    {
+      "file": "Agency/Core/work/planning/proposal_generation.py",
+      "line": 44,
+      "kind": "python_function",
+      "name": "_load_proposal_inputs"
+    },
+    {
+      "file": "Agency/Core/work/planning/proposal_generation.py",
+      "line": 47,
+      "kind": "python_function",
+      "name": "_assess_proposal_readiness"
+    },
+    {
+      "file": "Agency/Core/work/planning/proposal_generation.py",
+      "line": 64,
+      "kind": "python_function",
+      "name": "_proposal_system_context"
+    },
+    {
+      "file": "Agency/Core/work/planning/proposal_generation.py",
+      "line": 67,
+      "kind": "python_function",
+      "name": "_build_mission_proposal_prompt"
+    },
+    {
+      "file": "Agency/Core/work/planning/proposal_generation.py",
+      "line": 88,
+      "kind": "python_function",
+      "name": "_plan_finding_ids"
+    },
+    {
+      "file": "Agency/Core/work/planning/proposal_generation.py",
+      "line": 97,
+      "kind": "python_function",
+      "name": "_first_finding_ids"
+    },
+    {
+      "file": "Agency/Core/work/planning/proposal_generation.py",
+      "line": 101,
+      "kind": "python_function",
+      "name": "_normalize_change_item"
+    },
+    {
+      "file": "Agency/Core/work/planning/proposal_generation.py",
+      "line": 116,
+      "kind": "python_function",
+      "name": "_normalize_supported_by"
+    },
+    {
+      "file": "Agency/Core/work/planning/proposal_generation.py",
+      "line": 129,
+      "kind": "python_function",
+      "name": "_normalize_proposal_acceptance_criteria"
+    },
+    {
+      "file": "Agency/Core/work/planning/proposal_generation.py",
+      "line": 157,
+      "kind": "python_function",
+      "name": "_normalize_proposal_visual_checks"
+    },
+    {
+      "file": "Agency/Core/work/planning/proposal_generation.py",
+      "line": 169,
+      "kind": "python_function",
+      "name": "_normalize_proposal_payload"
+    },
+    {
+      "file": "Agency/Core/work/planning/proposal_generation.py",
+      "line": 226,
+      "kind": "python_function",
+      "name": "_validate_proposal"
+    },
+    {
+      "file": "Agency/Core/work/planning/proposal_generation.py",
+      "line": 260,
+      "kind": "python_function",
+      "name": "_render_proposal_markdown"
+    },
+    {
+      "file": "Agency/Core/work/planning/proposal_generation.py",
+      "line": 262,
+      "kind": "python_function",
+      "name": "bullet"
+    },
+    {
+      "file": "Agency/Core/work/planning/proposal_generation.py",
+      "line": 286,
+      "kind": "python_function",
+      "name": "_update_state_after_proposal"
+    },
+    {
+      "file": "Agency/Core/work/planning/proposal_generation.py",
+      "line": 298,
+      "kind": "python_function",
+      "name": "_proposal_failure"
+    },
+    {
+      "file": "Agency/Core/work/planning/proposal_generation.py",
+      "line": 307,
+      "kind": "python_function",
+      "name": "run_mission_propose"
+    }
+  ],
+  "dependencies": [
+    {
+      "file": "Agency/Core/runtime/commands.py",
+      "line": 1,
+      "kind": "python_from",
+      "target": "__future__:annotations"
+    },
+    {
+      "file": "Agency/Core/work/missions/pipeline/review/execution.py",
+      "line": 1,
+      "kind": "python_from",
+      "target": "__future__:annotations"
+    },
+    {
+      "file": "Agency/Core/work/missions/pipeline/review/execution.py",
+      "line": 3,
+      "kind": "python_from",
+      "target": "Agency.Core.runtime.commands:mission_command"
+    },
+    {
+      "file": "Agency/Core/work/missions/pipeline/review/execution.py",
+      "line": 4,
+      "kind": "python_import",
+      "target": "argparse"
+    },
+    {
+      "file": "Agency/Core/work/missions/pipeline/review/execution.py",
+      "line": 5,
+      "kind": "python_from",
+      "target": "dataclasses:dataclass"
+    },
+    {
+      "file": "Agency/Core/work/missions/pipeline/review/execution.py",
+      "line": 6,
+      "kind": "python_from",
+      "target": "pathlib:Path"
+    },
+    {
+      "file": "Agency/Core/work/missions/pipeline/review/execution.py",
+      "line": 7,
+      "kind": "python_from",
+      "target": "typing:Any, Callable"
+    },
+    {
+      "file": "Agency/Core/work/missions/pipeline/review/helpers.py",
+      "line": 1,
+      "kind": "python_from",
+      "target": "__future__:annotations"
+    },
+    {
+      "file": "Agency/Core/work/missions/pipeline/review/helpers.py",
+      "line": 3,
+      "kind": "python_from",
+      "target": "Agency.Core.runtime.commands:mission_command"
+    },
+    {
+      "file": "Agency/Core/work/missions/pipeline/review/helpers.py",
+      "line": 4,
+      "kind": "python_import",
+      "target": "argparse"
+    },
+    {
+      "file": "Agency/Core/work/missions/pipeline/review/helpers.py",
+      "line": 5,
+      "kind": "python_from",
+      "target": "typing:Any"
+    },
+    {
+      "file": "Agency/Core/work/missions/pipeline/review/state.py",
+      "line": 1,
+      "kind": "python_from",
+      "target": "__future__:annotations"
+    },
+    {
+      "file": "Agency/Core/work/missions/pipeline/review/state.py",
+      "line": 3,
+      "kind": "python_from",
+      "target": "dataclasses:dataclass"
+    },
+    {
+      "file": "Agency/Core/work/missions/pipeline/review/state.py",
+      "line": 4,
+      "kind": "python_from",
+      "target": "pathlib:Path"
+    },
+    {
+      "file": "Agency/Core/work/missions/pipeline/review/state.py",
+      "line": 5,
+      "kind": "python_from",
+      "target": "typing:Any, Callable"
+    },
+    {
+      "file": "Agency/Core/work/planning/mission_planning.py",
+      "line": 1,
+      "kind": "python_from",
+      "target": "__future__:annotations"
+    },
+    {
+      "file": "Agency/Core/work/planning/mission_planning.py",
+      "line": 3,
+      "kind": "python_from",
+      "target": "Agency.Core.runtime.commands:mission_command"
+    },
+    {
+      "file": "Agency/Core/work/planning/mission_planning.py",
+      "line": 4,
+      "kind": "python_import",
+      "target": "json"
+    },
+    {
+      "file": "Agency/Core/work/planning/mission_planning.py",
+      "line": 5,
+      "kind": "python_from",
+      "target": "dataclasses:dataclass"
+    },
+    {
+      "file": "Agency/Core/work/planning/mission_planning.py",
+      "line": 6,
+      "kind": "python_from",
+      "target": "pathlib:Path"
+    },
+    {
+      "file": "Agency/Core/work/planning/mission_planning.py",
+      "line": 7,
+      "kind": "python_from",
+      "target": "typing:Any, Callable"
+    },
+    {
+      "file": "Agency/Core/work/planning/mission_planning.py",
+      "line": 9,
+      "kind": "python_from",
+      "target": "Agency.Core.runtime.resourcefulness:("
+    },
+    {
+      "file": "Agency/Core/work/planning/mission_planning.py",
+      "line": 15,
+      "kind": "python_from",
+      "target": "Agency.Core.knowledge.reasoning:("
+    },
+    {
+      "file": "Agency/Core/work/planning/mission_planning.py",
+      "line": 21,
+      "kind": "python_from",
+      "target": "Agency.Core.work.planning.prompting:("
+    },
+    {
+      "file": "Agency/Core/work/planning/proposal_generation.py",
+      "line": 1,
+      "kind": "python_from",
+      "target": "__future__:annotations"
+    },
+    {
+      "file": "Agency/Core/work/planning/proposal_generation.py",
+      "line": 3,
+      "kind": "python_from",
+      "target": "Agency.Core.runtime.commands:mission_command"
+    },
+    {
+      "file": "Agency/Core/work/planning/proposal_generation.py",
+      "line": 4,
+      "kind": "python_import",
+      "target": "json"
+    },
+    {
+      "file": "Agency/Core/work/planning/proposal_generation.py",
+      "line": 5,
+      "kind": "python_from",
+      "target": "dataclasses:dataclass"
+    },
+    {
+      "file": "Agency/Core/work/planning/proposal_generation.py",
+      "line": 6,
+      "kind": "python_from",
+      "target": "pathlib:Path"
+    },
+    {
+      "file": "Agency/Core/work/planning/proposal_generation.py",
+      "line": 7,
+      "kind": "python_from",
+      "target": "typing:Any, Callable"
+    },
+    {
+      "file": "Agency/Core/work/planning/proposal_generation.py",
+      "line": 9,
+      "kind": "python_from",
+      "target": "Agency.Core.runtime.resourcefulness:trim_resourcefulness_context_for_prompt"
+    }
+  ],
+  "observations": [
+    {
+      "kind": "pass_observation",
+      "summary": "Read 8 files in inspection pass 2.",
+      "file_count": 8
+    },
+    {
+      "kind": "pass_observation",
+      "summary": "Active queue by class: primary=9, secondary=0, evidence=0, ignored=0.",
+      "class_counts": {
+        "primary": 9,
+        "secondary": 0,
+        "evidence": 0,
+        "ignored": 0
+      }
+    },
+    {
+      "kind": "file_inspected",
+      "path": "Agency/Core/runtime/commands.py",
+      "class": "primary",
+      "summary": "Inspection pass 2 read primary file Agency/Core/runtime/commands.py (28 lines).",
+      "bytes": 502,
+      "lines": 28,
+      "included_in_prompt": true,
+      "prompt_excerpt_chars": 502
+    },
+    {
+      "kind": "file_inspected",
+      "path": "Agency/Core/work/missions/pipeline/implementation/__init__.py",
+      "class": "primary",
+      "summary": "Inspection pass 2 read primary file Agency/Core/work/missions/pipeline/implementation/__init__.py (1 lines).",
+      "bytes": 39,
+      "lines": 1,
+      "included_in_prompt": true,
+      "prompt_excerpt_chars": 39
+    },
+    {
+      "kind": "file_inspected",
+      "path": "Agency/Core/work/missions/pipeline/review/execution.py",
+      "class": "primary",
+      "summary": "Inspection pass 2 read primary file Agency/Core/work/missions/pipeline/review/execution.py (255 lines).",
+      "bytes": 7611,
+      "lines": 255,
+      "included_in_prompt": true,
+      "prompt_excerpt_chars": 859
+    },
+    {
+      "kind": "file_inspected",
+      "path": "Agency/Core/work/missions/pipeline/review/helpers.py",
+      "class": "primary",
+      "summary": "Inspection pass 2 read primary file Agency/Core/work/missions/pipeline/review/helpers.py (106 lines).",
+      "bytes": 2881,
+      "lines": 106,
+      "included_in_prompt": false,
+      "prompt_excerpt_chars": 0
+    },
+    {
+      "kind": "file_inspected",
+      "path": "Agency/Core/work/missions/pipeline/review/state.py",
+      "class": "primary",
+      "summary": "Inspection pass 2 read primary file Agency/Core/work/missions/pipeline/review/state.py (170 lines).",
+      "bytes": 4851,
+      "lines": 170,
+      "included_in_prompt": false,
+      "prompt_excerpt_chars": 0
+    },
+    {
+      "kind": "file_inspected",
+      "path": "Agency/Core/work/planning/__init__.py",
+      "class": "primary",
+      "summary": "Inspection pass 2 read primary file Agency/Core/work/planning/__init__.py (0 lines).",
+      "bytes": 0,
+      "lines": 0,
+      "included_in_prompt": false,
+      "prompt_excerpt_chars": 0
+    },
+    {
+      "kind": "file_inspected",
+      "path": "Agency/Core/work/planning/mission_planning.py",
+      "class": "primary",
+      "summary": "Inspection pass 2 read primary file Agency/Core/work/planning/mission_planning.py (684 lines).",
+      "bytes": 45142,
+      "lines": 684,
+      "included_in_prompt": false,
+      "prompt_excerpt_chars": 0,
+      "evidence_terms": [
+        "audit"
+      ]
+    },
+    {
+      "kind": "file_inspected",
+      "path": "Agency/Core/work/planning/proposal_generation.py",
+      "class": "primary",
+      "summary": "Inspection pass 2 read primary file Agency/Core/work/planning/proposal_generation.py (362 lines).",
+      "bytes": 27547,
+      "lines": 362,
+      "included_in_prompt": false,
+      "prompt_excerpt_chars": 0,
+      "evidence_terms": [
+        "verify"
+      ]
+    }
+  ],
+  "unresolved": [],
+  "next_files": [],
+  "inspection_complete": true,
+  "skipped_files": [],
+  "operational_context": [
+    {
+      "path": "Agency/Agents/Editor/work/Pinboard/current.json",
+      "status": "missing"
+    },
+    {
+      "schema_version": 1,
+      "generated_at": "2026-07-28T00:43:36.391191+00:00",
+      "rule": "Declared authority is not demonstrated capability. Safe AI use requires bounded, observed execution.",
+      "summary": {
+        "REGISTERED_COMMANDS": 26,
+        "PASS": 15,
+        "FAIL": 0,
+        "BLOCKED_TIMEOUT": 0,
+        "UNTESTED": 9
+      },
+      "current_test": {
+        "id": "local.model_plan.01",
+        "step": "Accept bounded engineering scopes",
+        "pass_condition": "Valid UI engineering scopes are represented in the latest model-plan proposal.",
+        "result": "UNTESTED",
+        "evidence": "",
+        "unresolved": []
+      },
+      "path": "Agency/audit/output/agency_state.json",
+      "status": "present"
+    },
+    {
+      "schema_version": 1,
+      "generated_at": "2026-07-16T07:56:10.998392+00:00",
+      "rule": "Presence is not capability. Capability requires an observed end-to-end demonstration.",
+      "summary": {
+        "NONE": 2,
+        "PRESENT": 19,
+        "WIRED": 6,
+        "EXECUTABLE": 0,
+        "PASS": 4,
+        "PARTIAL": 0,
+        "FAIL": 0,
+        "UNTESTED": 23
+      },
+      "current_test": {
+        "id": "shell.05",
+        "step": "Open Terminal tab",
+        "pass_condition": "Terminal becomes active.",
+        "result": "UNTESTED",
+        "evidence": "",
+        "unresolved": []
+      },
+      "path": "UI/OperatorShell/audit/output/operator_shell_state.json",
+      "status": "present"
+    },
+    {
+      "schema_version": 3,
+      "generated_at": "2026-07-16T06:59:27.556236+00:00",
+      "rule": "Presence is not capability. Capability requires an observed end-to-end demonstration.",
+      "summary": {
+        "NONE": 1,
+        "PRESENT": 23,
+        "WIRED": 11,
+        "EXECUTABLE": 0,
+        "PASS": 0,
+        "PARTIAL": 1,
+        "FAIL": 0,
+        "UNTESTED": 10
+      },
+      "current_test": {
+        "id": "demo.01",
+        "step": "Launch the current Godot project",
+        "pass_condition": "Workbench opens and remains usable; fatal parser or runtime errors are not present.",
+        "result": "PARTIAL",
+        "evidence": "Godot launched and Workbench visibly rendered with the viewport, object tree, and left-side status panel.",
+        "unresolved": [
+          "Console output was not captured, so absence of parser or runtime errors is not yet established."
+        ]
+      },
+      "path": "UI/Workbench/audit/output/capability_state.json",
+      "status": "present"
+    }
+  ],
+  "context_limits": {
+    "max_files": 8,
+    "max_total_source_bytes": 65000,
+    "max_prompt_source_chars": 1400,
+    "max_prompt_chars": 3600,
+    "max_files_per_pass": 8,
+    "inspection_generation_limit": 768
+  },
+  "context_bytes": {
+    "source_bytes_inspected": 88573,
+    "prompt_source_chars": 1400
+  },
+  "source_files_modified": false,
+  "authority": "read_only_inspection"
+}

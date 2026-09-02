@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "mission_id": "mission-2",
+  "sequence": 1,
+  "event_type": "created",
+  "timestamp": "2026-08-13T09:18:33.511144+00:00",
+  "authority": "mission_event_log",
+  "payload": {
+    "command": "mission create",
+    "status": "mission_created",
+    "mission_id": "mission-2",
+    "intent": "Test core agency mission planning on Python source",
+    "scopes": [
+      "Agency/Core/work/missions/mission_runtime.py"
+    ],
+    "mission_path": "Agency/Agents/Editor/work/Missions/mission-2",
+    "source_files_modified": false,
+    "authority": "mission_creation_only"
+  }
+}

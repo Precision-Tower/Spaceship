@@ -1,0 +1,195 @@
+=== git_status ===
+command: python3 run.py cmd git-status --root /home/spaztic/Core/Dashboard
+GIT_STATUS
+root: /home/spaztic/Core/Dashboard
+status: changes_present
+M Agency/Agents/Weebo/README.md
+ D Agency/Agents/Weebo/actions.py
+ D Agency/Agents/Weebo/build_vector_memory.py
+ D Agency/Agents/Weebo/ceos_memory.py
+ D Agency/Agents/Weebo/datasets/godot/bunny_gdscript/raw/train.jsonl
+ D Agency/Agents/Weebo/datasets/godot/bunny_gdscript/source_manifest.json
+ D Agency/Agents/Weebo/decision_memory.py
+ D Agency/Agents/Weebo/factory.py
+ D Agency/Agents/Weebo/godot_playground.py
+ D Agency/Agents/Weebo/injest_bunny.py
+ D Agency/Agents/Weebo/io.py
+ D Agency/Agents/Weebo/memory/memory/Directory.yaml
+ D Agency/Agents/Weebo/memory/memory/SpaceshipDirectory.yaml
+ D Agency/Agents/Weebo/memory/memory/active_mission.yaml
+ D Agency/Agents/Weebo/memory/memory/approved_proposals.yaml
+ D Agency/Agents/Weebo/memory/memory/cards.yaml
+ D Agency/Agents/Weebo/memory/memory/godot4_minimal_card.yaml
+ D Agency/Agents/Weebo/memory/memory/godot_gd_index.yaml
+ D Agency/Agents/Weebo/memory/memory/memory_sources.yaml
+ D Agency/Agents/Weebo/memory/memory/project_index.yaml
+ D Agency/Agents/Weebo/memory/memory/rejected_proposals.yaml
+ D Agency/Agents/Weebo/memory/memory/short_term.yaml
+ D Agency/Agents/Weebo/memory/memory/sources.yaml
+ D Agency/Agents/Weebo/mission_memory.py
+ D Agency/Agents/Weebo/patches/.keep
+ D Agency/Agents/Weebo/patches/latest_patch_packet.yaml
+ D Agency/Agents/Weebo/project.py
+ D Agency/Agents/Weebo/project_memory.py
+ D Agency/Agents/Weebo/project_runner.py
+ D Agency/Agents/Weebo/projects/README.md
+ D Agency/Agents/Weebo/projects/boat/artifacts/floating_barrel_runtime_stub.md
+ D Agency/Agents/Weebo/projects/boat/artifacts/goal_001_floating_barrel_artifact_artifact.md
+ D Agency/Agents/Weebo/projects/boat/artifacts/goal_001_floating_barrel_artifact_memory_context.md
+ D Agency/Agents/Weebo/projects/boat/artifacts/goal_002_floating_barrel_runtime_stub_memory_context.md
+ D Agency/Agents/Weebo/projects/boat/artifacts/goal_003_create_boat_godot_scene_memory_context.md
+ D Agency/Agents/Weebo/projects/boat/artifacts/goal_004_record_first_runtime_observation_memory_context.md
+ D Agency/Agents/Weebo/projects/boat/artifacts/goal_005_add_barrel_disturbance_response_memory_context.md
+ D Agency/Agents/Weebo/projects/boat/artifacts/goal_006_add_visible_barrel_disturbance_response_memory_context.md
+ D Agency/Agents/Weebo/projects/boat/artifacts/goal_007_record_barrel_disturbance_observation_memory_context.md
+ D Agency/Agents/Weebo/projects/boat/goals/done/goal_001_seed_artifact.yaml
+ D Agency/Agents/Weebo/projects/boat/goals/done/goal_002_floating_barrel_runtime_stub.yaml
+ D Agency/Agents/Weebo/projects/boat/goals/done/goal_003_create_boat_godot_scene.yaml
+ D Agency/Agents/Weebo/projects/boat/goals/done/goal_004_record_first_runtime_observation.yaml
+ D Agency/Agents/Weebo/projects/boat/goals/done/goal_005_add_barrel_disturbance_response.yaml
+ D Agency/Agents/Weebo/projects/boat/goals/done/goal_006_add_visible_barrel_disturbance_response.yaml
+ D Agency/Agents/Weebo/projects/boat/goals/done/goal_007_record_barrel_disturbance_observation.yaml
+ D Agency/Agents/Weebo/projects/boat/memory/failure_patterns.yaml
+ D Agency/Agents/Weebo/projects/boat/memory/runtime_lessons.yaml
+ D Agency/Agents/Weebo/projects/boat/memory/success_patterns.yaml
+ D Agency/Agents/Weebo/projects/boat/results/goal_001_floating_barrel_artifact_result.yaml
+ D Agency/Agents/Weebo/projects/boat/results/goal_002_floating_barrel_runtime_stub_result.yaml
+ D Agency/Agents/Weebo/projects/boat/results/goal_003_create_boat_godot_scene_result.yaml
+ D Agency/Agents/Weebo/projects/boat/results/goal_004_record_first_runtime_observation_result.yaml
+ D Agency/Agents/Weebo/projects/boat/results/goal_005_add_barrel_disturbance_response_result.yaml
+ D Agency/Agents/Weebo/projects/boat/results/goal_006_add_visible_barrel_disturbance_response_result.yaml
+ D Agency/Agents/Weebo/projects/boat/results/goal_007_record_barrel_disturbance_observation_result.yaml
+ D Agency/Agents/Weebo/projects/godot_playground/artifacts/goal_001_vector_context.md
+ D Agency/Agents/Weebo/projects/godot_playground/artifacts/goal_002_memory_context.md
+ D Agency/Agents/Weebo/projects/godot_playground/artifacts/goal_003_generate_godot_artifact_memory_context.md
+ D Agency/Agents/Weebo/projects/godot_playground/artifacts/goal_004_runtime_blocker_diagnosis.md
+ D Agency/Agents/Weebo/projects/godot_playground/artifacts/goal_005_static_godot_integrity_check.md
+ D Agency/Agents/Weebo/projects/godot_playground/artifacts/goal_007_goal_lifecycle_enforcement_memory_context.md
+ D Agency/Agents/Weebo/projects/godot_playground/artifacts/goal_008_goal_lifecycle_marker_memory_context.md
+ D Agency/Agents/Weebo/projects/godot_playground/artifacts/goal_009_spawn_on_space_memory_context.md
+ D Agency/Agents/Weebo/projects/godot_playground/artifacts/goal_010_spawn_on_space_action_memory_context.md
+ D Agency/Agents/Weebo/projects/godot_playground/artifacts/goal_011_add_reset_key_memory_context.md
+ D Agency/Agents/Weebo/projects/godot_playground/artifacts/goal_012_add_reset_key_retry_memory_context.md
+ D Agency/Agents/Weebo/projects/godot_playground/artifacts/goal_013_manual_input_route_patch_memory_context.md
+ D Agency/Agents/Weebo/projects/godot_playground/artifacts/goal_014_restore_reset_key_memory_context.md
+ D Agency/Agents/Weebo/projects/godot_playground/goals/done/goal_001_seed.yaml
+ D Agency/Agents/Weebo/projects/godot_playground/goals/done/goal_002_project_memory_bridge.yaml
+ D Agency/Agents/Weebo/projects/godot_playground/goals/done/goal_003_generate_godot_artifact.yaml
+ D Agency/Agents/Weebo/projects/godot_playground/goals/done/goal_007_goal_lifecycle_enforcement.yaml
+ D Agency/Agents/Weebo/projects/godot_playground/goals/done/goal_008_goal_lifecycle_marker.yaml
+ D Agency/Agents/Weebo/projects/godot_playground/goals/done/goal_009_spawn_on_space.yaml
+ D Agency/Agents/Weebo/projects/godot_playground/goals/done/goal_010_spawn_on_space_action.yaml
+ D Agency/Agents/Weebo/projects/godot_playground/goals/done/goal_011_add_reset_key.yaml
+ D Agency/Agents/Weebo/projects/godot_playground/goals/done/goal_012_add_reset_key_retry.yaml
+ D Agency/Agents/Weebo/projects/godot_playground/goals/done/goal_013_manual_input_route_patch.yaml
+ D Agency/Agents/Weebo/projects/godot_playground/goals/done/goal_014_restore_reset_key.yaml
+ D Agency/Agents/Weebo/projects/godot_playground/memory/runtime_lessons.yaml
+ D Agency/Agents/Weebo/projects/godot_playground/project.yaml
+ D Agency/Agents/Weebo/projects/godot_playground/results/goal_001_seed_result.yaml
+ D Agency/Agents/Weebo/projects/godot_playground/results/goal_002_project_memory_bridge_result.yaml
+ D Agency/Agents/Weebo/projects/godot_playground/results/goal_003_generate_godot_artifact_result.yaml
+ D Agency/Agents/Weebo/projects/godot_playground/results/goal_004_runtime_blocker_result.yaml
+ D Agency/Agents/Weebo/projects/godot_playground/results/goal_005_static_godot_integrity_check_result.yaml
+ D Agency/Agents/Weebo/projects/godot_playground/results/goal_006_manual_runtime_observation.yaml
+ D Agency/Agents/Weebo/projects/godot_playground/results/goal_007_goal_lifecycle_enforcement_result.yaml
+ D Agency/Agents/Weebo/projects/godot_playground/results/goal_008_goal_lifecycle_marker_result.yaml
+ D Agency/Agents/Weebo/projects/godot_playground/results/goal_009_spawn_on_space_result.yaml
+ D Agency/Agents/Weebo/projects/godot_playground/results/goal_010_spawn_on_space_action_result.yaml
+ D Agency/Agents/Weebo/projects/godot_playground/results/goal_011_add_reset_key_result.yaml
+ D Agency/Agents/Weebo/projects/godot_playground/results/goal_012_add_reset_key_retry_result.yaml
+ D Agency/Agents/Weebo/projects/godot_playground/results/goal_013_manual_input_route_patch_result.yaml
+ D Agency/Agents/Weebo/projects/godot_playground/results/goal_014_manual_runtime_onbservation.yaml
+ D Agency/Agents/Weebo/projects/godot_playground/results/goal_014_restore_reset_key_result.yaml
+ D Agency/Agents/Weebo/query_vector_memory.py
+ D Agency/Agents/Weebo/records.py
+ D Agency/Agents/Weebo/registry.py
+ D Agency/Agents/Weebo/retrieval.py
+ D Agency/Agents/Weebo/runner.py
+ M Agency/Agents/Weebo/runtime.yaml
+ D Agency/Agents/Weebo/tasks/active/task_001_memory_only_python.yaml
+ D Agency/Agents/Weebo/tasks/active/task_002_memory_only_yaml.yaml
+ D Agency/Agents/Weebo/tasks/active/task_003_godot_card.yaml
+ D Agency/Agents/Weebo/tasks/active/task_004_scratch_write.yaml
+ D Agency/Agents/Weebo/tasks/active/task_005_pressure_loader_proposal.yaml
+ D Agency/Agents/Weebo/tasks/active/task_006_vector_retrieval_smoke_test.yaml
+ D Agency/Agents/Weebo/tasks/active/task_007_vector_retrieval_yaml_query.yaml
+ D Agency/Agents/Weebo/tasks/active/task_008_vector_retrieval_godot_query.yaml
+ D Agency/Agents/Weebo/tasks/active/task_009_result_packet_inventory.yaml
+ D Agency/Agents/Weebo/tasks/active/task_010_level5_freeze_6_10.yaml
+ D Agency/Agents/Weebo/tasks/active/task_011_godot_playground_sandbox.yaml
+ D Agency/Agents/Weebo/tasks/active/task_012_godot_playground_interaction_test.yaml
+ D Agency/Agents/Weebo/tasks/active/task_013_godot_playground_spawn_test.yaml
+ D Agency/Agents/Weebo/tasks/index/milestones.yaml
+ D Agency/Agents/Weebo/tasks/results/task_001_memory_only_python_result.yaml
+ D Agency/Agents/Weebo/tasks/results/task_002_memory_only_yaml_result.yaml
+ D Agency/Agents/Weebo/tasks/results/task_003_godot_card_result.yaml
+ D Agency/Agents/Weebo/tasks/results/task_004_scratch_write_result.yaml
+ D Agency/Agents/Weebo/tasks/results/task_005_pressure_loader_proposal_result.yaml
+ D Agency/Agents/Weebo/tasks/results/task_006_vector_retrieval_smoke_test_result.yaml
+ D Agency/Agents/Weebo/tasks/results/task_007_vector_retrieval_yaml_query_result.yaml
+ D Agency/Agents/Weebo/tasks/results/task_008_vector_retrieval_godot_query_result.yaml
+ D Agency/Agents/Weebo/tasks/results/task_009_result_packet_inventory_result.yaml
+ D Agency/Agents/Weebo/tasks/results/task_010_level5_freeze_6_10_result.yaml
+ D Agency/Agents/Weebo/tasks/results/task_011_godot_playground_sandbox_result.yaml
+ D Agency/Agents/Weebo/tasks/results/task_012_godot_playground_interaction_test_result.yaml
+ D Agency/Agents/Weebo/tasks/results/task_013_godot_playground_spawn_test_result.yaml
+ D Agency/Agents/Weebo/tasks1.5.py
+ D Agency/Agents/Weebo/tasks6.10.py
+ D Agency/Agents/Weebo/types.py
+ M Agency/Agents/Weebo/weebo.py
+ D Agency/Agents/Weebo2/README.md
+ D Agency/Agents/Weebo2/__init__.py
+ D Agency/Agents/Weebo2/autonomy/autonomy.yaml
+ D Agency/Agents/Weebo2/memory/short_term.yaml
+ D Agency/Agents/Weebo2/memory/sources.yaml
+ D Agency/Agents/Weebo2/output_contract.yaml
+ D Agency/Agents/Weebo2/runtime.yaml
+ D Agency/Agents/Weebo2/state/README.md
+ D Agency/Agents/Weebo2/state/agent_state.yaml
+ D Agency/Agents/Weebo2/state/transition_log.yaml
+ D Agency/Agents/Weebo2/weebo2.py
+ M UI/Main/Main.gd
+ M UI/OperatorShell/Main.gd
+ M UI/OperatorShell/layout/LeftPanel.gd
+ M UI/OperatorShell/resources/DashboardConfig.gd
+ M UI/Workbench/Main/Main.gd
+ M UI/Workbench/inspectors/LeftPanel.gd
+ M UI/Workbench/layout/WorkbenchShellBuilder.gd
+ M UI/Workbench/scenes/Workbench.gd
+ M UI/project.godot
+?? Agency/Agents/NewNew/
+?? Agency/Agents/Weebo/action_policy.yaml
+?? Agency/Agents/Weebo/action_policy.yaml.bak
+?? Agency/Agents/Weebo/actions/
+?? Agency/Agents/Weebo/autonomy/
+?? Agency/Agents/Weebo/memory/short_term.yaml
+?? Agency/Agents/Weebo/memory/sources.yaml
+?? Agency/Agents/Weebo/output_contract.yaml
+?? Agency/Agents/Weebo/output_contract.yaml.bak
+?? Agency/Agents/Weebo/state/
+?? Agency/Agents/Weebo2_legacy_shell/
+?? Agency/Agents/Weebo_legacy_pre_agency/
+?? Agency/Archive/
+?? Agency/audit/
+?? UI/Main/Main.gd.bak_20260715_000050
+?? UI/Main/Main.gd.bak_20260715_000656
+?? UI/OperatorShell/Main.gd.bak_20260715_021417
+?? UI/OperatorShell/Main.gd.bak_20260715_021659
+?? UI/OperatorShell/Main.gd.bak_20260715_021946
+?? UI/OperatorShell/Main.gd.bak_20260715_033158
+?? UI/OperatorShell/audit/
+?? UI/OperatorShell/layout/LeftPanel.gd.bak_20260715_021417
+?? UI/OperatorShell/layout/LeftPanel.gd.bak_20260715_021659
+?? UI/OperatorShell/layout/LeftPanel.gd.bak_20260715_021946
+?? UI/OperatorShell/resources/DashboardConfig.gd.bak_20260715_022925
+?? UI/OperatorShell/resources/dashboard_config.tres.bak_20260715_022925
+?? UI/Workbench/Main/Main.gd.bak_20260714_232356
+?? UI/Workbench/Main/Main.gd.bak_20260714_233750
+?? UI/Workbench/Workbench.gd
+?? UI/Workbench/WorkbenchShellBuilder.gd
+?? UI/Workbench/audit/
+?? UI/Workbench/layout/WorkbenchShellBuilder.gd.bak_20260714_231140
+?? UI/project.godot.bak_20260715_000050
+?? UI/shared/
+?? run-dashboard.sh
+exit_code: 0

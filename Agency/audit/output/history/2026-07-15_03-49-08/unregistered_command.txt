@@ -1,0 +1,7 @@
+=== unregistered_command ===
+command: python3 run.py cmd definitely-not-a-command
+usage: dashboard_cli [-h]
+                     {scan-repo,runtime-state,git-status,propose-directory-diff,grant-review,apply-patch,view-latest-diff,grant-review-latest-diff,clear-latest-diff,list-packets,create-packet,test-all,cali-observe-directory,list-agents,propose-task-packet,propose-diff,gemini-analyze,gemini-list-models,update-state,read-file,apply-code,refs,tree}
+                     ...
+dashboard_cli: error: argument command: invalid choice: 'definitely-not-a-command' (choose from 'scan-repo', 'runtime-state', 'git-status', 'propose-directory-diff', 'grant-review', 'apply-patch', 'view-latest-diff', 'grant-review-latest-diff', 'clear-latest-diff', 'list-packets', 'create-packet', 'test-all', 'cali-observe-directory', 'list-agents', 'propose-task-packet', 'propose-diff', 'gemini-analyze', 'gemini-list-models', 'update-state', 'read-file', 'apply-code', 'refs', 'tree')
+exit_code: 2

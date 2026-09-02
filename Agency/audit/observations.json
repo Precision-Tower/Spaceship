@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-07-15T20:32:42.793831+00:00",
+  "observations": {
+    "agency.propose_task": {
+      "result": "PASS",
+      "evidence": [
+        {
+          "type": "command_output",
+          "date": "2026-07-15",
+          "observation": "propose-task-packet generated a structured, non-mutating task proposal for hosting Workbench inside OperatorShell.",
+          "path": "Agency/audit/evidence/propose_task_2026-07-15_19-38-05/proposal.txt"
+        }
+      ],
+      "unresolved": [
+        "The proposed inspection scope 'Dashboard/UI/' is stale or incorrect for the current repository layout.",
+        "The allowed mutation scope '.py and .gd files' is too broad.",
+        "The proposal does not identify the specific OperatorShell workspace-hosting files.",
+        "Architectural quality has not been reviewed.",
+        "No diff has been generated or applied."
+      ]
+    },
+    "agency.propose_diff": {
+      "result": "PASS",
+      "evidence": [
+        {
+          "type": "runtime_smoke_test",
+          "date": "2026-07-15",
+          "observation": "A scoped, non-mutating propose-diff command created proposal.json, proposed.diff, and evidence.json on the black laptop. Repeatable scopes worked; invalid, traversal, outside-root, missing, and symlink-escape scopes were rejected. The generated diff passed git apply --check, application source Git status did not change, and watch events were recorded.",
+          "proposal_directory": "Agency/runtime/proposals/proposal_20260715T201419826650Z_820d098c79",
+          "artifacts": [
+            "Agency/runtime/proposals/proposal_20260715T201419826650Z_820d098c79/proposal.json",
+            "Agency/runtime/proposals/proposal_20260715T201419826650Z_820d098c79/proposed.diff",
+            "Agency/runtime/proposals/proposal_20260715T201419826650Z_820d098c79/evidence.json"
+          ]
+        }
+      ],
+      "unresolved": [
+        "The implementation is deterministic and does not call a local model.",
+        "The generated diff targets proposal-owned scratch content only.",
+        "Real application-source diff generation has not been demonstrated.",
+        "Proposal architectural quality has not been reviewed.",
+        "No proposal has been applied."
+      ]
+    },
+    "agency.review_diff": {
+      "result": "PASS",
+      "evidence": [
+        {
+          "type": "runtime_smoke_test",
+          "date": "2026-07-15",
+          "observation": "grant-review inspected the generated proposed.diff, reported status admissible, exited successfully, and caused no observable Git-status change.",
+          "diff": "Agency/runtime/proposals/proposal_20260715T201419826650Z_820d098c79/proposed.diff",
+          "review_output": "Agency/audit/evidence/review_diff_2026-07-15_20-21-34/review_output.txt"
+        }
+      ],
+      "unresolved": [
+        "GrantReviewCommand currently performs only placeholder lexical review.",
+        "No semantic architecture review has been demonstrated.",
+        "No review artifact or persistent review decision was written.",
+        "Review status does not grant approval authority.",
+        "The proposal has not been applied."
+      ]
+    },
+    "agency.approved_mutation": {
+      "result": "PASS",
+      "evidence": [
+        {
+          "type": "runtime_smoke_test",
+          "date": "2026-07-15",
+          "observation": "apply-code rejected execution without --approved. With explicit approval, it created one disposable file inside Agency/audit/sandbox and wrote the exact requested content.",
+          "target": "Agency/audit/sandbox/approved_mutation_probe.txt",
+          "output": "Agency/audit/sandbox/approved_mutation_output.txt"
+        }
+      ],
+      "unresolved": [
+        "Denied read-file operations currently return shell exit code 0.",
+        "Command-level denied and missing results need reliable nonzero exit codes.",
+        "The disposable mutation has not yet been removed and reconstructed.",
+        "No application source mutation has been attempted."
+      ]
+    },
+    "agency.verify_reconstruction": {
+      "result": "PASS",
+      "evidence": [
+        {
+          "type": "reconstruction_test",
+          "date": "2026-07-15",
+          "observation": "The approved disposable mutation was hashed, removed, recreated through the same approved apply-code command, and verified byte-identical by SHA-256.",
+          "target": "Agency/audit/sandbox/approved_mutation_probe.txt",
+          "hash_record": "Agency/audit/sandbox/original_probe.sha256",
+          "reconstruction_output": "Agency/audit/sandbox/reconstruction_output.txt"
+        }
+      ],
+      "unresolved": [
+        "Denied and missing command outcomes still need reliable nonzero shell exit codes.",
+        "No real application-source mutation has been approved or reconstructed.",
+        "The local model has not yet generated a source-targeting proposal."
+      ]
+    }
+  }
+}

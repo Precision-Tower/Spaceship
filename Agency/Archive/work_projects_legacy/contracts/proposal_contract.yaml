@@ -1,0 +1,125 @@
+ProposalContract:
+  file: Agency/Core/work/projects/contracts/proposal_contract.yaml
+  role: supervised_proposal_schema_and_approval_gate
+  status: v0_1
+  authority: proposal_behavior_contract_not_source_authority
+
+  contract_summary: >
+    The proposal workflow may observe, summarize, classify, and draft proposals.
+    It may not apply autonomous edits, mutate CE-OS source files, construct
+    unrelated agents, or promote a proposal into accepted work without operator
+    approval.
+
+  operating_mode:
+    name: supervised_memory_plus_proposal_layer
+    allowed_actions:
+      - observe
+      - read_indexed_memory
+      - summarize_existing_work
+      - rank_relevant_files
+      - classify_authority_boundary
+      - draft_reviewable_proposal
+      - list_approval_gates
+    blocked_actions:
+      - autonomous_repo_edits
+      - autonomous_patch_application
+      - CE_OS_source_mutation
+      - unrelated_agent_construction
+      - runtime_readiness_claims
+      - validation_claims
+      - canon_promotion
+
+  proposal_schema:
+    required_fields:
+      - proposal_id
+      - status
+      - goal
+      - what_already_exists
+      - relevant_files
+      - authority_boundaries
+      - safe_proposal
+      - waits_for_operator
+      - non_actions
+
+    field_rules:
+      proposal_id:
+        meaning: stable_identifier_for_the_drafted_candidate
+      status:
+        allowed_values:
+          - proposal_only
+          - proposal_only_pending_operator_review
+          - blocked_until_operator_approval
+      goal:
+        rule: state_the_requested_or_inferred_operator_goal
+      what_already_exists:
+        rule: identify_existing_surfaces_before_any_new_work
+      relevant_files:
+        rule: list_paths_roles_existence_and_mutation_boundary
+      authority_boundaries:
+        rule: list_human_source_runtime_and_agent_limits
+      safe_proposal:
+        rule: describe_only_the_safe_reviewable_next_step
+      waits_for_operator:
+        rule: list_every_action_that_requires_human_acceptance
+      non_actions:
+        rule: list_what_the_agent_is_explicitly_not_doing
+
+  file_authority_rules:
+    current_proposal_targets:
+      mutation_status: allowed_for_this_supervised_build_only
+      paths:
+        - Agency/Agents/<AgentName>/work/Proposals/
+        - Agency/Agents/<AgentName>/work/Tasks/
+        - Agency/Agents/<AgentName>/memory/
+
+    CE_OS_source_files:
+      mutation_status: blocked_read_only_without_explicit_operator_approval
+      path_prefixes:
+        - Models/Shared/
+        - Models/Gear/
+        - Models/Godot/
+        - Models/Grant/
+        - Models/Cali/
+      individual_paths:
+        - UI/Mission.yaml
+        - UI/BOUNDARY.md
+
+    existing_runtime_files:
+      mutation_status: requires_operator_approval
+      path_prefixes:
+        - UI/scripts/
+        - UI/screen/
+
+    blocked_ingestion:
+      mutation_status: never_ingest_as_memory
+      path_prefixes:
+        - local/
+        - .git/
+        - .godot/
+        - __pycache__/
+
+  approval_gates:
+    operator_approval_required_for:
+      - accepting_or_rejecting_any_candidate
+      - editing_CE_OS_source_files
+      - editing_existing_runtime_or_dashboard_files
+      - changing_authority_boundaries
+      - enabling_autonomous_edits
+      - constructing_or_wiring_unrelated_agents
+      - promoting_summary_to_source_authority
+      - promoting_runtime_or_display_output_to_evidence
+
+  safe_proposal_rules:
+    - proposal_may_identify_files_to_review
+    - proposal_may_identify_files_that_would_need_approval_before_editing
+    - proposal_may_recommend_next_review_step
+    - proposal_must_not_apply_or_queue_patch
+    - proposal_must_not_claim_validation
+    - proposal_must_not_hide_missing_sources_or_uncertainty
+
+  default_non_actions:
+    - no_CE_OS_source_file_mutation
+    - no_autonomous_edits
+    - no_unrelated_agent_build
+    - no_runtime_validation_claim
+    - no_canon_promotion

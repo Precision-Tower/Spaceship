@@ -1,0 +1,8 @@
+{"ball_holder": "Editor", "event": "task_received", "ts": "2026-08-05T21:04:47Z"}
+{"event": "task_validated", "ts": "2026-08-05T21:04:47Z"}
+{"event": "inspection_started", "ts": "2026-08-05T21:04:47Z"}
+{"event": "inspection_completed", "files_examined": 1, "findings": 1, "status": "completed", "ts": "2026-08-05T21:04:47Z"}
+{"event": "proposal_started", "ts": "2026-08-05T21:04:47Z"}
+{"event": "proposal_completed", "patch": "proposed.patch", "ts": "2026-08-05T21:04:47Z"}
+{"event": "ball_returned", "from_holder": "Editor", "result_status": "completed", "to_holder": "Editor", "ts": "2026-08-05T21:04:47Z"}
+{"event": "task_returned", "play_outcome": "returned", "status": "completed", "ts": "2026-08-05T21:04:47Z"}

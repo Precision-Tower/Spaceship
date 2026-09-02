@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+SCRIPT_DIR="$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/../lib/common.sh"
+pt_initialize
+pt_print_line "Precision Tower doctor"
+pt_require_dashboard_root || exit 1
+[[ -x "$PACKAGE_VERIFY" ]] || { pt_status_line "MISSING" "verify script" "$PACKAGE_VERIFY"; exit 1; }
+pt_print_line
+pt_print_line "Deployment verification"
+set +e
+"$PACKAGE_VERIFY"
+verify_status=$?
+set -e
+pt_print_line
+pt_print_line "Additional safe diagnostics"
+if pt_have_command git; then
+    change_count="$(cd "$REPO_ROOT" && git status --porcelain=v1 | wc -l | tr -d ' ')"
+    pt_status_line "PASS" "git working tree readable" "$change_count change(s) currently reported"
+else
+    pt_status_line "MISSING" "git" "cannot inspect working tree"
+fi
+if [[ -f "$REPO_ROOT/Agency/Core/runtime/model_server_manager.py" ]]; then
+    pt_run_repo_python -m Agency.Core.runtime.model_server_manager status >/dev/null \
+        && pt_status_line "PASS" "model manager diagnostic" "status command executed" \
+        || pt_status_line "WARNING" "model manager diagnostic" "status command exited nonzero"
+else
+    pt_status_line "MISSING" "model manager diagnostic" "$REPO_ROOT/Agency/Core/runtime/model_server_manager.py"
+fi
+pt_print_line
+(( verify_status == 0 )) && pt_status_line "PASS" "doctor" "completed read-only diagnostics" || pt_status_line "WARNING" "doctor" "verify.sh exited $verify_status"
+exit "$verify_status"

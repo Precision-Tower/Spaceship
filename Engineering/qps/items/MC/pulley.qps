@@ -1,0 +1,7 @@
+pu. Pulley: def"A mass-centric article that creates angular momentum and can multiply force. Used from belt driven devices to linear applications like cranes.";
+dimensions: (
+radius-/n;
+width-/n;
+depth-/n;
+material-/a;
+);

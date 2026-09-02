@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+SCRIPT_DIR="$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/../lib/common.sh"
+pt_initialize
+CHECK_ONLY=false
+[[ "${1:-}" == "--check" ]] && CHECK_ONLY=true
+pt_print_line "Precision Tower browser launcher"
+pt_require_dashboard_root || exit 1
+BRAVE="$(pt_brave_command || true)"
+if [[ -z "$BRAVE" ]]; then
+    pt_status_line "MISSING" "brave" "Brave executable not found in PATH"
+    [[ "$CHECK_ONLY" == true ]] && exit 0
+    exit 1
+fi
+pt_status_line "PASS" "brave" "$BRAVE"
+if [[ "$CHECK_ONLY" == true ]]; then
+    pt_status_line "PASS" "browser check" "not launching because --check was supplied"
+    exit 0
+fi
+if ! pt_has_launch_surface; then
+    pt_status_line "WARNING" "browser launch" "No DISPLAY or local virtual console detected; start desktop locally or run from the console."
+    exit 2
+fi
+pt_status_line "PASS" "browser launch" "executing Brave"
+exec "$BRAVE"

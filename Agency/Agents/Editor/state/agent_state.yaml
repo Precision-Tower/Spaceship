@@ -1,0 +1,25 @@
+AgentState:
+  owner: Editor
+
+  status: scaffold
+  active: false
+
+  authority: state_scaffold_only_not_runtime_authority
+
+  activation:
+    connected_to_runtime: false
+    connected_to_memory: false
+    connected_to_actions: false
+    last_verified_command: null
+
+  current:
+    focus: null
+    capabilities: []
+    open_questions: []
+    risks: []
+
+  rules:
+    - state_is_explicit_not_implied
+    - inactive_state_is_not_runtime_authority
+    - activation_requires_verified_route
+    - transitions_required_for_state_changes

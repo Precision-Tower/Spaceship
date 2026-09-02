@@ -1,0 +1,28 @@
+pu: (pulley: def"
+A mass-centric article that creates angular momentum and can multiply force.
+Used from belt driven devices to linear applications like cranes.)
+(dimensions: radius, width, depth, material;)
+
+cbp: (Combine Pulley: def"
+A mass-centric article that uses two pulleys that spin the same rpm with different circumferences.;)
+(input: mv, rpm;)(output: mv, rpm;)
+(dimensions: (master: radius, width, depth, material;)(slave: radius, width, depth, material;))
+
+pus: (Pulley System: def"
+A mass-centric device that creates angular momentum and can multiply force.
+Used from belt driven devices to linear applications like cranes.)
+(input: mv, rpm;)(output: mv, rpm;)
+(dimensions: (master: radius, width, depth, material;)(slave: radius, width, depth, material;))
+
+gr: (Gear: def"
+A mass-centric article that creates angular momentum.)
+(dimensions: radius, width, tooth count, tooth depth, material;)
+
+cgr: (Combine Gear: def"
+A mass-centric article that combines 2 gears that share rpm with different circumferences.)
+(dimensions: (master: radius, width, tooth count, tooth depth, material;)(slave: radius, width, depth, tooth count, tooth depth, material;))
+
+gt: (Gear Train: def"
+A combination of gears aligned to spin one another from a driven point.;)
+(input: mv, rpm;)(output: mv, rpm;)
+(dimensions: (master: radius, width, tooth count, tooth depth, material;)(slave: radius, width, depth, tooth count, tooth depth, material;))

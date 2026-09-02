@@ -1,0 +1,223 @@
+{
+  "acceptance_claimed": false,
+  "after_hashes": {},
+  "authorization_id": null,
+  "ball_holder": "Gear",
+  "ball_owner": "Gear",
+  "before_hashes": {},
+  "commit_performed": false,
+  "completed_at": "2026-07-26T19:15:21Z",
+  "contradictions": [],
+  "editor": "Editor",
+  "errors": [],
+  "evidence_bundle": {
+    "contradictions": [],
+    "dependency_edges": [],
+    "effective_scope": {
+      "default_exclusions": [
+        ".git",
+        "__pycache__",
+        ".pytest_cache",
+        "node_modules",
+        ".venv",
+        "venv",
+        "weebo_env",
+        "Chroma",
+        "memory/Chroma",
+        "build",
+        "dist",
+        ".godot",
+        "logs",
+        "sessions",
+        "*.pyc",
+        "*.pyo",
+        "*.sqlite",
+        "*.sqlite3",
+        "*.db",
+        ".env",
+        ".env.*",
+        "*.pem",
+        "*.key",
+        "*token*",
+        "*credential*",
+        "*secret*"
+      ],
+      "exclude": [],
+      "include": [
+        "Agency/Agents/Editor/README.md"
+      ]
+    },
+    "files_examined": [
+      "Agency/Agents/Editor/README.md"
+    ],
+    "files_skipped": [],
+    "findings": [
+      {
+        "claim": "Text query 'EditorTask' matched Agency/Agents/Editor/README.md:7.",
+        "classification": "confirmed",
+        "confidence": "high",
+        "evidence": [
+          {
+            "end_line": 7,
+            "evidence_type": "text_search",
+            "excerpt": "- `Agency/Core/editor` for `EditorTask -> EditorResult`",
+            "match_type": "exact_text",
+            "path": "Agency/Agents/Editor/README.md",
+            "query": "EditorTask",
+            "start_line": 7
+          }
+        ],
+        "id": "finding-001"
+      },
+      {
+        "claim": "Text query 'EditorTask' matched Agency/Agents/Editor/README.md:46.",
+        "classification": "confirmed",
+        "confidence": "high",
+        "evidence": [
+          {
+            "end_line": 46,
+            "evidence_type": "text_search",
+            "excerpt": "## Canonical EditorTask YAML",
+            "match_type": "exact_text",
+            "path": "Agency/Agents/Editor/README.md",
+            "query": "EditorTask",
+            "start_line": 46
+          }
+        ],
+        "id": "finding-002"
+      },
+      {
+        "claim": "Text query 'EditorTask' matched Agency/Agents/Editor/README.md:98.",
+        "classification": "confirmed",
+        "confidence": "high",
+        "evidence": [
+          {
+            "end_line": 98,
+            "evidence_type": "text_search",
+            "excerpt": "`--task` expects a YAML or JSON EditorTask file. Natural-language instructions must be converted into a bounded task contract before Editor execution.",
+            "match_type": "exact_text",
+            "path": "Agency/Agents/Editor/README.md",
+            "query": "EditorTask",
+            "start_line": 98
+          }
+        ],
+        "id": "finding-003"
+      }
+    ],
+    "generated_at": "2026-07-26T19:15:21Z",
+    "imports": [],
+    "limits": {
+      "configured": {
+        "max_depth": 2,
+        "max_evidence_items": 500,
+        "max_file_bytes": 120000,
+        "max_files": 500,
+        "max_matches": 500,
+        "max_total_context_bytes": 40000
+      },
+      "reached": {
+        "max_depth": false,
+        "max_evidence_items": false,
+        "max_file_bytes": false,
+        "max_files": false,
+        "max_matches": false,
+        "max_total_context_bytes": false
+      }
+    },
+    "negative_results": [],
+    "objective": "Replace one deterministic string in the Editor README.",
+    "operations_performed": [
+      "text_search"
+    ],
+    "parse_failures": [],
+    "persistence_path": "Agency/Work/Inspections/editor-e2e-proposal-001-evidence",
+    "references": [],
+    "repository_mutation_performed": false,
+    "repository_root": "/home/spaztic/Core/Dashboard",
+    "repository_root_authority": "Agency.Core.foundation.paths.DASHBOARD_ROOT",
+    "request_id": "editor-e2e-proposal-001-evidence",
+    "status": "completed",
+    "symbols": [],
+    "unresolveds": []
+  },
+  "issued_by": "Gear",
+  "limits_reached": [],
+  "next_decision_owner": "Gear",
+  "objective": "Replace one deterministic string in the Editor README.",
+  "observations": [
+    {
+      "authority": "editor_handoff_contract",
+      "claim": "Editor returned the ball to Gear; Editor did not acquire play authority.",
+      "classification": "confirmed"
+    },
+    {
+      "authority": "editor_handoff_contract",
+      "claim": "Patch construction is not implementation; no repository source files were changed.",
+      "classification": "confirmed"
+    }
+  ],
+  "operation": "propose_patch",
+  "patch_artifacts": [
+    {
+      "applied": false,
+      "artifact_type": "unified_diff",
+      "path": "Agency/Work/EditorTasks/editor-e2e-proposal-001/proposed.patch"
+    }
+  ],
+  "persistence_path": "Agency/Work/EditorTasks/editor-e2e-proposal-001",
+  "play_outcome": "returned",
+  "play_owner": "Gear",
+  "proposal_sha256": "b1dcef5f80372f1d02cb312e68f5e2df27acbd6369d3cc2afbda7a075df9ad36",
+  "proposed_changes": [
+    {
+      "assumptions": [
+        "The requested replacement is intentional and remains subject to Gear/Seth approval."
+      ],
+      "intended_change": "deterministic_text_replacement",
+      "supporting_evidence": [
+        {
+          "collection": "findings",
+          "end_line": 7,
+          "evidence_type": "text_search",
+          "path": "Agency/Agents/Editor/README.md",
+          "start_line": 7
+        },
+        {
+          "collection": "findings",
+          "end_line": 46,
+          "evidence_type": "text_search",
+          "path": "Agency/Agents/Editor/README.md",
+          "start_line": 46
+        },
+        {
+          "collection": "findings",
+          "end_line": 98,
+          "evidence_type": "text_search",
+          "path": "Agency/Agents/Editor/README.md",
+          "start_line": 98
+        }
+      ],
+      "target_file": "Agency/Agents/Editor/README.md",
+      "unresolveds": []
+    }
+  ],
+  "repository_mutations": [],
+  "schema_version": 1,
+  "started_at": "2026-07-26T19:15:21Z",
+  "status": "completed",
+  "task_id": "editor-e2e-proposal-001",
+  "throw_completed": true,
+  "unresolveds": [],
+  "verification": [
+    {
+      "claim": "The patch artifact was constructed, but repository verification has not run.",
+      "classification": "not_repository_verification"
+    }
+  ],
+  "verification_results": [
+    {
+      "claim": "The patch artifact was constructed, but repository verification has not run.",
+      "classification": "not_repository_verification"
+    }
+  ]
+}

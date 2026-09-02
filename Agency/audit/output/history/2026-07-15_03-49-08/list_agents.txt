@@ -1,0 +1,75 @@
+=== list_agents ===
+command: python3 run.py cmd list-agents
+AGENTS
+path: /home/spaztic/Core/Dashboard/Agency/Agents
+
+Cali [complete]
+  runtime: True
+  memory_sources: True
+  state: True
+  autonomy: True
+  output_contract: True
+
+Grant [partial]
+  runtime: False
+  memory_sources: True
+  state: False
+  autonomy: False
+  output_contract: False
+
+Jarvis [partial]
+  runtime: True
+  memory_sources: True
+  state: False
+  autonomy: False
+  output_contract: False
+
+NewNew [complete]
+  runtime: True
+  memory_sources: True
+  state: True
+  autonomy: True
+  output_contract: True
+
+Online [empty]
+  runtime: False
+  memory_sources: False
+  state: False
+  autonomy: False
+  output_contract: False
+
+Probe [complete]
+  runtime: True
+  memory_sources: True
+  state: True
+  autonomy: True
+  output_contract: True
+
+Scout [complete]
+  runtime: True
+  memory_sources: True
+  state: True
+  autonomy: True
+  output_contract: True
+
+Weebo [complete]
+  runtime: True
+  memory_sources: True
+  state: True
+  autonomy: True
+  output_contract: True
+
+Weebo2_legacy_shell [complete]
+  runtime: True
+  memory_sources: True
+  state: True
+  autonomy: True
+  output_contract: True
+
+Weebo_legacy_pre_agency [partial]
+  runtime: True
+  memory_sources: False
+  state: False
+  autonomy: False
+  output_contract: False
+exit_code: 0

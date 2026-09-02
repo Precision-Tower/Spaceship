@@ -1,0 +1,4 @@
+exit_code: 124
+result: BLOCKED_TIMEOUT
+observation: refs OperatorShell exceeded the 20-second execution boundary.
+next_proof: Restrict search scope or optimize implementation, then complete within 20 seconds.

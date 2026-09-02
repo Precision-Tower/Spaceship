@@ -1,0 +1,23 @@
+core/:
+(model.qps:
+The Kinetic Energy Model (KEm),
+Causality (L1),
+Conservation of Momentum (L2),
+Description (D),
+Principles (P),
+Applications (A),
+Goals (G),
+Rules (R);)
+(axioms.qps:
+Thermal Genesis (0),
+Field Co-Existence (1),
+Field Alignment (2),
+Stellar Genesis (3),
+Reactive Threshold (4),
+Plasma Threshold (5),
+Inductive Propagation (6),
+Electric Conduction (7),
+Gravity (8),
+Abundance (9),
+Energy (10),
+Fire (11);)

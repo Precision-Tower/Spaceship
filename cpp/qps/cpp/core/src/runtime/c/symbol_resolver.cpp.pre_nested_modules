@@ -1,0 +1,201 @@
+#include "../h/symbol_resolver.hpp"
+
+#include "../h/document_store.hpp"
+#include "../h/path_resolver.hpp"
+
+#include "../../ast/ast_node.hpp"
+
+#include <stdexcept>
+#include <utility>
+
+namespace qps {
+namespace runtime {
+
+namespace fs = std::filesystem;
+
+SymbolResolver::SymbolResolver(
+    PathResolver& paths,
+    DocumentStore& documents)
+    : paths_(paths),
+      documents_(documents) {}
+
+ResolvedSymbol SymbolResolver::resolve(
+    const std::string& symbol,
+    const fs::path& start_module) const {
+
+    fs::path module = start_module.lexically_normal();
+
+    while (true) {
+        const fs::path index_file =
+            paths_.indexFile(module);
+
+        auto index_ast =
+            documents_.get(index_file);
+
+        const ast::ItemDeclarationNode* match = nullptr;
+
+        for (const auto& statement : index_ast->statements) {
+            auto* item =
+                dynamic_cast<ast::ItemDeclarationNode*>(
+                    statement.get());
+
+            if (!item) {
+                continue;
+            }
+
+            auto* identifier_target =
+                dynamic_cast<ast::IdentifierNode*>(
+                    item->target_.get());
+
+            if (!identifier_target ||
+                identifier_target->name_ != symbol) {
+                continue;
+            }
+
+            if (match != nullptr) {
+                throw std::runtime_error(
+                    "Duplicate surfaced symbol '" +
+                    symbol +
+                    "' in " +
+                    index_file.string());
+            }
+
+            match = item;
+        }
+
+        if (match != nullptr) {
+            auto* path_ref =
+                dynamic_cast<ast::PathReferenceNode*>(
+                    match->value_node_.get());
+
+            if (!path_ref) {
+                throw std::runtime_error(
+                    "Surfaced symbol '" +
+                    symbol +
+                    "' in " +
+                    index_file.string() +
+                    " must reference a QPS path.");
+            }
+
+            const auto& segments =
+                path_ref->getPathSegments();
+
+            if (segments.empty()) {
+                throw std::runtime_error(
+                    "Surfaced symbol '" +
+                    symbol +
+                    "' has an empty target path.");
+            }
+
+            // Current V1 surface rule:
+            //
+            //   p- uni.p/p;
+            //
+            // First segment = .qps document stem.
+            // Remaining segments = semantic path inside document.
+            fs::path document_relative = module;
+
+            document_relative /=
+                segments.front() + ".qps";
+
+            const fs::path document_file =
+                paths_.resolveFile(document_relative);
+
+            ResolvedSymbol result;
+            result.symbol = symbol;
+            result.surface_module = module;
+            result.index_file = index_file;
+            result.document_file = document_file;
+
+            result.semantic_path.assign(
+                segments.begin() + 1,
+                segments.end());
+
+            if (result.semantic_path.empty()) {
+                throw std::runtime_error(
+                    "Surfaced symbol '" +
+                    symbol +
+                    "' resolves to a document but no semantic target.");
+            }
+
+            // V1 semantic-target proof:
+            // resolve the first semantic segment as a top-level Key.
+            //
+            // Example:
+            //   p- uni.p/p;
+            //
+            // document_file  -> uni.qps
+            // semantic_path  -> ["p"]
+            // target         -> KeyDeclarationNode("p")
+            auto document_ast =
+                documents_.get(result.document_file);
+
+            result.document_owner = document_ast;
+
+            const std::string& target_name =
+                result.semantic_path.front();
+
+            const ast::KeyDeclarationNode* target = nullptr;
+
+            for (const auto& statement :
+                 document_ast->statements) {
+
+                auto* key =
+                    dynamic_cast<ast::KeyDeclarationNode*>(
+                        statement.get());
+
+                if (!key ||
+                    key->identifier_ != target_name) {
+                    continue;
+                }
+
+                if (target != nullptr) {
+                    throw std::runtime_error(
+                        "Duplicate semantic Key '" +
+                        target_name +
+                        "' in " +
+                        result.document_file.string());
+                }
+
+                target = key;
+            }
+
+            if (target == nullptr) {
+                throw std::runtime_error(
+                    "Semantic Key '" +
+                    target_name +
+                    "' not found in " +
+                    result.document_file.string());
+            }
+
+            // Do not retain the AST pointer here: document_ast is locally
+            // owned and will be destroyed when resolve() returns.
+            // Record verified identity only. AST lifetime comes later.
+            result.target_type = "KEY_DECLARATION";
+            result.target_identifier =
+                target->identifier_;
+
+            result.target_node =
+                const_cast<ast::KeyDeclarationNode*>(target);
+
+            return result;
+        }
+
+        // Empty module path represents the workspace root.
+        if (module.empty()) {
+            break;
+        }
+
+        module = module.parent_path();
+    }
+
+    throw std::runtime_error(
+        "Unresolved QPS symbol '" +
+        symbol +
+        "' from module '" +
+        start_module.string() +
+        "'.");
+}
+
+} // namespace runtime
+} // namespace qps

@@ -1,0 +1,71 @@
+{
+  "packet_type": "barrel_candidate_packet",
+  "created_at": "2026-06-15T13:07:30.938921+00:00",
+  "evidence_state": "calculated_candidate",
+  "object_or_system": "barrel_001",
+  "barrel": {
+    "object_id": "barrel_001",
+    "object_type": "barrel_candidate",
+    "material_id": "hdpe_candidate",
+    "unresolved_variables": [
+      "actual_wall_thickness",
+      "actual_internal_volume",
+      "material_grade",
+      "cap_or_lid_geometry",
+      "ribbed_surface_geometry",
+      "measured_mass_kg",
+      "declared_mass_disagrees_with_geometry_material_estimate"
+    ],
+    "material": {
+      "material_id": "hdpe_candidate",
+      "density_kg_m3": 950.0
+    },
+    "mass": {
+      "declared_mass_kg": 18.0,
+      "estimated_shell_mass_kg": 5.540688733059583,
+      "mass_difference_kg": 12.459311266940418,
+      "mass_source": "declared_candidate_vs_geometry_material_estimate"
+    },
+    "geometry": {
+      "shape": "hollow_cylinder_candidate",
+      "outer_radius_m": 0.285,
+      "height_m": 0.82,
+      "wall_thickness_m": 0.004,
+      "inner_radius_m": 0.28099999999999997,
+      "render": {
+        "outer": {
+          "primitive": "cylinder",
+          "radius_m": 0.285,
+          "height_m": 0.82
+        },
+        "inner": {
+          "primitive": "cylinder",
+          "radius_m": 0.28099999999999997,
+          "height_m": 0.82
+        },
+        "wall_thickness_m": 0.004
+      }
+    },
+    "volumes": {
+      "external_volume_m3": 0.20924420789602136,
+      "internal_volume_m3": 0.20341190396648495,
+      "shell_volume_m3": 0.005832303929536403,
+      "flooded_volume_m3": 0.0
+    },
+    "state": {
+      "sealed_state": true
+    },
+    "blocked_interpretations": [
+      "candidate_geometry_equals_measured_barrel",
+      "calculated_volume_equals_validated_volume",
+      "sealed_state_equals_validated_no_leak"
+    ]
+  },
+  "prohibited_interpretations": [
+    "candidate_barrel_equals_measured_barrel",
+    "calculated_volume_equals_validated_volume",
+    "estimated_mass_equals_measured_mass",
+    "sealed_state_equals_validated_no_leak",
+    "geometry_display_equals_physical_truth"
+  ]
+}

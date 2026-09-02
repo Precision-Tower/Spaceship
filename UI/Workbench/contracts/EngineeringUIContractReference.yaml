@@ -1,0 +1,87 @@
+EngineeringUIContractReference:
+  version: 0.1
+  authority: boundary_reference_only_not_validation
+
+  purpose:
+    - define_boundary_between_Engineering_outputs_and_UI_surfaces
+    - preserve_clear_ownership_between_calculation_and_visualization
+    - document_current_Float_to_Workbench_runtime_spine
+
+  Engineering:
+    owns:
+      - environment_candidates
+      - assembly_packets
+      - object_records
+      - calculations
+      - unresolved_variables
+      - blocked_interpretations
+      - prohibited_interpretations
+
+    does_not_own:
+      - visualization_truth
+      - operator_interaction
+      - UI_state
+      - evidence_promotion
+      - validation
+      - physical_truth
+
+  UI:
+    owns:
+      - visualization
+      - object_selection
+      - inspection_panels
+      - packet_loading
+      - operator_surface_behavior
+      - Workbench_runtime_display
+
+    does_not_own:
+      - equations
+      - engineering_truth
+      - physical_validation
+      - evidence_promotion
+      - payload_safety
+      - seaworthiness
+
+  Workbench:
+    consumes:
+      - assembly.objects
+      - object.render
+      - object.packet_links
+      - packet.evidence_state
+      - packet.prohibited_interpretations
+      - assembly.unresolved_variables
+      - assembly.blocked_interpretations
+
+    does_not_own:
+      - engineering_identity_mutation
+      - physics_claims
+      - validation
+      - source_packet_authority
+
+  active_flow:
+    - Engineering/py/Projects/Float/Boat/Hull/hull_inventory.py
+    - Engineering/py/Projects/Float/Boat/Hull/hull_inventory_packet.json
+    - Engineering/py/Projects/Float/Boat/boat_assembly.py
+    - Engineering/py/Projects/Float/Boat/boat_assembly_packet.json
+    - UI/projects/Float/FloatProject.gd
+    - UI/Workbench/scenes/Workbench.tscn
+
+  confirmed_runtime_output:
+    - "[Workbench] project=float"
+    - "[Float] assembly=boat_assembly_001 objects=17 packet=boat_assembly_packet"
+
+  rules:
+    - Engineering_generates_packets
+    - UI_displays_packets
+    - Workbench_inspects_objects
+    - Runtime_success_is_not_validation
+    - Visualization_is_not_evidence
+    - Packet_contracts_preserve_transport_not_truth
+
+  prohibited_interpretations:
+    - visualization_equals_evidence
+    - packet_equals_validation
+    - successful_load_equals_correct_engineering
+    - clean_UI_equals_physical_truth
+    - positive_float_margin_equals_stability
+    - Workbench_display_equals_operational_readiness

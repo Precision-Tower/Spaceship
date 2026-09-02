@@ -1,0 +1,20 @@
+ProjectState:
+  project_id: ProjectName
+
+  status: scaffold
+
+  objectives: []
+
+  constraints: []
+
+  assumptions: []
+
+  resources: []
+
+  risks: []
+
+  open_questions: []
+
+  current_phase: null
+
+  authority: explicit_state_model_not_validation

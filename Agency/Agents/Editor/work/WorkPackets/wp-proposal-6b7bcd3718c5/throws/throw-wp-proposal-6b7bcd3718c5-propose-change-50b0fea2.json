@@ -1,0 +1,12 @@
+{
+  "dispatched_at": "2026-08-05T21:04:47Z",
+  "from": "Editor",
+  "packet": "wp-proposal-6b7bcd3718c5",
+  "received_at": "2026-08-05T21:04:47Z",
+  "result": "Agency/Agents/Editor/work/WorkPackets/wp-proposal-6b7bcd3718c5/results/wp-proposal-6b7bcd3718c5-propose-change.json",
+  "returned_at": "2026-08-05T21:04:47Z",
+  "route": "propose_patch",
+  "step": "propose-change",
+  "throw_id": "throw-wp-proposal-6b7bcd3718c5-propose-change-50b0fea2",
+  "to": "Editor"
+}

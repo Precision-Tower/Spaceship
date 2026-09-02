@@ -1,0 +1,21 @@
+# Precision Tower base packages.
+# Do not install from this file until a future install phase supplies machine inputs.
+
+python3
+python3-venv
+python3-pip
+pipx
+git
+curl
+wget
+jq
+rsync
+zip
+unzip
+tmux
+build-essential
+cmake
+openssh-server
+ufw
+tailscale
+network-manager

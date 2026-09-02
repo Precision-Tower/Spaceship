@@ -1,0 +1,1238 @@
+{
+  "packet_type": "boat_assembly_packet",
+  "created_at": "2026-07-01T19:45:44.325685+00:00",
+  "evidence_state": "calculated_candidate",
+  "environment": {
+    "environment_id": "water_environment_001",
+    "fluid": {
+      "fluid_id": "sea_water",
+      "density_kg_m3": 1025.0,
+      "material_id": "sea_water_candidate",
+      "notes": "sea_water_default_candidate"
+    },
+    "gravity_m_s2": 9.80665,
+    "surface_z_m": 0.0,
+    "render": {
+      "primitive": "fluid_volume",
+      "size_m": {
+        "x": 6.0,
+        "y": 0.5,
+        "z": 6.0
+      },
+      "surface_z_m": 0.0,
+      "depth_m": 0.5,
+      "material": {
+        "fluid_id": "sea_water",
+        "alpha": 0.25
+      }
+    },
+    "notes": ""
+  },
+  "source_packets": [
+    {
+      "packet_type": "hull_inventory_packet",
+      "packet_path": "Hull/hull_inventory_packet.json"
+    },
+    {
+      "packet_type": "battery_packet",
+      "packet_path": "Motor/battery_packet.json"
+    },
+    {
+      "packet_type": "hull_frame_packet",
+      "packet_path": "Hull/hull_frame_packet.json"
+    },
+    {
+      "packet_type": "motor_packet",
+      "packet_path": "Motor/motor_packet.json"
+    }
+  ],
+  "assembly": {
+    "assembly_id": "boat_assembly_001",
+    "assembly_type": "boat_assembly",
+    "hierarchy": {
+      "root_group": "boat_assembly",
+      "groups": {
+        "boat_assembly": {
+          "parent_group": null,
+          "status": "active",
+          "role": "root_assembly"
+        },
+        "hull": {
+          "parent_group": "boat_assembly",
+          "status": "active",
+          "role": "primary_float_structure"
+        },
+        "hull_frame": {
+          "parent_group": "hull",
+          "status": "active",
+          "role": "structural_mounting_frame_candidate"
+        },
+        "port_pontoon": {
+          "parent_group": "hull",
+          "status": "active",
+          "role": "flotation_subassembly"
+        },
+        "starboard_pontoon": {
+          "parent_group": "hull",
+          "status": "active",
+          "role": "flotation_subassembly"
+        },
+        "connector_frame": {
+          "parent_group": "hull",
+          "status": "active",
+          "role": "restraint_structure"
+        },
+        "subfloor": {
+          "parent_group": "boat_assembly",
+          "status": "planned",
+          "planned": true
+        },
+        "deck": {
+          "parent_group": "boat_assembly",
+          "status": "planned",
+          "planned": true
+        },
+        "motor_assembly": {
+          "parent_group": "boat_assembly",
+          "status": "active",
+          "role": "propulsion_subassembly_candidate"
+        },
+        "power_system": {
+          "parent_group": "motor_assembly",
+          "status": "active",
+          "role": "electrical_power_storage"
+        }
+      }
+    },
+    "objects": [
+      {
+        "object_id": "barrel_001",
+        "object_type": "barrel",
+        "physical_primitive": "barrel",
+        "role": "flotation_element",
+        "mass_kg": 18.0,
+        "volume_m3": 0.208,
+        "position_m": {
+          "x": -1.7924,
+          "y": 0.0,
+          "z": -0.6096
+        },
+        "dimensions_m": {
+          "radius": 0.285,
+          "height": 0.82
+        },
+        "barrel": {
+          "radius_m": 0.285,
+          "height_m": 0.82,
+          "sealed": true,
+          "fill_state": "air",
+          "external_volume_m3": 0.208
+        },
+        "render": {
+          "primitive": "cylinder",
+          "radius_m": 0.285,
+          "height_m": 0.82,
+          "display_position_m": {
+            "x": -1.7924,
+            "y": 0.24224999999999997,
+            "z": -0.6096
+          },
+          "rotation_degrees": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 90.0
+          }
+        },
+        "material": "hdpe_candidate",
+        "contributes_weight": true,
+        "contributes_buoyancy": true,
+        "assembly_group": "port_pontoon",
+        "subsystem": "hull",
+        "parent_group": "hull"
+      },
+      {
+        "object_id": "barrel_002",
+        "object_type": "barrel",
+        "physical_primitive": "barrel",
+        "role": "flotation_element",
+        "mass_kg": 18.0,
+        "volume_m3": 0.208,
+        "position_m": {
+          "x": -0.8962,
+          "y": 0.0,
+          "z": -0.6096
+        },
+        "dimensions_m": {
+          "radius": 0.285,
+          "height": 0.82
+        },
+        "barrel": {
+          "radius_m": 0.285,
+          "height_m": 0.82,
+          "sealed": true,
+          "fill_state": "air",
+          "external_volume_m3": 0.208
+        },
+        "render": {
+          "primitive": "cylinder",
+          "radius_m": 0.285,
+          "height_m": 0.82,
+          "display_position_m": {
+            "x": -0.8962,
+            "y": 0.24224999999999997,
+            "z": -0.6096
+          },
+          "rotation_degrees": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 90.0
+          }
+        },
+        "material": "hdpe_candidate",
+        "contributes_weight": true,
+        "contributes_buoyancy": true,
+        "assembly_group": "port_pontoon",
+        "subsystem": "hull",
+        "parent_group": "hull"
+      },
+      {
+        "object_id": "barrel_003",
+        "object_type": "barrel",
+        "physical_primitive": "barrel",
+        "role": "flotation_element",
+        "mass_kg": 18.0,
+        "volume_m3": 0.208,
+        "position_m": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": -0.6096
+        },
+        "dimensions_m": {
+          "radius": 0.285,
+          "height": 0.82
+        },
+        "barrel": {
+          "radius_m": 0.285,
+          "height_m": 0.82,
+          "sealed": true,
+          "fill_state": "air",
+          "external_volume_m3": 0.208
+        },
+        "render": {
+          "primitive": "cylinder",
+          "radius_m": 0.285,
+          "height_m": 0.82,
+          "display_position_m": {
+            "x": 0.0,
+            "y": 0.24224999999999997,
+            "z": -0.6096
+          },
+          "rotation_degrees": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 90.0
+          }
+        },
+        "material": "hdpe_candidate",
+        "contributes_weight": true,
+        "contributes_buoyancy": true,
+        "assembly_group": "port_pontoon",
+        "subsystem": "hull",
+        "parent_group": "hull"
+      },
+      {
+        "object_id": "barrel_004",
+        "object_type": "barrel",
+        "physical_primitive": "barrel",
+        "role": "flotation_element",
+        "mass_kg": 18.0,
+        "volume_m3": 0.208,
+        "position_m": {
+          "x": 0.8962000000000001,
+          "y": 0.0,
+          "z": -0.6096
+        },
+        "dimensions_m": {
+          "radius": 0.285,
+          "height": 0.82
+        },
+        "barrel": {
+          "radius_m": 0.285,
+          "height_m": 0.82,
+          "sealed": true,
+          "fill_state": "air",
+          "external_volume_m3": 0.208
+        },
+        "render": {
+          "primitive": "cylinder",
+          "radius_m": 0.285,
+          "height_m": 0.82,
+          "display_position_m": {
+            "x": 0.8962000000000001,
+            "y": 0.24224999999999997,
+            "z": -0.6096
+          },
+          "rotation_degrees": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 90.0
+          }
+        },
+        "material": "hdpe_candidate",
+        "contributes_weight": true,
+        "contributes_buoyancy": true,
+        "assembly_group": "port_pontoon",
+        "subsystem": "hull",
+        "parent_group": "hull"
+      },
+      {
+        "object_id": "barrel_005",
+        "object_type": "barrel",
+        "physical_primitive": "barrel",
+        "role": "flotation_element",
+        "mass_kg": 18.0,
+        "volume_m3": 0.208,
+        "position_m": {
+          "x": 1.7924,
+          "y": 0.0,
+          "z": -0.6096
+        },
+        "dimensions_m": {
+          "radius": 0.285,
+          "height": 0.82
+        },
+        "barrel": {
+          "radius_m": 0.285,
+          "height_m": 0.82,
+          "sealed": true,
+          "fill_state": "air",
+          "external_volume_m3": 0.208
+        },
+        "render": {
+          "primitive": "cylinder",
+          "radius_m": 0.285,
+          "height_m": 0.82,
+          "display_position_m": {
+            "x": 1.7924,
+            "y": 0.24224999999999997,
+            "z": -0.6096
+          },
+          "rotation_degrees": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 90.0
+          }
+        },
+        "material": "hdpe_candidate",
+        "contributes_weight": true,
+        "contributes_buoyancy": true,
+        "assembly_group": "port_pontoon",
+        "subsystem": "hull",
+        "parent_group": "hull"
+      },
+      {
+        "object_id": "barrel_006",
+        "object_type": "barrel",
+        "physical_primitive": "barrel",
+        "role": "flotation_element",
+        "mass_kg": 18.0,
+        "volume_m3": 0.208,
+        "position_m": {
+          "x": -1.7924,
+          "y": 0.0,
+          "z": 0.6096
+        },
+        "dimensions_m": {
+          "radius": 0.285,
+          "height": 0.82
+        },
+        "barrel": {
+          "radius_m": 0.285,
+          "height_m": 0.82,
+          "sealed": true,
+          "fill_state": "air",
+          "external_volume_m3": 0.208
+        },
+        "render": {
+          "primitive": "cylinder",
+          "radius_m": 0.285,
+          "height_m": 0.82,
+          "display_position_m": {
+            "x": -1.7924,
+            "y": 0.24224999999999997,
+            "z": 0.6096
+          },
+          "rotation_degrees": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 90.0
+          }
+        },
+        "material": "hdpe_candidate",
+        "contributes_weight": true,
+        "contributes_buoyancy": true,
+        "assembly_group": "starboard_pontoon",
+        "subsystem": "hull",
+        "parent_group": "hull"
+      },
+      {
+        "object_id": "barrel_007",
+        "object_type": "barrel",
+        "physical_primitive": "barrel",
+        "role": "flotation_element",
+        "mass_kg": 18.0,
+        "volume_m3": 0.208,
+        "position_m": {
+          "x": -0.8962,
+          "y": 0.0,
+          "z": 0.6096
+        },
+        "dimensions_m": {
+          "radius": 0.285,
+          "height": 0.82
+        },
+        "barrel": {
+          "radius_m": 0.285,
+          "height_m": 0.82,
+          "sealed": true,
+          "fill_state": "air",
+          "external_volume_m3": 0.208
+        },
+        "render": {
+          "primitive": "cylinder",
+          "radius_m": 0.285,
+          "height_m": 0.82,
+          "display_position_m": {
+            "x": -0.8962,
+            "y": 0.24224999999999997,
+            "z": 0.6096
+          },
+          "rotation_degrees": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 90.0
+          }
+        },
+        "material": "hdpe_candidate",
+        "contributes_weight": true,
+        "contributes_buoyancy": true,
+        "assembly_group": "starboard_pontoon",
+        "subsystem": "hull",
+        "parent_group": "hull"
+      },
+      {
+        "object_id": "barrel_008",
+        "object_type": "barrel",
+        "physical_primitive": "barrel",
+        "role": "flotation_element",
+        "mass_kg": 18.0,
+        "volume_m3": 0.208,
+        "position_m": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.6096
+        },
+        "dimensions_m": {
+          "radius": 0.285,
+          "height": 0.82
+        },
+        "barrel": {
+          "radius_m": 0.285,
+          "height_m": 0.82,
+          "sealed": true,
+          "fill_state": "air",
+          "external_volume_m3": 0.208
+        },
+        "render": {
+          "primitive": "cylinder",
+          "radius_m": 0.285,
+          "height_m": 0.82,
+          "display_position_m": {
+            "x": 0.0,
+            "y": 0.24224999999999997,
+            "z": 0.6096
+          },
+          "rotation_degrees": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 90.0
+          }
+        },
+        "material": "hdpe_candidate",
+        "contributes_weight": true,
+        "contributes_buoyancy": true,
+        "assembly_group": "starboard_pontoon",
+        "subsystem": "hull",
+        "parent_group": "hull"
+      },
+      {
+        "object_id": "barrel_009",
+        "object_type": "barrel",
+        "physical_primitive": "barrel",
+        "role": "flotation_element",
+        "mass_kg": 18.0,
+        "volume_m3": 0.208,
+        "position_m": {
+          "x": 0.8962000000000001,
+          "y": 0.0,
+          "z": 0.6096
+        },
+        "dimensions_m": {
+          "radius": 0.285,
+          "height": 0.82
+        },
+        "barrel": {
+          "radius_m": 0.285,
+          "height_m": 0.82,
+          "sealed": true,
+          "fill_state": "air",
+          "external_volume_m3": 0.208
+        },
+        "render": {
+          "primitive": "cylinder",
+          "radius_m": 0.285,
+          "height_m": 0.82,
+          "display_position_m": {
+            "x": 0.8962000000000001,
+            "y": 0.24224999999999997,
+            "z": 0.6096
+          },
+          "rotation_degrees": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 90.0
+          }
+        },
+        "material": "hdpe_candidate",
+        "contributes_weight": true,
+        "contributes_buoyancy": true,
+        "assembly_group": "starboard_pontoon",
+        "subsystem": "hull",
+        "parent_group": "hull"
+      },
+      {
+        "object_id": "barrel_010",
+        "object_type": "barrel",
+        "physical_primitive": "barrel",
+        "role": "flotation_element",
+        "mass_kg": 18.0,
+        "volume_m3": 0.208,
+        "position_m": {
+          "x": 1.7924,
+          "y": 0.0,
+          "z": 0.6096
+        },
+        "dimensions_m": {
+          "radius": 0.285,
+          "height": 0.82
+        },
+        "barrel": {
+          "radius_m": 0.285,
+          "height_m": 0.82,
+          "sealed": true,
+          "fill_state": "air",
+          "external_volume_m3": 0.208
+        },
+        "render": {
+          "primitive": "cylinder",
+          "radius_m": 0.285,
+          "height_m": 0.82,
+          "display_position_m": {
+            "x": 1.7924,
+            "y": 0.24224999999999997,
+            "z": 0.6096
+          },
+          "rotation_degrees": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 90.0
+          }
+        },
+        "material": "hdpe_candidate",
+        "contributes_weight": true,
+        "contributes_buoyancy": true,
+        "assembly_group": "starboard_pontoon",
+        "subsystem": "hull",
+        "parent_group": "hull"
+      },
+      {
+        "object_id": "test_pipe_001",
+        "object_type": "connector_pipe",
+        "physical_primitive": "pipe",
+        "role": "pipe_lab_straight_pipe_candidate",
+        "mass_kg": 0.1338245260111221,
+        "volume_m3": 0.0,
+        "position_m": {
+          "x": 0.0,
+          "y": 0.90675,
+          "z": 0.0
+        },
+        "dimensions_m": {
+          "radius": 0.0167005,
+          "length": 0.3,
+          "outer_radius": 0.0167005,
+          "inner_radius": 0.013322299999999999,
+          "wall_thickness": 0.0033782000000000013,
+          "nominal_size_in": 1.0,
+          "schedule": "SCH40",
+          "outer_diameter_m": 0.033401,
+          "inner_diameter_m": 0.026644599999999997
+        },
+        "render": {
+          "primitive": "cylinder",
+          "radius_m": 0.0167005,
+          "height_m": 0.3,
+          "display_position_m": {
+            "x": 0.0,
+            "y": 0.90675,
+            "z": 0.0
+          },
+          "rotation_degrees": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": -90.0
+          }
+        },
+        "material": "pvc_candidate",
+        "material_density_kg_m3": 1400.0,
+        "material_volume_m3": 9.558894715080151e-05,
+        "contributes_weight": true,
+        "contributes_buoyancy": false,
+        "assembly_group": "pipe_lab",
+        "subsystem": "hull",
+        "parent_group": "hull",
+        "fill_state": "empty",
+        "contained_volume_m3": 0.00016727442501190964,
+        "ports": [
+          {
+            "port_id": "A",
+            "connection_type": "pipe_end",
+            "nominal_radius_m": 0.0167005,
+            "inner_radius_m": 0.013322299999999999,
+            "position_m": {
+              "x": -0.15,
+              "y": 0.90675,
+              "z": 0.0
+            },
+            "direction": {
+              "x": -1.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "state": "open"
+          },
+          {
+            "port_id": "B",
+            "connection_type": "pipe_end",
+            "nominal_radius_m": 0.0167005,
+            "inner_radius_m": 0.013322299999999999,
+            "position_m": {
+              "x": 0.15,
+              "y": 0.90675,
+              "z": 0.0
+            },
+            "direction": {
+              "x": 1.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "state": "open"
+          }
+        ],
+        "pipe_spec": {
+          "nominal_size_in": 1.0,
+          "schedule": "SCH40",
+          "outer_diameter_m": 0.033401,
+          "inner_diameter_m": 0.026644599999999997,
+          "outer_radius_m": 0.0167005,
+          "inner_radius_m": 0.013322299999999999,
+          "wall_thickness_m": 0.0033782
+        },
+        "connections": [
+          {
+            "connection_id": "connection_test_pipe_001_to_test_elbow_001",
+            "from_object_id": "test_pipe_001",
+            "from_port_id": "B",
+            "to_object_id": "test_elbow_001",
+            "to_port_id": "A",
+            "connection_role": "pipe_to_elbow_candidate",
+            "evidence_state": "calculated_candidate",
+            "prohibited_interpretations": [
+              "connection_record_equals_leak_free",
+              "connection_record_equals_pressure_safe",
+              "visual_alignment_equals_physical_connection",
+              "pipe_topology_equals_build_ready"
+            ]
+          }
+        ]
+      },
+      {
+        "object_id": "test_elbow_001",
+        "object_type": "pipe_fitting",
+        "physical_primitive": "pipe_fitting",
+        "fitting_type": "elbow_90",
+        "role": "pipe_lab_elbow_90_candidate",
+        "evidence_state": "calculated_candidate",
+        "mass_kg": 0.02669680638445401,
+        "volume_m3": 0.0,
+        "position_m": {
+          "x": 0.15,
+          "y": 0.90675,
+          "z": 0.0
+        },
+        "dimensions_m": {
+          "nominal_radius_m": 0.0167005,
+          "nominal_size_in": 1.0,
+          "outer_radius_m": 0.0167005,
+          "inner_radius_m": 0.013322299999999999,
+          "bend_radius_m": 0.038099999999999995,
+          "takeoff_m": 0.038099999999999995,
+          "takeoff_multiplier": 1.5,
+          "angle_degrees": 90.0,
+          "centerline_length_m": 0.05984734005088555,
+          "wall_thickness_m": 0.0033782000000000013,
+          "fitting_standard": "ASME_B16_9_LR_90",
+          "schedule": "SCH40",
+          "pipe_spec": {
+            "nominal_size_in": 1.0,
+            "schedule": "SCH40",
+            "outer_diameter_m": 0.033401,
+            "inner_diameter_m": 0.026644599999999997,
+            "outer_radius_m": 0.0167005,
+            "inner_radius_m": 0.013322299999999999,
+            "wall_thickness_m": 0.0033782
+          }
+        },
+        "render": {
+          "primitive": "pipe_elbow_90",
+          "outer_radius_m": 0.0167005,
+          "inner_radius_m": 0.013322299999999999,
+          "bend_radius_m": 0.038099999999999995,
+          "takeoff_m": 0.038099999999999995,
+          "angle_degrees": 90.0,
+          "display_position_m": {
+            "x": 0.15,
+            "y": 0.90675,
+            "z": 0.0
+          },
+          "rotation_degrees": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "nominal_size_in": 1.0,
+          "schedule": "SCH40"
+        },
+        "material": "pvc_candidate",
+        "material_density_kg_m3": 1400.0,
+        "material_volume_m3": 1.906914741746715e-05,
+        "contributes_weight": true,
+        "contributes_buoyancy": false,
+        "assembly_group": "pipe_lab",
+        "subsystem": "hull",
+        "parent_group": "hull",
+        "ports": [
+          {
+            "port_id": "A",
+            "connection_type": "pipe_end",
+            "nominal_radius_m": 0.0167005,
+            "inner_radius_m": 0.013322299999999999,
+            "position_m": {
+              "x": 0.1881,
+              "y": 0.8686499999999999,
+              "z": 0.0
+            },
+            "direction": {
+              "x": -1.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "state": "open"
+          },
+          {
+            "port_id": "B",
+            "connection_type": "pipe_end",
+            "nominal_radius_m": 0.0167005,
+            "inner_radius_m": 0.013322299999999999,
+            "position_m": {
+              "x": 0.15,
+              "y": 0.90675,
+              "z": 0.0
+            },
+            "direction": {
+              "x": 0.0,
+              "y": 1.0,
+              "z": 0.0
+            },
+            "state": "open"
+          }
+        ],
+        "takeoffs": {
+          "evidence_state": "calculated_candidate",
+          "items": [
+            {
+              "type": "fitting_takeoff_candidate",
+              "takeoff_role": "elbow_90",
+              "values_m": {
+                "nominal_radius_m": 0.0167005,
+                "nominal_size_in": 1.0,
+                "outer_radius_m": 0.0167005,
+                "inner_radius_m": 0.013322299999999999,
+                "wall_thickness_m": 0.0033782000000000013,
+                "bend_radius_m": 0.038099999999999995,
+                "takeoff_m": 0.038099999999999995,
+                "takeoff_multiplier": 1.5,
+                "angle_degrees": 90.0,
+                "centerline_length_m": 0.05984734005088555
+              }
+            }
+          ]
+        },
+        "blocked_interpretations": [
+          "fitting_candidate_equals_pressure_rated_part",
+          "fitting_geometry_equals_leak_free_connection",
+          "calculated_candidate_equals_build_ready_component",
+          "roll_alignment_equals_pressure_safe_connection",
+          "socket_alignment_equals_leak_free_joint",
+          "visual_pipe_connection_equals_validated_pressure_boundary"
+        ],
+        "display_position_m": {
+          "x": 0.15,
+          "y": 0.90675,
+          "z": 0.0
+        },
+        "placement": {
+          "mode": "pipe_port_locked_roll",
+          "attached_to": {
+            "object_id": "test_pipe_001",
+            "port_id": "B"
+          },
+          "fitting_port_id": "A",
+          "locked_axis": {
+            "source": "test_pipe_001.B.direction",
+            "world_direction": {
+              "x": 1.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          },
+          "required_fitting_port_direction": {
+            "x": -1.0,
+            "y": -0.0,
+            "z": -0.0
+          },
+          "roll_degrees": 0.0,
+          "editable_degrees_of_freedom": [
+            "roll_degrees_about_locked_axis"
+          ],
+          "blocked_degrees_of_freedom": [
+            "free_position",
+            "free_rotation_x",
+            "free_rotation_y",
+            "free_rotation_z"
+          ]
+        },
+        "roll_degrees": 0.0,
+        "connections": [
+          {
+            "connection_id": "connection_test_pipe_001_to_test_elbow_001",
+            "from_object_id": "test_pipe_001",
+            "from_port_id": "B",
+            "to_object_id": "test_elbow_001",
+            "to_port_id": "A",
+            "connection_role": "pipe_to_elbow_candidate",
+            "evidence_state": "calculated_candidate",
+            "prohibited_interpretations": [
+              "connection_record_equals_leak_free",
+              "connection_record_equals_pressure_safe",
+              "visual_alignment_equals_physical_connection",
+              "pipe_topology_equals_build_ready"
+            ]
+          }
+        ]
+      },
+      {
+        "object_id": "battery_12v_001",
+        "object_type": "battery",
+        "role": "power_storage",
+        "mass_kg": 18.0,
+        "volume_m3": 0.0,
+        "position_m": {
+          "x": -0.35,
+          "y": 0.55,
+          "z": 0.0
+        },
+        "dimensions_m": {
+          "x": 0.33,
+          "y": 0.24,
+          "z": 0.22
+        },
+        "electrical": {
+          "nominal_voltage_v": 12.0,
+          "connection_role": "series_member",
+          "series_index": 1
+        },
+        "render": {
+          "primitive": "box",
+          "size_m": {
+            "x": 0.33,
+            "y": 0.24,
+            "z": 0.22
+          },
+          "display_position_m": {
+            "x": -0.35,
+            "y": 0.55,
+            "z": 0.0
+          },
+          "material": {
+            "material_id": "battery_case_candidate"
+          }
+        },
+        "material": "lead_acid_battery_candidate",
+        "contributes_weight": true,
+        "contributes_buoyancy": false,
+        "assembly_group": "power_system",
+        "subsystem": "motor",
+        "parent_group": "motor_assembly",
+        "unresolved_variables": [
+          "actual_battery_type",
+          "actual_battery_mass",
+          "actual_battery_dimensions",
+          "battery_mounting_hardware",
+          "battery_box_mass",
+          "cable_mass",
+          "waterproofing",
+          "electrical_protection"
+        ],
+        "blocked_interpretations": [
+          "battery_candidate_equals_selected_battery",
+          "nominal_voltage_equals_runtime_voltage_under_load",
+          "battery_presence_equals_power_system_validated"
+        ]
+      },
+      {
+        "object_id": "battery_12v_002",
+        "object_type": "battery",
+        "role": "power_storage",
+        "mass_kg": 18.0,
+        "volume_m3": 0.0,
+        "position_m": {
+          "x": 0.35,
+          "y": 0.55,
+          "z": 0.0
+        },
+        "dimensions_m": {
+          "x": 0.33,
+          "y": 0.24,
+          "z": 0.22
+        },
+        "electrical": {
+          "nominal_voltage_v": 12.0,
+          "connection_role": "series_member",
+          "series_index": 2
+        },
+        "render": {
+          "primitive": "box",
+          "size_m": {
+            "x": 0.33,
+            "y": 0.24,
+            "z": 0.22
+          },
+          "display_position_m": {
+            "x": 0.35,
+            "y": 0.55,
+            "z": 0.0
+          },
+          "material": {
+            "material_id": "battery_case_candidate"
+          }
+        },
+        "material": "lead_acid_battery_candidate",
+        "contributes_weight": true,
+        "contributes_buoyancy": false,
+        "assembly_group": "power_system",
+        "subsystem": "motor",
+        "parent_group": "motor_assembly",
+        "unresolved_variables": [
+          "actual_battery_type",
+          "actual_battery_mass",
+          "actual_battery_dimensions",
+          "battery_mounting_hardware",
+          "battery_box_mass",
+          "cable_mass",
+          "waterproofing",
+          "electrical_protection"
+        ],
+        "blocked_interpretations": [
+          "battery_candidate_equals_selected_battery",
+          "nominal_voltage_equals_runtime_voltage_under_load",
+          "battery_presence_equals_power_system_validated"
+        ]
+      },
+      {
+        "object_id": "electric_motor_001",
+        "object_type": "electric_motor",
+        "role": "propulsion_drive",
+        "mass_kg": 12.0,
+        "volume_m3": 0.0,
+        "position_m": {
+          "x": 0.0,
+          "y": 0.45,
+          "z": 0.95
+        },
+        "dimensions_m": {
+          "x": 0.35,
+          "y": 0.28,
+          "z": 0.28
+        },
+        "electrical": {
+          "nominal_voltage_v": 24.0,
+          "power_w_candidate": 1000.0,
+          "current_a_candidate": 41.67
+        },
+        "propulsion": {
+          "thrust_force_n_candidate": null,
+          "propeller_diameter_m_candidate": null,
+          "shaft_power_w_candidate": null,
+          "efficiency_candidate": null
+        },
+        "render": {
+          "primitive": "box",
+          "size_m": {
+            "x": 0.35,
+            "y": 0.28,
+            "z": 0.28
+          },
+          "display_position_m": {
+            "x": 0.0,
+            "y": 0.45,
+            "z": 0.95
+          },
+          "material": {
+            "material_id": "motor_case_candidate"
+          }
+        },
+        "material": "electric_motor_candidate",
+        "contributes_weight": true,
+        "contributes_buoyancy": false,
+        "assembly_group": "motor_assembly",
+        "subsystem": "motor",
+        "parent_group": "boat_assembly",
+        "unresolved_variables": [
+          "actual_motor_mass",
+          "actual_motor_dimensions",
+          "motor_mount_mass",
+          "shaft_mass",
+          "propeller_mass",
+          "controller_mass",
+          "actual_power_rating",
+          "actual_current_draw",
+          "actual_thrust_curve",
+          "cooling_requirement",
+          "waterproofing"
+        ],
+        "blocked_interpretations": [
+          "motor_candidate_equals_selected_motor",
+          "nominal_voltage_equals_motor_compatibility",
+          "power_candidate_equals_measured_output",
+          "motor_packet_equals_propulsion_validation"
+        ]
+      }
+    ],
+    "summary": {
+      "total_mass_kg": 228.16052133239558,
+      "total_displacement_volume_m3": 2.08,
+      "total_weight_force_n": 2237.490376524337,
+      "total_buoyant_force_n": 20907.7778,
+      "float_margin_n": 18670.287423475664,
+      "center_of_mass_candidate_m": {
+        "x": 1.755133155500749e-05,
+        "y": 0.11108649546441486,
+        "z": 0.049964822719667214
+      },
+      "center_of_buoyancy_candidate_m": {
+        "x": 2.668805347656626e-17,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass_breakdown_kg": {
+        "barrel": 180.0,
+        "connector_pipe": 0.1338245260111221,
+        "pipe_fitting": 0.02669680638445401,
+        "battery": 36.0,
+        "electric_motor": 12.0
+      },
+      "object_count_breakdown": {
+        "barrel": 10,
+        "connector_pipe": 1,
+        "pipe_fitting": 1,
+        "battery": 2,
+        "electric_motor": 1
+      },
+      "assembly_group_breakdown": {
+        "port_pontoon": {
+          "object_count": 5,
+          "mass_kg": 90.0,
+          "displacement_volume_m3": 1.04
+        },
+        "starboard_pontoon": {
+          "object_count": 5,
+          "mass_kg": 90.0,
+          "displacement_volume_m3": 1.04
+        },
+        "pipe_lab": {
+          "object_count": 2,
+          "mass_kg": 0.16052133239557612,
+          "displacement_volume_m3": 0.0
+        },
+        "power_system": {
+          "object_count": 2,
+          "mass_kg": 36.0,
+          "displacement_volume_m3": 0.0
+        },
+        "motor_assembly": {
+          "object_count": 1,
+          "mass_kg": 12.0,
+          "displacement_volume_m3": 0.0
+        }
+      },
+      "physical_overlap_validation": "passed",
+      "physical_overlap_warning_count": 0,
+      "physical_overlap_warnings": [],
+      "equation_results": [
+        {
+          "equation_id": "MC.weight_force",
+          "description": "weight_force_n = mass_kg * gravity_m_s2",
+          "inputs": {
+            "mass_kg": 180.0,
+            "gravity_m_s2": 9.80665
+          },
+          "output_name": "weight_force_n",
+          "output_value": 1765.197,
+          "output_unit": "N",
+          "domain": "MC",
+          "blocked_interpretations": [
+            "mass_equals_weight",
+            "weight_force_equals_mass_without_gravity_context"
+          ]
+        },
+        {
+          "equation_id": "MC.buoyant_force",
+          "description": "buoyant_force_n = fluid_density_kg_m3 * displaced_volume_m3 * gravity_m_s2",
+          "inputs": {
+            "fluid_density_kg_m3": 1025.0,
+            "displaced_volume_m3": 2.08,
+            "gravity_m_s2": 9.80665
+          },
+          "output_name": "buoyant_force_n",
+          "output_value": 20907.7778,
+          "output_unit": "N",
+          "domain": "MC",
+          "blocked_interpretations": [
+            "buoyant_force_equals_stability",
+            "positive_buoyancy_equals_safe_payload",
+            "calculation_equals_validation"
+          ]
+        },
+        {
+          "equation_id": "MC.float_margin",
+          "description": "float_margin_n = buoyant_force_n - weight_force_n",
+          "inputs": {
+            "buoyant_force_n": 20907.7778,
+            "weight_force_n": 1765.197
+          },
+          "output_name": "float_margin_n",
+          "output_value": 19142.5808,
+          "output_unit": "N",
+          "domain": "MC",
+          "blocked_interpretations": [
+            "positive_margin_equals_stable",
+            "positive_margin_equals_seaworthy",
+            "positive_margin_equals_validated"
+          ]
+        }
+      ],
+      "source_assembly_ids": [
+        "hull_inventory_001"
+      ],
+      "layout_override_applied": false,
+      "layout_override_path": null,
+      "layout_override_object_count": 0
+    },
+    "unresolved_variables": [
+      "actual_barrel_dimensions",
+      "actual_barrel_spacing",
+      "pvc_joint_method",
+      "pvc_cradle_fastening",
+      "barrel_retention_straps",
+      "center_of_mass",
+      "center_of_buoyancy",
+      "tilt_or_list_behavior",
+      "actual_battery_type",
+      "actual_battery_mass",
+      "actual_battery_dimensions",
+      "battery_mounting_location",
+      "battery_box_mass",
+      "cable_mass",
+      "fuse_breaker_selection",
+      "waterproofing",
+      "runtime_current_draw",
+      "usable_capacity_ah",
+      "actual_pipe_material",
+      "actual_pipe_schedule",
+      "actual_joint_method",
+      "fitting_geometry",
+      "port_alignment",
+      "joint_strength",
+      "barrel_retention_method",
+      "frame_load_path",
+      "actual_motor_selection",
+      "motor_mounting_location",
+      "motor_mount_mass",
+      "controller_mass",
+      "shaft_or_outdrive_geometry",
+      "propeller_selection",
+      "thrust_curve",
+      "drag_model",
+      "battery_runtime_under_load",
+      "waterproofing"
+    ],
+    "blocked_interpretations": [
+      "positive_float_margin_equals_stability",
+      "inventory_packet_equals_physical_validation",
+      "calculated_candidate_equals_safe_payload",
+      "pvc_cradle_geometry_equals_structural_validation",
+      "two_12v_batteries_equals_validated_power_system",
+      "series_voltage_equals_motor_compatibility",
+      "battery_packet_equals_safe_electrical_design",
+      "battery_mass_candidate_equals_measured_mass",
+      "pipe_frame_packet_equals_structural_validation",
+      "visible_pipe_frame_equals_load_path_validated",
+      "candidate_pipe_mass_equals_measured_mass",
+      "pipe_presence_equals_safe_mounting",
+      "motor_packet_equals_validated_propulsion",
+      "voltage_match_equals_system_compatibility",
+      "candidate_power_equals_available_thrust",
+      "motor_presence_equals_drivable_vessel"
+    ]
+  },
+  "prohibited_interpretations": [
+    "simulation_equals_truth",
+    "calculation_equals_validation",
+    "float_margin_equals_seaworthiness",
+    "visual_cradle_equals_structural_safety",
+    "calculation_equals_validation",
+    "battery_candidate_equals_safe_installation",
+    "packet_equals_electrical_safety_review",
+    "nominal_voltage_equals_operational_readiness",
+    "calculation_equals_validation",
+    "pipe_frame_candidate_equals_structural_safety",
+    "packet_equals_load_test",
+    "visual_frame_equals_validated_structure",
+    "calculation_equals_validation",
+    "motor_candidate_equals_safe_installation",
+    "packet_equals_propulsion_test",
+    "nominal_voltage_equals_operational_readiness",
+    "power_rating_equals_measured_thrust"
+  ]
+}

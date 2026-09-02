@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="DashboardConfig" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://OperatorShell/resources/DashboardConfig.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+terminal_first = true
+terminal_density = "compact"
+@export var show_top_bar := false
+@export var show_runtime_state_bar := false
+show_top_bar = false
+show_runtime_state_bar = false
+show_workspace = false
+show_left_panel = false
+show_right_rail = false
+show_workspace = false
+show_directory_panel = false
+show_screens_panel = false
+show_commands_panel = false
+default_bottom_expanded = true
+bottom_height_collapsed = 245
+bottom_height_expanded = 710
+mission_path = "UI/Mission.yaml"
+default_screens = PackedStringArray("Terminal", "Home", "State")

@@ -1,0 +1,19 @@
+[Unit]
+Description=Precision Tower Agency health monitor
+Documentation=file:Docs/PrecisionTowerNode.md
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+EnvironmentFile=-/etc/precision-tower-node/default.env
+ExecStart=/bin/bash -lc 'set -Eeuo pipefail; : "${DASHBOARD_ROOT:?DASHBOARD_ROOT unresolved}"; cd "$DASHBOARD_ROOT"; while :; do "$DASHBOARD_ROOT/package/commands/doctor"; sleep "${HEALTH_INTERVAL_SECONDS:-60}"; done'
+Restart=on-failure
+RestartSec=15s
+StartLimitIntervalSec=300
+StartLimitBurst=5
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,480 @@
+{
+  "schema_version": 1,
+  "mission_id": "mission-4",
+  "created_at": "2026-08-13T10:20:01.847645+00:00",
+  "authority": "planning_synthesis_only",
+  "intent_summary": "Exercise adaptive mission scope expansion",
+  "problem_definition": "The mission requires adaptive scope expansion, but there are partial inspection evidences and needs planning review for route_ownership and workspace_host.",
+  "current_system_model": {
+    "components": [
+      "Inspected artifact: Agency/Core/work/missions/mission_runtime.py",
+      "Inspected artifact: Agency/Core/runtime/commands.py",
+      "Inspected artifact: Agency/Core/work/missions/pipeline/implementation/__init__.py",
+      "Inspected artifact: Agency/Core/work/missions/pipeline/review/execution.py",
+      "Inspected artifact: Agency/Core/work/missions/pipeline/review/helpers.py",
+      "Inspected artifact: Agency/Core/work/missions/pipeline/review/state.py",
+      "Inspected artifact: Agency/Core/work/planning/__init__.py",
+      "Inspected artifact: Agency/Core/work/planning/mission_planning.py"
+    ],
+    "control_flow": [
+      "Control flow remains partially inferred from inspected scene/script dependencies."
+    ],
+    "state_ownership": [
+      "State ownership needs confirmation during proposal scoping."
+    ],
+    "integration_points": [
+      "Agency/Core/work/missions/mission_runtime.py",
+      "Agency/Core/runtime/commands.py",
+      "Agency/Core/work/missions/pipeline/implementation/__init__.py",
+      "Agency/Core/work/missions/pipeline/review/execution.py",
+      "Agency/Core/work/missions/pipeline/review/helpers.py",
+      "Agency/Core/work/missions/pipeline/review/state.py"
+    ]
+  },
+  "causal_findings": [
+    {
+      "id": "finding-001",
+      "claim": "The mission has persisted inspection evidence for primary engineering artifacts, but the plan should preserve partial knowledge until unresolved inspection gaps are addressed.",
+      "evidence": [
+        {
+          "observation_id": "obs-001-03",
+          "path": "Agency/Core/work/missions/mission_runtime.py",
+          "pass": 1
+        }
+      ],
+      "confidence": "high"
+    }
+  ],
+  "assumptions": [
+    {
+      "id": "assumption-001",
+      "statement": "The inspected artifacts are representative enough to support bounded planning.",
+      "reason": "Planning readiness was based on persisted inspection evidence, not full repository completion.",
+      "risk_if_false": "Additional inspection may change proposal boundaries."
+    }
+  ],
+  "unresolved_questions": [
+    {
+      "id": "unresolved-001",
+      "question": "route_ownership has partial inspection evidence and still needs planning review.",
+      "blocking": false,
+      "recommended_action": "additional_inspection"
+    },
+    {
+      "id": "unresolved-002",
+      "question": "workspace_host has partial inspection evidence and still needs planning review.",
+      "blocking": false,
+      "recommended_action": "additional_inspection"
+    },
+    {
+      "id": "unresolved-003",
+      "question": "workbench_root has partial inspection evidence and still needs planning review.",
+      "blocking": false,
+      "recommended_action": "additional_inspection"
+    },
+    {
+      "id": "unresolved-004",
+      "question": "creation_lifecycle has partial inspection evidence and still needs planning review.",
+      "blocking": false,
+      "recommended_action": "additional_inspection"
+    },
+    {
+      "id": "unresolved-005",
+      "question": "cleanup_lifecycle has partial inspection evidence and still needs planning review.",
+      "blocking": false,
+      "recommended_action": "additional_inspection"
+    },
+    {
+      "id": "unresolved-006",
+      "question": "expected_modified_files has partial inspection evidence and still needs planning review.",
+      "blocking": false,
+      "recommended_action": "additional_inspection"
+    }
+  ],
+  "scope": {
+    "in_scope": [
+      "Agency/Core/work/missions/mission_runtime.py",
+      "Agency/Core/work/planning/__init__.py",
+      "Agency/Core/work/planning/mission_planning.py",
+      "Agency/Core/work/planning/proposal_generation.py",
+      "Agency/Core/work/missions/pipeline/review/execution.py",
+      "Agency/Core/runtime/commands.py",
+      "Agency/Core/work/missions/pipeline/review/helpers.py",
+      "Agency/Core/work/missions/pipeline/review/state.py",
+      "Agency/Core/work/missions/pipeline/implementation/__init__.py"
+    ],
+    "out_of_scope": [
+      "Source mutation during mission planning.",
+      "Implementation proposal generation."
+    ],
+    "likely_modified_files": [
+      "Agency/Core/work/missions/mission_runtime.py",
+      "Agency/Core/runtime/commands.py",
+      "Agency/Core/work/missions/pipeline/implementation/__init__.py",
+      "Agency/Core/work/missions/pipeline/review/execution.py",
+      "Agency/Core/work/missions/pipeline/review/helpers.py",
+      "Agency/Core/work/missions/pipeline/review/state.py",
+      "Agency/Core/work/planning/__init__.py",
+      "Agency/Core/work/planning/mission_planning.py"
+    ],
+    "files_requiring_confirmation": [
+      "Agency/Core/work/missions/pipeline/implementation/execution.py",
+      "Agency/Core/work/missions/pipeline/verification/__init__.py",
+      "Agency/Core/work/missions/pipeline/verification/execution.py",
+      "Agency/Core/runtime/resourcefulness/__init__.py",
+      "Agency/Core/runtime/runtime_config.py",
+      "Agency/Core/repository/inspection/analysis.py",
+      "Agency/Core/repository/inspection/context.py",
+      "Agency/Core/repository/inspection/coverage.py",
+      "Agency/Core/foundation/paths.py",
+      "Agency/Core/runtime/__init__.py",
+      "Agency/Core/runtime/model_server_manager.py",
+      "Agency/Core/runtime/model_service.py"
+    ]
+  },
+  "implementation_strategy": {
+    "summary": "Proceed in small proposals bounded by inspected evidence.",
+    "stages": [
+      {
+        "order": 1,
+        "name": "Bounded proposal preparation",
+        "objective": "Prepare implementation proposals only for files supported by inspection evidence.",
+        "dependencies": [],
+        "expected_files": [
+          "Agency/Core/work/missions/mission_runtime.py",
+          "Agency/Core/runtime/commands.py",
+          "Agency/Core/work/missions/pipeline/implementation/__init__.py",
+          "Agency/Core/work/missions/pipeline/review/execution.py",
+          "Agency/Core/work/missions/pipeline/review/helpers.py",
+          "Agency/Core/work/missions/pipeline/review/state.py",
+          "Agency/Core/work/planning/__init__.py",
+          "Agency/Core/work/planning/mission_planning.py"
+        ],
+        "verification": [
+          "Run the relevant audit and runtime checks named by inspected evidence."
+        ]
+      }
+    ]
+  },
+  "risks": [
+    {
+      "id": "risk-001",
+      "description": "Partial inspection may omit a required integration dependency.",
+      "likelihood": "medium",
+      "impact": "medium",
+      "mitigation": "Use the remaining inspection queue before high-risk proposal generation."
+    }
+  ],
+  "verification_strategy": [
+    "Use existing audit and runtime checks before accepting implementation."
+  ],
+  "rollback_strategy": [
+    "Keep implementation proposals small enough to revert independently."
+  ],
+  "proposal_boundaries": {
+    "recommended_proposals": [
+      "Generate a narrow proposal for the highest-confidence integration path."
+    ],
+    "do_not_combine": [
+      "Do not combine implementation with verification artifact rewrites."
+    ]
+  },
+  "resourcefulness": [
+    {
+      "path": "Agency/Agents/Editor/work/Missions/mission-4/inspect/knowledge/resourcefulness_reconstruction.json",
+      "strategy": "reconstruct",
+      "diagnosis": {
+        "proposal_ready": false,
+        "reason": "inspection_assessment.sufficient_for_proposal is false; route_ownership has partial inspection evidence and still needs planning review.; workspace_host has partial inspection evidence and still needs planning review.",
+        "inspection_complete": true,
+        "inspection_passes": 1,
+        "files_inspected": 1,
+        "observations": 83
+      },
+      "categories": [
+        {
+          "category": "route_ownership",
+          "status": "partial",
+          "paths": [
+            {
+              "path": "Agency/Core/work/missions/mission_runtime.py",
+              "signals": [
+                "file_inspected",
+                "symbol"
+              ],
+              "observations": [
+                "obs-001-03",
+                "obs-001-04",
+                "obs-001-05"
+              ],
+              "reason": "inspected route-related path or marker"
+            }
+          ]
+        },
+        {
+          "category": "workspace_host",
+          "status": "partial",
+          "paths": [
+            {
+              "path": "Agency/Core/work/missions/mission_runtime.py",
+              "signals": [
+                "file_inspected",
+                "symbol"
+              ],
+              "observations": [
+                "obs-001-03",
+                "obs-001-04",
+                "obs-001-05"
+              ],
+              "reason": "inspected workspace-related path or marker"
+            }
+          ]
+        },
+        {
+          "category": "workbench_root",
+          "status": "partial",
+          "paths": [
+            {
+              "path": "Agency/Core/work/missions/mission_runtime.py",
+              "signals": [
+                "file_inspected",
+                "symbol"
+              ],
+              "observations": [
+                "obs-001-03",
+                "obs-001-04",
+                "obs-001-05"
+              ],
+              "reason": "inspected Workbench path or marker"
+            }
+          ]
+        },
+        {
+          "category": "creation_lifecycle",
+          "status": "partial",
+          "paths": [
+            {
+              "path": "Agency/Core/work/missions/mission_runtime.py",
+              "signals": [
+                "file_inspected",
+                "symbol"
+              ],
+              "observations": [
+                "obs-001-03",
+                "obs-001-04",
+                "obs-001-05"
+              ],
+              "reason": "inspected creation lifecycle marker"
+            }
+          ]
+        },
+        {
+          "category": "cleanup_lifecycle",
+          "status": "partial",
+          "paths": [
+            {
+              "path": "Agency/Core/work/missions/mission_runtime.py",
+              "signals": [
+                "file_inspected",
+                "symbol"
+              ],
+              "observations": [
+                "obs-001-03",
+                "obs-001-04",
+                "obs-001-05"
+              ],
+              "reason": "inspected cleanup lifecycle marker"
+            }
+          ]
+        },
+        {
+          "category": "expected_modified_files",
+          "status": "partial",
+          "paths": [
+            {
+              "path": "Agency/Core/work/missions/mission_runtime.py",
+              "signals": [
+                "file_inspected",
+                "symbol"
+              ],
+              "observations": [
+                "obs-001-03",
+                "obs-001-04",
+                "obs-001-05"
+              ],
+              "reason": "primary engineering source inspected"
+            }
+          ]
+        },
+        {
+          "category": "verification_surfaces",
+          "status": "partial",
+          "paths": [
+            {
+              "path": "Agency/Core/work/missions/mission_runtime.py",
+              "signals": [
+                "file_inspected",
+                "symbol"
+              ],
+              "observations": [
+                "obs-001-03",
+                "obs-001-04",
+                "obs-001-05"
+              ],
+              "reason": "inspected verification-related path or marker"
+            }
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "source": "Agency/Core/work/missions/mission_runtime.py",
+          "target": "Agency.Core.runtime.commands:mission_command",
+          "observation_id": "obs-001-71",
+          "pass": 1
+        },
+        {
+          "source": "Agency/Core/work/missions/mission_runtime.py",
+          "target": "Agency.Core.work.missions.pipeline.review.execution:(",
+          "observation_id": "obs-001-70",
+          "pass": 1
+        },
+        {
+          "source": "Agency/Core/work/missions/mission_runtime.py",
+          "target": "Agency.Core.work.planning:mission_planning as _mission_planning",
+          "observation_id": "obs-001-68",
+          "pass": 1
+        },
+        {
+          "source": "Agency/Core/work/missions/mission_runtime.py",
+          "target": "Agency.Core.work.planning:proposal_generation as _proposal_generation",
+          "observation_id": "obs-001-69",
+          "pass": 1
+        },
+        {
+          "source": "Agency/Core/work/missions/mission_runtime.py",
+          "target": "__future__:annotations",
+          "observation_id": "obs-001-54",
+          "pass": 1
+        },
+        {
+          "source": "Agency/Core/work/missions/mission_runtime.py",
+          "target": "argparse",
+          "observation_id": "obs-001-55",
+          "pass": 1
+        },
+        {
+          "source": "Agency/Core/work/missions/mission_runtime.py",
+          "target": "contextlib",
+          "observation_id": "obs-001-56",
+          "pass": 1
+        },
+        {
+          "source": "Agency/Core/work/missions/mission_runtime.py",
+          "target": "datetime:datetime, timezone",
+          "observation_id": "obs-001-65",
+          "pass": 1
+        }
+      ],
+      "unresolved": [
+        "route_ownership has partial inspection evidence and still needs planning review.",
+        "workspace_host has partial inspection evidence and still needs planning review.",
+        "workbench_root has partial inspection evidence and still needs planning review.",
+        "creation_lifecycle has partial inspection evidence and still needs planning review.",
+        "cleanup_lifecycle has partial inspection evidence and still needs planning review.",
+        "expected_modified_files has partial inspection evidence and still needs planning review."
+      ]
+    }
+  ],
+  "inspection_assessment": {
+    "sufficient_for_planning": true,
+    "sufficient_for_proposal": false,
+    "planning_confidence": "medium",
+    "warnings": [
+      "Plan confidence is limited by partial inspection coverage."
+    ],
+    "coverage_summary": {
+      "route_ownership": "partial",
+      "workspace_host": "partial",
+      "workbench_root": "partial",
+      "creation_lifecycle": "partial",
+      "cleanup_lifecycle": "partial",
+      "expected_modified_files": "partial",
+      "verification_surfaces": "partial"
+    },
+    "additional_inspection_recommended": [
+      "Agency/Core/work/missions/pipeline/implementation/execution.py",
+      "Agency/Core/work/missions/pipeline/verification/__init__.py",
+      "Agency/Core/work/missions/pipeline/verification/execution.py",
+      "Agency/Core/runtime/resourcefulness/__init__.py",
+      "Agency/Core/runtime/runtime_config.py",
+      "Agency/Core/repository/inspection/analysis.py",
+      "Agency/Core/repository/inspection/context.py",
+      "Agency/Core/repository/inspection/coverage.py",
+      "Agency/Core/foundation/paths.py",
+      "Agency/Core/runtime/__init__.py",
+      "Agency/Core/runtime/model_server_manager.py",
+      "Agency/Core/runtime/model_service.py"
+    ]
+  },
+  "resourcefulness_compression_diagnostics": {
+    "original_category_count": 7,
+    "retained_category_count": 7,
+    "original_path_count": 1,
+    "retained_path_count": 1,
+    "dropped_paths": [],
+    "dropped_relationships": [
+      {
+        "source": "Agency/Core/work/missions/mission_runtime.py",
+        "target": "Agency.Core.runtime.commands:mission_command",
+        "observation_id": "obs-001-71",
+        "pass": 1
+      },
+      {
+        "source": "Agency/Core/work/missions/mission_runtime.py",
+        "target": "Agency.Core.work.missions.pipeline.review.execution:(",
+        "observation_id": "obs-001-70",
+        "pass": 1
+      },
+      {
+        "source": "Agency/Core/work/missions/mission_runtime.py",
+        "target": "Agency.Core.work.planning:mission_planning as _mission_planning",
+        "observation_id": "obs-001-68",
+        "pass": 1
+      },
+      {
+        "source": "Agency/Core/work/missions/mission_runtime.py",
+        "target": "Agency.Core.work.planning:proposal_generation as _proposal_generation",
+        "observation_id": "obs-001-69",
+        "pass": 1
+      },
+      {
+        "source": "Agency/Core/work/missions/mission_runtime.py",
+        "target": "__future__:annotations",
+        "observation_id": "obs-001-54",
+        "pass": 1
+      },
+      {
+        "source": "Agency/Core/work/missions/mission_runtime.py",
+        "target": "argparse",
+        "observation_id": "obs-001-55",
+        "pass": 1
+      },
+      {
+        "source": "Agency/Core/work/missions/mission_runtime.py",
+        "target": "contextlib",
+        "observation_id": "obs-001-56",
+        "pass": 1
+      },
+      {
+        "source": "Agency/Core/work/missions/mission_runtime.py",
+        "target": "datetime:datetime, timezone",
+        "observation_id": "obs-001-65",
+        "pass": 1
+      }
+    ],
+    "final_prompt_size": 1794,
+    "configured_budget": 2800,
+    "tier": "category_floor"
+  }
+}

@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+SCRIPT_DIR="$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/../lib/common.sh"
+source "$SCRIPT_DIR/../lib/hardware.sh"
+pt_initialize
+pt_print_line "Precision Tower operator status"
+pt_require_dashboard_root || exit 1
+pt_status_line "PASS" "repository root" "$REPO_ROOT"
+pt_print_line
+pt_print_line "Hardware readiness"
+pt_hardware_acceptance_report || true
+pt_print_line
+pt_print_line "Dashboard repository status"
+if [[ -f "$REPO_ROOT/run.py" ]]; then
+    pt_run_repo_python run.py status || pt_status_line "WARNING" "dashboard status" "run.py status exited nonzero"
+else
+    pt_status_line "MISSING" "dashboard status" "$REPO_ROOT/run.py"
+fi
+pt_print_line
+pt_print_line "Model runtime status"
+if [[ -f "$REPO_ROOT/Agency/Core/runtime/model_server_manager.py" ]]; then
+    pt_run_repo_python -m Agency.Core.runtime.model_server_manager status || pt_status_line "WARNING" "model runtime" "model_server_manager status exited nonzero"
+else
+    pt_status_line "MISSING" "model manager" "$REPO_ROOT/Agency/Core/runtime/model_server_manager.py"
+fi
+pt_print_line
+pt_print_line "Deployment package status"
+[[ -x "$PACKAGE_VERIFY" ]] && pt_status_line "PASS" "verify wrapper" "$PACKAGE_VERIFY" || pt_status_line "MISSING" "verify wrapper" "$PACKAGE_VERIFY"
+[[ -d "$PACKAGE_SYSTEMD" ]] && pt_status_line "PASS" "systemd templates" "$PACKAGE_SYSTEMD" || pt_status_line "MISSING" "systemd templates" "$PACKAGE_SYSTEMD"
+pt_status_line "UNRESOLVED" "Agency service" "AGENCY_COMMAND is not selected; agency.service is non-installable."
+pt_status_line "UNRESOLVED" "installed package state" "Operator wrappers/env install only with package/install.sh --apply."

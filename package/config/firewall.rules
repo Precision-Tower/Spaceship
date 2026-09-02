@@ -1,0 +1,19 @@
+# Precision Tower Node firewall policy template.
+# This file is deployment policy only. It is not executed by package/verify.sh or package/install.sh.
+
+policy.default_incoming=deny
+policy.default_outgoing=allow
+policy.allow_established=true
+
+ssh.allowed_network=tailscale_private_network
+ssh.public_internet_exposure=forbidden
+ssh.router_port_forwarding=forbidden
+
+tailscale.interface=UNRESOLVED
+ssh.port=22
+
+# Example shape only, not an executable command list:
+# ufw default deny incoming
+# ufw default allow outgoing
+# ufw allow in on <tailscale.interface> to any port 22 proto tcp
+# ufw enable

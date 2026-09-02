@@ -1,0 +1,90 @@
+RuntimeProfiles:
+  active_profile: local_gpu
+  profiles:
+    local_cpu:
+      runtime_endpoint: local
+      platform: windows
+      role: development_workstation
+      hardware:
+        os:
+          name: Microsoft Windows 11 Pro
+          build: 26200
+          system_type: x64-based PC
+        cpu:
+          name: Intel N100
+          cores: 4
+          logical_processors: 4
+          max_clock_mhz: 800
+        ram:
+          total_mb: 32422
+          total_gb_approx: 32
+          speed_mhz: 3200
+          manufacturer: Kingston
+        gpu:
+          name: Intel UHD Graphics
+          vram_gb_approx: 2
+          cuda_visible: false
+          nvidia_smi_available: false
+      model_execution:
+        preferred_backend: gguf
+        cuda: false
+        recommended_context_tokens: 2048
+        memory_only_max_tokens: 64
+        reasoning_max_tokens: 192
+        patch_recommendation_max_tokens: 512
+      model_server:
+        server_path: /home/spaztic/Core/tools/llama.cpp-cuda/build/bin/llama-server
+        model_path_key: qwen_1_5b_gguf
+        host: 127.0.0.1
+        port: 8081
+        context_tokens: 2048
+        gpu_layers: 99
+      operational_assessment:
+        strengths:
+        - python_development
+        - godot_development
+        - yaml_pipeline_testing
+        - small_gguf_smoke_tests
+        constraints:
+        - cpu_only_inference
+        - no_cuda
+        - Intel_N100_latency
+        - avoid_large_context_ingestion
+        preferred_use:
+        - development
+        - dashboard_testing
+        - task_packet_validation
+        - small_model_loop_testing
+        avoid:
+        - large_model_inference
+        - full_repo_prompt_ingestion
+        - 7b_plus_cpu_serving
+      paths:
+        qwen_1_5b_gguf: local/Qwen2.5-Coder-3B-Instruct-Q4_K_M.gguf
+        qwen3_8b: local/Qwen3-8b
+        phi3: local/Phi-3-mini-4k-instruct
+        godot_console: local/godot/Godot_v4.6.3-stable_win64_console.exe
+        godot_gui: local/godot/Godot_v4.6.3-stable_win64.exe
+    local_gpu:
+      runtime_endpoint: local
+      platform: ubuntu
+      role: local_inference_runtime
+      model_execution:
+        preferred_backend: llama_server
+        cuda: true
+        current_runtime: llama_cpp
+        current_model: local/Qwen3-4B-Q4_K_M.gguf
+        endpoint: http://127.0.0.1:8081
+        recommended_context_tokens: 2048
+        memory_only_max_tokens: 64
+        reasoning_max_tokens: 1024
+        patch_recommendation_max_tokens: 1024
+      model_server:
+        server_path: /home/spaztic/Core/tools/llama.cpp-cuda/build/bin/llama-server
+        model_path_key: qwen3_4b_q4_k_m
+        host: 127.0.0.1
+        port: 8081
+        context_tokens: 2048
+        gpu_layers: 99
+      paths:
+        qwen3_4b_q4_k_m: local/Qwen3-4B-Q4_K_M.gguf

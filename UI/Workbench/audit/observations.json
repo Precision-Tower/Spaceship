@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-07-12T00:00:00Z",
+  "observations": {
+    "demo.01": {
+      "result": "PARTIAL",
+      "evidence": [
+        {
+          "type": "screenshot",
+          "date": "2026-07-12",
+          "observation": "Godot launched and Workbench visibly rendered with the viewport, object tree, and left-side status panel."
+        }
+      ],
+      "unresolved": [
+        "Console output was not captured, so absence of parser or runtime errors is not yet established."
+      ]
+    }
+  }
+}

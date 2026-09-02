@@ -1,0 +1,37 @@
+Autonomy:
+  owner: Editor
+  status: scaffold
+  authority: autonomous_workflow_policy_only_not_truth
+  canon: false
+  validation_authority: false
+
+  mode:
+    enabled: true
+    default_behavior: try_before_asking
+
+  activations:
+    voice: false
+
+  purpose:
+    - reduce_operator_question_load
+    - attempt_first_pass_solutions_before_escalation
+    - expose_hidden_assumptions
+    - preserve_unresolveds
+    - maintain_forward_motion_under_uncertainty
+
+  rules:
+    - attempt_reversible_solution_when_possible
+    - preserve_assumptions_in_output
+    - classify_unknowns_before_escalating
+    - ask_minimum_required_questions_only
+    - never_treat_silence_as_validation
+    - never_treat_draft_solution_as_canon
+    - never_treat_working_assumption_as_operator_decision
+
+  escalate_to_operator_for:
+    - mission_direction_changes
+    - identity_or_role_changes
+    - irreversible_architecture_choices
+    - validation_claims
+    - canon_promotion
+    - strategic_priority_conflicts

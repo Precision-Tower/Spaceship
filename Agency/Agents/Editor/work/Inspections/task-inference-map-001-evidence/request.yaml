@@ -1,0 +1,26 @@
+RepositoryContextRequest:
+  request_id: task-inference-map-001-evidence
+  objective: Inspect the inference map as a bounded read-only task.
+  include:
+  - Agency/Core/runtime/_inference_map.md
+  exclude: []
+  operations:
+  - references
+  symbols: []
+  text: []
+  paths:
+  - Agency/Core/runtime/_inference_map.md
+  limits:
+    max_files: 500
+    max_matches: 500
+    max_file_bytes: 120000
+    max_depth: 2
+    max_total_context_bytes: 40000
+    max_evidence_items: 500
+  output:
+  - evidence_bundle
+  constraints:
+  - read_only
+  - preserve_unknowns
+  - require_line_citations
+  synthesis: false

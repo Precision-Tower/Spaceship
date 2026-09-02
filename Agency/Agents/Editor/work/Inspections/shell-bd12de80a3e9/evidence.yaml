@@ -1,0 +1,119 @@
+EvidenceBundle:
+  request_id: shell-bd12de80a3e9
+  status: completed
+  objective: 'Shell repository inspection: path Agency/Core/runtime/model_service.py
+    --scope Agency/Core/runtime/model_service.py'
+  repository_root: /home/spaztic/Core/Dashboard
+  repository_root_authority: Agency.Core.foundation.paths.DASHBOARD_ROOT
+  effective_scope:
+    include:
+    - Agency/Core/runtime/model_service.py
+    - Agency/Core/runtime/model_service.py
+    exclude:
+    - .git
+    - __pycache__
+    - .pytest_cache
+    - node_modules
+    - .venv
+    - venv
+    - weebo_env
+    - Chroma
+    - memory/Chroma
+    - build
+    - dist
+    - .godot
+    - logs
+    - sessions
+    - '*.pyc'
+    - '*.pyo'
+    - '*.sqlite'
+    - '*.sqlite3'
+    - '*.db'
+    - .env
+    - .env.*
+    - '*.pem'
+    - '*.key'
+    - '*token*'
+    - '*credential*'
+    - '*secret*'
+    default_exclusions:
+    - .git
+    - __pycache__
+    - .pytest_cache
+    - node_modules
+    - .venv
+    - venv
+    - weebo_env
+    - Chroma
+    - memory/Chroma
+    - build
+    - dist
+    - .godot
+    - logs
+    - sessions
+    - '*.pyc'
+    - '*.pyo'
+    - '*.sqlite'
+    - '*.sqlite3'
+    - '*.db'
+    - .env
+    - .env.*
+    - '*.pem'
+    - '*.key'
+    - '*token*'
+    - '*credential*'
+    - '*secret*'
+  operations_performed:
+  - path_discovery
+  - text_search
+  findings:
+  - id: finding-001
+    claim: 'Path matched within scope: Agency/Core/runtime/model_service.py'
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: Agency/Core/runtime/model_service.py
+      start_line: 1
+      end_line: 1
+      excerpt: Agency/Core/runtime/model_service.py
+      evidence_type: path_discovery
+  - id: finding-002
+    claim: 'Path matched within scope: Agency/Core/runtime/model_service.py'
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: Agency/Core/runtime/model_service.py
+      start_line: 1
+      end_line: 1
+      excerpt: Agency/Core/runtime/model_service.py
+      evidence_type: path_discovery
+  symbols: []
+  references: []
+  imports: []
+  dependency_edges: []
+  negative_results: []
+  files_examined:
+  - Agency/Core/runtime/model_service.py
+  - Agency/Core/runtime/model_service.py
+  files_skipped: []
+  limits:
+    configured:
+      max_files: 500
+      max_matches: 500
+      max_file_bytes: 120000
+      max_depth: 2
+      max_total_context_bytes: 40000
+      max_evidence_items: 500
+    reached:
+      max_files: false
+      max_matches: false
+      max_file_bytes: false
+      max_depth: false
+      max_total_context_bytes: false
+      max_evidence_items: false
+  parse_failures: []
+  unresolveds: []
+  contradictions: []
+  generated_at: '2026-07-28T09:52:46Z'
+  persistence_path: Agency/Core/runtime/state/work/Inspections/shell-bd12de80a3e9
+  repository_mutation_performed: false

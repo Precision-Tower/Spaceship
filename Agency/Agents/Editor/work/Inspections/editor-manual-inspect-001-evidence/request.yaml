@@ -1,0 +1,28 @@
+RepositoryContextRequest:
+  request_id: editor-manual-inspect-001-evidence
+  objective: Inspect the Editor agent structure and return grounded evidence.
+  include:
+  - Agency/Agents/Editor
+  exclude:
+  - Agency/Agents/Editor/memory/Chroma
+  operations:
+  - text_search
+  symbols: []
+  text:
+  - bounded_repository_editor_agent
+  paths:
+  - Agency/Agents/Editor
+  limits:
+    max_files: 500
+    max_matches: 500
+    max_file_bytes: 120000
+    max_depth: 2
+    max_total_context_bytes: 40000
+    max_evidence_items: 500
+  output:
+  - evidence_bundle
+  constraints:
+  - read_only
+  - preserve_unknowns
+  - require_line_citations
+  synthesis: false

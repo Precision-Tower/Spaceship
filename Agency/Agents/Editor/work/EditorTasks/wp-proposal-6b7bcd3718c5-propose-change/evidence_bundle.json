@@ -1,0 +1,96 @@
+{
+  "contradictions": [],
+  "dependency_edges": [],
+  "effective_scope": {
+    "default_exclusions": [
+      ".git",
+      "__pycache__",
+      ".pytest_cache",
+      "node_modules",
+      ".venv",
+      "venv",
+      "*_env",
+      "Chroma",
+      "memory/Chroma",
+      "build",
+      "dist",
+      ".godot",
+      "logs",
+      "sessions",
+      "*.pyc",
+      "*.pyo",
+      "*.sqlite",
+      "*.sqlite3",
+      "*.db",
+      ".env",
+      ".env.*",
+      "*.pem",
+      "*.key",
+      "*token*",
+      "*credential*",
+      "*secret*"
+    ],
+    "exclude": [],
+    "include": [
+      "Agency/local/editor_acceptance/target.txt"
+    ]
+  },
+  "files_examined": [
+    "Agency/local/editor_acceptance/target.txt"
+  ],
+  "files_skipped": [],
+  "findings": [
+    {
+      "claim": "Text query 'alpha' matched Agency/local/editor_acceptance/target.txt:1.",
+      "classification": "confirmed",
+      "confidence": "high",
+      "evidence": [
+        {
+          "end_line": 1,
+          "evidence_type": "text_search",
+          "excerpt": "alpha",
+          "match_type": "exact_text",
+          "path": "Agency/local/editor_acceptance/target.txt",
+          "query": "alpha",
+          "start_line": 1
+        }
+      ],
+      "id": "finding-001"
+    }
+  ],
+  "generated_at": "2026-08-05T21:04:47Z",
+  "imports": [],
+  "limits": {
+    "configured": {
+      "max_depth": 2,
+      "max_evidence_items": 500,
+      "max_file_bytes": 120000,
+      "max_files": 500,
+      "max_matches": 500,
+      "max_total_context_bytes": 40000
+    },
+    "reached": {
+      "max_depth": false,
+      "max_evidence_items": false,
+      "max_file_bytes": false,
+      "max_files": false,
+      "max_matches": false,
+      "max_total_context_bytes": false
+    }
+  },
+  "negative_results": [],
+  "objective": "Produce a non-applied patch proposal for the requested repository change.",
+  "operations_performed": [
+    "text_search"
+  ],
+  "parse_failures": [],
+  "persistence_path": "Agency/Agents/Editor/work/Inspections/wp-proposal-6b7bcd3718c5-propose-change-evidence",
+  "references": [],
+  "repository_mutation_performed": false,
+  "repository_root": "/home/spaztic/Core/Dashboard",
+  "repository_root_authority": "Agency.Core.foundation.paths.DASHBOARD_ROOT",
+  "request_id": "wp-proposal-6b7bcd3718c5-propose-change-evidence",
+  "status": "completed",
+  "symbols": [],
+  "unresolveds": []
+}

@@ -1,0 +1,18 @@
+cgr. Combine_Gear: def"A mass-centric article that combines two gears that share rpm with different circumferences.";
+dimensions: (
+master: (
+radius-/n;
+width-/n;
+tooth_count-/n;
+tooth_depth-/n;
+material-/a;
+);
+slave: (
+radius-/n;
+width-/n;
+depth-/n;
+tooth_count-/n;
+tooth_depth-/n;
+material-/a;
+);
+);

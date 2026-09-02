@@ -1,0 +1,367 @@
+EvidenceBundle:
+  request_id: repoctx-39a04bbac4a2
+  status: rejected
+  objective: "Available command, not an observed fact:\npython -m Agency.Core.interfaces.cli.dashboard_cli\
+    \ test-all --root .\n\nRule:\nDo not place available commands in Observed.\nWhen\
+    \ explicitly asked about repository health, say health requires running the health\
+    \ command unless its output is already supplied.\n\n=== AUTHORITATIVE OBSERVED\
+    \ STATE ===\nAuthority: workspace_snapshot_not_validation\n\nAgency files: 2085\n\
+    UI files: 146\nEngineering files: 94\nWorkbench files: 60\nWorkbench packet files:\
+    \ 4\nWorkbench rendering files: 5\nWorkbench viewport interaction files: 6\nWorkbench\
+    \ scene files: 4\n\nRequired Workbench Observed lines when Workbench is in scope:\n\
+    - Workbench files: 60\n- Workbench packet files: 4\n- Workbench rendering files:\
+    \ 5\n- Workbench viewport interaction files: 6\n- Workbench scene files: 4\n\n\
+    Git modified files: 2\nGit untracked files: 7\nModified file list: Agency/Agents/Editor/__init__.py,\
+    \ run.py\nUntracked file list: .recovery_backups/, recover_editor.sh, run.py.20260728T120015Z.bak,\
+    \ run.py.20260728T180649Z.bak, run.py.20260728T180818Z.bak, scripts/verify_agent_help.sh,\
+    \ verify_editor.sh\n\nRules:\n- Do not contradict the authoritative observed state.\n\
+    - Do not infer remote sync status from local snapshot facts.\n- Observed must\
+    \ list only facts from the authoritative observed state block or explicit tool\
+    \ output.\n- Do not put available commands in Observed.\n- Do not claim repository\
+    \ health unless a health command result is supplied.\n- Do not claim there are\
+    \ no unresolved issues; say none were observed in the current snapshot.\n- Next\
+    \ inspection target must name exactly one concrete inspection target.\n- Valid\
+    \ next inspection targets include: git status --short, modified file list, untracked\
+    \ file list, current_workspace_snapshot.yaml, or test-all output.\n- Never say\
+    \ inspect the repository generically.\n- Never use the phrase inspect the repository\
+    \ generically.\n\n=== DIRECT FILE CONTEXT ===\nAuthority: observed_file_contents_not_validation\n\
+    \n--- run.py ---\n#!/usr/bin/env python3\nimport argparse\nfrom Agency.Core.runtime.help.help_text\
+    \ import SUBSYSTEMS\nimport json\nimport os\nimport signal\nimport subprocess\n\
+    import sys\nimport time\nimport traceback\nfrom pathlib import Path\n\nDASHBOARD_ROOT\
+    \ = Path(__file__).resolve().parent\nUI_ROOT = DASHBOARD_ROOT / \"UI\"\nWORKSPACE_ROOT\
+    \ = DASHBOARD_ROOT.parent\nAGENCY_ROOT = DASHBOARD_ROOT / \"Agency\"\nSESSION_DIR\
+    \ = AGENCY_ROOT / \"Core\" / \"runtime\" / \"sessions\"\nWATCH_LOG = SESSION_DIR\
+    \ / \"run_watch.jsonl\"\n\nif str(DASHBOARD_ROOT) not in sys.path:\n    sys.path.insert(0,\
+    \ str(DASHBOARD_ROOT))\n\n\ndef watch(event_type: str, payload: dict):\n    SESSION_DIR.mkdir(parents=True,\
+    \ exist_ok=True)\n    record = {\n        \"ts\": time.strftime(\"%Y-%m-%d %H:%M:%S\"\
+    ),\n        \"event\": event_type,\n        \"payload\": payload,\n    }\n   \
+    \ with WATCH_LOG.open(\"a\", encoding=\"utf-8\") as fh:\n        fh.write(json.dumps(record)\
+    \ + \"\\n\")\n\n\ndef run_status():\n    print(\"DASHBOARD_READY\")\n    print(f\"\
+    agency_root: {AGENCY_ROOT}\")\n    print(f\"dashboard_root: {DASHBOARD_ROOT}\"\
+    )\n    print(f\"ui_root: {UI_ROOT}\")\n    print(f\"watch_log: {WATCH_LOG}\")\n\
+    \n    watch(\"status_checked\", {\n        \"dashboard_root\": str(DASHBOARD_ROOT),\n\
+    \        \"ui_root\": str(UI_ROOT),\n    })\n    return 0\n\n\ndef run_scope():\n\
+    \    \"\"\"Report the live Dashboard command and agent surface.\"\"\"\n    from\
+    \ Agency.Core.agents.discovery import discover_agents\n\n    print(\"DASHBOARD_SCOPE\"\
+    )\n    print(f\"dashboard_root: {DASHBOARD_ROOT}\")\n    print(f\"agency_root:\
+    \ {AGENCY_ROOT}\")\n    print(f\"ui_root: {UI_ROOT}\")\n\n    print()\n    print(\"\
+    TOP-LEVEL COMMANDS\")\n\n    for name, metadata in SUBSYSTEMS.items():\n     \
+    \   help_text = metadata.get(\"help_text\") or \"\"\n        print(f\"- {name:12}\
+    \ {help_text}\")\n\n    print()\n    print(\"AVAILABLE AGENTS\")\n\n    agents\
+    \ = discover_agents()\n\n    if agents:\n        for name in agents:\n       \
+    \     print(f\"- {name}\")\n    else:\n        print(\"- (none)\")\n\n    return\
+    \ 0\n\n\ndef run_cli_command(command):\n    from Agency.Core.interfaces.cli import run_command\n\
+    \    cmd_str = \" \".join(command) if not isinstance(command, str) else command\n\
+    \    watch(\"cli_command_started\", {\"command\": cmd_str})\n    try:\n      \
+    \  result = run_command(command)\n        watch(\"cli_command_completed\", {\"\
+    command\": cmd_str, \"result\": result})\n        if result is not None:\n   \
+    \         print(result)\n        return 0\n    except SystemExit as e:\n     \
+    \   exit_code = e.code if isinstance(e.code, int) else (0 if e.code is None else\
+    \ 1)\n        if exit_code != 0:\n            watch(\"cli_command_failed\", {\n\
+    \ \n...[truncated]\n\nRules:\n- When direct file context is present, Observed\
+    \ may summarize those file contents.\n- Do not claim behavior was executed unless\
+    \ tool output is supplied.\n- Do not propose changes unless explicitly asked.\n\
+    \nRaw workspace snapshot follows for reference only.\nThe authoritative observed\
+    \ state block above overrides retrieved memory and raw summary interpretation.\n\
+    \nWorkspaceSnapshot:\n  timestamp_utc: 2026-07-28T18:24:08.699664+00:00\n  root:\
+    \ /home/spaztic/Core/Dashboard\n  authority: workspace_snapshot_not_validation\n\
+    \  scanned:\n    Agency:\n      path: Agency\n      exists: true\n      file_count:\
+    \ 2085\n      files:\n        - 'Agency/Core/foundation/paths.py'\n        - 'Agency/Core/foundation/yaml_compat.py'\n\
+    \        - 'Agency/Core/foundation/guardrails.py'\n        - 'Agency/Core/foundation/shared_bridge.py'\n\
+    \        - 'Agency/Core/planning/goals.py'\n        - 'Agency/Core/planning/memory.py'\n\
+    \        - 'Agency/Core/planning/mission_planning.py'\n        - 'Agency/Core/planning/proposal_generation.py'\n\
+    \        - 'Agency/Core/planning/tests/test_proposal_generation_extraction.py'\n\
+    \        - 'Agency/Core/planning/tests/test_mission_planning_extraction.py'\n\
+    \        - 'Agency/Core/agents/__init__.py'\n        - 'Agency/Core/agents/discovery.py'\n\
+    \        - 'Agency/Core/state/engine.py'\n        - 'Agency/Core/state/replay.py'\n\
+    \        - 'Agency/Core/state/README.md'\n        - 'Agency/Core/state/__init__.py'\n\
+    \        - 'Agency/Core/state/event_log.py'\n        - 'Agency/Core/state/transitions.py'\n\
+    \        - 'Agency/Core/state/schemas/agent_state.yaml'\n        - 'Agency/Core/state/schemas/transition_event.yaml'\n\
+    \        - 'Agency/Core/state/schemas/project_state.yaml'\n        - 'Agency/Core/cli/dashboard_cli.py'\n\
+    \        - 'Agency/Core/cli/__init__.py'\n        - 'Agency/Core/cli/commands/ai_commands.py'\n\
+    \        - 'Agency/Core/cli/commands/observation_commands.py'\n    UI:\n     \
+    \ path: UI\n      exists: true\n      file_count: 146\n      files:\n        -\
+    \ 'UI/project.godot'\n        - 'UI/Main/Main.tscn'\n        - 'UI/Main/Main.gd'\n\
+    \        - 'UI/Workbench/Main/Main.tscn'\n        - 'UI/Workbench/Main/Main.gd'\n\
+    \        - 'UI/Workbench/actions/ProjectActionController.gd'\n        - 'UI/Workbench/inspectors/ObjectInspectorPanel.gd'\n\
+    \        - 'UI/Workbench/inspectors/ObjectInspector.gd'\n        - 'UI/Workbench/inspectors/PacketInspector.gd'\n\
+    \        - 'UI/Workbench/inspectors/LeftPanel.gd'\n        - 'UI/Workbench/config/WorkbenchConstants.gd'\n\
+    \        - 'UI/Workbench/config/WorkbenchPaths.gd'\n        - 'UI/Workbench/selection/HighlightController.gd'\n\
+    \        - 'UI/Workbench/selection/ViewportSelectionController.gd'\n        -\
+    \ 'UI/Workbench/selection/SelectionRaycaster.gd'\n        - 'UI/Workbench/selection/SelectionManager.gd'\n\
+    \        - 'UI/Workbench/contracts/WorkbenchObjectContract.yaml'\n        - 'UI/Workbench/contracts/EngineeringUIContractReference.yaml'\n\
+    \        - 'UI/Workbench/contracts/PacketDisplayContract.yaml'\n        - 'UI/Workbench/interaction/CameraController.gd'\n\
+    \        - 'UI/Workbench/interaction/GhostCommandController.gd'\n        - 'UI/Workbench/interaction/CreateContextMenu.gd'\n\
+    \        - 'UI/Workbench/interaction/GhostCommandDialogs.gd'\n        - 'UI/Workbench/interaction/ViewportInputHelper.gd'\n\
+    \        - 'UI/Workbench/interaction/SimulationPlaybackController.gd'\n    Engineering:\n\
+    \      path: Engineering\n      exists: true\n      file_count: 94\n      files:\n\
+    \        - 'Engineering/__init__.py'\n        - 'Engineering/Physics/export_workbench_primitives.py'\n\
+    \        - 'Engineering/Physics/variables.py'\n        - 'Engineering/Physics/primitive_registry.py'\n\
+    \        - 'Engineering/Physics/geometry.py'\n        - 'Engineering/Physics/primitives.py'\n\
+    \        - 'Engineering/Physics/materials.py'\n        - 'Engineering/Physics/equations.py'\n\
+    \        - 'Engineering/Physics/constants.py'\n        - 'Engineering/Physics/__init__.py'\n\
+    \        - 'Engineering/Physics/workbench_primitives.json'\n        - 'Engineering/Physics/Domains/solids.py'\n\
+    \        - 'Engineering/Physics/Domains/buoyancy.py'\n        - 'Engineering/Physics/Domains/fluids.py'\n\
+    \        - 'Engineering/Physics/Domains/motion.py'\n        - 'Engineering/Physics/Domains/resistance.py'\n\
+    \        - 'Engineering/Physics/Domains/domains.py'\n        - 'Engineering/Physics/Objects/objects.py'\n\
+    \        - 'Engineering/Physics/Objects/__init__.py'\n        - 'Engineering/Physics/Objects/pipe/connections.py'\n\
+    \        - 'Engineering/Physics/Objects/pipe/fittings.py'\n        - 'Engineering/Physics/Objects/pipe/pipe.py'\n\
+    \        - 'Engineering/Physics/Objects/pipe/hollow_pipe.py'\n        - 'Engineering/Physics/Objects/pipe/routing.py'\n\
+    \        - 'Engineering/Physics/Objects/pipe/catalog.py'\n    Workbench:\n   \
+    \   path: UI/Workbench\n      exists: true\n      file_count: 60\n      files:\n\
+    \        - 'UI/Workbench/Main/Main.tscn'\n        - 'UI/Workbench/Main/Main.gd'\n\
+    \        - 'UI/Workbench/actions/ProjectActionController.gd'\n        - 'UI/Workbench/inspectors/ObjectInspectorPanel.gd'\n\
+    \        - 'UI/Workbench/inspectors/ObjectInspector.gd'\n        - 'UI/Workbench/inspectors/PacketInspector.gd'\n\
+    \        - 'UI/Workbench/inspectors/LeftPanel.gd'\n        - 'UI/Workbench/config/WorkbenchConstants.gd'\n\
+    \        - 'UI/Workbench/config/WorkbenchPaths.gd'\n        - 'UI/Workbench/selection/HighlightController.gd'\n\
+    \        - 'UI/Workbench/selection/ViewportSelectionController.gd'\n        -\
+    \ 'UI/Workbench/selection/SelectionRaycaster.gd'\n        - 'UI/Workbench/selection/SelectionManager.gd'\n\
+    \        - 'UI/Workbench/contracts/WorkbenchObjectContract.yaml'\n        - 'UI/Workbench/contracts/EngineeringUIContractReference.yaml'\n\
+    \        - 'UI/Workbench/contracts/PacketDisplayContract.yaml'\n        - 'UI/Workbench/interaction/CameraController.gd'\n\
+    \        - 'UI/Workbench/interaction/GhostCommandController.gd'\n        - 'UI/Workbench/interaction/CreateContextMenu.gd'\n\
+    \        - 'UI/Workbench/interaction/GhostCommandDialogs.gd'\n        - 'UI/Workbench/interaction/ViewportInputHelper.gd'\n\
+    \        - 'UI/Workbench/interaction/SimulationPlaybackController.gd'\n      \
+    \  - 'UI/Workbench/packet/PacketDisplayResolver.gd'\n        - 'UI/Workbench/packet/PacketLoader.gd'\n\
+    \        - 'UI/Workbench/packet/GhostCommandExporter.gd'\n    Workbench_packet:\n\
+    \      path: UI/Workbench/packet\n      exists: true\n      file_count: 4\n  \
+    \    files:\n        - 'UI/Workbench/packet/PacketDisplayResolver.gd'\n      \
+    \  - 'UI/Workbench/packet/PacketLoader.gd'\n        - 'UI/Workbench/packet/GhostCommandExporter.gd'\n\
+    \        - 'UI/Workbench/packet/PacketLink.gd'\n    Workbench_rendering:\n   \
+    \   path: UI/Workbench/rendering\n      exists: true\n      file_count: 5\n  \
+    \    files:\n        - 'UI/Workbench/rendering/ViewportObjectRenderer.gd'\n  \
+    \      - 'UI/Workbench/rendering/GhostPrimitiveRenderer.gd'\n        - 'UI/Workbench/rendering/PacketGeometryRenderer.gd'\n\
+    \        - 'UI/Workbench/rendering/CoordinateHelper.gd'\n        - 'UI/Workbench/rendering/PortMarkerRenderer.gd'\n\
+    \    Workbench_viewport_interaction:\n      path: UI/Workbench/interaction\n \
+    \     exists: true\n      file_count: 6\n      files:\n        - 'UI/Workbench/interaction/CameraController.gd'\n\
+    \        - 'UI/Workbench/interaction/GhostCommandController.gd'\n        - 'UI/Workbench/interaction/CreateContextMenu.gd'\n\
+    \        - 'UI/Workbench/interaction/GhostCommandDialogs.gd'\n        - 'UI/Workbench/interaction/ViewportInputHelper.gd'\n\
+    \        - 'UI/Workbench/interaction/SimulationPlaybackController.gd'\n    Workbench_scenes:\n\
+    \      path: UI/Workbench/scenes\n      exists: true\n      file_count: 4\n  \
+    \    files:\n        - 'UI/Workbench/scenes/ObjectInspector.tscn'\n        - 'UI/Workbench/scenes/PacketInspector.tscn'\n\
+    \        - 'UI/Workbench/scenes/Workbench.tscn'\n        - 'UI/Workbench/scenes/Workbench.gd'\n\
+    \    Workbench_primitives:\n      path: UI/Workbench/primitives\n      exists:\
+    \ false\n      file_count: 0\n      files:\n    Engineering_primitives:\n    \
+    \  path: Engineering/Physics\n      exists: true\n      file_count: 27\n     \
+    \ files:\n        - 'Engineering/Physics/export_workbench_primitives.py'\n   \
+    \     - 'Engineering/Physics/variables.py'\n        - 'Engineering/Physics/primitive_registry.py'\n\
+    \        - 'Engineering/Physics/geometry.py'\n        - 'Engineering/Physics/primitives.py'\n\
+    \        - 'Engineering/Physics/materials.py'\n        - 'Engineering/Physics/equations.py'\n\
+    \        - 'Engineering/Physics/constants.py'\n        - 'Engineering/Physics/__init__.py'\n\
+    \        - 'Engineering/Physics/workbench_primitives.json'\n        - 'Engineering/Physics/Domains/solids.py'\n\
+    \        - 'Engineering/Physics/Domains/buoyancy.py'\n        - 'Engineering/Physics/Domains/fluids.py'\n\
+    \        - 'Engineering/Physics/Domains/motion.py'\n        - 'Engineering/Physics/Domains/resistance.py'\n\
+    \        - 'Engineering/Physics/Domains/domains.py'\n        - 'Engineering/Physics/Objects/objects.py'\n\
+    \        - 'Engineering/Physics/Objects/__init__.py'\n        - 'Engineering/Physics/Objects/pipe/connections.py'\n\
+    \        - 'Engineering/Physics/Objects/pipe/fittings.py'\n        - 'Engineering/Physics/Objects/pipe/pipe.py'\n\
+    \        - 'Engineering/Physics/Objects/pipe/hollow_pipe.py'\n        - 'Engineering/Physics/Objects/pipe/routing.py'\n\
+    \        - 'Engineering/Physics/Objects/pipe/catalog.py'\n        - 'Engineering/Physics/Objects/pipe/__init__.py'\n\
+    \  git_observation:\n    authority: historical_git_observation_not_current_truth\n\
+    \    observation_id: 'gitobs-8df6ad2dc3e3bdac'\n    observed_at: '2026-07-28T18:24:08Z'\n\
+    \    git_command: ['git', 'status', '--porcelain=v1']\n    git_exit_code: 0\n\
+    \    output_sha256: 'da0e5bc95c03f0c975b2c3a3d30596946d9753c46422bc75f16ec2dd4c1e808a'\n\
+    \    head_oid: 'fd55e808e3a916b114641439ab04f3357887414f'\n    modified_count:\
+    \ 2\n    untracked_count: 7\n    modified:\n      - 'Agency/Agents/Editor/__init__.py'\n\
+    \      - 'run.py'\n    untracked:\n      - '.recovery_backups/'\n      - 'recover_editor.sh'\n\
+    \      - 'run.py.20260728T120015Z.bak'\n      - 'run.py.20260728T180649Z.bak'\n\
+    \      - 'run.py.20260728T180818Z.bak'\n      - 'scripts/verify_agent_help.sh'\n\
+    \      - 'verify_editor.sh'\n  action_packets:\n    proposal_count: 0\n    result_count:\
+    \ 0\n\n\nRequired output discipline:\nObserved must only contain extracted observed\
+    \ facts.\nWhen Workbench facts are present, Observed must include Workbench files,\
+    \ Workbench packet files, Workbench rendering files, Workbench viewport interaction\
+    \ files, and Workbench scene files.\nDo not replace file counts with vague labels\
+    \ like packet loading or viewport rendering surfaces.\nInferred must contain only\
+    \ cautious conclusions derived from observed facts, or the literal word None.\n\
+    Inferred must not mention unresolved issues, unresolved tasks, repository health,\
+    \ remote sync, or validation.\nUnresolved must not say None.\nUnresolved must\
+    \ say: No unresolved issues were observed in the current workspace snapshot.\n\
+    Next inspection target must be one concrete target, not generic repository inspection.\n\
+    \nUser request:\nInspect the current agent help routing in run.py. Identify architectural\
+    \ weaknesses and propose a regression-safe improvement. Do not modify files."
+  repository_root: /home/spaztic/Core/Dashboard
+  repository_root_authority: Agency.Core.foundation.paths.DASHBOARD_ROOT
+  effective_scope:
+    include:
+    - Agency/Agents/Editor/__init__.py
+    - run.py
+    - Agency/Core/foundation/paths.py
+    - Agency/Core/foundation/yaml_compat.py
+    - Agency/Core/foundation/guardrails.py
+    - Agency/Core/foundation/shared_bridge.py
+    - Agency/Core/planning/goals.py
+    - Agency/Core/planning/memory.py
+    - Agency/Core/planning/mission_planning.py
+    - Agency/Core/planning/proposal_generation.py
+    - Agency/Core/planning/tests/test_proposal_generation_extraction.py
+    - Agency/Core/planning/tests/test_mission_planning_extraction.py
+    - Agency/Core/agents/__init__.py
+    - Agency/Core/agents/discovery.py
+    - Agency/Core/state/engine.py
+    - Agency/Core/state/replay.py
+    - Agency/Core/state/README.md
+    - Agency/Core/state/__init__.py
+    - Agency/Core/state/event_log.py
+    - Agency/Core/state/transitions.py
+    - Agency/Core/state/schemas/agent_state.yaml
+    - Agency/Core/state/schemas/transition_event.yaml
+    - Agency/Core/state/schemas/project_state.yaml
+    - Agency/Core/cli/dashboard_cli.py
+    - Agency/Core/cli/__init__.py
+    - Agency/Core/cli/commands/ai_commands.py
+    - Agency/Core/cli/commands/observation_commands.py
+    - UI/project.godot
+    - UI/Main/Main.tscn
+    - UI/Main/Main.gd
+    - UI/Workbench/Main/Main.tscn
+    - UI/Workbench/Main/Main.gd
+    - UI/Workbench/actions/ProjectActionController.gd
+    - UI/Workbench/inspectors/ObjectInspectorPanel.gd
+    - UI/Workbench/inspectors/ObjectInspector.gd
+    - UI/Workbench/inspectors/PacketInspector.gd
+    - UI/Workbench/inspectors/LeftPanel.gd
+    - UI/Workbench/config/WorkbenchConstants.gd
+    - UI/Workbench/config/WorkbenchPaths.gd
+    - UI/Workbench/selection/HighlightController.gd
+    - UI/Workbench/selection/ViewportSelectionController.gd
+    - UI/Workbench/selection/SelectionRaycaster.gd
+    - UI/Workbench/selection/SelectionManager.gd
+    - UI/Workbench/contracts/WorkbenchObjectContract.yaml
+    - UI/Workbench/contracts/EngineeringUIContractReference.yaml
+    - UI/Workbench/contracts/PacketDisplayContract.yaml
+    - UI/Workbench/interaction/CameraController.gd
+    - UI/Workbench/interaction/GhostCommandController.gd
+    - UI/Workbench/interaction/CreateContextMenu.gd
+    - UI/Workbench/interaction/GhostCommandDialogs.gd
+    - UI/Workbench/interaction/ViewportInputHelper.gd
+    - UI/Workbench/interaction/SimulationPlaybackController.gd
+    - Engineering/__init__.py
+    - Engineering/Physics/export_workbench_primitives.py
+    - Engineering/Physics/variables.py
+    - Engineering/Physics/primitive_registry.py
+    - Engineering/Physics/geometry.py
+    - Engineering/Physics/primitives.py
+    - Engineering/Physics/materials.py
+    - Engineering/Physics/equations.py
+    - Engineering/Physics/constants.py
+    - Engineering/Physics/__init__.py
+    - Engineering/Physics/workbench_primitives.json
+    - Engineering/Physics/Domains/solids.py
+    - Engineering/Physics/Domains/buoyancy.py
+    - Engineering/Physics/Domains/fluids.py
+    - Engineering/Physics/Domains/motion.py
+    - Engineering/Physics/Domains/resistance.py
+    - Engineering/Physics/Domains/domains.py
+    - Engineering/Physics/Objects/objects.py
+    - Engineering/Physics/Objects/__init__.py
+    - Engineering/Physics/Objects/pipe/connections.py
+    - Engineering/Physics/Objects/pipe/fittings.py
+    - Engineering/Physics/Objects/pipe/pipe.py
+    - Engineering/Physics/Objects/pipe/hollow_pipe.py
+    - Engineering/Physics/Objects/pipe/routing.py
+    - Engineering/Physics/Objects/pipe/catalog.py
+    - UI/Workbench
+    - UI/Workbench/packet/PacketDisplayResolver.gd
+    - UI/Workbench/packet/PacketLoader.gd
+    - UI/Workbench/packet/GhostCommandExporter.gd
+    - UI/Workbench/packet
+    - UI/Workbench/packet/PacketLink.gd
+    - UI/Workbench/rendering
+    - UI/Workbench/rendering/ViewportObjectRenderer.gd
+    - UI/Workbench/rendering/GhostPrimitiveRenderer.gd
+    - UI/Workbench/rendering/PacketGeometryRenderer.gd
+    - UI/Workbench/rendering/CoordinateHelper.gd
+    - UI/Workbench/rendering/PortMarkerRenderer.gd
+    - UI/Workbench/interaction
+    - UI/Workbench/scenes
+    - UI/Workbench/scenes/ObjectInspector.tscn
+    - UI/Workbench/scenes/PacketInspector.tscn
+    - UI/Workbench/scenes/Workbench.tscn
+    - UI/Workbench/scenes/Workbench.gd
+    - UI/Workbench/primitives
+    - Engineering/Physics
+    - Engineering/Physics/Objects/pipe/__init__.py
+    exclude:
+    - .git
+    - __pycache__
+    - .pytest_cache
+    - node_modules
+    - .venv
+    - venv
+    - weebo_env
+    - Chroma
+    - memory/Chroma
+    - build
+    - dist
+    - .godot
+    - logs
+    - sessions
+    - '*.pyc'
+    - '*.pyo'
+    - '*.sqlite'
+    - '*.sqlite3'
+    - '*.db'
+    - .env
+    - .env.*
+    - '*.pem'
+    - '*.key'
+    - '*token*'
+    - '*credential*'
+    - '*secret*'
+    default_exclusions:
+    - .git
+    - __pycache__
+    - .pytest_cache
+    - node_modules
+    - .venv
+    - venv
+    - weebo_env
+    - Chroma
+    - memory/Chroma
+    - build
+    - dist
+    - .godot
+    - logs
+    - sessions
+    - '*.pyc'
+    - '*.pyo'
+    - '*.sqlite'
+    - '*.sqlite3'
+    - '*.db'
+    - .env
+    - .env.*
+    - '*.pem'
+    - '*.key'
+    - '*token*'
+    - '*credential*'
+    - '*secret*'
+  operations_performed: []
+  findings: []
+  symbols: []
+  references: []
+  imports: []
+  dependency_edges: []
+  negative_results: []
+  files_examined: []
+  files_skipped: []
+  limits:
+    configured:
+      max_files: 500
+      max_matches: 500
+      max_file_bytes: 120000
+      max_depth: 2
+      max_total_context_bytes: 40000
+      max_evidence_items: 500
+    reached:
+      max_files: false
+      max_matches: false
+      max_file_bytes: false
+      max_depth: false
+      max_total_context_bytes: false
+      max_evidence_items: false
+  parse_failures: []
+  unresolveds:
+  - reason: 'path_not_found: UI/Workbench/primitives'
+    classification: unresolved
+  contradictions: []
+  generated_at: '2026-07-28T18:25:05Z'
+  persistence_path: Agency/Agents/Editor/work/Inspections/repoctx-39a04bbac4a2
+  repository_mutation_performed: false

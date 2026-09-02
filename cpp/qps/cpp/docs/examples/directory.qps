@@ -1,0 +1,62 @@
+gravitus_principia: ( # This is a Term declaration for the root directory. Its content is a container ().
+    core: ( # This is a Term declaration for the 'core' directory. Its content is a container ().
+        src: ( # Term 'src'. Its content is a container ().
+            ast: ( # Term 'ast'. Its content is a container of files.
+                ast_node.hpp- "path_to_ast_node.hpp";, # Item- declaration. Ends with ';', then comma.
+                ast_utils.cpp- "path_to_ast_utils.cpp"; # Item- declaration. Ends with ';'.
+            )\ , # List ends with '\'. Then comma separates from next element in 'src:'s list.
+            parser: ( # Term 'parser'. Its content is a container (list of sub-directories).
+                c: ( # Term 'c'. Its content is a container of files.
+                    _index.cpp- "path_to_index.cpp";,
+                    causal.cpp- "path_to_causal.cpp";,
+                    class.cpp- "path_to_class.cpp";,
+                    container.cpp- "path_to_container.cpp";,
+                    dictionary.cpp- "path_to_dictionary.cpp";,
+                    function.cpp- "path_to_function.cpp";,
+                    item.cpp- "path_to_item.cpp";,
+                    key.cpp- "path_to_key.cpp";,
+                    library.cpp- "path_to_library.cpp";,
+                    math.cpp- "path_to_math.cpp";,
+                    reference.cpp- "path_to_reference.cpp";,
+                    term.cpp- "path_to_term.cpp";,
+                    value.cpp- "path_to_value.cpp";
+                )\ , # List ends with '\'. Then comma separates.
+                h: ( # Term 'h'. Its content is a container of files.
+                    _index.hpp- "path_to_index.hpp";,
+                    causal.hpp- "path_to_causal.hpp";,
+                    class.hpp- "path_to_class.hpp";,
+                    container.hpp- "path_to_container.hpp";,
+                    dictionary.hpp- "path_to_dictionary.hpp";,
+                    function.hpp- "path_to_function.hpp";,
+                    item.hpp- "path_to_item.hpp";,
+                    key.hpp- "path_to_key.hpp";,
+                    library.hpp- "path_to_library.hpp";,
+                    math.hpp- "path_to_math.hpp";,
+                    reference.hpp- "path_to_reference.hpp";,
+                    term.hpp- "path_to_term.hpp";,
+                    value.hpp- "path_to_value.hpp";
+                )\ # List ends with '\'. No comma, as it's the last element in 'parser:'s list.
+            )\ , # Term 'parser' ends its content. Then comma separates.
+            runtime: ( # Term 'runtime'.
+                c: ( # Term 'c'.
+                    builtins.cpp- "path";, interpreter.cpp- "path";, path_resolver.cpp- "path";, symbol_table.cpp- "path";
+                )\ ,
+                h: ( # Term 'h'.
+                    builtins.hpp- "path";, interpreter.hpp- "path";, path_resolver.hpp- "path";, symbol_table.hpp- "path";
+                )\ # Last element in 'runtime:'s list.
+            )\ , # Term 'runtime' ends its content. Then comma separates.
+            tokens: ( # Term 'tokens'.
+                c: ( # Term 'c'.
+                    char_stream.cpp- "path";, lexer.cpp- "path";, public_lexer.cpp- "path";, token.cpp- "path";
+                )\ ,
+                h: ( # Term 'h'.
+                    char_stream.hpp- "path";, lexer.hpp- "path";, public_lexer.hpp- "path";, token.hpp- "path"; # Last item.
+                )\ # List ends with '\'. No comma, as it's the last element in 'tokens:'s list.
+            )\ # Term 'tokens' ends its content.
+        )\ # Term 'src' ends its content.
+    )\ , # Term 'core' ends its content.
+    common.hpp- "path_to_common.hpp";, # Item- declaration for top-level file.
+    main.cpp- "path_to_main.cpp";,
+    utils.cpp- "path_to_utils.cpp";,
+    utils.hpp- "path_to_utils.hpp"; # Last item.
+)\ ; # The content of 'gravitus_principia:' ends here. The list ends with '\'. The ';' terminates the 'gravitus_principia:' Term declaration itself.

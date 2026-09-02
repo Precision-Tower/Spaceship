@@ -1,0 +1,631 @@
+{
+  "packet_type": "hull_inventory_packet",
+  "created_at": "2026-06-22T07:37:25.864735+00:00",
+  "evidence_state": "calculated_candidate",
+  "environment": {
+    "environment_id": "water_environment_001",
+    "fluid": {
+      "fluid_id": "sea_water",
+      "density_kg_m3": 1025.0,
+      "material_id": "sea_water_candidate",
+      "notes": "sea_water_default_candidate"
+    },
+    "gravity_m_s2": 9.80665,
+    "surface_z_m": 0.0,
+    "render": {
+      "primitive": "fluid_volume",
+      "size_m": {
+        "x": 6.0,
+        "y": 0.5,
+        "z": 6.0
+      },
+      "surface_z_m": 0.0,
+      "depth_m": 0.5,
+      "material": {
+        "fluid_id": "sea_water",
+        "alpha": 0.25
+      }
+    },
+    "notes": ""
+  },
+  "assembly": {
+    "assembly_id": "hull_inventory_001",
+    "assembly_type": "hull_inventory",
+    "hierarchy": {
+      "root_group": "hull",
+      "groups": {
+        "hull": {
+          "parent_group": "boat_assembly",
+          "status": "active",
+          "role": "primary_float_structure"
+        },
+        "port_pontoon": {
+          "parent_group": "hull",
+          "status": "active",
+          "role": "flotation_subassembly"
+        },
+        "starboard_pontoon": {
+          "parent_group": "hull",
+          "status": "active",
+          "role": "flotation_subassembly"
+        },
+        "connector_frame": {
+          "parent_group": "hull",
+          "status": "active",
+          "role": "pvc_cradle_structure"
+        }
+      }
+    },
+    "objects": [
+      {
+        "object_id": "barrel_001",
+        "object_type": "barrel",
+        "physical_primitive": "barrel",
+        "role": "flotation_element",
+        "mass_kg": 18.0,
+        "volume_m3": 0.208,
+        "position_m": {
+          "x": -1.7924,
+          "y": 0.0,
+          "z": -0.6096
+        },
+        "dimensions_m": {
+          "radius": 0.285,
+          "height": 0.82
+        },
+        "barrel": {
+          "radius_m": 0.285,
+          "height_m": 0.82,
+          "sealed": true,
+          "fill_state": "air",
+          "external_volume_m3": 0.208
+        },
+        "render": {
+          "primitive": "cylinder",
+          "radius_m": 0.285,
+          "height_m": 0.82,
+          "display_position_m": {
+            "x": -1.7924,
+            "y": 0.24224999999999997,
+            "z": -0.6096
+          },
+          "rotation_degrees": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 90.0
+          }
+        },
+        "material": "hdpe_candidate",
+        "contributes_weight": true,
+        "contributes_buoyancy": true,
+        "assembly_group": "port_pontoon",
+        "subsystem": "hull",
+        "parent_group": "hull"
+      },
+      {
+        "object_id": "barrel_002",
+        "object_type": "barrel",
+        "physical_primitive": "barrel",
+        "role": "flotation_element",
+        "mass_kg": 18.0,
+        "volume_m3": 0.208,
+        "position_m": {
+          "x": -0.8962,
+          "y": 0.0,
+          "z": -0.6096
+        },
+        "dimensions_m": {
+          "radius": 0.285,
+          "height": 0.82
+        },
+        "barrel": {
+          "radius_m": 0.285,
+          "height_m": 0.82,
+          "sealed": true,
+          "fill_state": "air",
+          "external_volume_m3": 0.208
+        },
+        "render": {
+          "primitive": "cylinder",
+          "radius_m": 0.285,
+          "height_m": 0.82,
+          "display_position_m": {
+            "x": -0.8962,
+            "y": 0.24224999999999997,
+            "z": -0.6096
+          },
+          "rotation_degrees": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 90.0
+          }
+        },
+        "material": "hdpe_candidate",
+        "contributes_weight": true,
+        "contributes_buoyancy": true,
+        "assembly_group": "port_pontoon",
+        "subsystem": "hull",
+        "parent_group": "hull"
+      },
+      {
+        "object_id": "barrel_003",
+        "object_type": "barrel",
+        "physical_primitive": "barrel",
+        "role": "flotation_element",
+        "mass_kg": 18.0,
+        "volume_m3": 0.208,
+        "position_m": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": -0.6096
+        },
+        "dimensions_m": {
+          "radius": 0.285,
+          "height": 0.82
+        },
+        "barrel": {
+          "radius_m": 0.285,
+          "height_m": 0.82,
+          "sealed": true,
+          "fill_state": "air",
+          "external_volume_m3": 0.208
+        },
+        "render": {
+          "primitive": "cylinder",
+          "radius_m": 0.285,
+          "height_m": 0.82,
+          "display_position_m": {
+            "x": 0.0,
+            "y": 0.24224999999999997,
+            "z": -0.6096
+          },
+          "rotation_degrees": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 90.0
+          }
+        },
+        "material": "hdpe_candidate",
+        "contributes_weight": true,
+        "contributes_buoyancy": true,
+        "assembly_group": "port_pontoon",
+        "subsystem": "hull",
+        "parent_group": "hull"
+      },
+      {
+        "object_id": "barrel_004",
+        "object_type": "barrel",
+        "physical_primitive": "barrel",
+        "role": "flotation_element",
+        "mass_kg": 18.0,
+        "volume_m3": 0.208,
+        "position_m": {
+          "x": 0.8962000000000001,
+          "y": 0.0,
+          "z": -0.6096
+        },
+        "dimensions_m": {
+          "radius": 0.285,
+          "height": 0.82
+        },
+        "barrel": {
+          "radius_m": 0.285,
+          "height_m": 0.82,
+          "sealed": true,
+          "fill_state": "air",
+          "external_volume_m3": 0.208
+        },
+        "render": {
+          "primitive": "cylinder",
+          "radius_m": 0.285,
+          "height_m": 0.82,
+          "display_position_m": {
+            "x": 0.8962000000000001,
+            "y": 0.24224999999999997,
+            "z": -0.6096
+          },
+          "rotation_degrees": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 90.0
+          }
+        },
+        "material": "hdpe_candidate",
+        "contributes_weight": true,
+        "contributes_buoyancy": true,
+        "assembly_group": "port_pontoon",
+        "subsystem": "hull",
+        "parent_group": "hull"
+      },
+      {
+        "object_id": "barrel_005",
+        "object_type": "barrel",
+        "physical_primitive": "barrel",
+        "role": "flotation_element",
+        "mass_kg": 18.0,
+        "volume_m3": 0.208,
+        "position_m": {
+          "x": 1.7924,
+          "y": 0.0,
+          "z": -0.6096
+        },
+        "dimensions_m": {
+          "radius": 0.285,
+          "height": 0.82
+        },
+        "barrel": {
+          "radius_m": 0.285,
+          "height_m": 0.82,
+          "sealed": true,
+          "fill_state": "air",
+          "external_volume_m3": 0.208
+        },
+        "render": {
+          "primitive": "cylinder",
+          "radius_m": 0.285,
+          "height_m": 0.82,
+          "display_position_m": {
+            "x": 1.7924,
+            "y": 0.24224999999999997,
+            "z": -0.6096
+          },
+          "rotation_degrees": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 90.0
+          }
+        },
+        "material": "hdpe_candidate",
+        "contributes_weight": true,
+        "contributes_buoyancy": true,
+        "assembly_group": "port_pontoon",
+        "subsystem": "hull",
+        "parent_group": "hull"
+      },
+      {
+        "object_id": "barrel_006",
+        "object_type": "barrel",
+        "physical_primitive": "barrel",
+        "role": "flotation_element",
+        "mass_kg": 18.0,
+        "volume_m3": 0.208,
+        "position_m": {
+          "x": -1.7924,
+          "y": 0.0,
+          "z": 0.6096
+        },
+        "dimensions_m": {
+          "radius": 0.285,
+          "height": 0.82
+        },
+        "barrel": {
+          "radius_m": 0.285,
+          "height_m": 0.82,
+          "sealed": true,
+          "fill_state": "air",
+          "external_volume_m3": 0.208
+        },
+        "render": {
+          "primitive": "cylinder",
+          "radius_m": 0.285,
+          "height_m": 0.82,
+          "display_position_m": {
+            "x": -1.7924,
+            "y": 0.24224999999999997,
+            "z": 0.6096
+          },
+          "rotation_degrees": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 90.0
+          }
+        },
+        "material": "hdpe_candidate",
+        "contributes_weight": true,
+        "contributes_buoyancy": true,
+        "assembly_group": "starboard_pontoon",
+        "subsystem": "hull",
+        "parent_group": "hull"
+      },
+      {
+        "object_id": "barrel_007",
+        "object_type": "barrel",
+        "physical_primitive": "barrel",
+        "role": "flotation_element",
+        "mass_kg": 18.0,
+        "volume_m3": 0.208,
+        "position_m": {
+          "x": -0.8962,
+          "y": 0.0,
+          "z": 0.6096
+        },
+        "dimensions_m": {
+          "radius": 0.285,
+          "height": 0.82
+        },
+        "barrel": {
+          "radius_m": 0.285,
+          "height_m": 0.82,
+          "sealed": true,
+          "fill_state": "air",
+          "external_volume_m3": 0.208
+        },
+        "render": {
+          "primitive": "cylinder",
+          "radius_m": 0.285,
+          "height_m": 0.82,
+          "display_position_m": {
+            "x": -0.8962,
+            "y": 0.24224999999999997,
+            "z": 0.6096
+          },
+          "rotation_degrees": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 90.0
+          }
+        },
+        "material": "hdpe_candidate",
+        "contributes_weight": true,
+        "contributes_buoyancy": true,
+        "assembly_group": "starboard_pontoon",
+        "subsystem": "hull",
+        "parent_group": "hull"
+      },
+      {
+        "object_id": "barrel_008",
+        "object_type": "barrel",
+        "physical_primitive": "barrel",
+        "role": "flotation_element",
+        "mass_kg": 18.0,
+        "volume_m3": 0.208,
+        "position_m": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.6096
+        },
+        "dimensions_m": {
+          "radius": 0.285,
+          "height": 0.82
+        },
+        "barrel": {
+          "radius_m": 0.285,
+          "height_m": 0.82,
+          "sealed": true,
+          "fill_state": "air",
+          "external_volume_m3": 0.208
+        },
+        "render": {
+          "primitive": "cylinder",
+          "radius_m": 0.285,
+          "height_m": 0.82,
+          "display_position_m": {
+            "x": 0.0,
+            "y": 0.24224999999999997,
+            "z": 0.6096
+          },
+          "rotation_degrees": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 90.0
+          }
+        },
+        "material": "hdpe_candidate",
+        "contributes_weight": true,
+        "contributes_buoyancy": true,
+        "assembly_group": "starboard_pontoon",
+        "subsystem": "hull",
+        "parent_group": "hull"
+      },
+      {
+        "object_id": "barrel_009",
+        "object_type": "barrel",
+        "physical_primitive": "barrel",
+        "role": "flotation_element",
+        "mass_kg": 18.0,
+        "volume_m3": 0.208,
+        "position_m": {
+          "x": 0.8962000000000001,
+          "y": 0.0,
+          "z": 0.6096
+        },
+        "dimensions_m": {
+          "radius": 0.285,
+          "height": 0.82
+        },
+        "barrel": {
+          "radius_m": 0.285,
+          "height_m": 0.82,
+          "sealed": true,
+          "fill_state": "air",
+          "external_volume_m3": 0.208
+        },
+        "render": {
+          "primitive": "cylinder",
+          "radius_m": 0.285,
+          "height_m": 0.82,
+          "display_position_m": {
+            "x": 0.8962000000000001,
+            "y": 0.24224999999999997,
+            "z": 0.6096
+          },
+          "rotation_degrees": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 90.0
+          }
+        },
+        "material": "hdpe_candidate",
+        "contributes_weight": true,
+        "contributes_buoyancy": true,
+        "assembly_group": "starboard_pontoon",
+        "subsystem": "hull",
+        "parent_group": "hull"
+      },
+      {
+        "object_id": "barrel_010",
+        "object_type": "barrel",
+        "physical_primitive": "barrel",
+        "role": "flotation_element",
+        "mass_kg": 18.0,
+        "volume_m3": 0.208,
+        "position_m": {
+          "x": 1.7924,
+          "y": 0.0,
+          "z": 0.6096
+        },
+        "dimensions_m": {
+          "radius": 0.285,
+          "height": 0.82
+        },
+        "barrel": {
+          "radius_m": 0.285,
+          "height_m": 0.82,
+          "sealed": true,
+          "fill_state": "air",
+          "external_volume_m3": 0.208
+        },
+        "render": {
+          "primitive": "cylinder",
+          "radius_m": 0.285,
+          "height_m": 0.82,
+          "display_position_m": {
+            "x": 1.7924,
+            "y": 0.24224999999999997,
+            "z": 0.6096
+          },
+          "rotation_degrees": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 90.0
+          }
+        },
+        "material": "hdpe_candidate",
+        "contributes_weight": true,
+        "contributes_buoyancy": true,
+        "assembly_group": "starboard_pontoon",
+        "subsystem": "hull",
+        "parent_group": "hull"
+      }
+    ],
+    "summary": {
+      "barrels_per_pontoon": 5,
+      "barrel_gap_m": 0.0762,
+      "barrel_spacing_m": 0.8962,
+      "pontoon_center_spread_m": 1.2192,
+      "pontoon_length_m": 4.4048,
+      "total_mass_kg": 180.0,
+      "total_displacement_volume_m3": 2.08,
+      "total_weight_force_n": 1765.197,
+      "total_buoyant_force_n": 20907.7778,
+      "float_margin_n": 19142.5808,
+      "center_of_mass_candidate_m": {
+        "x": 3.947459643111668e-17,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "center_of_buoyancy_candidate_m": {
+        "x": 2.668805347656626e-17,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass_breakdown_kg": {
+        "barrel": 180.0
+      },
+      "object_count_breakdown": {
+        "barrel": 10
+      },
+      "assembly_group_breakdown": {
+        "port_pontoon": {
+          "object_count": 5,
+          "mass_kg": 90.0,
+          "displacement_volume_m3": 1.04
+        },
+        "starboard_pontoon": {
+          "object_count": 5,
+          "mass_kg": 90.0,
+          "displacement_volume_m3": 1.04
+        }
+      },
+      "equation_results": [
+        {
+          "equation_id": "MC.weight_force",
+          "description": "weight_force_n = mass_kg * gravity_m_s2",
+          "inputs": {
+            "mass_kg": 180.0,
+            "gravity_m_s2": 9.80665
+          },
+          "output_name": "weight_force_n",
+          "output_value": 1765.197,
+          "output_unit": "N",
+          "domain": "MC",
+          "blocked_interpretations": [
+            "mass_equals_weight",
+            "weight_force_equals_mass_without_gravity_context"
+          ]
+        },
+        {
+          "equation_id": "MC.buoyant_force",
+          "description": "buoyant_force_n = fluid_density_kg_m3 * displaced_volume_m3 * gravity_m_s2",
+          "inputs": {
+            "fluid_density_kg_m3": 1025.0,
+            "displaced_volume_m3": 2.08,
+            "gravity_m_s2": 9.80665
+          },
+          "output_name": "buoyant_force_n",
+          "output_value": 20907.7778,
+          "output_unit": "N",
+          "domain": "MC",
+          "blocked_interpretations": [
+            "buoyant_force_equals_stability",
+            "positive_buoyancy_equals_safe_payload",
+            "calculation_equals_validation"
+          ]
+        },
+        {
+          "equation_id": "MC.float_margin",
+          "description": "float_margin_n = buoyant_force_n - weight_force_n",
+          "inputs": {
+            "buoyant_force_n": 20907.7778,
+            "weight_force_n": 1765.197
+          },
+          "output_name": "float_margin_n",
+          "output_value": 19142.5808,
+          "output_unit": "N",
+          "domain": "MC",
+          "blocked_interpretations": [
+            "positive_margin_equals_stable",
+            "positive_margin_equals_seaworthy",
+            "positive_margin_equals_validated"
+          ]
+        }
+      ],
+      "required_displacement_volume_m3": 0.17560975609756097,
+      "available_displacement_volume_m3": 2.08,
+      "unused_displacement_volume_m3": 1.9043902439024392,
+      "displacement_utilization_ratio": 0.08442776735459662
+    },
+    "unresolved_variables": [
+      "actual_barrel_dimensions",
+      "actual_barrel_spacing",
+      "pvc_joint_method",
+      "pvc_cradle_fastening",
+      "barrel_retention_straps",
+      "center_of_mass",
+      "center_of_buoyancy",
+      "tilt_or_list_behavior"
+    ],
+    "blocked_interpretations": [
+      "positive_float_margin_equals_stability",
+      "inventory_packet_equals_physical_validation",
+      "calculated_candidate_equals_safe_payload",
+      "pvc_cradle_geometry_equals_structural_validation"
+    ]
+  },
+  "prohibited_interpretations": [
+    "simulation_equals_truth",
+    "calculation_equals_validation",
+    "float_margin_equals_seaworthiness",
+    "visual_cradle_equals_structural_safety"
+  ]
+}

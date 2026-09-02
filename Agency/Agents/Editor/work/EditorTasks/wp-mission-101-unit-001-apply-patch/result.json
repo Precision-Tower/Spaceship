@@ -1,0 +1,88 @@
+{
+  "acceptance_claimed": false,
+  "after_hashes": {},
+  "authorization_id": "auth-wp-mission-101-unit-001-apply-patch",
+  "ball_holder": "Gear",
+  "ball_owner": "Gear",
+  "before_hashes": {},
+  "commit_performed": false,
+  "completed_at": "2026-07-31T04:25:57Z",
+  "contradictions": [],
+  "editor": "Editor",
+  "errors": [
+    {
+      "code": "git_apply_check_failed",
+      "message": "error: No valid patches in input (allow with \"--allow-empty\")"
+    }
+  ],
+  "evidence_bundle": null,
+  "issued_by": "Gear",
+  "limits_reached": [],
+  "next_decision_owner": "Gear",
+  "objective": "Apply implementation patch for unit unit-001",
+  "observations": [
+    {
+      "authority": "editor_handoff_contract",
+      "claim": "Editor returned the ball to Gear; Editor did not acquire play authority.",
+      "classification": "confirmed"
+    }
+  ],
+  "operation": "apply_patch",
+  "patch_artifacts": [],
+  "persistence_path": "Agency/Agents/Editor/work/EditorTasks/wp-mission-101-unit-001-apply-patch",
+  "play_outcome": "blocked",
+  "play_owner": "Gear",
+  "proposal_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "proposed_changes": [],
+  "repository_mutations": [],
+  "schema_version": 1,
+  "started_at": "2026-07-31T04:25:57Z",
+  "status": "failed",
+  "task_id": "wp-mission-101-unit-001-apply-patch",
+  "throw_completed": true,
+  "unresolveds": [],
+  "verification": [
+    {
+      "_git_authority_type": "GitObservation",
+      "command": "git apply --check /tmp/tmpi5wow1s1/Agency/Core/missions/active/mission-101/implementation/units/unit-001/attempt_001/changes.patch",
+      "git_command": [
+        "git",
+        "apply",
+        "--check",
+        "/tmp/tmpi5wow1s1/Agency/Core/missions/active/mission-101/implementation/units/unit-001/attempt_001/changes.patch"
+      ],
+      "git_exit_code": 128,
+      "head_oid": "cdab3e22426f4364c4498d1bbfa8a7a7c97f049a",
+      "observation_id": "gitobs-b8d3f0a312a6bdf9",
+      "observed_at": "2026-07-31T04:25:57Z",
+      "output_sha256": "b30b409aa83645eb5632960da6b0a548901b7c81cd5180f29b6e0989682bb4a6",
+      "repository_id": "gitrepo-c1571895bafbacca",
+      "returncode": 128,
+      "stderr": "error: No valid patches in input (allow with \"--allow-empty\")\n",
+      "stdout": "",
+      "timeout_seconds": 60
+    }
+  ],
+  "verification_results": [
+    {
+      "_git_authority_type": "GitObservation",
+      "command": "git apply --check /tmp/tmpi5wow1s1/Agency/Core/missions/active/mission-101/implementation/units/unit-001/attempt_001/changes.patch",
+      "git_command": [
+        "git",
+        "apply",
+        "--check",
+        "/tmp/tmpi5wow1s1/Agency/Core/missions/active/mission-101/implementation/units/unit-001/attempt_001/changes.patch"
+      ],
+      "git_exit_code": 128,
+      "head_oid": "cdab3e22426f4364c4498d1bbfa8a7a7c97f049a",
+      "observation_id": "gitobs-b8d3f0a312a6bdf9",
+      "observed_at": "2026-07-31T04:25:57Z",
+      "output_sha256": "b30b409aa83645eb5632960da6b0a548901b7c81cd5180f29b6e0989682bb4a6",
+      "repository_id": "gitrepo-c1571895bafbacca",
+      "returncode": 128,
+      "stderr": "error: No valid patches in input (allow with \"--allow-empty\")\n",
+      "stdout": "",
+      "timeout_seconds": 60
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{"ball_holder": "Editor", "created_by": "Editor", "event": "packet_created", "play_owner": "Editor", "ts": "2026-08-05T21:04:47Z"}
+{"ball_holder": "Editor", "event": "packet_activated", "play_owner": "Editor", "ts": "2026-08-05T21:04:47Z"}
+{"decision_owner": "Editor", "event": "step_selected", "owner": "Editor", "step_id": "propose-change", "ts": "2026-08-05T21:04:47Z"}
+{"event": "step_dispatch_started", "owner": "Editor", "step_id": "propose-change", "ts": "2026-08-05T21:04:47Z"}
+{"event": "ball_thrown", "from_holder": "Editor", "packet": "wp-proposal-6b7bcd3718c5", "route": "propose_patch", "step": "propose-change", "throw_id": "throw-wp-proposal-6b7bcd3718c5-propose-change-50b0fea2", "to_holder": "Editor", "ts": "2026-08-05T21:04:47Z"}
+{"by": "Editor", "event": "ball_received", "throw_id": "throw-wp-proposal-6b7bcd3718c5-propose-change-50b0fea2", "ts": "2026-08-05T21:04:47Z"}
+{"editor_task_id": "wp-proposal-6b7bcd3718c5-propose-change", "event": "editor_task_created", "step_id": "propose-change", "ts": "2026-08-05T21:04:47Z"}
+{"editor_task_id": "wp-proposal-6b7bcd3718c5-propose-change", "event": "editor_result_received", "status": "completed", "step_id": "propose-change", "ts": "2026-08-05T21:04:47Z"}
+{"event": "ball_returned", "from_holder": "Editor", "throw_id": "throw-wp-proposal-6b7bcd3718c5-propose-change-50b0fea2", "to_holder": "Editor", "ts": "2026-08-05T21:04:47Z"}
+{"by": "Editor", "event": "ball_received_back", "throw_id": "throw-wp-proposal-6b7bcd3718c5-propose-change-50b0fea2", "ts": "2026-08-05T21:04:47Z"}
+{"event": "step_state_updated", "status": "completed", "step_id": "propose-change", "ts": "2026-08-05T21:04:47Z"}
+{"acceptance_established": false, "event": "packet_completed", "status": "completed", "ts": "2026-08-05T21:04:47Z"}

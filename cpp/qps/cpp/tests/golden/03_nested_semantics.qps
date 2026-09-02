@@ -1,0 +1,10 @@
+Electric_Water_Pump.
+description: def"A device that uses electricity to move water.";
+input: (ac: (vac- 120/n; hz- 60/n;); dc: (vdc- 12/n;);
+);
+output: (fluid: (psi- 40/n; gpm- 6/n;);
+);
+housing: (dimensions: (inside_diameter- 50/n; outside_diameter- 60/n; length- 120/n;); material- "aluminum"/a;
+);
+impeller: (dimensions: (radius- 25/n; blade_count- 6/n; blade_width- 8/n; shaft_radius- 5/n;);
+);

@@ -1,0 +1,62 @@
+schema_version: 1
+
+repository:
+  root: .
+  agency: Agency
+  core: Agency/Core
+
+agency:
+  ownership:
+    Agents: agent implementations and runtime state
+    Core: shared architecture, capabilities, interfaces, and workflow
+    Datasets: external data and authoring assets
+    Documentation: docs and guides
+    Archive: legacy project scaffolding and retired artifacts
+    UI: operator interface and Godot runtime
+    audit: repository inspection and review assets
+
+core:
+  ownership_groups:
+    agents: Agent discovery, tooling, and integration
+    capabilities: contract definitions, engineering capabilities, and runtime policies
+    foundation: path authority, guardrails, and shared helpers
+    interfaces: CLI and remote interfaces
+    knowledge: reasoning, memory, and knowledge management
+    repository: git and local repository inspection
+    runtime: execution surfaces, environment probes, and help surfaces
+    state: runtime state, schemas, and transitions
+    work: Task/Mission/Adventure workflow models
+
+work_hierarchy:
+  - Task
+  - WorkPacket
+  - Mission
+  - Adventure
+
+entrypoints:
+  validation: python Agency/unittest.py
+  agent_help: python run.py agent -h
+  editor_help: python run.py agent Editor -h
+  task_help: python run.py task -h
+  work_packet_help: python run.py work-packet -h
+  mission_help: python run.py mission -h
+
+invariants:
+  - Core roots are authoritative and derived from path constants.
+  - Retired active namespaces are excluded from current Core imports.
+  - Work hierarchy is expressed by Agency/Core/work packages.
+  - Help surfaces expose current command groups without retired namespaces.
+
+archive_boundary:
+  Agency/Archive: legacy projects and retirement artifacts
+  not_active: Agency/Agency, Agency/Core/memory, Agency/Core/projects
+
+retired_active_namespaces:
+  - Agency.Core.editor
+  - Agency.Core.missions
+  - Agency.Core.planning
+  - Agency.Core.projects
+  - Agency.Core.agent_tools
+  - Agency.Core.cli
+  - Agency.Core.reasoning
+  - Agency.Core.memory

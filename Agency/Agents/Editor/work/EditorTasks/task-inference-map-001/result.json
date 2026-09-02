@@ -1,0 +1,123 @@
+{
+  "acceptance_claimed": false,
+  "after_hashes": {},
+  "authorization_id": null,
+  "ball_holder": "Gear",
+  "ball_owner": "Gear",
+  "before_hashes": {},
+  "commit_performed": false,
+  "completed_at": "2026-07-28T10:12:26Z",
+  "contradictions": [],
+  "editor": "Editor",
+  "errors": [],
+  "evidence_bundle": {
+    "contradictions": [],
+    "dependency_edges": [],
+    "effective_scope": {
+      "default_exclusions": [
+        ".git",
+        "__pycache__",
+        ".pytest_cache",
+        "node_modules",
+        ".venv",
+        "venv",
+        "weebo_env",
+        "Chroma",
+        "memory/Chroma",
+        "build",
+        "dist",
+        ".godot",
+        "logs",
+        "sessions",
+        "*.pyc",
+        "*.pyo",
+        "*.sqlite",
+        "*.sqlite3",
+        "*.db",
+        ".env",
+        ".env.*",
+        "*.pem",
+        "*.key",
+        "*token*",
+        "*credential*",
+        "*secret*"
+      ],
+      "exclude": [],
+      "include": [
+        "Agency/Core/runtime/_inference_map.md"
+      ]
+    },
+    "files_examined": [
+      "Agency/Core/runtime/_inference_map.md"
+    ],
+    "files_skipped": [],
+    "findings": [],
+    "generated_at": "2026-07-28T10:12:26Z",
+    "imports": [],
+    "limits": {
+      "configured": {
+        "max_depth": 2,
+        "max_evidence_items": 500,
+        "max_file_bytes": 120000,
+        "max_files": 500,
+        "max_matches": 500,
+        "max_total_context_bytes": 40000
+      },
+      "reached": {
+        "max_depth": false,
+        "max_evidence_items": false,
+        "max_file_bytes": false,
+        "max_files": false,
+        "max_matches": false,
+        "max_total_context_bytes": false
+      }
+    },
+    "negative_results": [],
+    "objective": "Inspect the inference map as a bounded read-only task.",
+    "operations_performed": [
+      "references"
+    ],
+    "parse_failures": [],
+    "persistence_path": "Agency/Core/runtime/state/work/Inspections/task-inference-map-001-evidence",
+    "references": [],
+    "repository_mutation_performed": false,
+    "repository_root": "/home/spaztic/Core/Dashboard",
+    "repository_root_authority": "Agency.Core.foundation.paths.DASHBOARD_ROOT",
+    "request_id": "task-inference-map-001-evidence",
+    "status": "completed",
+    "symbols": [],
+    "unresolveds": []
+  },
+  "issued_by": "Operator",
+  "limits_reached": [],
+  "next_decision_owner": "Gear",
+  "objective": "Inspect the inference map as a bounded read-only task.",
+  "observations": [
+    {
+      "authority": "editor_handoff_contract",
+      "claim": "Editor returned the ball to Gear; Editor did not acquire play authority.",
+      "classification": "confirmed"
+    },
+    {
+      "authority": "repository_context_builder",
+      "claim": "Inspection used deterministic repository evidence only; memory retrieval and general model inference were not used.",
+      "classification": "confirmed"
+    }
+  ],
+  "operation": "inspect",
+  "patch_artifacts": [],
+  "persistence_path": "Agency/Core/runtime/state/work/EditorTasks/task-inference-map-001",
+  "play_outcome": "returned",
+  "play_owner": "Gear",
+  "proposal_sha256": null,
+  "proposed_changes": [],
+  "repository_mutations": [],
+  "schema_version": 1,
+  "started_at": "2026-07-28T10:12:26Z",
+  "status": "completed",
+  "task_id": "task-inference-map-001",
+  "throw_completed": true,
+  "unresolveds": [],
+  "verification": [],
+  "verification_results": []
+}

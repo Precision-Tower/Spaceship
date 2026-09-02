@@ -1,0 +1,23 @@
+{
+  "allowed_operations": [
+    "apply_patch"
+  ],
+  "allowed_paths": [
+    "Agency/Core/runtime/target.txt"
+  ],
+  "authorization_id": "auth-wp-m-101-unit-001-apply-patch",
+  "authorized_by": "Gear",
+  "authorized_editor": "Editor",
+  "baseline_hashes": {
+    "Agency/Core/runtime/target.txt": "wronghash"
+  },
+  "created_at": "2026-07-31T02:04:50Z",
+  "editor_task_id": "wp-m-101-unit-001-apply-patch",
+  "expires_at": "2026-08-01T02:04:50Z",
+  "play_owner": "Gear",
+  "proposal_path": "/tmp/tmpwb73l25s/Agency/Core/missions/active/m-101/test.patch",
+  "proposal_sha256": "a4895eb44afc336fecbba6e520cd67e178dace0276655d102fceffa8e5f70570",
+  "step_id": "apply-patch",
+  "used_at": null,
+  "work_packet_id": "wp-m-101-unit-001"
+}

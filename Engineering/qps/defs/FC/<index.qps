@@ -1,0 +1,53 @@
+Cc- Ec.Cc/p; # Charge-centric
+
+Fc- Ec.Fc/p; # Field-centric
+
+Ec- Ec.Ec/p; # Electricity
+
+I- Ec.I/p; # Induction
+
+cI- Ec.cI/p; # Closed Induction
+
+v- Ec.v/p; # Voltage
+
+c- Ec.c/p; # Current
+
+a- Ec.a/p; # Amps
+
+r- Ec.r/p; # Resistance
+
+p- Ec.p/p; # Power
+
+ofx- Ec.ofx/p; # Opposing Flux
+
+d- Ec.d/p; # Draw
+
+f- Ec.f/p; # Fuse
+
+cap- Ec.cap/p; # Capacitor
+
+ca- Ec.ca/p; # Capacitance
+
+cw- Ec.cw/p; # Coil Wrap
+
+fc- Ec.fc/p; # Field Coil
+
+tf- Ec.tf/p; # Transformer
+
+MF- Fx.MF/p; # Magnetic Field
+
+fx- Fx.fx/p; # Magnetic Flux
+
+pm- Fx.pm/p; # Permanent Magnet
+
+Em- Fx.Em/p; # Electromagnet
+
+MFs- Fx.MFs/p; # Magnetic Field Strength
+
+Mp- Fx.Mp/p; # Magnetic Force
+
+x- Fx.x/p; # Permeability
+
+mx- Fx.mx/p; # Magnetic Permeance
+
+mR- Fx.mR/p; # Magnetic Reluctance

@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "mission_id": "mission-3",
+  "updated_at": "2026-08-13T09:54:23.004106+00:00",
+  "inspection_complete": true,
+  "categories": {
+    "route_ownership": "partial",
+    "workspace_host": "partial",
+    "workbench_root": "partial",
+    "creation_lifecycle": "partial",
+    "cleanup_lifecycle": "partial",
+    "expected_modified_files": "partial",
+    "verification_surfaces": "partial"
+  },
+  "unresolved": [
+    "route_ownership has partial inspection evidence and still needs planning review.",
+    "workspace_host has partial inspection evidence and still needs planning review.",
+    "workbench_root has partial inspection evidence and still needs planning review.",
+    "creation_lifecycle has partial inspection evidence and still needs planning review.",
+    "cleanup_lifecycle has partial inspection evidence and still needs planning review.",
+    "expected_modified_files has partial inspection evidence and still needs planning review.",
+    "verification_surfaces has partial inspection evidence and still needs planning review."
+  ],
+  "next_inspection": [],
+  "authority": "inspection_coverage_not_capability",
+  "evidence": {
+    "route_ownership": [
+      {
+        "path": "Agency/Core/work/missions/mission_runtime.py",
+        "reason": "inspected route-related path or marker"
+      }
+    ],
+    "workspace_host": [
+      {
+        "path": "Agency/Core/work/missions/mission_runtime.py",
+        "reason": "inspected workspace-related path or marker"
+      }
+    ],
+    "workbench_root": [
+      {
+        "path": "Agency/Core/work/missions/mission_runtime.py",
+        "reason": "inspected Workbench path or marker"
+      }
+    ],
+    "creation_lifecycle": [
+      {
+        "path": "Agency/Core/work/missions/mission_runtime.py",
+        "reason": "inspected creation lifecycle marker"
+      }
+    ],
+    "cleanup_lifecycle": [
+      {
+        "path": "Agency/Core/work/missions/mission_runtime.py",
+        "reason": "inspected cleanup lifecycle marker"
+      }
+    ],
+    "expected_modified_files": [
+      {
+        "path": "Agency/Core/work/missions/mission_runtime.py",
+        "reason": "primary engineering source inspected"
+      }
+    ],
+    "verification_surfaces": [
+      {
+        "path": "Agency/Core/work/missions/mission_runtime.py",
+        "reason": "inspected verification-related path or marker"
+      }
+    ]
+  }
+}

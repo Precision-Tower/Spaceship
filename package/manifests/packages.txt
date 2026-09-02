@@ -1,0 +1,13 @@
+# Precision Tower intended deployment package manifests
+# Authority: deployment policy only. This manifest does not install anything.
+# Package groups live under package/packages/.
+
+package/packages/base.txt
+package/packages/desktop.txt
+package/packages/diagnostics.txt
+package/packages/wine.txt
+
+UNRESOLVED godot_package_or_binary: repository currently references local/godot; deployment-owned Godot version/source is not selected.
+UNRESOLVED nvidia_driver_package: target GPU and driver version must be verified on Precision Tower hardware.
+UNRESOLVED wine_application_dependencies: required Windows application, architecture, dependencies, and licensing are unknown.
+UNRESOLVED agency_service_dependencies: persistent Agency service command is not selected.

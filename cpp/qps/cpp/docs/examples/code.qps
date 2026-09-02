@@ -1,0 +1,66 @@
+# code.grav
+
+# Declare your index reference
+index1: path/to/my_library/{index}/p; # Example: 'path/to/my_library/index.grav'
+data_from_library: index1.key.term:item-value/n;/p;
+
+# Declare your function
+-func my_processing_function. {
+-print "Processing data: data_from_library/n_
+-let processed_result: {#output: data_from_library * 2/n;}_
+-return [result: processed_result]_
+};
+
+{
+-print "Starting pipeline."_
+-let result: my_processing_function._ # Call the function
+-print "Pipeline complete. Result: [>result]_
+}
+
+-----
+
+# code.grav
+
+# Declare your index reference
+# `index1:` is the Item identifier (ends with colon).
+# The value is a path string, typed as a path (`/p;`).
+# The statement ends with `;;`.
+index1: "path/to/my_library/{index}";/p;;
+
+# Declare another item that holds data accessed directly via a resolved path.
+# `data_from_library:` is the Item identifier.
+# Its value is resolved from the path `index1.key.term:item-value/n;`.
+# The statement ends with `;;`.
+data_from_library: index1.key.term:item-value/n;;
+
+# Declare your function
+# `-func` is the keyword. `my_processing_function.` is the function's name (identifier followed by dot).
+# Parameters are an empty `[]` because it takes no explicit inputs.
+# The function body is an execution block `{}`.
+-func my_processing_function. []. {
+# Every executable statement inside `{}` must end with `;;`.
+# String concatenation uses `|`. Values are accessed directly (like `data_from_library/n;` for its numeric value).
+-print "Processing data: " | data_from_library/n;;
+
+# `processed_result:` is an Item- (local variable using colon for Item identifier)
+# The math expression is within `{#output: ...;}`.
+-let processed_result: {#output: data_from_library/n; * 2/n;};;
+
+# `-return` returns a dictionary with key `result` and value `processed_result`.
+-return [result: processed_result];;
+}; # The function declaration itself ends with a single `;`.
+
+# Top-level execution block (like Python's `if __name__ == "__main__":`)
+# All statements within this block also end with `;;`.
+{
+-print "Starting pipeline.";;
+
+# Call the function `my_processing_function.`. The `.` is the call operator.
+# The function returns a value, which is stored in `pipeline_result:`.
+-let pipeline_result: my_processing_function. [];;
+
+# Access `pipeline_result`'s value using `[>result]` if it's a dictionary being returned.
+# If the return was just a single value, it would be `pipeline_result/n;` (if numeric).
+# Since you returned `[result: processed_result]`, it's a dictionary, so `[>result]` is correct.
+-print "Pipeline complete. Result: " | [>pipeline_result.result]/n;;
+}; # The top-level execution block declaration ends with a single `;`.

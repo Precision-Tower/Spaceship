@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "mission_id": "mission-1",
+  "created_at": "2026-08-13T09:01:31.131591+00:00",
+  "intent": "Test core agency mission scope",
+  "scopes": [
+    {
+      "input": "Agency/Core/runtime/target.txt",
+      "relative": "Agency/Core/runtime/target.txt",
+      "resolved": "/home/spaztic/Core/Dashboard/Agency/Core/runtime/target.txt",
+      "allowed_root": "Agency",
+      "kind": "file"
+    }
+  ],
+  "authority": "read_only_inspection_and_proposal_only",
+  "source_mutation_allowed": false,
+  "required_context": [
+    "Agency/Agents/Editor/work/Pinboard/current.json",
+    "Agency/audit/output/agency_state.json",
+    "UI/OperatorShell/audit/output/operator_shell_state.json",
+    "UI/Workbench/audit/output/capability_state.json"
+  ]
+}

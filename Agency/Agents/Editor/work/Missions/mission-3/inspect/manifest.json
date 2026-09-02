@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "mission_id": "mission-3",
+  "generated_at": "2026-08-13T09:54:16.268703+00:00",
+  "declared_scopes": [
+    "Agency/Core/work/missions/mission_runtime.py"
+  ],
+  "files_discovered": [
+    "Agency/Core/work/missions/mission_runtime.py"
+  ],
+  "files_inspected": [
+    "Agency/Core/work/missions/mission_runtime.py"
+  ],
+  "files_remaining": [],
+  "skipped_files": [],
+  "authority": "inspection_inventory_only",
+  "updated_at": "2026-08-13T09:54:23.004106+00:00",
+  "files_by_class": {
+    "primary": [
+      "Agency/Core/work/missions/mission_runtime.py"
+    ],
+    "secondary": [],
+    "evidence": [],
+    "ignored": []
+  }
+}

@@ -1,0 +1,564 @@
+OperatorShell.
+OperatorShell: def"CE-OS operator-facing desktop, workspace, terminal, document editor, and runtime control shell built in Godot.";
+
+purpose.
+desktop- "primary operator-facing software surface";
+workspace- "hosts operational screens documents chats and engineering applications";
+terminal- "provides interactive Bash PTY sessions and a system console";
+documents- "browses opens edits saves and closes text files";
+runtime- "presents logs diffs packets status and command results";
+automation- "may invoke Agency and other runtime services through explicit bridges";
+qps_surface- "makes the existing OperatorShell subsystem addressable through shared QPS structure";
+
+paths.
+root- ".";
+ui- "UI";
+operatorshell- "UI/OperatorShell";
+engineering- "Engineering";
+qps- "qps";
+mission- "UI/Mission.yaml";
+main_scene- "UI/OperatorShell/scenes/Main.tscn";
+ai_scene- "UI/OperatorShell/scenes/AI.tscn";
+fallback_config- "UI/OperatorShell/resources/dashboard_config.tres";
+audit_script- "UI/OperatorShell/audit/operator-shell-audit.sh";
+audit_state- "UI/OperatorShell/audit/output/operator_shell_state.json";
+
+implementation.
+ui- "Godot";
+interaction- "GDScript";
+language- "QPS";
+qps_runtime- "qps/cpp";
+qps_reference- "qps/docs/QPS.qps";
+configuration_bridge- "UI/OperatorShell/runtime/QPSConfig.gd";
+
+module.
+surface- "UI/OperatorShell/<index.qps";
+root- "UI/OperatorShell";
+role- "QPS-addressable structural surface for the live OperatorShell Godot subsystem";
+rule- ".gd owns behavior; QPS owns declarative structure configuration identity and relationships";
+status- "active_semantic_surface";
+
+configuration.
+qps_consumed_by- "runtime/QPSConfig.gd";
+qps_document- "UI/OperatorShell/<index.qps";
+qps_runtime- "qps/cpp/build/qps";
+runtime_query- "terminal.density";
+fallback_resource- "resources/dashboard_config.tres";
+fallback_class- "resources/DashboardConfig.gd";
+migration_state- "incremental";
+preserve_godot_fallback- true;
+only_observed_qps_runtime_value- "terminal.density";
+
+layout.
+left_panel- true;
+right_rail- false;
+workspace- false;
+top_bar- false;
+runtime_state_bar- false;
+commands_panel- true;
+directory_panel- false;
+screens_panel- false;
+built_by- "Main.gd";
+left_dock_shell- "built in Main._build_left_dock_shell";
+right_dock_shell- "built in Main._build_right_dock_shell";
+center_stack- "built in Main._build";
+top_bars- "layout/TopBars.gd";
+left_panel_surface- "layout/LeftPanel.gd";
+right_rail_surface- "layout/RightRail.gd";
+workspace_surface- "layout/WorkspaceSurface.gd";
+bottom_dock_surface- "layout/BottomDock.gd";
+initial_left_mode- "missions";
+initial_right_mode- "controls";
+initial_right_sub_mode- "none";
+
+bottom_dock.
+expanded- true;
+collapsed_height- 245;
+expanded_height- 710;
+surface- "UI/OperatorShell/layout/BottomDock.gd";
+role- "runtime surface host";
+owned_tabs- "Logs Diffs Packets Terminal";
+terminal_child- "UI/OperatorShell/widgets/TerminalSurface.gd";
+density_control- true;
+collapse_control- true;
+proposal_approval_button- true;
+intent_input- true;
+
+runtime_surfaces.
+Logs- true;
+Diffs- true;
+Packets- true;
+Terminal- true;
+host- "layout/BottomDock.gd";
+role- "bottom dock operational output surfaces";
+
+terminal.
+density- "compact";
+first- true;
+backend- "external PTY service";
+client- "UI/OperatorShell/runtime/TerminalServiceClient.gd";
+surface- "UI/OperatorShell/widgets/TerminalSurface.gd";
+system_console- "dashboard.log";
+session_type- "Bash PTY";
+system_session_id- "system-log";
+system_log_path- "/home/spaztic/Core/Dashboard/dashboard.log";
+poll_interval_seconds- .08;
+client_transport- "TCP JSON lines";
+client_default_host- "127.0.0.1";
+client_default_port- 8765;
+env_host_override- "OPERATOR_PTY_HOST";
+env_port_override- "OPERATOR_PTY_PORT";
+
+terminal_density.
+comfortable- 14;
+compact- 12;
+dense- 10;
+applied_by- "layout/BottomDock.gd and widgets/TerminalSurface.gd";
+qps_source- "terminal.density";
+
+workspace.
+surface- "UI/OperatorShell/layout/WorkspaceSurface.gd";
+kind- "tabbed surface host";
+chat_surface- true;
+generic_screen_surface- true;
+specialized_screens- "State Packets Diffs AI_Assist";
+authority_boundary- "workspace surface not authority";
+
+screens.
+Terminal- true;
+Home- true;
+State- true;
+Agents- true;
+Packets- true;
+Diffs- true;
+Logs- true;
+Settings- true;
+AI_Assist- true;
+Chat- true;
+Terminal_role- "bottom_dock_runtime_surface";
+source- "RightRail._build_screens_panel and WorkspaceSurface.open_screen";
+
+scenes.
+Main: (
+path- "UI/OperatorShell/scenes/Main.tscn";
+root_node- "DashBoardRoot";
+script- "UI/OperatorShell/Main.gd";
+role- "primary OperatorShell scene";
+);
+AI: (
+path- "UI/OperatorShell/scenes/AI.tscn";
+root_node- "AI";
+script- "UI/OperatorShell/AI.gd";
+role- "standalone AI test surface scene";
+);
+
+library.
+surface- "UI/OperatorShell/widgets/LibraryPanel.gd";
+root- ".";
+authority- "filesystem";
+display- "tree";
+open_target- "Docs";
+root_source- "CliBridge.dashboard_root";
+selection_behavior- "calls host.open_document_in_docs for file items";
+excluded_directory- ".git";
+
+documents.
+surface- "UI/OperatorShell/widgets/DocsPanel.gd";
+text_editing- true;
+binary_editing- false;
+save- true;
+dirty_state- true;
+close_confirmation- true;
+hosted_by- "layout/LeftPanel.gd";
+opened_by- "Main.open_document_in_docs";
+line_ending_preservation- true;
+binary_detection- "null byte scan of first 1024 bytes";
+
+bridges.
+dashboard_cli: (
+client- "UI/OperatorShell/runtime/CliBridge.gd";
+target- "Agency/Core/cli/dashboard_cli.py";
+role- "dashboard and Agency command bridge";
+execution- "OS.execute python dashboard_cli.py";
+python_override- "DASHBOARD_PYTHON";
+);
+terminal_service: (
+client- "UI/OperatorShell/runtime/TerminalServiceClient.gd";
+transport- "TCP JSON lines";
+role- "PTY session service boundary";
+default_endpoint- "127.0.0.1:8765";
+actions- "ping create_session write_input read_output resize_session close_session list_sessions";
+environment_overrides- "OPERATOR_PTY_HOST OPERATOR_PTY_PORT";
+);
+qps_runtime: (
+client- "UI/OperatorShell/runtime/QPSConfig.gd";
+executable- "qps/cpp/build/qps";
+document- "UI/OperatorShell/<index.qps";
+query- "terminal.density";
+role- "shared QPS runtime scalar configuration bridge";
+);
+model_server_manager: (
+client- "UI/OperatorShell/runtime/ModelServerController.gd";
+target- "Agency/Core/runtime/model_server_manager.py";
+role- "model server status and toggle bridge";
+execution- "threaded OS.execute";
+);
+
+runtime.
+CliBridge: (
+path- "runtime/CliBridge.gd";
+role- "Python CLI and repository path bridge";
+boundary- "explicit OS.execute bridge";
+);
+CommandActions: (
+path- "runtime/CommandActions.gd";
+role- "creates command result packets for OperatorShell surfaces";
+depends_on- "runtime/CommandPacket.gd runtime/CliBridge.gd";
+);
+CommandPacket: (
+path- "runtime/CommandPacket.gd";
+role- "normalizes command packet dictionaries";
+);
+MissionService: (
+path- "runtime/MissionService.gd";
+role- "reads UI/Mission.yaml and renders mission text";
+);
+ModelServerController: (
+path- "runtime/ModelServerController.gd";
+role- "threads model server manager commands and emits status";
+);
+ObservationTracker: (
+path- "runtime/ObservationTracker.gd";
+role- "tracks operator button surface and panel observations";
+);
+QPSConfig: (
+path- "runtime/QPSConfig.gd";
+role- "queries QPS scalar configuration and applies it to DashboardConfig";
+consumed_value- "terminal.density";
+);
+ResultRenderer: (
+path- "runtime/ResultRenderer.gd";
+role- "formats command results and task proposals for RichTextLabel surfaces";
+);
+StatusService: (
+path- "runtime/StatusService.gd";
+role- "formats and updates current runtime status display text";
+);
+TerminalServiceClient: (
+path- "runtime/TerminalServiceClient.gd";
+role- "synchronous TCP JSON-lines client for external PTY service";
+);
+
+audit.
+controller- "audit/OperatorAuditController.gd";
+panel- "audit/CapabilityPanel.gd";
+script- "audit/operator-shell-audit.sh";
+state_json- "audit/output/operator_shell_state.json";
+state_markdown- "audit/output/operator_shell_state.md";
+trigger- "Ctrl+Shift+A";
+role- "operator capability audit display and refresh";
+controller_state- "loads JSON audit state and refreshes panel";
+panel_state- "renders current test summary details and unresolved items";
+
+resources.
+DashboardConfig: (
+path- "resources/DashboardConfig.gd";
+resource- "resources/dashboard_config.tres";
+role- "Godot fallback and exported configuration resource";
+qps_overlay- "terminal_density is overwritten by QPSConfig when terminal.density resolves";
+);
+
+ownership.
+OperatorShell- "desktop workspace interaction presentation and explicit operator intent";
+QPS- "declarative OperatorShell structure configuration and references";
+Godot- "UI rendering and interaction";
+terminal_service- "PTY session mechanics";
+Agency- "agent and automation capabilities reached through an explicit bridge";
+DashboardConfig- "fallback Godot resource while QPS integration remains incremental";
+Audit- "operator-facing audit state presentation not repository truth";
+
+boundaries.
+display- "not authority";
+history- "not evidence";
+runtime_health- "not readiness";
+green_status- "not safe";
+proposal- "not patch";
+terminal_ui- "not PTY implementation";
+library_tree- "not filesystem authority";
+chat- "workspace surface not authority";
+mission_display- "not mission completion";
+command_output- "not validation";
+qps_surface- "describes structure and configuration; does not move Godot behavior";
+audit_panel- "display of audit state; not acceptance";
+
+status.
+godot_shell- "implemented";
+terminal_surface- "implemented";
+terminal_client- "implemented";
+document_editor- "implemented";
+filesystem_library- "implemented";
+workspace_tabs- "implemented";
+bottom_dock- "implemented";
+left_panel- "implemented";
+right_rail- "implemented";
+top_bars- "implemented";
+audit_panel- "implemented";
+model_server_control- "implemented";
+qps_definition- "current";
+qps_runtime_integration- "working_initial";
+qps_runtime_scope- "terminal.density scalar applied to DashboardConfig";
+qps_web- "expanded_from_current_implementation_evidence";
+
+web.
+Main- "Main.gd";
+AI- "AI.gd";
+
+layout: (
+BottomDock- "layout/BottomDock.gd";
+LeftPanel- "layout/LeftPanel.gd";
+RightRail- "layout/RightRail.gd";
+TopBars- "layout/TopBars.gd";
+WorkspaceSurface- "layout/WorkspaceSurface.gd";
+);
+
+runtime: (
+CliBridge- "runtime/CliBridge.gd";
+CommandActions- "runtime/CommandActions.gd";
+CommandPacket- "runtime/CommandPacket.gd";
+MissionService- "runtime/MissionService.gd";
+ModelServerController- "runtime/ModelServerController.gd";
+ObservationTracker- "runtime/ObservationTracker.gd";
+QPSConfig- "runtime/QPSConfig.gd";
+ResultRenderer- "runtime/ResultRenderer.gd";
+StatusService- "runtime/StatusService.gd";
+TerminalServiceClient- "runtime/TerminalServiceClient.gd";
+);
+
+widgets: (
+DocsPanel- "widgets/DocsPanel.gd";
+LibraryPanel- "widgets/LibraryPanel.gd";
+Palette- "widgets/Palette.gd";
+TerminalSurface- "widgets/TerminalSurface.gd";
+);
+
+resources: (
+DashboardConfig- "resources/DashboardConfig.gd";
+dashboard_config- "resources/dashboard_config.tres";
+);
+
+scenes: (
+Main- "scenes/Main.tscn";
+AI- "scenes/AI.tscn";
+);
+
+audit: (
+CapabilityPanel- "audit/CapabilityPanel.gd";
+OperatorAuditController- "audit/OperatorAuditController.gd";
+operator_shell_audit- "audit/operator-shell-audit.sh";
+operator_shell_state- "audit/output/operator_shell_state.json";
+);
+
+relationships.
+Main_DashboardConfig: (
+from- "Main.gd";
+to- "resources/dashboard_config.tres and resources/DashboardConfig.gd";
+kind- "resource load and typed fallback config";
+evidence- "DashboardConfig preload plus load(res://OperatorShell/resources/dashboard_config.tres) in _ready";
+);
+Main_QPSConfig: (
+from- "Main.gd";
+to- "runtime/QPSConfig.gd";
+kind- "QPS runtime configuration bridge";
+evidence- "QPSConfig preload plus QPSConfig.new(CliBridge.dashboard_root()).apply(config) in _ready";
+);
+QPSConfig_QPSRuntime: (
+from- "runtime/QPSConfig.gd";
+to- "qps/cpp/build/qps and UI/OperatorShell/<index.qps";
+kind- "scalar QPS query";
+evidence- "OS.execute executable document --get path";
+);
+Main_TopBars: (
+from- "Main.gd";
+to- "layout/TopBars.gd";
+kind- "direct construction";
+evidence- "TopBars preload and TopBars.new(self) in _top_bar and _runtime_state_bar";
+);
+Main_LeftPanel: (
+from- "Main.gd";
+to- "layout/LeftPanel.gd";
+kind- "direct construction";
+evidence- "LeftPanel preload and LeftPanel.new(self).build() in _left_awareness";
+);
+Main_RightRail: (
+from- "Main.gd";
+to- "layout/RightRail.gd";
+kind- "direct construction";
+evidence- "RightRail preload and RightRail.new(self).build() in _right_control_rail";
+);
+Main_WorkspaceSurface: (
+from- "Main.gd";
+to- "layout/WorkspaceSurface.gd";
+kind- "direct construction and delegation";
+evidence- "WorkspaceSurface preload plus WorkspaceSurface.new(self).build(); Main delegates chat screen and tab methods";
+);
+Main_BottomDock: (
+from- "Main.gd";
+to- "layout/BottomDock.gd";
+kind- "direct construction and delegation";
+evidence- "BottomDock preload plus BottomDock.new(self).build(); Main delegates log terminal diff packets history and shutdown";
+);
+Main_CommandActions: (
+from- "Main.gd";
+to- "runtime/CommandActions.gd";
+kind- "runtime command packet factory";
+evidence- "CommandActions preload and Main command methods call CommandActions.*";
+);
+Main_CliBridge: (
+from- "Main.gd";
+to- "runtime/CliBridge.gd";
+kind- "runtime bridge use";
+evidence- "CliBridge preload and direct calls for roots powershell task proposals and Gemini analysis";
+);
+Main_MissionService: (
+from- "Main.gd";
+to- "runtime/MissionService.gd";
+kind- "mission rendering and analysis input";
+evidence- "MissionService preload; _render_mission calls render and Gemini path calls read_mission";
+);
+Main_ObservationTracker: (
+from- "Main.gd";
+to- "runtime/ObservationTracker.gd";
+kind- "operator observation state";
+evidence- "ObservationTracker preload and ObservationTracker.new(OBSERVATION_SURFACES) in _obs";
+);
+Main_ResultRenderer: (
+from- "Main.gd";
+to- "runtime/ResultRenderer.gd";
+kind- "command output rendering";
+evidence- "ResultRenderer preload and _format/_render_task_proposal call ResultRenderer methods";
+);
+Main_StatusService: (
+from- "Main.gd";
+to- "runtime/StatusService.gd";
+kind- "status text service";
+evidence- "StatusService preload and _current_status_text/_state_field/_update_status_from_state_text call StatusService methods";
+);
+Main_OperatorAuditController: (
+from- "Main.gd";
+to- "audit/OperatorAuditController.gd";
+kind- "direct construction and input delegation";
+evidence- "OperatorAuditController preload; _ready constructs and setup(capability_panel); _unhandled_input calls handle_input";
+);
+BottomDock_TerminalSurface: (
+from- "layout/BottomDock.gd";
+to- "widgets/TerminalSurface.gd";
+kind- "direct construction";
+evidence- "TerminalSurface preload and TerminalSurface.new(host).build() in add_terminal_bottom";
+);
+BottomDock_HostMain: (
+from- "layout/BottomDock.gd";
+to- "Main.gd";
+kind- "host callbacks and state mutation";
+evidence- "connects buttons to host terminal density toggle input submit approve task and updates host status history";
+);
+TerminalSurface_TerminalServiceClient: (
+from- "widgets/TerminalSurface.gd";
+to- "runtime/TerminalServiceClient.gd";
+kind- "external PTY service use";
+evidence- "TerminalClient preload and calls create_session write_input read_output resize_session close_session";
+);
+TerminalSurface_SystemLog: (
+from- "widgets/TerminalSurface.gd";
+to- "/home/spaztic/Core/Dashboard/dashboard.log";
+kind- "system console file tail";
+evidence- "SYSTEM_LOG_PATH constant and _load_system_log_tail/_poll_system_log";
+);
+LeftPanel_DocsPanel: (
+from- "layout/LeftPanel.gd";
+to- "widgets/DocsPanel.gd";
+kind- "direct construction";
+evidence- "DocsPanel preload and DocsPanel.new(host).build() in LeftPanel.build";
+);
+LeftPanel_CapabilityPanel: (
+from- "layout/LeftPanel.gd";
+to- "audit/CapabilityPanel.gd";
+kind- "direct construction";
+evidence- "CapabilityPanel preload and CapabilityPanel.new() in LeftPanel.build";
+);
+RightRail_LibraryPanel: (
+from- "layout/RightRail.gd";
+to- "widgets/LibraryPanel.gd";
+kind- "direct construction";
+evidence- "LibraryPanel preload and LibraryPanel.new(host).build() in RightRail.build";
+);
+RightRail_ModelServerController: (
+from- "layout/RightRail.gd";
+to- "runtime/ModelServerController.gd";
+kind- "direct construction and signal connection";
+evidence- "ModelServerController preload; new(); status_changed.connect; refresh_now; toggle";
+);
+ModelServerController_Manager: (
+from- "runtime/ModelServerController.gd";
+to- "Agency/Core/runtime/model_server_manager.py";
+kind- "external manager bridge";
+evidence- "MANAGER_RELATIVE constant and threaded OS.execute(PYTHON manager action)";
+);
+LibraryPanel_CliBridge: (
+from- "widgets/LibraryPanel.gd";
+to- "runtime/CliBridge.gd";
+kind- "root path resolution";
+evidence- "CliBridge preload and dashboard_root() used for tree root";
+);
+LibraryPanel_DocsPanel: (
+from- "widgets/LibraryPanel.gd";
+to- "widgets/DocsPanel.gd";
+kind- "host-mediated document open";
+evidence- "LibraryPanel calls host.open_document_in_docs(path); Main forwards to docs_panel_widget.open_document(file_path)";
+);
+CommandActions_CommandPacket: (
+from- "runtime/CommandActions.gd";
+to- "runtime/CommandPacket.gd";
+kind- "packet construction helper";
+evidence- "CommandPacket preload and CommandPacket.make used for refresh_state";
+);
+CommandActions_CliBridge: (
+from- "runtime/CommandActions.gd";
+to- "runtime/CliBridge.gd";
+kind- "CLI command invocation";
+evidence- "CliBridge preload and each command action calls a CliBridge method";
+);
+AI_CliBridge: (
+from- "AI.gd";
+to- "runtime/CliBridge.gd";
+kind- "standalone test surface bridge";
+evidence- "CliBridge preload and Propose Task Refresh State Test CLI buttons call CliBridge methods";
+);
+OperatorAuditController_CapabilityPanel: (
+from- "audit/OperatorAuditController.gd";
+to- "audit/CapabilityPanel.gd";
+kind- "setup and refresh contract";
+evidence- "setup(panel), panel.show_running/show_error/load_state method checks";
+);
+OperatorAuditController_AuditScript: (
+from- "audit/OperatorAuditController.gd";
+to- "audit/operator-shell-audit.sh";
+kind- "audit execution bridge";
+evidence- "AUDIT_SCRIPT_PATH constant and OS.execute bash script_path repo_root";
+);
+Scene_MainScript: (
+from- "scenes/Main.tscn";
+to- "Main.gd";
+kind- "scene script resource";
+evidence- "ext_resource path=res://OperatorShell/Main.gd and root script ExtResource(1)";
+);
+Scene_AIScript: (
+from- "scenes/AI.tscn";
+to- "AI.gd";
+kind- "scene script resource";
+evidence- "ext_resource path=res://OperatorShell/AI.gd and root script ExtResource(1)";
+);
+
+open_questions.
+DashboardConfig_visibility_fields- "show_left_panel show_right_rail show_directory_panel show_screens_panel and show_commands_panel exist in DashboardConfig but are not applied by Main._apply_config in the inspected implementation";
+AI_scene_integration- "scenes/AI.tscn is a valid standalone scene surface; no inspected code directly loads it from Main.gd";
+additional_qps_runtime_values- "QPSConfig currently consumes terminal.density only; no other QPS scalar consumption was observed";

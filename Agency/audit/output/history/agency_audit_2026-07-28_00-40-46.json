@@ -1,0 +1,478 @@
+{
+  "schema_version": 1,
+  "repository_root": "/home/spaztic/Core/Dashboard",
+  "generated_at": "2026-07-28T00:40:55.016051+00:00",
+  "rule": "Declared authority is not demonstrated capability. Safe AI use requires bounded, observed execution.",
+  "summary": {
+    "REGISTERED_COMMANDS": 26,
+    "PASS": 15,
+    "FAIL": 8,
+    "BLOCKED_TIMEOUT": 0,
+    "UNTESTED": 1
+  },
+  "current_test": {
+    "id": "local.model_plan.01",
+    "step": "Accept bounded engineering scopes",
+    "pass_condition": "Valid UI engineering scopes are represented in the latest model-plan proposal.",
+    "result": "FAIL",
+    "evidence": "exit=1; duration_ms=117; file=/home/spaztic/Core/Dashboard/Agency/audit/evidence/2026-07-28_00-40-46/local.model_plan.01.txt",
+    "unresolved": []
+  },
+  "command_inventory": [
+    {
+      "id": "scan_repo",
+      "cli_name": "scan-repo",
+      "authority": "read_only",
+      "default_agent": "Cali",
+      "safe_for_ai": "YES_BOUNDED",
+      "observed": false,
+      "notes": "Declared authority only. Execution must be demonstrated separately."
+    },
+    {
+      "id": "git_status",
+      "cli_name": "git-status",
+      "authority": "read_only",
+      "default_agent": "Executor",
+      "safe_for_ai": "YES_BOUNDED",
+      "observed": false,
+      "notes": "Declared authority only. Execution must be demonstrated separately."
+    },
+    {
+      "id": "propose_directory_diff",
+      "cli_name": "propose-directory-diff",
+      "authority": "propose_only",
+      "default_agent": "Cali",
+      "safe_for_ai": "YES_PROPOSAL_ONLY",
+      "observed": false,
+      "notes": "Declared authority only. Execution must be demonstrated separately."
+    },
+    {
+      "id": "grant_review",
+      "cli_name": "grant-review",
+      "authority": "review_only",
+      "default_agent": "Grant",
+      "safe_for_ai": "YES_REVIEW_ONLY",
+      "observed": false,
+      "notes": "Declared authority only. Execution must be demonstrated separately."
+    },
+    {
+      "id": "apply_patch",
+      "cli_name": "apply-patch",
+      "authority": "requires_approval",
+      "default_agent": "Executor",
+      "safe_for_ai": "NO_WITHOUT_OPERATOR_APPROVAL",
+      "observed": false,
+      "notes": "Declared authority only. Execution must be demonstrated separately."
+    },
+    {
+      "id": "cali_observe_directory",
+      "cli_name": "cali-observe-directory",
+      "authority": "read_only",
+      "default_agent": "Cali",
+      "safe_for_ai": "YES_BOUNDED",
+      "observed": false,
+      "notes": "Declared authority only. Execution must be demonstrated separately."
+    },
+    {
+      "id": "list_agents",
+      "cli_name": "list-agents",
+      "authority": "read_only",
+      "default_agent": "Cali",
+      "safe_for_ai": "YES_BOUNDED",
+      "observed": false,
+      "notes": "Declared authority only. Execution must be demonstrated separately."
+    },
+    {
+      "id": "propose_task_packet",
+      "cli_name": "propose-task-packet",
+      "authority": "propose_only",
+      "default_agent": "Cali",
+      "safe_for_ai": "YES_PROPOSAL_ONLY",
+      "observed": false,
+      "notes": "Declared authority only. Execution must be demonstrated separately."
+    },
+    {
+      "id": "cali_action_propose",
+      "cli_name": "agent action propose",
+      "authority": "propose_only",
+      "default_agent": "Cali",
+      "safe_for_ai": "YES_PROPOSAL_ONLY",
+      "observed": false,
+      "notes": "Declared authority only. Execution must be demonstrated separately."
+    },
+    {
+      "id": "cali_action_review",
+      "cli_name": "agent action review",
+      "authority": "review_only",
+      "default_agent": "Cali",
+      "safe_for_ai": "YES_REVIEW_ONLY",
+      "observed": false,
+      "notes": "Declared authority only. Execution must be demonstrated separately."
+    },
+    {
+      "id": "cali_action_apply",
+      "cli_name": "agent action apply",
+      "authority": "requires_approval",
+      "default_agent": "Executor",
+      "safe_for_ai": "NO_WITHOUT_OPERATOR_APPROVAL",
+      "observed": false,
+      "notes": "Declared authority only. Execution must be demonstrated separately."
+    },
+    {
+      "id": "propose_diff",
+      "cli_name": "propose-diff",
+      "authority": "propose_only",
+      "default_agent": "Cali",
+      "safe_for_ai": "YES_PROPOSAL_ONLY",
+      "observed": false,
+      "notes": "Declared authority only. Execution must be demonstrated separately."
+    },
+    {
+      "id": "runtime_state",
+      "cli_name": "runtime-state",
+      "authority": "read_only",
+      "default_agent": "Cali",
+      "safe_for_ai": "YES_BOUNDED",
+      "observed": false,
+      "notes": "Declared authority only. Execution must be demonstrated separately."
+    },
+    {
+      "id": "view_latest_diff",
+      "cli_name": "view-latest-diff",
+      "authority": "read_only",
+      "default_agent": "Cali",
+      "safe_for_ai": "YES_BOUNDED",
+      "observed": false,
+      "notes": "Declared authority only. Execution must be demonstrated separately."
+    },
+    {
+      "id": "grant_review_latest_diff",
+      "cli_name": "grant-review-latest-diff",
+      "authority": "review_only",
+      "default_agent": "Grant",
+      "safe_for_ai": "YES_REVIEW_ONLY",
+      "observed": false,
+      "notes": "Declared authority only. Execution must be demonstrated separately."
+    },
+    {
+      "id": "clear_latest_diff",
+      "cli_name": "clear-latest-diff",
+      "authority": "read_only",
+      "default_agent": "Cali",
+      "safe_for_ai": "YES_BOUNDED",
+      "observed": false,
+      "notes": "Declared authority only. Execution must be demonstrated separately."
+    },
+    {
+      "id": "list_packets",
+      "cli_name": "list-packets",
+      "authority": "read_only",
+      "default_agent": "Cali",
+      "safe_for_ai": "YES_BOUNDED",
+      "observed": false,
+      "notes": "Declared authority only. Execution must be demonstrated separately."
+    },
+    {
+      "id": "create_packet",
+      "cli_name": "create-packet",
+      "authority": "propose_only",
+      "default_agent": "Cali",
+      "safe_for_ai": "YES_PROPOSAL_ONLY",
+      "observed": false,
+      "notes": "Declared authority only. Execution must be demonstrated separately."
+    },
+    {
+      "id": "test_all",
+      "cli_name": "test-all",
+      "authority": "read_only",
+      "default_agent": "Executor",
+      "safe_for_ai": "YES_BOUNDED",
+      "observed": false,
+      "notes": "Declared authority only. Execution must be demonstrated separately."
+    },
+    {
+      "id": "gemini_analyze",
+      "cli_name": "gemini-analyze",
+      "authority": "propose_only",
+      "default_agent": "Cali",
+      "safe_for_ai": "YES_PROPOSAL_ONLY",
+      "observed": false,
+      "notes": "Declared authority only. Execution must be demonstrated separately."
+    },
+    {
+      "id": "gemini_list_models",
+      "cli_name": "gemini-list-models",
+      "authority": "read_only",
+      "default_agent": "Cali",
+      "safe_for_ai": "YES_BOUNDED",
+      "observed": false,
+      "notes": "Declared authority only. Execution must be demonstrated separately."
+    },
+    {
+      "id": "update_state",
+      "cli_name": "update-state",
+      "authority": "propose_only",
+      "default_agent": "Cali",
+      "safe_for_ai": "YES_PROPOSAL_ONLY",
+      "observed": false,
+      "notes": "Declared authority only. Execution must be demonstrated separately."
+    },
+    {
+      "id": "read_file",
+      "cli_name": "read-file",
+      "authority": "read_only",
+      "default_agent": "Cali",
+      "safe_for_ai": "YES_BOUNDED",
+      "observed": false,
+      "notes": "Declared authority only. Execution must be demonstrated separately."
+    },
+    {
+      "id": "apply_code",
+      "cli_name": "apply-code",
+      "authority": "requires_approval",
+      "default_agent": "Executor",
+      "safe_for_ai": "NO_WITHOUT_OPERATOR_APPROVAL",
+      "observed": false,
+      "notes": "Declared authority only. Execution must be demonstrated separately."
+    },
+    {
+      "id": "refs",
+      "cli_name": "refs",
+      "authority": "read_only",
+      "default_agent": "Cali",
+      "safe_for_ai": "YES_BOUNDED",
+      "observed": false,
+      "notes": "Declared authority only. Execution must be demonstrated separately."
+    },
+    {
+      "id": "tree",
+      "cli_name": "tree",
+      "authority": "read_only",
+      "default_agent": "Cali",
+      "safe_for_ai": "YES_BOUNDED",
+      "observed": false,
+      "notes": "Declared authority only. Execution must be demonstrated separately."
+    }
+  ],
+  "manual_demonstration": [
+    {
+      "id": "agency.status",
+      "step": "Run Dashboard status",
+      "pass_condition": "run.py status exits successfully.",
+      "result": "PASS",
+      "evidence": "exit=0; duration_ms=120; file=/home/spaztic/Core/Dashboard/Agency/audit/evidence/2026-07-28_00-40-46/agency.status.txt",
+      "unresolved": []
+    },
+    {
+      "id": "agency.scope",
+      "step": "Resolve Dashboard scope",
+      "pass_condition": "run.py scope exits successfully.",
+      "result": "PASS",
+      "evidence": "exit=0; duration_ms=118; file=/home/spaztic/Core/Dashboard/Agency/audit/evidence/2026-07-28_00-40-46/agency.scope.txt",
+      "unresolved": []
+    },
+    {
+      "id": "agency.runtime_state",
+      "step": "Read runtime state",
+      "pass_condition": "runtime-state completes within 20 seconds.",
+      "result": "PASS",
+      "evidence": "exit=0; duration_ms=115; file=/home/spaztic/Core/Dashboard/Agency/audit/evidence/2026-07-28_00-40-46/agency.runtime_state.txt",
+      "unresolved": []
+    },
+    {
+      "id": "agency.git_status",
+      "step": "Read Git status",
+      "pass_condition": "git-status completes within 20 seconds.",
+      "result": "PASS",
+      "evidence": "exit=0; duration_ms=229; file=/home/spaztic/Core/Dashboard/Agency/audit/evidence/2026-07-28_00-40-46/agency.git_status.txt",
+      "unresolved": []
+    },
+    {
+      "id": "agency.list_agents",
+      "step": "List registered agents",
+      "pass_condition": "list-agents completes within 20 seconds.",
+      "result": "PASS",
+      "evidence": "exit=0; duration_ms=115; file=/home/spaztic/Core/Dashboard/Agency/audit/evidence/2026-07-28_00-40-46/agency.list_agents.txt",
+      "unresolved": []
+    },
+    {
+      "id": "agency.list_packets",
+      "step": "List packets",
+      "pass_condition": "list-packets completes within 20 seconds.",
+      "result": "PASS",
+      "evidence": "exit=0; duration_ms=114; file=/home/spaztic/Core/Dashboard/Agency/audit/evidence/2026-07-28_00-40-46/agency.list_packets.txt",
+      "unresolved": []
+    },
+    {
+      "id": "agency.refs_scoped",
+      "step": "Run bounded reference search",
+      "pass_condition": "Scoped refs completes within 20 seconds.",
+      "result": "PASS",
+      "evidence": "exit=0; duration_ms=114; file=/home/spaztic/Core/Dashboard/Agency/audit/evidence/2026-07-28_00-40-46/agency.refs_scoped.txt",
+      "unresolved": []
+    },
+    {
+      "id": "agency.tree_scoped",
+      "step": "Inspect OperatorShell tree",
+      "pass_condition": "Scoped tree inspection completes successfully.",
+      "result": "PASS",
+      "evidence": "exit=0; duration_ms=114; file=/home/spaztic/Core/Dashboard/Agency/audit/evidence/2026-07-28_00-40-46/agency.tree_scoped.txt",
+      "unresolved": []
+    },
+    {
+      "id": "agency.apply_code_gate",
+      "step": "Block unapproved code mutation",
+      "pass_condition": "apply-code is rejected without --approved and writes nothing.",
+      "result": "PASS",
+      "evidence": "exit=1; duration_ms=114; file=/home/spaztic/Core/Dashboard/Agency/audit/evidence/2026-07-28_00-40-46/agency.apply_code_gate.txt",
+      "unresolved": []
+    },
+    {
+      "id": "agency.unregistered_gate",
+      "step": "Block unregistered command",
+      "pass_condition": "An unregistered command is rejected.",
+      "result": "PASS",
+      "evidence": "exit=2; duration_ms=114; file=/home/spaztic/Core/Dashboard/Agency/audit/evidence/2026-07-28_00-40-46/agency.unregistered_gate.txt",
+      "unresolved": []
+    },
+    {
+      "id": "agency.propose_task",
+      "step": "Generate a task proposal",
+      "pass_condition": "A non-mutating task proposal is produced.",
+      "result": "PASS",
+      "evidence": "propose-task-packet generated a structured, non-mutating task proposal for hosting Workbench inside OperatorShell.",
+      "unresolved": [
+        "The proposed inspection scope 'Dashboard/UI/' is stale or incorrect for the current repository layout.",
+        "The allowed mutation scope '.py and .gd files' is too broad.",
+        "The proposal does not identify the specific OperatorShell workspace-hosting files.",
+        "Architectural quality has not been reviewed.",
+        "No diff has been generated or applied."
+      ]
+    },
+    {
+      "id": "agency.propose_diff",
+      "step": "Generate a reviewable diff proposal",
+      "pass_condition": "A diff artifact is produced without applying it.",
+      "result": "PASS",
+      "evidence": "A scoped, non-mutating propose-diff command created proposal.json, proposed.diff, and evidence.json on the black laptop. Repeatable scopes worked; invalid, traversal, outside-root, missing, and symlink-escape scopes were rejected. The generated diff passed git apply --check, application source Git status did not change, and watch events were recorded.",
+      "unresolved": [
+        "The implementation is deterministic and does not call a local model.",
+        "The generated diff targets proposal-owned scratch content only.",
+        "Real application-source diff generation has not been demonstrated.",
+        "Proposal architectural quality has not been reviewed.",
+        "No proposal has been applied."
+      ]
+    },
+    {
+      "id": "agency.review_diff",
+      "step": "Review a proposed diff",
+      "pass_condition": "Review status is recorded without applying changes.",
+      "result": "PASS",
+      "evidence": "grant-review inspected the generated proposed.diff, reported status admissible, exited successfully, and caused no observable Git-status change.",
+      "unresolved": [
+        "GrantReviewCommand currently performs only placeholder lexical review.",
+        "No semantic architecture review has been demonstrated.",
+        "No review artifact or persistent review decision was written.",
+        "Review status does not grant approval authority.",
+        "The proposal has not been applied."
+      ]
+    },
+    {
+      "id": "agency.approved_mutation",
+      "step": "Apply an approved disposable mutation",
+      "pass_condition": "An explicitly approved scoped change is applied and verified.",
+      "result": "PASS",
+      "evidence": "apply-code rejected execution without --approved. With explicit approval, it created one disposable file inside Agency/audit/sandbox and wrote the exact requested content.",
+      "unresolved": [
+        "Denied read-file operations currently return shell exit code 0.",
+        "Command-level denied and missing results need reliable nonzero exit codes.",
+        "The disposable mutation has not yet been removed and reconstructed.",
+        "No application source mutation has been attempted."
+      ]
+    },
+    {
+      "id": "agency.verify_reconstruction",
+      "step": "Verify and reconstruct the approved change",
+      "pass_condition": "The change is observable, attributable, and reversible.",
+      "result": "PASS",
+      "evidence": "The approved disposable mutation was hashed, removed, recreated through the same approved apply-code command, and verified byte-identical by SHA-256.",
+      "unresolved": [
+        "Denied and missing command outcomes still need reliable nonzero shell exit codes.",
+        "No real application-source mutation has been approved or reconstructed.",
+        "The local model has not yet generated a source-targeting proposal."
+      ]
+    },
+    {
+      "id": "local.model_plan.01",
+      "step": "Accept bounded engineering scopes",
+      "pass_condition": "Valid UI engineering scopes are represented in the latest model-plan proposal.",
+      "result": "FAIL",
+      "evidence": "exit=1; duration_ms=117; file=/home/spaztic/Core/Dashboard/Agency/audit/evidence/2026-07-28_00-40-46/local.model_plan.01.txt",
+      "unresolved": []
+    },
+    {
+      "id": "local.model_plan.02",
+      "step": "Reject invalid model-plan scopes",
+      "pass_condition": "Invalid, traversal, outside, disallowed, and missing scopes are rejected.",
+      "result": "FAIL",
+      "evidence": "exit=1; duration_ms=3428; file=/home/spaztic/Core/Dashboard/Agency/audit/evidence/2026-07-28_00-40-46/local.model_plan.02.txt",
+      "unresolved": []
+    },
+    {
+      "id": "local.model_plan.03",
+      "step": "Fail clearly when model server is stopped",
+      "pass_condition": "Stopped model server returns nonzero configured_but_server_unavailable.",
+      "result": "UNTESTED",
+      "evidence": "",
+      "unresolved": []
+    },
+    {
+      "id": "local.model_plan.04",
+      "step": "Generate nonempty model plan with healthy server",
+      "pass_condition": "A healthy local model server produced a nonempty model_plan.md artifact.",
+      "result": "FAIL",
+      "evidence": "exit=1; duration_ms=117; file=/home/spaztic/Core/Dashboard/Agency/audit/evidence/2026-07-28_00-40-46/local.model_plan.04.txt",
+      "unresolved": []
+    },
+    {
+      "id": "local.model_plan.05",
+      "step": "Report required plan sections",
+      "pass_condition": "Required plan sections are present or missing sections are recorded.",
+      "result": "FAIL",
+      "evidence": "exit=1; duration_ms=117; file=/home/spaztic/Core/Dashboard/Agency/audit/evidence/2026-07-28_00-40-46/local.model_plan.05.txt",
+      "unresolved": []
+    },
+    {
+      "id": "local.model_plan.06",
+      "step": "Inspect only declared scopes",
+      "pass_condition": "Inspected engineering files stay within declared UI scopes.",
+      "result": "FAIL",
+      "evidence": "exit=1; duration_ms=117; file=/home/spaztic/Core/Dashboard/Agency/audit/evidence/2026-07-28_00-40-46/local.model_plan.06.txt",
+      "unresolved": []
+    },
+    {
+      "id": "local.model_plan.07",
+      "step": "Preserve source files",
+      "pass_condition": "Proposal generation records source_files_modified=false and source status is unchanged outside runtime artifacts.",
+      "result": "FAIL",
+      "evidence": "exit=1; duration_ms=116; file=/home/spaztic/Core/Dashboard/Agency/audit/evidence/2026-07-28_00-40-46/local.model_plan.07.txt",
+      "unresolved": []
+    },
+    {
+      "id": "local.model_plan.08",
+      "step": "Record model invocation evidence",
+      "pass_condition": "Proposal artifacts contain model server and model response evidence.",
+      "result": "FAIL",
+      "evidence": "exit=1; duration_ms=120; file=/home/spaztic/Core/Dashboard/Agency/audit/evidence/2026-07-28_00-40-46/local.model_plan.08.txt",
+      "unresolved": []
+    },
+    {
+      "id": "local.model_plan.09",
+      "step": "Pinboard points to active model plan",
+      "pass_condition": "Pinboard active_proposal points to the latest model-generated plan.",
+      "result": "FAIL",
+      "evidence": "exit=1; duration_ms=116; file=/home/spaztic/Core/Dashboard/Agency/audit/evidence/2026-07-28_00-40-46/local.model_plan.09.txt",
+      "unresolved": []
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+alt: (Alternator: def"
+An alternator is a device that turns angular momentum into AC Electricity. (ME = AC))
+(input: mv, rpm;)
+(output: vac, hz;)
+(dimensions:
+(master: (pulley: radius, width, depth, material;)(gear: radius, width, teeth count, teeth depth, material;))
+(housing: outside diameter, inside diameter, length;)
+(stator: poles, windings, coil material;)(rotor: poles, windings, coil material, shaft radius;))
+(equation: )
+
+em: (Electric Motor: def"
+An electric motor is a device that converts electrical energy into mechanical energy.
+Its function is governed by the causal relationship. (Ec) = (ME);)
+(input: (dc: vdc;)(ac: vac, hz;))
+(ouput: mv, rpm;)
+(DC:
+(bm: (brushed_motor: def"
+A simple electric motor that uses brushes to deliver current to the motor windings.;)
+(dimensions:
+(stator: permanent magnet;)
+(rotor: armature;)
+(slave:
+(pulley: radius, width, depth, material;)
+(gear: radius, width, teeth count, teeth depth, material;))
+equation: Ec:brushed = ME:shaft;))
+(blm: (brushless_motor: def"
+A more efficient electric motor that uses electronic commutation instead of brushes.;)
+(stator: )
+(rotor: )
+(slave:
+(pulley: radius, width, depth, material;)
+(gear: radius, width, teeth count, teeth depth, material;))
+(equation: Ec:brushless = ME:shaft;)))
+(AC:
+(sm: (Synchronous Motor: def"
+A Synchronous AC Motor uses an electro-magnetic rotor that synchronizes with the hz.;)
+(dimensions:
+(housing: outside diameter, length;)
+(stator: poles, windings, coil material;)
+(rotor: poles, windings, coil material, shaft radius;)
+(slave:
+(pulley: radius, width, depth, material;)
+(gear: radius, width, teeth count, teeth depth, material;))
+(equation: ))
+(im: (Induction Motor: def"
+An AC Induction Motor uses an iron rotor to induce a magnetic field that is manipulated by the phases.;)
+(dimensions:
+(housing: outside diameter, length;)
+(stator: poles, windings, coil material;)
+(rotor: poles, material;)
+(slave:
+(pulley: radius, width, depth, material;)
+(gear: radius, width, teeth count, teeth depth, material;))
+(equation: )
+))
+
+ewp: (Electric Water Pump: def"
+A device that uses electricity to move water. (DC = ME = FD))
+(input: (ac: vac, hz;)(dc: vdc;))
+(output: (fm, psi, gpm))
+(em[>em])
+(housing: inside diameter, outside diameter, outside height, inside height, inlet, outlet, material;)
+(impeller: radius, blade count, blade width, blade height, shaft radius, shaft height, material;)

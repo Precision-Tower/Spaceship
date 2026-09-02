@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+SCRIPT_DIR="$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/../lib/common.sh"
+pt_initialize
+pt_print_line "Precision Tower logs"
+pt_require_dashboard_root || exit 1
+report_log() {
+    local label="$1" path="$2"
+    [[ -e "$path" ]] && pt_status_line "PASS" "$label" "$path ($(pt_file_size "$path"))" || pt_status_line "MISSING" "$label" "$path"
+}
+pt_print_line
+pt_print_line "Repository log files"
+report_log "dashboard log" "$REPO_ROOT/dashboard.log"
+report_log "llama-server log" "$REPO_ROOT/Agency/Agents/Editor/runtime/logs/llama-server.log"
+report_log "run watch log" "$REPO_ROOT/Agency/Agents/Editor/runtime/sessions/run_watch.jsonl"
+pt_print_line
+pt_print_line "Journal logs"
+if pt_have_command journalctl; then
+    pt_status_line "UNRESOLVED" "installed systemd journals" "Package units have not been installed."
+else
+    pt_status_line "MISSING" "journalctl" "journalctl not found in PATH"
+fi
+pt_print_line
+pt_print_line "Recent repository log tail"
+[[ -f "$REPO_ROOT/dashboard.log" ]] && tail -n 20 "$REPO_ROOT/dashboard.log" || pt_status_line "MISSING" "dashboard log tail" "dashboard.log does not exist"

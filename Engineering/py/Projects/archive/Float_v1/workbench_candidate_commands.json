@@ -1,0 +1,42 @@
+{
+	"commands": [
+		{
+			"category": "Objects",
+			"command_type": "create_pipe_candidate",
+			"evidence_state": "ui_ghost_candidate",
+			"item": "pipe",
+			"object_id": "ghost_pipe_002",
+			"object_type": "pipe",
+			"position_m": {
+				"x": -0.178970292210579,
+				"y": 0.0,
+				"z": 5.46777439117432
+			},
+			"rotation_degrees": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": 0.0
+			},
+			"scale_m": {
+				"x": 1.0,
+				"y": 1.0,
+				"z": 1.0
+			},
+			"source_state": "workbench_ghost",
+			"world_position": {
+				"x": -0.178970292210579,
+				"y": 0.0,
+				"z": 5.46777439117432
+			}
+		}
+	],
+	"evidence_state": "ui_ghost_candidate",
+	"packet_type": "workbench_candidate_commands",
+	"prohibited_interpretations": [
+		"ghost_candidate_equals_engineering_object",
+		"ui_position_equals_validated_geometry",
+		"candidate_command_equals_packet_mutation",
+		"visual_object_equals_physical_truth"
+	],
+	"source": "UI/Workbench"
+}

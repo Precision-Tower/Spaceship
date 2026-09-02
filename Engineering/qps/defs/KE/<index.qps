@@ -1,0 +1,81 @@
+u- U.u/p; # Universal Causal Terms
+
+cr- U.cr/p; # Causal Retraction
+
+p- U.p/p; # Potential
+
+r- U.r/p; # Resistance
+
+d- U.d/p; # Displacement
+
+e- U.e/p; # Energy
+
+t- U.t/p; # Time
+
+ten- U.ten/p; # Tension
+
+ps- U.ps/p; # Stored Potential
+
+ca- U.ca/p; # Chemical Reaction
+
+cat- U.cat/p; # Catalyst
+
+F- U.F/p; # Fire
+
+V- U.V/p; # Volume
+
+D- U.D/p; # Density
+
+P- U.P/p; # Pressure
+
+mc- MC.mc/p; # Mass-Centric Terms
+
+m- MC.m/p; # Mass
+
+su- MC.su/p; # Substance
+
+i- MC.i/p; # Inertia
+
+v- MC.v/p; # Velocity
+
+a- MC.a/p; # Acceleration
+
+f- MC.f/p; # Force
+
+mv- MC.mv/p; # Momentum
+
+fc- FC.fc/p; # Field-Centric
+
+fd- FC.fd/p; # Field Displacement
+
+Et- FC.Et/p; # Ether
+
+tf- FC.tf/p; # Thermal Field
+
+mf- FC.mf/p; # Magnetic Field
+
+emf- FC.emf/p; # Electromagnetic Field
+
+emw- FC.emw/p; # Electromagnetic Wave
+
+g- FC.g/p; # Gravity
+
+Heliosphere- FC.Heliosphere/p; # Heliosphere
+
+fho- FC.fho/p; # Field Harmonic Oscillator
+
+zpe- FC.zpe/p; # Zero Point Energy
+
+spt- FC.spt/p; # Space-Time
+
+TR- FC.TR/p; # Thermo-reactivity
+
+esf- FC.esf/p; # Electrostatic Friction
+
+tic- FC.tic/p; # Thermal Inversion Collapse
+
+re- FC.re/p; # Refrigerant Effect
+
+gt- FC.gt/p; # Gradient
+
+px- FC.px/p; # Proximity

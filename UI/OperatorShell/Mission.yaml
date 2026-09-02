@@ -1,0 +1,13 @@
+goal: "Operator-triggered Dashboard control surface"
+status: "active_runtime_surface_baseline"
+mission:
+  - "Preserve a working Godot dashboard screen"
+  - "Route operator commands through CliBridge"
+  - "Display runtime state without treating display as authority"
+  - "Keep Quarantine intact until dependencies are fully understood"
+boundaries:
+  - "display != authority"
+  - "refresh != validation"
+  - "route_success != evidence"
+  - "proposal != patch"
+next_required_action: "Verify Refresh State command behavior"

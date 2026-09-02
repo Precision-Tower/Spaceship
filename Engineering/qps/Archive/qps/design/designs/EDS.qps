@@ -1,0 +1,19 @@
+Eco_Distillation_System:
+(KE: 
+Heat Source: Hydrogen Combustion: (TE = FD), Turbine Engine: (FD = ME), Alternator: (ME = AC);
+Hydrogen Condensation: Hydrogen Combustion: (TE = FD), Water Condensation: (TE = FD);
+Steam Energy: Hydrogen Combustion: (TE = HE), Steam Energy: (HE = FD), Steam Turbine: (FD = ME), Alternator: (ME = AC);
+Water Distillation: Hydrogen Combustion: (TE = HE), Steam Energy: (HE = FD), Water Condensation: (TE = FD);) 
+(Equation: {
+[1: ps:Hydrogen Combustion: (Fuel: reservoir details, hydrogen concentration, oxygen concentration; / output: 
+[<.1 EMW: Light]
+[<.2 TE: Heat; p: pd: gradient;]
+[<.3 FD: Expansion Rate/volume;])
+= Turbine Engine: (design: type, dimensions; / output: mv, rpm;)
+= Alternator: (Ec: AC: type, dimensions, poles; / output: vac, hz;)]
+[2 >1.2: = Water Condensation: (FD: material: type, therm-reactivity; / output: rate of condensation;)]
+[3 >1.3: = Steam Energy: (type, reservoir details, rate of expansion; / output: mv, psi, gpm;)
+= Steam Turbine: (design: type, dimensions; / output: mv, rpm;)
+= Alternator: (Ec: AC: type, dimensions, poles; / output: vac, hz;)]
+[4 >1.2: = Water Distillation: (FD: material: type, therm-reactivity, reservoir details; / output: rate of distillation;)]
+}

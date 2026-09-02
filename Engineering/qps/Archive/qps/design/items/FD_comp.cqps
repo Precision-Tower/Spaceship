@@ -1,0 +1,28 @@
+tb: (Turbine: def"
+A turbine is a device that resolves linear fluid motion into mechanical energy.
+Its function is governed by the causal relationship: (FD) = (ME);)
+(input: fm, fr;)(output: mv, rpm)
+(type:
+(ww: (water wheel: def"
+A passive turbine driven by ambient liquid flow. No pressure vessel.
+Resolution is open-air flow into shaft torque.;)
+(dimensions: radius, width, blade count, shaft radius, shaft length, slave radius, slave width;)
+(equation: FD:ambient = ME:pulley))
+(wt: (wind turbine: def"
+A turbine that resolves ambient wind (fluid momentum) into rotational mechanical energy.
+Operates in an open field configuration.;)
+(dimensions: radius, blade count, slope, material, shaft radius, shaft length, slave radius, slave width;)
+(equation: FD:ambient = ME:rpm))
+(ht: (hydraulic turbine: def"
+A pressure-driven turbine using a contained liquid (typically water) to drive an impeller in a housing.;)
+(dimensions:
+(housing: inside diameter, outside diameter, outside height, inside height, inlet, outlet, material;)
+(impeller: radius, blade count, blade width, blade height, shaft radius, shaft height, material;)
+(slave:(pulley: radius, width, depth, material;(gear: radius, width, teeth count, teeth depth, material;)))
+(equation: FD:pressurized = ME:shaft)))
+(pt: (pneumatic turbine: def"
+A turbine driven by compressed air, using an enclosed impeller to resolve pressure into rotation.;)
+(housing: inside diameter, outside diameter, outside height, inside height, inlet, outlet, material;)
+(impeller: radius, blade count, blade width, blade height, shaft radius, shaft height, material;)
+(slave: (pulley: radius, width, depth, material;)(gear: radius, width, teeth count, teeth depth, material;)
+(equation: FD:compressed_air = ME:rpm);))

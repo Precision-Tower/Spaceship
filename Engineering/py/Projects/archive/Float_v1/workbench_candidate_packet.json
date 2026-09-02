@@ -1,0 +1,726 @@
+{
+  "packet_type": "workbench_candidate_packet",
+  "evidence_state": "ui_imported_candidate",
+  "source_packet": "workbench_candidate_commands.json",
+  "objects": [
+    {
+      "object_id": "ghost_pipe_001",
+      "object_type": "connector_pipe",
+      "physical_primitive": "pipe",
+      "role": "workbench_pipe_candidate",
+      "mass_kg": 0.446081753370407,
+      "volume_m3": 0.0,
+      "position_m": {
+        "x": -0.564487159252167,
+        "y": 0.0,
+        "z": 4.59331607818604
+      },
+      "dimensions_m": {
+        "radius": 0.0167005,
+        "length": 1.0,
+        "outer_radius": 0.0167005,
+        "inner_radius": 0.013322299999999999,
+        "wall_thickness": 0.0033782000000000013,
+        "nominal_size_in": 1.0,
+        "schedule": "SCH40",
+        "outer_diameter_m": 0.033401,
+        "inner_diameter_m": 0.026644599999999997
+      },
+      "render": {
+        "primitive": "cylinder",
+        "radius_m": 0.0167005,
+        "height_m": 1.0,
+        "display_position_m": {
+          "x": -0.564487159252167,
+          "y": 0.0,
+          "z": 4.59331607818604
+        },
+        "rotation_degrees": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": -90.0
+        }
+      },
+      "material": "pvc_candidate",
+      "material_density_kg_m3": 1400.0,
+      "material_volume_m3": 0.000318629823836005,
+      "contributes_weight": true,
+      "contributes_buoyancy": false,
+      "assembly_group": "workbench_candidates",
+      "subsystem": "pipe",
+      "parent_group": "workbench_candidates",
+      "fill_state": "empty",
+      "contained_volume_m3": 0.0005575814167063655,
+      "ports": [
+        {
+          "port_id": "A",
+          "connection_type": "pipe_end",
+          "nominal_radius_m": 0.0167005,
+          "inner_radius_m": 0.013322299999999999,
+          "position_m": {
+            "x": -1.064487159252167,
+            "y": 0.0,
+            "z": 4.59331607818604
+          },
+          "direction": {
+            "x": -1.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "state": "open"
+        },
+        {
+          "port_id": "B",
+          "connection_type": "pipe_end",
+          "nominal_radius_m": 0.0167005,
+          "inner_radius_m": 0.013322299999999999,
+          "position_m": {
+            "x": -0.06448715925216697,
+            "y": 0.0,
+            "z": 4.59331607818604
+          },
+          "direction": {
+            "x": 1.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "state": "open"
+        }
+      ],
+      "pipe_spec": {
+        "nominal_size_in": 1.0,
+        "schedule": "SCH40",
+        "outer_diameter_m": 0.033401,
+        "inner_diameter_m": 0.026644599999999997,
+        "outer_radius_m": 0.0167005,
+        "inner_radius_m": 0.013322299999999999,
+        "wall_thickness_m": 0.0033782
+      },
+      "evidence_state": "ui_imported_candidate",
+      "source_command": {
+        "category": "Objects",
+        "command_type": "create_pipe_candidate",
+        "evidence_state": "ui_ghost_candidate",
+        "item": "pipe",
+        "object_id": "ghost_pipe_001",
+        "object_type": "pipe",
+        "position_m": {
+          "x": -0.564487159252167,
+          "y": 0.0,
+          "z": 4.59331607818604
+        },
+        "rotation_degrees": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "scale_m": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        },
+        "source_state": "workbench_ghost",
+        "world_position": {
+          "x": -0.564487159252167,
+          "y": 0.0,
+          "z": 4.59331607818604
+        }
+      },
+      "candidate_state": "ui_imported_candidate",
+      "blocked_interpretations": [
+        "ui_pipe_candidate_equals_routed_pipe_system",
+        "ghost_pipe_equals_pressure_safe_pipe",
+        "candidate_pipe_position_equals_validated_installation"
+      ]
+    },
+    {
+      "object_id": "elbow_90_for_ghost_pipe_001_B",
+      "object_type": "pipe_fitting",
+      "physical_primitive": "pipe_fitting",
+      "fitting_type": "elbow_90",
+      "role": "workbench_elbow_90_candidate",
+      "evidence_state": "ui_imported_candidate",
+      "mass_kg": 0.02669680638445401,
+      "volume_m3": 0.0,
+      "position_m": {
+        "x": -0.06448715925216697,
+        "y": 0.0,
+        "z": 4.59331607818604
+      },
+      "dimensions_m": {
+        "nominal_radius_m": 0.0167005,
+        "nominal_size_in": 1.0,
+        "outer_radius_m": 0.0167005,
+        "inner_radius_m": 0.013322299999999999,
+        "bend_radius_m": 0.038099999999999995,
+        "takeoff_m": 0.038099999999999995,
+        "takeoff_multiplier": 1.5,
+        "angle_degrees": 90.0,
+        "centerline_length_m": 0.05984734005088555,
+        "wall_thickness_m": 0.0033782000000000013,
+        "fitting_standard": "ASME_B16_9_LR_90",
+        "schedule": "SCH40",
+        "pipe_spec": {
+          "nominal_size_in": 1.0,
+          "schedule": "SCH40",
+          "outer_diameter_m": 0.033401,
+          "inner_diameter_m": 0.026644599999999997,
+          "outer_radius_m": 0.0167005,
+          "inner_radius_m": 0.013322299999999999,
+          "wall_thickness_m": 0.0033782
+        }
+      },
+      "render": {
+        "primitive": "pipe_elbow_90",
+        "outer_radius_m": 0.0167005,
+        "inner_radius_m": 0.013322299999999999,
+        "bend_radius_m": 0.038099999999999995,
+        "takeoff_m": 0.038099999999999995,
+        "angle_degrees": 90.0,
+        "display_position_m": {
+          "x": -0.06448715925216697,
+          "y": 0.0,
+          "z": 4.59331607818604
+        },
+        "rotation_degrees": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "nominal_size_in": 1.0,
+        "schedule": "SCH40"
+      },
+      "material": "pvc_candidate",
+      "material_density_kg_m3": 1400.0,
+      "material_volume_m3": 1.906914741746715e-05,
+      "contributes_weight": true,
+      "contributes_buoyancy": false,
+      "assembly_group": "workbench_candidates",
+      "subsystem": "pipe",
+      "parent_group": "workbench_candidates",
+      "ports": [
+        {
+          "port_id": "A",
+          "connection_type": "pipe_end",
+          "nominal_radius_m": 0.0167005,
+          "inner_radius_m": 0.013322299999999999,
+          "position_m": {
+            "x": -0.026387159252166975,
+            "y": -0.038099999999999995,
+            "z": 4.59331607818604
+          },
+          "direction": {
+            "x": -1.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "state": "open"
+        },
+        {
+          "port_id": "B",
+          "connection_type": "pipe_end",
+          "nominal_radius_m": 0.0167005,
+          "inner_radius_m": 0.013322299999999999,
+          "position_m": {
+            "x": -0.06448715925216697,
+            "y": 0.0,
+            "z": 4.59331607818604
+          },
+          "direction": {
+            "x": 0.0,
+            "y": 1.0,
+            "z": 0.0
+          },
+          "state": "open"
+        }
+      ],
+      "takeoffs": {
+        "evidence_state": "calculated_candidate",
+        "items": [
+          {
+            "type": "fitting_takeoff_candidate",
+            "takeoff_role": "elbow_90",
+            "values_m": {
+              "nominal_radius_m": 0.0167005,
+              "nominal_size_in": 1.0,
+              "outer_radius_m": 0.0167005,
+              "inner_radius_m": 0.013322299999999999,
+              "wall_thickness_m": 0.0033782000000000013,
+              "bend_radius_m": 0.038099999999999995,
+              "takeoff_m": 0.038099999999999995,
+              "takeoff_multiplier": 1.5,
+              "angle_degrees": 90.0,
+              "centerline_length_m": 0.05984734005088555
+            }
+          }
+        ]
+      },
+      "blocked_interpretations": [
+        "fitting_candidate_equals_pressure_rated_part",
+        "fitting_geometry_equals_leak_free_connection",
+        "calculated_candidate_equals_build_ready_component",
+        "roll_alignment_equals_pressure_safe_connection",
+        "socket_alignment_equals_leak_free_joint",
+        "visual_pipe_connection_equals_validated_pressure_boundary"
+      ],
+      "display_position_m": {
+        "x": -0.06448715925216697,
+        "y": 0.0,
+        "z": 4.59331607818604
+      },
+      "placement": {
+        "mode": "pipe_port_locked_roll",
+        "attached_to": {
+          "object_id": "ghost_pipe_001",
+          "port_id": "B"
+        },
+        "fitting_port_id": "A",
+        "locked_axis": {
+          "source": "ghost_pipe_001.B.direction",
+          "world_direction": {
+            "x": 1.0,
+            "y": 0.0,
+            "z": 0.0
+          }
+        },
+        "required_fitting_port_direction": {
+          "x": -1.0,
+          "y": -0.0,
+          "z": -0.0
+        },
+        "roll_degrees": 0.0,
+        "editable_degrees_of_freedom": [
+          "roll_degrees_about_locked_axis"
+        ],
+        "blocked_degrees_of_freedom": [
+          "free_position",
+          "free_rotation_x",
+          "free_rotation_y",
+          "free_rotation_z"
+        ]
+      },
+      "roll_degrees": 0.0,
+      "connections": [
+        {
+          "connection_id": "connection_ghost_pipe_001_B_to_elbow_90_for_ghost_pipe_001_B_A",
+          "from_object_id": "ghost_pipe_001",
+          "from_port_id": "B",
+          "to_object_id": "elbow_90_for_ghost_pipe_001_B",
+          "to_port_id": "A",
+          "connection_role": "pipe_to_elbow_90_candidate",
+          "evidence_state": "calculated_candidate",
+          "prohibited_interpretations": [
+            "connection_record_equals_leak_free",
+            "connection_record_equals_pressure_safe",
+            "visual_alignment_equals_physical_connection",
+            "pipe_topology_equals_build_ready"
+          ]
+        }
+      ],
+      "source_command": {
+        "command_type": "attach_elbow_90_candidate",
+        "fitting_port_id": "A",
+        "roll_degrees": 0.0,
+        "source_state": "workbench_port_action",
+        "target_object_id": "ghost_pipe_001",
+        "target_port_id": "B"
+      },
+      "candidate_state": "ui_imported_candidate"
+    },
+    {
+      "object_id": "elbow_90_for_elbow_90_for_ghost_pipe_001_B_A",
+      "object_type": "pipe_fitting",
+      "physical_primitive": "pipe_fitting",
+      "fitting_type": "elbow_90",
+      "role": "workbench_elbow_90_candidate",
+      "evidence_state": "ui_imported_candidate",
+      "mass_kg": 0.02669680638445401,
+      "volume_m3": 0.0,
+      "position_m": {
+        "x": -0.026387159252166975,
+        "y": -0.038099999999999995,
+        "z": 4.59331607818604
+      },
+      "dimensions_m": {
+        "nominal_radius_m": 0.0167005,
+        "nominal_size_in": 1.0,
+        "outer_radius_m": 0.0167005,
+        "inner_radius_m": 0.013322299999999999,
+        "bend_radius_m": 0.038099999999999995,
+        "takeoff_m": 0.038099999999999995,
+        "takeoff_multiplier": 1.5,
+        "angle_degrees": 90.0,
+        "centerline_length_m": 0.05984734005088555,
+        "wall_thickness_m": 0.0033782000000000013,
+        "fitting_standard": "ASME_B16_9_LR_90",
+        "schedule": "SCH40",
+        "pipe_spec": {
+          "nominal_size_in": 1.0,
+          "schedule": "SCH40",
+          "outer_diameter_m": 0.033401,
+          "inner_diameter_m": 0.026644599999999997,
+          "outer_radius_m": 0.0167005,
+          "inner_radius_m": 0.013322299999999999,
+          "wall_thickness_m": 0.0033782
+        }
+      },
+      "render": {
+        "primitive": "pipe_elbow_90",
+        "outer_radius_m": 0.0167005,
+        "inner_radius_m": 0.013322299999999999,
+        "bend_radius_m": 0.038099999999999995,
+        "takeoff_m": 0.038099999999999995,
+        "angle_degrees": 90.0,
+        "display_position_m": {
+          "x": -0.026387159252166975,
+          "y": -0.038099999999999995,
+          "z": 4.59331607818604
+        },
+        "rotation_degrees": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "nominal_size_in": 1.0,
+        "schedule": "SCH40"
+      },
+      "material": "pvc_candidate",
+      "material_density_kg_m3": 1400.0,
+      "material_volume_m3": 1.906914741746715e-05,
+      "contributes_weight": true,
+      "contributes_buoyancy": false,
+      "assembly_group": "workbench_candidates",
+      "subsystem": "pipe",
+      "parent_group": "workbench_candidates",
+      "ports": [
+        {
+          "port_id": "A",
+          "connection_type": "pipe_end",
+          "nominal_radius_m": 0.0167005,
+          "inner_radius_m": 0.013322299999999999,
+          "position_m": {
+            "x": 0.01171284074783302,
+            "y": -0.07619999999999999,
+            "z": 4.59331607818604
+          },
+          "direction": {
+            "x": -1.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "state": "open"
+        },
+        {
+          "port_id": "B",
+          "connection_type": "pipe_end",
+          "nominal_radius_m": 0.0167005,
+          "inner_radius_m": 0.013322299999999999,
+          "position_m": {
+            "x": -0.026387159252166975,
+            "y": -0.038099999999999995,
+            "z": 4.59331607818604
+          },
+          "direction": {
+            "x": 0.0,
+            "y": 1.0,
+            "z": 0.0
+          },
+          "state": "open"
+        }
+      ],
+      "takeoffs": {
+        "evidence_state": "calculated_candidate",
+        "items": [
+          {
+            "type": "fitting_takeoff_candidate",
+            "takeoff_role": "elbow_90",
+            "values_m": {
+              "nominal_radius_m": 0.0167005,
+              "nominal_size_in": 1.0,
+              "outer_radius_m": 0.0167005,
+              "inner_radius_m": 0.013322299999999999,
+              "wall_thickness_m": 0.0033782000000000013,
+              "bend_radius_m": 0.038099999999999995,
+              "takeoff_m": 0.038099999999999995,
+              "takeoff_multiplier": 1.5,
+              "angle_degrees": 90.0,
+              "centerline_length_m": 0.05984734005088555
+            }
+          }
+        ]
+      },
+      "blocked_interpretations": [
+        "fitting_candidate_equals_pressure_rated_part",
+        "fitting_geometry_equals_leak_free_connection",
+        "calculated_candidate_equals_build_ready_component",
+        "roll_alignment_equals_pressure_safe_connection",
+        "socket_alignment_equals_leak_free_joint",
+        "visual_pipe_connection_equals_validated_pressure_boundary"
+      ],
+      "display_position_m": {
+        "x": -0.026387159252166975,
+        "y": -0.038099999999999995,
+        "z": 4.59331607818604
+      },
+      "placement": {
+        "mode": "pipe_port_locked_roll",
+        "attached_to": {
+          "object_id": "elbow_90_for_ghost_pipe_001_B",
+          "port_id": "A"
+        },
+        "fitting_port_id": "A",
+        "locked_axis": {
+          "source": "elbow_90_for_ghost_pipe_001_B.A.direction",
+          "world_direction": {
+            "x": -1.0,
+            "y": 0.0,
+            "z": 0.0
+          }
+        },
+        "required_fitting_port_direction": {
+          "x": 1.0,
+          "y": -0.0,
+          "z": -0.0
+        },
+        "roll_degrees": 0.0,
+        "editable_degrees_of_freedom": [
+          "roll_degrees_about_locked_axis"
+        ],
+        "blocked_degrees_of_freedom": [
+          "free_position",
+          "free_rotation_x",
+          "free_rotation_y",
+          "free_rotation_z"
+        ]
+      },
+      "roll_degrees": 0.0,
+      "connections": [
+        {
+          "connection_id": "connection_elbow_90_for_ghost_pipe_001_B_A_to_elbow_90_for_elbow_90_for_ghost_pipe_001_B_A_A",
+          "from_object_id": "elbow_90_for_ghost_pipe_001_B",
+          "from_port_id": "A",
+          "to_object_id": "elbow_90_for_elbow_90_for_ghost_pipe_001_B_A",
+          "to_port_id": "A",
+          "connection_role": "pipe_to_elbow_90_candidate",
+          "evidence_state": "calculated_candidate",
+          "prohibited_interpretations": [
+            "connection_record_equals_leak_free",
+            "connection_record_equals_pressure_safe",
+            "visual_alignment_equals_physical_connection",
+            "pipe_topology_equals_build_ready"
+          ]
+        }
+      ],
+      "source_command": {
+        "command_type": "attach_elbow_90_candidate",
+        "fitting_port_id": "A",
+        "roll_degrees": 0.0,
+        "source_state": "workbench_port_action",
+        "target_object_id": "elbow_90_for_ghost_pipe_001_B",
+        "target_port_id": "A"
+      },
+      "candidate_state": "ui_imported_candidate"
+    },
+    {
+      "object_id": "elbow_90_for_elbow_90_for_ghost_pipe_001_B_B",
+      "object_type": "pipe_fitting",
+      "physical_primitive": "pipe_fitting",
+      "fitting_type": "elbow_90",
+      "role": "workbench_elbow_90_candidate",
+      "evidence_state": "ui_imported_candidate",
+      "mass_kg": 0.02669680638445401,
+      "volume_m3": 0.0,
+      "position_m": {
+        "x": -0.06448715925216697,
+        "y": 0.0,
+        "z": 4.59331607818604
+      },
+      "dimensions_m": {
+        "nominal_radius_m": 0.0167005,
+        "nominal_size_in": 1.0,
+        "outer_radius_m": 0.0167005,
+        "inner_radius_m": 0.013322299999999999,
+        "bend_radius_m": 0.038099999999999995,
+        "takeoff_m": 0.038099999999999995,
+        "takeoff_multiplier": 1.5,
+        "angle_degrees": 90.0,
+        "centerline_length_m": 0.05984734005088555,
+        "wall_thickness_m": 0.0033782000000000013,
+        "fitting_standard": "ASME_B16_9_LR_90",
+        "schedule": "SCH40",
+        "pipe_spec": {
+          "nominal_size_in": 1.0,
+          "schedule": "SCH40",
+          "outer_diameter_m": 0.033401,
+          "inner_diameter_m": 0.026644599999999997,
+          "outer_radius_m": 0.0167005,
+          "inner_radius_m": 0.013322299999999999,
+          "wall_thickness_m": 0.0033782
+        }
+      },
+      "render": {
+        "primitive": "pipe_elbow_90",
+        "outer_radius_m": 0.0167005,
+        "inner_radius_m": 0.013322299999999999,
+        "bend_radius_m": 0.038099999999999995,
+        "takeoff_m": 0.038099999999999995,
+        "angle_degrees": 90.0,
+        "display_position_m": {
+          "x": -0.06448715925216697,
+          "y": 0.0,
+          "z": 4.59331607818604
+        },
+        "rotation_degrees": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "nominal_size_in": 1.0,
+        "schedule": "SCH40"
+      },
+      "material": "pvc_candidate",
+      "material_density_kg_m3": 1400.0,
+      "material_volume_m3": 1.906914741746715e-05,
+      "contributes_weight": true,
+      "contributes_buoyancy": false,
+      "assembly_group": "workbench_candidates",
+      "subsystem": "pipe",
+      "parent_group": "workbench_candidates",
+      "ports": [
+        {
+          "port_id": "A",
+          "connection_type": "pipe_end",
+          "nominal_radius_m": 0.0167005,
+          "inner_radius_m": 0.013322299999999999,
+          "position_m": {
+            "x": -0.026387159252166975,
+            "y": -0.038099999999999995,
+            "z": 4.59331607818604
+          },
+          "direction": {
+            "x": -1.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "state": "open"
+        },
+        {
+          "port_id": "B",
+          "connection_type": "pipe_end",
+          "nominal_radius_m": 0.0167005,
+          "inner_radius_m": 0.013322299999999999,
+          "position_m": {
+            "x": -0.06448715925216697,
+            "y": 0.0,
+            "z": 4.59331607818604
+          },
+          "direction": {
+            "x": 0.0,
+            "y": 1.0,
+            "z": 0.0
+          },
+          "state": "open"
+        }
+      ],
+      "takeoffs": {
+        "evidence_state": "calculated_candidate",
+        "items": [
+          {
+            "type": "fitting_takeoff_candidate",
+            "takeoff_role": "elbow_90",
+            "values_m": {
+              "nominal_radius_m": 0.0167005,
+              "nominal_size_in": 1.0,
+              "outer_radius_m": 0.0167005,
+              "inner_radius_m": 0.013322299999999999,
+              "wall_thickness_m": 0.0033782000000000013,
+              "bend_radius_m": 0.038099999999999995,
+              "takeoff_m": 0.038099999999999995,
+              "takeoff_multiplier": 1.5,
+              "angle_degrees": 90.0,
+              "centerline_length_m": 0.05984734005088555
+            }
+          }
+        ]
+      },
+      "blocked_interpretations": [
+        "fitting_candidate_equals_pressure_rated_part",
+        "fitting_geometry_equals_leak_free_connection",
+        "calculated_candidate_equals_build_ready_component",
+        "roll_alignment_equals_pressure_safe_connection",
+        "socket_alignment_equals_leak_free_joint",
+        "visual_pipe_connection_equals_validated_pressure_boundary"
+      ],
+      "display_position_m": {
+        "x": -0.06448715925216697,
+        "y": 0.0,
+        "z": 4.59331607818604
+      },
+      "placement": {
+        "mode": "pipe_port_locked_roll",
+        "attached_to": {
+          "object_id": "elbow_90_for_ghost_pipe_001_B",
+          "port_id": "B"
+        },
+        "fitting_port_id": "A",
+        "locked_axis": {
+          "source": "elbow_90_for_ghost_pipe_001_B.B.direction",
+          "world_direction": {
+            "x": 0.0,
+            "y": 1.0,
+            "z": 0.0
+          }
+        },
+        "required_fitting_port_direction": {
+          "x": -0.0,
+          "y": -1.0,
+          "z": -0.0
+        },
+        "roll_degrees": 0.0,
+        "editable_degrees_of_freedom": [
+          "roll_degrees_about_locked_axis"
+        ],
+        "blocked_degrees_of_freedom": [
+          "free_position",
+          "free_rotation_x",
+          "free_rotation_y",
+          "free_rotation_z"
+        ]
+      },
+      "roll_degrees": 0.0,
+      "connections": [
+        {
+          "connection_id": "connection_elbow_90_for_ghost_pipe_001_B_B_to_elbow_90_for_elbow_90_for_ghost_pipe_001_B_B_A",
+          "from_object_id": "elbow_90_for_ghost_pipe_001_B",
+          "from_port_id": "B",
+          "to_object_id": "elbow_90_for_elbow_90_for_ghost_pipe_001_B_B",
+          "to_port_id": "A",
+          "connection_role": "pipe_to_elbow_90_candidate",
+          "evidence_state": "calculated_candidate",
+          "prohibited_interpretations": [
+            "connection_record_equals_leak_free",
+            "connection_record_equals_pressure_safe",
+            "visual_alignment_equals_physical_connection",
+            "pipe_topology_equals_build_ready"
+          ]
+        }
+      ],
+      "source_command": {
+        "command_type": "attach_elbow_90_candidate",
+        "fitting_port_id": "A",
+        "roll_degrees": 0.0,
+        "source_state": "workbench_port_action",
+        "target_object_id": "elbow_90_for_ghost_pipe_001_B",
+        "target_port_id": "B"
+      },
+      "candidate_state": "ui_imported_candidate"
+    }
+  ],
+  "unresolved_commands": [],
+  "prohibited_interpretations": [
+    "candidate_packet_equals_engineering_validation",
+    "ui_imported_candidate_equals_project_assembly_member",
+    "ghost_position_equals_validated_geometry",
+    "candidate_object_equals_physical_truth"
+  ]
+}

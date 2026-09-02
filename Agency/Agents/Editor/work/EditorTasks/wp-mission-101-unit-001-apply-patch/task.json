@@ -1,0 +1,62 @@
+{
+  "ball_holder": "Editor",
+  "ball_owner": "Gear",
+  "constraints": {
+    "mutation_authorized": true,
+    "read_only": false
+  },
+  "created_at": "2026-07-31T04:25:57Z",
+  "editor": "Editor",
+  "evidence_requirements": [],
+  "issued_by": "Gear",
+  "next_decision_owner": "Gear",
+  "objective": "Apply implementation patch for unit unit-001",
+  "operation": "apply_patch",
+  "parent_step_id": "apply-patch",
+  "play_owner": "Gear",
+  "request": {
+    "authorization": {
+      "allowed_operations": [
+        "apply_patch"
+      ],
+      "allowed_paths": [
+        "Agency/Core/runtime/target.txt"
+      ],
+      "authorization_id": "auth-wp-mission-101-unit-001-apply-patch",
+      "authorized_by": "Gear",
+      "authorized_editor": "Editor",
+      "baseline_hashes": {
+        "Agency/Core/runtime/target.txt": "e49c81e2d2f84e259d40e2fb8192f3bcd198b355184845d76d8f58807d0d78ee"
+      },
+      "created_at": "2026-07-31T04:25:57Z",
+      "editor_task_id": "wp-mission-101-unit-001-apply-patch",
+      "expires_at": "2026-08-01T04:25:57Z",
+      "play_owner": "Gear",
+      "proposal_path": "/tmp/tmpi5wow1s1/Agency/Core/missions/active/mission-101/implementation/units/unit-001/attempt_001/changes.patch",
+      "proposal_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "step_id": "apply-patch",
+      "used_at": null,
+      "work_packet_id": "wp-mission-101-unit-001"
+    },
+    "authorization_path": "/tmp/tmpi5wow1s1/Agency/Core/missions/work_packets/active/wp-mission-101-unit-001/authorizations/auth-wp-mission-101-unit-001-apply-patch.json",
+    "baseline_hashes": {
+      "Agency/Core/runtime/target.txt": "e49c81e2d2f84e259d40e2fb8192f3bcd198b355184845d76d8f58807d0d78ee"
+    },
+    "dependencies": [],
+    "mission_id": "mission-101",
+    "patch_path": "/tmp/tmpi5wow1s1/Agency/Core/missions/active/mission-101/implementation/units/unit-001/attempt_001/changes.patch",
+    "proposal_patch_path": "/tmp/tmpi5wow1s1/Agency/Core/missions/active/mission-101/implementation/units/unit-001/attempt_001/changes.patch",
+    "proposal_path": "/tmp/tmpi5wow1s1/Agency/Core/missions/active/mission-101/proposal/proposal.json",
+    "review_path": "/tmp/tmpi5wow1s1/Agency/Core/missions/active/mission-101/review/decision.json",
+    "unit_id": "unit-001"
+  },
+  "schema_version": 1,
+  "scope": {
+    "exclude": [],
+    "include": [
+      "Agency/Core/runtime/target.txt"
+    ]
+  },
+  "task_id": "wp-mission-101-unit-001-apply-patch",
+  "work_packet_id": "wp-mission-101-unit-001"
+}

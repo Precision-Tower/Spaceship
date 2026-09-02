@@ -1,0 +1,16 @@
+=== tree_operator_shell ===
+command: python3 run.py cmd tree UI/OperatorShell
+Tree analysis: UI/OperatorShell
+files: 58
+buckets:
+  - .: 9
+  - assets: 2
+  - audit: 24
+  - layout: 8
+  - resources: 4
+  - runtime: 7
+  - scenes: 2
+  - widgets: 2
+stale res://screen refs: 0
+authority: filesystem_scan_not_validation
+exit_code: 0

@@ -1,0 +1,107 @@
+EvidenceBundle:
+  request_id: editor-manual-proposal-001-evidence
+  status: completed
+  objective: Propose adding a manual capability-test note to the Editor README.
+  repository_root: /home/spaztic/Core/Dashboard
+  repository_root_authority: Agency.Core.foundation.paths.DASHBOARD_ROOT
+  effective_scope:
+    include:
+    - Agency/Agents/Editor/README.md
+    exclude: []
+    default_exclusions:
+    - .git
+    - __pycache__
+    - .pytest_cache
+    - node_modules
+    - .venv
+    - venv
+    - weebo_env
+    - Chroma
+    - memory/Chroma
+    - build
+    - dist
+    - .godot
+    - logs
+    - sessions
+    - '*.pyc'
+    - '*.pyo'
+    - '*.sqlite'
+    - '*.sqlite3'
+    - '*.db'
+    - .env
+    - .env.*
+    - '*.pem'
+    - '*.key'
+    - '*token*'
+    - '*credential*'
+    - '*secret*'
+  operations_performed:
+  - text_search
+  findings:
+  - id: finding-001
+    claim: Text query 'EditorTask' matched Agency/Agents/Editor/README.md:7.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: Agency/Agents/Editor/README.md
+      start_line: 7
+      end_line: 7
+      excerpt: '- `Agency/Core/editor` for `EditorTask -> EditorResult`'
+      evidence_type: text_search
+      query: EditorTask
+      match_type: exact_text
+  - id: finding-002
+    claim: Text query 'EditorTask' matched Agency/Agents/Editor/README.md:30.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: Agency/Agents/Editor/README.md
+      start_line: 30
+      end_line: 30
+      excerpt: '## Canonical EditorTask YAML'
+      evidence_type: text_search
+      query: EditorTask
+      match_type: exact_text
+  - id: finding-003
+    claim: Text query 'EditorTask' matched Agency/Agents/Editor/README.md:65.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: Agency/Agents/Editor/README.md
+      start_line: 65
+      end_line: 65
+      excerpt: '`--task` expects a YAML or JSON EditorTask file. Natural-language
+        instructions must be converted into a bounded task contract before Editor
+        execution.'
+      evidence_type: text_search
+      query: EditorTask
+      match_type: exact_text
+  symbols: []
+  references: []
+  imports: []
+  dependency_edges: []
+  negative_results: []
+  files_examined:
+  - Agency/Agents/Editor/README.md
+  files_skipped: []
+  limits:
+    configured:
+      max_files: 500
+      max_matches: 500
+      max_file_bytes: 120000
+      max_depth: 2
+      max_total_context_bytes: 40000
+      max_evidence_items: 500
+    reached:
+      max_files: false
+      max_matches: false
+      max_file_bytes: false
+      max_depth: false
+      max_total_context_bytes: false
+      max_evidence_items: false
+  parse_failures: []
+  unresolveds: []
+  contradictions: []
+  generated_at: '2026-07-26T19:02:01Z'
+  persistence_path: Agency/Work/Inspections/editor-manual-proposal-001-evidence
+  repository_mutation_performed: false

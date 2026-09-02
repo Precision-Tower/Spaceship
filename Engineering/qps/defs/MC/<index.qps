@@ -1,0 +1,41 @@
+ME- ME.ME/p; # Mechanical Energy
+
+LM- ME.LM/p; # Linear Mechanical
+
+mv- ME.mv/p; # Momentum
+
+v- ME.v/p; # Velocity
+
+fr- ME.fr/p; # Friction
+
+w- ME.w/p; # Work
+
+AM- ME.AM/p; # Angular Mechanical
+
+T- ME.T/p; # Torque
+
+av- ME.av/p; # Angular Velocity
+
+ma- ME.ma/p; # Mechanical Advantage
+
+am- ME.am/p; # Angular Momentum
+
+br- ME.br/p; # Bearing
+
+P- ME.P/p; # Power
+
+FD- FD.FD/p; # Fluid Dyanamics
+
+vc- FD.vc/p; # Viscosity
+
+mf- FD.mf/p; # Fluid Mass
+
+fr- FD.fr/p; # Flow Rate
+
+fp- FD.fp/p; # Fluid Momentum
+
+ph- FD.ph/p; # Hydraulic Pressure
+
+px- FD.px/p; # Pneumatic Pressure
+
+fg- FD.fg/p; # Refrigerant

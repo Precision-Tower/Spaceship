@@ -1,0 +1,662 @@
+{
+  "schema_version": 1,
+  "mission_id": "mission-4",
+  "pass": 1,
+  "timestamp": "2026-08-13T10:17:22.131911+00:00",
+  "files_inspected": [
+    {
+      "path": "Agency/Core/work/missions/mission_runtime.py",
+      "bytes": 121969,
+      "lines": 3188,
+      "included_in_prompt": false,
+      "prompt_excerpt_chars": 0,
+      "evidence_terms": [
+        "route",
+        "workspace",
+        "workbench",
+        "instantiate",
+        "add_child",
+        "remove_child",
+        "queue_free",
+        "cleanup",
+        "screenshot",
+        "audit",
+        "test",
+        "verify"
+      ],
+      "class": "primary",
+      "inspection_note": "recorded_after_source_byte_limit"
+    }
+  ],
+  "file_classification": {
+    "Agency/Core/work/missions/mission_runtime.py": "primary"
+  },
+  "symbols": [
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 184,
+      "kind": "python_class",
+      "name": "MissionOperationError"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 185,
+      "kind": "python_function",
+      "name": "__init__"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 192,
+      "kind": "python_function",
+      "name": "_noop_refresh_pinboard"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 196,
+      "kind": "python_function",
+      "name": "_refresh_callback"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 200,
+      "kind": "python_function",
+      "name": "_emit_to"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 201,
+      "kind": "python_function",
+      "name": "emit"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 206,
+      "kind": "python_function",
+      "name": "_payload_from_text"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 220,
+      "kind": "python_function",
+      "name": "_operation_payload"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 231,
+      "kind": "python_function",
+      "name": "_run_emitting_operation"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 237,
+      "kind": "python_function",
+      "name": "_run_printing_operation"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 253,
+      "kind": "python_function",
+      "name": "_resolve_with_root"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 257,
+      "kind": "python_function",
+      "name": "_parse_model_json_object"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 277,
+      "kind": "python_function",
+      "name": "_as_string_list"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 295,
+      "kind": "python_function",
+      "name": "_run_command"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 300,
+      "kind": "python_function",
+      "name": "_git_status_lines"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 305,
+      "kind": "python_function",
+      "name": "_status_path"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 309,
+      "kind": "python_function",
+      "name": "_model_status"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 344,
+      "kind": "python_function",
+      "name": "_model_context_tokens"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 365,
+      "kind": "python_function",
+      "name": "_require_model_ready"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 384,
+      "kind": "python_function",
+      "name": "_call_model"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 397,
+      "kind": "python_function",
+      "name": "_mission_plan_dir"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 401,
+      "kind": "python_function",
+      "name": "_mission_plan_md_path"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 405,
+      "kind": "python_function",
+      "name": "_mission_proposal_dir"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 409,
+      "kind": "python_function",
+      "name": "_mission_proposal_md_path"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 413,
+      "kind": "python_function",
+      "name": "_mission_review_dir"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 417,
+      "kind": "python_function",
+      "name": "_load_plan"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 421,
+      "kind": "python_function",
+      "name": "_mission_review_decision_md_path"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 425,
+      "kind": "python_function",
+      "name": "_review_state_dependencies"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 440,
+      "kind": "python_function",
+      "name": "_load_proposal"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 444,
+      "kind": "python_function",
+      "name": "_load_review_inputs"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 448,
+      "kind": "python_function",
+      "name": "_update_state_after_review"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 452,
+      "kind": "python_function",
+      "name": "_review_failure_factory"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 453,
+      "kind": "python_function",
+      "name": "review_failure"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 458,
+      "kind": "python_function",
+      "name": "_planning_dependencies"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 495,
+      "kind": "python_function",
+      "name": "_proposal_dependencies"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 526,
+      "kind": "python_function",
+      "name": "_review_execution_dependencies"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 552,
+      "kind": "python_function",
+      "name": "_implementation_execution_dependencies"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 590,
+      "kind": "python_function",
+      "name": "_verification_execution_dependencies"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 630,
+      "kind": "python_function",
+      "name": "_missions_root"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 634,
+      "kind": "python_function",
+      "name": "_now"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 638,
+      "kind": "python_function",
+      "name": "_stable"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 642,
+      "kind": "python_function",
+      "name": "_load_json"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 652,
+      "kind": "python_function",
+      "name": "_atomic_json"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 659,
+      "kind": "python_function",
+      "name": "_atomic_text"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 666,
+      "kind": "python_function",
+      "name": "_is_relative_to"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 674,
+      "kind": "python_function",
+      "name": "agency_blocks_dependent_operations"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 693,
+      "kind": "python_function",
+      "name": "validate_engineering_scopes"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 752,
+      "kind": "python_function",
+      "name": "_mission_number_from_name"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 760,
+      "kind": "python_function",
+      "name": "_next_mission_number"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 773,
+      "kind": "python_function",
+      "name": "mission_id"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "kind": "truncated",
+      "name": "symbol_limit_reached"
+    }
+  ],
+  "dependencies": [
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 1,
+      "kind": "python_from",
+      "target": "__future__:annotations"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 3,
+      "kind": "python_import",
+      "target": "argparse"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 4,
+      "kind": "python_import",
+      "target": "contextlib"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 5,
+      "kind": "python_import",
+      "target": "io"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 6,
+      "kind": "python_import",
+      "target": "json"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 7,
+      "kind": "python_import",
+      "target": "os"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 8,
+      "kind": "python_import",
+      "target": "re"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 9,
+      "kind": "python_import",
+      "target": "shlex"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 10,
+      "kind": "python_import",
+      "target": "subprocess"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 11,
+      "kind": "python_import",
+      "target": "sys"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 12,
+      "kind": "python_import",
+      "target": "time"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 13,
+      "kind": "python_from",
+      "target": "datetime:datetime, timezone"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 14,
+      "kind": "python_from",
+      "target": "pathlib:Path"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 15,
+      "kind": "python_from",
+      "target": "typing:Any, Callable"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 17,
+      "kind": "python_from",
+      "target": "Agency.Core.work.planning:mission_planning as _mission_planning"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 18,
+      "kind": "python_from",
+      "target": "Agency.Core.work.planning:proposal_generation as _proposal_generation"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 19,
+      "kind": "python_from",
+      "target": "Agency.Core.work.missions.pipeline.review.execution:("
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 23,
+      "kind": "python_from",
+      "target": "Agency.Core.runtime.commands:mission_command"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 24,
+      "kind": "python_from",
+      "target": "Agency.Core.work.missions.pipeline.review.helpers:("
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 29,
+      "kind": "python_from",
+      "target": "Agency.Core.work.missions.pipeline.review.state:("
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 38,
+      "kind": "python_from",
+      "target": "Agency.Core.work.missions.pipeline.implementation:execution as _implementation_execution"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 39,
+      "kind": "python_from",
+      "target": "Agency.Core.work.missions.pipeline.verification:execution as _verification_execution"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 40,
+      "kind": "python_from",
+      "target": "Agency.Core.runtime.resourcefulness:("
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 44,
+      "kind": "python_from",
+      "target": "Agency.Core.runtime.runtime_config:effective_model_context_tokens"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 46,
+      "kind": "python_from",
+      "target": "Agency.Core.repository.inspection.analysis:("
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 51,
+      "kind": "python_from",
+      "target": "Agency.Core.repository.inspection.context:("
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 55,
+      "kind": "python_from",
+      "target": "Agency.Core.repository.inspection.coverage:("
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 60,
+      "kind": "python_from",
+      "target": "Agency.Core.foundation.paths:("
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 311,
+      "kind": "python_from",
+      "target": "Agency.Core.runtime:model_server_manager"
+    },
+    {
+      "file": "Agency/Core/work/missions/mission_runtime.py",
+      "line": 390,
+      "kind": "python_from",
+      "target": "Agency.Core.runtime:model_service"
+    }
+  ],
+  "observations": [
+    {
+      "kind": "pass_observation",
+      "summary": "Read 1 files in inspection pass 1.",
+      "file_count": 1
+    },
+    {
+      "kind": "pass_observation",
+      "summary": "Active queue by class: primary=1, secondary=0, evidence=0, ignored=0.",
+      "class_counts": {
+        "primary": 1,
+        "secondary": 0,
+        "evidence": 0,
+        "ignored": 0
+      }
+    },
+    {
+      "kind": "file_inspected",
+      "path": "Agency/Core/work/missions/mission_runtime.py",
+      "class": "primary",
+      "summary": "Inspection pass 1 read primary file Agency/Core/work/missions/mission_runtime.py (3188 lines).",
+      "bytes": 121969,
+      "lines": 3188,
+      "included_in_prompt": false,
+      "prompt_excerpt_chars": 0,
+      "evidence_terms": [
+        "route",
+        "workspace",
+        "workbench",
+        "instantiate",
+        "add_child",
+        "remove_child",
+        "queue_free",
+        "cleanup",
+        "screenshot",
+        "audit",
+        "test",
+        "verify"
+      ]
+    }
+  ],
+  "unresolved": [],
+  "next_files": [],
+  "inspection_complete": true,
+  "skipped_files": [],
+  "operational_context": [
+    {
+      "path": "Agency/Agents/Editor/work/Pinboard/current.json",
+      "status": "missing"
+    },
+    {
+      "schema_version": 1,
+      "generated_at": "2026-07-28T00:43:36.391191+00:00",
+      "rule": "Declared authority is not demonstrated capability. Safe AI use requires bounded, observed execution.",
+      "summary": {
+        "REGISTERED_COMMANDS": 26,
+        "PASS": 15,
+        "FAIL": 0,
+        "BLOCKED_TIMEOUT": 0,
+        "UNTESTED": 9
+      },
+      "current_test": {
+        "id": "local.model_plan.01",
+        "step": "Accept bounded engineering scopes",
+        "pass_condition": "Valid UI engineering scopes are represented in the latest model-plan proposal.",
+        "result": "UNTESTED",
+        "evidence": "",
+        "unresolved": []
+      },
+      "path": "Agency/audit/output/agency_state.json",
+      "status": "present"
+    },
+    {
+      "schema_version": 1,
+      "generated_at": "2026-07-16T07:56:10.998392+00:00",
+      "rule": "Presence is not capability. Capability requires an observed end-to-end demonstration.",
+      "summary": {
+        "NONE": 2,
+        "PRESENT": 19,
+        "WIRED": 6,
+        "EXECUTABLE": 0,
+        "PASS": 4,
+        "PARTIAL": 0,
+        "FAIL": 0,
+        "UNTESTED": 23
+      },
+      "current_test": {
+        "id": "shell.05",
+        "step": "Open Terminal tab",
+        "pass_condition": "Terminal becomes active.",
+        "result": "UNTESTED",
+        "evidence": "",
+        "unresolved": []
+      },
+      "path": "UI/OperatorShell/audit/output/operator_shell_state.json",
+      "status": "present"
+    },
+    {
+      "schema_version": 3,
+      "generated_at": "2026-07-16T06:59:27.556236+00:00",
+      "rule": "Presence is not capability. Capability requires an observed end-to-end demonstration.",
+      "summary": {
+        "NONE": 1,
+        "PRESENT": 23,
+        "WIRED": 11,
+        "EXECUTABLE": 0,
+        "PASS": 0,
+        "PARTIAL": 1,
+        "FAIL": 0,
+        "UNTESTED": 10
+      },
+      "current_test": {
+        "id": "demo.01",
+        "step": "Launch the current Godot project",
+        "pass_condition": "Workbench opens and remains usable; fatal parser or runtime errors are not present.",
+        "result": "PARTIAL",
+        "evidence": "Godot launched and Workbench visibly rendered with the viewport, object tree, and left-side status panel.",
+        "unresolved": [
+          "Console output was not captured, so absence of parser or runtime errors is not yet established."
+        ]
+      },
+      "path": "UI/Workbench/audit/output/capability_state.json",
+      "status": "present"
+    }
+  ],
+  "context_limits": {
+    "max_files": 8,
+    "max_total_source_bytes": 65000,
+    "max_prompt_source_chars": 1400,
+    "max_prompt_chars": 3600,
+    "max_files_per_pass": 8,
+    "inspection_generation_limit": 768
+  },
+  "context_bytes": {
+    "source_bytes_inspected": 121969,
+    "prompt_source_chars": 0
+  },
+  "source_files_modified": false,
+  "authority": "read_only_inspection"
+}

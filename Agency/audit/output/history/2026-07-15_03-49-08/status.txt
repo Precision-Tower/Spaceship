@@ -1,0 +1,8 @@
+=== status ===
+command: python3 run.py status
+DASHBOARD_READY
+agency_root: /home/spaztic/Core/Dashboard/Agency
+dashboard_root: /home/spaztic/Core/Dashboard
+ui_root: /home/spaztic/Core/Dashboard/UI
+watch_log: /home/spaztic/Core/Dashboard/Agency/Core/runtime/sessions/run_watch.jsonl
+exit_code: 0

@@ -1,0 +1,1 @@
+OperatorShell is the migration target for legacy screen/ dashboard shell code. It is not active runtime yet. It should preserve CLI bridge, file browser, status/result rendering, and dashboard layout surfaces while staying separate from Workbench engineering inspection logic.

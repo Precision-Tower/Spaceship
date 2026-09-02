@@ -1,0 +1,11 @@
+--- a/Agency/Agents/Editor/README.md
++++ b/Agency/Agents/Editor/README.md
+@@ -43,7 +43,7 @@
+ 
+ Proposal generation is deterministic. Editor does not infer edits, guess intent, invoke arbitrary rewriting, or broaden scope from natural language. Malformed `change_intent` values return operator guidance and do not produce `proposed.patch`, a proposal SHA, or repository source mutation.
+ 
+-## Canonical EditorTask YAML
++## Canonical EditorTask Contract
+ 
+ ```yaml
+ schema_version: 1

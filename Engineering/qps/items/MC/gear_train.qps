@@ -1,0 +1,26 @@
+gt. Gear_Train: def"A combination of gears aligned to spin one another from a driven point.";
+input: (
+mv-/n;
+rpm-/n;
+);
+output: (
+mv-/n;
+rpm-/n;
+);
+dimensions: (
+master: (
+radius-/n;
+width-/n;
+tooth_count-/n;
+tooth_depth-/n;
+material-/a;
+);
+slave: (
+radius-/n;
+width-/n;
+depth-/n;
+tooth_count-/n;
+tooth_depth-/n;
+material-/a;
+);
+);

@@ -1,0 +1,22 @@
+[Unit]
+Description=Precision Tower Agency status console on %I
+Documentation=file:Docs/PrecisionTowerNode.md
+After=network-online.target
+
+[Service]
+Type=simple
+EnvironmentFile=-/etc/precision-tower-node/default.env
+TTYPath=/dev/%I
+StandardInput=tty
+StandardOutput=tty
+TTYReset=yes
+TTYVHangup=yes
+ExecStart=/bin/bash -lc 'set -Eeuo pipefail; : "${DASHBOARD_ROOT:?DASHBOARD_ROOT unresolved}"; cd "$DASHBOARD_ROOT"; while :; do clear || true; "$DASHBOARD_ROOT/package/commands/status" || true; printf "\nAgency status console on %s. Return to tty1 for the local operator console.\n" "%I"; sleep "${CONSOLE_REFRESH_SECONDS:-10}"; done'
+Restart=always
+RestartSec=5s
+StartLimitIntervalSec=300
+StartLimitBurst=10
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,582 @@
+{
+  "contradictions": [],
+  "dependency_edges": [],
+  "effective_scope": {
+    "default_exclusions": [
+      ".git",
+      "__pycache__",
+      ".pytest_cache",
+      "node_modules",
+      ".venv",
+      "venv",
+      "*_env",
+      "Chroma",
+      "memory/Chroma",
+      "build",
+      "dist",
+      ".godot",
+      "logs",
+      "sessions",
+      "*.pyc",
+      "*.pyo",
+      "*.sqlite",
+      "*.sqlite3",
+      "*.db",
+      ".env",
+      ".env.*",
+      "*.pem",
+      "*.key",
+      "*token*",
+      "*credential*",
+      "*secret*"
+    ],
+    "exclude": [],
+    "include": [
+      "Agency/Core/editor"
+    ]
+  },
+  "files_examined": [
+    "Agency/Core/editor/MIGRATION.md",
+    "Agency/Core/editor/__init__.py",
+    "Agency/Core/editor/contracts.py",
+    "Agency/Core/editor/execution.py",
+    "Agency/Core/editor/persistence.py",
+    "Agency/Core/editor/tests/__init__.py",
+    "Agency/Core/editor/tests/test_editor_handoff.py",
+    "Agency/Core/editor/tests/test_task_cli_efficiency.py"
+  ],
+  "files_skipped": [
+    {
+      "path": "Agency/Core/editor/__pycache__/__init__.cpython-310.pyc",
+      "reason": "binary_file_skipped"
+    },
+    {
+      "path": "Agency/Core/editor/__pycache__/__init__.cpython-314.pyc",
+      "reason": "binary_file_skipped"
+    },
+    {
+      "path": "Agency/Core/editor/__pycache__/contracts.cpython-310.pyc",
+      "reason": "binary_file_skipped"
+    },
+    {
+      "path": "Agency/Core/editor/__pycache__/contracts.cpython-314.pyc",
+      "reason": "binary_file_skipped"
+    },
+    {
+      "path": "Agency/Core/editor/__pycache__/execution.cpython-310.pyc",
+      "reason": "binary_file_skipped"
+    },
+    {
+      "path": "Agency/Core/editor/__pycache__/execution.cpython-314.pyc",
+      "reason": "binary_file_skipped"
+    },
+    {
+      "path": "Agency/Core/editor/__pycache__/persistence.cpython-310.pyc",
+      "reason": "binary_file_skipped"
+    },
+    {
+      "path": "Agency/Core/editor/__pycache__/persistence.cpython-314.pyc",
+      "reason": "binary_file_skipped"
+    },
+    {
+      "path": "Agency/Core/editor/tests/__pycache__/__init__.cpython-310.pyc",
+      "reason": "binary_file_skipped"
+    },
+    {
+      "path": "Agency/Core/editor/tests/__pycache__/test_editor_handoff.cpython-310.pyc",
+      "reason": "binary_file_skipped"
+    },
+    {
+      "path": "Agency/Core/editor/tests/__pycache__/test_task_cli_efficiency.cpython-310.pyc",
+      "reason": "binary_file_skipped"
+    }
+  ],
+  "findings": [
+    {
+      "claim": "Symbol 'execute_editor_task' is defined in Agency/Core/editor/execution.py:556.",
+      "classification": "confirmed",
+      "confidence": "high",
+      "evidence": [
+        {
+          "end_line": 649,
+          "evidence_type": "symbol_definition",
+          "excerpt": "def execute_editor_task(task: EditorTask, *, reject_duplicates: bool = True) -> EditorResult:\n    started_at = now_utc()\n    directory = persistence.task_dir(task.task_id or f\"rejected-{hashlib.sha256(started_at.encode()).hexdigest()[:12]}\")\n    if reject_duplicates and (directory / \"task.json\").exists():\n        return _result(\n            task,\n            status=\"rejected\",\n            play_outcome=\"blocked\",\n            started_at=started_at,\n            persistence_path=stable_path(directory),\n            errors=[{\"code\": \"duplicate_task_id\", \"message\": \"duplicate task IDs do not overwrite prior Editor work.\"}],\n            unresolveds=[{\"classification\": \"unresolved\", \"reason\": \"duplicate_task_id\"}],\n        )\n\n    persistence.append_event(directory / \"events.jsonl\", \"task_received\", ball_holder=task.ball_holder)\n    persistence.persist_task(task, directory)\n    errors = validate_editor_task(task, root=DASHBOARD_ROOT)\n    if errors:\n        result = _rejected_result(task, errors, directory, started_at)\n        persistence.append_event(directory / \"events.jsonl\", \"task_rejected\", errors=errors)\n        persistence.persist_result(result, directory)\n        return result\n    persistence.append_event(directory / \"events.jsonl\", \"task_validated\")\n\n    try:\n        if task.operation == \"inspect\":\n            bundle = _run_inspection(task, directory)\n            status = \"partial\" if bundle.status == \"partial\" else (\"blocked\" if bundle.status in {\"rejected\", \"failed\"} else \"completed\")\n            result = _result(\n                task,\n                status=status,\n                play_outcome=\"returned\" if status in {\"completed\", \"partial\"} else \"blocked\",\n                started_at=started_at,\n                persistence_path=stable_path(directory),\n                evidence_bundle=bundle,\n                observations=[{\"classification\": \"confirmed\", \"claim\": \"Inspection used deterministic repository evidence only; memory retrieval and general model inference were not used.\", \"authority\": \"repository_context_builder\"}],\n                unresolveds=list(bundle.unresolveds),\n                contradictions=list(bundle.contradictions),\n                errors=[] if bundle.status not in {\"rejected\", \"failed\"} else [{\"code\": \"inspection_failed\", \"message\": bundle.status}],\n            )\n        elif task.operation == \"propose_patch\":\n            bundle = _run_inspection(task, directory)\n            if bundle.status in {\"rejected\", \"failed\"}:\n                result = _result(task, status=\"blocked\", play_outcome=\"blocked\", started_at=started_at, persistence_path=stable_path(directory), evidence_bundle=bundle, unresolveds=[{\"classification\": \"unresolved\", \"reason\": \"inspection_failed_before_patch_proposal\"}])\n                persistence.append_event(directory / \"events.jsonl\", \"task_blocked\", reason=\"inspection_failed_before_patch_proposal\")\n            elif not (bundle.findings or bundle.symbols or bundle.references or bundle.imports):\n                result = _result(task, status=\"blocked\", play_outcome=\"blocked\", started_at=started_at, persistence_path=stable_path(directory), evidence_bundle=bundle, unresolveds=[{\"classification\": \"unresolved\", \"reason\": \"insufficient_repository_evidence_for_patch_proposal\"}])\n                persistence.append_event(directory / \"events.jsonl\", \"task_blocked\", reason=\"insufficient_repository_evidence_for_patch_proposal\")\n            else:\n                persistence.append_event(directory / \"events.jsonl\", \"proposal_started\")\n                diff, proposal, changes, unresolveds = _build_patch_proposal(task, bundle)\n                if unresolveds:\n                    result = _result(task, status=\"blocked\", play_outcome=\"blocked\", started_at=started_at, persistence_path=stable_path(directory), evidence_bundle=bundle, unresolveds=unresolveds)\n                    persistence.append_event(directory / \"events.jsonl\", \"task_blocked\", reason=\"proposal_unresolved\")\n                else:\n                    patch_path = directory / \"proposed.patch\"\n                    persistence.atomic_text(patch_path, diff)\n                    proposal[\"proposal_sha256\"] = hashlib.sha256(patch_path.read_bytes()).hexdigest()\n                    persistence.atomic_json(directory / \"proposal.json\", proposal)\n                    result = _result(\n                        task,\n                        status=\"completed\" if bundle.status == \"completed\" else \"partial\",\n                        play_outcome=\"returned\",\n                        started_at=started_at,\n                        persistence_path=stable_path(directory),\n                        evidence_bundle=bundle,\n                        observations=[{\"classification\": \"confirmed\", \"claim\": \"Patch construction is not implementation; no repository source files were changed.\", \"authority\": \"editor_handoff_contract\"}],\n                        proposed_changes=changes,\n                        patch_artifacts=[{\"path\": stable_path(patch_path), \"artifact_type\": \"unified_diff\", \"applied\": False}],\n                        verification_results=[{\"classification\": \"not_repository_verification\", \"claim\": \"The patch artifact was constructed, but repository verification has not run.\"}],\n                        proposal_sha256=proposal[\"proposal_sha256\"],\n                    )\n                    persistence.append_event(directory / \"events.jsonl\", \"proposal_completed\", patch=\"proposed.patch\")\n        elif task.operation == \"apply_patch\":\n            result = _run_apply_patch(task, directory, started_at)\n        elif task.operation == \"verify\":\n            result = _run_verify(task, directory, started_at)\n        else:\n            result = _rejected_result(task, [f\"unknown_operation:{task.operation}\"], directory, started_at)\n    except Exception as exc:\n        result = _result(\n            task,\n            status=\"failed\",\n            play_outcome=\"blocked\",\n            started_at=started_at,\n            persistence_path=stable_path(directory),\n            errors=[{\"code\": \"editor_execution_failed\", \"message\": f\"{type(exc).__name__}: {exc}\"}],\n        )\n        persistence.append_event(directory / \"events.jsonl\", \"task_failed\", error=f\"{type(exc).__name__}: {exc}\")\n\n    persistence.persist_result(result, directory)\n    persistence.append_event(directory / \"events.jsonl\", \"ball_returned\", from_holder=task.editor, to_holder=task.play_owner, result_status=result.status)\n    persistence.append_event(directory / \"events.jsonl\", \"task_returned\", status=result.status, play_outcome=result.play_outcome)\n    return result",
+          "path": "Agency/Core/editor/execution.py",
+          "start_line": 556
+        }
+      ],
+      "id": "finding-001"
+    }
+  ],
+  "generated_at": "2026-07-29T16:05:22Z",
+  "imports": [],
+  "limits": {
+    "configured": {
+      "max_depth": 2,
+      "max_evidence_items": 500,
+      "max_file_bytes": 120000,
+      "max_files": 50,
+      "max_matches": 100,
+      "max_total_context_bytes": 20000
+    },
+    "reached": {
+      "max_depth": false,
+      "max_evidence_items": false,
+      "max_file_bytes": false,
+      "max_files": false,
+      "max_matches": false,
+      "max_total_context_bytes": false
+    }
+  },
+  "negative_results": [],
+  "objective": "Operational review inspect Editor execution path",
+  "operations_performed": [
+    "symbol_definition",
+    "references"
+  ],
+  "parse_failures": [],
+  "persistence_path": "Agency/Agents/Editor/work/Inspections/operational-review-inspect-editor-execution-evidence",
+  "references": [
+    {
+      "classification": "strongly_inferred",
+      "confidence": "medium",
+      "context": "submit_task_file",
+      "evidence": {
+        "end_line": 747,
+        "evidence_type": "call_site",
+        "excerpt": "    return execute_editor_task(task)",
+        "path": "Agency/Core/editor/execution.py",
+        "start_line": 747
+      },
+      "line": 747,
+      "path": "Agency/Core/editor/execution.py",
+      "reference_type": "possible_call_site",
+      "symbol": "execute_editor_task"
+    },
+    {
+      "classification": "confirmed",
+      "confidence": "medium",
+      "context": "submit_task_file",
+      "evidence": {
+        "end_line": 747,
+        "evidence_type": "syntactic_reference",
+        "excerpt": "    return execute_editor_task(task)",
+        "path": "Agency/Core/editor/execution.py",
+        "start_line": 747
+      },
+      "line": 747,
+      "path": "Agency/Core/editor/execution.py",
+      "reference_type": "syntactic_reference",
+      "symbol": "execute_editor_task"
+    },
+    {
+      "classification": "strongly_inferred",
+      "confidence": "medium",
+      "context": "main",
+      "evidence": {
+        "end_line": 847,
+        "evidence_type": "call_site",
+        "excerpt": "        result = execute_editor_task(_make_inspect_task(args))",
+        "path": "Agency/Core/editor/execution.py",
+        "start_line": 847
+      },
+      "line": 847,
+      "path": "Agency/Core/editor/execution.py",
+      "reference_type": "possible_call_site",
+      "symbol": "execute_editor_task"
+    },
+    {
+      "classification": "confirmed",
+      "confidence": "medium",
+      "context": "main",
+      "evidence": {
+        "end_line": 847,
+        "evidence_type": "syntactic_reference",
+        "excerpt": "        result = execute_editor_task(_make_inspect_task(args))",
+        "path": "Agency/Core/editor/execution.py",
+        "start_line": 847
+      },
+      "line": 847,
+      "path": "Agency/Core/editor/execution.py",
+      "reference_type": "syntactic_reference",
+      "symbol": "execute_editor_task"
+    },
+    {
+      "classification": "strongly_inferred",
+      "confidence": "medium",
+      "context": "EditorHandoffTests.create_proposal_and_authorization",
+      "evidence": {
+        "end_line": 81,
+        "evidence_type": "call_site",
+        "excerpt": "        proposal = execution.execute_editor_task(self.proposal_task())",
+        "path": "Agency/Core/editor/tests/test_editor_handoff.py",
+        "start_line": 81
+      },
+      "line": 81,
+      "path": "Agency/Core/editor/tests/test_editor_handoff.py",
+      "reference_type": "possible_call_site",
+      "symbol": "execute_editor_task"
+    },
+    {
+      "classification": "confirmed",
+      "confidence": "medium",
+      "context": "EditorHandoffTests.create_proposal_and_authorization",
+      "evidence": {
+        "end_line": 81,
+        "evidence_type": "attribute_reference",
+        "excerpt": "        proposal = execution.execute_editor_task(self.proposal_task())",
+        "path": "Agency/Core/editor/tests/test_editor_handoff.py",
+        "start_line": 81
+      },
+      "line": 81,
+      "path": "Agency/Core/editor/tests/test_editor_handoff.py",
+      "reference_type": "syntactic_reference",
+      "symbol": "execute_editor_task"
+    },
+    {
+      "classification": "strongly_inferred",
+      "confidence": "medium",
+      "context": "EditorHandoffTests.test_inspect_result_returns_ball_and_evidence",
+      "evidence": {
+        "end_line": 117,
+        "evidence_type": "call_site",
+        "excerpt": "        result = execution.execute_editor_task(self.task())",
+        "path": "Agency/Core/editor/tests/test_editor_handoff.py",
+        "start_line": 117
+      },
+      "line": 117,
+      "path": "Agency/Core/editor/tests/test_editor_handoff.py",
+      "reference_type": "possible_call_site",
+      "symbol": "execute_editor_task"
+    },
+    {
+      "classification": "confirmed",
+      "confidence": "medium",
+      "context": "EditorHandoffTests.test_inspect_result_returns_ball_and_evidence",
+      "evidence": {
+        "end_line": 117,
+        "evidence_type": "attribute_reference",
+        "excerpt": "        result = execution.execute_editor_task(self.task())",
+        "path": "Agency/Core/editor/tests/test_editor_handoff.py",
+        "start_line": 117
+      },
+      "line": 117,
+      "path": "Agency/Core/editor/tests/test_editor_handoff.py",
+      "reference_type": "syntactic_reference",
+      "symbol": "execute_editor_task"
+    },
+    {
+      "classification": "strongly_inferred",
+      "confidence": "medium",
+      "context": "EditorHandoffTests.test_negative_symbol_lookup_returns_negative_evidence",
+      "evidence": {
+        "end_line": 130,
+        "evidence_type": "call_site",
+        "excerpt": "        result = execution.execute_editor_task(self.task(",
+        "path": "Agency/Core/editor/tests/test_editor_handoff.py",
+        "start_line": 130
+      },
+      "line": 130,
+      "path": "Agency/Core/editor/tests/test_editor_handoff.py",
+      "reference_type": "possible_call_site",
+      "symbol": "execute_editor_task"
+    },
+    {
+      "classification": "confirmed",
+      "confidence": "medium",
+      "context": "EditorHandoffTests.test_negative_symbol_lookup_returns_negative_evidence",
+      "evidence": {
+        "end_line": 130,
+        "evidence_type": "attribute_reference",
+        "excerpt": "        result = execution.execute_editor_task(self.task(",
+        "path": "Agency/Core/editor/tests/test_editor_handoff.py",
+        "start_line": 130
+      },
+      "line": 130,
+      "path": "Agency/Core/editor/tests/test_editor_handoff.py",
+      "reference_type": "syntactic_reference",
+      "symbol": "execute_editor_task"
+    },
+    {
+      "classification": "strongly_inferred",
+      "confidence": "medium",
+      "context": "EditorHandoffTests.test_propose_patch_creates_artifact_without_source_mutation",
+      "evidence": {
+        "end_line": 141,
+        "evidence_type": "call_site",
+        "excerpt": "        result = execution.execute_editor_task(self.proposal_task())",
+        "path": "Agency/Core/editor/tests/test_editor_handoff.py",
+        "start_line": 141
+      },
+      "line": 141,
+      "path": "Agency/Core/editor/tests/test_editor_handoff.py",
+      "reference_type": "possible_call_site",
+      "symbol": "execute_editor_task"
+    },
+    {
+      "classification": "confirmed",
+      "confidence": "medium",
+      "context": "EditorHandoffTests.test_propose_patch_creates_artifact_without_source_mutation",
+      "evidence": {
+        "end_line": 141,
+        "evidence_type": "attribute_reference",
+        "excerpt": "        result = execution.execute_editor_task(self.proposal_task())",
+        "path": "Agency/Core/editor/tests/test_editor_handoff.py",
+        "start_line": 141
+      },
+      "line": 141,
+      "path": "Agency/Core/editor/tests/test_editor_handoff.py",
+      "reference_type": "syntactic_reference",
+      "symbol": "execute_editor_task"
+    },
+    {
+      "classification": "strongly_inferred",
+      "confidence": "medium",
+      "context": "EditorHandoffTests.test_malformed_change_intent_returns_guidance_without_artifacts",
+      "evidence": {
+        "end_line": 160,
+        "evidence_type": "call_site",
+        "excerpt": "                result = execution.execute_editor_task(self.task(",
+        "path": "Agency/Core/editor/tests/test_editor_handoff.py",
+        "start_line": 160
+      },
+      "line": 160,
+      "path": "Agency/Core/editor/tests/test_editor_handoff.py",
+      "reference_type": "possible_call_site",
+      "symbol": "execute_editor_task"
+    },
+    {
+      "classification": "confirmed",
+      "confidence": "medium",
+      "context": "EditorHandoffTests.test_malformed_change_intent_returns_guidance_without_artifacts",
+      "evidence": {
+        "end_line": 160,
+        "evidence_type": "attribute_reference",
+        "excerpt": "                result = execution.execute_editor_task(self.task(",
+        "path": "Agency/Core/editor/tests/test_editor_handoff.py",
+        "start_line": 160
+      },
+      "line": 160,
+      "path": "Agency/Core/editor/tests/test_editor_handoff.py",
+      "reference_type": "syntactic_reference",
+      "symbol": "execute_editor_task"
+    },
+    {
+      "classification": "strongly_inferred",
+      "confidence": "medium",
+      "context": "EditorHandoffTests.test_authorization_failures_reject_apply_patch",
+      "evidence": {
+        "end_line": 198,
+        "evidence_type": "call_site",
+        "excerpt": "            result = execution.execute_editor_task(self.task(",
+        "path": "Agency/Core/editor/tests/test_editor_handoff.py",
+        "start_line": 198
+      },
+      "line": 198,
+      "path": "Agency/Core/editor/tests/test_editor_handoff.py",
+      "reference_type": "possible_call_site",
+      "symbol": "execute_editor_task"
+    },
+    {
+      "classification": "confirmed",
+      "confidence": "medium",
+      "context": "EditorHandoffTests.test_authorization_failures_reject_apply_patch",
+      "evidence": {
+        "end_line": 198,
+        "evidence_type": "attribute_reference",
+        "excerpt": "            result = execution.execute_editor_task(self.task(",
+        "path": "Agency/Core/editor/tests/test_editor_handoff.py",
+        "start_line": 198
+      },
+      "line": 198,
+      "path": "Agency/Core/editor/tests/test_editor_handoff.py",
+      "reference_type": "syntactic_reference",
+      "symbol": "execute_editor_task"
+    },
+    {
+      "classification": "strongly_inferred",
+      "confidence": "medium",
+      "context": "EditorHandoffTests.test_authorized_patch_applies_once_and_verification_runs",
+      "evidence": {
+        "end_line": 212,
+        "evidence_type": "call_site",
+        "excerpt": "        result = execution.execute_editor_task(self.task(",
+        "path": "Agency/Core/editor/tests/test_editor_handoff.py",
+        "start_line": 212
+      },
+      "line": 212,
+      "path": "Agency/Core/editor/tests/test_editor_handoff.py",
+      "reference_type": "possible_call_site",
+      "symbol": "execute_editor_task"
+    },
+    {
+      "classification": "confirmed",
+      "confidence": "medium",
+      "context": "EditorHandoffTests.test_authorized_patch_applies_once_and_verification_runs",
+      "evidence": {
+        "end_line": 212,
+        "evidence_type": "attribute_reference",
+        "excerpt": "        result = execution.execute_editor_task(self.task(",
+        "path": "Agency/Core/editor/tests/test_editor_handoff.py",
+        "start_line": 212
+      },
+      "line": 212,
+      "path": "Agency/Core/editor/tests/test_editor_handoff.py",
+      "reference_type": "syntactic_reference",
+      "symbol": "execute_editor_task"
+    },
+    {
+      "classification": "strongly_inferred",
+      "confidence": "medium",
+      "context": "EditorHandoffTests.test_authorized_patch_applies_once_and_verification_runs",
+      "evidence": {
+        "end_line": 230,
+        "evidence_type": "call_site",
+        "excerpt": "        reused = execution.execute_editor_task(self.task(",
+        "path": "Agency/Core/editor/tests/test_editor_handoff.py",
+        "start_line": 230
+      },
+      "line": 230,
+      "path": "Agency/Core/editor/tests/test_editor_handoff.py",
+      "reference_type": "possible_call_site",
+      "symbol": "execute_editor_task"
+    },
+    {
+      "classification": "confirmed",
+      "confidence": "medium",
+      "context": "EditorHandoffTests.test_authorized_patch_applies_once_and_verification_runs",
+      "evidence": {
+        "end_line": 230,
+        "evidence_type": "attribute_reference",
+        "excerpt": "        reused = execution.execute_editor_task(self.task(",
+        "path": "Agency/Core/editor/tests/test_editor_handoff.py",
+        "start_line": 230
+      },
+      "line": 230,
+      "path": "Agency/Core/editor/tests/test_editor_handoff.py",
+      "reference_type": "syntactic_reference",
+      "symbol": "execute_editor_task"
+    },
+    {
+      "classification": "strongly_inferred",
+      "confidence": "medium",
+      "context": "EditorHandoffTests.test_authorized_patch_applies_once_and_verification_runs",
+      "evidence": {
+        "end_line": 242,
+        "evidence_type": "call_site",
+        "excerpt": "        verify = execution.execute_editor_task(self.task(",
+        "path": "Agency/Core/editor/tests/test_editor_handoff.py",
+        "start_line": 242
+      },
+      "line": 242,
+      "path": "Agency/Core/editor/tests/test_editor_handoff.py",
+      "reference_type": "possible_call_site",
+      "symbol": "execute_editor_task"
+    },
+    {
+      "classification": "confirmed",
+      "confidence": "medium",
+      "context": "EditorHandoffTests.test_authorized_patch_applies_once_and_verification_runs",
+      "evidence": {
+        "end_line": 242,
+        "evidence_type": "attribute_reference",
+        "excerpt": "        verify = execution.execute_editor_task(self.task(",
+        "path": "Agency/Core/editor/tests/test_editor_handoff.py",
+        "start_line": 242
+      },
+      "line": 242,
+      "path": "Agency/Core/editor/tests/test_editor_handoff.py",
+      "reference_type": "syntactic_reference",
+      "symbol": "execute_editor_task"
+    },
+    {
+      "classification": "strongly_inferred",
+      "confidence": "medium",
+      "context": "EditorHandoffTests.test_persistence_round_trip_and_cli_submit",
+      "evidence": {
+        "end_line": 254,
+        "evidence_type": "call_site",
+        "excerpt": "        first = execution.execute_editor_task(task)",
+        "path": "Agency/Core/editor/tests/test_editor_handoff.py",
+        "start_line": 254
+      },
+      "line": 254,
+      "path": "Agency/Core/editor/tests/test_editor_handoff.py",
+      "reference_type": "possible_call_site",
+      "symbol": "execute_editor_task"
+    },
+    {
+      "classification": "confirmed",
+      "confidence": "medium",
+      "context": "EditorHandoffTests.test_persistence_round_trip_and_cli_submit",
+      "evidence": {
+        "end_line": 254,
+        "evidence_type": "attribute_reference",
+        "excerpt": "        first = execution.execute_editor_task(task)",
+        "path": "Agency/Core/editor/tests/test_editor_handoff.py",
+        "start_line": 254
+      },
+      "line": 254,
+      "path": "Agency/Core/editor/tests/test_editor_handoff.py",
+      "reference_type": "syntactic_reference",
+      "symbol": "execute_editor_task"
+    },
+    {
+      "classification": "strongly_inferred",
+      "confidence": "medium",
+      "context": "EditorHandoffTests.test_persistence_round_trip_and_cli_submit",
+      "evidence": {
+        "end_line": 255,
+        "evidence_type": "call_site",
+        "excerpt": "        duplicate = execution.execute_editor_task(task)",
+        "path": "Agency/Core/editor/tests/test_editor_handoff.py",
+        "start_line": 255
+      },
+      "line": 255,
+      "path": "Agency/Core/editor/tests/test_editor_handoff.py",
+      "reference_type": "possible_call_site",
+      "symbol": "execute_editor_task"
+    },
+    {
+      "classification": "confirmed",
+      "confidence": "medium",
+      "context": "EditorHandoffTests.test_persistence_round_trip_and_cli_submit",
+      "evidence": {
+        "end_line": 255,
+        "evidence_type": "attribute_reference",
+        "excerpt": "        duplicate = execution.execute_editor_task(task)",
+        "path": "Agency/Core/editor/tests/test_editor_handoff.py",
+        "start_line": 255
+      },
+      "line": 255,
+      "path": "Agency/Core/editor/tests/test_editor_handoff.py",
+      "reference_type": "syntactic_reference",
+      "symbol": "execute_editor_task"
+    }
+  ],
+  "repository_mutation_performed": false,
+  "repository_root": "/home/spaztic/Core/Dashboard",
+  "repository_root_authority": "Agency.Core.foundation.paths.DASHBOARD_ROOT",
+  "request_id": "operational-review-inspect-editor-execution-evidence",
+  "status": "completed",
+  "symbols": [
+    {
+      "classification": "confirmed",
+      "confidence": "high",
+      "definition_kind": "function",
+      "end_line": 649,
+      "evidence": {
+        "end_line": 649,
+        "evidence_type": "symbol_definition",
+        "excerpt": "def execute_editor_task(task: EditorTask, *, reject_duplicates: bool = True) -> EditorResult:\n    started_at = now_utc()\n    directory = persistence.task_dir(task.task_id or f\"rejected-{hashlib.sha256(started_at.encode()).hexdigest()[:12]}\")\n    if reject_duplicates and (directory / \"task.json\").exists():\n        return _result(\n            task,\n            status=\"rejected\",\n            play_outcome=\"blocked\",\n            started_at=started_at,\n            persistence_path=stable_path(directory),\n            errors=[{\"code\": \"duplicate_task_id\", \"message\": \"duplicate task IDs do not overwrite prior Editor work.\"}],\n            unresolveds=[{\"classification\": \"unresolved\", \"reason\": \"duplicate_task_id\"}],\n        )\n\n    persistence.append_event(directory / \"events.jsonl\", \"task_received\", ball_holder=task.ball_holder)\n    persistence.persist_task(task, directory)\n    errors = validate_editor_task(task, root=DASHBOARD_ROOT)\n    if errors:\n        result = _rejected_result(task, errors, directory, started_at)\n        persistence.append_event(directory / \"events.jsonl\", \"task_rejected\", errors=errors)\n        persistence.persist_result(result, directory)\n        return result\n    persistence.append_event(directory / \"events.jsonl\", \"task_validated\")\n\n    try:\n        if task.operation == \"inspect\":\n            bundle = _run_inspection(task, directory)\n            status = \"partial\" if bundle.status == \"partial\" else (\"blocked\" if bundle.status in {\"rejected\", \"failed\"} else \"completed\")\n            result = _result(\n                task,\n                status=status,\n                play_outcome=\"returned\" if status in {\"completed\", \"partial\"} else \"blocked\",\n                started_at=started_at,\n                persistence_path=stable_path(directory),\n                evidence_bundle=bundle,\n                observations=[{\"classification\": \"confirmed\", \"claim\": \"Inspection used deterministic repository evidence only; memory retrieval and general model inference were not used.\", \"authority\": \"repository_context_builder\"}],\n                unresolveds=list(bundle.unresolveds),\n                contradictions=list(bundle.contradictions),\n                errors=[] if bundle.status not in {\"rejected\", \"failed\"} else [{\"code\": \"inspection_failed\", \"message\": bundle.status}],\n            )\n        elif task.operation == \"propose_patch\":\n            bundle = _run_inspection(task, directory)\n            if bundle.status in {\"rejected\", \"failed\"}:\n                result = _result(task, status=\"blocked\", play_outcome=\"blocked\", started_at=started_at, persistence_path=stable_path(directory), evidence_bundle=bundle, unresolveds=[{\"classification\": \"unresolved\", \"reason\": \"inspection_failed_before_patch_proposal\"}])\n                persistence.append_event(directory / \"events.jsonl\", \"task_blocked\", reason=\"inspection_failed_before_patch_proposal\")\n            elif not (bundle.findings or bundle.symbols or bundle.references or bundle.imports):\n                result = _result(task, status=\"blocked\", play_outcome=\"blocked\", started_at=started_at, persistence_path=stable_path(directory), evidence_bundle=bundle, unresolveds=[{\"classification\": \"unresolved\", \"reason\": \"insufficient_repository_evidence_for_patch_proposal\"}])\n                persistence.append_event(directory / \"events.jsonl\", \"task_blocked\", reason=\"insufficient_repository_evidence_for_patch_proposal\")\n            else:\n                persistence.append_event(directory / \"events.jsonl\", \"proposal_started\")\n                diff, proposal, changes, unresolveds = _build_patch_proposal(task, bundle)\n                if unresolveds:\n                    result = _result(task, status=\"blocked\", play_outcome=\"blocked\", started_at=started_at, persistence_path=stable_path(directory), evidence_bundle=bundle, unresolveds=unresolveds)\n                    persistence.append_event(directory / \"events.jsonl\", \"task_blocked\", reason=\"proposal_unresolved\")\n                else:\n                    patch_path = directory / \"proposed.patch\"\n                    persistence.atomic_text(patch_path, diff)\n                    proposal[\"proposal_sha256\"] = hashlib.sha256(patch_path.read_bytes()).hexdigest()\n                    persistence.atomic_json(directory / \"proposal.json\", proposal)\n                    result = _result(\n                        task,\n                        status=\"completed\" if bundle.status == \"completed\" else \"partial\",\n                        play_outcome=\"returned\",\n                        started_at=started_at,\n                        persistence_path=stable_path(directory),\n                        evidence_bundle=bundle,\n                        observations=[{\"classification\": \"confirmed\", \"claim\": \"Patch construction is not implementation; no repository source files were changed.\", \"authority\": \"editor_handoff_contract\"}],\n                        proposed_changes=changes,\n                        patch_artifacts=[{\"path\": stable_path(patch_path), \"artifact_type\": \"unified_diff\", \"applied\": False}],\n                        verification_results=[{\"classification\": \"not_repository_verification\", \"claim\": \"The patch artifact was constructed, but repository verification has not run.\"}],\n                        proposal_sha256=proposal[\"proposal_sha256\"],\n                    )\n                    persistence.append_event(directory / \"events.jsonl\", \"proposal_completed\", patch=\"proposed.patch\")\n        elif task.operation == \"apply_patch\":\n            result = _run_apply_patch(task, directory, started_at)\n        elif task.operation == \"verify\":\n            result = _run_verify(task, directory, started_at)\n        else:\n            result = _rejected_result(task, [f\"unknown_operation:{task.operation}\"], directory, started_at)\n    except Exception as exc:\n        result = _result(\n            task,\n            status=\"failed\",\n            play_outcome=\"blocked\",\n            started_at=started_at,\n            persistence_path=stable_path(directory),\n            errors=[{\"code\": \"editor_execution_failed\", \"message\": f\"{type(exc).__name__}: {exc}\"}],\n        )\n        persistence.append_event(directory / \"events.jsonl\", \"task_failed\", error=f\"{type(exc).__name__}: {exc}\")\n\n    persistence.persist_result(result, directory)\n    persistence.append_event(directory / \"events.jsonl\", \"ball_returned\", from_holder=task.editor, to_holder=task.play_owner, result_status=result.status)\n    persistence.append_event(directory / \"events.jsonl\", \"task_returned\", status=result.status, play_outcome=result.play_outcome)\n    return result",
+        "path": "Agency/Core/editor/execution.py",
+        "start_line": 556
+      },
+      "path": "Agency/Core/editor/execution.py",
+      "qualified_name": "execute_editor_task",
+      "start_line": 556,
+      "symbol": "execute_editor_task"
+    }
+  ],
+  "unresolveds": []
+}

@@ -1,0 +1,9 @@
+tb- tb.tb/p; # Turbine
+
+ww- tb.ww/p; # Water Wheel
+
+wt- tb.wt/p; # Wind Turbine
+
+ht- tb.ht/p; # Hydraulic Turbine
+
+pt- tb.pt/p; # Pneumatic Turbine

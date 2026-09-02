@@ -1,0 +1,437 @@
+{
+  "schema_version": 3,
+  "repository_root": "/home/spaztic/Core/Dashboard",
+  "script_root": "/home/spaztic/Core/Dashboard/UI/Workbench/audit",
+  "generated_at": "2026-07-16T06:59:27.556236+00:00",
+  "rule": "Presence is not capability. Capability requires an observed end-to-end demonstration.",
+  "summary": {
+    "NONE": 1,
+    "PRESENT": 23,
+    "WIRED": 11,
+    "EXECUTABLE": 0,
+    "PASS": 0,
+    "PARTIAL": 1,
+    "FAIL": 0,
+    "UNTESTED": 10
+  },
+  "current_test": {
+    "id": "demo.01",
+    "step": "Launch the current Godot project",
+    "pass_condition": "Workbench opens and remains usable; fatal parser or runtime errors are not present.",
+    "result": "PARTIAL",
+    "evidence": "Godot launched and Workbench visibly rendered with the viewport, object tree, and left-side status panel.",
+    "unresolved": [
+      "Console output was not captured, so absence of parser or runtime errors is not yet established."
+    ]
+  },
+  "checks": [
+    {
+      "id": "repo.run_py",
+      "category": "Runtime",
+      "capability": "Root runtime entrypoint exists",
+      "evidence_level": "PRESENT",
+      "status": "FOUND",
+      "evidence": "run.py",
+      "next_proof": "Run the entrypoint and capture actual output."
+    },
+    {
+      "id": "agency.cli",
+      "category": "Runtime",
+      "capability": "Agency CLI entrypoint exists",
+      "evidence_level": "PRESENT",
+      "status": "FOUND",
+      "evidence": "Agency/Core/cli/dashboard_cli.py",
+      "next_proof": "Run a read-only command and capture output."
+    },
+    {
+      "id": "ui.project",
+      "category": "UI",
+      "capability": "Godot project exists",
+      "evidence_level": "PRESENT",
+      "status": "FOUND",
+      "evidence": "UI/project.godot",
+      "next_proof": "Launch the project and record the actual scene."
+    },
+    {
+      "id": "workbench.main",
+      "category": "UI",
+      "capability": "Workbench boot scene exists",
+      "evidence_level": "PRESENT",
+      "status": "FOUND",
+      "evidence": "UI/Workbench/Main/Main.tscn",
+      "next_proof": "Launch the scene and verify it remains usable."
+    },
+    {
+      "id": "workbench.main_script",
+      "category": "UI",
+      "capability": "Workbench boot script exists",
+      "evidence_level": "PRESENT",
+      "status": "FOUND",
+      "evidence": "UI/Workbench/Main/Main.gd",
+      "next_proof": "Parse and launch the boot scene."
+    },
+    {
+      "id": "workbench.shell_scene",
+      "category": "UI",
+      "capability": "Workbench shell scene exists",
+      "evidence_level": "PRESENT",
+      "status": "FOUND",
+      "evidence": "UI/Workbench/scenes/Workbench.tscn",
+      "next_proof": "Instantiate it through the boot scene."
+    },
+    {
+      "id": "workbench.shell_script",
+      "category": "UI",
+      "capability": "Workbench shell script is canonical",
+      "evidence_level": "PRESENT",
+      "status": "FOUND",
+      "evidence": "UI/Workbench/scenes/Workbench.gd",
+      "next_proof": "Verify it owns shell layout creation."
+    },
+    {
+      "id": "workbench.shell_builder",
+      "category": "UI",
+      "capability": "Workbench shell builder is canonical",
+      "evidence_level": "PRESENT",
+      "status": "FOUND",
+      "evidence": "UI/Workbench/layout/WorkbenchShellBuilder.gd",
+      "next_proof": "Verify only this builder path is loaded."
+    },
+    {
+      "id": "workbench.left_panel",
+      "category": "UI",
+      "capability": "Workbench left audit panel exists",
+      "evidence_level": "PRESENT",
+      "status": "FOUND",
+      "evidence": "UI/Workbench/inspectors/LeftPanel.gd",
+      "next_proof": "Run audit and verify the panel reloads current state."
+    },
+    {
+      "id": "shared.screenshot_controller",
+      "category": "Shared UI",
+      "capability": "Shared screenshot controller exists",
+      "evidence_level": "PRESENT",
+      "status": "FOUND",
+      "evidence": "UI/shared/ScreenshotController.gd",
+      "next_proof": "Press Alt+S and verify output."
+    },
+    {
+      "id": "audit.posix_runner",
+      "category": "Audit",
+      "capability": "Linux audit runner exists",
+      "evidence_level": "PRESENT",
+      "status": "FOUND",
+      "evidence": "UI/Workbench/audit/capability-audit.sh, UI/Workbench/audit/capability_audit.py",
+      "next_proof": "Run it on the black laptop."
+    },
+    {
+      "id": "ui.main_scene",
+      "category": "UI",
+      "capability": "Godot project boots through cockpit router",
+      "evidence_level": "WIRED",
+      "status": "FOUND",
+      "evidence": "run/main_scene=\"res://Main/Main.tscn\"",
+      "next_proof": "Launch the project and record the active route."
+    },
+    {
+      "id": "workbench.route_constant",
+      "category": "UI",
+      "capability": "Workbench route is declared in cockpit router",
+      "evidence_level": "WIRED",
+      "status": "FOUND",
+      "evidence": "UI/Main/Main.gd: ROUTE_WORKBENCH := \"res://Workbench/Main/Main.tscn\"",
+      "next_proof": "Launch the Workbench route."
+    },
+    {
+      "id": "workbench.default_route",
+      "category": "UI",
+      "capability": "Cockpit default remains OperatorShell",
+      "evidence_level": "WIRED",
+      "status": "FOUND",
+      "evidence": "UI/Main/Main.gd: DEFAULT_ROUTE := ROUTE_OPERATOR_SHELL",
+      "next_proof": "Do not embed Workbench into OperatorShell yet."
+    },
+    {
+      "id": "workbench.root_duplicates",
+      "category": "Repository Hygiene",
+      "capability": "Root-level duplicate Workbench scripts are absent",
+      "evidence_level": "NONE",
+      "status": "ABSENT",
+      "evidence": "No root-level duplicate scripts found.",
+      "next_proof": "Keep canonical scripts under Main/scenes/layout."
+    },
+    {
+      "id": "workbench.shell_scene_script",
+      "category": "UI",
+      "capability": "Workbench shell scene uses canonical script",
+      "evidence_level": "WIRED",
+      "status": "FOUND",
+      "evidence": "UI/Workbench/scenes/Workbench.tscn: path=\"res://Workbench/scenes/Workbench.gd\"",
+      "next_proof": "Load the scene."
+    },
+    {
+      "id": "workbench.builder_reference",
+      "category": "UI",
+      "capability": "Workbench shell uses canonical builder",
+      "evidence_level": "WIRED",
+      "status": "FOUND",
+      "evidence": "UI/Workbench/scenes/Workbench.gd: preload(\"res://Workbench/layout/WorkbenchShellBuilder.gd\")",
+      "next_proof": "Load the shell scene."
+    },
+    {
+      "id": "left_panel.audit_state",
+      "category": "Audit",
+      "capability": "Left panel reads stable audit state",
+      "evidence_level": "WIRED",
+      "status": "FOUND",
+      "evidence": "UI/Workbench/inspectors/LeftPanel.gd: res://Workbench/audit/output/capability_state.json",
+      "next_proof": "Run Ctrl+Shift+A and observe reload."
+    },
+    {
+      "id": "audit.hotkey",
+      "category": "Audit",
+      "capability": "Ctrl+Shift+A audit hotkey remains wired",
+      "evidence_level": "WIRED",
+      "status": "FOUND",
+      "evidence": "UI/Workbench/audit/AuditController.gd: event.ctrl_pressed",
+      "next_proof": "Press Ctrl+Shift+A in Workbench."
+    },
+    {
+      "id": "audit.controller_posix",
+      "category": "Audit",
+      "capability": "Audit controller can call Linux runner",
+      "evidence_level": "WIRED",
+      "status": "FOUND",
+      "evidence": "UI/Workbench/audit/AuditController.gd: capability-audit.sh",
+      "next_proof": "Press Ctrl+Shift+A on Linux."
+    },
+    {
+      "id": "shared.screenshot_main",
+      "category": "Shared UI",
+      "capability": "Cockpit uses shared screenshot controller",
+      "evidence_level": "WIRED",
+      "status": "FOUND",
+      "evidence": "UI/Main/Main.gd: res://shared/ScreenshotController.gd",
+      "next_proof": "Press Alt+S in cockpit."
+    },
+    {
+      "id": "shared.screenshot_workbench",
+      "category": "Shared UI",
+      "capability": "Workbench uses shared screenshot controller",
+      "evidence_level": "WIRED",
+      "status": "FOUND",
+      "evidence": "UI/Workbench/Main/Main.gd: res://shared/ScreenshotController.gd",
+      "next_proof": "Press Alt+S in Workbench."
+    },
+    {
+      "id": "ghost.controller",
+      "category": "Ghost Workflow",
+      "capability": "Ghost command controller exists",
+      "evidence_level": "PRESENT",
+      "status": "FOUND",
+      "evidence": "UI/Workbench/interaction/GhostCommandController.gd",
+      "next_proof": "Create one primitive from an operator action."
+    },
+    {
+      "id": "ghost.dialogs",
+      "category": "Ghost Workflow",
+      "capability": "Ghost authoring dialogs exist",
+      "evidence_level": "PRESENT",
+      "status": "FOUND",
+      "evidence": "UI/Workbench/interaction/GhostCommandDialogs.gd",
+      "next_proof": "Open the authoring UI and submit one command."
+    },
+    {
+      "id": "ghost.renderer",
+      "category": "Ghost Workflow",
+      "capability": "Ghost primitive renderer exists",
+      "evidence_level": "PRESENT",
+      "status": "FOUND",
+      "evidence": "UI/Workbench/rendering/GhostPrimitiveRenderer.gd",
+      "next_proof": "Observe a primitive rendered in the viewport."
+    },
+    {
+      "id": "ghost.exporter",
+      "category": "Ghost Workflow",
+      "capability": "Ghost JSON exporter exists",
+      "evidence_level": "PRESENT",
+      "status": "FOUND",
+      "evidence": "UI/Workbench/packet/GhostCommandExporter.gd",
+      "next_proof": "Export one primitive and validate the JSON."
+    },
+    {
+      "id": "packet.loader",
+      "category": "Workbench",
+      "capability": "Packet loader exists",
+      "evidence_level": "PRESENT",
+      "status": "FOUND",
+      "evidence": "UI/Workbench/packet/PacketLoader.gd",
+      "next_proof": "Load a known JSON packet in the running Workbench."
+    },
+    {
+      "id": "packet.display",
+      "category": "Workbench",
+      "capability": "Packet display resolver exists",
+      "evidence_level": "PRESENT",
+      "status": "FOUND",
+      "evidence": "UI/Workbench/packet/PacketDisplayResolver.gd",
+      "next_proof": "Select an object and verify packet details are shown."
+    },
+    {
+      "id": "render.packet_geometry",
+      "category": "Workbench",
+      "capability": "Packet geometry renderer exists",
+      "evidence_level": "PRESENT",
+      "status": "FOUND",
+      "evidence": "UI/Workbench/rendering/PacketGeometryRenderer.gd",
+      "next_proof": "Render geometry from a packet."
+    },
+    {
+      "id": "selection.raycaster",
+      "category": "Workbench",
+      "capability": "Viewport selection code exists",
+      "evidence_level": "PRESENT",
+      "status": "FOUND",
+      "evidence": "UI/Workbench/selection/SelectionRaycaster.gd",
+      "next_proof": "Click a rendered object and observe selection state."
+    },
+    {
+      "id": "session",
+      "category": "Workbench",
+      "capability": "Workbench session state exists",
+      "evidence_level": "PRESENT",
+      "status": "FOUND",
+      "evidence": "UI/Workbench/core/WorkbenchSession.gd",
+      "next_proof": "Load, modify, and reload without losing traceable state."
+    },
+    {
+      "id": "engineering.boat_assembly",
+      "category": "Engineering",
+      "capability": "Active boat assembly generator exists",
+      "evidence_level": "PRESENT",
+      "status": "FOUND",
+      "evidence": "Engineering/Projects/Float/Boat/boat_assembly.py",
+      "next_proof": "Run it successfully and verify generated packet fields."
+    },
+    {
+      "id": "engineering.hull",
+      "category": "Engineering",
+      "capability": "Active hull generation scripts exist",
+      "evidence_level": "PRESENT",
+      "status": "FOUND",
+      "evidence": "Engineering/Projects/Float/Boat/Hull/hull_inventory.py, Engineering/Projects/Float/Boat/Hull/hull_frame.py",
+      "next_proof": "Run each generator and capture outputs and errors."
+    },
+    {
+      "id": "engineering.motor",
+      "category": "Engineering",
+      "capability": "Active motor and battery generators exist",
+      "evidence_level": "PRESENT",
+      "status": "FOUND",
+      "evidence": "Engineering/Projects/Float/Boat/Motor/battery.py, Engineering/Projects/Float/Boat/Motor/motor.py",
+      "next_proof": "Run each generator and verify packet schema."
+    },
+    {
+      "id": "ghost.export_wiring",
+      "category": "Ghost Workflow",
+      "capability": "Workbench export references are present",
+      "evidence_level": "WIRED",
+      "status": "FOUND",
+      "evidence": "UI/Workbench/Main/Main.gd: GhostCommandExporter, UI/Workbench/actions/ProjectActionController.gd: JSON.stringify, UI/Workbench/interaction/GhostCommandController.gd: JSON.stringify, UI/Workbench/packet/GhostCommandExporter.gd: GhostCommandExporter",
+      "next_proof": "Execute export and inspect the file."
+    }
+  ],
+  "smoke_tests": [],
+  "manual_demonstration": [
+    {
+      "id": "demo.01",
+      "step": "Launch the current Godot project",
+      "pass_condition": "Workbench opens and remains usable; fatal parser or runtime errors are not present.",
+      "result": "PARTIAL",
+      "evidence": "Godot launched and Workbench visibly rendered with the viewport, object tree, and left-side status panel.",
+      "unresolved": [
+        "Console output was not captured, so absence of parser or runtime errors is not yet established."
+      ]
+    },
+    {
+      "id": "demo.02",
+      "step": "Create or load an empty room",
+      "pass_condition": "Room is visibly present and has a traceable source.",
+      "result": "UNTESTED",
+      "evidence": "",
+      "unresolved": []
+    },
+    {
+      "id": "demo.03",
+      "step": "Create one ghost primitive",
+      "pass_condition": "Primitive appears in the viewport from an operator action.",
+      "result": "UNTESTED",
+      "evidence": "",
+      "unresolved": []
+    },
+    {
+      "id": "demo.04",
+      "step": "Move, rotate, and scale the primitive",
+      "pass_condition": "Transforms visibly change and persist in candidate state.",
+      "result": "UNTESTED",
+      "evidence": "",
+      "unresolved": []
+    },
+    {
+      "id": "demo.05",
+      "step": "Export the ghost candidate to JSON",
+      "pass_condition": "A new JSON file is written with identity and transforms.",
+      "result": "UNTESTED",
+      "evidence": "",
+      "unresolved": []
+    },
+    {
+      "id": "demo.06",
+      "step": "Validate and inspect the JSON",
+      "pass_condition": "JSON parses and fields match the viewport candidate.",
+      "result": "UNTESTED",
+      "evidence": "",
+      "unresolved": []
+    },
+    {
+      "id": "demo.07",
+      "step": "Edit one JSON field outside Godot",
+      "pass_condition": "The edit is deliberate, parseable, and recorded.",
+      "result": "UNTESTED",
+      "evidence": "",
+      "unresolved": []
+    },
+    {
+      "id": "demo.08",
+      "step": "Reload the edited JSON",
+      "pass_condition": "Workbench reflects the edited field.",
+      "result": "UNTESTED",
+      "evidence": "",
+      "unresolved": []
+    },
+    {
+      "id": "demo.09",
+      "step": "Assign additional object detail",
+      "pass_condition": "Material, type, or metadata can be added without losing base geometry.",
+      "result": "UNTESTED",
+      "evidence": "",
+      "unresolved": []
+    },
+    {
+      "id": "demo.10",
+      "step": "Save and reopen the project state",
+      "pass_condition": "The room and object reconstruct from files, not memory.",
+      "result": "UNTESTED",
+      "evidence": "",
+      "unresolved": []
+    },
+    {
+      "id": "demo.11",
+      "step": "Trace provenance",
+      "pass_condition": "The producing command, file, and code path can be identified.",
+      "result": "UNTESTED",
+      "evidence": "",
+      "unresolved": []
+    }
+  ]
+}

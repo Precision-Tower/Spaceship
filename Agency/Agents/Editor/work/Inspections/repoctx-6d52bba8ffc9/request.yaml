@@ -1,0 +1,65 @@
+RepositoryContextRequest:
+  request_id: repoctx-6d52bba8ffc9
+  objective: Inspect run.py for the agent ask output behavior. --raw
+  include:
+  - run.py
+  exclude:
+  - .git
+  - __pycache__
+  - .pytest_cache
+  - node_modules
+  - .venv
+  - venv
+  - '*_env'
+  - Chroma
+  - memory/Chroma
+  - build
+  - dist
+  - .godot
+  - logs
+  - sessions
+  - '*.pyc'
+  - '*.pyo'
+  - '*.sqlite'
+  - '*.sqlite3'
+  - '*.db'
+  - .env
+  - .env.*
+  - '*.pem'
+  - '*.key'
+  - '*token*'
+  - '*credential*'
+  - '*secret*'
+  operations:
+  - path_discovery
+  - text_search
+  symbols:
+  - run
+  - agent
+  - ask
+  - output
+  - behavior
+  - raw
+  text:
+  - run
+  - agent
+  - ask
+  - output
+  - behavior
+  - raw
+  paths:
+  - run.py
+  limits:
+    max_files: 500
+    max_matches: 500
+    max_file_bytes: 120000
+    max_depth: 2
+    max_total_context_bytes: 40000
+    max_evidence_items: 500
+  output:
+  - evidence_bundle
+  constraints:
+  - read_only
+  - preserve_unknowns
+  - require_line_citations
+  synthesis: false

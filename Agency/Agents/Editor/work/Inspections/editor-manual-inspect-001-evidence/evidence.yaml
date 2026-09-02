@@ -1,0 +1,104 @@
+EvidenceBundle:
+  request_id: editor-manual-inspect-001-evidence
+  status: completed
+  objective: Inspect the Editor agent structure and return grounded evidence.
+  repository_root: /home/spaztic/Core/Dashboard
+  repository_root_authority: Agency.Core.foundation.paths.DASHBOARD_ROOT
+  effective_scope:
+    include:
+    - Agency/Agents/Editor
+    exclude:
+    - Agency/Agents/Editor/memory/Chroma
+    default_exclusions:
+    - .git
+    - __pycache__
+    - .pytest_cache
+    - node_modules
+    - .venv
+    - venv
+    - weebo_env
+    - Chroma
+    - memory/Chroma
+    - build
+    - dist
+    - .godot
+    - logs
+    - sessions
+    - '*.pyc'
+    - '*.pyo'
+    - '*.sqlite'
+    - '*.sqlite3'
+    - '*.db'
+    - .env
+    - .env.*
+    - '*.pem'
+    - '*.key'
+    - '*token*'
+    - '*credential*'
+    - '*secret*'
+  operations_performed:
+  - text_search
+  findings:
+  - id: finding-001
+    claim: Text query 'bounded_repository_editor_agent' matched Agency/Agents/Editor/runtime.yaml:5.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: Agency/Agents/Editor/runtime.yaml
+      start_line: 5
+      end_line: 5
+      excerpt: '    role: bounded_repository_editor_agent'
+      evidence_type: text_search
+      query: bounded_repository_editor_agent
+      match_type: exact_text
+  symbols: []
+  references: []
+  imports: []
+  dependency_edges: []
+  negative_results: []
+  files_examined:
+  - Agency/Agents/Editor/README.md
+  - Agency/Agents/Editor/__init__.py
+  - Agency/Agents/Editor/action_policy.yaml
+  - Agency/Agents/Editor/actions/proposals/.keep
+  - Agency/Agents/Editor/actions/results/.keep
+  - Agency/Agents/Editor/actions/sandbox/.keep
+  - Agency/Agents/Editor/autonomy/autonomy.yaml
+  - Agency/Agents/Editor/editor.py
+  - Agency/Agents/Editor/memory/sources.yaml
+  - Agency/Agents/Editor/mission_bindings.yaml
+  - Agency/Agents/Editor/output_contract.yaml
+  - Agency/Agents/Editor/runtime.yaml
+  - Agency/Agents/Editor/state/README.md
+  - Agency/Agents/Editor/state/agent_state.yaml
+  - Agency/Agents/Editor/state/transition_log.yaml
+  - Agency/Agents/Editor/tests/__init__.py
+  - Agency/Agents/Editor/tests/test_editor_agent.py
+  files_skipped:
+  - path: Agency/Agents/Editor/memory/Chroma/.keep
+    reason: excluded_by_pattern:Agency/Agents/Editor/memory/Chroma
+  - path: Agency/Agents/Editor/__pycache__/__init__.cpython-310.pyc
+    reason: binary_file_skipped
+  - path: Agency/Agents/Editor/__pycache__/editor.cpython-310.pyc
+    reason: binary_file_skipped
+  limits:
+    configured:
+      max_files: 500
+      max_matches: 500
+      max_file_bytes: 120000
+      max_depth: 2
+      max_total_context_bytes: 40000
+      max_evidence_items: 500
+    reached:
+      max_files: false
+      max_matches: false
+      max_file_bytes: false
+      max_depth: false
+      max_total_context_bytes: false
+      max_evidence_items: false
+  parse_failures: []
+  unresolveds: []
+  contradictions: []
+  generated_at: '2026-07-26T18:47:34Z'
+  persistence_path: Agency/Work/Inspections/editor-manual-inspect-001-evidence
+  repository_mutation_performed: false

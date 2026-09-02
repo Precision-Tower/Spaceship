@@ -1,0 +1,11 @@
+# Precision Tower desktop and browser packages.
+# The desktop must remain on-demand and must not own Agency runtime.
+
+xfce4
+xfce4-goodies
+brave-browser
+mesa-utils
+vulkan-tools
+
+UNRESOLVED godot_package_or_binary
+UNRESOLVED nvidia_driver_package

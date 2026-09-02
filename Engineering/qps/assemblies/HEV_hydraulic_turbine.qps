@@ -1,0 +1,127 @@
+HEV_HT_01. HEV_Hydraulic_Turbine: def"Bench-test hydraulic turbine for the Hydraulic Electric Vehicle concept. Upstream hydraulic pressure is developed in the plumbing and released through a controlled straight-line flow path across the outer region of the impeller. The housing directs flow and supports the rotating assembly; it is not intended to serve as the primary pressure vessel.";
+purpose: (
+architecture- "bench_test_component"/a;
+development_stage- "prototype"/a;
+pressure_source- "upstream_plumbing"/a;
+housing_pressure_vessel- false/b;
+);
+assembly: (
+primary_piece_count- 4;
+bottom_housing- "printed"/a;
+top_housing- "printed"/a;
+impeller_shaft- "monolithic_metal_print"/a;
+pulley- "purchased"/a;
+);
+impeller: (
+diameter_in- 10;
+blade_count- 16;
+blade_geometry- "straight_rectangular_radial"/a;
+blade_pitch_deg- 0;
+blade_inner_radius_in-/n;
+blade_outer_radius_in- 5;
+blade_thickness_in-/n;
+blade_height_in-/n;
+shaft_diameter_in- 1;
+shaft_length_in-/n;
+neck_length_in-/n;
+shaft_transition_geometry-/a;
+clearance_min_mm- 0.5;
+clearance_max_mm- 1;
+material-/a;
+);
+flow_path: (
+geometry- "straight"/a;
+application_region- "outer_impeller"/a;
+inlet_diameter_in- 1;
+outlet_diameter_in- 1.5;
+upstream_line_diameter_in- 2;
+active_blades_min- 4;
+active_blades_max- 5;
+channel_center_radius_in-/n;
+channel_width_in-/n;
+channel_height_in-/n;
+channel_angle_deg-/n;
+);
+bottom_housing: (
+shape- "circular"/a;
+depth_in- 3;
+outside_diameter_in-/n;
+wall_thickness_in-/n;
+bearing_pocket_diameter_in-/n;
+bearing_pocket_depth_in-/n;
+bearing_pocket_type- "blind"/a;
+inlet_diameter_in- 1;
+outlet_diameter_in- 1.5;
+gasket_surface_width_in-/n;
+zip_tie_hole_count-/n;
+zip_tie_hole_diameter_in-/n;
+zip_tie_pattern_radius_in-/n;
+material-/a;
+);
+top_housing: (
+shape- "circular"/a;
+depth_in- 1.5;
+outside_diameter_in-/n;
+wall_thickness_in-/n;
+bearing_pocket_diameter_in-/n;
+bearing_pocket_depth_in-/n;
+shaft_opening_diameter_in-/n;
+shaft_seal_type-/a;
+shaft_seal_diameter_in-/n;
+gasket_surface_width_in-/n;
+zip_tie_hole_count-/n;
+zip_tie_hole_diameter_in-/n;
+zip_tie_pattern_radius_in-/n;
+material-/a;
+);
+bearings: (
+quantity- 2;
+bore_diameter_in- 1;
+wet_service- true/b;
+lower_location- "bottom_blind_pocket"/a;
+upper_location- "top_shaft_exit"/a;
+bearing_type-/a;
+outside_diameter_in-/n;
+width_in-/n;
+);
+shaft_seal: (
+required- true/b;
+location- "upper_housing"/a;
+type-/a;
+material-/a;
+dimensions-/a;
+);
+housing_fastening: (
+method- "distributed_zip_tie_flange"/a;
+fastener- "heavy_duty_zip_tie"/a;
+zip_tie_quantity-/n;
+zip_tie_spacing_deg-/n;
+gasket_material-/a;
+gasket_thickness_in-/n;
+gasket_compression-/n;
+);
+pulley: (
+source- "purchased"/a;
+bore_diameter_in- 1;
+diameter_in-/n;
+interface-/a;
+);
+bench_input: (
+inlet_pressure_psi-/n;
+outlet_pressure_psi-/n;
+flow_rate_gpm-/n;
+fluid_temperature-/n;
+);
+bench_output: (
+impeller_rpm-/n;
+shaft_torque-/n;
+shaft_deflection-/n;
+vibration-/n;
+leakage-/n;
+bearing_behavior-/a;
+temperature-/n;
+);
+operating_limits: (
+maximum_pressure_psi-/n;
+maximum_flow_gpm-/n;
+);

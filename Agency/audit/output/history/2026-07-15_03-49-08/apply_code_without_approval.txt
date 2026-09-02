@@ -1,0 +1,4 @@
+=== apply_code_without_approval ===
+command: python3 run.py cmd apply-code --root /home/spaztic/Core/Dashboard --file UI/OperatorShell/DO_NOT_CREATE.txt --code approval gate test
+CRITICAL: Command 'apply-code' requires explicit approval (--approved). Dispatch aborted.
+exit_code: 1

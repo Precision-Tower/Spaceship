@@ -1,0 +1,49 @@
+TaskPacketContract:
+  file: Agency/Core/work/projects/contracts/task_packet.yaml
+  role: task_operating_contract
+  status: v0_1_candidate
+  authority: task_shape_only_not_execution_authority
+  canon: false
+
+  required_fields:
+    - id
+    - goal
+    - mode
+    - allowed_paths
+    - blocked_paths
+    - required_checks
+    - success_condition
+    - stop_conditions
+
+  modes:
+    read_only:
+      allowed:
+        - inspect_files
+        - summarize
+        - report
+      blocked:
+        - write_file
+        - patch
+        - modify_repo
+
+    proposal_only:
+      allowed:
+        - inspect_files
+        - draft_patch
+        - explain_risk
+      blocked:
+        - apply_patch
+        - write_file
+
+    authorized_write:
+      allowed:
+        - write_only_allowed_paths
+      blocked:
+        - write_outside_allowed_paths
+        - mutate_blocked_paths
+
+  prime_rule:
+    - no_task_packet_no_task_operation
+    - task_packet_does_not_override_write_sandbox
+    - allowed_paths_are_scope_not_permission
+    - blocked_paths_win_over_allowed_paths

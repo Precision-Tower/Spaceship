@@ -1,0 +1,44 @@
+{
+  "ball_holder": "Editor",
+  "ball_owner": "Gear",
+  "constraints": {
+    "max_files": 50,
+    "max_matches": 100,
+    "max_total_context_bytes": 20000,
+    "mutation_authorized": false,
+    "read_only": true
+  },
+  "created_at": "2026-07-29T16:05:21Z",
+  "editor": "Editor",
+  "evidence_requirements": [
+    "repository_relative_path",
+    "line_range",
+    "excerpt"
+  ],
+  "issued_by": "Gear",
+  "next_decision_owner": "Gear",
+  "objective": "Operational review inspect Editor execution path",
+  "operation": "inspect",
+  "parent_step_id": null,
+  "play_owner": "Gear",
+  "request": {
+    "repository_context": {
+      "operations": [
+        "symbol_definition",
+        "references"
+      ],
+      "symbols": [
+        "execute_editor_task"
+      ]
+    }
+  },
+  "schema_version": 1,
+  "scope": {
+    "exclude": [],
+    "include": [
+      "Agency/Core/editor"
+    ]
+  },
+  "task_id": "operational-review-inspect-editor-execution",
+  "work_packet_id": null
+}

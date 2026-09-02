@@ -1,0 +1,6 @@
+=== list_packets ===
+command: python3 run.py cmd list-packets
+LIST_PACKETS
+status: missing
+message: Packet registry directory not found
+exit_code: 0

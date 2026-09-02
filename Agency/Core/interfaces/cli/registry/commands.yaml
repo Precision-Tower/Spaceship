@@ -1,0 +1,67 @@
+commands:
+  scan_repo:
+    cli_name: scan-repo
+    authority: read_only
+  git_status:
+    cli_name: git-status
+    authority: read_only
+  propose_directory_diff:
+    cli_name: propose-directory-diff
+    authority: propose_only
+  grant_review:
+    cli_name: grant-review
+    authority: review_only
+  apply_patch:
+    cli_name: apply-patch
+    authority: requires_approval
+  cali_observe_directory:
+    cli_name: cali-observe-directory
+    authority: read_only
+  list_agents:
+    cli_name: list-agents
+    authority: read_only
+  propose_task_packet:
+    cli_name: propose-task-packet
+    authority: propose_only
+  propose_diff:
+    cli_name: propose-diff
+    authority: propose_only
+  runtime_state:
+    cli_name: runtime-state
+    authority: read_only
+  view_latest_diff:
+    cli_name: view-latest-diff
+    authority: read_only
+  grant_review_latest_diff:
+    cli_name: grant-review-latest-diff
+    authority: review_only
+  clear_latest_diff:
+    cli_name: clear-latest-diff
+    authority: maintenance_write
+  list_packets:
+    cli_name: list-packets
+    authority: read_only
+  create_packet:
+    cli_name: create-packet
+    authority: propose_only
+  test_all:
+    cli_name: test-all
+    authority: diagnostic_exec
+  gemini_analyze:
+    cli_name: gemini-analyze
+    authority: propose_only
+  gemini_list_models:
+    cli_name: gemini-list-models
+    authority: read_only
+  read_file:
+    cli_name: read-file
+    authority: read_only
+  apply_code:
+    cli_name: apply-code
+    authority: requires_approval
+  refs:
+    cli_name: refs
+    authority: read_only
+  tree:
+    cli_name: tree
+    authority: read_only

@@ -1,0 +1,35 @@
+﻿{
+  "environment_id": "ghostlab_positive_corner_001",
+  "environment_type": "positive_space_corner",
+  "origin_rule": "build_only_in_positive_xyz_space",
+  "units": "meters",
+  "floor": {
+    "object_id": "env_floor_001",
+    "object_type": "environment_floor",
+    "display_name": "Positive Space Floor",
+    "position": { "x": 5.0, "y": -0.01, "z": 5.0 },
+    "size": { "x": 10.0, "y": 0.02, "z": 10.0 },
+    "primitive": "box",
+    "role": "environment_boundary"
+  },
+  "walls": [
+    {
+      "object_id": "env_wall_x_001",
+      "object_type": "environment_wall",
+      "display_name": "Back Wall Z",
+      "position": { "x": 5.0, "y": 2.5, "z": 0.0 },
+      "size": { "x": 10.0, "y": 5.0, "z": 0.05 },
+      "primitive": "box",
+      "role": "environment_boundary"
+    },
+    {
+      "object_id": "env_wall_z_001",
+      "object_type": "environment_wall",
+      "display_name": "Side Wall X",
+      "position": { "x": 0.0, "y": 2.5, "z": 5.0 },
+      "size": { "x": 0.05, "y": 5.0, "z": 10.0 },
+      "primitive": "box",
+      "role": "environment_boundary"
+    }
+  ]
+}

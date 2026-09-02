@@ -1,0 +1,74 @@
+tb. Turbine: def"A turbine is a device that resolves linear fluid motion into mechanical energy. Its function is governed by the causal relationship: (FD) = (ME).";,
+input: (
+fm-/n;,
+fr-/n;\
+);,
+output: (
+mv-/n;,
+rpm-/n;\
+);,
+type: (
+ww: Water_Wheel: def"A passive turbine driven by ambient liquid flow. No pressure vessel. Resolution is open-air flow into shaft torque.";,
+dimensions: (
+radius-/n;,
+width-/n;,
+blade_count-/n;,
+shaft_radius-/n;,
+shaft_length-/n;,
+slave_radius-/n;,
+slave_width-/n;\
+);\;,
+wt: Wind_Turbine: def"A turbine that resolves ambient wind (fluid momentum) into rotational mechanical energy. Operates in an open field configuration.";,
+dimensions: (
+radius-/n;,
+blade_count-/n;,
+slope-/n;,
+material-/a;,
+shaft_radius-/n;,
+shaft_length-/n;,
+slave_radius-/n;,
+slave_width-/n;\
+);\;,
+ht: Hydraulic_Turbine: def"A pressure-driven turbine using a contained liquid, typically water, to drive an impeller in a housing.";,
+dimensions: (
+housing: (
+inside_diameter-/n;,
+outside_diameter-/n;,
+outside_height-/n;,
+inside_height-/n;,
+inlet-/n;,
+outlet-/n;,
+material-/a;\
+);,
+impeller: (
+radius-/n;,
+blade_count-/n;,
+blade_width-/n;,
+blade_height-/n;,
+shaft_radius-/n;,
+shaft_height-/n;,
+material-/a;\
+);\
+);\;,
+pt: Pneumatic_Turbine: def"A turbine driven by compressed air, using an enclosed impeller to resolve pressure into rotation.";,
+dimensions: (
+housing: (
+inside_diameter-/n;,
+outside_diameter-/n;,
+outside_height-/n;,
+inside_height-/n;,
+inlet-/n;,
+outlet-/n;,
+material-/a;\
+);,
+impeller: (
+radius-/n;,
+blade_count-/n;,
+blade_width-/n;,
+blade_height-/n;,
+shaft_radius-/n;,
+shaft_height-/n;,
+material-/a;\
+);\
+);\;\
+);

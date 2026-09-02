@@ -1,0 +1,45 @@
+{
+  "ball_holder": "Editor",
+  "ball_owner": "Gear",
+  "constraints": {
+    "max_files": 500,
+    "max_matches": 500,
+    "max_total_context_bytes": 40000,
+    "mutation_authorized": false,
+    "read_only": true
+  },
+  "created_at": "2026-07-28T11:23:08Z",
+  "editor": "Editor",
+  "evidence_requirements": [
+    "repository_relative_path",
+    "line_range",
+    "excerpt"
+  ],
+  "issued_by": "Gear",
+  "next_decision_owner": "Gear",
+  "objective": "Inspect Agency/Core/editor",
+  "operation": "inspect",
+  "parent_step_id": null,
+  "play_owner": "Gear",
+  "request": {
+    "repository_context": {
+      "operations": [
+        "symbol_definition",
+        "references"
+      ],
+      "symbols": [
+        "execute_editor_task",
+        "WorkPacket"
+      ]
+    }
+  },
+  "schema_version": 1,
+  "scope": {
+    "exclude": [],
+    "include": [
+      "Agency/Core/editor"
+    ]
+  },
+  "task_id": "editor-inspect-a061a4b3f30f",
+  "work_packet_id": null
+}

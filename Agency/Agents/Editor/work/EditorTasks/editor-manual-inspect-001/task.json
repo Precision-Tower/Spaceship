@@ -1,0 +1,40 @@
+{
+  "ball_holder": "Editor",
+  "ball_owner": "Gear",
+  "constraints": {
+    "mutation_authorized": false,
+    "read_only": true
+  },
+  "created_at": "2026-07-26T18:47:34Z",
+  "editor": "Editor",
+  "evidence_requirements": [
+    "repository_relative_path",
+    "line_range",
+    "excerpt"
+  ],
+  "issued_by": "Gear",
+  "next_decision_owner": "Gear",
+  "objective": "Inspect the Editor agent structure and return grounded evidence.",
+  "operation": "inspect",
+  "parent_step_id": null,
+  "play_owner": "Gear",
+  "request": {
+    "repository_context": {
+      "operations": [
+        "text_search"
+      ],
+      "text": "bounded_repository_editor_agent"
+    }
+  },
+  "schema_version": 1,
+  "scope": {
+    "exclude": [
+      "Agency/Agents/Editor/memory/Chroma"
+    ],
+    "include": [
+      "Agency/Agents/Editor"
+    ]
+  },
+  "task_id": "editor-manual-inspect-001",
+  "work_packet_id": null
+}

@@ -1,0 +1,187 @@
+Workbench.
+Workbench: def"CE-OS whitebox engineering workspace built in Godot. Workbench exposes Engineering spatially and interactively without becoming Engineering truth.";
+
+navigation.
+purpose- "what Workbench is";
+principle- "whitebox interaction and authority boundary";
+structure- "current Workbench implementation surfaces";
+workspace- "operator engineering workspace";
+viewport- "geometry rendering interaction and selection";
+instances- "Design Definition and Design Instance interaction";
+parameters- "QPS parameter discovery and binding";
+geometry- "Engineering geometry visualization";
+ghosts- "candidate authoring intent";
+assemblies- "placement ports and connections";
+simulation- "simulation and playback surfaces";
+interfaces- "Engineering UI OperatorShell and Agency boundaries";
+status- "current implemented capability";
+frontier- "current development edge";
+
+purpose.
+workspace- "interactive Engineering environment";
+inspect- "expose Engineering state to the operator";
+edit- "author engineering intent through explicit interfaces";
+visualize- "display geometry assemblies ports and simulation state";
+operate- "request Engineering actions without silently redefining Engineering";
+
+principle.
+whitebox- "Workbench exposes Engineering structure rather than hiding it";
+engineering_truth- "Workbench does not own Engineering truth";
+cad_truth- "Godot render geometry is not authoritative CAD state";
+intent- "operator interaction produces explicit intent";
+unknowns- "unresolved engineering state remains visible";
+validation- "visualization and interaction do not establish physical validation";
+
+structure.
+root- "UI/Workbench";
+Main- "application bootstrap";
+scenes- "workspace shell and inspectors";
+core- "session project object and value state";
+packet- "packet loading display and candidate export";
+interaction- "camera viewport ghost and simulation interaction";
+rendering- "geometry object port and helper rendering";
+selection- "object and viewport selection";
+widgets- "object tree visibility and workspace controls";
+actions- "project reload regeneration and override requests";
+contracts- "Engineering UI display contracts";
+
+workspace.
+session- "loads and tracks the active engineering workspace";
+objects- "tracks loaded objects";
+selection- "tracks operator selection";
+inspection- "exposes object packet and engineering information";
+layout- "hosts viewport tree inspectors menus and controls";
+
+viewport.
+camera- "operator spatial navigation";
+selection- "viewport object selection";
+rendering- "Engineering geometry projection";
+ports- "engineering interface markers";
+helpers- "coordinates datums and visual aids";
+rule- "rendered geometry is a projection of Engineering state";
+
+qps.
+role- "Workbench should expose QPS structure and unresolved authored state";
+source- "Engineering QPS documents";
+reference- "qps/docs/QPS.qps";
+boundary- "Workbench may edit or bind QPS-backed intent but QPS meaning remains owned by Engineering";
+
+instances.
+definition- "reusable authored Engineering definition";
+instance- "working resolved object derived from a definition";
+rule- "Workbench edits Design Instances rather than silently mutating reusable Design Definitions";
+inspect- "definition identity bindings derived state geometry ports diagnostics and revision";
+
+parameters.
+discovery- "inspect QPS structure for unresolved Items";
+supplied- "show operator supplied values";
+derived- "show Engineering derived values";
+editing- "allow explicit parameter binding";
+rule- "UI fields are representations of bindings and are not themselves authoritative engineering state";
+
+geometry.
+source- "Engineering native geometry";
+backend- "Engineering owns CAD construction";
+display- "Godot";
+render_mesh- "disposable visualization";
+selection- "maps operator interaction back to Engineering semantic identity";
+rule- "Workbench never reconstructs authoritative CAD from the render mesh";
+
+editing.
+gesture- "operator spatial interaction";
+interpretation- "Workbench converts gesture into explicit parameter transform placement or command intent";
+rebuild- "Engineering evaluates and rebuilds authoritative geometry";
+prohibited- "direct render mesh mutation as engineering truth";
+
+ghosts.
+role- "transient candidate authoring";
+state- "ui_ghost_candidate";
+operations- "create move rotate draw and export candidate commands";
+boundary- "ghost object is not an Engineering object";
+boundary- "candidate command is not validated Engineering state";
+
+assemblies.
+components- "Design Instances";
+placement- "operator spatial placement";
+ports- "Engineering interface points";
+connections- "explicit assembly relationships";
+spatial_graph- "physical placement and connectivity";
+functional_graph- "Engineering domain relationships";
+rule- "scene hierarchy does not replace Engineering assembly semantics";
+
+simulation.
+playback- "display recorded or candidate simulation frames";
+visualization- "show state changes over time";
+measurement- "display Engineering or apparatus measurements";
+boundary- "playback does not validate simulation correctness";
+
+diagnostics.
+build- "show Engineering build state";
+features- "show feature state and failures";
+parameters- "show unresolved or invalid bindings";
+geometry- "show native build diagnostics";
+history- "show relevant build and revision history";
+rule- "failed Engineering state remains visible rather than being silently repaired by UI";
+
+current_capabilities.
+session_management- "working";
+visual_shell- "working";
+packet_loading- "working";
+packet_inspection- "working";
+viewport_interaction- "working";
+selection- "working";
+ghost_authoring- "working_candidate_intent";
+project_actions- "working";
+simulation_playback- "working_visualization_surface";
+
+interfaces.
+Engineering: (
+relation- "Workbench consumes Engineering outputs and authors explicit candidate intent";
+boundary- "Engineering may reject modify or replace Workbench intent";
+);
+UI: (
+relation- "Workbench is an engineering workspace within the CE-OS Godot UI";
+boundary- "final project boot and routing relationship remains unresolved";
+);
+OperatorShell: (
+relation- "separate operator command and system workspace";
+boundary- "final navigation relationship remains unresolved";
+);
+Agency: (
+relation- "may automate bounded Workbench and Engineering workflows";
+boundary- "Agency execution does not become Engineering truth";
+);
+
+authority.
+Engineering- "engineering meaning calculation model geometry and validation state";
+Workbench- "operator interaction workspace visualization and explicit intent";
+Godot- "viewport interaction and UI rendering";
+OperatorShell- "system command and development operations";
+Agency- "bounded automation";
+apparatus- "physical measurement";
+
+invariants.
+whitebox- "Engineering state remains inspectable";
+rendering- "visual output is not evidence by itself";
+ghosts- "candidate intent remains distinguishable from Engineering objects";
+definitions- "Design Definitions remain distinct from Design Instances";
+semantic_identity- "selection resolves to stable Engineering meaning rather than raw mesh identity";
+failures- "failed builds do not silently replace last known valid geometry";
+unknowns- "unresolved parameters remain visible";
+ports- "ports represent Engineering interfaces";
+graphs- "assembly spatial and functional relationships remain distinct";
+
+status.
+workspace- "active";
+engineering_consumer- "working";
+packet_workflow- "working_legacy_and_current_support";
+qps_instance_ux- "developing";
+native_geometry_view- "active_frontier";
+assembly_ux- "developing";
+measurement_ux- "future";
+manufacturing_ux- "future";
+project_boot_route- "unresolved";
+
+frontier.
+current- "display and capture Engineering generated native geometry in Godot";
+next- "QPS primitive instantiation unresolved parameter UX feature inspection rebuild diagnostics ports and assemblies";

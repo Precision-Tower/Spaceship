@@ -1,0 +1,23 @@
+pus. Pulley_System: def"A mass-centric device that creates angular momentum and can multiply force. Used from belt driven devices to linear applications like cranes.";
+input: (
+mv-/n;
+rpm-/n;
+);
+output: (
+mv-/n;
+rpm-/n;
+);
+dimensions: (
+master: (
+radius-/n;
+width-/n;
+depth-/n;
+material-/a;
+);
+slave: (
+radius-/n;
+width-/n;
+depth-/n;
+material-/a;
+);
+);

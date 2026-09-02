@@ -1,0 +1,21 @@
+=== refs_operator_shell ===
+command: python3 run.py cmd refs OperatorShell
+Traceback (most recent call last):
+  File "/home/spaztic/Core/Dashboard/run.py", line 1042, in <module>
+    raise SystemExit(main())
+  File "/home/spaztic/Core/Dashboard/run.py", line 1032, in main
+    return run_cli_command(args.command)
+  File "/home/spaztic/Core/Dashboard/run.py", line 72, in run_cli_command
+    result = run_command(command)
+  File "/home/spaztic/Core/Dashboard/Agency/Core/cli/dashboard_cli.py", line 227, in run_command
+    return CommandValidator.validate_and_dispatch(args)
+  File "/home/spaztic/Core/Dashboard/Agency/Core/cli/dashboard_cli.py", line 75, in validate_and_dispatch
+    args.func(args)
+  File "/home/spaztic/Core/Dashboard/Agency/Core/cli/commands/navigation_commands.py", line 33, in run
+    text = path.read_text(encoding="utf-8", errors="replace")
+  File "/home/spaztic/miniconda3/envs/weebo_env/lib/python3.10/pathlib.py", line 1135, in read_text
+    return f.read()
+KeyboardInterrupt
+exit_code: 130
+result: INTERRUPTED
+observation: Command did not complete in a reasonable time and was manually stopped.

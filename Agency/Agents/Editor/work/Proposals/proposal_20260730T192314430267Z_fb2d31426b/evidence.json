@@ -1,0 +1,44 @@
+{
+  "proposal_id": "proposal_20260730T192314430267Z_fb2d31426b",
+  "inspected_files": [
+    {
+      "path": "UI/OperatorShell/runtime/CliBridge.gd",
+      "bytes": 5152,
+      "lines": 165
+    }
+  ],
+  "skipped_files": [],
+  "validated_scopes": [
+    {
+      "input": "UI/OperatorShell/runtime/CliBridge.gd",
+      "resolved": "/home/spaztic/Core/Dashboard/UI/OperatorShell/runtime/CliBridge.gd",
+      "relative": "UI/OperatorShell/runtime/CliBridge.gd",
+      "kind": "file"
+    }
+  ],
+  "generated_artifacts": {
+    "proposal_json": "Agency/Agents/Editor/work/Proposals/proposal_20260730T192314430267Z_fb2d31426b/proposal.json",
+    "proposed_diff": "Agency/Agents/Editor/work/Proposals/proposal_20260730T192314430267Z_fb2d31426b/proposed.diff",
+    "evidence_json": "Agency/Agents/Editor/work/Proposals/proposal_20260730T192314430267Z_fb2d31426b/evidence.json",
+    "scratch_diff_target": "Agency/Agents/Editor/work/Proposals/proposal_20260730T192314430267Z_fb2d31426b/proposal_scratch.txt"
+  },
+  "diff_target_validation": {
+    "status": "valid",
+    "targets": [
+      "Agency/Agents/Editor/work/Proposals/proposal_20260730T192314430267Z_fb2d31426b/proposal_scratch.txt"
+    ],
+    "proposal_owned_targets": [
+      "Agency/Agents/Editor/work/Proposals/proposal_20260730T192314430267Z_fb2d31426b/proposal_scratch.txt"
+    ],
+    "source_targets": [],
+    "invalid_targets": []
+  },
+  "source_files_modified": false,
+  "limitations": [
+    "Deterministic placeholder generator only; no AI model was called.",
+    "The generated diff targets only a proposal-owned scratch file.",
+    "No apply behavior is implemented by this command.",
+    "No application source file changes are proposed in this implementation."
+  ],
+  "no_source_files_modified_statement": "No source files were modified; this command wrote only proposal artifacts inside the proposal directory."
+}

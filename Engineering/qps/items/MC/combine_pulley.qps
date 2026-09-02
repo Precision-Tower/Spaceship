@@ -1,0 +1,23 @@
+cbp. Combine_Pulley: def"A mass-centric article that uses two pulleys that spin the same rpm with different circumferences.";
+input: (
+mv-/n;
+rpm-/n;
+);
+output: (
+mv-/n;
+rpm-/n;
+);
+dimensions: (
+master: (
+radius-/n;
+width-/n;
+depth-/n;
+material-/a;
+);
+slave: (
+radius-/n;
+width-/n;
+depth-/n;
+material-/a;
+);
+);

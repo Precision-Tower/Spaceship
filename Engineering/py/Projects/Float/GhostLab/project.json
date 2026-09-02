@@ -1,0 +1,13 @@
+﻿{
+  "project_id": "float_ghostlab",
+  "project_name": "GhostLab",
+  "project_type": "ghost_layout",
+  "version": "0.1",
+  "evidence_state": "operator_intent",
+  "objects_path": "objects.json",
+  "topology_path": "topology.json",
+  "environment_path": "environment.json",
+  "save_state_path": "working_state.json",
+  "root_label": "GhostLab",
+  "space_rule": "positive_coordinates_only"
+}

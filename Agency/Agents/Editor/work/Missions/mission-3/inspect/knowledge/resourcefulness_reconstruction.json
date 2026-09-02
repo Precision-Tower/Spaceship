@@ -1,0 +1,480 @@
+{
+  "schema_version": 1,
+  "mission_id": "mission-3",
+  "created_at": "2026-08-13T10:00:56.753573+00:00",
+  "strategy": "reconstruct",
+  "authority": "bounded_self_diagnosis_from_existing_inspection",
+  "source_files_modified": false,
+  "diagnosis": {
+    "proposal_ready": false,
+    "reason": "inspection_assessment.sufficient_for_proposal is false; route_ownership has partial inspection evidence and still needs planning review.; workspace_host has partial inspection evidence and still needs planning review.",
+    "inspection_complete": true,
+    "inspection_passes": 1,
+    "files_inspected": 1,
+    "observations": 82
+  },
+  "architecture_evidence": {
+    "route_ownership": {
+      "status": "partial",
+      "paths": [
+        {
+          "path": "Agency/Core/work/missions/mission_runtime.py",
+          "reason": "inspected route-related path or marker",
+          "signals": [
+            "file_inspected",
+            "symbol"
+          ],
+          "observations": [
+            {
+              "observation_id": "obs-001-03",
+              "kind": "file_inspected",
+              "pass": 1,
+              "path": "Agency/Core/work/missions/mission_runtime.py"
+            },
+            {
+              "observation_id": "obs-001-04",
+              "kind": "symbol",
+              "pass": 1,
+              "path": "Agency/Core/work/missions/mission_runtime.py",
+              "name": "MissionOperationError"
+            },
+            {
+              "observation_id": "obs-001-05",
+              "kind": "symbol",
+              "pass": 1,
+              "path": "Agency/Core/work/missions/mission_runtime.py",
+              "name": "__init__"
+            },
+            {
+              "observation_id": "obs-001-06",
+              "kind": "symbol",
+              "pass": 1,
+              "path": "Agency/Core/work/missions/mission_runtime.py",
+              "name": "_noop_refresh_pinboard"
+            },
+            {
+              "observation_id": "obs-001-07",
+              "kind": "symbol",
+              "pass": 1,
+              "path": "Agency/Core/work/missions/mission_runtime.py",
+              "name": "_refresh_callback"
+            }
+          ]
+        }
+      ]
+    },
+    "workspace_host": {
+      "status": "partial",
+      "paths": [
+        {
+          "path": "Agency/Core/work/missions/mission_runtime.py",
+          "reason": "inspected workspace-related path or marker",
+          "signals": [
+            "file_inspected",
+            "symbol"
+          ],
+          "observations": [
+            {
+              "observation_id": "obs-001-03",
+              "kind": "file_inspected",
+              "pass": 1,
+              "path": "Agency/Core/work/missions/mission_runtime.py"
+            },
+            {
+              "observation_id": "obs-001-04",
+              "kind": "symbol",
+              "pass": 1,
+              "path": "Agency/Core/work/missions/mission_runtime.py",
+              "name": "MissionOperationError"
+            },
+            {
+              "observation_id": "obs-001-05",
+              "kind": "symbol",
+              "pass": 1,
+              "path": "Agency/Core/work/missions/mission_runtime.py",
+              "name": "__init__"
+            },
+            {
+              "observation_id": "obs-001-06",
+              "kind": "symbol",
+              "pass": 1,
+              "path": "Agency/Core/work/missions/mission_runtime.py",
+              "name": "_noop_refresh_pinboard"
+            },
+            {
+              "observation_id": "obs-001-07",
+              "kind": "symbol",
+              "pass": 1,
+              "path": "Agency/Core/work/missions/mission_runtime.py",
+              "name": "_refresh_callback"
+            }
+          ]
+        }
+      ]
+    },
+    "workbench_root": {
+      "status": "partial",
+      "paths": [
+        {
+          "path": "Agency/Core/work/missions/mission_runtime.py",
+          "reason": "inspected Workbench path or marker",
+          "signals": [
+            "file_inspected",
+            "symbol"
+          ],
+          "observations": [
+            {
+              "observation_id": "obs-001-03",
+              "kind": "file_inspected",
+              "pass": 1,
+              "path": "Agency/Core/work/missions/mission_runtime.py"
+            },
+            {
+              "observation_id": "obs-001-04",
+              "kind": "symbol",
+              "pass": 1,
+              "path": "Agency/Core/work/missions/mission_runtime.py",
+              "name": "MissionOperationError"
+            },
+            {
+              "observation_id": "obs-001-05",
+              "kind": "symbol",
+              "pass": 1,
+              "path": "Agency/Core/work/missions/mission_runtime.py",
+              "name": "__init__"
+            },
+            {
+              "observation_id": "obs-001-06",
+              "kind": "symbol",
+              "pass": 1,
+              "path": "Agency/Core/work/missions/mission_runtime.py",
+              "name": "_noop_refresh_pinboard"
+            },
+            {
+              "observation_id": "obs-001-07",
+              "kind": "symbol",
+              "pass": 1,
+              "path": "Agency/Core/work/missions/mission_runtime.py",
+              "name": "_refresh_callback"
+            }
+          ]
+        }
+      ]
+    },
+    "creation_lifecycle": {
+      "status": "partial",
+      "paths": [
+        {
+          "path": "Agency/Core/work/missions/mission_runtime.py",
+          "reason": "inspected creation lifecycle marker",
+          "signals": [
+            "file_inspected",
+            "symbol"
+          ],
+          "observations": [
+            {
+              "observation_id": "obs-001-03",
+              "kind": "file_inspected",
+              "pass": 1,
+              "path": "Agency/Core/work/missions/mission_runtime.py"
+            },
+            {
+              "observation_id": "obs-001-04",
+              "kind": "symbol",
+              "pass": 1,
+              "path": "Agency/Core/work/missions/mission_runtime.py",
+              "name": "MissionOperationError"
+            },
+            {
+              "observation_id": "obs-001-05",
+              "kind": "symbol",
+              "pass": 1,
+              "path": "Agency/Core/work/missions/mission_runtime.py",
+              "name": "__init__"
+            },
+            {
+              "observation_id": "obs-001-06",
+              "kind": "symbol",
+              "pass": 1,
+              "path": "Agency/Core/work/missions/mission_runtime.py",
+              "name": "_noop_refresh_pinboard"
+            },
+            {
+              "observation_id": "obs-001-07",
+              "kind": "symbol",
+              "pass": 1,
+              "path": "Agency/Core/work/missions/mission_runtime.py",
+              "name": "_refresh_callback"
+            }
+          ]
+        }
+      ]
+    },
+    "cleanup_lifecycle": {
+      "status": "partial",
+      "paths": [
+        {
+          "path": "Agency/Core/work/missions/mission_runtime.py",
+          "reason": "inspected cleanup lifecycle marker",
+          "signals": [
+            "file_inspected",
+            "symbol"
+          ],
+          "observations": [
+            {
+              "observation_id": "obs-001-03",
+              "kind": "file_inspected",
+              "pass": 1,
+              "path": "Agency/Core/work/missions/mission_runtime.py"
+            },
+            {
+              "observation_id": "obs-001-04",
+              "kind": "symbol",
+              "pass": 1,
+              "path": "Agency/Core/work/missions/mission_runtime.py",
+              "name": "MissionOperationError"
+            },
+            {
+              "observation_id": "obs-001-05",
+              "kind": "symbol",
+              "pass": 1,
+              "path": "Agency/Core/work/missions/mission_runtime.py",
+              "name": "__init__"
+            },
+            {
+              "observation_id": "obs-001-06",
+              "kind": "symbol",
+              "pass": 1,
+              "path": "Agency/Core/work/missions/mission_runtime.py",
+              "name": "_noop_refresh_pinboard"
+            },
+            {
+              "observation_id": "obs-001-07",
+              "kind": "symbol",
+              "pass": 1,
+              "path": "Agency/Core/work/missions/mission_runtime.py",
+              "name": "_refresh_callback"
+            }
+          ]
+        }
+      ]
+    },
+    "expected_modified_files": {
+      "status": "partial",
+      "paths": [
+        {
+          "path": "Agency/Core/work/missions/mission_runtime.py",
+          "reason": "primary engineering source inspected",
+          "signals": [
+            "file_inspected",
+            "symbol"
+          ],
+          "observations": [
+            {
+              "observation_id": "obs-001-03",
+              "kind": "file_inspected",
+              "pass": 1,
+              "path": "Agency/Core/work/missions/mission_runtime.py"
+            },
+            {
+              "observation_id": "obs-001-04",
+              "kind": "symbol",
+              "pass": 1,
+              "path": "Agency/Core/work/missions/mission_runtime.py",
+              "name": "MissionOperationError"
+            },
+            {
+              "observation_id": "obs-001-05",
+              "kind": "symbol",
+              "pass": 1,
+              "path": "Agency/Core/work/missions/mission_runtime.py",
+              "name": "__init__"
+            },
+            {
+              "observation_id": "obs-001-06",
+              "kind": "symbol",
+              "pass": 1,
+              "path": "Agency/Core/work/missions/mission_runtime.py",
+              "name": "_noop_refresh_pinboard"
+            },
+            {
+              "observation_id": "obs-001-07",
+              "kind": "symbol",
+              "pass": 1,
+              "path": "Agency/Core/work/missions/mission_runtime.py",
+              "name": "_refresh_callback"
+            }
+          ]
+        }
+      ]
+    },
+    "verification_surfaces": {
+      "status": "partial",
+      "paths": [
+        {
+          "path": "Agency/Core/work/missions/mission_runtime.py",
+          "reason": "inspected verification-related path or marker",
+          "signals": [
+            "file_inspected",
+            "symbol"
+          ],
+          "observations": [
+            {
+              "observation_id": "obs-001-03",
+              "kind": "file_inspected",
+              "pass": 1,
+              "path": "Agency/Core/work/missions/mission_runtime.py"
+            },
+            {
+              "observation_id": "obs-001-04",
+              "kind": "symbol",
+              "pass": 1,
+              "path": "Agency/Core/work/missions/mission_runtime.py",
+              "name": "MissionOperationError"
+            },
+            {
+              "observation_id": "obs-001-05",
+              "kind": "symbol",
+              "pass": 1,
+              "path": "Agency/Core/work/missions/mission_runtime.py",
+              "name": "__init__"
+            },
+            {
+              "observation_id": "obs-001-06",
+              "kind": "symbol",
+              "pass": 1,
+              "path": "Agency/Core/work/missions/mission_runtime.py",
+              "name": "_noop_refresh_pinboard"
+            },
+            {
+              "observation_id": "obs-001-07",
+              "kind": "symbol",
+              "pass": 1,
+              "path": "Agency/Core/work/missions/mission_runtime.py",
+              "name": "_refresh_callback"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "relationships": [
+    {
+      "source": "Agency/Core/work/missions/mission_runtime.py",
+      "target": "__future__:annotations",
+      "observation_id": "obs-001-54",
+      "pass": 1
+    },
+    {
+      "source": "Agency/Core/work/missions/mission_runtime.py",
+      "target": "argparse",
+      "observation_id": "obs-001-55",
+      "pass": 1
+    },
+    {
+      "source": "Agency/Core/work/missions/mission_runtime.py",
+      "target": "contextlib",
+      "observation_id": "obs-001-56",
+      "pass": 1
+    },
+    {
+      "source": "Agency/Core/work/missions/mission_runtime.py",
+      "target": "io",
+      "observation_id": "obs-001-57",
+      "pass": 1
+    },
+    {
+      "source": "Agency/Core/work/missions/mission_runtime.py",
+      "target": "json",
+      "observation_id": "obs-001-58",
+      "pass": 1
+    },
+    {
+      "source": "Agency/Core/work/missions/mission_runtime.py",
+      "target": "os",
+      "observation_id": "obs-001-59",
+      "pass": 1
+    },
+    {
+      "source": "Agency/Core/work/missions/mission_runtime.py",
+      "target": "re",
+      "observation_id": "obs-001-60",
+      "pass": 1
+    },
+    {
+      "source": "Agency/Core/work/missions/mission_runtime.py",
+      "target": "subprocess",
+      "observation_id": "obs-001-61",
+      "pass": 1
+    },
+    {
+      "source": "Agency/Core/work/missions/mission_runtime.py",
+      "target": "sys",
+      "observation_id": "obs-001-62",
+      "pass": 1
+    },
+    {
+      "source": "Agency/Core/work/missions/mission_runtime.py",
+      "target": "time",
+      "observation_id": "obs-001-63",
+      "pass": 1
+    },
+    {
+      "source": "Agency/Core/work/missions/mission_runtime.py",
+      "target": "datetime:datetime, timezone",
+      "observation_id": "obs-001-64",
+      "pass": 1
+    },
+    {
+      "source": "Agency/Core/work/missions/mission_runtime.py",
+      "target": "pathlib:Path",
+      "observation_id": "obs-001-65",
+      "pass": 1
+    },
+    {
+      "source": "Agency/Core/work/missions/mission_runtime.py",
+      "target": "typing:Any, Callable",
+      "observation_id": "obs-001-66",
+      "pass": 1
+    },
+    {
+      "source": "Agency/Core/work/missions/mission_runtime.py",
+      "target": "Agency.Core.work.planning:mission_planning as _mission_planning",
+      "observation_id": "obs-001-67",
+      "pass": 1
+    },
+    {
+      "source": "Agency/Core/work/missions/mission_runtime.py",
+      "target": "Agency.Core.work.planning:proposal_generation as _proposal_generation",
+      "observation_id": "obs-001-68",
+      "pass": 1
+    },
+    {
+      "source": "Agency/Core/work/missions/mission_runtime.py",
+      "target": "Agency.Core.work.missions.pipeline.review.execution:(",
+      "observation_id": "obs-001-69",
+      "pass": 1
+    },
+    {
+      "source": "Agency/Core/work/missions/mission_runtime.py",
+      "target": "Agency.Core.runtime.commands:mission_command",
+      "observation_id": "obs-001-70",
+      "pass": 1
+    },
+    {
+      "source": "Agency/Core/work/missions/mission_runtime.py",
+      "target": "Agency.Core.work.missions.pipeline.review.helpers:(",
+      "observation_id": "obs-001-71",
+      "pass": 1
+    }
+  ],
+  "unresolved": [
+    "route_ownership has partial inspection evidence and still needs planning review.",
+    "workspace_host has partial inspection evidence and still needs planning review.",
+    "workbench_root has partial inspection evidence and still needs planning review.",
+    "creation_lifecycle has partial inspection evidence and still needs planning review.",
+    "cleanup_lifecycle has partial inspection evidence and still needs planning review.",
+    "expected_modified_files has partial inspection evidence and still needs planning review.",
+    "verification_surfaces has partial inspection evidence and still needs planning review."
+  ]
+}

@@ -1,0 +1,95 @@
+RepositoryContextRequest:
+  request_id: repoctx-77a49ced0ff4
+  objective: 'Inspect Agency/Core/planning/prompting.py.
+
+
+    Report only:
+
+    1. Whether you can access the file.
+
+    2. A one-paragraph description of its responsibility.
+
+    3. Whether you believe any changes are required.
+
+
+    Do not create a mission.
+
+    Do not propose edits.
+
+    Do not generate patches.
+
+    Do not modify anything.'
+  include:
+  - Agency/Core/planning/prompting.py
+  exclude:
+  - .git
+  - __pycache__
+  - .pytest_cache
+  - node_modules
+  - .venv
+  - venv
+  - '*_env'
+  - Chroma
+  - memory/Chroma
+  - build
+  - dist
+  - .godot
+  - logs
+  - sessions
+  - '*.pyc'
+  - '*.pyo'
+  - '*.sqlite'
+  - '*.sqlite3'
+  - '*.db'
+  - .env
+  - .env.*
+  - '*.pem'
+  - '*.key'
+  - '*token*'
+  - '*credential*'
+  - '*secret*'
+  operations:
+  - path_discovery
+  - text_search
+  symbols:
+  - planning
+  - prompting
+  - Report
+  - only
+  - you
+  - can
+  - access
+  - file
+  - one
+  - paragraph
+  - description
+  - its
+  text:
+  - planning
+  - prompting
+  - Report
+  - only
+  - you
+  - can
+  - access
+  - file
+  - one
+  - paragraph
+  - description
+  - its
+  paths:
+  - Agency/Core/planning/prompting.py
+  limits:
+    max_files: 500
+    max_matches: 500
+    max_file_bytes: 120000
+    max_depth: 2
+    max_total_context_bytes: 40000
+    max_evidence_items: 500
+  output:
+  - evidence_bundle
+  constraints:
+  - read_only
+  - preserve_unknowns
+  - require_line_citations
+  synthesis: false

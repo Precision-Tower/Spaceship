@@ -1,0 +1,25 @@
+designs:
+DWT.qps: Driven Wind Turbine (DWT),
+EDS.qps: Eco-Distillation System (EDS),
+HEV.qps: Hydraulic-Electric Vehicle (HEV),
+HEWW.qps: Hydro-Electric Water Wheel (HEWW),
+ICE.qps: Internal Combustion Engine (ICE);
+
+items:
+(Ec_com.qps:
+Alternator (alt),
+Electric Motor (em),
+Electric Water Pump (ewp);)
+(FD_com.qps:
+(Turbine (tb):
+Water Wheel (ww),
+Wind Turbine (wt),
+Hydraulic Turbine (ht),
+Pneumatic Turbine (pt);))
+(MC_com.qps:
+Pulley (pu),
+Combine Pulley (cbp),
+Pulley System (pus),
+Gear (gr),
+Combine Gear (cgr),
+Gear Train (gt);)

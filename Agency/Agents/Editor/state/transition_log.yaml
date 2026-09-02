@@ -1,0 +1,5 @@
+TransitionLog:
+  owner: Editor
+  kind: agent
+  authority: transition_history_not_truth
+  events: []

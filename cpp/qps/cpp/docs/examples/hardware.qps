@@ -1,0 +1,218 @@
+# External Library Interfaces (Conceptual)
+# These are NOT in this file. They represent separate .grav library files
+# that your Gravitus Principia engine would use to bind to external Python/C++ libraries.
+#
+# Example content for 'libs/os_env.grav':
+#   -func get_env_var. [>var_name]. { # C++ binding to os.environ.get(var_name) };
+#   -func set_env_var. [>var_name, >value]. { # C++ binding to os.environ[var_name] = value };
+#
+# Example content for 'libs/torch_cuda.grav':
+#   -func is_available. []. { # C++ binding to torch.cuda.is_available() };
+#   -func device_count. []. { # C++ binding to torch.cuda.device_count() };
+#   -func get_device_properties. [>device_index]. { # C++ binding to torch.cuda.get_device_properties() };
+#   -func is_bf16_supported. []. { # C++ binding to torch.cuda.is_bf16_supported() };
+#   # Assuming device properties are returned as a dictionary-like structure
+#
+# Example content for 'libs/psutil_mem.grav':
+#   -func get_virtual_memory_total. []. { # C++ binding to psutil.virtual_memory().total };
+#
+# Example content for 'libs/torch_types.grav':
+#   -func bfloat16. []. { # C++ binding for torch.bfloat16 type constant };
+#   -func float16. []. { # C++ binding for torch.float16 type constant };
+#   -func float32. []. { # C++ binding for torch.float32 type constant };
+#
+# Example for a utility/standard library 'utils/math.grav':
+#   -func round. [>input, >decimals]. { # C++ binding for rounding function };
+#   -func dict_get. [>dict_ref, >key, >default_val]. { # C++ binding for dictionary .get() method };
+#   -func dict_merge. [>dest_dict, >src_dict]. { # C++ binding for dictionary .update() method };
+
+
+# Class: Hardware (Equivalent to process/device.py::Hardware)
+class- Hardware. {
+# Class Instance Variables (equivalent to self.config_data, self.hardware_info, etc.)
+# These are declared within the class's scope.
+# The class acts as a container for these variables, accessible via dot notation.
+
+config_data: [1:]; # Will hold the passed config (a dictionary)
+hardware_info: ( # Term to hold detected hardware info (equivalent to self.hardware_info)
+runtime_env: null/a;;
+cuda_available: false/b;;
+backend: null/a;;
+prefer_bf16: false/b;;
+force_cpu_offload: false/b;; # Not used in python code, but kept
+cuda_device_count: 0/n;;
+gpu_name: null/a;;
+gpu_total_memory_gb: null/n;;
+system_ram_gb: null/n;;
+device: null/a;; # Added here
+);
+runtime_env- null/a;; # An Item- (simple variable) for self.runtime_env
+launch_target- null/a;; # An Item- (simple variable) for self.launch_target
+
+
+# Method: run (Equivalent to self.run())
+-func run. [>initial_config_dict]. { # Accepts the config dictionary by reference
+# Alias for easier access to the passed config within methods
+-let current_config_ref: [>initial_config_dict];
+# Alias for easier access to the class's hardware_info Term
+-let class_hw_info_ref: hardware_info;
+
+# Call the private methods, passing references to the config and hardware_info
+# Note: In Gravitus, methods implicitly access class instance variables if not shadowed by local vars.
+# However, passing references for clarity and potential modification is good practice.
+-func _detect_runtime. [>current_config_ref, >class_hw_info_ref];
+-func _detect_hardware. [>current_config_ref, >class_hw_info_ref];
+-func _inject_configs. [>current_config_ref, >class_hw_info_ref];
+-func _adjust_dtype. [>current_config_ref, >class_hw_info_ref];
+
+# After run() completes, the 'hardware_info' Term within the class instance
+# and the 'initial_config_dict' (if it was passed by reference and modified)
+# will contain the updated data.
+};
+
+
+# Method: _detect_runtime (Equivalent to self._detect_runtime())
+-func _detect_runtime. [>config_ref, >hw_info_ref]. {
+# Get environment variables via external library functions
+-let env_colab_gpu: libs/os_env.get_env_var. [>var_name: "COLAB_GPU"];
+-let env_use_hf: libs/os_env.get_env_var. [>var_name: "USE_HUGGINGFACE"];
+-let env_kaggle_url: libs/os_env.get_env_var. [>var_name: "KAGGLE_URL_BASE"];
+-let env_kaggle_kernel: libs/os_env.get_env_var. [>var_name: "KAGGLE_KERNEL_RUN_TYPE"];
+
+-let detected_runtime_env: "local" /a;; # Default value
+
+# Conditional logic based on environment variables
+-if [>env_colab_gpu] == "1" /a;. {
+-set detected_runtime_env: "gcolab_gpu" /a;;
+} -else -if [>env_colab_gpu] == "0" /a;. {
+-set detected_runtime_env: "gcolab_cpu" /a;;
+} -else -if [>env_use_hf] is not null/null;. { # Check if variable exists/is non-null
+-set detected_runtime_env: "huggingface" /a;;
+} -else -if ([>env_kaggle_url] is not null/null;) | ([>env_kaggle_kernel] is not null/null;). {
+-set detected_runtime_env: "kaggle" /a;;
+};
+
+# Update class instance variable and hardware_info Term
+-set runtime_env- [>detected_runtime_env]; # Update the class's direct Item-
+-set hw_info_ref.runtime_env: [>detected_runtime_env]; # Update item within the referenced Term
+};
+
+
+# Method: _detect_hardware (Equivalent to self._detect_hardware())
+-func _detect_hardware. [>config_ref, >hw_info_ref]. {
+-let cuda_available_val: libs/torch_cuda.is_available. [];
+-let system_ram_total_bytes: libs/psutil_mem.get_virtual_memory_total. [];
+-let system_ram_gb_raw: {#output: [>system_ram_total_bytes] / (1024 * 1024 * 1024);};
+-let system_ram_gb_rounded: -func utils/math.round. [>input: [>system_ram_gb_raw], >decimals: 1];
+
+# Initialize base info directly into the referenced hw_info_ref Term
+-set hw_info_ref.cuda_available: [>cuda_available_val];
+-set hw_info_ref.backend: "cpu" /a;;
+-set hw_info_ref.prefer_bf16: false/b;;
+-set hw_info_ref.force_cpu_offload: false/b;;
+-set hw_info_ref.cuda_device_count: 0/n;;
+-set hw_info_ref.gpu_name: null/a;;
+-set hw_info_ref.gpu_total_memory_gb: null/n;;
+-set hw_info_ref.system_ram_gb: [>system_ram_gb_rounded];
+-set hw_info_ref.device: "cpu" /a;; # Default device
+
+-if [>cuda_available_val]. {
+-let device_index_cfg: -func utils/math.dict_get. [>dict_ref: [>config_ref].[hardware], >key: "device_index", >default_val: 0/n;];
+
+-let final_device_index: 0/n;; # Default index
+
+-if [>device_index_cfg] == "auto" /a;. {
+-let device_count: libs/torch_cuda.device_count. [];
+-let max_memory_found: 0/n;;
+-let best_device_index: 0/n;;
+
+-for -let i: 0/n; -while [>i] < [>device_count]; -set i: {#output: [>i] + 1/n;};. {
+    -let dev_props: libs/torch_cuda.get_device_properties. [>device_index: [>i]];
+    -let current_device_memory: [>dev_props].[total_memory]; # Assuming .total_memory key in returned dict
+    -if [>current_device_memory] > [>max_memory_found]. {
+        -set max_memory_found: [>current_device_memory];
+        -set best_device_index: [>i];
+    };
+};
+-set final_device_index: [>best_device_index];
+} -else {
+-set final_device_index: [>device_index_cfg];
+};
+
+-let dev_props_final: libs/torch_cuda.get_device_properties. [>device_index: [>final_device_index]];
+-let gpu_total_memory_raw: [>dev_props_final].[total_memory];
+-let gpu_total_memory_gb: {#output: [>gpu_total_memory_raw] / (1024 * 1024 * 1024);};
+-let gpu_total_memory_gb_rounded: -func utils/math.round. [>input: [>gpu_total_memory_gb], >decimals: 1];
+-let gpu_name_val: [>dev_props_final].[name]; # Assuming .name key
+
+-let bf16_supported_val: libs/torch_cuda.is_bf16_supported. [];
+-let device_string: {#output: "cuda:" | [>final_device_index] | "";}; # String concatenation
+
+# Update hardware_info Term with CUDA-specific details
+-set hw_info_ref.backend: "cuda" /a;;
+-set hw_info_ref.cuda_device_count: libs/torch_cuda.device_count. [];
+-set hw_info_ref.gpu_name: [>gpu_name_val];
+-set hw_info_ref.gpu_total_memory_gb: [>gpu_total_memory_gb_rounded];
+-set hw_info_ref.prefer_bf16: [>bf16_supported_val];
+-set hw_info_ref.device: [>device_string];
+};
+};
+
+
+# Method: _inject_configs (Equivalent to self._inject_configs())
+-func _inject_configs. [>config_ref, >hw_info_ref]. {
+# Ensure 'hardware' key exists in config_ref, then merge hw_info_ref into it.
+# This requires `setdefault` or a merge function.
+# Using a custom dict_merge function that creates keys if they don't exist.
+-func utils/math.dict_merge. [>dest_dict: [>config_ref].[hardware], >src_dict: [>hw_info_ref]];
+
+-let runtime_env_val: hw_info_ref.runtime_env; # Access runtime_env from hw_info_ref
+
+-if ([>runtime_env_val] == "gcolab_gpu" /a;) | ([>runtime_env_val] == "gcolab_cpu" /a;). {
+-func libs/os_env.set_env_var. [>var_name: "TF_CPP_MIN_LOG_LEVEL", >value: "2"];
+-func libs/os_env.set_env_var. [>var_name: "SDL_AUDIODRIVER", >value: "dummy"];
+-func libs/os_env.set_env_var. [>var_name: "XDG_RUNTIME_DIR", >value: "/tmp"];
+
+-let dtype: "fp32" /a;;
+-if [>runtime_env_val] == "gcolab_cpu" /a;. { -set dtype: "bf16" /a;; };
+
+-set config_ref.[hardware].[model_dtype]: [>dtype]; # Update config_data directly
+} -else -if [>runtime_env_val] == "huggingface" /a;. {
+-raise "NotImplementedError: Hugging Face configurations are not yet implemented." /a;;
+};
+};
+
+
+# Method: _adjust_dtype (Equivalent to self._adjust_dtype())
+-func _adjust_dtype. [>config_ref, >hw_info_ref]. {
+-let config_hw: -func utils/math.dict_get. [>dict_ref: [>config_ref], >key: "hardware", >default_val: [1:]]; # Use dict_get with default
+
+-let dtype: -func utils/math.dict_get. [>dict_ref: [>config_hw], >key: "model_dtype", >default_val: "fp32" /a;];
+-let torch_dtype_val: libs/torch_types.float32. []; # Default
+
+-if [>dtype] == "bf16" /a;. {
+-set torch_dtype_val: libs/torch_types.bfloat16. [];
+} -else -if [>dtype] == "fp16" /a;. {
+-set torch_dtype_val: libs/torch_types.float16. [];
+};
+
+-set config_hw.[torch_dtype]: [>torch_dtype_val]; # Update config_hw dictionary
+};
+};
+
+
+# Global Function: hardware (Equivalent to process/device.py::hardware)
+# This is the entry point function.
+-func hardware. [>input_config]. {
+# Instantiate the class (conceptually)
+-let hw_instance: class- Hardware. {};
+# Assign the input config to the class instance's config_data variable
+-set hw_instance.config_data: [>input_config];
+
+# Call the run method on the instance, no params needed now as config is assigned
+-func hw_instance.run. [>input_config]; # Still passing input_config to run if run's logic depends on it.
+                        # Or, the class methods directly access self.config_data
+
+# Return the hardware_info Term from the instance
+-return hw_instance.hardware_info;
+};

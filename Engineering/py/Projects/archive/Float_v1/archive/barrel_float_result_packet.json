@@ -1,0 +1,81 @@
+{
+  "packet_type": "barrel_float_static_packet",
+  "created_at": "2026-06-16T08:41:08.422214+00:00",
+  "evidence_state": "calculated_candidate",
+  "environment": {
+    "environment_id": "sea_water_test",
+    "fluid": {
+      "fluid_id": "sea_water",
+      "density_kg_m3": 1025.0,
+      "material_id": "sea_water_candidate",
+      "notes": "sea_water_default_candidate"
+    },
+    "gravity_m_s2": 9.80665,
+    "surface_z_m": 0.0,
+    "render": {
+      "primitive": "fluid_surface",
+      "size_m": {
+        "x": 6.0,
+        "z": 6.0
+      },
+      "surface_z_m": 0.0,
+      "material": {
+        "fluid_id": "sea_water",
+        "alpha": 0.35
+      }
+    },
+    "notes": ""
+  },
+  "barrel": {
+    "object_id": "barrel_001",
+    "object_type": "barrel",
+    "mass_kg": 18.0,
+    "outer_radius_m": 0.285,
+    "height_m": 0.82,
+    "geometry": {
+      "shape": "solid_cylinder_candidate",
+      "render": {
+        "outer": {
+          "primitive": "cylinder",
+          "radius_m": 0.285,
+          "height_m": 0.82
+        }
+      }
+    },
+    "volumes": {
+      "external_volume_m3": 0.20924420789602136,
+      "required_displaced_volume_m3": 0.0175609756097561
+    },
+    "float_state": {
+      "state": "floating_candidate",
+      "submerged_height_m": 0.06881910923506049,
+      "submerged_fraction": 0.08392574296958596,
+      "barrel_center_z_m": 0.3411808907649395,
+      "water_surface_z_m": 0.0
+    },
+    "forces": {
+      "weight_force_n": 176.5197,
+      "buoyant_force_at_equilibrium_n": 176.5197,
+      "net_force_at_equilibrium_n": 0.0
+    },
+    "unresolved_variables": [
+      "barrel_orientation",
+      "sealed_state_validation",
+      "dynamic_water_response",
+      "drag",
+      "waves",
+      "current",
+      "real_measured_mass"
+    ],
+    "blocked_interpretations": [
+      "calculated_float_state_equals_validated_float_behavior",
+      "static_equilibrium_equals_dynamic_stability",
+      "rendered_waterline_equals_physical_measurement"
+    ]
+  },
+  "prohibited_interpretations": [
+    "simulation_equals_truth",
+    "floating_candidate_equals_validated_stability",
+    "calculated_submerged_depth_equals_measured_submerged_depth"
+  ]
+}

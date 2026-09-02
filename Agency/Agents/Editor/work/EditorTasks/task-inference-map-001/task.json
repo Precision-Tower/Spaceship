@@ -1,0 +1,40 @@
+{
+  "ball_holder": "Editor",
+  "ball_owner": "Gear",
+  "constraints": {
+    "max_files": 500,
+    "max_matches": 500,
+    "max_total_context_bytes": 40000,
+    "mutation_authorized": false,
+    "read_only": true
+  },
+  "created_at": "2026-07-28T10:12:26Z",
+  "editor": "Editor",
+  "evidence_requirements": [
+    "repository_relative_path",
+    "line_range",
+    "excerpt"
+  ],
+  "issued_by": "Operator",
+  "next_decision_owner": "Gear",
+  "objective": "Inspect the inference map as a bounded read-only task.",
+  "operation": "inspect",
+  "parent_step_id": null,
+  "play_owner": "Gear",
+  "request": {
+    "repository_context": {
+      "operations": [
+        "references"
+      ]
+    }
+  },
+  "schema_version": 1,
+  "scope": {
+    "exclude": [],
+    "include": [
+      "Agency/Core/runtime/_inference_map.md"
+    ]
+  },
+  "task_id": "task-inference-map-001",
+  "work_packet_id": null
+}

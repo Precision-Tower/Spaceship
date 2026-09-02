@@ -1,0 +1,161 @@
+schema_version: 1
+
+package:
+  name: precision_tower_node
+  status: hardware_readiness_phase
+  authority: deployment_policy_only
+  contract: Docs/PrecisionTowerNode.md
+  install_entrypoint: package/install.sh
+  uninstall_entrypoint: package/uninstall.sh
+  verification_entrypoint: package/verify.sh
+  command_manifest: package/manifests/commands.txt
+  package_manifest: package/manifests/packages.txt
+  package_lists: package/packages
+  systemd_templates: package/systemd
+  tests: package/tests
+
+installation:
+  default_mode: dry_run
+  apply_requires: --apply
+  wrapper_destination: /usr/local/bin
+  environment_destination: /etc/precision-tower-node/default.env
+  installed_by_current_phase:
+    - operator_command_symlinks
+    - machine_local_environment_file
+  not_installed_by_current_phase:
+    - packages
+    - systemd_units
+    - ssh_configuration
+    - tailscale_enrollment
+    - firewall_rules
+    - boot_target
+    - tty_configuration
+    - desktop_autostart
+    - runtime_configuration
+
+policy:
+  operating_model:
+    headless_agency_node: required
+    local_operator_computer: required
+    agency_requires_local_login: false
+    desktop_starts_at_boot: false
+    dashboard_owns_agency_runtime: false
+  hardware_readiness:
+    source: package/config/hardware.env
+    status: detection_and_apply_gate
+    ownership: package_deployment_policy
+    mutation: none
+  remote_access:
+    network: tailscale_private_network
+    public_ssh_exposure: forbidden
+    router_port_forwarding: forbidden
+    ssh_password_login_after_key_verification: forbidden
+    direct_root_ssh_login: forbidden
+  boot:
+    target: non_graphical
+    services_enabled_at_boot: required_for_future_install_phase
+    physical_display_default_tty: tty1
+  tty_map:
+    source: package/config/tty-map.conf
+    tty1: local_operator_console
+    tty2: recovery_console
+    tty3: recovery_console
+    tty4: recovery_console
+    tty5: agency_status_console
+    tty6: reserved_emergency_administration
+  mutation:
+    current_phase:
+      dry_run_default: true
+      apply_required: true
+      permitted_destinations:
+        - /usr/local/bin/operator_command_symlinks
+        - /etc/precision-tower-node/default.env
+    require_explicit_future_phase_for:
+      - package_installation
+      - ssh_hardening
+      - tailscale_enrollment
+      - firewall_configuration
+      - systemd_unit_installation
+      - tty_configuration
+      - boot_target_configuration
+      - desktop_or_browser_installation
+      - wine_configuration
+      - repository_update_workflow
+
+repository_authorities:
+  root_resolution:
+    path: Agency/Core/paths.py
+    ownership: repository_paths_authority
+  runtime_profiles:
+    path: Agency/Core/runtime/runtime_profiles.yaml
+    ownership: shared_runtime_authority
+  model_lifecycle:
+    path: Agency/Core/runtime/model_server_manager.py
+    ownership: runtime_model_lifecycle_authority
+  terminal_service:
+    path: Agency/Core/runtime/terminal/pty_service.py
+    ownership: runtime_terminal_service_authority
+  dashboard_launcher:
+    path: run-dashboard.sh
+    ownership: existing_dashboard_launch_entrypoint
+  dashboard_status:
+    path: run.py
+    command: python run.py status
+    ownership: existing_repository_status_entrypoint
+  machine_local_state:
+    path: local/
+    ownership: machine_local_untracked_state
+
+operator_commands:
+  stable_path: /usr/local/bin
+  installation_status: apply_gated_symlink_install
+  wrappers:
+    - help
+    - browser
+    - desktop
+    - dashboard
+    - status
+    - doctor
+    - logs
+    - update
+    - restart
+    - shutdown
+
+systemd:
+  installation_status: not_installed_by_current_phase
+  agency_service_status: unresolved_non_installable
+  non_installable_templates:
+    - package/systemd/agency.service.unresolved
+  draft_units_requiring_future_agency_runtime:
+    - package/systemd/agency-health.service
+    - package/systemd/agency-console@.service
+  reason: No persistent Agency runtime command has been proven from repository evidence.
+
+unresolved_inputs:
+  agency_service_entrypoint:
+    status: unresolved
+    reason: No persistent Agency systemd command has been selected or proven.
+  tailscale_enrollment_method:
+    status: unresolved
+    reason: Auth key, interactive login, or machine-local secret file must be selected during provisioning.
+  ssh_administrator_public_key:
+    status: unresolved
+    reason: The administrator key must be supplied outside tracked repository files.
+  wine_application:
+    status: unresolved
+    reason: Required Windows application, installer, architecture, dependencies, and license are not known.
+  nvidia_driver_package:
+    status: unresolved
+    reason: Hardware detection is implemented; driver installation package policy remains unresolved.
+  cuda_installation_policy:
+    status: unresolved
+    reason: CUDA detection is implemented; package-managed CUDA installation is not implemented.
+  firewall_interface_policy:
+    status: unresolved
+    reason: Tailscale interface and any additional service openings must be verified on target hardware.
+  bios_restore_on_ac_power_loss:
+    status: unresolved
+    reason: Firmware setting cannot be proven from the repository.
+  durable_remote_acceptance_test:
+    status: unresolved
+    reason: The Durant acceptance test requires the real Precision Tower and an external remote device.

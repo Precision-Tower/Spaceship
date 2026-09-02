@@ -1,0 +1,6 @@
+#!/data/data/com.termux/files/usr/bin/sh
+
+while true; do
+    "$HOME/ce-os/bin/ce-os-live-sync"
+    sleep 5
+done

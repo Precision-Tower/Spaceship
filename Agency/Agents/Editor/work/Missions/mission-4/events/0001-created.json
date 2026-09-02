@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "mission_id": "mission-4",
+  "sequence": 1,
+  "event_type": "created",
+  "timestamp": "2026-08-13T10:17:12.371058+00:00",
+  "authority": "mission_event_log",
+  "payload": {
+    "command": "mission create",
+    "status": "mission_created",
+    "mission_id": "mission-4",
+    "intent": "Exercise adaptive mission scope expansion",
+    "scopes": [
+      "Agency/Core/work/missions/mission_runtime.py"
+    ],
+    "mission_path": "Agency/Agents/Editor/work/Missions/mission-4",
+    "source_files_modified": false,
+    "authority": "mission_creation_only"
+  }
+}

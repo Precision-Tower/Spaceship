@@ -1,0 +1,49 @@
+{
+  "editor_task_id": "wp-proposal-6b7bcd3718c5-propose-change",
+  "editor_task_path": "Agency/Agents/Editor/work/EditorTasks/wp-proposal-6b7bcd3718c5-propose-change/task.json",
+  "task": {
+    "ball_holder": "Editor",
+    "ball_owner": "Editor",
+    "constraints": {
+      "mutation_authorized": false,
+      "read_only": true
+    },
+    "created_at": "2026-08-05T21:04:47Z",
+    "editor": "Editor",
+    "evidence_requirements": [
+      "supporting_evidence",
+      "proposed_patch",
+      "source_unchanged_proof"
+    ],
+    "issued_by": "Editor",
+    "next_decision_owner": "Editor",
+    "objective": "Produce a non-applied patch proposal for the requested repository change.",
+    "operation": "propose_patch",
+    "parent_step_id": "propose-change",
+    "play_owner": "Editor",
+    "request": {
+      "change_intent": "replace \"alpha\" with \"beta\" in Agency/local/editor_acceptance/target.txt",
+      "proposal_intent": {
+        "kind": "replace_text",
+        "new": "beta",
+        "old": "alpha",
+        "path": "Agency/local/editor_acceptance/target.txt"
+      },
+      "repository_context": {
+        "operations": [
+          "text_search"
+        ],
+        "text": "alpha"
+      }
+    },
+    "schema_version": 1,
+    "scope": {
+      "exclude": [],
+      "include": [
+        "Agency/local/editor_acceptance/target.txt"
+      ]
+    },
+    "task_id": "wp-proposal-6b7bcd3718c5-propose-change",
+    "work_packet_id": "wp-proposal-6b7bcd3718c5"
+  }
+}

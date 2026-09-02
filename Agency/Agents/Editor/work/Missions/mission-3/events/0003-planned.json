@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "mission_id": "mission-3",
+  "sequence": 3,
+  "event_type": "planned",
+  "timestamp": "2026-08-13T09:55:09.044878+00:00",
+  "authority": "mission_event_log",
+  "payload": {
+    "command": "mission plan",
+    "status": "plan_complete",
+    "mission_id": "mission-3",
+    "plan_path": "Agency/Agents/Editor/work/Missions/mission-3/plan/plan.json",
+    "markdown_path": "Agency/Agents/Editor/work/Missions/mission-3/plan/plan.md",
+    "source_files_modified": false,
+    "authority": "planning_synthesis_only"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "ball_holder": "Editor",
+  "ball_owner": "Gear",
+  "constraints": {
+    "mutation_authorized": false,
+    "read_only": true
+  },
+  "created_at": "2026-07-26T19:15:21Z",
+  "editor": "Editor",
+  "evidence_requirements": [
+    "repository_relative_path",
+    "line_range",
+    "excerpt"
+  ],
+  "issued_by": "Gear",
+  "next_decision_owner": "Gear",
+  "objective": "Replace one deterministic string in the Editor README.",
+  "operation": "propose_patch",
+  "parent_step_id": null,
+  "play_owner": "Gear",
+  "request": {
+    "change_intent": "replace \"Canonical EditorTask YAML\" with \"Canonical EditorTask Contract\" in Agency/Agents/Editor/README.md\n",
+    "repository_context": {
+      "operations": [
+        "text_search"
+      ],
+      "paths": [
+        "Agency/Agents/Editor/README.md"
+      ],
+      "text": "EditorTask"
+    }
+  },
+  "schema_version": 1,
+  "scope": {
+    "exclude": [],
+    "include": [
+      "Agency/Agents/Editor/README.md"
+    ]
+  },
+  "task_id": "editor-e2e-proposal-001",
+  "work_packet_id": null
+}

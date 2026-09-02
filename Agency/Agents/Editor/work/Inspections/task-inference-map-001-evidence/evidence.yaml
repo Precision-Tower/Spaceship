@@ -1,0 +1,69 @@
+EvidenceBundle:
+  request_id: task-inference-map-001-evidence
+  status: completed
+  objective: Inspect the inference map as a bounded read-only task.
+  repository_root: /home/spaztic/Core/Dashboard
+  repository_root_authority: Agency.Core.foundation.paths.DASHBOARD_ROOT
+  effective_scope:
+    include:
+    - Agency/Core/runtime/_inference_map.md
+    exclude: []
+    default_exclusions:
+    - .git
+    - __pycache__
+    - .pytest_cache
+    - node_modules
+    - .venv
+    - venv
+    - weebo_env
+    - Chroma
+    - memory/Chroma
+    - build
+    - dist
+    - .godot
+    - logs
+    - sessions
+    - '*.pyc'
+    - '*.pyo'
+    - '*.sqlite'
+    - '*.sqlite3'
+    - '*.db'
+    - .env
+    - .env.*
+    - '*.pem'
+    - '*.key'
+    - '*token*'
+    - '*credential*'
+    - '*secret*'
+  operations_performed:
+  - references
+  findings: []
+  symbols: []
+  references: []
+  imports: []
+  dependency_edges: []
+  negative_results: []
+  files_examined:
+  - Agency/Core/runtime/_inference_map.md
+  files_skipped: []
+  limits:
+    configured:
+      max_files: 500
+      max_matches: 500
+      max_file_bytes: 120000
+      max_depth: 2
+      max_total_context_bytes: 40000
+      max_evidence_items: 500
+    reached:
+      max_files: false
+      max_matches: false
+      max_file_bytes: false
+      max_depth: false
+      max_total_context_bytes: false
+      max_evidence_items: false
+  parse_failures: []
+  unresolveds: []
+  contradictions: []
+  generated_at: '2026-07-28T10:12:26Z'
+  persistence_path: Agency/Core/runtime/state/work/Inspections/task-inference-map-001-evidence
+  repository_mutation_performed: false

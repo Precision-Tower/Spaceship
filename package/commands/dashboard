@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+SCRIPT_DIR="$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/../lib/common.sh"
+pt_initialize
+CHECK_ONLY=false
+[[ "${1:-}" == "--check" ]] && CHECK_ONLY=true
+pt_print_line "Precision Tower Dashboard launcher"
+pt_require_dashboard_root || exit 1
+LAUNCHER="$REPO_ROOT/run-dashboard.sh"
+if [[ ! -x "$LAUNCHER" ]]; then
+    pt_status_line "MISSING" "dashboard launcher" "$LAUNCHER is missing or not executable"
+    exit 1
+fi
+pt_status_line "PASS" "dashboard launcher" "$LAUNCHER"
+if [[ "$CHECK_ONLY" == true ]]; then
+    pt_status_line "PASS" "dashboard check" "launcher exists; not launching because --check was supplied"
+    exit 0
+fi
+if ! pt_has_launch_surface; then
+    pt_status_line "WARNING" "dashboard launch" "No DISPLAY or local virtual console detected; refusing to invoke fullscreen launcher from this session."
+    exit 2
+fi
+pt_status_line "PASS" "dashboard launch" "executing existing run-dashboard.sh"
+exec "$LAUNCHER"

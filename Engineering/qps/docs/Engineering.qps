@@ -1,0 +1,260 @@
+Engineering.
+purpose: def"Engineering is the CE-OS engineering subsystem. It owns engineering representation, calculation, semantic execution, native model translation, geometry construction, and engineering project outputs.";
+status: def"Active reconstruction from current repository implementation. Repository behavior and passing tests take precedence over stale Engineering documentation.";
+authority: def"Engineering produces engineering models, calculations, geometry, packets, and candidate outputs. Engineering execution does not by itself establish physical validation, safety, operational readiness, or operator acceptance.";
+
+
+navigation.
+purpose- "what Engineering is and why it exists";
+principle- "source-of-truth and validation doctrine";
+structure- "current cpp py qps organization";
+qps- "QPS ownership and language boundary";
+native- "native model geometry and CAD implementation";
+flow- "QPS to runtime to model to geometry to Workbench";
+information- "definitions items designs and assemblies";
+authority- "ownership boundaries across CE-OS";
+invariants- "rules that must remain true";
+status- "current implemented state";
+frontier- "current development edge";
+detail- "full architecture continues below";
+
+overview.
+Engineering- "represents and executes engineering intent";
+QPS- "describes engineering structure and executable relationships";
+Workbench- "exposes Engineering to the operator";
+Agency- "may automate Engineering through explicit interfaces";
+
+principle.
+source_of_truth- "engineering intent must remain reconstructable";
+generated_geometry- "product, not sole design authority";
+unknowns- "remain explicit";
+validation- "software execution is distinct from physical validation";
+
+structure.
+cpp- "native Engineering implementation";
+py- "Python Engineering capabilities and workflows";
+qps- "engineering language, authored definitions, items, designs, assemblies, and documentation";
+
+native.
+model- "Engineering/cpp/model";
+geometry- "Engineering/cpp/geometry";
+cad_backend- "OCCT";
+
+flow.
+intent- "QPS";
+runtime- "QPS parser and execution";
+model- "native Engineering model";
+geometry- "native geometry compilation";
+cad- "OCCT";
+interface- "Workbench";
+
+information.
+definitions- "engineering concepts";
+items- "reusable engineering primitives";
+designs- "engineered articles";
+assemblies- "connected engineered systems";
+
+authority_map.
+QPS- "declarative engineering intent";
+Engineering- "engineering interpretation and execution";
+OCCT- "generated B-rep geometry";
+Godot- "interaction and visualization";
+Workbench- "operator-facing engineering environment";
+Agency- "bounded automation";
+apparatus- "physical measurement";
+
+invariants.
+definition_instance- "Design Definitions remain distinct from Design Instances";
+semantic_geometry- "engineering identity does not depend on raw kernel topology";
+render_mesh- "disposable visualization";
+units- "resolved before native geometry execution";
+builds- "transactional";
+failures- "preserve last known valid result";
+ports- "engineering interfaces";
+artifacts- "generated outputs are reconstructable products";
+measurement- "physical apparatus decides physical claims";
+
+status_summary.
+qps_structure- "working";
+qps_execution- "working";
+calculation- "working";
+geometry- "working_active_development";
+native_cad- "working";
+model_domain- "unimplemented";
+causal_domain- "unimplemented";
+
+frontier.
+current- "Engineering geometry through Workbench and Godot";
+future- "model execution, causal execution, simulation, manufacturing, and physical validation";
+
+topology.
+root- "Engineering";
+implementation: (
+cpp: (
+path- "Engineering/cpp";
+role- "native Engineering implementation";
+);
+py: (
+path- "Engineering/py";
+role- "Python engineering utilities, projects, packet generation, and compatibility surfaces";
+);
+qps: (
+path- "Engineering/qps";
+role- "authored QPS engineering corpus, definitions, items, assemblies, designs, and semantic modules";
+);
+);
+
+cpp.
+model: (
+path- "Engineering/cpp/model";
+role- "native Engineering object and quantity contracts";
+contains- "DesignInstance Port Quantity QPS adapters";
+);
+geometry: (
+path- "Engineering/cpp/geometry";
+role- "native geometry compilation and execution";
+contains- "FeatureDAG geometry build plans QPS geometry adapters native executors";
+backend- "OCCT";
+);
+qps_runtime: (
+path- "qps/cpp";
+role- "QPS lexer parser AST runtime interpreter document navigation symbol resolution and execution";
+quicksheet- "qps/cpp/tests/golden/QPS.qps";
+);
+
+qps.
+role: def"QPS is the structural engineering language used by Engineering.";
+implementation- "qps/cpp";
+corpus- "Engineering/qps";
+quicksheet- "qps/cpp/tests/golden/QPS.qps";
+quicksheet_contract: def"QPS.qps is executable documentation and a parser conformance fixture.";
+current_test_state- "10/10 QPS tests passing";
+current_corpus_state- "32/32 active QPS documents parsing";
+
+qps_corpus.
+definitions: (
+path- "Engineering/qps/defs";
+role- "semantic definitions and module surfaces";
+);
+items: (
+path- "Engineering/qps/items";
+role- "reusable authored Engineering item structures";
+);
+assemblies: (
+path- "Engineering/qps/assemblies";
+role- "authored assembly structures";
+);
+designs: (
+path- "Engineering/qps/designs";
+role- "authored design structures";
+);
+module_rule: def"QPS directories may expose semantic surfaces through <index.qps.";
+
+engineering_flow.
+pipeline: (
+authored_structure- "Engineering/qps";
+language_runtime- "qps/cpp";
+native_model- "Engineering/cpp/model";
+geometry_compiler- "Engineering/cpp/geometry";
+native_backend- "OCCT";
+visualization- "Workbench and Godot";
+);
+rule: def"QPS preserves authored semantic structure and execution intent. Native Engineering layers translate resolved QPS into Engineering model and geometry behavior.";
+
+qps_engineering_boundary.
+QPS_owns: (
+syntax- "QPS grammar";
+documents- "QPS document and module model";
+structure- "authored structural representation";
+references- "structural navigation and symbol resolution";
+execution- "QPS execution semantics";
+runtime_bindings- "QPS runtime binding behavior";
+);
+Engineering_owns: (
+quantities- "Engineering quantity representation";
+units- "physical interpretation and normalization of authored units";
+model- "native Engineering object contracts";
+geometry_structure- "interpretation of structural geometry arguments";
+geometry_compilation- "FeatureDAG and geometry build planning";
+native_geometry- "native geometry construction";
+backend- "OCCT and future Engineering backends";
+);
+
+quantities.
+rule: def"QPS Items may preserve authored unit suffixes. Engineering resolves unit meaning and quantity dimensions downstream.";
+normalization: def"Engineering quantities may normalize compatible units without erasing authored source provenance.";
+boundary: def"A QPS numeric value is not automatically an Engineering physical quantity without Engineering interpretation.";
+
+geometry.
+input: def"QPS execution may provide resolved structural arguments to geometry-qualified actions.";
+qualification- "@";
+execution: def"QPS resolves execution names, bindings, actions, and structural arguments. Engineering owns geometry interpretation and native construction.";
+compiler- "Engineering/cpp/geometry";
+backend- "OCCT";
+observed_state- "QPS geometry execution has reached native CAD and produced viewable mesh output";
+current_frontier- "Godot visualization and image capture of generated geometry";
+
+execution_domains.
+generic- "working";
+calculation_percent- "working";
+geometry_at- "working_active_development";
+model_dollar- "lexed_not_implemented";
+causal_bang- "not_canonically_implemented";
+
+python.
+path- "Engineering/py";
+role: def"Python retains Engineering utilities and project-oriented workflows that predate or complement the native C++ and QPS implementation.";
+boundary: def"Python surfaces remain Engineering implementation where active, but they do not define QPS language truth or native C++ behavior.";
+
+interfaces.
+Workbench: (
+relation- "consumes or visualizes Engineering outputs";
+relation- "provides an Engineering workspace through Godot";
+boundary- "visualization does not establish physical validation";
+);
+UI: (
+relation- "displays Engineering and Workbench state";
+boundary- "UI presentation does not own Engineering truth";
+);
+Agency: (
+relation- "may execute bounded Engineering operations";
+boundary- "execution success does not establish Engineering validation";
+);
+OperatorShell: (
+relation- "may invoke Engineering workflows through bounded command surfaces";
+boundary- "command success does not establish physical correctness";
+);
+
+claim_boundaries.
+calculation: def"A calculated value is a candidate result, not a physical measurement.";
+geometry: def"Successful native geometry generation proves the exercised software path, not manufacturability or real-world validity.";
+mesh: def"A rendered or viewed mesh proves representation and visualization, not physical validation.";
+packet: def"A generated Engineering packet is an Engineering artifact, not operational readiness.";
+test: def"A passing software test establishes only the behavior exercised by that test.";
+
+current_state.
+repository_layout- "Engineering/cpp Engineering/py Engineering/qps";
+qps_quicksheet- "parser tested";
+qps_test_suite- "10/10 passing";
+active_qps_corpus- "32/32 parsing";
+structural_collection_backslash- "removed_from_canonical_parser";
+legacy_list_closer- "removed_from_canonical_parser";
+native_geometry- "working_observed";
+native_mesh- "working_observed";
+godot_geometry_capture- "next_integration_edge";
+model_domain- "unimplemented";
+causal_domain- "unimplemented";
+
+lineage.
+restructure: def"Engineering was restructured by implementation language into cpp, py, and qps.";
+old_document- "CE-OS/Gear/core/Engineering.yaml";
+old_document_status- "historical_reference_pending_replacement";
+preservation: def"Engineering.yaml may preserve useful project history, validation boundaries, and unresolveds, but its obsolete Physics Projects Prototype topology does not override the current repository.";
+
+unresolved.
+godot_capture- "complete the interrupted generated-geometry visualization and capture path";
+model_dollar- "define and implement canonical $ execution semantics";
+causal_bang- "define and implement canonical ! execution semantics";
+python_cpp_boundary- "reconstruct which Python Engineering surfaces remain active versus compatibility or legacy";
+workbench_geometry_contract- "document the current native geometry to Workbench Godot visualization boundary";
+yaml_retirement- "replace Engineering.yaml only after Engineering.qps is accepted as its measured successor";

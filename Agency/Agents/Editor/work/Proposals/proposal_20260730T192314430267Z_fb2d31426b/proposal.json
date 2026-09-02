@@ -1,0 +1,12 @@
+{
+  "proposal_id": "proposal_20260730T192314430267Z_fb2d31426b",
+  "status": "proposal_generated",
+  "intent": "Fix only _python_command so DASHBOARD_PYTHON overrides platform defaults; on Windows use the existing hard-coded interpreter only when it exists, otherwise fall back to py; preserve python3 for non-Windows; change nothing else.",
+  "scopes": [
+    "UI/OperatorShell/runtime/CliBridge.gd"
+  ],
+  "authority": "proposal_only",
+  "source_files_modified": false,
+  "diff_path": "Agency/Agents/Editor/work/Proposals/proposal_20260730T192314430267Z_fb2d31426b/proposed.diff",
+  "created_at": "2026-07-30T19:23:14.430267Z"
+}

@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "mission_id": "mission-4",
+  "sequence": 8,
+  "event_type": "planned",
+  "timestamp": "2026-08-13T10:20:01.858603+00:00",
+  "authority": "mission_event_log",
+  "payload": {
+    "command": "mission replan",
+    "status": "replan_complete",
+    "mission_id": "mission-4",
+    "plan_path": "Agency/Agents/Editor/work/Missions/mission-4/plan/plan.json",
+    "markdown_path": "Agency/Agents/Editor/work/Missions/mission-4/plan/plan.md",
+    "source_files_modified": false,
+    "authority": "planning_synthesis_only"
+  }
+}

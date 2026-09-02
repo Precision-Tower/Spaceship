@@ -1,0 +1,11 @@
+pu- pulley.pu/p; # Pulley
+
+cbp- combine_pulley.cbp/p; # Combine Pulley
+
+gr- gear.gr/p; # Gear
+
+cgr- combine_gear.cgr/p; # Combine Gear
+
+pus- pulley_system.pus/p; # Pulley System
+
+gt- gear_train.gt/p; # Gear Train

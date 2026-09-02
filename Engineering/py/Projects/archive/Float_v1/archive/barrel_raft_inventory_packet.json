@@ -1,0 +1,818 @@
+{
+  "packet_type": "barrel_raft_inventory_packet",
+  "created_at": "2026-06-17T13:31:28.286613+00:00",
+  "evidence_state": "calculated_candidate",
+  "environment": {
+    "environment_id": "water_environment_001",
+    "fluid": {
+      "fluid_id": "sea_water",
+      "density_kg_m3": 1025.0,
+      "material_id": "sea_water_candidate",
+      "notes": "sea_water_default_candidate"
+    },
+    "gravity_m_s2": 9.80665,
+    "surface_z_m": 0.0,
+    "render": {
+      "primitive": "fluid_volume",
+      "size_m": {
+        "x": 6.0,
+        "y": 0.5,
+        "z": 6.0
+      },
+      "surface_z_m": 0.0,
+      "depth_m": 0.5,
+      "material": {
+        "fluid_id": "sea_water",
+        "alpha": 0.25
+      }
+    },
+    "notes": ""
+  },
+  "assembly": {
+    "assembly_id": "boat_assembly_001",
+    "assembly_type": "boat_assembly",
+    "hierarchy": {
+      "root_group": "boat_assembly",
+      "groups": {
+        "boat_assembly": {
+          "parent_group": null,
+          "status": "active",
+          "role": "root_assembly"
+        },
+        "hull": {
+          "parent_group": "boat_assembly",
+          "status": "active",
+          "role": "primary_float_structure"
+        },
+        "port_pontoon": {
+          "parent_group": "hull",
+          "status": "active",
+          "role": "flotation_subassembly"
+        },
+        "starboard_pontoon": {
+          "parent_group": "hull",
+          "status": "active",
+          "role": "flotation_subassembly"
+        },
+        "connector_frame": {
+          "parent_group": "hull",
+          "status": "active",
+          "role": "restraint_structure"
+        },
+        "subfloor": {
+          "parent_group": "boat_assembly",
+          "status": "planned",
+          "planned": true
+        },
+        "deck": {
+          "parent_group": "boat_assembly",
+          "status": "planned",
+          "planned": true
+        },
+        "motor_assembly": {
+          "parent_group": "boat_assembly",
+          "status": "planned",
+          "planned": true
+        }
+      }
+    },
+    "objects": [
+      {
+        "object_id": "barrel_001",
+        "object_type": "barrel",
+        "role": "flotation_element",
+        "mass_kg": 18.0,
+        "volume_m3": 0.208,
+        "position_m": {
+          "x": -1.44,
+          "y": 0.0,
+          "z": -0.61
+        },
+        "dimensions_m": {
+          "radius": 0.285,
+          "height": 0.82
+        },
+        "render": {
+          "primitive": "cylinder",
+          "radius_m": 0.285,
+          "height_m": 0.82,
+          "display_position_m": {
+            "x": -1.44,
+            "y": 0.24224999999999997,
+            "z": -0.61
+          },
+          "rotation_degrees": {
+            "x": 90.0,
+            "y": 0.0,
+            "z": 0.0
+          }
+        },
+        "material": "hdpe_candidate",
+        "contributes_weight": true,
+        "contributes_buoyancy": true,
+        "assembly_group": "port_pontoon",
+        "subsystem": "hull",
+        "parent_group": "hull"
+      },
+      {
+        "object_id": "barrel_002",
+        "object_type": "barrel",
+        "role": "flotation_element",
+        "mass_kg": 18.0,
+        "volume_m3": 0.208,
+        "position_m": {
+          "x": -0.72,
+          "y": 0.0,
+          "z": -0.61
+        },
+        "dimensions_m": {
+          "radius": 0.285,
+          "height": 0.82
+        },
+        "render": {
+          "primitive": "cylinder",
+          "radius_m": 0.285,
+          "height_m": 0.82,
+          "display_position_m": {
+            "x": -0.72,
+            "y": 0.24224999999999997,
+            "z": -0.61
+          },
+          "rotation_degrees": {
+            "x": 90.0,
+            "y": 0.0,
+            "z": 0.0
+          }
+        },
+        "material": "hdpe_candidate",
+        "contributes_weight": true,
+        "contributes_buoyancy": true,
+        "assembly_group": "port_pontoon",
+        "subsystem": "hull",
+        "parent_group": "hull"
+      },
+      {
+        "object_id": "barrel_003",
+        "object_type": "barrel",
+        "role": "flotation_element",
+        "mass_kg": 18.0,
+        "volume_m3": 0.208,
+        "position_m": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": -0.61
+        },
+        "dimensions_m": {
+          "radius": 0.285,
+          "height": 0.82
+        },
+        "render": {
+          "primitive": "cylinder",
+          "radius_m": 0.285,
+          "height_m": 0.82,
+          "display_position_m": {
+            "x": 0.0,
+            "y": 0.24224999999999997,
+            "z": -0.61
+          },
+          "rotation_degrees": {
+            "x": 90.0,
+            "y": 0.0,
+            "z": 0.0
+          }
+        },
+        "material": "hdpe_candidate",
+        "contributes_weight": true,
+        "contributes_buoyancy": true,
+        "assembly_group": "port_pontoon",
+        "subsystem": "hull",
+        "parent_group": "hull"
+      },
+      {
+        "object_id": "barrel_004",
+        "object_type": "barrel",
+        "role": "flotation_element",
+        "mass_kg": 18.0,
+        "volume_m3": 0.208,
+        "position_m": {
+          "x": 0.7200000000000002,
+          "y": 0.0,
+          "z": -0.61
+        },
+        "dimensions_m": {
+          "radius": 0.285,
+          "height": 0.82
+        },
+        "render": {
+          "primitive": "cylinder",
+          "radius_m": 0.285,
+          "height_m": 0.82,
+          "display_position_m": {
+            "x": 0.7200000000000002,
+            "y": 0.24224999999999997,
+            "z": -0.61
+          },
+          "rotation_degrees": {
+            "x": 90.0,
+            "y": 0.0,
+            "z": 0.0
+          }
+        },
+        "material": "hdpe_candidate",
+        "contributes_weight": true,
+        "contributes_buoyancy": true,
+        "assembly_group": "port_pontoon",
+        "subsystem": "hull",
+        "parent_group": "hull"
+      },
+      {
+        "object_id": "barrel_005",
+        "object_type": "barrel",
+        "role": "flotation_element",
+        "mass_kg": 18.0,
+        "volume_m3": 0.208,
+        "position_m": {
+          "x": 1.44,
+          "y": 0.0,
+          "z": -0.61
+        },
+        "dimensions_m": {
+          "radius": 0.285,
+          "height": 0.82
+        },
+        "render": {
+          "primitive": "cylinder",
+          "radius_m": 0.285,
+          "height_m": 0.82,
+          "display_position_m": {
+            "x": 1.44,
+            "y": 0.24224999999999997,
+            "z": -0.61
+          },
+          "rotation_degrees": {
+            "x": 90.0,
+            "y": 0.0,
+            "z": 0.0
+          }
+        },
+        "material": "hdpe_candidate",
+        "contributes_weight": true,
+        "contributes_buoyancy": true,
+        "assembly_group": "port_pontoon",
+        "subsystem": "hull",
+        "parent_group": "hull"
+      },
+      {
+        "object_id": "barrel_006",
+        "object_type": "barrel",
+        "role": "flotation_element",
+        "mass_kg": 18.0,
+        "volume_m3": 0.208,
+        "position_m": {
+          "x": -1.44,
+          "y": 0.0,
+          "z": 0.61
+        },
+        "dimensions_m": {
+          "radius": 0.285,
+          "height": 0.82
+        },
+        "render": {
+          "primitive": "cylinder",
+          "radius_m": 0.285,
+          "height_m": 0.82,
+          "display_position_m": {
+            "x": -1.44,
+            "y": 0.24224999999999997,
+            "z": 0.61
+          },
+          "rotation_degrees": {
+            "x": 90.0,
+            "y": 0.0,
+            "z": 0.0
+          }
+        },
+        "material": "hdpe_candidate",
+        "contributes_weight": true,
+        "contributes_buoyancy": true,
+        "assembly_group": "starboard_pontoon",
+        "subsystem": "hull",
+        "parent_group": "hull"
+      },
+      {
+        "object_id": "barrel_007",
+        "object_type": "barrel",
+        "role": "flotation_element",
+        "mass_kg": 18.0,
+        "volume_m3": 0.208,
+        "position_m": {
+          "x": -0.72,
+          "y": 0.0,
+          "z": 0.61
+        },
+        "dimensions_m": {
+          "radius": 0.285,
+          "height": 0.82
+        },
+        "render": {
+          "primitive": "cylinder",
+          "radius_m": 0.285,
+          "height_m": 0.82,
+          "display_position_m": {
+            "x": -0.72,
+            "y": 0.24224999999999997,
+            "z": 0.61
+          },
+          "rotation_degrees": {
+            "x": 90.0,
+            "y": 0.0,
+            "z": 0.0
+          }
+        },
+        "material": "hdpe_candidate",
+        "contributes_weight": true,
+        "contributes_buoyancy": true,
+        "assembly_group": "starboard_pontoon",
+        "subsystem": "hull",
+        "parent_group": "hull"
+      },
+      {
+        "object_id": "barrel_008",
+        "object_type": "barrel",
+        "role": "flotation_element",
+        "mass_kg": 18.0,
+        "volume_m3": 0.208,
+        "position_m": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.61
+        },
+        "dimensions_m": {
+          "radius": 0.285,
+          "height": 0.82
+        },
+        "render": {
+          "primitive": "cylinder",
+          "radius_m": 0.285,
+          "height_m": 0.82,
+          "display_position_m": {
+            "x": 0.0,
+            "y": 0.24224999999999997,
+            "z": 0.61
+          },
+          "rotation_degrees": {
+            "x": 90.0,
+            "y": 0.0,
+            "z": 0.0
+          }
+        },
+        "material": "hdpe_candidate",
+        "contributes_weight": true,
+        "contributes_buoyancy": true,
+        "assembly_group": "starboard_pontoon",
+        "subsystem": "hull",
+        "parent_group": "hull"
+      },
+      {
+        "object_id": "barrel_009",
+        "object_type": "barrel",
+        "role": "flotation_element",
+        "mass_kg": 18.0,
+        "volume_m3": 0.208,
+        "position_m": {
+          "x": 0.7200000000000002,
+          "y": 0.0,
+          "z": 0.61
+        },
+        "dimensions_m": {
+          "radius": 0.285,
+          "height": 0.82
+        },
+        "render": {
+          "primitive": "cylinder",
+          "radius_m": 0.285,
+          "height_m": 0.82,
+          "display_position_m": {
+            "x": 0.7200000000000002,
+            "y": 0.24224999999999997,
+            "z": 0.61
+          },
+          "rotation_degrees": {
+            "x": 90.0,
+            "y": 0.0,
+            "z": 0.0
+          }
+        },
+        "material": "hdpe_candidate",
+        "contributes_weight": true,
+        "contributes_buoyancy": true,
+        "assembly_group": "starboard_pontoon",
+        "subsystem": "hull",
+        "parent_group": "hull"
+      },
+      {
+        "object_id": "barrel_010",
+        "object_type": "barrel",
+        "role": "flotation_element",
+        "mass_kg": 18.0,
+        "volume_m3": 0.208,
+        "position_m": {
+          "x": 1.44,
+          "y": 0.0,
+          "z": 0.61
+        },
+        "dimensions_m": {
+          "radius": 0.285,
+          "height": 0.82
+        },
+        "render": {
+          "primitive": "cylinder",
+          "radius_m": 0.285,
+          "height_m": 0.82,
+          "display_position_m": {
+            "x": 1.44,
+            "y": 0.24224999999999997,
+            "z": 0.61
+          },
+          "rotation_degrees": {
+            "x": 90.0,
+            "y": 0.0,
+            "z": 0.0
+          }
+        },
+        "material": "hdpe_candidate",
+        "contributes_weight": true,
+        "contributes_buoyancy": true,
+        "assembly_group": "starboard_pontoon",
+        "subsystem": "hull",
+        "parent_group": "hull"
+      },
+      {
+        "object_id": "connector_long_left_001",
+        "object_type": "connector_pipe",
+        "role": "restraint_structure",
+        "assembly_group": "connector_frame",
+        "subsystem": "hull",
+        "parent_group": "hull",
+        "mass_kg": 4.0,
+        "volume_m3": 0.0,
+        "position_m": {
+          "x": 0.0,
+          "y": 0.4,
+          "z": -0.61
+        },
+        "dimensions_m": {
+          "radius": 0.0254,
+          "length": 3.2
+        },
+        "render": {
+          "primitive": "cylinder",
+          "radius_m": 0.0254,
+          "height_m": 3.2,
+          "display_position_m": {
+            "x": 0.0,
+            "y": 0.4,
+            "z": -0.61
+          },
+          "rotation_degrees": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 90.0
+          }
+        },
+        "material": "pvc_candidate",
+        "contributes_weight": true,
+        "contributes_buoyancy": false
+      },
+      {
+        "object_id": "connector_long_right_001",
+        "object_type": "connector_pipe",
+        "role": "restraint_structure",
+        "assembly_group": "connector_frame",
+        "subsystem": "hull",
+        "parent_group": "hull",
+        "mass_kg": 4.0,
+        "volume_m3": 0.0,
+        "position_m": {
+          "x": 0.0,
+          "y": 0.4,
+          "z": 0.61
+        },
+        "dimensions_m": {
+          "radius": 0.0254,
+          "length": 3.2
+        },
+        "render": {
+          "primitive": "cylinder",
+          "radius_m": 0.0254,
+          "height_m": 3.2,
+          "display_position_m": {
+            "x": 0.0,
+            "y": 0.4,
+            "z": 0.61
+          },
+          "rotation_degrees": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 90.0
+          }
+        },
+        "material": "pvc_candidate",
+        "contributes_weight": true,
+        "contributes_buoyancy": false
+      },
+      {
+        "object_id": "connector_cross_001",
+        "object_type": "connector_pipe",
+        "role": "restraint_structure",
+        "assembly_group": "connector_frame",
+        "subsystem": "hull",
+        "parent_group": "hull",
+        "mass_kg": 1.5,
+        "volume_m3": 0.0,
+        "position_m": {
+          "x": -1.44,
+          "y": 0.45,
+          "z": 0.0
+        },
+        "dimensions_m": {
+          "radius": 0.0254,
+          "length": 1.22
+        },
+        "render": {
+          "primitive": "cylinder",
+          "radius_m": 0.0254,
+          "height_m": 1.22,
+          "display_position_m": {
+            "x": -1.44,
+            "y": 0.45,
+            "z": 0.0
+          },
+          "rotation_degrees": {
+            "x": 90.0,
+            "y": 0.0,
+            "z": 0.0
+          }
+        },
+        "material": "pvc_candidate",
+        "contributes_weight": true,
+        "contributes_buoyancy": false
+      },
+      {
+        "object_id": "connector_cross_002",
+        "object_type": "connector_pipe",
+        "role": "restraint_structure",
+        "assembly_group": "connector_frame",
+        "subsystem": "hull",
+        "parent_group": "hull",
+        "mass_kg": 1.5,
+        "volume_m3": 0.0,
+        "position_m": {
+          "x": -0.72,
+          "y": 0.45,
+          "z": 0.0
+        },
+        "dimensions_m": {
+          "radius": 0.0254,
+          "length": 1.22
+        },
+        "render": {
+          "primitive": "cylinder",
+          "radius_m": 0.0254,
+          "height_m": 1.22,
+          "display_position_m": {
+            "x": -0.72,
+            "y": 0.45,
+            "z": 0.0
+          },
+          "rotation_degrees": {
+            "x": 90.0,
+            "y": 0.0,
+            "z": 0.0
+          }
+        },
+        "material": "pvc_candidate",
+        "contributes_weight": true,
+        "contributes_buoyancy": false
+      },
+      {
+        "object_id": "connector_cross_003",
+        "object_type": "connector_pipe",
+        "role": "restraint_structure",
+        "assembly_group": "connector_frame",
+        "subsystem": "hull",
+        "parent_group": "hull",
+        "mass_kg": 1.5,
+        "volume_m3": 0.0,
+        "position_m": {
+          "x": 0.0,
+          "y": 0.45,
+          "z": 0.0
+        },
+        "dimensions_m": {
+          "radius": 0.0254,
+          "length": 1.22
+        },
+        "render": {
+          "primitive": "cylinder",
+          "radius_m": 0.0254,
+          "height_m": 1.22,
+          "display_position_m": {
+            "x": 0.0,
+            "y": 0.45,
+            "z": 0.0
+          },
+          "rotation_degrees": {
+            "x": 90.0,
+            "y": 0.0,
+            "z": 0.0
+          }
+        },
+        "material": "pvc_candidate",
+        "contributes_weight": true,
+        "contributes_buoyancy": false
+      },
+      {
+        "object_id": "connector_cross_004",
+        "object_type": "connector_pipe",
+        "role": "restraint_structure",
+        "assembly_group": "connector_frame",
+        "subsystem": "hull",
+        "parent_group": "hull",
+        "mass_kg": 1.5,
+        "volume_m3": 0.0,
+        "position_m": {
+          "x": 0.7200000000000002,
+          "y": 0.45,
+          "z": 0.0
+        },
+        "dimensions_m": {
+          "radius": 0.0254,
+          "length": 1.22
+        },
+        "render": {
+          "primitive": "cylinder",
+          "radius_m": 0.0254,
+          "height_m": 1.22,
+          "display_position_m": {
+            "x": 0.7200000000000002,
+            "y": 0.45,
+            "z": 0.0
+          },
+          "rotation_degrees": {
+            "x": 90.0,
+            "y": 0.0,
+            "z": 0.0
+          }
+        },
+        "material": "pvc_candidate",
+        "contributes_weight": true,
+        "contributes_buoyancy": false
+      },
+      {
+        "object_id": "connector_cross_005",
+        "object_type": "connector_pipe",
+        "role": "restraint_structure",
+        "assembly_group": "connector_frame",
+        "subsystem": "hull",
+        "parent_group": "hull",
+        "mass_kg": 1.5,
+        "volume_m3": 0.0,
+        "position_m": {
+          "x": 1.44,
+          "y": 0.45,
+          "z": 0.0
+        },
+        "dimensions_m": {
+          "radius": 0.0254,
+          "length": 1.22
+        },
+        "render": {
+          "primitive": "cylinder",
+          "radius_m": 0.0254,
+          "height_m": 1.22,
+          "display_position_m": {
+            "x": 1.44,
+            "y": 0.45,
+            "z": 0.0
+          },
+          "rotation_degrees": {
+            "x": 90.0,
+            "y": 0.0,
+            "z": 0.0
+          }
+        },
+        "material": "pvc_candidate",
+        "contributes_weight": true,
+        "contributes_buoyancy": false
+      }
+    ],
+    "summary": {
+      "total_mass_kg": 195.5,
+      "total_displacement_volume_m3": 2.08,
+      "total_weight_force_n": 1917.200075,
+      "total_buoyant_force_n": 20907.7778,
+      "float_margin_n": 18990.577725,
+      "center_of_mass_candidate_m": {
+        "x": 5.565312348504621e-17,
+        "y": 0.033631713554987216,
+        "z": 0.0
+      },
+      "mass_breakdown_kg": {
+        "barrel": 180.0,
+        "connector_pipe": 15.5
+      },
+      "object_count_breakdown": {
+        "barrel": 10,
+        "connector_pipe": 7
+      },
+      "assembly_group_breakdown": {
+        "port_pontoon": {
+          "object_count": 5,
+          "mass_kg": 90.0,
+          "displacement_volume_m3": 1.04
+        },
+        "starboard_pontoon": {
+          "object_count": 5,
+          "mass_kg": 90.0,
+          "displacement_volume_m3": 1.04
+        },
+        "connector_frame": {
+          "object_count": 7,
+          "mass_kg": 15.5,
+          "displacement_volume_m3": 0.0
+        }
+      },
+      "equation_results": [
+        {
+          "equation_id": "MC.weight_force",
+          "description": "weight_force_n = mass_kg * gravity_m_s2",
+          "inputs": {
+            "mass_kg": 195.5,
+            "gravity_m_s2": 9.80665
+          },
+          "output_name": "weight_force_n",
+          "output_value": 1917.200075,
+          "output_unit": "N",
+          "domain": "MC",
+          "blocked_interpretations": [
+            "mass_equals_weight",
+            "weight_force_equals_mass_without_gravity_context"
+          ]
+        },
+        {
+          "equation_id": "MC.buoyant_force",
+          "description": "buoyant_force_n = fluid_density_kg_m3 * displaced_volume_m3 * gravity_m_s2",
+          "inputs": {
+            "fluid_density_kg_m3": 1025.0,
+            "displaced_volume_m3": 2.08,
+            "gravity_m_s2": 9.80665
+          },
+          "output_name": "buoyant_force_n",
+          "output_value": 20907.7778,
+          "output_unit": "N",
+          "domain": "MC",
+          "blocked_interpretations": [
+            "buoyant_force_equals_stability",
+            "positive_buoyancy_equals_safe_payload",
+            "calculation_equals_validation"
+          ]
+        },
+        {
+          "equation_id": "MC.float_margin",
+          "description": "float_margin_n = buoyant_force_n - weight_force_n",
+          "inputs": {
+            "buoyant_force_n": 20907.7778,
+            "weight_force_n": 1917.200075
+          },
+          "output_name": "float_margin_n",
+          "output_value": 18990.577725,
+          "output_unit": "N",
+          "domain": "MC",
+          "blocked_interpretations": [
+            "positive_margin_equals_stable",
+            "positive_margin_equals_seaworthy",
+            "positive_margin_equals_validated"
+          ]
+        }
+      ]
+    },
+    "unresolved_variables": [
+      "object_spacing",
+      "connector_mass",
+      "center_of_mass",
+      "center_of_buoyancy",
+      "tilt_or_list_behavior"
+    ],
+    "blocked_interpretations": [
+      "positive_float_margin_equals_stability",
+      "inventory_packet_equals_physical_validation",
+      "calculated_candidate_equals_safe_payload"
+    ]
+  },
+  "prohibited_interpretations": [
+    "simulation_equals_truth",
+    "calculation_equals_validation",
+    "float_margin_equals_seaworthiness"
+  ]
+}

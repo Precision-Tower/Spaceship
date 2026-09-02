@@ -1,0 +1,36 @@
+  Components:
+    Hydrogen Combustion:
+      definition: >
+        A process that combusts hydrogen to produce heat and drive a turbine engine.
+      equation: TE:hydrogen_combustion = FD:heat
+
+    Turbine Engine:
+      definition: >
+        A turbine engine that converts the heat from hydrogen combustion into mechanical energy.
+      equation: ME:turbine_engine = FD:heat
+
+    Alternator:
+      definition: >
+        An alternator that converts mechanical energy from the turbine engine into electrical energy.
+      equation: Ec:alternator = ME:turbine_engine
+
+    Water Condensation:
+      definition: >
+        A process that condenses water vapor produced during combustion.
+      equation: TE:water_condensation = FD:condensation_rate
+
+    Steam Energy:
+      definition: >
+        A process that generates steam energy from the heat of combustion.
+      equation: HE:steam_energy = FD:expansion_rate
+
+    Steam Turbine:
+      definition: >
+        A steam turbine that converts steam energy into mechanical energy.
+      equation: ME:steam_turbine = HE:steam_energy
+
+
+
+[2: Recovered_Displacement: (TE: "Cooled_Medium"; FD: "Fluid_Flow"; Ec: "Net_Electrical_Output";)]
+  )
+}

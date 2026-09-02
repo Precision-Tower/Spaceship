@@ -1,0 +1,5 @@
+pu- MC.pu/p; # Pulley
+
+cbp- MC.cbp/p; # Combine Pulley
+
+tb- FD.tb/p; # Turbine

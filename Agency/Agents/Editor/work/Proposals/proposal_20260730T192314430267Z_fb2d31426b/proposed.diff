@@ -1,0 +1,24 @@
+--- /dev/null
++++ b/Agency/Agents/Editor/work/Proposals/proposal_20260730T192314430267Z_fb2d31426b/proposal_scratch.txt
+@@ -0,0 +1,21 @@
++Deterministic placeholder proposal
++Proposal ID: proposal_20260730T192314430267Z_fb2d31426b
++Created at: 2026-07-30T19:23:14.430267Z
++Authority: proposal_only
++Source files modified: false
++
++Intent: Fix only _python_command so DASHBOARD_PYTHON overrides platform defaults; on Windows use the existing hard-coded interpreter only when it exists, otherwise fall back to py; preserve python3 for non-Windows; change nothing else.
++
++Validated scopes:
++- UI/OperatorShell/runtime/CliBridge.gd
++
++Inspected text files: 1
++Skipped files: 0
++
++Inspected file sample:
++- UI/OperatorShell/runtime/CliBridge.gd (5152 bytes, 165 lines)
++
++Limitations:
++- Placeholder generator only; no AI model was called.
++- Diff target is proposal-owned scratch content only.
++- No real application source file targets are proposed in this implementation.

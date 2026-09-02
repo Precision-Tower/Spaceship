@@ -1,0 +1,17 @@
+# Precision Tower diagnostics packages.
+
+ripgrep
+fd-find
+bat
+tree
+htop
+btop
+dnsutils
+traceroute
+mtr
+iproute2
+pciutils
+usbutils
+smartmontools
+nvme-cli
+lm-sensors

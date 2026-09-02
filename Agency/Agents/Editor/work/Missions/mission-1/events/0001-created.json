@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "mission_id": "mission-1",
+  "sequence": 1,
+  "event_type": "created",
+  "timestamp": "2026-08-13T09:01:31.133239+00:00",
+  "authority": "mission_event_log",
+  "payload": {
+    "command": "mission create",
+    "status": "mission_created",
+    "mission_id": "mission-1",
+    "intent": "Test core agency mission scope",
+    "scopes": [
+      "Agency/Core/runtime/target.txt"
+    ],
+    "mission_path": "Agency/Agents/Editor/work/Missions/mission-1",
+    "source_files_modified": false,
+    "authority": "mission_creation_only"
+  }
+}

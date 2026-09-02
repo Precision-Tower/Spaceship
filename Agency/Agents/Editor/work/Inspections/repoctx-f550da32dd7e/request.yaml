@@ -1,0 +1,126 @@
+RepositoryContextRequest:
+  request_id: repoctx-f550da32dd7e
+  objective: 'Diagnose this concrete operational limitation.
+
+
+    Command:
+
+    python run.py agent ask Editor ''<repository diagnosis request>''
+
+
+    Observed runtime metadata:
+
+    direct_file_context_loaded=false
+
+    workspace_snapshot_loaded=false
+
+    memory_results_loaded=0
+
+    memory_retrieval_skipped=true
+
+    context_route=action_request
+
+    response_provenance=model_inference
+
+
+    Expected behavior:
+
+    Editor should be able to diagnose repository failures using scoped repository
+    context.
+
+
+    Actual behavior:
+
+    Editor can only reason from text explicitly included in the prompt.
+
+
+    Do not modify files or generate a patch.
+
+
+    Return:
+
+    1. observed failure
+
+    2. likely routing cause
+
+    3. relevant runtime components to inspect
+
+    4. uncertainty
+
+    5. smallest safe repair
+
+    6. tests proving repository context is loaded without granting write authority'
+  include:
+  - run.py
+  exclude:
+  - .git
+  - __pycache__
+  - .pytest_cache
+  - node_modules
+  - .venv
+  - venv
+  - '*_env'
+  - Chroma
+  - memory/Chroma
+  - build
+  - dist
+  - .godot
+  - logs
+  - sessions
+  - '*.pyc'
+  - '*.pyo'
+  - '*.sqlite'
+  - '*.sqlite3'
+  - '*.db'
+  - .env
+  - .env.*
+  - '*.pem'
+  - '*.key'
+  - '*token*'
+  - '*credential*'
+  - '*secret*'
+  operations:
+  - path_discovery
+  - text_search
+  symbols:
+  - Diagnose
+  - this
+  - concrete
+  - operational
+  - limitation
+  - Command
+  - python
+  - run
+  - agent
+  - ask
+  - Editor
+  - repository
+  text:
+  - Diagnose
+  - this
+  - concrete
+  - operational
+  - limitation
+  - Command
+  - python
+  - run
+  - agent
+  - ask
+  - Editor
+  - repository
+  paths:
+  - run.py
+  limits:
+    max_files: 500
+    max_matches: 500
+    max_file_bytes: 120000
+    max_depth: 2
+    max_total_context_bytes: 40000
+    max_evidence_items: 500
+  output:
+  - evidence_bundle
+  constraints:
+  - read_only
+  - preserve_unknowns
+  - require_line_citations
+  synthesis: false

@@ -1,0 +1,27 @@
+RepositoryContextRequest:
+  request_id: wp-proposal-6b7bcd3718c5-propose-change-evidence
+  objective: Produce a non-applied patch proposal for the requested repository change.
+  include:
+  - Agency/local/editor_acceptance/target.txt
+  exclude: []
+  operations:
+  - text_search
+  symbols: []
+  text:
+  - alpha
+  paths:
+  - Agency/local/editor_acceptance/target.txt
+  limits:
+    max_files: 500
+    max_matches: 500
+    max_file_bytes: 120000
+    max_depth: 2
+    max_total_context_bytes: 40000
+    max_evidence_items: 500
+  output:
+  - evidence_bundle
+  constraints:
+  - read_only
+  - preserve_unknowns
+  - require_line_citations
+  synthesis: false

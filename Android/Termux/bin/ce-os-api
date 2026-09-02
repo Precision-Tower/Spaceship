@@ -1,0 +1,332 @@
+#!/data/data/com.termux/files/usr/bin/python
+
+from __future__ import annotations
+
+import json
+import hmac
+import socket
+import subprocess
+import sys
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from pathlib import Path
+
+HOME = Path("/data/data/com.termux/files/home")
+ROOT = HOME / "ce-os"
+
+sys.path.insert(0, str(ROOT))
+
+from services.ce_os.guardian import evaluate_state
+from services.ce_os.state import load_state, request_mode, save_state
+
+STATE = ROOT / "state/runtime/state.json"
+LIVE = ROOT / "state/runtime/live.env"
+TOKEN_FILE = ROOT / "config/private/api-token"
+PRIV_SOCKET = ROOT / "run/privileged.sock"
+
+HOST = "127.0.0.1"
+PORT = 8765
+
+ALLOWED_MODES = {
+    "node",
+    "conserve",
+    "bootstrap",
+}
+
+
+def current_state():
+    state = evaluate_state(load_state(STATE))
+    return state
+
+
+def state_payload():
+    state = current_state()
+
+    payload = {
+        "node": "pixel",
+        "requested_mode": state.requested_mode,
+        "effective_mode": state.effective_mode,
+        "platform_state": state.platform_state,
+        "requested_usb_mode": state.requested_usb_mode,
+        "usb_mode": state.usb_mode,
+        "allow_compute": state.allow_compute,
+        "power_state": state.power_state,
+        "thermal_state": state.thermal_state,
+        "guardian_reasons": state.guardian_reasons,
+        "control_plane": state.control_plane,
+    }
+
+    if LIVE.exists():
+        live = {}
+        for line in LIVE.read_text(encoding="utf-8").splitlines():
+            if "=" in line:
+                key, value = line.split("=", 1)
+                live[key] = value
+        payload["telemetry"] = live
+
+    return payload
+
+
+def set_mode(mode: str):
+    if mode not in ALLOWED_MODES:
+        raise ValueError("unsupported mode")
+
+    state = load_state(STATE)
+    state = request_mode(state, mode)
+    state = evaluate_state(state)
+    save_state(state, STATE)
+
+    return state_payload()
+
+
+
+def bootstrap_policy() -> tuple[bool, dict]:
+    """Return whether canonical CE-OS state permits BOOTSTRAP realization."""
+    state = current_state()
+
+    checks = {
+        "requested_mode": state.requested_mode == "bootstrap",
+        "effective_mode": state.effective_mode == "bootstrap",
+        "requested_usb_mode": state.requested_usb_mode == "bootstrap",
+        "platform_state": state.platform_state == "ok",
+        "power_state": state.power_state == "POWERED",
+        "thermal_state": state.thermal_state in {"NOMINAL", "LIGHT"},
+    }
+
+    return all(checks.values()), {
+        "checks": checks,
+        "requested_mode": state.requested_mode,
+        "effective_mode": state.effective_mode,
+        "requested_usb_mode": state.requested_usb_mode,
+        "usb_mode": state.usb_mode,
+        "platform_state": state.platform_state,
+        "power_state": state.power_state,
+        "thermal_state": state.thermal_state,
+        "guardian_reasons": state.guardian_reasons,
+    }
+
+
+def valid_token(value: str | None) -> bool:
+    if not value or not TOKEN_FILE.exists():
+        return False
+
+    expected = TOKEN_FILE.read_text(encoding="utf-8").strip()
+
+    return bool(expected) and hmac.compare_digest(
+        value.strip(),
+        expected,
+    )
+
+
+def privileged_request(operation: str) -> dict:
+    allowed = {
+        "health",
+        "platform.verify",
+        "bootstrap.status",
+        "bootstrap.enable",
+        "bootstrap.disable",
+    }
+
+    if operation not in allowed:
+        raise ValueError("privileged operation not allowed")
+
+    request = json.dumps(
+        {"operation": operation}
+    ).encode("utf-8") + b"\n"
+
+    sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+    sock.settimeout(15)
+
+    try:
+        sock.connect(str(PRIV_SOCKET))
+        sock.sendall(request)
+
+        raw = b""
+
+        while not raw.endswith(b"\n") and len(raw) < 262144:
+            chunk = sock.recv(4096)
+
+            if not chunk:
+                break
+
+            raw += chunk
+
+        return json.loads(raw.decode("utf-8"))
+    finally:
+        sock.close()
+
+
+class Handler(BaseHTTPRequestHandler):
+
+    def send_json(self, status: int, payload):
+        body = json.dumps(payload, indent=2).encode("utf-8")
+
+        self.send_response(status)
+        self.send_header("Content-Type", "application/json")
+        self.send_header("Content-Length", str(len(body)))
+        self.end_headers()
+
+        self.wfile.write(body)
+
+    def do_GET(self):
+        privileged_paths = {
+            "/v1/privileged/health": "health",
+            "/v1/privileged/platform/verify": "platform.verify",
+            "/v1/privileged/bootstrap/status": "bootstrap.status",
+        }
+
+        if self.path in privileged_paths:
+            token = self.headers.get("X-CEOS-Token")
+
+            if not valid_token(token):
+                self.send_json(
+                    401,
+                    {"ok": False, "error": "unauthorized"},
+                )
+                return
+
+            try:
+                payload = privileged_request(
+                    privileged_paths[self.path]
+                )
+                self.send_json(
+                    200 if payload.get("ok") else 503,
+                    payload,
+                )
+            except Exception as exc:
+                self.send_json(
+                    503,
+                    {
+                        "ok": False,
+                        "error": "privileged_broker_unavailable",
+                        "detail": str(exc),
+                    },
+                )
+
+            return
+
+        if self.path == "/v1/status":
+            self.send_json(200, state_payload())
+            return
+
+        if self.path == "/v1/health":
+            self.send_json(
+                200,
+                {
+                    "service": "ce-os-api",
+                    "node": "pixel",
+                    "status": "ok",
+                },
+            )
+            return
+
+        self.send_json(404, {"error": "not found"})
+
+    def do_POST(self):
+        privileged_paths = {
+            "/v1/privileged/bootstrap/enable": "bootstrap.enable",
+            "/v1/privileged/bootstrap/disable": "bootstrap.disable",
+        }
+
+        if self.path in privileged_paths:
+            token = self.headers.get("X-CEOS-Token")
+
+            if not valid_token(token):
+                self.send_json(
+                    401,
+                    {
+                        "ok": False,
+                        "error": "unauthorized",
+                    },
+                )
+                return
+
+            operation = privileged_paths[self.path]
+
+            # Disable is deliberately always available to an authenticated
+            # caller because returning ownership to Android is a recovery
+            # operation.
+            if operation == "bootstrap.enable":
+                allowed, policy = bootstrap_policy()
+
+                if not allowed:
+                    self.send_json(
+                        409,
+                        {
+                            "ok": False,
+                            "error": "bootstrap_policy_denied",
+                            "policy": policy,
+                        },
+                    )
+                    return
+
+                try:
+                    hardware = privileged_request("bootstrap.status")
+                except (OSError, ValueError, json.JSONDecodeError):
+                    self.send_json(
+                        503,
+                        {
+                            "ok": False,
+                            "error": "privileged_broker_unavailable",
+                        },
+                    )
+                    return
+
+                if (
+                    hardware.get("ok")
+                    and hardware.get("effective_mode") == "bootstrap"
+                ):
+                    hardware["already_active"] = True
+                    self.send_json(200, hardware)
+                    return
+
+            try:
+                payload = privileged_request(operation)
+            except (OSError, ValueError, json.JSONDecodeError):
+                self.send_json(
+                    503,
+                    {
+                        "ok": False,
+                        "error": "privileged_broker_unavailable",
+                    },
+                )
+                return
+
+            self.send_json(
+                200 if payload.get("ok") else 409,
+                payload,
+            )
+            return
+
+        if self.path.startswith("/v1/mode/"):
+            mode = self.path.rsplit("/", 1)[-1].lower()
+
+            try:
+                payload = set_mode(mode)
+            except ValueError:
+                self.send_json(
+                    400,
+                    {
+                        "error": "unsupported mode",
+                        "allowed": sorted(ALLOWED_MODES),
+                    },
+                )
+                return
+
+            self.send_json(200, payload)
+            return
+
+        self.send_json(404, {"error": "not found"})
+
+    def log_message(self, fmt, *args):
+        return
+
+
+def main():
+    server = ThreadingHTTPServer((HOST, PORT), Handler)
+
+    print(f"CE-OS API listening on http://{HOST}:{PORT}")
+    server.serve_forever()
+
+
+if __name__ == "__main__":
+    main()

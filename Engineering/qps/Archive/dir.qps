@@ -1,0 +1,13 @@
+Engineering:
+qps:
+(core: axioms.qps, model.qps;)
+(definitions:
+(FC: Ec.qps, EMW.qps, Fx.qps, TE.qps;)
+(KE: FC.qps, MC.qps, U.qps;)
+(MC: FD.qps, ME.qps;)
+index.qps;)
+(design:
+(designs: DWT.qps, EDS.qps, HEV.qps, HEWW.qps, ICE.qps;)
+(items: EC_com.qps, FD_com.qps, MC_com.qps;)
+index.qps;)
+index.qps;

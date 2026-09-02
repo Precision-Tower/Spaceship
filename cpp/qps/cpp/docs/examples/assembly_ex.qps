@@ -1,0 +1,60 @@
+# part.grav
+alt. (
+    Alternator: def"An alternator is a device that turns angular momentum into AC Electricity. (ME = AC)";,
+    input: (
+        mv- /n;,
+        rpm- /n;
+    ),
+    output: (
+        vac- /n;,
+        hz- /n;
+    ),
+    dimensions: (
+        master: (
+            pulley: (
+                radius- /n;,
+                width- /n;,
+                depth- /n;,
+                material- /n;
+            ),
+            gear: (
+                radius- /n;,
+                width- /n;,
+                teeth_count- /n;,
+                teeth_depth- /n;,
+                (
+                    material- /a;,
+                    density- /n;
+                )
+            )
+        ),
+        housing: (
+            outside_diameter- /n;,
+            inside_diameter- /n;,
+            length- /n;,
+            (
+                material- /a;,
+                density- /n;
+            )
+        ),
+        stator: (
+            poles- /n;,
+            windings- /n;,
+            (
+                coil_material- /a;,
+                density- /n;
+            )
+        ),
+        rotor: (
+            poles- /n;,
+            windings- /n;,
+            shaft_radius- /n;,
+            (
+                material- /a;,
+                density- /n;
+            )
+        )
+    ),
+    equation: {#output: 0/n;_}
+);
+; # This final semicolon terminates the entire 'alt.' Key declaration.

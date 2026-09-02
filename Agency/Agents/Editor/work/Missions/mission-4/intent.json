@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "mission_id": "mission-4",
+  "created_at": "2026-08-13T10:17:12.369632+00:00",
+  "intent": "Exercise adaptive mission scope expansion",
+  "scopes": [
+    {
+      "input": "Agency/Core/work/missions/mission_runtime.py",
+      "relative": "Agency/Core/work/missions/mission_runtime.py",
+      "resolved": "/home/spaztic/Core/Dashboard/Agency/Core/work/missions/mission_runtime.py",
+      "allowed_root": "Agency/Core/work",
+      "kind": "file"
+    },
+    {
+      "input": "Agency/Core/work/planning/__init__.py",
+      "relative": "Agency/Core/work/planning/__init__.py",
+      "resolved": "/home/spaztic/Core/Dashboard/Agency/Core/work/planning/__init__.py",
+      "allowed_root": "Agency/Core/work",
+      "kind": "file"
+    },
+    {
+      "input": "Agency/Core/work/planning/mission_planning.py",
+      "relative": "Agency/Core/work/planning/mission_planning.py",
+      "resolved": "/home/spaztic/Core/Dashboard/Agency/Core/work/planning/mission_planning.py",
+      "allowed_root": "Agency/Core/work",
+      "kind": "file"
+    },
+    {
+      "input": "Agency/Core/work/planning/proposal_generation.py",
+      "relative": "Agency/Core/work/planning/proposal_generation.py",
+      "resolved": "/home/spaztic/Core/Dashboard/Agency/Core/work/planning/proposal_generation.py",
+      "allowed_root": "Agency/Core/work",
+      "kind": "file"
+    },
+    {
+      "input": "Agency/Core/work/missions/pipeline/review/execution.py",
+      "relative": "Agency/Core/work/missions/pipeline/review/execution.py",
+      "resolved": "/home/spaztic/Core/Dashboard/Agency/Core/work/missions/pipeline/review/execution.py",
+      "allowed_root": "Agency/Core/work",
+      "kind": "file"
+    },
+    {
+      "input": "Agency/Core/runtime/commands.py",
+      "relative": "Agency/Core/runtime/commands.py",
+      "resolved": "/home/spaztic/Core/Dashboard/Agency/Core/runtime/commands.py",
+      "allowed_root": "Agency/Core/runtime",
+      "kind": "file"
+    },
+    {
+      "input": "Agency/Core/work/missions/pipeline/review/helpers.py",
+      "relative": "Agency/Core/work/missions/pipeline/review/helpers.py",
+      "resolved": "/home/spaztic/Core/Dashboard/Agency/Core/work/missions/pipeline/review/helpers.py",
+      "allowed_root": "Agency/Core/work",
+      "kind": "file"
+    },
+    {
+      "input": "Agency/Core/work/missions/pipeline/review/state.py",
+      "relative": "Agency/Core/work/missions/pipeline/review/state.py",
+      "resolved": "/home/spaztic/Core/Dashboard/Agency/Core/work/missions/pipeline/review/state.py",
+      "allowed_root": "Agency/Core/work",
+      "kind": "file"
+    },
+    {
+      "input": "Agency/Core/work/missions/pipeline/implementation/__init__.py",
+      "relative": "Agency/Core/work/missions/pipeline/implementation/__init__.py",
+      "resolved": "/home/spaztic/Core/Dashboard/Agency/Core/work/missions/pipeline/implementation/__init__.py",
+      "allowed_root": "Agency/Core/work",
+      "kind": "file"
+    }
+  ],
+  "authority": "read_only_inspection_and_proposal_only",
+  "source_mutation_allowed": false,
+  "required_context": [
+    "Agency/Agents/Editor/work/Pinboard/current.json",
+    "Agency/audit/output/agency_state.json",
+    "UI/OperatorShell/audit/output/operator_shell_state.json",
+    "UI/Workbench/audit/output/capability_state.json"
+  ]
+}

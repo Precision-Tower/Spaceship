@@ -1,0 +1,64 @@
+PacketDisplayContract:
+  version: 0.1
+  authority: packet_display_contract_not_validation
+
+  purpose:
+    - define_packet_shape_Workbench_can_load_and_inspect
+    - preserve_engineering_output_lineage
+    - expose_objects_unresolveds_and_blocked_interpretations
+    - prevent_packet_loading_from_becoming_validation
+
+  required_top_level_fields:
+    - packet_type
+    - created_at
+    - evidence_state
+
+  recognized_top_level_fields:
+    - environment
+    - source_packets
+    - assembly
+    - prohibited_interpretations
+
+  assembly_packet:
+    required_fields:
+      - assembly_id
+      - assembly_type
+      - hierarchy
+      - objects
+
+    recommended_fields:
+      - summary
+      - unresolved_variables
+      - blocked_interpretations
+
+  object_source:
+    path: assembly.objects
+    contract: WorkbenchObjectContract
+
+  environment:
+    recommended_fields:
+      - environment_id
+      - fluid
+      - gravity_m_s2
+      - surface_z_m
+      - render
+
+  source_packets:
+    recommended_fields:
+      - packet_type
+      - packet_path
+
+  rules:
+    - Packets_preserve_engineering_output_for_inspection
+    - Packet_display_does_not_validate_calculations
+    - Packet_loading_success_does_not_prove_packet_correctness
+    - Unknown_packet_fields_should_be_preserved_when_possible
+    - Workbench_should_tolerate_missing_recommended_fields
+    - Packet_paths_are_lineage_references_not_validation_evidence
+
+  prohibited_interpretations:
+    - packet_equals_validation
+    - successful_load_equals_correct_engineering
+    - evidence_state_label_equals_evidence
+    - packet_lineage_equals_physical_proof
+    - assembly_packet_equals_operational_readiness

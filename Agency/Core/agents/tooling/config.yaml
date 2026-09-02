@@ -1,0 +1,16 @@
+ChromaMemory:
+  model: sentence-transformers/all-MiniLM-L6-v2
+
+  agents:
+
+    Editor:
+      memory_root: Agency/Agents/Editor/memory
+      chroma_dir: Agency/Agents/Editor/memory/Chroma
+      collection: editor_memory
+      sources_file: Agency/Agents/Editor/memory/sources.yaml
+
+    Cali:
+      memory_root: Agency/Agents/Cali/memory
+      chroma_dir: Agency/Agents/Cali/memory/Chroma
+      collection: cali_memory
+      sources_file: Agency/Agents/Cali/memory/sources.yaml

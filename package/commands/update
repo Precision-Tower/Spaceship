@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+SCRIPT_DIR="$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/../lib/common.sh"
+pt_initialize
+CHECK_ONLY=false
+APPLY=false
+case "${1:-}" in
+    --check|--plan) CHECK_ONLY=true ;;
+    --apply) APPLY=true ;;
+    "") ;;
+    *) pt_status_line "WARNING" "usage" "update [--check|--plan|--apply]"; exit 2 ;;
+esac
+pt_print_line "Precision Tower update workflow"
+pt_require_dashboard_root || exit 1
+if pt_have_command git; then
+    branch="$(cd "$REPO_ROOT" && git branch --show-current 2>/dev/null || true)"
+    head="$(cd "$REPO_ROOT" && git rev-parse --short HEAD 2>/dev/null || true)"
+    changes="$(cd "$REPO_ROOT" && git status --porcelain=v1 | wc -l | tr -d ' ')"
+    pt_status_line "PASS" "git repository" "branch=${branch:-unknown} head=${head:-unknown} changes=$changes"
+fi
+pt_status_line "UNRESOLVED" "package update workflow" "Repository/package update mutation has not been specified."
+pt_status_line "UNRESOLVED" "log preservation" "Future update phase must record before/after state before mutation."
+if [[ "$APPLY" == true ]]; then pt_status_line "WARNING" "update refused" "--apply is not implemented until the update workflow is specified."; exit 2; fi
+if [[ "$CHECK_ONLY" == true ]]; then pt_status_line "PASS" "update check" "read-only planning output completed; no changes made"; exit 0; fi
+pt_status_line "WARNING" "update refused" "No update was performed. Use --check for diagnostics; future install phases must define --apply behavior."
+exit 2

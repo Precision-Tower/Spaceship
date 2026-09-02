@@ -1,0 +1,4 @@
+{"ball_holder": "Editor", "event": "task_received", "ts": "2026-07-31T04:25:57Z"}
+{"event": "task_validated", "ts": "2026-07-31T04:25:57Z"}
+{"event": "ball_returned", "from_holder": "Editor", "result_status": "failed", "to_holder": "Gear", "ts": "2026-07-31T04:25:57Z"}
+{"event": "task_returned", "play_outcome": "blocked", "status": "failed", "ts": "2026-07-31T04:25:57Z"}

@@ -1,0 +1,9 @@
+=== runtime_state ===
+command: python3 run.py cmd runtime-state --root /home/spaztic/Core/Dashboard
+RUNTIME_STATE
+status: importable
+dashboard_root: /home/spaztic/Core/Dashboard
+ui_root: /home/spaztic/Core/Dashboard/UI
+spaceship_root: /home/spaztic/Core/Dashboard
+root_resolution: Agency/Core/paths.py
+exit_code: 0

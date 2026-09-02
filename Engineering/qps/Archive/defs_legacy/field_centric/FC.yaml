@@ -1,0 +1,23 @@
+field_centric_systems:
+  - name: Magnetic Field Potential
+    symbol: Fx
+    description: The relationship between potential and displacement as expressed through the motion or configuration of magnetic fields.
+  - name: Electricity
+    symbol: Ec
+    equation: pe-r=de
+    description: The relationship of potential through the displacement as expressed through the resolution of magnetic fields.
+    subcategories:
+      - name: Alternating Current
+        symbol: AC
+        description: The relationship between potential (e.g., Voltage) and displacement (electric field lines) of a charge against resistance in an alternating current system.
+      - name: Direct Current
+        symbol: DC
+        description: The relationship between potential (e.g., Voltage) and displacement (electric field lines) of a charge against resistance in a direct current system.
+  - name: Electromagnetic Wave
+    symbol: EMW
+    equation: pw-r=dw
+    description: The relationship of potential through the displacement as expressed through the resolution of electromagnetic waves.
+  - name: Thermodynamics
+    symbol: TE
+    equation: pt-r=dt
+    description: The relationship of potential through the displacement as expressed through the resolution of thermal energy.

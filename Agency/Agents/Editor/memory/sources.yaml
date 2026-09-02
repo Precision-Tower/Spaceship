@@ -1,0 +1,18 @@
+MemorySources:
+  owner: Editor
+  purpose: agent_memory
+  enabled: true
+  vector_store_enabled: true
+  sources:
+  - Agency/Core
+  - Agency/Agents
+  - DashboardAuthority.yaml
+  exclude:
+  - Agency/**/__pycache__/**
+  - Agency/**/*.pyc
+  - Agency/**/memory/Chroma/**
+  - Agency/audit/**
+  - Agency/**/output/**
+  - Agency/**/history/**
+  - Agency/Agents/*/work/**
+  - Agency/Agents/*/runtime/**

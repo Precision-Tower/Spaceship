@@ -1,0 +1,29 @@
+RepositoryContextRequest:
+  request_id: editor-inspect-a061a4b3f30f-evidence
+  objective: Inspect Agency/Core/editor
+  include:
+  - Agency/Core/editor
+  exclude: []
+  operations:
+  - symbol_definition
+  - references
+  symbols:
+  - execute_editor_task
+  - WorkPacket
+  text: []
+  paths:
+  - Agency/Core/editor
+  limits:
+    max_files: 500
+    max_matches: 500
+    max_file_bytes: 120000
+    max_depth: 2
+    max_total_context_bytes: 40000
+    max_evidence_items: 500
+  output:
+  - evidence_bundle
+  constraints:
+  - read_only
+  - preserve_unknowns
+  - require_line_citations
+  synthesis: false

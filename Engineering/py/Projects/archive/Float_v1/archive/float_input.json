@@ -1,0 +1,23 @@
+{
+	"fluid_id": "fresh_water",
+	"objects": [
+		{
+			"mass_kg": 80.0,
+			"object_id": "boat_hull_001",
+			"object_type": "boat_hull",
+			"volume_m3": 0.35
+		},
+		{
+			"mass_kg": 18.0,
+			"object_id": "barrel_001",
+			"object_type": "barrel",
+			"volume_m3": 0.208
+		},
+		{
+			"mass_kg": 90.0,
+			"object_id": "operator_payload_001",
+			"object_type": "payload",
+			"volume_m3": 0.0
+		}
+	]
+}

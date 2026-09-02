@@ -1,0 +1,52 @@
+{
+  "constraints": {
+    "mutation_authorized": false,
+    "read_only": true
+  },
+  "depends_on": [],
+  "editor_result_path": "Agency/Agents/Editor/work/WorkPackets/wp-proposal-6b7bcd3718c5/results/wp-proposal-6b7bcd3718c5-propose-change.json",
+  "editor_task_id": "wp-proposal-6b7bcd3718c5-propose-change",
+  "evidence_requirements": [
+    "supporting_evidence",
+    "proposed_patch",
+    "source_unchanged_proof"
+  ],
+  "objective": "Produce a non-applied patch proposal for the requested repository change.",
+  "operation": "propose_patch",
+  "request": {
+    "change_intent": "replace \"alpha\" with \"beta\" in Agency/local/editor_acceptance/target.txt",
+    "proposal_intent": {
+      "kind": "replace_text",
+      "new": "beta",
+      "old": "alpha",
+      "path": "Agency/local/editor_acceptance/target.txt"
+    },
+    "repository_context": {
+      "operations": [
+        "text_search"
+      ],
+      "text": "alpha"
+    }
+  },
+  "result_summary": {
+    "acceptance_claimed": false,
+    "authorization_id": null,
+    "commit_performed": false,
+    "evidence_loaded": true,
+    "play_outcome": "returned",
+    "proposal_created": true,
+    "repository_mutation_performed": false,
+    "status": "completed"
+  },
+  "scope": {
+    "exclude": [],
+    "include": [
+      "Agency/local/editor_acceptance/target.txt"
+    ]
+  },
+  "sequence": 1,
+  "status": "completed",
+  "step_id": "propose-change",
+  "title": "Produce bounded patch proposal",
+  "unresolveds": []
+}

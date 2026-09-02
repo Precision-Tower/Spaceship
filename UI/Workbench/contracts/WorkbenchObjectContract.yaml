@@ -1,0 +1,60 @@
+WorkbenchObjectContract:
+  version: 0.1
+  authority: ui_workbench_object_display_contract_not_engineering_truth
+
+  purpose:
+    - define_minimum_object_shape_for_Workbench_display_and_selection
+    - preserve_object_identity_between_Engineering_packets_and_UI
+    - keep_rendering_support_separate_from_physical_validation
+
+  required_fields:
+    - object_id
+    - object_type
+    - role
+
+  recommended_fields:
+    - display_name
+    - assembly_group
+    - subsystem
+    - parent_group
+    - mass_kg
+    - volume_m3
+    - position_m
+    - dimensions_m
+    - render
+    - material
+    - contributes_weight
+    - contributes_buoyancy
+    - packet_links
+
+  render:
+    required_fields:
+      - primitive
+
+    recommended_fields:
+      - display_position_m
+      - rotation_degrees
+      - radius_m
+      - height_m
+      - size_m
+      - material
+
+  packet_links:
+    recommended_fields:
+      - packet_type
+      - packet_role
+      - packet_path
+
+  rules:
+    - Workbench_may_display_object_fields
+    - Workbench_may_select_objects_by_object_id
+    - Workbench_must_not_mutate_engineering_identity
+    - Missing_recommended_fields_should_not_crash_Workbench
+    - Render_data_is_visualization_support_not_evidence
+    - Object_presence_in_Workbench_does_not_validate_physical_existence
+
+  prohibited_interpretations:
+    - object_visible_equals_object_validated
+    - render_geometry_equals_physical_geometry
+    - selected_object_equals_inspected_truth
+    - clean_object_tree_equals_correct_engineering

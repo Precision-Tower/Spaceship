@@ -1,0 +1,4 @@
+status: success
+target: Agency/audit/sandbox/approved_mutation_probe.txt
+bytes_written: 23
+exit_code: 0

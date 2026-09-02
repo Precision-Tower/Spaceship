@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "mission_id": "mission-2",
+  "created_at": "2026-08-13T09:18:33.509721+00:00",
+  "intent": "Test core agency mission planning on Python source",
+  "scopes": [
+    {
+      "input": "Agency/Core/work/missions/mission_runtime.py",
+      "relative": "Agency/Core/work/missions/mission_runtime.py",
+      "resolved": "/home/spaztic/Core/Dashboard/Agency/Core/work/missions/mission_runtime.py",
+      "allowed_root": "Agency",
+      "kind": "file"
+    }
+  ],
+  "authority": "read_only_inspection_and_proposal_only",
+  "source_mutation_allowed": false,
+  "required_context": [
+    "Agency/Agents/Editor/work/Pinboard/current.json",
+    "Agency/audit/output/agency_state.json",
+    "UI/OperatorShell/audit/output/operator_shell_state.json",
+    "UI/Workbench/audit/output/capability_state.json"
+  ]
+}

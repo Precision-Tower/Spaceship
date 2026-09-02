@@ -1,0 +1,205 @@
+#!/system/bin/sh
+
+G1=${CE_OS_USB_G1:-/config/usb_gadget/g1}
+G2=${CE_OS_USB_G2:-/config/usb_gadget/ceos}
+UDC=${CE_OS_USB_UDC:-11110000.dwc3}
+
+RECOVER=${CE_OS_USB_RECOVER:-/data/adb/ce-os-usb-recover-android}
+STATE=${CE_OS_USB_STATE:-/data/adb/ce-os-usb-handoff.state}
+LOG=${CE_OS_USB_LOG:-/data/adb/ce-os-usb-handoff.log}
+WATCHDOG_SECONDS=${CE_OS_USB_WATCHDOG_SECONDS:-30}
+REQUIRE_ROOT=${CE_OS_USB_REQUIRE_ROOT:-1}
+
+read_g1_udc() {
+    cat "$G1/UDC" 2>/dev/null
+}
+
+read_g2_udc() {
+    cat "$G2/UDC" 2>/dev/null
+}
+
+read_hal() {
+    getprop init.svc.vendor.usb-gadget-hal
+}
+
+set_state() {
+    mkdir -p "$(dirname "$STATE")" 2>/dev/null || true
+    echo "$1" > "$STATE"
+}
+
+log_event() {
+    mkdir -p "$(dirname "$LOG")" 2>/dev/null || true
+    echo "$(date) $*" >> "$LOG"
+}
+
+status() {
+    echo "g1_udc=$(read_g1_udc)"
+    echo "g2_udc=$(read_g2_udc)"
+    echo "hal=$(read_hal)"
+    echo "state=$(cat "$STATE" 2>/dev/null)"
+}
+
+fail_enable() {
+    REASON=$1
+
+    log_event "handoff failed reason=$REASON"
+
+    "$RECOVER"
+    RC=$?
+
+    if [ "$RC" = 0 ]; then
+        set_state android
+
+        echo "ok=false"
+        echo "mode=android"
+        echo "error=usb_handoff_failed"
+        echo "failure_reason=$REASON"
+        status
+        return 20
+    fi
+
+    set_state recovery_failed
+
+    echo "ok=false"
+    echo "mode=recovery_failed"
+    echo "error=usb_handoff_failed"
+    echo "failure_reason=$REASON"
+    echo "recovery_code=$RC"
+    status
+    return "$RC"
+}
+
+preflight() {
+    [ "$REQUIRE_ROOT" != "1" ] || [ "$(id -u)" = "0" ] || return 10
+    [ -d "$G1" ] || return 11
+    [ -d "$G2" ] || return 12
+    [ "$(read_g1_udc)" = "$UDC" ] || return 13
+    [ -z "$(read_g2_udc)" ] || return 14
+    [ -x "$RECOVER" ] || return 15
+    [ "$(cat "$G2/functions/mass_storage.ceos/lun.0/ro" 2>/dev/null)" = "1" ] || return 16
+    return 0
+}
+
+enable_test() {
+    preflight || {
+        CODE=$?
+        echo "preflight_failed=$CODE"
+        return "$CODE"
+    }
+
+    log_event "handoff start"
+    set_state arming
+
+    # The privileged broker arms the detached watchdog before
+    # invoking this handoff. This helper performs only the UDC
+    # ownership transaction itself.
+
+    stop vendor.usb-gadget-hal
+    sleep 1
+
+    sync
+
+    if ! echo "" > "$G1/UDC"; then
+        fail_enable g1_release_failed
+        return $?
+    fi
+
+    sleep 1
+
+    if [ -n "$(read_g1_udc)" ]; then
+        fail_enable g1_still_bound
+        return $?
+    fi
+
+    if ! echo "$UDC" > "$G2/UDC"; then
+        fail_enable g2_bind_failed
+        return $?
+    fi
+
+    sleep 2
+
+    if [ "$(read_g2_udc)" != "$UDC" ] || [ -n "$(read_g1_udc)" ]; then
+        fail_enable ceos_ownership_not_verified
+        return $?
+    fi
+
+    set_state ceos
+
+    echo "ok=true"
+    echo "mode=bootstrap"
+    echo "rollback_seconds=30"
+    status
+}
+
+disable() {
+    "$RECOVER"
+    RC=$?
+
+    if [ "$RC" = 0 ]; then
+        set_state android
+
+        echo "ok=true"
+        echo "mode=android"
+        status
+        return 0
+    fi
+
+    set_state recovery_failed
+
+    echo "ok=false"
+    echo "mode=recovery_failed"
+    echo "recovery_code=$RC"
+    status
+    return "$RC"
+}
+
+watchdog() {
+    sleep "$WATCHDOG_SECONDS"
+
+    CURRENT="$(cat "$STATE" 2>/dev/null)"
+
+    case "$CURRENT" in
+        arming|ceos)
+            log_event "watchdog recovery state=$CURRENT"
+
+            "$RECOVER"
+            RC=$?
+
+            if [ "$RC" = 0 ]; then
+                set_state android
+                log_event "watchdog recovery verified state=android"
+            else
+                set_state recovery_failed
+                log_event "watchdog recovery failed code=$RC"
+                return "$RC"
+            fi
+            ;;
+    esac
+}
+
+case "${1:-status}" in
+    preflight)
+        preflight
+        RC=$?
+        echo "ok=$([ "$RC" = 0 ] && echo true || echo false)"
+        echo "code=$RC"
+        status
+        exit "$RC"
+        ;;
+    enable-test)
+        enable_test
+        ;;
+    disable)
+        disable
+        ;;
+    status)
+        status
+        ;;
+    watchdog)
+        watchdog
+        ;;
+    *)
+        echo "unknown command"
+        exit 2
+        ;;
+esac

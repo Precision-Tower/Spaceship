@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "mission_id": "mission-4",
+  "updated_at": "2026-08-13T10:20:01.847645+00:00",
+  "phase": "planned",
+  "status": "plan_complete",
+  "inspection_complete": true,
+  "inspection_passes": 2,
+  "planning_complete": true,
+  "proposals_complete": false,
+  "implementation_enabled": false,
+  "next_action": {
+    "command": "python run.py agent Editor mission scope-add --mission mission-4 --scope Agency/Core/work/missions/pipeline/implementation/execution.py --scope Agency/Core/work/missions/pipeline/verification/__init__.py --scope Agency/Core/work/missions/pipeline/verification/execution.py --scope Agency/Core/runtime/resourcefulness/__init__.py --scope Agency/Core/runtime/runtime_config.py --scope Agency/Core/repository/inspection/analysis.py --scope Agency/Core/repository/inspection/context.py --scope Agency/Core/repository/inspection/coverage.py",
+    "authority": "mission_scope_expansion",
+    "reason": "Plan needs more bounded evidence: inspection_assessment.sufficient_for_proposal is false. Add the proposed dependent files, then inspect again.",
+    "scope_candidates": [
+      "Agency/Core/work/missions/pipeline/implementation/execution.py",
+      "Agency/Core/work/missions/pipeline/verification/__init__.py",
+      "Agency/Core/work/missions/pipeline/verification/execution.py",
+      "Agency/Core/runtime/resourcefulness/__init__.py",
+      "Agency/Core/runtime/runtime_config.py",
+      "Agency/Core/repository/inspection/analysis.py",
+      "Agency/Core/repository/inspection/context.py",
+      "Agency/Core/repository/inspection/coverage.py"
+    ]
+  },
+  "blocked_reason": null,
+  "unresolved": [
+    "Implementation proposal is blocked: inspection_assessment.sufficient_for_proposal is false"
+  ],
+  "budgets": {
+    "max_inspection_passes": 8,
+    "max_files_per_pass": 8,
+    "max_total_files": 40,
+    "max_seconds_per_model_call": 300,
+    "max_mission_seconds": 1800
+  },
+  "plan": {
+    "path": "Agency/Agents/Editor/work/Missions/mission-4/plan/plan.json",
+    "created_at": "2026-08-13T10:20:01.847645+00:00",
+    "schema_version": 1
+  },
+  "resourcefulness_complete": false,
+  "resourcefulness": {
+    "strategy": "reconstruct",
+    "status": "resourcefulness_reconstruction_complete",
+    "reason": "Reconstructed architecture evidence from existing inspection observations.",
+    "confidence": "medium",
+    "next_recommendation": "replan",
+    "artifacts": {
+      "resourcefulness_reconstruction": "Agency/Agents/Editor/work/Missions/mission-4/inspect/knowledge/resourcefulness_reconstruction.json"
+    },
+    "path": "Agency/Agents/Editor/work/Missions/mission-4/inspect/knowledge/resourcefulness_reconstruction.json",
+    "created_at": "2026-08-13T10:18:31.201644+00:00",
+    "schema_version": 1
+  }
+}

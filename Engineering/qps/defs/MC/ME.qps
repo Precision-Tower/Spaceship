@@ -1,0 +1,93 @@
+ME. Mechanical_Energy: def"
+Newtonian Physics of Force and Motion.
+'f=ma', 'v=a_resolved', meaning 'f=mv'.
+You can also see it as
+'f/m=a', where mass is the resistance to force.
+The definition to inertia is an objects resistance to change its state of motion.
+The Conservation of Momentum is that an mass in motion will stay in motion unless it is obstructed.";
+
+LM. Linear_Mechanical: def"
+Linear refers to the behavior of mass-based systems where displacement occurs through structural inertia.
+It encompasses the principles of force, velocity, momentum, inertia, and friction.";
+
+mv. Momentum: def"
+Momentum (mv = m·v) is the memory of resolved force in mass-based systems.
+It is not a cause; it is the inertial effect of displacement.
+In this framework, momentum and force are equivalent when time is treated as resolved:
+- Acceleration becomes velocity
+- Resistance becomes displacement
+- Force becomes stored as motion
+Therefore:
+- Momentum expresses the accumulated force of mass in motion
+- mv = m·v is causally valid where a = v * t and t is fully resolved
+- This unites Newton’s second law with momentum under a common causal principle";
+
+v. Velocity: def"
+Velocity (v=d) is the displacement a mass travels.
+An inertial state of mass is defined by its velocity.";
+
+fr. Friction: def"
+Friction is the residual resistance encountered during displacement across a surface or through a medium.
+It is a linear resistance force that opposes motion after inertia has been overcome.
+Causally:
+- Friction is not inertia — it arises after motion begins
+- It is the ongoing energy sink that continuously opposes displacement (d)
+- It is directly proportional to surface interaction, medium density, or internal material resistance
+In KE terms:
+- Friction is modeled as active resistance (r) in systems where displacement is continuous
+- In rotational systems, friction is reduced using bearings (Br)
+- In linear systems, it is managed through design, material, or lubrication
+Friction does not store potential. It only extracts it from motion through heat or material stress.";
+
+w. Work: def"
+Work is force applied over distance linearly, but only valid when force exists due to resistance.";
+
+AM. Angular_Mechanical: def"
+Angular refers to the rotational aspects of mass-centric systems.
+It encompasses the principles of torque, angular momentum, and rotational inertia.";
+
+T. Torque: def"
+'Give me a place to stand, a long enough lever, and fulcrum on which to place it, and I shall move the world.' - Archimedes
+Torque is the amplification of force based on displacement radius. 
+Leverage is the rotational expression of force around a pivot point.
+It is calculated as T = Force × Radius (T = F × r).
+Torque is not energy — it is rotational potential applied through resistance.";
+
+av. Angular_Velocity: def"
+Angular velocity (ω) is the fundamental rate of angular displacement, measuring how rapidly a mass rotates around a center point.
+It represents the rate at which the field geometry of rotation resolves.
+While often expressed in revolutions per minute (RPM) for practical applications, its causal base is derived from the linear displacement of the circumference per unit time relative to the radius.
+For a linear velocity (v) at the circumference of a radius (r), ω = v / r (in units of radians per unit time).
+To convert linear speed (v) of a circumference to RPM:
+RPM = (Linear Speed / Circumference) = (v / (2πr))
+ω is expressed directly in RPM.";
+
+ma. Mechanical_Advantage: def"
+Mechanical Advantage is the geometric conversion of rotational torque into linear force.
+It describes how torque, applied at a radius, resolves as linear displacement pressure.
+Formula:
+Force (lbs) = Torque (ft-lbs) / Radius (ft)
+MA is not a comparison of effort and load — it is the mechanism of motion transfer between angular and linear systems.";
+
+am. Angular_Momentum: def"
+Angular Momentum (AM) is a mechanical structure that embodies and stores rotational displacement through its moment of inertia.
+It holds the memory of past force as sustained rotational velocity, allowing for the amplification of potential through continued angular motion.
+Functionally, Angular Momentum converts applied torque into stored rotational velocity, which can then be released as linear or angular output.
+Its resistance arises from friction and its inherent moment of inertia — the structural reluctance to change its state of rotational motion.
+In Kinetic Energy terms, potential is introduced as torque, resistance is the moment of inertia and friction, and displacement is the angular velocity retained and released under load.
+The more displacement of mass farther from the center, the more potential is embodied by Angular Momentum.
+Moment of Inertia (I) is the measure of structural resistance to changes in rotational motion. It quantifies how difficult it is to change the angular velocity of a rotating mass, dependent on the mass distribution relative to the axis of rotation.";
+
+br. Bearing: def"
+A bearing is a structure that reduces resistance to angular displacement.
+It does not carry energy, store momentum, or generate motion — it only minimizes friction in a rotating system.
+Causally:
+- Bearings reduce the r in p - r = d
+- They allow angular momentum to persist with minimal loss
+- They enable sustained flywheel effect by lowering system drag
+Bearings are not modeled for their type (ball, roller, sleeve), but for their function:
+friction reduction at pivot points where rotational displacement occurs.";
+
+P. Power: def"
+Power is the rate at which force becomes flow in angular systems.
+Must be separated from electrical or thermal power, which follow different geometries.";

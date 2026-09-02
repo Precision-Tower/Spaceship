@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "mission_id": "mission-3",
+  "updated_at": "2026-08-13T10:01:13.707297+00:00",
+  "phase": "planned",
+  "status": "plan_complete",
+  "inspection_complete": true,
+  "inspection_passes": 1,
+  "planning_complete": true,
+  "proposals_complete": false,
+  "implementation_enabled": false,
+  "next_action": {
+    "command": null,
+    "authority": "operator_scope_expansion",
+    "reason": "Plan is not ready for proposal generation: inspection_assessment.sufficient_for_proposal is false. Declared mission scope is exhausted after resourcefulness; operator scope expansion is required."
+  },
+  "blocked_reason": null,
+  "unresolved": [
+    "Implementation proposal is blocked: inspection_assessment.sufficient_for_proposal is false"
+  ],
+  "budgets": {
+    "max_inspection_passes": 8,
+    "max_files_per_pass": 8,
+    "max_total_files": 40,
+    "max_seconds_per_model_call": 300,
+    "max_mission_seconds": 1800
+  },
+  "plan": {
+    "path": "Agency/Agents/Editor/work/Missions/mission-3/plan/plan.json",
+    "created_at": "2026-08-13T10:01:13.707297+00:00",
+    "schema_version": 1
+  },
+  "resourcefulness_complete": true,
+  "resourcefulness": {
+    "strategy": "reconstruct",
+    "status": "resourcefulness_reconstruction_complete",
+    "reason": "Reconstructed architecture evidence from existing inspection observations.",
+    "confidence": "medium",
+    "next_recommendation": "replan",
+    "artifacts": {
+      "resourcefulness_reconstruction": "Agency/Agents/Editor/work/Missions/mission-3/inspect/knowledge/resourcefulness_reconstruction.json"
+    },
+    "path": "Agency/Agents/Editor/work/Missions/mission-3/inspect/knowledge/resourcefulness_reconstruction.json",
+    "created_at": "2026-08-13T10:00:56.753573+00:00",
+    "schema_version": 1
+  }
+}

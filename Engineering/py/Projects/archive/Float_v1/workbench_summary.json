@@ -1,0 +1,79 @@
+{
+  "Overview": {
+    "project": "Float",
+    "packet_type": "boat_assembly_packet",
+    "evidence_state": "calculated_candidate",
+    "object_count": 15,
+    "total_mass_kg": 228.16052133239558,
+    "float_margin_n": 18670.287423475664
+  },
+  "Packets": {
+    "source_packets": [
+      {
+        "packet_type": "hull_inventory_packet",
+        "packet_path": "Hull\\hull_inventory_packet.json"
+      },
+      {
+        "packet_type": "battery_packet",
+        "packet_path": "Motor\\battery_packet.json"
+      },
+      {
+        "packet_type": "hull_frame_packet",
+        "packet_path": "Hull\\hull_frame_packet.json"
+      },
+      {
+        "packet_type": "motor_packet",
+        "packet_path": "Motor\\motor_packet.json"
+      }
+    ]
+  },
+  "Warnings": {
+    "physical_overlap_warning_count": 0,
+    "blocked_interpretations": [
+      "positive_float_margin_equals_stability",
+      "inventory_packet_equals_physical_validation",
+      "calculated_candidate_equals_safe_payload",
+      "pvc_cradle_geometry_equals_structural_validation",
+      "two_12v_batteries_equals_validated_power_system",
+      "series_voltage_equals_motor_compatibility",
+      "battery_packet_equals_safe_electrical_design",
+      "battery_mass_candidate_equals_measured_mass",
+      "pipe_frame_packet_equals_structural_validation",
+      "visible_pipe_frame_equals_load_path_validated",
+      "candidate_pipe_mass_equals_measured_mass",
+      "pipe_presence_equals_safe_mounting",
+      "motor_packet_equals_validated_propulsion",
+      "voltage_match_equals_system_compatibility",
+      "candidate_power_equals_available_thrust",
+      "motor_presence_equals_drivable_vessel"
+    ],
+    "prohibited_interpretations": [
+      "simulation_equals_truth",
+      "calculation_equals_validation",
+      "float_margin_equals_seaworthiness",
+      "visual_cradle_equals_structural_safety",
+      "calculation_equals_validation",
+      "battery_candidate_equals_safe_installation",
+      "packet_equals_electrical_safety_review",
+      "nominal_voltage_equals_operational_readiness",
+      "calculation_equals_validation",
+      "pipe_frame_candidate_equals_structural_safety",
+      "packet_equals_load_test",
+      "visual_frame_equals_validated_structure",
+      "calculation_equals_validation",
+      "motor_candidate_equals_safe_installation",
+      "packet_equals_propulsion_test",
+      "nominal_voltage_equals_operational_readiness",
+      "power_rating_equals_measured_thrust"
+    ]
+  },
+  "Objects": {
+    "object_types": [
+      "barrel",
+      "battery",
+      "connector_pipe",
+      "electric_motor",
+      "pipe_fitting"
+    ]
+  }
+}

@@ -1,0 +1,163 @@
+#!/data/data/com.termux/files/usr/bin/python
+
+from __future__ import annotations
+
+import csv
+import json
+import socket
+import sys
+from pathlib import Path
+
+HOME = Path.home()
+ROOT = HOME / "ce-os"
+
+sys.path.insert(0, str(ROOT))
+
+from services.ce_os.guardian import evaluate_state
+from services.ce_os.state import load_state, save_state
+
+STATE = ROOT / "state/runtime/state.json"
+LIVE = ROOT / "state/runtime/live.env"
+PLATFORM = ROOT / "state/runtime/platform-approved.env"
+POWER = ROOT / "logs/power.csv"
+PRIV_SOCKET = ROOT / "run/privileged.sock"
+
+THERMAL = {
+    "0": "NOMINAL",
+    "1": "LIGHT",
+    "2": "MODERATE",
+    "3": "SEVERE",
+    "4": "CRITICAL",
+    "5": "EMERGENCY",
+    "6": "SHUTDOWN",
+}
+
+
+def read_platform() -> str:
+    if not PLATFORM.exists():
+        return "unknown"
+
+    values = {}
+    for line in PLATFORM.read_text().splitlines():
+        if "=" in line:
+            key, value = line.split("=", 1)
+            values[key.strip()] = value.strip()
+
+    return values.get("platform_state", "unknown")
+
+
+def read_latest_power():
+    if not POWER.exists():
+        return None
+
+    with POWER.open(newline="", encoding="utf-8") as handle:
+        rows = list(csv.DictReader(handle))
+
+    if not rows:
+        return None
+
+    return rows[-1]
+
+
+def read_usb_mode() -> str:
+    """Observe actual USB ownership through the privileged broker."""
+    request = json.dumps(
+        {"operation": "bootstrap.status"}
+    ).encode("utf-8") + b"\n"
+
+    sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+    sock.settimeout(5)
+
+    try:
+        sock.connect(str(PRIV_SOCKET))
+        sock.sendall(request)
+
+        raw = b""
+        while not raw.endswith(b"\n") and len(raw) < 65536:
+            chunk = sock.recv(4096)
+            if not chunk:
+                break
+            raw += chunk
+
+        payload = json.loads(raw.decode("utf-8"))
+
+        if not payload.get("ok"):
+            return "none"
+
+        if payload.get("effective_mode") == "bootstrap":
+            return "bootstrap"
+
+        return "none"
+
+    except (OSError, ValueError, json.JSONDecodeError):
+        # Failure to observe privileged hardware never fabricates
+        # BOOTSTRAP ownership.
+        return "none"
+
+    finally:
+        sock.close()
+
+
+def main():
+    current = load_state(STATE)
+    latest = read_latest_power()
+
+    if latest is None:
+        current = current.with_updates(
+            platform_state=read_platform(),
+            power_state="SURVIVAL",
+            thermal_state="MODERATE",
+        )
+    else:
+        mode = latest.get("mode", "").upper()
+
+        if mode == "MOBILE":
+            power_state = "MOBILE"
+        elif mode == "SURVIVAL":
+            power_state = "SURVIVAL"
+        else:
+            power_state = "POWERED"
+
+        thermal_status = latest.get("thermal_status", "2")
+        thermal_state = THERMAL.get(thermal_status, "MODERATE")
+
+        current = current.with_updates(
+            platform_state=read_platform(),
+            power_state=power_state,
+            thermal_state=thermal_state,
+        )
+
+    current = current.with_updates(
+        usb_mode=read_usb_mode(),
+    )
+    current = evaluate_state(current)
+    save_state(current, STATE)
+
+    LIVE.parent.mkdir(parents=True, exist_ok=True)
+
+    telemetry = {
+        "timestamp": latest.get("timestamp", "") if latest else "",
+        "battery": latest.get("battery", "unknown") if latest else "unknown",
+        "battery_temp_c": latest.get("battery_temp_c", "unknown") if latest else "unknown",
+        "thermal_status": latest.get("thermal_status", "unknown") if latest else "unknown",
+        "power_state": current.power_state,
+        "thermal_state": current.thermal_state,
+        "platform_state": current.platform_state,
+        "allow_compute": str(current.allow_compute),
+        "requested_mode": current.requested_mode,
+        "effective_mode": current.effective_mode,
+        "requested_usb_mode": current.requested_usb_mode,
+        "usb_mode": current.usb_mode,
+    }
+
+    LIVE.write_text(
+        "".join(
+            f"{key}={value}\n"
+            for key, value in telemetry.items()
+        ),
+        encoding="utf-8",
+    )
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,8 @@
+{"ball_holder": "Editor", "event": "task_received", "ts": "2026-07-26T19:02:01Z"}
+{"event": "task_validated", "ts": "2026-07-26T19:02:01Z"}
+{"event": "inspection_started", "ts": "2026-07-26T19:02:01Z"}
+{"event": "inspection_completed", "files_examined": 1, "findings": 3, "status": "completed", "ts": "2026-07-26T19:02:01Z"}
+{"event": "proposal_started", "ts": "2026-07-26T19:02:01Z"}
+{"event": "task_blocked", "reason": "proposal_unresolved", "ts": "2026-07-26T19:02:01Z"}
+{"event": "ball_returned", "from_holder": "Editor", "result_status": "blocked", "to_holder": "Gear", "ts": "2026-07-26T19:02:01Z"}
+{"event": "task_returned", "play_outcome": "blocked", "status": "blocked", "ts": "2026-07-26T19:02:01Z"}

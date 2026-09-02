@@ -1,0 +1,3650 @@
+EvidenceBundle:
+  request_id: repoctx-f550da32dd7e
+  status: completed
+  objective: 'Diagnose this concrete operational limitation.
+
+
+    Command:
+
+    python run.py agent ask Editor ''<repository diagnosis request>''
+
+
+    Observed runtime metadata:
+
+    direct_file_context_loaded=false
+
+    workspace_snapshot_loaded=false
+
+    memory_results_loaded=0
+
+    memory_retrieval_skipped=true
+
+    context_route=action_request
+
+    response_provenance=model_inference
+
+
+    Expected behavior:
+
+    Editor should be able to diagnose repository failures using scoped repository
+    context.
+
+
+    Actual behavior:
+
+    Editor can only reason from text explicitly included in the prompt.
+
+
+    Do not modify files or generate a patch.
+
+
+    Return:
+
+    1. observed failure
+
+    2. likely routing cause
+
+    3. relevant runtime components to inspect
+
+    4. uncertainty
+
+    5. smallest safe repair
+
+    6. tests proving repository context is loaded without granting write authority'
+  repository_root: /home/spaztic/Core/Dashboard
+  repository_root_authority: Agency.Core.foundation.paths.DASHBOARD_ROOT
+  effective_scope:
+    include:
+    - run.py
+    exclude:
+    - .git
+    - __pycache__
+    - .pytest_cache
+    - node_modules
+    - .venv
+    - venv
+    - '*_env'
+    - Chroma
+    - memory/Chroma
+    - build
+    - dist
+    - .godot
+    - logs
+    - sessions
+    - '*.pyc'
+    - '*.pyo'
+    - '*.sqlite'
+    - '*.sqlite3'
+    - '*.db'
+    - .env
+    - .env.*
+    - '*.pem'
+    - '*.key'
+    - '*token*'
+    - '*credential*'
+    - '*secret*'
+    default_exclusions:
+    - .git
+    - __pycache__
+    - .pytest_cache
+    - node_modules
+    - .venv
+    - venv
+    - '*_env'
+    - Chroma
+    - memory/Chroma
+    - build
+    - dist
+    - .godot
+    - logs
+    - sessions
+    - '*.pyc'
+    - '*.pyo'
+    - '*.sqlite'
+    - '*.sqlite3'
+    - '*.db'
+    - .env
+    - .env.*
+    - '*.pem'
+    - '*.key'
+    - '*token*'
+    - '*credential*'
+    - '*secret*'
+  operations_performed:
+  - path_discovery
+  - text_search
+  findings:
+  - id: finding-001
+    claim: 'Path matched within scope: run.py'
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 1
+      end_line: 1
+      excerpt: run.py
+      evidence_type: path_discovery
+  - id: finding-002
+    claim: Text query 'Command' matched run.py:51.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 51
+      end_line: 51
+      excerpt: '    """Report the live Dashboard command and agent surface."""'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-003
+    claim: Text query 'Command' matched run.py:60.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 60
+      end_line: 60
+      excerpt: '    print("TOP-LEVEL COMMANDS")'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-004
+    claim: Text query 'Command' matched run.py:80.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 80
+      end_line: 80
+      excerpt: 'def run_cli_command(command):'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-005
+    claim: Text query 'Command' matched run.py:81.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 81
+      end_line: 81
+      excerpt: '    from Agency.Core.interfaces.cli import run_command'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-006
+    claim: Text query 'Command' matched run.py:82.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 82
+      end_line: 82
+      excerpt: '    cmd_str = " ".join(command) if not isinstance(command, str) else
+        command'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-007
+    claim: Text query 'Command' matched run.py:83.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 83
+      end_line: 83
+      excerpt: '    watch("cli_command_started", {"command": cmd_str})'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-008
+    claim: Text query 'Command' matched run.py:85.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 85
+      end_line: 85
+      excerpt: '        result = run_command(command)'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-009
+    claim: Text query 'Command' matched run.py:86.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 86
+      end_line: 86
+      excerpt: '        watch("cli_command_completed", {"command": cmd_str, "result":
+        result})'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-010
+    claim: Text query 'Command' matched run.py:93.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 93
+      end_line: 93
+      excerpt: '            watch("cli_command_failed", {'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-011
+    claim: Text query 'Command' matched run.py:94.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 94
+      end_line: 94
+      excerpt: '                "command": cmd_str,'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-012
+    claim: Text query 'Command' matched run.py:100.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 100
+      end_line: 100
+      excerpt: '        watch("cli_command_failed", {'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-013
+    claim: Text query 'Command' matched run.py:101.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 101
+      end_line: 101
+      excerpt: '            "command": cmd_str,'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-014
+    claim: Text query 'Command' matched run.py:109.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 109
+      end_line: 109
+      excerpt: 'def run_remote_command(args):'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-015
+    claim: Text query 'Command' matched run.py:114.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 114
+      end_line: 114
+      excerpt: '    command = args[0].lower()'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-016
+    claim: Text query 'Command' matched run.py:116.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 116
+      end_line: 116
+      excerpt: '    if command == "status":'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-017
+    claim: Text query 'Command' matched run.py:121.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 121
+      end_line: 121
+      excerpt: '    if command == "ask":'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-018
+    claim: Text query 'Command' matched run.py:151.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 151
+      end_line: 151
+      excerpt: '    if command == "read":'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-019
+    claim: Text query 'Command' matched run.py:160.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 160
+      end_line: 160
+      excerpt: '    if command == "write":'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-020
+    claim: Text query 'Command' matched run.py:169.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 169
+      end_line: 169
+      excerpt: '    print(f"ERR: unknown remote command: {'' ''.join(args)}")'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-021
+    claim: Text query 'Command' matched run.py:193.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 193
+      end_line: 193
+      excerpt: '        "CommandActions.gd",'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-022
+    claim: Text query 'Command' matched run.py:194.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 194
+      end_line: 194
+      excerpt: '        "CommandPacket.gd",'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-023
+    claim: Text query 'Command' matched run.py:338.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 338
+      end_line: 338
+      excerpt: 'def _run_tracked_process(command: list[str], *, cwd: Path, label:
+        str, env: dict | None = None) -> int:'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-024
+    claim: Text query 'Command' matched run.py:339.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 339
+      end_line: 339
+      excerpt: '    print(f"command: {'' ''.join(command)}")'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-025
+    claim: Text query 'Command' matched run.py:348.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 348
+      end_line: 348
+      excerpt: '    proc = subprocess.Popen(command, cwd=str(cwd), **kwargs)'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-026
+    claim: Text query 'Command' matched run.py:479.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 479
+      end_line: 479
+      excerpt: 'def _screenshot_tool_command(output_path: Path) -> tuple[str, list[str]]
+        | None:'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-027
+    claim: Text query 'Command' matched run.py:487.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 487
+      end_line: 487
+      excerpt: '    for name, command in candidates:'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-028
+    claim: Text query 'Command' matched run.py:498.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 498
+      end_line: 498
+      excerpt: '            return name, command'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-029
+    claim: Text query 'Command' matched run.py:515.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 515
+      end_line: 515
+      excerpt: '    tool = _screenshot_tool_command(screenshot_dir / "probe.png")'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-030
+    claim: Text query 'Command' matched run.py:529.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 529
+      end_line: 529
+      excerpt: '    tool_name, command = _screenshot_tool_command(output_path)'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-031
+    claim: Text query 'Command' matched run.py:531.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 531
+      end_line: 531
+      excerpt: '        command,'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-032
+    claim: Text query 'Command' matched run.py:633.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 633
+      end_line: 633
+      excerpt: '        command = args[0].lower()'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-033
+    claim: Text query 'Command' matched run.py:634.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 634
+      end_line: 634
+      excerpt: '        if command == "launch":'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-034
+    claim: Text query 'Command' matched run.py:636.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 636
+      end_line: 636
+      excerpt: '        if command == "screenshot":'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-035
+    claim: Text query 'Command' matched run.py:638.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 638
+      end_line: 638
+      excerpt: '        if command not in {"status", "--status"}:'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-036
+    claim: Text query 'Command' matched run.py:718.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 718
+      end_line: 718
+      excerpt: '    print("""usage: python run.py agent <command|AgentName> [arguments]'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-037
+    claim: Text query 'Command' matched run.py:722.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 722
+      end_line: 722
+      excerpt: 'Commands:'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-038
+    claim: Text query 'Command' matched run.py:733.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 733
+      end_line: 733
+      excerpt: '      Show commands supported by that agent.'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-039
+    claim: Text query 'Command' matched run.py:765.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 765
+      end_line: 765
+      excerpt: 'def run_agent_command(args):'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-040
+    claim: Text query 'Command' matched run.py:776.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 776
+      end_line: 776
+      excerpt: '    command = args[0]'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-041
+    claim: Text query 'Command' matched run.py:777.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 777
+      end_line: 777
+      excerpt: '    normalized = command.lower()'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-042
+    claim: Text query 'Command' matched run.py:795.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 795
+      end_line: 795
+      excerpt: '    if command == "ask":'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-043
+    claim: Text query 'Command' matched run.py:826.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 826
+      end_line: 826
+      excerpt: '    if command == "action":'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-044
+    claim: Text query 'Command' matched run.py:889.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 889
+      end_line: 889
+      excerpt: '        print(f"ERR: unknown agent action command: {sub}")'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-045
+    claim: Text query 'Command' matched run.py:892.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 892
+      end_line: 892
+      excerpt: '    if command == "memory":'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-046
+    claim: Text query 'Command' matched run.py:904.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 904
+      end_line: 904
+      excerpt: '            short_command = args[2].lower()'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-047
+    claim: Text query 'Command' matched run.py:907.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 907
+      end_line: 907
+      excerpt: '            if short_command == "show":'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-048
+    claim: Text query 'Command' matched run.py:911.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 911
+      end_line: 911
+      excerpt: '            if short_command == "append":'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-049
+    claim: Text query 'Command' matched run.py:920.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 920
+      end_line: 920
+      excerpt: '            if short_command == "clear":'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-050
+    claim: Text query 'Command' matched run.py:924.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 924
+      end_line: 924
+      excerpt: '            print(f"ERR: unknown short memory command: {short_command}")'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-051
+    claim: Text query 'Command' matched run.py:954.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 954
+      end_line: 954
+      excerpt: '        return launch_agent(command, args[1:])'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-052
+    claim: Text query 'Command' matched run.py:961.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 961
+      end_line: 961
+      excerpt: 'def run_task_command(args):'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-053
+    claim: Text query 'Command' matched run.py:982.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 982
+      end_line: 982
+      excerpt: '    command-line arguments to its subsystem.'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-054
+    claim: Text query 'Command' matched run.py:989.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 989
+      end_line: 989
+      excerpt: 'def run_mission_command(argv: list[str]) -> int:'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-055
+    claim: Text query 'Command' matched run.py:998.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 998
+      end_line: 998
+      excerpt: '    # can forward it to run_agent_command().'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-056
+    claim: Text query 'Command' matched run.py:1008.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 1008
+      end_line: 1008
+      excerpt: '        return run_agent_command(sys.argv[2:])'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-057
+    claim: Text query 'Command' matched run.py:1010.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 1010
+      end_line: 1010
+      excerpt: '    # Model subcommands are owned by model_service; forward help there
+        so'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-058
+    claim: Text query 'Command' matched run.py:1011.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 1011
+      end_line: 1011
+      excerpt: '    # operators see the real status/ask/agent-ask command surface.'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-059
+    claim: Text query 'Command' matched run.py:1068.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 1068
+      end_line: 1068
+      excerpt: '    cmd.add_argument("command", nargs=argparse.REMAINDER)'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-060
+    claim: Text query 'Command' matched run.py:1084.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 1084
+      end_line: 1084
+      excerpt: '        return run_task_command(args.args)'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-061
+    claim: Text query 'Command' matched run.py:1097.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 1097
+      end_line: 1097
+      excerpt: '        return run_remote_command(args.args)'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-062
+    claim: Text query 'Command' matched run.py:1107.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 1107
+      end_line: 1107
+      excerpt: '        return run_agent_command(args.args)'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-063
+    claim: Text query 'Command' matched run.py:1118.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 1118
+      end_line: 1118
+      excerpt: '        if not args.command:'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-064
+    claim: Text query 'Command' matched run.py:1119.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 1119
+      end_line: 1119
+      excerpt: '            print("ERR: missing command")'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-065
+    claim: Text query 'Command' matched run.py:1121.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 1121
+      end_line: 1121
+      excerpt: '        return run_cli_command(args.command)'
+      evidence_type: text_search
+      query: Command
+      match_type: exact_text
+  - id: finding-066
+    claim: Text query 'python' matched run.py:1.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 1
+      end_line: 1
+      excerpt: '#!/usr/bin/env python3'
+      evidence_type: text_search
+      query: python
+      match_type: exact_text
+  - id: finding-067
+    claim: Text query 'python' matched run.py:111.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 111
+      end_line: 111
+      excerpt: '        print("usage: python run.py remote <status|ask|read|write>
+        ...")'
+      evidence_type: text_search
+      query: python
+      match_type: exact_text
+  - id: finding-068
+    claim: Text query 'python' matched run.py:123.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 123
+      end_line: 123
+      excerpt: '            print(''usage: python run.py remote ask "prompt"'')'
+      evidence_type: text_search
+      query: python
+      match_type: exact_text
+  - id: finding-069
+    claim: Text query 'python' matched run.py:153.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 153
+      end_line: 153
+      excerpt: '            print("usage: python run.py remote read <path>")'
+      evidence_type: text_search
+      query: python
+      match_type: exact_text
+  - id: finding-070
+    claim: Text query 'python' matched run.py:162.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 162
+      end_line: 162
+      excerpt: '            print(''usage: python run.py remote write <path> "content"'')'
+      evidence_type: text_search
+      query: python
+      match_type: exact_text
+  - id: finding-071
+    claim: Text query 'python' matched run.py:639.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 639
+      end_line: 639
+      excerpt: '            print("usage: python run.py shell [launch|screenshot]")'
+      evidence_type: text_search
+      query: python
+      match_type: exact_text
+  - id: finding-072
+    claim: Text query 'python' matched run.py:718.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 718
+      end_line: 718
+      excerpt: '    print("""usage: python run.py agent <command|AgentName> [arguments]'
+      evidence_type: text_search
+      query: python
+      match_type: exact_text
+  - id: finding-073
+    claim: Text query 'python' matched run.py:748.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 748
+      end_line: 748
+      excerpt: '  python run.py agent list'
+      evidence_type: text_search
+      query: python
+      match_type: exact_text
+  - id: finding-074
+    claim: Text query 'python' matched run.py:749.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 749
+      end_line: 749
+      excerpt: '  python run.py agent Editor'
+      evidence_type: text_search
+      query: python
+      match_type: exact_text
+  - id: finding-075
+    claim: Text query 'python' matched run.py:750.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 750
+      end_line: 750
+      excerpt: '  python run.py agent Editor status'
+      evidence_type: text_search
+      query: python
+      match_type: exact_text
+  - id: finding-076
+    claim: Text query 'python' matched run.py:751.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 751
+      end_line: 751
+      excerpt: '  python run.py agent Editor -h'
+      evidence_type: text_search
+      query: python
+      match_type: exact_text
+  - id: finding-077
+    claim: Text query 'python' matched run.py:752.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 752
+      end_line: 752
+      excerpt: '  python run.py agent ask Editor "Inspect the current task."'
+      evidence_type: text_search
+      query: python
+      match_type: exact_text
+  - id: finding-078
+    claim: Text query 'python' matched run.py:797.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 797
+      end_line: 797
+      excerpt: '            print(''usage: python run.py agent ask <AgentName> "prompt"
+        [--inference <target>]'')'
+      evidence_type: text_search
+      query: python
+      match_type: exact_text
+  - id: finding-079
+    claim: Text query 'python' matched run.py:828.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 828
+      end_line: 828
+      excerpt: '            print("usage: python run.py agent action <propose|review|apply>
+        <AgentName> ...")'
+      evidence_type: text_search
+      query: python
+      match_type: exact_text
+  - id: finding-080
+    claim: Text query 'python' matched run.py:836.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 836
+      end_line: 836
+      excerpt: '                print(''usage: python run.py agent action propose
+        <AgentName> "request"'')'
+      evidence_type: text_search
+      query: python
+      match_type: exact_text
+  - id: finding-081
+    claim: Text query 'python' matched run.py:894.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 894
+      end_line: 894
+      excerpt: '            print("usage: python run.py agent memory <short|build|query>
+        ...")'
+      evidence_type: text_search
+      query: python
+      match_type: exact_text
+  - id: finding-082
+    claim: Text query 'python' matched run.py:901.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 901
+      end_line: 901
+      excerpt: '                print(''usage: python run.py agent memory short <show|append|clear>
+        <AgentName> ...'')'
+      evidence_type: text_search
+      query: python
+      match_type: exact_text
+  - id: finding-083
+    claim: Text query 'python' matched run.py:913.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 913
+      end_line: 913
+      excerpt: '                    print(''usage: python run.py agent memory short
+        append <AgentName> --note "text"'')'
+      evidence_type: text_search
+      query: python
+      match_type: exact_text
+  - id: finding-084
+    claim: Text query 'python' matched run.py:944.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 944
+      end_line: 944
+      excerpt: '                print(''usage: python run.py agent memory query <AgentName>
+        "query"'')'
+      evidence_type: text_search
+      query: python
+      match_type: exact_text
+  - id: finding-085
+    claim: Text query 'python' matched run.py:1034.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 1034
+      end_line: 1034
+      excerpt: '    python run.py <subsystem> --help'
+      evidence_type: text_search
+      query: python
+      match_type: exact_text
+  - id: finding-086
+    claim: Text query 'run' matched run.py:3.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 3
+      end_line: 3
+      excerpt: from Agency.Core.runtime.help.help_text import SUBSYSTEMS
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-087
+    claim: Text query 'run' matched run.py:20.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 20
+      end_line: 20
+      excerpt: from Agency.Core.foundation.paths import EDITOR_RUNTIME_ROOT, WATCH_LOG
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-088
+    claim: Text query 'run' matched run.py:36.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 36
+      end_line: 36
+      excerpt: 'def run_status():'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-089
+    claim: Text query 'run' matched run.py:50.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 50
+      end_line: 50
+      excerpt: 'def run_scope():'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-090
+    claim: Text query 'run' matched run.py:80.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 80
+      end_line: 80
+      excerpt: 'def run_cli_command(command):'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-091
+    claim: Text query 'run' matched run.py:81.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 81
+      end_line: 81
+      excerpt: '    from Agency.Core.interfaces.cli import run_command'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-092
+    claim: Text query 'run' matched run.py:85.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 85
+      end_line: 85
+      excerpt: '        result = run_command(command)'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-093
+    claim: Text query 'run' matched run.py:109.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 109
+      end_line: 109
+      excerpt: 'def run_remote_command(args):'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-094
+    claim: Text query 'run' matched run.py:111.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 111
+      end_line: 111
+      excerpt: '        print("usage: python run.py remote <status|ask|read|write>
+        ...")'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-095
+    claim: Text query 'run' matched run.py:123.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 123
+      end_line: 123
+      excerpt: '            print(''usage: python run.py remote ask "prompt"'')'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-096
+    claim: Text query 'run' matched run.py:153.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 153
+      end_line: 153
+      excerpt: '            print("usage: python run.py remote read <path>")'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-097
+    claim: Text query 'run' matched run.py:162.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 162
+      end_line: 162
+      excerpt: '            print(''usage: python run.py remote write <path> "content"'')'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-098
+    claim: Text query 'run' matched run.py:187.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 187
+      end_line: 187
+      excerpt: '    runtime_root = shell_root / "runtime"'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-099
+    claim: Text query 'run' matched run.py:191.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 191
+      end_line: 191
+      excerpt: '    runtime_files = ['
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-100
+    claim: Text query 'run' matched run.py:205.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 205
+      end_line: 205
+      excerpt: '        "runtime_root": runtime_root,'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-101
+    claim: Text query 'run' matched run.py:208.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 208
+      end_line: 208
+      excerpt: '        "runtime_files": runtime_files,'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-102
+    claim: Text query 'run' matched run.py:214.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 214
+      end_line: 214
+      excerpt: '        proc = subprocess.run('
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-103
+    claim: Text query 'run' matched run.py:243.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 243
+      end_line: 243
+      excerpt: '        proc = subprocess.run('
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-104
+    claim: Text query 'run' matched run.py:338.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 338
+      end_line: 338
+      excerpt: 'def _run_tracked_process(command: list[str], *, cwd: Path, label:
+        str, env: dict | None = None) -> int:'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-105
+    claim: Text query 'run' matched run.py:399.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 399
+      end_line: 399
+      excerpt: '    runtime_root = status["runtime_root"]'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-106
+    claim: Text query 'run' matched run.py:407.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 407
+      end_line: 407
+      excerpt: '    print(f"runtime: {runtime_root}")'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-107
+    claim: Text query 'run' matched run.py:408.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 408
+      end_line: 408
+      excerpt: '    print(f"runtime_exists: {runtime_root.exists()}")'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-108
+    claim: Text query 'run' matched run.py:409.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 409
+      end_line: 409
+      excerpt: '    print("runtime_files:")'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-109
+    claim: Text query 'run' matched run.py:410.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 410
+      end_line: 410
+      excerpt: '    for name in status["runtime_files"]:'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-110
+    claim: Text query 'run' matched run.py:411.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 411
+      end_line: 411
+      excerpt: '        path = runtime_root / name'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-111
+    claim: Text query 'run' matched run.py:419.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 419
+      end_line: 419
+      excerpt: '    print("authority: operator_shell_status_only_not_runtime_validation")'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-112
+    claim: Text query 'run' matched run.py:458.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 458
+      end_line: 458
+      excerpt: '        print("authority: operator_shell_launch_attempt_not_runtime_validation")'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-113
+    claim: Text query 'run' matched run.py:459.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 459
+      end_line: 459
+      excerpt: '        return _run_tracked_process('
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-114
+    claim: Text query 'run' matched run.py:469.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 469
+      end_line: 469
+      excerpt: '        print("authority: operator_shell_launch_attempt_not_runtime_validation")'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-115
+    claim: Text query 'run' matched run.py:470.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 470
+      end_line: 470
+      excerpt: '        return _run_tracked_process('
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-116
+    claim: Text query 'run' matched run.py:489.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 489
+      end_line: 489
+      excerpt: '            found = subprocess.run('
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-117
+    claim: Text query 'run' matched run.py:504.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 504
+      end_line: 504
+      excerpt: '    screenshot_dir = EDITOR_RUNTIME_ROOT / "screenshots"'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-118
+    claim: Text query 'run' matched run.py:530.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 530
+      end_line: 530
+      excerpt: '    proc = subprocess.run('
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-119
+    claim: Text query 'run' matched run.py:551.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 551
+      end_line: 551
+      excerpt: '    print("authority: operator_shell_screenshot_only_not_runtime_validation")'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-120
+    claim: Text query 'run' matched run.py:585.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 585
+      end_line: 585
+      excerpt: 'def run_workbench(args):'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-121
+    claim: Text query 'run' matched run.py:610.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 610
+      end_line: 610
+      excerpt: '        print("authority: workbench_launch_attempt_not_runtime_validation")'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-122
+    claim: Text query 'run' matched run.py:611.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 611
+      end_line: 611
+      excerpt: '        return _run_tracked_process('
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-123
+    claim: Text query 'run' matched run.py:621.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 621
+      end_line: 621
+      excerpt: '        print("authority: workbench_launch_attempt_not_runtime_validation")'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-124
+    claim: Text query 'run' matched run.py:622.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 622
+      end_line: 622
+      excerpt: '        return _run_tracked_process('
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-125
+    claim: Text query 'run' matched run.py:631.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 631
+      end_line: 631
+      excerpt: 'def run_shell(args):'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-126
+    claim: Text query 'run' matched run.py:639.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 639
+      end_line: 639
+      excerpt: '            print("usage: python run.py shell [launch|screenshot]")'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-127
+    claim: Text query 'run' matched run.py:648.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 648
+      end_line: 648
+      excerpt: 'def run_godot(args):'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-128
+    claim: Text query 'run' matched run.py:666.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 666
+      end_line: 666
+      excerpt: '    print("authority: cockpit_route_launch_not_runtime_validation")'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-129
+    claim: Text query 'run' matched run.py:687.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 687
+      end_line: 687
+      excerpt: '        return _run_tracked_process('
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-130
+    claim: Text query 'run' matched run.py:697.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 697
+      end_line: 697
+      excerpt: '        return _run_tracked_process('
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-131
+    claim: Text query 'run' matched run.py:718.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 718
+      end_line: 718
+      excerpt: '    print("""usage: python run.py agent <command|AgentName> [arguments]'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-132
+    claim: Text query 'run' matched run.py:748.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 748
+      end_line: 748
+      excerpt: '  python run.py agent list'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-133
+    claim: Text query 'run' matched run.py:749.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 749
+      end_line: 749
+      excerpt: '  python run.py agent Editor'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-134
+    claim: Text query 'run' matched run.py:750.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 750
+      end_line: 750
+      excerpt: '  python run.py agent Editor status'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-135
+    claim: Text query 'run' matched run.py:751.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 751
+      end_line: 751
+      excerpt: '  python run.py agent Editor -h'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-136
+    claim: Text query 'run' matched run.py:752.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 752
+      end_line: 752
+      excerpt: '  python run.py agent ask Editor "Inspect the current task."'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-137
+    claim: Text query 'run' matched run.py:765.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 765
+      end_line: 765
+      excerpt: 'def run_agent_command(args):'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-138
+    claim: Text query 'run' matched run.py:797.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 797
+      end_line: 797
+      excerpt: '            print(''usage: python run.py agent ask <AgentName> "prompt"
+        [--inference <target>]'')'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-139
+    claim: Text query 'run' matched run.py:817.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 817
+      end_line: 817
+      excerpt: '        from Agency.Core.runtime.model_service import ask_agent'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-140
+    claim: Text query 'run' matched run.py:828.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 828
+      end_line: 828
+      excerpt: '            print("usage: python run.py agent action <propose|review|apply>
+        <AgentName> ...")'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-141
+    claim: Text query 'run' matched run.py:836.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 836
+      end_line: 836
+      excerpt: '                print(''usage: python run.py agent action propose
+        <AgentName> "request"'')'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-142
+    claim: Text query 'run' matched run.py:894.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 894
+      end_line: 894
+      excerpt: '            print("usage: python run.py agent memory <short|build|query>
+        ...")'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-143
+    claim: Text query 'run' matched run.py:901.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 901
+      end_line: 901
+      excerpt: '                print(''usage: python run.py agent memory short <show|append|clear>
+        <AgentName> ...'')'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-144
+    claim: Text query 'run' matched run.py:913.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 913
+      end_line: 913
+      excerpt: '                    print(''usage: python run.py agent memory short
+        append <AgentName> --note "text"'')'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-145
+    claim: Text query 'run' matched run.py:944.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 944
+      end_line: 944
+      excerpt: '                print(''usage: python run.py agent memory query <AgentName>
+        "query"'')'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-146
+    claim: Text query 'run' matched run.py:961.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 961
+      end_line: 961
+      excerpt: 'def run_task_command(args):'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-147
+    claim: Text query 'run' matched run.py:989.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 989
+      end_line: 989
+      excerpt: 'def run_mission_command(argv: list[str]) -> int:'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-148
+    claim: Text query 'run' matched run.py:998.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 998
+      end_line: 998
+      excerpt: '    # can forward it to run_agent_command().'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-149
+    claim: Text query 'run' matched run.py:1008.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 1008
+      end_line: 1008
+      excerpt: '        return run_agent_command(sys.argv[2:])'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-150
+    claim: Text query 'run' matched run.py:1017.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 1017
+      end_line: 1017
+      excerpt: '        from Agency.Core.runtime.model_service import main as model_main'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-151
+    claim: Text query 'run' matched run.py:1030.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 1030
+      end_line: 1030
+      excerpt: repositories, agents, runtime state, and supporting tools.
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-152
+    claim: Text query 'run' matched run.py:1032.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 1032
+      end_line: 1032
+      excerpt: 'Run:'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-153
+    claim: Text query 'run' matched run.py:1034.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 1034
+      end_line: 1034
+      excerpt: '    python run.py <subsystem> --help'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-154
+    claim: Text query 'run' matched run.py:1078.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 1078
+      end_line: 1078
+      excerpt: '        return run_shell(args.args)'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-155
+    claim: Text query 'run' matched run.py:1081.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 1081
+      end_line: 1081
+      excerpt: '        return run_workbench(args.args)'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-156
+    claim: Text query 'run' matched run.py:1084.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 1084
+      end_line: 1084
+      excerpt: '        return run_task_command(args.args)'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-157
+    claim: Text query 'run' matched run.py:1095.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 1095
+      end_line: 1095
+      excerpt: '        return run_status()'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-158
+    claim: Text query 'run' matched run.py:1097.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 1097
+      end_line: 1097
+      excerpt: '        return run_remote_command(args.args)'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-159
+    claim: Text query 'run' matched run.py:1104.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 1104
+      end_line: 1104
+      excerpt: '        return run_godot(args.args)'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-160
+    claim: Text query 'run' matched run.py:1107.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 1107
+      end_line: 1107
+      excerpt: '        return run_agent_command(args.args)'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-161
+    claim: Text query 'run' matched run.py:1110.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 1110
+      end_line: 1110
+      excerpt: '        from Agency.Core.runtime.model_service import main as model_main'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-162
+    claim: Text query 'run' matched run.py:1114.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 1114
+      end_line: 1114
+      excerpt: '        return run_scope()'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-163
+    claim: Text query 'run' matched run.py:1121.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 1121
+      end_line: 1121
+      excerpt: '        return run_cli_command(args.command)'
+      evidence_type: text_search
+      query: run
+      match_type: exact_text
+  - id: finding-164
+    claim: Text query 'agent' matched run.py:51.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 51
+      end_line: 51
+      excerpt: '    """Report the live Dashboard command and agent surface."""'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-165
+    claim: Text query 'agent' matched run.py:52.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 52
+      end_line: 52
+      excerpt: '    from Agency.Core.agents.discovery import discover_agents'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-166
+    claim: Text query 'agent' matched run.py:67.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 67
+      end_line: 67
+      excerpt: '    print("AVAILABLE AGENTS")'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-167
+    claim: Text query 'agent' matched run.py:69.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 69
+      end_line: 69
+      excerpt: '    agents = discover_agents()'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-168
+    claim: Text query 'agent' matched run.py:71.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 71
+      end_line: 71
+      excerpt: '    if agents:'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-169
+    claim: Text query 'agent' matched run.py:72.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 72
+      end_line: 72
+      excerpt: '        for name in agents:'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-170
+    claim: Text query 'agent' matched run.py:128.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 128
+      end_line: 128
+      excerpt: '        agent = "Cali"'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-171
+    claim: Text query 'agent' matched run.py:136.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 136
+      end_line: 136
+      excerpt: '            if args[i] == "--agent" and i + 1 < len(args):'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-172
+    claim: Text query 'agent' matched run.py:137.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 137
+      end_line: 137
+      excerpt: '                agent = args[i + 1]'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-173
+    claim: Text query 'agent' matched run.py:146.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 146
+      end_line: 146
+      excerpt: '            ask(" ".join(prompt_parts), agent=agent, max_tokens=max_tokens),'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-174
+    claim: Text query 'agent' matched run.py:715.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 715
+      end_line: 715
+      excerpt: 'def print_agent_help() -> None:'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-175
+    claim: Text query 'agent' matched run.py:716.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 716
+      end_line: 716
+      excerpt: '    from Agency.Core.agents.discovery import discover_agents'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-176
+    claim: Text query 'agent' matched run.py:718.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 718
+      end_line: 718
+      excerpt: '    print("""usage: python run.py agent <command|AgentName> [arguments]'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-177
+    claim: Text query 'agent' matched run.py:720.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 720
+      end_line: 720
+      excerpt: Agent lifecycle and execution.
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-178
+    claim: Text query 'agent' matched run.py:724.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 724
+      end_line: 724
+      excerpt: '      List agents discovered under Agency/Agents.'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-179
+    claim: Text query 'agent' matched run.py:726.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 726
+      end_line: 726
+      excerpt: '  <AgentName>'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-180
+    claim: Text query 'agent' matched run.py:727.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 727
+      end_line: 727
+      excerpt: '      Open the selected agent''s interactive REPL.'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-181
+    claim: Text query 'agent' matched run.py:729.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 729
+      end_line: 729
+      excerpt: '  <AgentName> status'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-182
+    claim: Text query 'agent' matched run.py:730.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 730
+      end_line: 730
+      excerpt: '      Print the selected agent''s current status.'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-183
+    claim: Text query 'agent' matched run.py:732.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 732
+      end_line: 732
+      excerpt: '  <AgentName> -h'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-184
+    claim: Text query 'agent' matched run.py:733.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 733
+      end_line: 733
+      excerpt: '      Show commands supported by that agent.'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-185
+    claim: Text query 'agent' matched run.py:735.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 735
+      end_line: 735
+      excerpt: '  ask <AgentName> "prompt"'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-186
+    claim: Text query 'agent' matched run.py:736.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 736
+      end_line: 736
+      excerpt: '      Send a one-shot prompt to an agent.'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-187
+    claim: Text query 'agent' matched run.py:739.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 739
+      end_line: 739
+      excerpt: '      Create a new agent.'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-188
+    claim: Text query 'agent' matched run.py:742.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 742
+      end_line: 742
+      excerpt: '      Operate agent memory.'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-189
+    claim: Text query 'agent' matched run.py:745.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 745
+      end_line: 745
+      excerpt: '      Propose, review, or apply agent actions.'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-190
+    claim: Text query 'agent' matched run.py:748.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 748
+      end_line: 748
+      excerpt: '  python run.py agent list'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-191
+    claim: Text query 'agent' matched run.py:749.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 749
+      end_line: 749
+      excerpt: '  python run.py agent Editor'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-192
+    claim: Text query 'agent' matched run.py:750.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 750
+      end_line: 750
+      excerpt: '  python run.py agent Editor status'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-193
+    claim: Text query 'agent' matched run.py:751.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 751
+      end_line: 751
+      excerpt: '  python run.py agent Editor -h'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-194
+    claim: Text query 'agent' matched run.py:752.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 752
+      end_line: 752
+      excerpt: '  python run.py agent ask Editor "Inspect the current task."'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-195
+    claim: Text query 'agent' matched run.py:755.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 755
+      end_line: 755
+      excerpt: '    agents = discover_agents()'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-196
+    claim: Text query 'agent' matched run.py:757.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 757
+      end_line: 757
+      excerpt: '    print("Discovered agents:")'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-197
+    claim: Text query 'agent' matched run.py:758.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 758
+      end_line: 758
+      excerpt: '    if agents:'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-198
+    claim: Text query 'agent' matched run.py:759.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 759
+      end_line: 759
+      excerpt: '        for name in agents:'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-199
+    claim: Text query 'agent' matched run.py:765.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 765
+      end_line: 765
+      excerpt: 'def run_agent_command(args):'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-200
+    claim: Text query 'agent' matched run.py:766.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 766
+      end_line: 766
+      excerpt: '    from Agency.Core.agents.discovery import ('
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-201
+    claim: Text query 'agent' matched run.py:767.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 767
+      end_line: 767
+      excerpt: '        AgentLaunchError,'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-202
+    claim: Text query 'agent' matched run.py:768.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 768
+      end_line: 768
+      excerpt: '        discover_agents,'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-203
+    claim: Text query 'agent' matched run.py:769.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 769
+      end_line: 769
+      excerpt: '        launch_agent,'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-204
+    claim: Text query 'agent' matched run.py:773.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 773
+      end_line: 773
+      excerpt: '        print_agent_help()'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-205
+    claim: Text query 'agent' matched run.py:780.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 780
+      end_line: 780
+      excerpt: '        print_agent_help()'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-206
+    claim: Text query 'agent' matched run.py:783.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 783
+      end_line: 783
+      excerpt: '    if normalized in {"list", "list-agents"}:'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-207
+    claim: Text query 'agent' matched run.py:784.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 784
+      end_line: 784
+      excerpt: '        agents = discover_agents()'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-208
+    claim: Text query 'agent' matched run.py:785.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 785
+      end_line: 785
+      excerpt: '        if agents:'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-209
+    claim: Text query 'agent' matched run.py:786.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 786
+      end_line: 786
+      excerpt: '            for name in agents:'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-210
+    claim: Text query 'agent' matched run.py:791.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 791
+      end_line: 791
+      excerpt: '        from Agency.Core.agents.tooling.create_agent import main as create_agent_main'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-211
+    claim: Text query 'agent' matched run.py:793.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 793
+      end_line: 793
+      excerpt: '        return create_agent_main(args[1:])'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-212
+    claim: Text query 'agent' matched run.py:797.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 797
+      end_line: 797
+      excerpt: '            print(''usage: python run.py agent ask <AgentName> "prompt"
+        [--inference <target>]'')'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-213
+    claim: Text query 'agent' matched run.py:800.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 800
+      end_line: 800
+      excerpt: '        agent = args[1]'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-214
+    claim: Text query 'agent' matched run.py:817.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 817
+      end_line: 817
+      excerpt: '        from Agency.Core.runtime.model_service import ask_agent'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-215
+    claim: Text query 'agent' matched run.py:818.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 818
+      end_line: 818
+      excerpt: '        payload = ask_agent('
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-216
+    claim: Text query 'agent' matched run.py:819.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 819
+      end_line: 819
+      excerpt: '            agent_name=agent,'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-217
+    claim: Text query 'agent' matched run.py:828.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 828
+      end_line: 828
+      excerpt: '            print("usage: python run.py agent action <propose|review|apply>
+        <AgentName> ...")'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-218
+    claim: Text query 'agent' matched run.py:832.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 832
+      end_line: 832
+      excerpt: '        agent = args[2]'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-219
+    claim: Text query 'agent' matched run.py:836.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 836
+      end_line: 836
+      excerpt: '                print(''usage: python run.py agent action propose
+        <AgentName> "request"'')'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-220
+    claim: Text query 'agent' matched run.py:839.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 839
+      end_line: 839
+      excerpt: '            from Agency.Core.agents.tooling.agent_actions import propose_action'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-221
+    claim: Text query 'agent' matched run.py:841.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 841
+      end_line: 841
+      excerpt: '            return propose_action(agent, " ".join(args[3:]))'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-222
+    claim: Text query 'agent' matched run.py:844.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 844
+      end_line: 844
+      excerpt: '            from Agency.Core.agents.tooling.agent_actions import apply_action_packet'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-223
+    claim: Text query 'agent' matched run.py:862.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 862
+      end_line: 862
+      excerpt: '                agent,'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-224
+    claim: Text query 'agent' matched run.py:869.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 869
+      end_line: 869
+      excerpt: '            from Agency.Core.agents.tooling.agent_actions import review_action_packet'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-225
+    claim: Text query 'agent' matched run.py:884.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 884
+      end_line: 884
+      excerpt: '                agent,'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-226
+    claim: Text query 'agent' matched run.py:889.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 889
+      end_line: 889
+      excerpt: '        print(f"ERR: unknown agent action command: {sub}")'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-227
+    claim: Text query 'agent' matched run.py:894.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 894
+      end_line: 894
+      excerpt: '            print("usage: python run.py agent memory <short|build|query>
+        ...")'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-228
+    claim: Text query 'agent' matched run.py:901.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 901
+      end_line: 901
+      excerpt: '                print(''usage: python run.py agent memory short <show|append|clear>
+        <AgentName> ...'')'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-229
+    claim: Text query 'agent' matched run.py:905.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 905
+      end_line: 905
+      excerpt: '            agent = args[3]'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-230
+    claim: Text query 'agent' matched run.py:908.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 908
+      end_line: 908
+      excerpt: '                from Agency.Core.agents.tooling.agent_memory import show_short_term_memory'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-231
+    claim: Text query 'agent' matched run.py:909.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 909
+      end_line: 909
+      excerpt: '                return show_short_term_memory(agent)'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-232
+    claim: Text query 'agent' matched run.py:913.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 913
+      end_line: 913
+      excerpt: '                    print(''usage: python run.py agent memory short
+        append <AgentName> --note "text"'')'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-233
+    claim: Text query 'agent' matched run.py:917.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 917
+      end_line: 917
+      excerpt: '                from Agency.Core.agents.tooling.agent_memory import append_short_term_memory'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-234
+    claim: Text query 'agent' matched run.py:918.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 918
+      end_line: 918
+      excerpt: '                return append_short_term_memory(agent, note)'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-235
+    claim: Text query 'agent' matched run.py:921.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 921
+      end_line: 921
+      excerpt: '                from Agency.Core.agents.tooling.agent_memory import clear_short_term_memory'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-236
+    claim: Text query 'agent' matched run.py:922.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 922
+      end_line: 922
+      excerpt: '                return clear_short_term_memory(agent)'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-237
+    claim: Text query 'agent' matched run.py:930.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 930
+      end_line: 930
+      excerpt: '                print("ERR: missing agent name or all")'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-238
+    claim: Text query 'agent' matched run.py:936.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 936
+      end_line: 936
+      excerpt: '                from Agency.Core.agents.tooling.agent_memory import build_all_indexes'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-239
+    claim: Text query 'agent' matched run.py:939.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 939
+      end_line: 939
+      excerpt: '            from Agency.Core.agents.tooling.Chroma import build_agent_index'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-240
+    claim: Text query 'agent' matched run.py:940.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 940
+      end_line: 940
+      excerpt: '            return build_agent_index(target)'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-241
+    claim: Text query 'agent' matched run.py:944.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 944
+      end_line: 944
+      excerpt: '                print(''usage: python run.py agent memory query <AgentName>
+        "query"'')'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-242
+    claim: Text query 'agent' matched run.py:947.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 947
+      end_line: 947
+      excerpt: '            agent = args[2]'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-243
+    claim: Text query 'agent' matched run.py:950.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 950
+      end_line: 950
+      excerpt: '            from Agency.Core.agents.tooling.Chroma import query_agent_index'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-244
+    claim: Text query 'agent' matched run.py:951.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 951
+      end_line: 951
+      excerpt: '            return query_agent_index(agent, query)'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-245
+    claim: Text query 'agent' matched run.py:954.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 954
+      end_line: 954
+      excerpt: '        return launch_agent(command, args[1:])'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-246
+    claim: Text query 'agent' matched run.py:955.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 955
+      end_line: 955
+      excerpt: '    except AgentLaunchError as exc:'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-247
+    claim: Text query 'agent' matched run.py:996.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 996
+      end_line: 996
+      excerpt: '    # Agent help must be intercepted before argparse processes the
+        agent'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-248
+    claim: Text query 'agent' matched run.py:998.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 998
+      end_line: 998
+      excerpt: '    # can forward it to run_agent_command().'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-249
+    claim: Text query 'agent' matched run.py:1001.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 1001
+      end_line: 1001
+      excerpt: '    # Agent subsystem help is handled before argparse so `agent -h`'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-250
+    claim: Text query 'agent' matched run.py:1002.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 1002
+      end_line: 1002
+      excerpt: '    # reaches the dynamic agent help instead of the static subparser
+        help.'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-251
+    claim: Text query 'agent' matched run.py:1005.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 1005
+      end_line: 1005
+      excerpt: '        and sys.argv[1].lower() == "agent"'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-252
+    claim: Text query 'agent' matched run.py:1008.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 1008
+      end_line: 1008
+      excerpt: '        return run_agent_command(sys.argv[2:])'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-253
+    claim: Text query 'agent' matched run.py:1011.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 1011
+      end_line: 1011
+      excerpt: '    # operators see the real status/ask/agent-ask command surface.'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-254
+    claim: Text query 'agent' matched run.py:1030.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 1030
+      end_line: 1030
+      excerpt: repositories, agents, runtime state, and supporting tools.
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-255
+    claim: Text query 'agent' matched run.py:1060.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 1060
+      end_line: 1060
+      excerpt: '    agent = add_passthrough_mode(sub, "agent", add_help=False)'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-256
+    claim: Text query 'agent' matched run.py:1106.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 1106
+      end_line: 1106
+      excerpt: '    if args.mode == "agent":'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-257
+    claim: Text query 'agent' matched run.py:1107.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 1107
+      end_line: 1107
+      excerpt: '        return run_agent_command(args.args)'
+      evidence_type: text_search
+      query: agent
+      match_type: exact_text
+  - id: finding-258
+    claim: Text query 'ask' matched run.py:111.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 111
+      end_line: 111
+      excerpt: '        print("usage: python run.py remote <status|ask|read|write>
+        ...")'
+      evidence_type: text_search
+      query: ask
+      match_type: exact_text
+  - id: finding-259
+    claim: Text query 'ask' matched run.py:121.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 121
+      end_line: 121
+      excerpt: '    if command == "ask":'
+      evidence_type: text_search
+      query: ask
+      match_type: exact_text
+  - id: finding-260
+    claim: Text query 'ask' matched run.py:123.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 123
+      end_line: 123
+      excerpt: '            print(''usage: python run.py remote ask "prompt"'')'
+      evidence_type: text_search
+      query: ask
+      match_type: exact_text
+  - id: finding-261
+    claim: Text query 'ask' matched run.py:144.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 144
+      end_line: 144
+      excerpt: '        from Agency.Core.interfaces.remote.blacklaptop import ask'
+      evidence_type: text_search
+      query: ask
+      match_type: exact_text
+  - id: finding-262
+    claim: Text query 'ask' matched run.py:146.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 146
+      end_line: 146
+      excerpt: '            ask(" ".join(prompt_parts), agent=agent, max_tokens=max_tokens),'
+      evidence_type: text_search
+      query: ask
+      match_type: exact_text
+  - id: finding-263
+    claim: Text query 'ask' matched run.py:735.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 735
+      end_line: 735
+      excerpt: '  ask <AgentName> "prompt"'
+      evidence_type: text_search
+      query: ask
+      match_type: exact_text
+  - id: finding-264
+    claim: Text query 'ask' matched run.py:752.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 752
+      end_line: 752
+      excerpt: '  python run.py agent ask Editor "Inspect the current task."'
+      evidence_type: text_search
+      query: ask
+      match_type: exact_text
+  - id: finding-265
+    claim: Text query 'ask' matched run.py:795.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 795
+      end_line: 795
+      excerpt: '    if command == "ask":'
+      evidence_type: text_search
+      query: ask
+      match_type: exact_text
+  - id: finding-266
+    claim: Text query 'ask' matched run.py:797.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 797
+      end_line: 797
+      excerpt: '            print(''usage: python run.py agent ask <AgentName> "prompt"
+        [--inference <target>]'')'
+      evidence_type: text_search
+      query: ask
+      match_type: exact_text
+  - id: finding-267
+    claim: Text query 'ask' matched run.py:817.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 817
+      end_line: 817
+      excerpt: '        from Agency.Core.runtime.model_service import ask_agent'
+      evidence_type: text_search
+      query: ask
+      match_type: exact_text
+  - id: finding-268
+    claim: Text query 'ask' matched run.py:818.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 818
+      end_line: 818
+      excerpt: '        payload = ask_agent('
+      evidence_type: text_search
+      query: ask
+      match_type: exact_text
+  - id: finding-269
+    claim: Text query 'ask' matched run.py:961.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 961
+      end_line: 961
+      excerpt: 'def run_task_command(args):'
+      evidence_type: text_search
+      query: ask
+      match_type: exact_text
+  - id: finding-270
+    claim: Text query 'ask' matched run.py:962.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 962
+      end_line: 962
+      excerpt: '    from Agency.Core.editor.execution import main as editor_task_main'
+      evidence_type: text_search
+      query: ask
+      match_type: exact_text
+  - id: finding-271
+    claim: Text query 'ask' matched run.py:963.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 963
+      end_line: 963
+      excerpt: '    return editor_task_main(args)'
+      evidence_type: text_search
+      query: ask
+      match_type: exact_text
+  - id: finding-272
+    claim: Text query 'ask' matched run.py:1011.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 1011
+      end_line: 1011
+      excerpt: '    # operators see the real status/ask/agent-ask command surface.'
+      evidence_type: text_search
+      query: ask
+      match_type: exact_text
+  - id: finding-273
+    claim: Text query 'ask' matched run.py:1045.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 1045
+      end_line: 1045
+      excerpt: '    task = add_passthrough_mode(sub, "task")'
+      evidence_type: text_search
+      query: ask
+      match_type: exact_text
+  - id: finding-274
+    claim: Text query 'ask' matched run.py:1083.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 1083
+      end_line: 1083
+      excerpt: '    if args.mode == "task":'
+      evidence_type: text_search
+      query: ask
+      match_type: exact_text
+  - id: finding-275
+    claim: Text query 'ask' matched run.py:1084.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 1084
+      end_line: 1084
+      excerpt: '        return run_task_command(args.args)'
+      evidence_type: text_search
+      query: ask
+      match_type: exact_text
+  - id: finding-276
+    claim: Text query 'Editor' matched run.py:20.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 20
+      end_line: 20
+      excerpt: from Agency.Core.foundation.paths import EDITOR_RUNTIME_ROOT, WATCH_LOG
+      evidence_type: text_search
+      query: Editor
+      match_type: exact_text
+  - id: finding-277
+    claim: Text query 'Editor' matched run.py:504.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 504
+      end_line: 504
+      excerpt: '    screenshot_dir = EDITOR_RUNTIME_ROOT / "screenshots"'
+      evidence_type: text_search
+      query: Editor
+      match_type: exact_text
+  - id: finding-278
+    claim: Text query 'Editor' matched run.py:749.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 749
+      end_line: 749
+      excerpt: '  python run.py agent Editor'
+      evidence_type: text_search
+      query: Editor
+      match_type: exact_text
+  - id: finding-279
+    claim: Text query 'Editor' matched run.py:750.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 750
+      end_line: 750
+      excerpt: '  python run.py agent Editor status'
+      evidence_type: text_search
+      query: Editor
+      match_type: exact_text
+  - id: finding-280
+    claim: Text query 'Editor' matched run.py:751.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 751
+      end_line: 751
+      excerpt: '  python run.py agent Editor -h'
+      evidence_type: text_search
+      query: Editor
+      match_type: exact_text
+  - id: finding-281
+    claim: Text query 'Editor' matched run.py:752.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 752
+      end_line: 752
+      excerpt: '  python run.py agent ask Editor "Inspect the current task."'
+      evidence_type: text_search
+      query: Editor
+      match_type: exact_text
+  - id: finding-282
+    claim: Text query 'Editor' matched run.py:962.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 962
+      end_line: 962
+      excerpt: '    from Agency.Core.editor.execution import main as editor_task_main'
+      evidence_type: text_search
+      query: Editor
+      match_type: exact_text
+  - id: finding-283
+    claim: Text query 'Editor' matched run.py:963.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 963
+      end_line: 963
+      excerpt: '    return editor_task_main(args)'
+      evidence_type: text_search
+      query: Editor
+      match_type: exact_text
+  - id: finding-284
+    claim: Text query 'repository' matched run.py:1049.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 1049
+      end_line: 1049
+      excerpt: '    repository = add_passthrough_mode(sub, "repository")'
+      evidence_type: text_search
+      query: repository
+      match_type: exact_text
+  - id: finding-285
+    claim: Text query 'repository' matched run.py:1090.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 1090
+      end_line: 1090
+      excerpt: '    if args.mode == "repository":'
+      evidence_type: text_search
+      query: repository
+      match_type: exact_text
+  - id: finding-286
+    claim: Text query 'repository' matched run.py:1091.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 1091
+      end_line: 1091
+      excerpt: '        from Agency.Core.repository.cli import main as repository_main'
+      evidence_type: text_search
+      query: repository
+      match_type: exact_text
+  - id: finding-287
+    claim: Text query 'repository' matched run.py:1092.
+    classification: confirmed
+    confidence: high
+    evidence:
+    - path: run.py
+      start_line: 1092
+      end_line: 1092
+      excerpt: '        return repository_main(args.args)'
+      evidence_type: text_search
+      query: repository
+      match_type: exact_text
+  symbols: []
+  references: []
+  imports: []
+  dependency_edges: []
+  negative_results:
+  - query: Diagnose
+    result: not_found_within_scope
+    search_method: bounded_text_search
+    classification: not_found_within_scope
+    searched_scope:
+    - run.py
+  - query: this
+    result: not_found_within_scope
+    search_method: bounded_text_search
+    classification: not_found_within_scope
+    searched_scope:
+    - run.py
+  - query: concrete
+    result: not_found_within_scope
+    search_method: bounded_text_search
+    classification: not_found_within_scope
+    searched_scope:
+    - run.py
+  - query: operational
+    result: not_found_within_scope
+    search_method: bounded_text_search
+    classification: not_found_within_scope
+    searched_scope:
+    - run.py
+  - query: limitation
+    result: not_found_within_scope
+    search_method: bounded_text_search
+    classification: not_found_within_scope
+    searched_scope:
+    - run.py
+  files_examined:
+  - run.py
+  files_skipped: []
+  limits:
+    configured:
+      max_files: 500
+      max_matches: 500
+      max_file_bytes: 120000
+      max_depth: 2
+      max_total_context_bytes: 40000
+      max_evidence_items: 500
+    reached:
+      max_files: false
+      max_matches: false
+      max_file_bytes: false
+      max_depth: false
+      max_total_context_bytes: false
+      max_evidence_items: false
+  parse_failures: []
+  unresolveds: []
+  contradictions: []
+  generated_at: '2026-07-29T16:27:36Z'
+  persistence_path: Agency/Agents/Editor/work/Inspections/repoctx-f550da32dd7e
+  repository_mutation_performed: false

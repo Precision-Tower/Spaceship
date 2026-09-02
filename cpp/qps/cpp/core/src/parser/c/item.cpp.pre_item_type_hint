@@ -1,0 +1,194 @@
+// qps/core/src/parser/c/item.cpp
+
+#include "../h/item.hpp"       // Include the item parsing header
+#include "../h/_index.hpp"     // Include the main Parser header
+#include "../../ast/ast_utils.hpp" // For AST node creation helpers
+
+namespace qps {
+namespace parser {
+
+// Note: In the final integrated parser, this function will be a member of the Parser class.
+// For now, it's defined here to represent the content of 'item.cpp'.
+
+// Parses an Item declaration: 'identifier- <value>;'
+std::unique_ptr<ast::ItemDeclarationNode> Parser::parseItemDeclaration() {
+    int line = current_token_.line;
+    int column = current_token_.column;
+
+    const int target_line = current_token_.line;
+    const int target_column = current_token_.column;
+
+    std::string identifier =
+        match_and_get_lexeme(tokens::TokenType::IDENTIFIER);
+
+    auto target =
+        ast::createIdentifierNode(
+            identifier,
+            target_line,
+            target_column);
+
+    match(tokens::TokenType::OP_SUBTRACT);
+
+    std::unique_ptr<ast::AstNode> value_node;
+
+    // An Item may be declared without a supplied value:
+    //
+    //   radius-;
+    //   radius-/n;
+    //
+    // This is distinct from assigning null:
+    //
+    //   radius- null;
+    //
+    // A typed empty Item preserves the expected type for downstream
+    // consumers such as design tooling and Workbench.
+    const bool empty_item =
+        peek_type() == tokens::TokenType::SEMICOLON ||
+        peek_type() == tokens::TokenType::TYPE_PATH ||
+        peek_type() == tokens::TokenType::TYPE_NUMERIC ||
+        peek_type() == tokens::TokenType::TYPE_ALPHANUM ||
+        peek_type() == tokens::TokenType::TYPE_BOOLEAN ||
+        peek_type() == tokens::TokenType::TYPE_NULL;
+
+    if (!empty_item) {
+        if (peek_type() == tokens::TokenType::STRING_LITERAL ||
+            peek_type() == tokens::TokenType::NUMERIC_LITERAL ||
+            peek_type() == tokens::TokenType::BOOLEAN_LITERAL ||
+            peek_type() == tokens::TokenType::NULL_LITERAL) {
+
+            value_node = parseLiteral();
+
+        } else if (peek_type() == tokens::TokenType::IDENTIFIER) {
+
+            value_node = parsePathReference();
+
+        } else if (peek_type() == tokens::TokenType::OPEN_BRACKET &&
+                   peek_next_type() == tokens::TokenType::REFERENCE_OPERATOR) {
+
+            value_node = parseSymbolReference();
+
+        } else if (peek_type() == tokens::TokenType::DICT_OUTPUT_REF) {
+
+            // Legacy dictionary-output reference support.
+            std::string dict_ref_lexeme =
+                match_and_get_lexeme(
+                    tokens::TokenType::DICT_OUTPUT_REF);
+
+            double id =
+                match_and_get_literal<double>(
+                    tokens::TokenType::NUMERIC_LITERAL);
+
+            std::string full_path =
+                dict_ref_lexeme +
+                std::to_string(static_cast<int>(id));
+
+            value_node =
+                ast::createPathReferenceNode(
+                    full_path,
+                    line,
+                    column);
+
+        } else {
+
+            error(
+                "Expected a literal, reference, type hint, or ';' after Item target. Found: " +
+                current_token_.toString());
+        }
+    }
+
+    // Typed suffixes remain optional. They may annotate either a populated
+    // Item or an empty Item.
+    if (peek_type() == tokens::TokenType::TYPE_PATH ||
+        peek_type() == tokens::TokenType::TYPE_NUMERIC ||
+        peek_type() == tokens::TokenType::TYPE_ALPHANUM ||
+        peek_type() == tokens::TokenType::TYPE_BOOLEAN ||
+        peek_type() == tokens::TokenType::TYPE_NULL) {
+
+        advance();
+
+    } else {
+
+        match(tokens::TokenType::SEMICOLON);
+    }
+
+    auto item_node =
+        ast::createItemDeclarationNode(
+            std::move(target),
+            line,
+            column);
+
+    item_node->value_node_ =
+        std::move(value_node);
+
+    return item_node;
+}
+
+
+// Semantic Item binding:
+//
+//   [>v]- 30/n;
+//
+// This binds a supplied value to a canonical semantic identity.
+std::unique_ptr<ast::ItemDeclarationNode>
+Parser::parseSemanticItemDeclaration() {
+
+    int line = current_token_.line;
+    int column = current_token_.column;
+
+    auto target =
+        parseSymbolReference();
+
+    match(tokens::TokenType::OP_SUBTRACT);
+
+    std::unique_ptr<ast::AstNode> value_node;
+
+    if (peek_type() == tokens::TokenType::STRING_LITERAL ||
+        peek_type() == tokens::TokenType::NUMERIC_LITERAL ||
+        peek_type() == tokens::TokenType::BOOLEAN_LITERAL ||
+        peek_type() == tokens::TokenType::NULL_LITERAL) {
+
+        value_node = parseLiteral();
+
+    } else if (peek_type() == tokens::TokenType::IDENTIFIER) {
+
+        value_node = parsePathReference();
+
+    } else if (peek_type() == tokens::TokenType::OPEN_BRACKET &&
+               peek_next_type() == tokens::TokenType::REFERENCE_OPERATOR) {
+
+        value_node = parseSymbolReference();
+
+    } else {
+
+        error(
+            "Expected a literal or reference after semantic Item target. Found: " +
+            current_token_.toString());
+    }
+
+    if (peek_type() == tokens::TokenType::TYPE_PATH ||
+        peek_type() == tokens::TokenType::TYPE_NUMERIC ||
+        peek_type() == tokens::TokenType::TYPE_ALPHANUM ||
+        peek_type() == tokens::TokenType::TYPE_BOOLEAN ||
+        peek_type() == tokens::TokenType::TYPE_NULL) {
+
+        advance();
+
+    } else {
+
+        match(tokens::TokenType::SEMICOLON);
+    }
+
+    auto item_node =
+        ast::createItemDeclarationNode(
+            std::move(target),
+            line,
+            column);
+
+    item_node->value_node_ =
+        std::move(value_node);
+
+    return item_node;
+}
+
+} // namespace parser
+} // namespace qps

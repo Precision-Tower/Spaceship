@@ -1,0 +1,7 @@
+*.bak_*
+evidence/logs/
+evidence/screenshots/
+evidence/latest_audit_inventory.json
+output/history/
+output/capability_audit_*.json
+output/capability_audit_*.md

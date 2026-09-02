@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "mission_id": "mission-1",
+  "updated_at": "2026-08-13T09:01:55.710980+00:00",
+  "phase": "inspection_complete",
+  "status": "ready_for_planning",
+  "inspection_complete": true,
+  "inspection_passes": 1,
+  "planning_complete": false,
+  "proposals_complete": false,
+  "implementation_enabled": false,
+  "next_action": {
+    "command": "python run.py agent Editor mission plan --mission mission-1",
+    "authority": "read_only_planning"
+  },
+  "blocked_reason": null,
+  "unresolved": [
+    "Architecture plan has not been generated.",
+    "No implementation proposal exists."
+  ],
+  "budgets": {
+    "max_inspection_passes": 8,
+    "max_files_per_pass": 8,
+    "max_total_files": 40,
+    "max_seconds_per_model_call": 300,
+    "max_mission_seconds": 1800
+  }
+}

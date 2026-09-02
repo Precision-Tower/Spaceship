@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+SCRIPT_DIR="$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/../lib/common.sh"
+pt_initialize
+TARGET="${1:-}"
+CONFIRM="${2:-}"
+pt_print_line "Precision Tower restart"
+pt_require_dashboard_root || exit 1
+pt_status_line "PASS" "model manager" "$REPO_ROOT/Agency/Core/runtime/model_server_manager.py"
+pt_status_line "UNRESOLVED" "Agency service restart" "No installed service or AGENCY_COMMAND is selected."
+pt_status_line "WARNING" "whole-system reboot" "Use shutdown or a future explicit reboot command; restart does not reboot the computer."
+if [[ "$TARGET" == "--check" ]]; then pt_status_line "PASS" "restart check" "no restart attempted"; exit 0; fi
+if [[ -z "$TARGET" ]]; then pt_status_line "WARNING" "restart refused" "use: restart --check or restart model --confirm"; exit 2; fi
+case "$TARGET" in
+    model|runtime)
+        [[ "$CONFIRM" == "--confirm" ]] || { pt_status_line "WARNING" "restart refused" "use: restart $TARGET --confirm"; exit 2; }
+        pt_status_line "PASS" "model runtime restart" "delegating to existing model_server_manager restart"
+        pt_run_repo_python -m Agency.Core.runtime.model_server_manager restart
+        ;;
+    dashboard) pt_status_line "WARNING" "dashboard restart" "Dashboard is an interactive client; no owned background service exists to restart."; exit 2 ;;
+    agency) pt_status_line "UNRESOLVED" "Agency restart" "No installed Agency service or command has been selected."; exit 2 ;;
+    *) pt_status_line "WARNING" "usage" "restart [--check|model --confirm|runtime --confirm|agency|dashboard]"; exit 2 ;;
+esac

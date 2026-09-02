@@ -1,0 +1,29 @@
+u- KE.u/p; # Universal Causal Terms
+
+cr- KE.cr/p; # Causal Retraction
+
+p- KE.p/p; # Potential
+
+r- KE.r/p; # Resistance
+
+d- KE.d/p; # Displacement
+
+e- KE.e/p; # Energy
+
+t- KE.t/p; # Time
+
+ten- KE.ten/p; # Tension
+
+ps- KE.ps/p; # Stored Potential
+
+ca- KE.ca/p; # Chemical Reaction
+
+cat- KE.cat/p; # Catalyst
+
+F- KE.F/p; # Fire
+
+V- KE.V/p; # Volume
+
+D- KE.D/p; # Density
+
+P- KE.P/p; # Pressure

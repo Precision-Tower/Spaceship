@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "mission_id": "mission-4",
+  "sequence": 6,
+  "event_type": "scope_expanded",
+  "timestamp": "2026-08-13T10:19:11.927412+00:00",
+  "authority": "mission_event_log",
+  "payload": {
+    "command": "mission scope-add",
+    "status": "mission_scope_expanded",
+    "mission_id": "mission-4",
+    "scopes_added": [
+      "Agency/Core/work/planning/__init__.py",
+      "Agency/Core/work/planning/mission_planning.py",
+      "Agency/Core/work/planning/proposal_generation.py",
+      "Agency/Core/work/missions/pipeline/review/execution.py",
+      "Agency/Core/runtime/commands.py",
+      "Agency/Core/work/missions/pipeline/review/helpers.py",
+      "Agency/Core/work/missions/pipeline/review/state.py",
+      "Agency/Core/work/missions/pipeline/implementation/__init__.py"
+    ],
+    "files_remaining": 8,
+    "source_files_modified": false,
+    "authority": "mission_scope_expansion"
+  }
+}

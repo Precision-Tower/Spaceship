@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "mission_id": "mission-4",
+  "generated_at": "2026-08-13T10:17:12.369632+00:00",
+  "declared_scopes": [
+    "Agency/Core/work/missions/mission_runtime.py",
+    "Agency/Core/work/planning/__init__.py",
+    "Agency/Core/work/planning/mission_planning.py",
+    "Agency/Core/work/planning/proposal_generation.py",
+    "Agency/Core/work/missions/pipeline/review/execution.py",
+    "Agency/Core/runtime/commands.py",
+    "Agency/Core/work/missions/pipeline/review/helpers.py",
+    "Agency/Core/work/missions/pipeline/review/state.py",
+    "Agency/Core/work/missions/pipeline/implementation/__init__.py"
+  ],
+  "files_discovered": [
+    "Agency/Core/work/missions/mission_runtime.py",
+    "Agency/Core/runtime/commands.py",
+    "Agency/Core/work/missions/pipeline/implementation/__init__.py",
+    "Agency/Core/work/missions/pipeline/review/execution.py",
+    "Agency/Core/work/missions/pipeline/review/helpers.py",
+    "Agency/Core/work/missions/pipeline/review/state.py",
+    "Agency/Core/work/planning/__init__.py",
+    "Agency/Core/work/planning/mission_planning.py",
+    "Agency/Core/work/planning/proposal_generation.py"
+  ],
+  "files_inspected": [
+    "Agency/Core/work/missions/mission_runtime.py",
+    "Agency/Core/runtime/commands.py",
+    "Agency/Core/work/missions/pipeline/implementation/__init__.py",
+    "Agency/Core/work/missions/pipeline/review/execution.py",
+    "Agency/Core/work/missions/pipeline/review/helpers.py",
+    "Agency/Core/work/missions/pipeline/review/state.py",
+    "Agency/Core/work/planning/__init__.py",
+    "Agency/Core/work/planning/mission_planning.py",
+    "Agency/Core/work/planning/proposal_generation.py"
+  ],
+  "files_remaining": [],
+  "skipped_files": [],
+  "authority": "inspection_inventory_only",
+  "updated_at": "2026-08-13T10:19:34.447579+00:00",
+  "files_by_class": {
+    "primary": [
+      "Agency/Core/runtime/commands.py",
+      "Agency/Core/work/missions/mission_runtime.py",
+      "Agency/Core/work/missions/pipeline/implementation/__init__.py",
+      "Agency/Core/work/missions/pipeline/review/execution.py",
+      "Agency/Core/work/missions/pipeline/review/helpers.py",
+      "Agency/Core/work/missions/pipeline/review/state.py",
+      "Agency/Core/work/planning/__init__.py",
+      "Agency/Core/work/planning/mission_planning.py",
+      "Agency/Core/work/planning/proposal_generation.py"
+    ],
+    "secondary": [],
+    "evidence": [],
+    "ignored": []
+  }
+}

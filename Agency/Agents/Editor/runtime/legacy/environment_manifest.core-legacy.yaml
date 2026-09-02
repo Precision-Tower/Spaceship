@@ -1,0 +1,57 @@
+EnvironmentManifest:
+  schema_version: 1
+  authority: environment_identity_runtime_capability_authority
+  created_at: '2026-07-26T10:47:34Z'
+  updated_at: '2026-07-26T10:47:34Z'
+  identity:
+    operator:
+      account: spaztic
+      account_source: operating_system
+      display_name: null
+      display_name_source: operator
+    machine:
+      hostname: nitro
+      hostname_source: operating_system
+      operating_system: linux
+      architecture: x86_64
+      python_executable: /home/spaztic/miniconda3/envs/weebo_env/bin/python
+      python_environment: weebo_env
+      workspace:
+        name: Dashboard
+        root: /home/spaztic/Core/Dashboard
+  capabilities:
+    gpu:
+      available: true
+      vendor: NVIDIA
+      model: NVIDIA GeForce GTX 1050
+      cuda: true
+      vram_mib: 4096
+      vram_used_mib: 2049
+      vram_free_mib: 1984
+      cuda_driver_version: 580.173.02
+      probe_status: detected
+      probe_error: null
+    cpu:
+      logical_cores: 8
+    memory:
+      total_mib: 15316
+    runtimes:
+      llama_server: true
+      ollama: false
+      vllm: false
+    network:
+      available: true
+  resolved_runtime:
+    backend: llama_server
+    accelerator: cuda
+    inference_route: local
+    execution_mode: local_gpu
+    selection_reason:
+    - CUDA available
+    - llama-server detected
+    router_runtime: llama_server
+    compatibility_profile_alias: null
+    compatibility_status: null
+  source:
+    platform_adapter: linux
+    workspace: .

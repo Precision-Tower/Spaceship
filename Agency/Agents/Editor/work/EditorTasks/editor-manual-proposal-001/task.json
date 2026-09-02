@@ -1,0 +1,42 @@
+{
+  "ball_holder": "Editor",
+  "ball_owner": "Gear",
+  "constraints": {
+    "mutation_authorized": false,
+    "read_only": true
+  },
+  "created_at": "2026-07-26T19:02:01Z",
+  "editor": "Editor",
+  "evidence_requirements": [
+    "repository_relative_path",
+    "line_range",
+    "excerpt"
+  ],
+  "issued_by": "Gear",
+  "next_decision_owner": "Gear",
+  "objective": "Propose adding a manual capability-test note to the Editor README.",
+  "operation": "propose_patch",
+  "parent_step_id": null,
+  "play_owner": "Gear",
+  "request": {
+    "change_intent": "Add a short section titled \"Manual capability test\" explaining that operators should run /task dry-run before /task submit. Do not modify any other file.\n",
+    "repository_context": {
+      "operations": [
+        "text_search"
+      ],
+      "paths": [
+        "Agency/Agents/Editor/README.md"
+      ],
+      "text": "EditorTask"
+    }
+  },
+  "schema_version": 1,
+  "scope": {
+    "exclude": [],
+    "include": [
+      "Agency/Agents/Editor/README.md"
+    ]
+  },
+  "task_id": "editor-manual-proposal-001",
+  "work_packet_id": null
+}

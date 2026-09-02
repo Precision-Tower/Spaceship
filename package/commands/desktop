@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+SCRIPT_DIR="$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/../lib/common.sh"
+pt_initialize
+CHECK_ONLY=false
+[[ "${1:-}" == "--check" ]] && CHECK_ONLY=true
+pt_print_line "Precision Tower desktop launcher"
+pt_require_dashboard_root || exit 1
+XFCE="$(pt_xfce_command || true)"
+if [[ -z "$XFCE" ]]; then
+    pt_status_line "MISSING" "xfce" "startxfce4 or xfce4-session not found in PATH"
+    [[ "$CHECK_ONLY" == true ]] && exit 0
+    exit 1
+fi
+pt_status_line "PASS" "xfce" "$XFCE"
+if [[ "$CHECK_ONLY" == true ]]; then
+    pt_status_line "PASS" "desktop check" "not launching because --check was supplied"
+    exit 0
+fi
+if ! pt_has_launch_surface; then
+    pt_status_line "WARNING" "desktop launch" "No local virtual console or DISPLAY detected; refusing to start a desktop from this session."
+    exit 2
+fi
+pt_status_line "PASS" "desktop launch" "executing XFCE on demand"
+exec "$XFCE"

@@ -1,0 +1,5 @@
+--- a/Agency/local/editor_acceptance/target.txt
++++ b/Agency/local/editor_acceptance/target.txt
+@@ -1 +1 @@
+-alpha
++beta

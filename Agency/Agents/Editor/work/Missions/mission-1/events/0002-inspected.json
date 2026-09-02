@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "mission_id": "mission-1",
+  "sequence": 2,
+  "event_type": "inspected",
+  "timestamp": "2026-08-13T09:01:55.715534+00:00",
+  "authority": "mission_event_log",
+  "payload": {
+    "command": "mission inspect",
+    "status": "inspection_complete",
+    "mission_id": "mission-1",
+    "pass": 1,
+    "files_inspected": [
+      "Agency/Core/runtime/target.txt"
+    ],
+    "files_remaining": 0,
+    "inspection_complete": true,
+    "source_files_modified": false,
+    "authority": "read_only_inspection"
+  }
+}

@@ -1,0 +1,6 @@
+{"ball_holder": "Editor", "event": "task_received", "ts": "2026-07-28T11:23:08Z"}
+{"event": "task_validated", "ts": "2026-07-28T11:23:08Z"}
+{"event": "inspection_started", "ts": "2026-07-28T11:23:08Z"}
+{"event": "inspection_completed", "files_examined": 8, "findings": 1, "status": "completed", "ts": "2026-07-28T11:23:08Z"}
+{"event": "ball_returned", "from_holder": "Editor", "result_status": "completed", "to_holder": "Gear", "ts": "2026-07-28T11:23:08Z"}
+{"event": "task_returned", "play_outcome": "returned", "status": "completed", "ts": "2026-07-28T11:23:08Z"}

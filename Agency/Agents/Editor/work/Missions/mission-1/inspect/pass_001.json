@@ -1,0 +1,124 @@
+{
+  "schema_version": 1,
+  "mission_id": "mission-1",
+  "pass": 1,
+  "timestamp": "2026-08-13T09:01:55.710980+00:00",
+  "files_inspected": [
+    {
+      "path": "Agency/Core/runtime/target.txt",
+      "bytes": 15,
+      "lines": 1,
+      "included_in_prompt": true,
+      "prompt_excerpt_chars": 15,
+      "evidence_terms": [],
+      "class": "secondary"
+    }
+  ],
+  "file_classification": {
+    "Agency/Core/runtime/target.txt": "secondary"
+  },
+  "symbols": [],
+  "dependencies": [],
+  "observations": [
+    "Read 1 files in inspection pass 1.",
+    "Active queue by class: primary=0, secondary=1, evidence=0, ignored=0."
+  ],
+  "unresolved": [],
+  "next_files": [],
+  "inspection_complete": true,
+  "skipped_files": [],
+  "operational_context": [
+    {
+      "path": "Agency/Agents/Editor/work/Pinboard/current.json",
+      "status": "missing"
+    },
+    {
+      "schema_version": 1,
+      "generated_at": "2026-07-28T00:43:36.391191+00:00",
+      "rule": "Declared authority is not demonstrated capability. Safe AI use requires bounded, observed execution.",
+      "summary": {
+        "REGISTERED_COMMANDS": 26,
+        "PASS": 15,
+        "FAIL": 0,
+        "BLOCKED_TIMEOUT": 0,
+        "UNTESTED": 9
+      },
+      "current_test": {
+        "id": "local.model_plan.01",
+        "step": "Accept bounded engineering scopes",
+        "pass_condition": "Valid UI engineering scopes are represented in the latest model-plan proposal.",
+        "result": "UNTESTED",
+        "evidence": "",
+        "unresolved": []
+      },
+      "path": "Agency/audit/output/agency_state.json",
+      "status": "present"
+    },
+    {
+      "schema_version": 1,
+      "generated_at": "2026-07-16T07:56:10.998392+00:00",
+      "rule": "Presence is not capability. Capability requires an observed end-to-end demonstration.",
+      "summary": {
+        "NONE": 2,
+        "PRESENT": 19,
+        "WIRED": 6,
+        "EXECUTABLE": 0,
+        "PASS": 4,
+        "PARTIAL": 0,
+        "FAIL": 0,
+        "UNTESTED": 23
+      },
+      "current_test": {
+        "id": "shell.05",
+        "step": "Open Terminal tab",
+        "pass_condition": "Terminal becomes active.",
+        "result": "UNTESTED",
+        "evidence": "",
+        "unresolved": []
+      },
+      "path": "UI/OperatorShell/audit/output/operator_shell_state.json",
+      "status": "present"
+    },
+    {
+      "schema_version": 3,
+      "generated_at": "2026-07-16T06:59:27.556236+00:00",
+      "rule": "Presence is not capability. Capability requires an observed end-to-end demonstration.",
+      "summary": {
+        "NONE": 1,
+        "PRESENT": 23,
+        "WIRED": 11,
+        "EXECUTABLE": 0,
+        "PASS": 0,
+        "PARTIAL": 1,
+        "FAIL": 0,
+        "UNTESTED": 10
+      },
+      "current_test": {
+        "id": "demo.01",
+        "step": "Launch the current Godot project",
+        "pass_condition": "Workbench opens and remains usable; fatal parser or runtime errors are not present.",
+        "result": "PARTIAL",
+        "evidence": "Godot launched and Workbench visibly rendered with the viewport, object tree, and left-side status panel.",
+        "unresolved": [
+          "Console output was not captured, so absence of parser or runtime errors is not yet established."
+        ]
+      },
+      "path": "UI/Workbench/audit/output/capability_state.json",
+      "status": "present"
+    }
+  ],
+  "context_limits": {
+    "max_files": 8,
+    "max_total_source_bytes": 65000,
+    "max_prompt_source_chars": 1400,
+    "max_prompt_chars": 3600,
+    "max_files_per_pass": 8,
+    "inspection_generation_limit": 768
+  },
+  "context_bytes": {
+    "source_bytes_inspected": 15,
+    "prompt_source_chars": 15
+  },
+  "source_files_modified": false,
+  "authority": "read_only_inspection"
+}

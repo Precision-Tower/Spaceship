@@ -1,0 +1,85 @@
+#model.md
+**The Kinetic Energy Model**
+A Causal Framework for Understanding Motion, Pressure, and Energy
+**Summary**
+The Kinetic Energy Model defines energy not as a conserved quantity, but as a causal resolution: potential (p) overcoming resistance (r) to produce displacement (d). This framework provides a causal understanding of motion, pressure, and energy as the resolution of structured potential.
+
+The Foundational Laws of Kinetic Resolution
+The Kinetic Energy Model is built upon two interconnected, fundamental Laws that govern all causal interactions:
+
+**Law 1: Causality**
+Energy is not conserved; it is resolved. All kinetic events are the resolution of potential (p) overcoming resistance (r) to produce displacement (d). This relationship is foundational and universal:
+p−r=d
+
+This Law describes how energy expresses itself—as the dynamic interchangeability between potential and displacement. Potential exists only when opposed by resistance; once resolved, it manifests as displacement.
+
+**Law 2: Conservation of Momentum**
+This law describes how potential resolves in systems involving mass and motion, building upon the overarching Energy Law of Resolution:
+-The Accumulation of Force (f=ma): The equation f=ma is an absolutely assured fact, accurately describing how the elapse of time accumulates the Force of a mass in motion.
+-Momentum Conservation: Momentum is universally conserved within the system.
+-Inertial Resistance: In the expression f/m=a, m explicitly represents the inertial value, which acts as the resistance to a change in momentum.
+-Resolved Force from Potential and Motion: When this inertial resistance is overcome and momentum is conserved, the system's potential, acceleration, and mass collectively resolve as Force at impact. This relationship is the precise definition of force generated upon the full resolution of mass-motion potential, directly equating momentum to the resulting Force:
+p⋅a⋅m−r=v⋅m-r=f_impact
+Here, p⋅a⋅m represents the specific potential configuration generating the kinetic event, involving initial potential, its rate of change (acceleration), and the mass.
+v⋅m signifies the resultant momentum (mass times velocity), which directly equates to the impact force.
+This interconnected set of laws frames how potential is always resolved. For instance:
+-Gravity's Dual Expression: Gravity acts as a Force (its perceived weight) when the system possesses more resistance than gravity's potential. In this state, potential is resolved as Force.
+-Gravity's Accelerating Effect: When resistance is removed, gravity's potential is immediately expressed as the acceleration of a mass that adheres to the conservation of momentum as described by f=ma.
+** These laws dictate how all kinetic events, from the most abstract field interactions to concrete impacts, operate as a resolution of potential through resistance into displacement or resultant force.
+
+**Description**
+The Kinetic Energy Model expresses Kinetic Energy not in absolute values, but as relational states: P−R=D. These relationships apply across mechanical, fluid, electrical, and thermal domains.
+
+The model fundamentally distinguishes between:
+Mass-Centric Systems: Where the primary causal interactions involve the properties and motion of mass (e.g., hydraulics, classical mechanics).
+Field-Centric Systems: Where causal influence is transmitted through continuous spatial structures, independent of or shaped by mass (e.g., magnetism, thermal radiation, gravity, electromagnetic phenomena).
+
+The goal is not to derive predictive formulas based on conservation laws, but to construct explicit causal chains:
+Identify the source of potential (p).
+Quantify the resistance (r).
+Observe or model the resulting displacement (d).
+
+Kinetic energy becomes the visible expression of this causal chain. Rather than relying on conservation-based shortcuts like E=.5mv^2, this model tracks how energy transfers form and resolves:
+(Thermodynamics: °F) → (Fluid Dynamics: Pneumatic: psi; gpm) → (Mechanical: Angular: ft-lb; rpm) → (Electricity: AC: vac; hz).
+These are not equal by conservation—they are resolved by system resistance, efficiency, and domain-specific constraints.
+
+**Principles**
+Energy is Resolution: Energy is the resolution of causal tension, not a stored entity.
+Displacement as Output: Displacement (d) is the output of potential (p) resolved through resistance (r).
+Domain Integrity: Each domain (mass, field, fluid, thermal) must preserve its causal logic; no cross-domain assumptions without a causal bridge.
+Causal Chains: Kinetic systems must be expressed in a chain of resolution events, not collapsed abstractions.
+Resolution, Not Conservation: All KE equations must model resolution, not conservation. Energy is not a stored quantity or currency; it is a condition: the resolution of causal tension through a structure. Models must show how motion occurs, not just balance outcomes.
+Field-Centric Resolution Principle: p−r=d is a field-centric definition, where R is the resistance to the propagation of the constant potential.
+Mass-Centric Deceleration Principle: mv−r=f represents the deceleration of mass due to resistance (e.g., viscosity). In this context, r is the momentum dissipated by the resistance over the duration of the deceleration, and f is the remaining momentum which, at the point of full resolution (e.g., impact), directly expresses as the Impact Force.
+
+**Applications**
+The Kinetic Energy Model is designed for application in:
+-Engineering Design: For systems such as turbines, engines, and power conversion.
+-Field Theory Modeling: Including concepts like gravity as ether compression.
+-Physics Education: Offering a framework with domain-separated causality.
+-Translational Energy Systems: Analyzing processes like thermal to mechanical conversion.
+
+**Goal**
+To provide a unified, causal framework that allows engineers, physicists, and system designers to model any kinetic system through domain-specific cause and resolution—not conservation math. The Kinetic Energy Model is not about what energy is. It is about how energy resolves.
+
+Missing Elements (for future development)
+Statement: "More potential, more displacement."
+
+Notes:
+-All terms in KE equations are measured in the same unit type. Their state, not their class, defines the relationship.
+-In the equation p−r=d, if resistance (r) is zero, then potential (p) fully resolves as displacement (d).
+-The model seeks to define a universal conversion constant between potential and displacement, called the Energy Constant.
+-For use in mass-centric applications, a working form is proposed: (f−r)e=mv, where f=force, r=resistance, e=Energy Constant, m=Mass, and v=resulting velocity (as displacement rate).
+
+**Rules for Model Construction**
+-Relationships, Not Predictions: Kinetic Energy equations express relationships, not predictions. The model describes how potential (p), resistance (r), and displacement (d) interact in causal systems.
+-Explicit Causal Terms: Every valid equation must explicitly include all three causal terms: Potential (p), Resistance (r), and Displacement (d). No term may be omitted, implied, or abstracted away.
+-Clarity is Law: All variables and constants must be explicitly defined. Ambiguity, shorthand, or "assumed" terms are disallowed in formal models.
+-Linear Algebra Only: All relationships must resolve along a single dimension of causal flow. No tensors, vector fields, or probabilistic functions are permitted in core logic.
+-Axioms are Foundational: Axioms are foundational causal truths. Each axiom must be causally primitive, not derived from other theorems. Axioms are sequenced to show dependency: each one defines or limits the structure/context of the next.
+-Theorems are Derived: Theorems are derived from the integration of two or more axioms. Theorems represent provable, internally consistent consequences of the system. All theorems must trace back to axiomatic logic and cannot introduce external assumptions.
+-Definitions are Sacred: Every term used in an axiom or theorem must have a standalone formal definition. Definitions must be scoped: Mass-Centric terms may not overlap with Field-Centric terms. Only universal KE terms (like p, r, d) may appear in both systems.
+-Domain Integrity Required: No equation may combine Field-Centric and Mass-Centric terms unless a formal domain bridge is defined. All bridges must be explicitly modeled (e.g., Thermal=Fluid=Mechanical).
+-Causal Chains are Foundation: All systems must be expressed as a sequence of causal events: Identify potential (p), quantify resistance (r), observe displacement (d). No shortcuts or collapsed abstractions are allowed.
+-Amplifying potential (p) is the number one goal: We're trying to find ways to amplify potential to balance between input and output.
+-Resistance isn't ever implied a value: we account for its existence, we don't assume that it is measured. We calculate for as much potential as possible, and reduce resistance in the system as much as possible, and balance potential against displacement to calculate resistance.

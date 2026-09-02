@@ -1,0 +1,48 @@
+MF. Magnetic Field: def"
+The causal potential embodied within a magnet or a magnetic field, representing the inherent strength and readiness for displacement.
+This section defines the nature of magnetic potential and how it manifests as force through field interaction to create motion.;
+
+fx. Magnetic Flux: def"
+Magnetic Flux is defined as the density of the field.
+Magnetic Flux (fx) is the **inherent strength and total causal potential (p) of a magnetic field**, defined by its capacity for potential displacement.
+It represents the concentrated field lines and the associated field tension that a magnet intrinsically holds, ready to interact and resolve.
+Magnetic Flux embodies both an attractive and a repulsive alignment, representing the dual nature of its inherent potential seeking to resolve against differential fields or susceptible masses.
+The **magnitude and orientation of Magnetic Flux (fx)** directly determine the potential for magnetic force and motion.;
+
+pm. Permanent Magnet: def"
+A Permanent Magnet (pm) is a form of structured mass that possesses **intrinsic, fixed Magnetic Flux (fx)** due to its inherent material composition and stable internal field alignment.
+The Magnetic Flux (fx) of a Permanent Magnet exists as a persistent potential (p) that does not require continuous external energy input to maintain its field.
+Its interaction with other magnetic fields (from Electromagnets or other Permanent Magnets) directly generates magnetic force (mf) leading to displacement.
+
+Em. Electromagnet: def"
+An Electromagnet (Em) is a device that generates **controllable Magnetic Flux (fx)** by establishing a temporary magnetic field.
+The Magnetic Flux (fx) of an Electromagnet arises from the arrangement of conductive material (e.g., coils of wire) and its core material, which collectively determine its capacity to establish and concentrate magnetic field lines.
+Its strength and polarity (Magnetic Flux fx) can be varied, allowing for dynamic magnetic field interactions that produce force (mf).
+(Note: The mechanism of *how* the magnetic field is established within the electromagnet, i.e., via current/voltage, belongs in the 'Ec' section.);
+
+MFs. Magnetic_Field_Strength: def"
+Magnetic Field Strength (s) is the proximity point of the field in the transfer of potential.
+Magnetic Field Strength (s) is the **localized concentration or density of Magnetic Flux (fx)** at a specific point in space.
+It quantifies how intensely the magnet's causal potential is distributed at that location, reflecting the spatial characteristics of the Magnetic Flux (fx) as it extends from its source.
+MFs is a measure of the *local effect* of the Magnetic Flux (fx) in a given area, influencing the potential for force generation.;
+
+Mp. Magnetic_Force: def"
+In rotational devices, Magnetic Force (Mp) is the resistance of 2 fields pulling on each other.
+Magnetic Force (Mp) is the **causal resolution (d)** that occurs when the Magnetic Flux (fx) of one magnetic field interacts with the Magnetic Flux (fx) of another, overcoming the intervening resistance (r).
+It is the direct, physical manifestation of one magnetic field's potential (p) resolving by attempting to displace another field or susceptible mass (e.g., a rotor in a motor).
+mf is the outcome of (p - r = d) specifically in the interaction between magnetic fields, leading to motion like rotation.;
+
+x. Permeability: def"
+Permeability (x) is a material's inherent capacity to *support the establishment and density of Magnetic Flux (fx)* within its structure.
+It is a causal modifier that describes how readily a material allows magnetic field lines to concentrate and displace through itself.
+High permeability indicates low internal resistance (r) to the alignment of magnetic field potential, facilitating greater localized Magnetic Flux (fx) and thus influencing the generation of Magnetic Force (mf).;
+
+mx. Magnetic_Permeance: def"
+Magnetic Permeance (mx) is the overall ease with which Magnetic Flux (fx) can be established and concentrated through a specific magnetic circuit or path.
+It quantifies the capacity of a defined magnetic path to allow magnetic potential (p) to resolve into Magnetic Flux (fx) by offering low inherent resistance (r).
+It is an inverse measure of the circuit's total opposition (reluctance) to the magnetic field's establishment.;
+
+mR. Magnetic_Reluctance: Def"
+Magnetic Reluctance (mR) is the inherent opposition or internal resistance (r) that a magnetic circuit or material presents to the establishment and concentration of Magnetic Flux (fx) within it.
+It defines how much inherent resistance a material offers to the resolution of magnetic potential into Magnetic Flux (fx).
+High reluctance means a material significantly impedes the development and concentration of Magnetic Flux (fx) within its structure, thereby impacting the resulting Magnetic Force (Mp).;

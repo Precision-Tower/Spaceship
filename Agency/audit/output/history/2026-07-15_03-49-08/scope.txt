@@ -1,0 +1,18 @@
+=== scope ===
+command: python3 run.py scope
+DASHBOARD_SCOPE
+root: /home/spaztic/Core/Dashboard
+ui: /home/spaztic/Core/Dashboard/UI
+
+ACTIVE ROUTES
+- godot  -> UI/Main
+- agent  -> Agency/Core/agent_tools
+- jarvis -> Agency/Agents/Jarvis
+- weebo  -> Agency/Agents/Weebo
+- cali   -> Agency/Agents/Cali
+- cmd    -> Agency/Core/cli
+- model  -> Agency/Core/runtime/model_service.py
+- watch  -> Agency/Core/runtime/sessions
+- shell  -> UI/OperatorShell status route
+- workbench -> UI/Workbench launch route
+exit_code: 0
