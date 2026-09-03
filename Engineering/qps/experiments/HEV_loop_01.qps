@@ -1,0 +1,117 @@
+HEV_LOOP_01. HEV_Closed_Loop_Experiment: def"
+Measurement contract for the first closed-loop HEV model.
+
+The purpose of this experiment is not to prove or disprove the HEV by assumption.
+
+The experiment records the physical state on both sides of every causal bridge so predicted relationships can be compared with the real system.
+
+Unknown values remain unknown until measured or derived from an explicitly implemented relationship.
+";
+
+identity: (
+experiment- "HEV_LOOP_01"/a;
+design- "HEV"/a;
+status- "planned"/a;
+);
+
+controls: (
+sample_interval-/n;
+test_duration-/n;
+starting_battery_state-/n;
+starting_fluid_temperature-/n;
+starting_system_temperature-/n;
+fluid- "water"/a;
+);
+
+battery_measurements: (
+timestamp-/n;
+voltage_vdc-/n;
+current_a-/n;
+state_of_charge-/n;
+temperature-/n;
+);
+
+motor_measurements: (
+timestamp-/n;
+input_voltage_vdc-/n;
+input_current_a-/n;
+shaft_torque-/n;
+shaft_rpm-/n;
+back_emf-/n;
+temperature-/n;
+);
+
+pump_measurements: (
+timestamp-/n;
+shaft_torque-/n;
+shaft_rpm-/n;
+inlet_pressure-/n;
+outlet_pressure-/n;
+flow_rate-/n;
+fluid_temperature-/n;
+);
+
+fluid_measurements: (
+timestamp-/n;
+pump_outlet_pressure-/n;
+turbine_inlet_pressure-/n;
+turbine_outlet_pressure-/n;
+pump_return_pressure-/n;
+flow_rate-/n;
+fluid_velocity-/n;
+fluid_temperature-/n;
+);
+
+turbine_measurements: (
+timestamp-/n;
+inlet_pressure-/n;
+outlet_pressure-/n;
+flow_rate-/n;
+shaft_torque-/n;
+shaft_rpm-/n;
+shaft_deflection-/n;
+vibration-/n;
+leakage-/n;
+temperature-/n;
+);
+
+alternator_measurements: (
+timestamp-/n;
+shaft_torque-/n;
+shaft_rpm-/n;
+unloaded_counter_torque-/n;
+loaded_counter_torque-/n;
+voltage_vac-/n;
+current_a-/n;
+frequency_hz-/n;
+winding_temperature-/n;
+);
+
+return_measurements: (
+timestamp-/n;
+rectified_voltage_vdc-/n;
+rectified_current_a-/n;
+battery_terminal_voltage_vdc-/n;
+battery_charge_current_a-/n;
+battery_temperature-/n;
+);
+
+comparison: (
+predicted_state- "unresolved"/a;
+measured_state- "unresolved"/a;
+difference- "unresolved"/a;
+cause_of_difference- "unresolved"/a;
+);
+
+result_classes: (
+steady- "system approaches repeatable operating state"/a;
+decay- "one or more required states decrease over time"/a;
+oscillation- "system enters repeatable or unstable cyclic variation"/a;
+growth- "one or more required states increase over time"/a;
+invalid_model- "prediction conflicts with measurement because modeled relationships are incomplete or incorrect"/a;
+invalid_measurement- "measurement cannot support causal comparison"/a;
+);
+
+proof_rule: (
+statement- "No HEV conclusion is accepted without a trace from measured state through the causal relationships used to produce that conclusion."/a;
+);

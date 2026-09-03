@@ -1,0 +1,357 @@
+HEV. Hydraulic_Electric_System: def"
+The Hydraulic Electric System is a closed rotary causal system under investigation.
+
+Its central architecture is:
+
+DC electrical
+-> rotational mechanical
+-> fluid dynamics
+-> rotational mechanical
+-> AC electrical
+-> DC electrical
+-> repeat
+
+The HEV model does not assume that the loop succeeds or fails.
+
+The purpose of this definition is to expose every causal relationship,
+state variable, resistance, displacement, geometry, and observable
+required to compare the predicted system against the real system.
+
+Efficiency is not an authoritative primitive of this model.
+Any efficiency ratio may be derived afterward from measured states,
+but must not replace the physical relationships that produced them.
+";
+
+identity: (
+system- "HEV"/a;
+full_name- "Hydraulic Electric System"/a;
+model_version- 1;
+status- "active_hypothesis"/a;
+verdict- "unresolved"/a;
+);
+
+origin: (
+purpose- "test the HEV as a fully causal physical system"/a;
+primary_question- "can the coupled system establish a sustained operating state"/a;
+authoritative_hypothesis- "Engineering/docs/Engineering.md"/a;
+historical_design- "Engineering/qps/Archive/qps/design/designs/HEV.qps"/a;
+);
+
+model_rules: (
+relationships_not_summary_metrics- true/b;
+efficiency_is_derived_only- true/b;
+resistance_must_be_explicit- true/b;
+displacement_must_be_explicit- true/b;
+domain_bridges_must_be_explicit- true/b;
+geometry_must_be_explicit_where_relevant- true/b;
+measured_state_must_remain_distinct_from_predicted_state- true/b;
+unknown_values_remain_unknown- true/b;
+no_hidden_energy_source- true/b;
+no_hidden_energy_sink- true/b;
+);
+
+causal_chain: (
+stage_1- "battery -> dc_motor"/a;
+stage_2- "dc_motor -> pump"/a;
+stage_3- "pump -> circulating_water"/a;
+stage_4- "circulating_water -> hydraulic_turbine"/a;
+stage_5- "hydraulic_turbine -> alternator"/a;
+stage_6- "alternator -> rectification_and_charge_control"/a;
+stage_7- "rectification_and_charge_control -> battery"/a;
+);
+
+domain_chain: (
+domain_1- "DC"/a;
+domain_2- "ME"/a;
+domain_3- "FD"/a;
+domain_4- "ME"/a;
+domain_5- "AC"/a;
+domain_6- "DC"/a;
+);
+
+knowledge_sources: (
+electricity- "Engineering/qps/defs/FC/Ec.qps"/a;
+direct_current- "Engineering/qps/defs/FC/DC.qps"/a;
+alternating_current- "Engineering/qps/defs/FC/AC.qps"/a;
+mechanical- "Engineering/qps/defs/MC/ME.qps"/a;
+fluid_dynamics- "Engineering/qps/defs/MC/FD.qps"/a;
+turbine_item- "Engineering/qps/items/FD/tb.qps"/a;
+hydraulic_turbine_prototype- "Engineering/qps/assemblies/HEV_hydraulic_turbine.qps"/a;
+);
+
+battery: (
+role- "initial stored electrical potential and loop return node"/a;
+
+state: (
+terminal_voltage_vdc-/n;
+terminal_current_a-/n;
+state_of_charge-/n;
+temperature-/n;
+);
+
+output: (
+voltage_vdc-/n;
+current_a-/n;
+);
+
+return_input: (
+charge_voltage_vdc-/n;
+charge_current_a-/n;
+);
+);
+
+dc_motor: (
+role- "resolve DC electrical state into rotational mechanical state"/a;
+
+electrical_input: (
+voltage_vdc-/n;
+current_a-/n;
+electrical_resistance_ohm-/n;
+magnetic_flux_state-/n;
+);
+
+mechanical_output: (
+shaft_torque-/n;
+shaft_rpm-/n;
+angular_velocity-/n;
+);
+
+internal_state: (
+back_emf-/n;
+magnetic_field_state-/n;
+bearing_resistance-/n;
+thermal_state-/n;
+);
+);
+
+pump: (
+role- "resolve rotational mechanical state into fluid pressure and flow"/a;
+
+mechanical_input: (
+shaft_torque-/n;
+shaft_rpm-/n;
+angular_velocity-/n;
+);
+
+geometry: (
+pump_type-/a;
+impeller_or_displacement_geometry-/a;
+inlet_diameter-/n;
+outlet_diameter-/n;
+clearance-/n;
+);
+
+fluid_input: (
+inlet_pressure-/n;
+inlet_flow-/n;
+fluid_temperature-/n;
+fluid_density-/n;
+fluid_viscosity-/n;
+);
+
+fluid_output: (
+outlet_pressure-/n;
+outlet_flow-/n;
+outlet_velocity-/n;
+);
+
+resistance: (
+bearing_resistance-/n;
+fluid_internal_resistance-/n;
+geometry_resistance-/n;
+);
+);
+
+fluid_loop: (
+role- "carry hydraulic displacement from pump to turbine and return fluid to pump"/a;
+
+fluid- "water"/a;
+
+geometry: (
+total_length-/n;
+upstream_line_diameter-/n;
+return_line_diameter-/n;
+bend_count-/n;
+fitting_count-/n;
+reservoir_or_closed_volume-/a;
+);
+
+pump_outlet_state: (
+pressure-/n;
+flow_rate-/n;
+velocity-/n;
+temperature-/n;
+);
+
+turbine_inlet_state: (
+pressure-/n;
+flow_rate-/n;
+velocity-/n;
+temperature-/n;
+);
+
+turbine_outlet_state: (
+pressure-/n;
+flow_rate-/n;
+velocity-/n;
+temperature-/n;
+);
+
+pump_return_state: (
+pressure-/n;
+flow_rate-/n;
+velocity-/n;
+temperature-/n;
+);
+
+resistance: (
+viscosity-/n;
+wall_interaction-/n;
+geometry_restriction-/n;
+bend_restriction-/n;
+turbine_restriction-/n;
+);
+);
+
+hydraulic_turbine: (
+role- "resolve contained fluid displacement into rotational mechanical state"/a;
+prototype- "HEV_HT_01"/a;
+
+fluid_input: (
+inlet_pressure-/n;
+outlet_pressure-/n;
+pressure_difference-/n;
+flow_rate-/n;
+fluid_velocity-/n;
+fluid_temperature-/n;
+);
+
+geometry: (
+impeller_diameter_in- 10;
+blade_count- 16;
+blade_geometry- "straight_rectangular_radial"/a;
+application_region- "outer_impeller"/a;
+inlet_diameter_in- 1;
+outlet_diameter_in- 1.5;
+upstream_line_diameter_in- 2;
+active_blades_min- 4;
+active_blades_max- 5;
+);
+
+mechanical_output: (
+shaft_torque-/n;
+shaft_rpm-/n;
+angular_velocity-/n;
+);
+
+observables: (
+shaft_deflection-/n;
+vibration-/n;
+leakage-/n;
+bearing_behavior-/a;
+temperature-/n;
+);
+);
+
+alternator: (
+role- "resolve rotational mechanical state through electromagnetic induction into AC electrical state"/a;
+
+mechanical_input: (
+shaft_torque-/n;
+shaft_rpm-/n;
+angular_velocity-/n;
+);
+
+magnetic_state: (
+rotor_field-/n;
+stator_field-/n;
+magnetic_flux-/n;
+opposing_flux-/n;
+);
+
+mechanical_resistance: (
+unloaded_counter_torque-/n;
+loaded_counter_torque-/n;
+bearing_resistance-/n;
+);
+
+electrical_output: (
+voltage_vac-/n;
+current_a-/n;
+frequency_hz-/n;
+phase_count-/n;
+impedance-/n;
+reactance-/n;
+);
+
+thermal_state: (
+winding_temperature-/n;
+bearing_temperature-/n;
+);
+);
+
+rectification_and_charge_control: (
+role- "resolve alternator AC output into DC state accepted by the battery"/a;
+
+ac_input: (
+voltage_vac-/n;
+current_a-/n;
+frequency_hz-/n;
+phase_count-/n;
+);
+
+dc_output: (
+voltage_vdc-/n;
+current_a-/n;
+);
+
+resistance: (
+electrical_resistance-/n;
+thermal_state-/n;
+);
+);
+
+loop_state: (
+time-/n;
+battery_state_change-/n;
+motor_state_change-/n;
+pump_state_change-/n;
+fluid_state_change-/n;
+turbine_state_change-/n;
+alternator_state_change-/n;
+return_state_change-/n;
+);
+
+primary_questions: (
+q1- "what DC state causes the motor operating state"/a;
+q2- "what motor torque and speed cause the pump operating state"/a;
+q3- "what pump geometry and mechanical state cause pressure and flow"/a;
+q4- "how does the closed fluid geometry modify pressure flow and velocity"/a;
+q5- "what fluid state and turbine geometry cause turbine torque and speed"/a;
+q6- "what turbine shaft state causes alternator electromagnetic state"/a;
+q7- "what electrical load causes alternator counter torque"/a;
+q8- "what alternator state produces the returned DC charging state"/a;
+q9- "what returned DC state changes the battery state over time"/a;
+q10- "does the complete coupled state settle decay oscillate or grow"/a;
+);
+
+required_domain_bridges: (
+DC_to_ME- "dc_motor"/a;
+ME_to_FD- "pump"/a;
+FD_to_ME- "hydraulic_turbine"/a;
+ME_to_AC- "alternator"/a;
+AC_to_DC- "rectification_and_charge_control"/a;
+DC_to_DC_storage- "battery"/a;
+);
+
+model_frontier: (
+DC_definition- "incomplete"/a;
+DC_motor_relationship- "unresolved"/a;
+pump_relationship- "unresolved"/a;
+fluid_loop_relationship- "unresolved"/a;
+turbine_relationship- "partially_structured"/a;
+alternator_relationship- "unresolved"/a;
+AC_to_DC_relationship- "unresolved"/a;
+battery_charge_relationship- "unresolved"/a;
+closed_loop_time_model- "unresolved"/a;
+);
