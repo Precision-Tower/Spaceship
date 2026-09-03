@@ -201,34 +201,123 @@ Do not fabricate backend state to make screenshots look correct.
 
 ## Remote Access
 
-The canonical Pixel CE-OS node is reached from Windows with:
+The canonical Pixel CE-OS node is controlled from Windows through the installed
+CE-OS Windows control plane.
+
+Interactive access:
 
     ssh pixel
 
-`pixel` is the CE-OS-facing SSH identity for the Pixel.
+`pixel` is the stable CE-OS-facing SSH identity for the Pixel. The Windows
+PowerShell wrapper verifies the `Pixel` hotspot, discovers the Pixel through the
+active Wi-Fi gateway, waits for Termux sshd on port 8022, and invokes native
+OpenSSH with the pinned CE-OS host identity.
 
-Do not use ADB as the normal control/development transport.
-Do not substitute a hard-coded Pixel IP.
-Do not modify the Windows SSH configuration unless the mission explicitly requires
-transport maintenance.
+The hotspot IP is transport state, not CE-OS identity.
 
-Once connected and the prompt is already on PIXEL, execute commands locally.
-Do not recursively run `ssh pixel` from inside the Pixel.
+Do not:
 
-Normal development transport:
+- hard-code the Pixel hotspot IP;
+- use obsolete numeric SSH aliases;
+- bypass `ssh pixel` with direct `ssh.exe` for normal CE-OS work;
+- modify Windows SSH configuration unless the mission is transport maintenance;
+- make SSH itself a root login;
+- recursively run `ssh pixel` after already entering the Pixel.
+
+### Windows Command Surface
+
+For automated or multiline work from Windows, use:
+
+    ops exec <script>
+
+`ops exec` is the canonical Windows-to-Pixel script transport. It transports the
+script as UTF-8/Base64 data, decodes it on the Pixel, and executes it with
+Termux Bash from:
+
+    ~/ce-os
+
+Normal execution identity is the non-root Termux CE-OS user.
+
+The current Android-assigned username may be observed with `whoami`; do not
+hard-code that username into CE-OS tooling.
+
+Use `ops exec` instead of constructing nested PowerShell -> SSH -> Bash command
+quoting. This is especially important for C++, QPS, Markdown, heredocs, patches,
+and other content containing quotes, dollar signs, backticks, redirection, or
+shell metacharacters.
+
+Do not use `scp` as an ad hoc substitute for agent script transport. Native
+`scp` does not pass through the PowerShell `ssh pixel` function and therefore
+does not automatically inherit its dynamic hotspot discovery behavior.
+
+The compatibility command:
+
+    ops-exec <script>
+
+currently maps to `ops exec`. Existing automation may use it, but new
+instructions should prefer `ops exec`.
+
+### Privileged Windows Execution
+
+Privileged work must be explicit:
+
+    ops root <script>
+
+`ops root` crosses the Magisk `su` boundary and executes with uid 0 using the
+absolute Termux Bash path. It starts execution from:
+
+    ~/ce-os
+
+Use root only when the operation actually requires Android/root authority.
+Normal source editing, Git operations, builds, tests, and repository inspection
+should remain under `ops exec` or an interactive `ssh pixel` session.
+
+Never convert the normal SSH identity into root access.
+
+### Control-Plane Diagnostics
+
+Diagnose the complete Windows-to-Pixel path with:
+
+    ops doctor
+
+`ops doctor` checks the active Wi-Fi/hotspot route, Pixel gateway, TCP port 8022,
+SSH access, CE-OS repository presence, current branch/dirty state, root
+availability, sshd state, and active SSH connection.
+
+When remote work fails, diagnose the control plane before changing repository or
+SSH configuration.
+
+### Agent Remote-Execution Rule
+
+Windows agents must treat the Pixel repository as canonical.
+
+For complex remote work:
+
+1. Construct the complete script locally as data.
+2. Send it with `ops exec`.
+3. Inspect results from `~/ce-os`.
+4. Validate changes with canonical Pixel Git/build/test evidence.
+
+Do not claim a source change based only on locally generated patch content or
+agent narration. The Pixel filesystem and Git state are the evidence.
+
+Normal control topology:
 
     Windows / Codex
           |
-      ssh pixel
+          +-- ssh pixel  -------- interactive user session
           |
-          v
-    Pixel ~/ce-os
+          +-- ops exec   -------- automated user execution
           |
-          +-- source editing
-          +-- builds
-          +-- Android control
-          +-- runtime observation
-          +-- screenshots/logs
+          +-- ops root   -------- explicit privileged execution
+          |
+          +-- ops doctor -------- control-plane diagnostics
+                    |
+                    v
+             Pixel / Termux
+                    |
+                    v
+                ~/ce-os
 
 ADB is optional Android maintenance/debugging only.
 Fastboot is provisioning/recovery only.
