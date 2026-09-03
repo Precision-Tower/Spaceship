@@ -1,0 +1,101 @@
+bat. Battery: def"
+A battery is an electrical storage Engineering Item.
+
+The Item represents the physical battery itself.
+
+Stored electrical state, terminal voltage, current, internal resistance,
+cell geometry, material state, thermal state, charging state, and
+discharging state remain explicit so the battery can participate in
+the HEV without being reduced to a summary efficiency value.
+
+The battery is the DC storage and return node of the HEV.
+";
+
+identity: (
+item- "battery"/a;
+domain- "DC"/a;
+role- "electrical_storage"/a;
+renderable- true/b;
+);
+
+terminal_state: (
+voltage_vdc-/n;
+current_a-/n;
+polarity-/a;
+);
+
+storage_state: (
+state_of_charge-/n;
+stored_charge-/n;
+capacity-/n;
+);
+
+internal_state: (
+internal_resistance_ohm-/n;
+electrolyte_state-/a;
+cell_temperature-/n;
+terminal_temperature-/n;
+);
+
+cell: (
+chemistry-/a;
+cell_count-/n;
+nominal_cell_voltage-/n;
+cell_capacity-/n;
+);
+
+geometry: (
+primitive- "battery"/a;
+body_length-/n;
+body_width-/n;
+body_height-/n;
+terminal_positive_position-/a;
+terminal_negative_position-/a;
+);
+
+charge_input: (
+voltage_vdc-/n;
+current_a-/n;
+temperature-/n;
+);
+
+discharge_output: (
+voltage_vdc-/n;
+current_a-/n;
+);
+
+resistance: (
+internal_resistance_ohm-/n;
+terminal_resistance-/n;
+connection_resistance-/n;
+);
+
+thermal_state: (
+cell_temperature-/n;
+case_temperature-/n;
+terminal_temperature-/n;
+);
+
+ports: (
+positive- "DC+"/a;
+negative- "DC-"/a;
+);
+
+input_state: (
+charge_voltage_vdc-/n;
+charge_current_a-/n;
+);
+
+output_state: (
+terminal_voltage_vdc-/n;
+terminal_current_a-/n;
+state_of_charge-/n;
+);
+
+model_frontier: (
+stored_state_to_terminal_voltage- "unresolved"/a;
+load_to_current- "unresolved"/a;
+charge_input_to_storage_state- "unresolved"/a;
+discharge_to_storage_state- "unresolved"/a;
+thermal_relationship- "unresolved"/a;
+);

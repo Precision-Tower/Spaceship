@@ -9,3 +9,5 @@ dcm- Ec.dcm/p; # DC Motor
 pmp- FD.pu/p; # Pump
 
 alt- Ec.alt/p; # Alternator
+
+bat- Ec.bat/p; # Battery
