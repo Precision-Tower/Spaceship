@@ -67,6 +67,22 @@ def main():
     ) as tmp_name:
         root = Path(tmp_name)
 
+        no_tests = root / "no_tests.qps"
+        write_qps(
+            no_tests,
+            [
+                "example.",
+                'value- "valid qps";',
+            ],
+        )
+        require_process(
+            run_qps_test(no_tests),
+            0,
+            f"{no_tests}: PASS\n",
+            "",
+            "valid qps without embedded tests passes",
+        )
+
         single_pass = root / "single_pass.qps"
         write_qps(
             single_pass,

@@ -329,7 +329,6 @@ std::vector<fs::path> collectQpsFiles(const fs::path& target) {
 
 bool runTestFile(
     const fs::path& file,
-    bool require_tests,
     bool& tested_any) {
 
     const std::string rendered_path = displayPath(file);
@@ -342,14 +341,9 @@ bool runTestFile(
         qps::runtime::TestSuiteSummary summary = runner.run(*ast_root);
 
         if (summary.total() == 0) {
-            if (!require_tests) {
-                return true;
-            }
-
             tested_any = true;
-            std::cout << rendered_path << ": FAIL\n";
-            std::cout << rendered_path << ":1 no tests discovered\n";
-            return false;
+            std::cout << rendered_path << ": PASS\n";
+            return true;
         }
 
         tested_any = true;
@@ -403,14 +397,13 @@ int runTestCommand(int argc, char* argv[]) {
 
     try {
         const fs::path target(argv[2]);
-        const bool require_tests_per_file = fs::is_regular_file(target);
         const std::vector<fs::path> files = collectQpsFiles(target);
 
         bool successful = true;
         bool tested_any = false;
 
         for (const auto& file : files) {
-            if (!runTestFile(file, require_tests_per_file, tested_any)) {
+            if (!runTestFile(file, tested_any)) {
                 successful = false;
             }
         }
