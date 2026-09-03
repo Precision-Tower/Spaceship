@@ -22,6 +22,10 @@ def load_source(path: Path):
         from .sources.python_source import load_python
         return load_python(path)
 
+    if suffix in {".cpp", ".cc", ".cxx", ".hpp", ".h"}:
+        from .sources.cpp_source import load_cpp
+        return load_cpp(path)
+
     raise SystemExit(
         f"Cipher source type not yet supported: {suffix}"
     )

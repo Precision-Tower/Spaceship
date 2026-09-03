@@ -37,3 +37,13 @@ Blocked until QPS general execution `{}` is stable.
 - [ ] Map function bodies.
 - [ ] Map algorithmic expressions.
 - [ ] Promote proven Cipher behavior into a native QPS library/tool.
+
+## Proven C++ Geometry Ingestion
+
+- [x] Constrained C++ source ingestion without compiler headers.
+- [x] Preserve C++ function bodies as deferred evidence.
+- [x] Extract calls and operation-dispatch literals.
+- [x] Ingest current CE-OS geometry executor with zero true gaps.
+- [x] Map OCCT-facing implementation symbols into backend-neutral CE-OS geometry capabilities.
+- [ ] Expand the C++ subset only when a CE-OS migration source requires it.
+- [ ] Use OCCT as a reference/oracle backend rather than QPS vocabulary authority.
