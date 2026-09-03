@@ -173,7 +173,7 @@ modules.
 index- "<index.qps";
 rule: def"A QPS directory may act as a module.";
 index_rule: def"<index.qps is the canonical module surface document for a QPS directory.";
-legacy_index: def"<index.qps is a legacy module-surface filename still present in older QPS workspaces pending migration.";
+index_status: def"<index.qps is the active canonical module-surface filename in the current QPS runtime and corpus.";
 surface: def"<index.qps exposes symbols from documents within that module.";
 documents: def"Runtime QPS documents use the .qps extension.";
 

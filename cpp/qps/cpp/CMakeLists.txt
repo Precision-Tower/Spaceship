@@ -184,3 +184,13 @@ add_test(
 # 1. Re-configure CMake: cmake ..
 # 2. Build: cmake --build . --config Release
 # 3. Run: .\qps.exe <your_source_file.qps>
+
+add_test(
+    NAME qps_active_corpus_conformance
+    COMMAND
+        ${CMAKE_COMMAND} -E env
+        QPS_EXECUTABLE=$<TARGET_FILE:qps>
+        CEOS_ROOT=${CMAKE_CURRENT_SOURCE_DIR}/../../..
+        python3
+        ${CMAKE_CURRENT_SOURCE_DIR}/tests/runtime/corpus_conformance_test.py
+)
