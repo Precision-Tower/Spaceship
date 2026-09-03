@@ -185,6 +185,19 @@ add_test(
 # 2. Build: cmake --build . --config Release
 # 3. Run: .\qps.exe <your_source_file.qps>
 
+
+add_qps_test(
+    qps_corpus_ast_conformance_test
+    tests/runtime/corpus_ast_conformance_test.cpp
+)
+
+add_test(
+    NAME qps_corpus_ast_conformance_test
+    COMMAND
+        qps_corpus_ast_conformance_test
+        ${CMAKE_CURRENT_SOURCE_DIR}/../../..
+)
+
 add_test(
     NAME qps_active_corpus_conformance
     COMMAND
