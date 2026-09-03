@@ -11,6 +11,12 @@ Linux/Desktop behavior must remain intact unless a shared abstraction explicitly
 
 ## Active Work Log
 
+- 2026-09-03 Milestone 1 reconciliation: mobile composition, bottom navigation,
+  editable TextEdit, dirty-state tracking, buffer Save interaction, Android IME,
+  headless `ops` controls, and deterministic visual observation are implemented.
+  Files remain placeholder-backed; real filesystem read/write authority is the
+  Milestone 2 boundary.
+
 - 2026-09-03 Milestone 1 scope: implement Android-only Files / Editor / Terminal / Controls
   bottom navigation, one primary surface at a time, a native Godot editable text surface,
   placeholder file entries, and visual validation through `operator-cycle`.
@@ -41,13 +47,13 @@ Android must use persistent bottom navigation:
 
 Only one primary surface should be visible at a time.
 
-- [ ] Replace Android desktop left/right dock composition with mobile surfaces.
-- [ ] Keep desktop/Linux dock layout unchanged.
-- [ ] Keep bottom navigation visible and readable.
-- [ ] Make Editor the normal working surface.
-- [ ] Make Files a full-height file browser surface.
-- [ ] Make Terminal a full-height terminal surface.
-- [ ] Make Controls a full-height CE-OS control/status surface.
+- [x] Replace Android desktop left/right dock composition with mobile surfaces.
+- [x] Keep desktop/Linux dock layout unchanged.
+- [x] Keep bottom navigation visible and readable.
+- [x] Make Editor the normal working surface.
+- [x] Make Files a full-height file browser surface.
+- [x] Make Terminal a full-height terminal surface.
+- [x] Make Controls a full-height CE-OS control/status surface.
 - [ ] Ensure surfaces fit Pixel 6 portrait dimensions.
 - [ ] Avoid horizontal overflow and inaccessible side controls.
 - [ ] Validate all surfaces visually on-device.
@@ -58,15 +64,15 @@ The editor must use Android's native keyboard through Godot text-editing control
 
 Do not implement a custom keyboard.
 
-- [ ] Add a primary editable text surface for files.
-- [ ] Use Godot text input controls compatible with Android IME.
-- [ ] Tapping editor text must summon the system keyboard.
-- [ ] Android Back should dismiss the keyboard before leaving the editor when appropriate.
-- [ ] Editor must resize or remain usable when the keyboard is visible.
+- [x] Add a primary editable text surface for files.
+- [x] Use Godot text input controls compatible with Android IME.
+- [x] Tapping editor text must summon the system keyboard.
+- [x] Android Back should dismiss the keyboard before leaving the editor when appropriate.
+- [x] Editor must resize or remain usable when the keyboard is visible.
 - [ ] Keep bottom navigation usable with IME behavior.
-- [ ] Support open file state.
-- [ ] Support modified/dirty state.
-- [ ] Support Save.
+- [x] Support open file state for current placeholder/mobile-buffer files.
+- [x] Support modified/dirty state.
+- [x] Support explicit buffer Save interaction. Real persistence remains Milestone 2.
 - [ ] Preserve cursor/scroll state when practical.
 
 ## Files
@@ -78,11 +84,11 @@ Godot Android must not directly browse Termux/root paths with `DirAccess`.
 - [ ] Define CE-OS filesystem platform interface.
 - [ ] Add Android filesystem adapter.
 - [ ] Keep Linux filesystem adapter/direct host behavior separate.
-- [ ] Render directory hierarchy as a tree.
+- [x] Render placeholder directory hierarchy as a tree. Real filesystem population remains Milestone 2.
 - [ ] Expand/collapse directories.
-- [ ] Select files.
-- [ ] Open selected file in Editor.
-- [ ] Refresh directory tree.
+- [x] Select placeholder files.
+- [x] Open selected placeholder file in Editor.
+- [x] Refresh current mobile Files tree.
 - [ ] Display inaccessible/error states without breaking shell construction.
 
 Required backend operations:
@@ -186,14 +192,14 @@ Before expensive builds:
 
 Do this first.
 
-- [ ] Implement Files / Editor / Terminal / Controls bottom navigation.
-- [ ] Show one primary mobile surface at a time.
-- [ ] Preserve desktop/Linux layout.
-- [ ] Add Editor surface with editable text control.
-- [ ] Verify Android system keyboard appears.
-- [ ] Use placeholder/mock file entries if needed.
-- [ ] Validate visually with `operator-cycle`.
-- [ ] Do not implement privileged filesystem backend yet.
+- [x] Implement Files / Editor / Terminal / Controls bottom navigation.
+- [x] Show one primary mobile surface at a time.
+- [x] Preserve desktop/Linux layout.
+- [x] Add Editor surface with editable text control.
+- [x] Verify Android system keyboard appears.
+- [x] Use placeholder/mock file entries for Milestone 1.
+- [x] Validate visually through the automated OperatorShell observation/headless loop.
+- [x] Complete Milestone 1 without introducing privileged filesystem authority into Godot.
 
 Completion rule:
 
@@ -204,6 +210,33 @@ and desktop behavior has not been intentionally replaced.
 ## Milestone 2 — CE-OS Filesystem Service
 
 Begin only after Milestone 1 is visually usable.
+
+### Filesystem Service Contract
+
+The Files and Editor UI already exist. Milestone 2 must connect them to real
+filesystem state without moving privileged authority into Godot.
+
+The logical `fs.*` contract must be shared between Android and Linux/Desktop.
+
+- [ ] `fs.list` returns typed structured entries, not rendered terminal text.
+- [ ] Directory entries distinguish file, directory, symlink, and inaccessible/error state.
+- [ ] Filesystem responses include canonical path information.
+- [ ] `fs.read` returns real file content through the CE-OS service boundary.
+- [ ] `fs.read` identifies binary/non-text files before loading them into TextEdit.
+- [ ] `fs.read` applies a safe file-size policy for the mobile editor.
+- [ ] `fs.write` persists editor contents through the CE-OS service boundary.
+- [ ] `fs.write` detects stale writes when a file changed after it was opened.
+- [ ] Use atomic write/replace where practical.
+- [ ] Symlink handling cannot bypass authorized-root policy.
+- [ ] Canonicalize paths before enforcing authorized-root boundaries.
+- [ ] Reject traversal that escapes an authorized root after canonicalization.
+- [ ] Privileged authority is operation-scoped; do not expose arbitrary shell execution.
+- [ ] Filesystem failures return stable machine-readable error codes.
+- [ ] Linux and Android implement the same logical `fs.*` contract.
+- [ ] Normal `~/ce-os` editing uses the least privilege necessary.
+- [ ] Root-backed paths require explicit allowlisting and privileged backend authority.
+- [ ] Determine whether `GodotLaunchBridge.godot.open-project` is still required by the current architecture.
+
 
 - [ ] Design `fs.list`.
 - [ ] Design `fs.read`.
@@ -269,6 +302,6 @@ Begin only after Milestone 1 is visually usable.
 - [ ] Keyboard layout does not hide active editor content.
 - [ ] Terminal surface remains usable on portrait Pixel.
 - [ ] Bottom navigation remains persistent and readable.
-- [ ] Files / Editor / Terminal / Controls remain remotely selectable via `ops`.
-- [ ] `ops share` captures the requested surface deterministically.
-- [ ] Runtime test suite covers new mobile IDE contracts.
+- [x] Files / Editor / Terminal / Controls remain remotely selectable via `ops`.
+- [x] `ops share` captures the requested surface deterministically.
+- [x] Runtime/source test suite covers current mobile shell and control contracts.
