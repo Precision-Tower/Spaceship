@@ -34,7 +34,6 @@ origin: (
 purpose- "test the HEV as a fully causal physical system"/a;
 primary_question- "can the coupled system establish a sustained operating state"/a;
 authoritative_hypothesis- "Engineering/docs/Engineering.md"/a;
-historical_design- "Engineering/qps/Archive/qps/design/designs/HEV.qps"/a;
 );
 
 model_rules: (
