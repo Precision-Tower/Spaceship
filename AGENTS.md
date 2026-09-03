@@ -11,7 +11,7 @@ Do not treat Nitro-era repositories as canonical history.
 
 ## Platform
 
-Target node:
+Target development node:
 
     Pixel 6 / oriole
     Android
@@ -61,6 +61,15 @@ Privileged Android services belong under:
 
     ~/ce-os/Android/Privileged
 
+Shared UI must remain platform-neutral where practical.
+
+Platform-specific filesystem, process, privilege, and host integration must live behind CE-OS platform services or adapters.
+
+Do not introduce host-specific paths or direct Termux/root assumptions into shared UI code.
+
+Android Godot must not directly depend on access to the Termux or root filesystem.
+Privileged operations must cross an explicit CE-OS service boundary.
+
 ## Git
 
 The Pixel repository is canonical.
@@ -75,7 +84,7 @@ Before committing:
     git status --short
     git diff --check
 
-## Working method
+## Working Method
 
 Maintain:
 
@@ -90,11 +99,14 @@ For each meaningful task:
 3. Make the smallest coherent change.
 4. Validate it.
 5. Observe runtime behavior when relevant.
-6. Record result in CHECKLIST.md.
+6. Record the result in CHECKLIST.md.
 7. Commit a stable checkpoint.
 
 Do not mark an item complete merely because source compiles.
 Runtime-facing work requires runtime observation.
+
+Mission-specific implementation details belong in checklists or design documents,
+not in AGENTS.md.
 
 ## QPS
 
@@ -102,10 +114,7 @@ Canonical QPS implementation:
 
     ~/ce-os/cpp/qps/cpp
 
-Current baseline:
-
-    qps_core compiled once as a static library
-    CTest suite must remain green
+The QPS CTest suite must remain green.
 
 Validate QPS with:
 
@@ -116,11 +125,11 @@ Avoid clean rebuilds unless required.
 
 ## OperatorShell
 
-OperatorShell is a Godot project whose source is:
+OperatorShell is the shared Godot operator interface:
 
     ~/ce-os/UI/OperatorShell
 
-Godot project root:
+Godot project:
 
     ~/ce-os/UI/OperatorShell/project.godot
 
@@ -132,10 +141,13 @@ Canonical QPS surface:
 
     UI/OperatorShell/_index.qps
 
-OperatorShell is portrait-first on Pixel 6.
+The same OperatorShell project targets Linux and Android.
+
+Android uses a mobile/portrait interaction model.
+Linux may use a desktop interaction model.
 
 The Godot Android editor is not the source-of-truth editing environment.
-Edit project.godot, .tscn, .tres, .gd and supporting files directly.
+Edit project.godot, .tscn, .tres, .gd, and supporting files directly.
 
 Runtime iteration should be automated:
 
@@ -144,11 +156,8 @@ Runtime iteration should be automated:
     build/export
     install
     launch
-    wait
-    screenshot
-    collect logs
+    observe
     inspect
-    close
     correct
     repeat
 
@@ -157,31 +166,27 @@ Never leave a broken test application running.
 The UI must reflect real CE-OS backend state.
 Do not fabricate backend state to make screenshots look correct.
 
-## Remote Access Contract
+## Remote Access
 
 The canonical Pixel CE-OS node is reached from Windows with:
 
-    ssh 69
+    ssh pixel
 
-`69` is the CE-OS-facing SSH identity for the Pixel.
-
-When operating from Windows, use:
-
-    ssh 69
+`pixel` is the CE-OS-facing SSH identity for the Pixel.
 
 Do not use ADB as the normal control/development transport.
 Do not substitute a hard-coded Pixel IP.
-Do not modify the Windows SSH configuration unless the mission explicitly
-requires transport maintenance.
+Do not modify the Windows SSH configuration unless the mission explicitly requires
+transport maintenance.
 
 Once connected and the prompt is already on PIXEL, execute commands locally.
-Do not recursively run `ssh 69` from inside the Pixel.
+Do not recursively run `ssh pixel` from inside the Pixel.
 
 Normal development transport:
 
     Windows / Codex
           |
-        ssh 69
+      ssh pixel
           |
           v
     Pixel ~/ce-os
