@@ -7,3 +7,5 @@ tb- FD.tb/p; # Turbine
 dcm- Ec.dcm/p; # DC Motor
 
 pmp- FD.pu/p; # Pump
+
+alt- Ec.alt/p; # Alternator

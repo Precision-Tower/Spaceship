@@ -1,0 +1,127 @@
+alt. Alternator: def"
+An alternator is a rotational mechanical-to-alternating-electrical Engineering Item.
+
+The Item represents the physical alternator itself.
+
+Mechanical shaft state, magnetic field interaction, opposing flux,
+electrical output, resistance, geometry, and thermal behavior remain
+explicit so the ME -> AC relationship can be implemented and tested
+without collapsing the component into a summary efficiency value.
+
+The alternator is a domain bridge:
+
+ME -> AC
+";
+
+identity: (
+item- "alternator"/a;
+domain_input- "ME"/a;
+domain_output- "AC"/a;
+renderable- true/b;
+);
+
+mechanical_input: (
+shaft_torque-/n;
+shaft_rpm-/n;
+angular_velocity-/n;
+);
+
+shaft: (
+radius-/n;
+length-/n;
+material-/a;
+);
+
+rotor: (
+type-/a;
+material-/a;
+radius-/n;
+length-/n;
+mass-/n;
+pole_count-/n;
+magnetic_flux-/n;
+);
+
+stator: (
+type-/a;
+material-/a;
+inside_radius-/n;
+outside_radius-/n;
+length-/n;
+coil_count-/n;
+coil_wraps-/n;
+phase_count-/n;
+);
+
+magnetic_state: (
+rotor_field-/n;
+stator_field-/n;
+magnetic_flux-/n;
+opposing_flux-/n;
+field_strength-/n;
+);
+
+mechanical_resistance: (
+unloaded_counter_torque-/n;
+loaded_counter_torque-/n;
+bearing_resistance-/n;
+rotor_inertia-/n;
+);
+
+electrical_output: (
+voltage_vac-/n;
+current_a-/n;
+frequency_hz-/n;
+phase_count-/n;
+impedance-/n;
+reactance-/n;
+);
+
+bearings: (
+quantity-/n;
+type-/a;
+friction-/n;
+);
+
+thermal_state: (
+rotor_temperature-/n;
+stator_temperature-/n;
+winding_temperature-/n;
+bearing_temperature-/n;
+);
+
+ports: (
+mechanical_shaft- "shaft"/a;
+ac_output- "AC"/a;
+);
+
+geometry: (
+primitive- "alternator"/a;
+body_radius-/n;
+body_length-/n;
+shaft_radius-/n;
+shaft_length-/n;
+rotor_radius-/n;
+stator_inside_radius-/n;
+);
+
+input_state: (
+shaft_torque-/n;
+shaft_rpm-/n;
+angular_velocity-/n;
+);
+
+output_state: (
+voltage_vac-/n;
+current_a-/n;
+frequency_hz-/n;
+);
+
+model_frontier: (
+shaft_to_flux- "unresolved"/a;
+flux_to_induced_voltage- "unresolved"/a;
+load_to_opposing_flux- "unresolved"/a;
+opposing_flux_to_counter_torque- "unresolved"/a;
+rpm_to_frequency- "unresolved"/a;
+thermal_relationship- "unresolved"/a;
+);
