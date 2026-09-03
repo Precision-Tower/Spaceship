@@ -84,29 +84,62 @@ Before committing:
     git status --short
     git diff --check
 
+## Workspace Documentation
+
+`~/ce-os/AGENTS.md` is the universal operating contract for all CE-OS workspaces.
+
+Do not create per-workspace `AGENTS.md` files unless a future requirement cannot
+be represented by the universal contract and explicitly requires an exception.
+
+Every CE-OS owned workspace/module maintains:
+
+    docs/README.md
+    docs/CHECKLIST.md
+
+`docs/README.md` records durable architectural truth for that workspace,
+including its purpose, structure, interfaces, terminology, established behavior,
+and proven design decisions.
+
+`docs/CHECKLIST.md` is the active implementation and validation ledger for that
+workspace. It records the proven baseline, active milestone, known gaps, future
+work, validation requirements, and concise work history.
+
+A checked checklist item means the behavior has been demonstrated by appropriate
+evidence. Implementation alone is not sufficient when tests, integration, or
+runtime observation are required.
+
+As checklist milestones are completed and proven, distill durable architectural
+information into `docs/README.md`. Preserve useful validation and milestone
+history in `docs/CHECKLIST.md`; do not turn the README into a task log.
+
+Parent workspace documentation should link to or summarize child workspaces at
+the integration level rather than duplicating detailed child checklists.
+
+Do not create documentation surfaces for incidental implementation directories,
+generated output, build trees, caches, vendor dependencies, or runtime state.
+The convention applies to CE-OS owned architectural workspaces/modules.
+
 ## Working Method
-
-Maintain:
-
-    ~/ce-os/CHECKLIST.md
-
-The checklist is the authoritative task ledger for the current mission.
 
 For each meaningful task:
 
-1. Inspect existing implementation.
-2. Record intended work in CHECKLIST.md.
-3. Make the smallest coherent change.
-4. Validate it.
-5. Observe runtime behavior when relevant.
-6. Record the result in CHECKLIST.md.
-7. Commit a stable checkpoint.
+1. Read `~/ce-os/AGENTS.md`.
+2. Read the active workspace `docs/README.md`.
+3. Read the active workspace `docs/CHECKLIST.md`.
+4. Inspect the existing implementation.
+5. Record or confirm the intended work in `docs/CHECKLIST.md`.
+6. Make the smallest coherent change.
+7. Validate it.
+8. Observe runtime behavior when relevant.
+9. Record proven results in `docs/CHECKLIST.md`.
+10. Distill newly established architectural truth into `docs/README.md`.
+11. Commit a stable, focused checkpoint.
 
 Do not mark an item complete merely because source compiles.
 Runtime-facing work requires runtime observation.
 
-Mission-specific implementation details belong in checklists or design documents,
-not in AGENTS.md.
+Mission-specific implementation details belong in workspace documentation,
+not in `AGENTS.md`.
 
 ## QPS
 
