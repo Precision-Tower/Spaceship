@@ -164,6 +164,149 @@ Remaining structural-reference proof:
 - [x] Record the resulting reference-semantics baseline: 120 index path references, 0 non-index path references, 0 active structural symbol references.
 - [ ] Distill proven reference architecture into `docs/README.md`.
 
+## Active Milestone — QPS testSuite / Execution Foundation
+
+`testSuite` is the canonical QPS-native testing system and the concrete bootstrap target for the general `{}` execution language.
+
+Detailed language design belongs in `docs/EXECUTION_DESIGN.md`.
+
+### Phase 1 — Implementation Inventory
+
+- [ ] Audit existing execution tokens.
+- [ ] Audit existing execution parser behavior.
+- [ ] Audit execution AST nodes.
+- [ ] Audit execution runtime behavior.
+- [ ] Audit current function parsing/runtime.
+- [ ] Audit control-flow parsing/runtime.
+- [ ] Audit binding/scope implementation.
+- [ ] Audit assertion/error behavior.
+- [ ] Audit calculation integration.
+- [ ] Classify each feature as implemented, partial, placeholder, legacy, or absent.
+
+### Phase 2 — Canonical Execution Grammar
+
+- [ ] Define canonical meaning of plain `{}`.
+- [ ] Define legal structural attachment points for `{}`.
+- [ ] Define statement versus expression grammar.
+- [ ] Define semicolon rules.
+- [ ] Define whitespace rules.
+- [ ] Define nesting rules.
+- [ ] Define scope rules.
+- [ ] Define structural-reference integration.
+- [ ] Define specialized-block integration boundaries.
+- [ ] Record recommended EBNF grammar in `docs/EXECUTION_DESIGN.md`.
+
+### Phase 3 — testSuite Primitive Grammar
+
+- [ ] Define canonical `-test` syntax.
+- [ ] Define canonical `-assert` syntax.
+- [ ] Define canonical `-fail` syntax.
+- [ ] Define expected-error / `-raises` semantics.
+- [ ] Define pass/fail/error result model.
+- [ ] Define source-location reporting.
+
+### Phase 4 — Execution Foundation
+
+- [ ] Parse canonical execution blocks.
+- [ ] Execute a plain `{}` block deterministically.
+- [ ] Establish execution context/bindings.
+- [ ] Execute assertion primitives.
+- [ ] Return structured test results.
+- [ ] Add focused parser/runtime tests.
+
+### Phase 5 — Bindings and Control Flow
+
+- [ ] Define and implement `-let`.
+- [ ] Define and implement `-set`.
+- [ ] Define and implement `-if`.
+- [ ] Define and implement `-elif`.
+- [ ] Define and implement `-else`.
+- [ ] Define loop requirements from real testSuite use cases.
+- [ ] Add only the loop constructs justified by those use cases.
+
+### Phase 6 — Functions
+
+- [ ] Define canonical `-func` syntax.
+- [ ] Define parameter semantics.
+- [ ] Define function-local scope.
+- [ ] Define return semantics.
+- [ ] Define function-call syntax.
+- [ ] Implement function parsing.
+- [ ] Implement function execution.
+- [ ] Add function conformance tests.
+
+### Phase 7 — testSuite Discovery
+
+- [ ] Define test discovery roots.
+- [ ] Discover `.qps` documents containing tests.
+- [ ] Register stable test identities.
+- [ ] Implement `qps test discover`.
+- [ ] Implement targeted path execution.
+
+### Phase 8 — Runner and Reporter
+
+- [ ] Implement `qps test`.
+- [ ] Implement deterministic execution ordering.
+- [ ] Implement concise reporter.
+- [ ] Implement verbose reporter.
+- [ ] Distinguish test failures from runtime errors.
+- [ ] Add machine-readable result representation.
+
+### Phase 9 — Filtering and Control
+
+- [ ] Add test-name filtering.
+- [ ] Add fail-fast.
+- [ ] Define test selection semantics.
+- [ ] Preserve deterministic behavior.
+
+### Phase 10 — Fixtures
+
+- [ ] Define fixture syntax.
+- [ ] Define fixture scopes.
+- [ ] Define setup/teardown behavior.
+- [ ] Guarantee teardown on failure/error.
+- [ ] Implement only after core test execution is stable.
+
+### Phase 11 — Parameterization
+
+- [ ] Define QPS-native parameterization syntax.
+- [ ] Define parameter identity/reporting.
+- [ ] Implement parameterized test execution.
+- [ ] Preserve deterministic ordering.
+
+### Phase 12 — Specialized Language Integration
+
+- [ ] Execute/consume `{%}` calculations from `{}`.
+- [ ] Define the `{}` -> `{@}` geometry boundary.
+- [ ] Define the `{}` -> `{$}` model boundary.
+- [ ] Define the `{}` -> `{!}` causal boundary.
+- [ ] Preserve semantic separation between block families.
+
+### Phase 13 — Self-Hosted QPS Testing
+
+- [ ] Author real tests in `.qps`.
+- [ ] Discover them through `testSuite`.
+- [ ] Execute them through QPS.
+- [ ] Report results through the QPS runner.
+- [ ] Begin migrating suitable semantic witnesses from C++ into QPS-authored tests.
+- [ ] Keep C++ tests where they remain the correct lower-level implementation boundary.
+
+### Definition of Success
+
+The milestone reaches its first major success when QPS can discover and execute a `.qps` test equivalent in capability to:
+
+    tests.
+
+    truth: -test {
+        -assert true;
+    };
+
+and produce a deterministic structured pass/fail result through `qps test`.
+
+Do not mark syntax canonical merely because it parses.
+
+Execution behavior must be implemented and proven.
+
 ## Future Language Milestones
 
 ### `%` Calculation

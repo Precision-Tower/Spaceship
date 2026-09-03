@@ -84,3 +84,36 @@ The structural resolver is runtime-tested for current-file navigation, sibling-f
 
 The active Engineering corpus currently contains zero `SymbolReferenceNode` instances. Structural references are therefore an implemented and tested runtime language capability, but are not yet an authored dependency of the active Engineering corpus.
 
+## testSuite
+
+`testSuite` is the canonical QPS-native testing library and execution-system target.
+
+Its purpose is to combine the strongest ideas from systems such as `unittest` and `pytest` while remaining native to QPS structure, syntax, runtime semantics, and CE-OS development.
+
+QPS tests are intended to be authored in `.qps` and eventually discovered, loaded, executed, asserted, filtered, and reported by the QPS runtime itself.
+
+`testSuite` is also the concrete bootstrap target for the QPS general execution language.
+
+Plain `{ ... }` is the general execution/control block family.
+
+Specialized block families remain semantically distinct:
+
+- `{ ... }` — general execution/control
+- `{% ... }` — calculation
+- `{@ ... }` — geometry
+- `{$ ... }` — model
+- `{! ... }` — causal
+
+The general execution language may orchestrate or consume specialized block behavior, but the specialized languages are not aliases for plain `{}`.
+
+QPS execution syntax should preserve normal structural ownership where practical:
+
+    key.
+    term: <executable behavior>;
+
+Function, test, control-flow, binding, assertion, and related execution syntax are still under active design and must not be treated as canonical until implemented and proven.
+
+Detailed execution-language design belongs in `docs/EXECUTION_DESIGN.md`.
+
+The active implementation ledger belongs in `docs/CHECKLIST.md`.
+
