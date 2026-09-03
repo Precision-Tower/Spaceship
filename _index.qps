@@ -1,0 +1,98 @@
+CE_OS.
+
+definition: def"
+Causal Engine Operating System.
+Whitebox engineering, simulation, software execution,
+and machine reasoning environment.
+";
+
+entrypoint: def"
+Read this file first when entering the CE-OS repository.
+
+This is the operational index for CE-OS.
+Canonical shortcuts, repository navigation, development rules,
+and platform commands belong here so information carries forward
+instead of depending on conversation or memory.
+";
+
+principles: (
+information_carries- "Do not force repetition across views, tools, agents, or conversations";
+scope_searches- "Start at the smallest relevant surface and widen only when evidence requires it";
+preserve_work- "Do not overwrite, reset, clean, or stage unrelated unfinished work";
+implementation_authority- "Current implementation and passing tests outrank stale documentation";
+);
+
+repository: (
+Engineering- "Engineering knowledge, models, experiments, simulation, and physical Items";
+cpp- "Native implementation including QPS";
+UI- "OperatorShell and Workbench";
+Agency- "Agent factory and local machine reasoning";
+Android- "Android, Termux, device runtime, and privileged integration";
+);
+
+qps: (
+language- "Quick Parse Standard";
+
+commands: (
+check_file- "qps path/file.qps --check";
+query_value- "qps path/file.qps --get path.to.value";
+test_file_target- "qps test path/file.qps";
+test_folder_target- "qps test path/folder";
+);
+
+test_output_contract: (
+pass- "path/file.qps: PASS";
+fail- "path/file.qps: FAIL";
+failure_location- "path/file.qps:ln";
+failure_rule- "Only failures expand with their exact line and reason";
+quiet_default- true/b;
+);
+);
+
+engineering: (
+root- "Engineering/qps";
+definitions- "Engineering/qps/defs";
+items- "Engineering/qps/items";
+assemblies- "Engineering/qps/assemblies";
+designs- "Engineering/qps/designs";
+experiments- "Engineering/qps/experiments";
+tests- "Engineering/qps/tests";
+);
+
+platforms: (
+pixel: (
+shell- "Termux";
+repository- "~/ce-os";
+ssh_port- 8022;
+);
+
+powershell: (
+note- "If you are on PowerShell, these CE-OS shortcuts can be used.";
+pixel_shell- "pixel";
+pixel_command- "pixel.cmd \"command\"";
+pixel_probe- "pixel.cmd \"echo PIXEL_SSH_OK && pwd\"";
+ops_doctor- "ops.cmd doctor";
+ops_command- "ops.cmd exec \"command\"";
+ops_root_command- "ops.cmd root \"command\"";
+ops_script- "ops.cmd exec-file \"path-to-script.sh\"";
+ops_root_script- "ops.cmd root-file \"path-to-script.sh\"";
+);
+);
+
+development: (
+test_changed_surface- "Test the smallest semantic surface affected by a change";
+address_source- "Use path/file.qps:ln as the canonical source location";
+stage_feature_only- "Stage only files belonging to the feature being checkpointed";
+);
+
+HEV: (
+design- "Engineering/qps/designs/HEV.qps";
+experiment- "Engineering/qps/experiments/HEV_loop_01.qps";
+hydraulic_turbine- "Engineering/qps/assemblies/HEV_hydraulic_turbine.qps";
+);
+
+navigation: (
+root_scope- "This _index.qps is the CE-OS root semantic surface";
+query_rule- "Query root terms directly without prefixing CE_OS";
+query_example- "qps _index.qps --get HEV.design";
+);
