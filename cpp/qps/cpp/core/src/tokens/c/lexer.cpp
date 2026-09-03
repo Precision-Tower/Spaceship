@@ -204,18 +204,21 @@ Token Lexer::getNextToken() {
         static const std::unordered_map<std::string, TokenType> executable_keywords = {
             {"-func", TokenType::KW_FUNC},
             {"-class", TokenType::KW_CLASS},
+            {"-test", TokenType::KW_TEST},
             {"-let", TokenType::KW_LET},
             {"-if", TokenType::KW_IF},
             {"-else", TokenType::KW_ELSE},
             {"-elif", TokenType::KW_ELIF},
             {"-try", TokenType::KW_TRY},
             {"-raise", TokenType::KW_RAISE},
+            {"-raises", TokenType::KW_RAISES},
             {"-loop", TokenType::KW_LOOP},
             {"-while", TokenType::KW_WHILE},
             {"-for", TokenType::KW_FOR},
             {"-return", TokenType::KW_RETURN},
             {"-print", TokenType::KW_PRINT},
             {"-assert", TokenType::KW_ASSERT},
+            {"-fail", TokenType::KW_FAIL},
             {"-set", TokenType::KW_SET},
             {"-break", TokenType::KW_BREAK},
             {"-continue", TokenType::KW_CONTINUE},
@@ -238,6 +241,12 @@ Token Lexer::getNextToken() {
 
         return Token(TokenType::EXECUTION_ACTION, candidate,
                      current_line_, current_column_);
+    }
+
+    if (current_char == '=' && next_char == '=') {
+        stream_.advance();
+        stream_.advance();
+        return Token(TokenType::OP_EQUAL, "==", current_line_, current_column_);
     }
 
     // --- Literal and Keyword Checks ---

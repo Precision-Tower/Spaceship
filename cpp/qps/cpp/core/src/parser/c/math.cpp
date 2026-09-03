@@ -100,7 +100,28 @@ std::unique_ptr<ast::CalculationNode> Parser::parseCalculation() {
 // Parses a mathematical expression without owning execution-block syntax.
 // Expression precedence is handled by the additive/multiplicative layers below.
 std::unique_ptr<ast::AstNode> Parser::parseExpression() {
-    return parseAdditiveExpression();
+    return parseComparisonExpression();
+}
+
+std::unique_ptr<ast::AstNode> Parser::parseComparisonExpression() {
+    auto left = parseAdditiveExpression();
+
+    while (peek_type() == tokens::TokenType::OP_EQUAL) {
+        const int op_line = current_token_.line;
+        const int op_column = current_token_.column;
+        match(tokens::TokenType::OP_EQUAL);
+
+        auto right = parseAdditiveExpression();
+
+        left = ast::createBinaryExpressionNode(
+            std::move(left),
+            ast::BinaryExpressionNode::Operator::EQUAL,
+            std::move(right),
+            op_line,
+            op_column);
+    }
+
+    return left;
 }
 
 // Parses primary expressions: literals, path references, or parenthesized expressions.
@@ -110,7 +131,7 @@ std::unique_ptr<ast::AstNode> Parser::parsePrimaryExpression() {
 
     if (peek_type() == tokens::TokenType::OPEN_PAREN) {
         match(tokens::TokenType::OPEN_PAREN);
-        auto expr = parseAdditiveExpression();
+        auto expr = parseExpression();
         match(tokens::TokenType::CLOSE_PAREN);
         return expr;
     } else if (

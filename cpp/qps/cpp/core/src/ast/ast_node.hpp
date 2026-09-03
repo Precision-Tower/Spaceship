@@ -38,9 +38,12 @@ namespace ast {
     class ExecutionCallNode;
     class FunctionCallNode;
     class ExecutionActionNode;
+    class TestDeclarationNode;
     class LetStatementNode;
     class SetStatementNode;
     class AssertStatementNode;
+    class FailStatementNode;
+    class RaisesStatementNode;
     class BreakStatementNode;
     class ContinueStatementNode;
     class ElifStatementNode;
@@ -93,6 +96,7 @@ enum class AstNodeType {
     EXECUTION_DEFINITION,
     EXECUTION_CALL,
     EXECUTION_ACTION,
+    TEST_DECLARATION,
     FUNCTION_CALL,
     IDENTIFIER,
     // Control flow and other executable statements
@@ -107,6 +111,8 @@ enum class AstNodeType {
     RETURN_STATEMENT,
     PRINT_STATEMENT,
     ASSERT_STATEMENT,
+    FAIL_STATEMENT,
+    RAISES_STATEMENT,
     TRY_STATEMENT,
     RAISE_STATEMENT,
     BREAK_STATEMENT,

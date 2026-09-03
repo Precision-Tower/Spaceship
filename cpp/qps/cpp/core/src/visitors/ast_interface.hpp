@@ -31,9 +31,12 @@ namespace ast {
     class ExecutionDefinitionNode;
     class ExecutionCallNode;
     class ExecutionActionNode;
+    class TestDeclarationNode;
     class LetStatementNode;
     class SetStatementNode;
     class AssertStatementNode;
+    class FailStatementNode;
+    class RaisesStatementNode;
     class BreakStatementNode;
     class ContinueStatementNode;
     class ElifStatementNode;
@@ -86,9 +89,12 @@ public:
     virtual void visit(ast::ExecutionDefinitionNode* node) = 0;
     virtual void visit(ast::ExecutionCallNode* node) = 0;
     virtual void visit(ast::ExecutionActionNode* node) = 0;
+    virtual void visit(ast::TestDeclarationNode* node) = 0;
     virtual void visit(ast::LetStatementNode* node) = 0;
     virtual void visit(ast::SetStatementNode* node) = 0;
     virtual void visit(ast::AssertStatementNode* node) = 0;
+    virtual void visit(ast::FailStatementNode* node) = 0;
+    virtual void visit(ast::RaisesStatementNode* node) = 0;
     virtual void visit(ast::BreakStatementNode* node) = 0;
     virtual void visit(ast::ContinueStatementNode* node) = 0;
     virtual void visit(ast::ElifStatementNode* node) = 0;

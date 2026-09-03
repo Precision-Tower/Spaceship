@@ -5,7 +5,9 @@
 #include "../../ast/ast_node.hpp"
 
 #include <algorithm>
+#include <cmath>
 #include <optional>
+#include <sstream>
 #include <stdexcept>
 #include <string>
 #include <unordered_set>
@@ -24,6 +26,12 @@ struct ReturnSignal {
 
     RuntimeValue value;
 };
+
+std::string numberToString(double value) {
+    std::ostringstream out;
+    out << value;
+    return out.str();
+}
 
 struct FunctionParameterSpec {
     std::string name;
@@ -212,7 +220,7 @@ void Interpreter::executeProgram(
             continue;
         }
 
-        executeStatement(*statement);
+        executeLocatedStatement(*statement);
     }
 }
 
@@ -222,7 +230,7 @@ void Interpreter::execute(
     for (const auto& statement :
          block.statements) {
 
-        executeStatement(*statement);
+        executeLocatedStatement(*statement);
     }
 }
 
@@ -242,13 +250,28 @@ Interpreter::executeForResult(
                 continue;
             }
 
-            executeStatement(*statement);
+            executeLocatedStatement(*statement);
         }
     } catch (const ReturnSignal& returned) {
         return returned.value;
     }
 
     return std::nullopt;
+}
+
+void Interpreter::executeLocatedStatement(
+    const ast::AstNode& statement) {
+
+    try {
+        executeStatement(statement);
+    } catch (const RuntimeDiagnostic&) {
+        throw;
+    } catch (const std::exception& e) {
+        throw ExecutionError(
+            e.what(),
+            statement.getLine(),
+            statement.getColumn());
+    }
 }
 
 void Interpreter::executeStatement(
@@ -269,6 +292,33 @@ void Interpreter::executeStatement(
                     &statement)) {
 
         executeCalculation(*calculation);
+        return;
+    }
+
+    if (auto* assert_statement =
+            dynamic_cast<
+                const ast::AssertStatementNode*>(
+                    &statement)) {
+
+        executeAssert(*assert_statement);
+        return;
+    }
+
+    if (auto* fail_statement =
+            dynamic_cast<
+                const ast::FailStatementNode*>(
+                    &statement)) {
+
+        executeFail(*fail_statement);
+        return;
+    }
+
+    if (auto* raises_statement =
+            dynamic_cast<
+                const ast::RaisesStatementNode*>(
+                    &statement)) {
+
+        executeRaises(*raises_statement);
         return;
     }
 
@@ -328,6 +378,10 @@ void Interpreter::executeStatement(
         return;
     }
 
+    if (dynamic_cast<const ast::PassStatementNode*>(&statement)) {
+        return;
+    }
+
     if (auto* return_statement =
             dynamic_cast<
                 const ast::ReturnStatementNode*>(
@@ -347,6 +401,93 @@ void Interpreter::executeStatement(
 
     throw std::runtime_error(
         "Interpreter does not yet support AST node type in execution block.");
+}
+
+void Interpreter::executeAssert(
+    const ast::AssertStatementNode& statement) const {
+
+    if (!statement.condition_) {
+        throw std::runtime_error(
+            "Assert statement requires a condition.");
+    }
+
+    if (evaluateTruth(*statement.condition_)) {
+        return;
+    }
+
+    throw AssertionFailure(
+        "assertion failed",
+        statement.getLine(),
+        statement.getColumn());
+}
+
+void Interpreter::executeFail(
+    const ast::FailStatementNode& statement) const {
+
+    std::string message = evaluateMessage(statement.message_.get());
+
+    if (message.empty()) {
+        message = "explicit test failure";
+    }
+
+    throw AssertionFailure(
+        message,
+        statement.getLine(),
+        statement.getColumn());
+}
+
+void Interpreter::executeRaises(
+    const ast::RaisesStatementNode& statement) {
+
+    if (!statement.body_) {
+        throw std::runtime_error(
+            "Raises statement requires a body.");
+    }
+
+    try {
+        execute(*statement.body_);
+    } catch (const AssertionFailure&) {
+        throw;
+    } catch (const RuntimeDiagnostic& e) {
+        const std::string message = e.what();
+
+        if (message.find(statement.expected_message_) !=
+            std::string::npos) {
+            return;
+        }
+
+        throw AssertionFailure(
+            "expected error containing \"" +
+            statement.expected_message_ +
+            "\"; got \"" +
+            message +
+            "\"",
+            statement.getLine(),
+            statement.getColumn());
+    } catch (const std::exception& e) {
+        const std::string message = e.what();
+
+        if (message.find(statement.expected_message_) !=
+            std::string::npos) {
+            return;
+        }
+
+        throw AssertionFailure(
+            "expected error containing \"" +
+            statement.expected_message_ +
+            "\"; got \"" +
+            message +
+            "\"",
+            statement.getLine(),
+            statement.getColumn());
+    }
+
+    throw AssertionFailure(
+        "expected error containing \"" +
+        statement.expected_message_ +
+        "\"; no error was raised",
+        statement.getLine(),
+        statement.getColumn());
 }
 
 void Interpreter::executeItem(
@@ -759,6 +900,12 @@ double Interpreter::evaluate(
                 }
 
                 return left / right;
+
+            case ast::BinaryExpressionNode::
+                Operator::EQUAL:
+
+                throw std::runtime_error(
+                    "Equality comparison is boolean and cannot be evaluated as numeric.");
         }
     }
 
@@ -934,6 +1081,62 @@ double Interpreter::invokeFunction(
         "Function '" +
         call.name_ +
         "' completed without return.");
+}
+
+bool Interpreter::evaluateTruth(
+    const ast::AstNode& node) const {
+
+    if (auto* boolean =
+            dynamic_cast<
+                const ast::BooleanLiteralNode*>(
+                    &node)) {
+
+        return boolean->value_;
+    }
+
+    if (auto* binary =
+            dynamic_cast<
+                const ast::BinaryExpressionNode*>(
+                    &node)) {
+
+        if (binary->getOperator() ==
+            ast::BinaryExpressionNode::Operator::EQUAL) {
+
+            const double left = evaluate(*binary->getLeft());
+            const double right = evaluate(*binary->getRight());
+
+            return std::fabs(left - right) <= 0.000000001;
+        }
+    }
+
+    throw std::runtime_error(
+        "Assertion condition must be a boolean literal or numeric equality expression.");
+}
+
+std::string Interpreter::evaluateMessage(
+    const ast::AstNode* node) const {
+
+    if (node == nullptr) {
+        return "";
+    }
+
+    if (auto* string = dynamic_cast<const ast::StringLiteralNode*>(node)) {
+        return string->value_;
+    }
+
+    if (auto* numeric = dynamic_cast<const ast::NumericLiteralNode*>(node)) {
+        return numberToString(numeric->value_);
+    }
+
+    if (auto* boolean = dynamic_cast<const ast::BooleanLiteralNode*>(node)) {
+        return boolean->value_ ? "true" : "false";
+    }
+
+    if (dynamic_cast<const ast::NullLiteralNode*>(node)) {
+        return "null";
+    }
+
+    return numberToString(evaluate(*node));
 }
 
 void Interpreter::bindTarget(

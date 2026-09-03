@@ -100,6 +100,11 @@ std::unique_ptr<ExecutionActionNode> createExecutionActionNode(
     int line,
     int column);
 
+std::unique_ptr<TestDeclarationNode> createTestDeclarationNode(
+    std::unique_ptr<ExecutionBlockNode> body,
+    int line,
+    int column);
+
 std::unique_ptr<CausalRelationshipNode::CausalSide> createCausalSide(
     std::unique_ptr<AstNode> entity,
     std::unique_ptr<AstNode> input,
@@ -131,6 +136,15 @@ std::unique_ptr<SetStatementNode> createSetStatementNode(
 
 std::unique_ptr<AssertStatementNode> createAssertStatementNode(
     std::unique_ptr<AstNode> condition,
+    int line, int column);
+
+std::unique_ptr<FailStatementNode> createFailStatementNode(
+    std::unique_ptr<AstNode> message,
+    int line, int column);
+
+std::unique_ptr<RaisesStatementNode> createRaisesStatementNode(
+    const std::string& expected_message,
+    std::unique_ptr<ExecutionBlockNode> body,
     int line, int column);
 
 std::unique_ptr<BreakStatementNode> createBreakStatementNode(

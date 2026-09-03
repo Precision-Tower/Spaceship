@@ -171,7 +171,7 @@ public:
 // BinaryExpressionNode: Represents mathematical operations like A + B, C * D
 class BinaryExpressionNode : public AstNode {
 public:
-    enum class Operator { ADD, SUBTRACT, MULTIPLY, DIVIDE };
+    enum class Operator { ADD, SUBTRACT, MULTIPLY, DIVIDE, EQUAL };
 
     BinaryExpressionNode(std::unique_ptr<AstNode> left, Operator op, std::unique_ptr<AstNode> right, int line, int column);
     AstNode* getLeft() const;

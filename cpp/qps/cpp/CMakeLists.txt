@@ -226,3 +226,14 @@ add_test(
         python3
         ${CMAKE_CURRENT_SOURCE_DIR}/tests/runtime/corpus_conformance_test.py
 )
+
+
+add_test(
+    NAME qps_test_suite_cli
+    COMMAND
+        ${CMAKE_COMMAND} -E env
+        QPS_EXECUTABLE=$<TARGET_FILE:qps>
+        CEOS_ROOT=${CMAKE_CURRENT_SOURCE_DIR}/../../..
+        python3
+        ${CMAKE_CURRENT_SOURCE_DIR}/tests/runtime/test_suite_cli_test.py
+)

@@ -166,6 +166,17 @@ std::unique_ptr<ExecutionActionNode> createExecutionActionNode(
         column);
 }
 
+std::unique_ptr<TestDeclarationNode> createTestDeclarationNode(
+    std::unique_ptr<ExecutionBlockNode> body,
+    int line,
+    int column) {
+
+    return std::make_unique<TestDeclarationNode>(
+        std::move(body),
+        line,
+        column);
+}
+
 std::unique_ptr<CausalRelationshipNode::CausalSide> createCausalSide(
     std::unique_ptr<AstNode> entity, std::unique_ptr<AstNode> input, std::unique_ptr<AstNode> output) {
     return std::make_unique<CausalRelationshipNode::CausalSide>(
@@ -204,6 +215,18 @@ std::unique_ptr<SetStatementNode> createSetStatementNode(
 std::unique_ptr<AssertStatementNode> createAssertStatementNode(
     std::unique_ptr<AstNode> condition, int line, int column) {
     return std::make_unique<AssertStatementNode>(std::move(condition), line, column);
+}
+
+std::unique_ptr<FailStatementNode> createFailStatementNode(
+    std::unique_ptr<AstNode> message, int line, int column) {
+    return std::make_unique<FailStatementNode>(std::move(message), line, column);
+}
+
+std::unique_ptr<RaisesStatementNode> createRaisesStatementNode(
+    const std::string& expected_message,
+    std::unique_ptr<ExecutionBlockNode> body,
+    int line, int column) {
+    return std::make_unique<RaisesStatementNode>(expected_message, std::move(body), line, column);
 }
 
 std::unique_ptr<BreakStatementNode> createBreakStatementNode(int line, int column) {
@@ -338,6 +361,7 @@ void printAst(const AstNode* node, int indent_level) {
             case BinaryExpressionNode::Operator::SUBTRACT: std::cout << "SUBTRACT\n"; break;
             case BinaryExpressionNode::Operator::MULTIPLY: std::cout << "MULTIPLY\n"; break;
             case BinaryExpressionNode::Operator::DIVIDE: std::cout << "DIVIDE\n"; break;
+            case BinaryExpressionNode::Operator::EQUAL: std::cout << "EQUAL\n"; break;
         }
         std::cout << indent << "  Left:\n";
         printAst(bin_expr_node->getLeft(), indent_level + 2);

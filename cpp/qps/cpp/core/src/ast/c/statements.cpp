@@ -26,6 +26,14 @@ void ExecutionBlockNode::accept(visitors::AstVisitor& visitor) {
     visitor.visit(this);
 }
 
+// TestDeclarationNode
+TestDeclarationNode::TestDeclarationNode(std::unique_ptr<ExecutionBlockNode> body, int line, int column)
+    : AstNode(AstNodeType::TEST_DECLARATION, line, column), body_(std::move(body)) {}
+
+void TestDeclarationNode::accept(visitors::AstVisitor& visitor) {
+    visitor.visit(this);
+}
+
 // ExecutionDefinitionNode
 ExecutionDefinitionNode::ExecutionDefinitionNode(
     const std::string& identifier,
@@ -113,6 +121,27 @@ AssertStatementNode::AssertStatementNode(std::unique_ptr<AstNode> condition, int
     : AstNode(AstNodeType::ASSERT_STATEMENT, line, column), condition_(std::move(condition)) {}
 
 void AssertStatementNode::accept(visitors::AstVisitor& visitor) {
+    visitor.visit(this);
+}
+
+// FailStatementNode
+FailStatementNode::FailStatementNode(std::unique_ptr<AstNode> message, int line, int column)
+    : AstNode(AstNodeType::FAIL_STATEMENT, line, column), message_(std::move(message)) {}
+
+void FailStatementNode::accept(visitors::AstVisitor& visitor) {
+    visitor.visit(this);
+}
+
+// RaisesStatementNode
+RaisesStatementNode::RaisesStatementNode(const std::string& expected_message,
+                                         std::unique_ptr<ExecutionBlockNode> body,
+                                         int line,
+                                         int column)
+    : AstNode(AstNodeType::RAISES_STATEMENT, line, column),
+      expected_message_(expected_message),
+      body_(std::move(body)) {}
+
+void RaisesStatementNode::accept(visitors::AstVisitor& visitor) {
     visitor.visit(this);
 }
 

@@ -7,6 +7,7 @@
 #include "../../ast/h/statements.hpp"
 
 #include <optional>
+#include <stdexcept>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -22,11 +23,50 @@ class FunctionDeclarationNode;
 class ItemDeclarationNode;
 class CalculationNode;
 class ProgramNode;
+class AssertStatementNode;
+class FailStatementNode;
+class RaisesStatementNode;
 class ReturnStatementNode;
 class TermDeclarationNode;
 }
 
 namespace runtime {
+
+class RuntimeDiagnostic : public std::runtime_error {
+public:
+    RuntimeDiagnostic(
+        const std::string& message,
+        int line,
+        int column)
+        : std::runtime_error(message),
+          line_(line),
+          column_(column) {}
+
+    int line() const { return line_; }
+    int column() const { return column_; }
+
+private:
+    int line_ = 0;
+    int column_ = 0;
+};
+
+class AssertionFailure : public RuntimeDiagnostic {
+public:
+    AssertionFailure(
+        const std::string& message,
+        int line = 0,
+        int column = 0)
+        : RuntimeDiagnostic(message, line, column) {}
+};
+
+class ExecutionError : public RuntimeDiagnostic {
+public:
+    ExecutionError(
+        const std::string& message,
+        int line = 0,
+        int column = 0)
+        : RuntimeDiagnostic(message, line, column) {}
+};
 
 class SymbolResolver;
 
@@ -108,11 +148,23 @@ private:
 
     InterpreterOptions options_;
 
+    void executeLocatedStatement(
+        const ast::AstNode& statement);
+
     void executeItem(
         const ast::ItemDeclarationNode& item);
 
     void executeCalculation(
         const ast::CalculationNode& calculation);
+
+    void executeAssert(
+        const ast::AssertStatementNode& statement) const;
+
+    void executeFail(
+        const ast::FailStatementNode& statement) const;
+
+    void executeRaises(
+        const ast::RaisesStatementNode& statement);
 
     void executeGeometryFeature(
         const ast::TermDeclarationNode& term);
@@ -131,6 +183,12 @@ private:
 
     double invokeFunction(
         const ast::FunctionCallNode& call) const;
+
+    bool evaluateTruth(
+        const ast::AstNode& node) const;
+
+    std::string evaluateMessage(
+        const ast::AstNode* node) const;
 
     void bindTarget(
         const ast::AstNode& target,

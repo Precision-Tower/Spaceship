@@ -10,17 +10,15 @@ namespace parser {
 // Note: In the final integrated parser, this function will remain a member of the Parser class.
 // It is defined here to represent the content of 'assert.cpp'.
 
-// Parses an '-assert' statement: '-assert condition_;'
+// Parses an '-assert' statement: '-assert condition;'
 std::unique_ptr<ast::AssertStatementNode> Parser::parseAssertStatement() {
     int line = current_token_.line;
     int column = current_token_.column;
-    match(tokens::TokenType::KW_ASSERT); // Consume '-assert'
+    match(tokens::TokenType::KW_ASSERT);
 
-    // The condition can be any expression that evaluates to a boolean.
-    // We'll parse it as a general expression (starting with additive expression for precedence).
-    std::unique_ptr<ast::AstNode> condition_expr = parseAdditiveExpression();
+    std::unique_ptr<ast::AstNode> condition_expr = parseExpression();
 
-    match(tokens::TokenType::EXEC_DELIMITER); // Consume '_' that terminates the statement
+    matchStatementTerminator("-assert");
 
     return ast::createAssertStatementNode(std::move(condition_expr), line, column);
 }

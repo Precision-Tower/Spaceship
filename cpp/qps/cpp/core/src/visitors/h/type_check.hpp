@@ -53,9 +53,12 @@ public:
     void visit(ast::ExecutionDefinitionNode* node) override;
     void visit(ast::ExecutionCallNode* node) override;
     void visit(ast::ExecutionActionNode* node) override;
+    void visit(ast::TestDeclarationNode* node) override;
     void visit(ast::LetStatementNode* node) override;
     void visit(ast::SetStatementNode* node) override;
     void visit(ast::AssertStatementNode* node) override;
+    void visit(ast::FailStatementNode* node) override;
+    void visit(ast::RaisesStatementNode* node) override;
     void visit(ast::BreakStatementNode* node) override;
     void visit(ast::ContinueStatementNode* node) override;
     void visit(ast::ElifStatementNode* node) override;

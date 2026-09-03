@@ -38,6 +38,20 @@ void Parser::match(tokens::TokenType expected_type) {
     }
 }
 
+void Parser::matchStatementTerminator(const std::string& statement_name) {
+    if (peek_type() == tokens::TokenType::SEMICOLON) {
+        match(tokens::TokenType::SEMICOLON);
+        return;
+    }
+
+    if (peek_type() == tokens::TokenType::EXEC_DELIMITER) {
+        match(tokens::TokenType::EXEC_DELIMITER);
+        return;
+    }
+
+    error("Expected ';' after " + statement_name + " statement. Found: " + current_token_.toString());
+}
+
 // Matches the current token against an expected TokenType and returns its lexeme.
 // Useful for identifiers.
 std::string Parser::match_and_get_lexeme(tokens::TokenType expected_type) {
@@ -273,6 +287,10 @@ std::unique_ptr<ast::AstNode> Parser::parseStatement() {
         return parseSetStatement();
     } else if (peek_type() == tokens::TokenType::KW_ASSERT) {
         return parseAssertStatement();
+    } else if (peek_type() == tokens::TokenType::KW_FAIL) {
+        return parseFailStatement();
+    } else if (peek_type() == tokens::TokenType::KW_RAISES) {
+        return parseRaisesStatement();
     } else if (peek_type() == tokens::TokenType::KW_BREAK) {
         return parseBreakStatement();
     } else if (peek_type() == tokens::TokenType::KW_CONTINUE) {

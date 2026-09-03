@@ -257,6 +257,7 @@ void PrintVisitor::visit(ast::BinaryExpressionNode* node) {
         case ast::BinaryExpressionNode::Operator::SUBTRACT: std::cout << "SUBTRACT\n"; break;
         case ast::BinaryExpressionNode::Operator::MULTIPLY: std::cout << "MULTIPLY\n"; break;
         case ast::BinaryExpressionNode::Operator::DIVIDE: std::cout << "DIVIDE\n"; break;
+        case ast::BinaryExpressionNode::Operator::EQUAL: std::cout << "EQUAL\n"; break;
     }
     std::cout << getIndent() << "Left Operand:\n";
     node->getLeft()->accept(*this);
@@ -388,6 +389,15 @@ void PrintVisitor::visit(ast::ExecutionActionNode* node) {
     indent_level_--;
 }
 
+void PrintVisitor::visit(ast::TestDeclarationNode* node) {
+    std::cout << getIndent() << "TEST_DECLARATION (L" << node->getLine() << ", C" << node->getColumn() << ")\n";
+    indent_level_++;
+    if (node->body_) {
+        node->body_->accept(*this);
+    }
+    indent_level_--;
+}
+
 void PrintVisitor::visit(ast::LetStatementNode* node) {
     std::cout << getIndent() << "LET_STATEMENT (L" << node->getLine() << ", C" << node->getColumn() << ")\n";
     indent_level_++;
@@ -416,6 +426,27 @@ void PrintVisitor::visit(ast::AssertStatementNode* node) {
     indent_level_++;
     std::cout << getIndent() << "Condition:\n";
     node->condition_->accept(*this);
+    indent_level_--;
+}
+
+void PrintVisitor::visit(ast::FailStatementNode* node) {
+    std::cout << getIndent() << "FAIL_STATEMENT (L" << node->getLine() << ", C" << node->getColumn() << ")\n";
+    indent_level_++;
+    if (node->message_) {
+        std::cout << getIndent() << "Message:\n";
+        node->message_->accept(*this);
+    }
+    indent_level_--;
+}
+
+void PrintVisitor::visit(ast::RaisesStatementNode* node) {
+    std::cout << getIndent() << "RAISES_STATEMENT (L" << node->getLine() << ", C" << node->getColumn() << ")\n";
+    indent_level_++;
+    std::cout << getIndent() << "Expected: \"" << node->expected_message_ << "\"\n";
+    if (node->body_) {
+        std::cout << getIndent() << "Body:\n";
+        node->body_->accept(*this);
+    }
     indent_level_--;
 }
 

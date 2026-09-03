@@ -50,6 +50,14 @@ enum class ExecutionDomain {
     GEOMETRY
 };
 
+// TestDeclarationNode: Represents a Term-owned QPS test: name: -test { ... };
+class TestDeclarationNode : public AstNode {
+public:
+    TestDeclarationNode(std::unique_ptr<ExecutionBlockNode> body, int line, int column);
+    std::unique_ptr<ExecutionBlockNode> body_;
+    void accept(visitors::AstVisitor& visitor) override;
+};
+
 // ExecutionDefinitionNode: Represents an addressable reusable execution definition: {id: ...}.
 class ExecutionDefinitionNode : public AstNode {
 public:
@@ -134,6 +142,26 @@ class AssertStatementNode : public AstNode {
 public:
     AssertStatementNode(std::unique_ptr<AstNode> condition, int line, int column);
     std::unique_ptr<AstNode> condition_; // The expression that must evaluate to true
+    void accept(visitors::AstVisitor& visitor) override;
+};
+
+// FailStatementNode: Represents a '-fail "message";' testing primitive.
+class FailStatementNode : public AstNode {
+public:
+    FailStatementNode(std::unique_ptr<AstNode> message, int line, int column);
+    std::unique_ptr<AstNode> message_;
+    void accept(visitors::AstVisitor& visitor) override;
+};
+
+// RaisesStatementNode: Represents '-raises "expected" { body }'.
+class RaisesStatementNode : public AstNode {
+public:
+    RaisesStatementNode(const std::string& expected_message,
+                        std::unique_ptr<ExecutionBlockNode> body,
+                        int line,
+                        int column);
+    std::string expected_message_;
+    std::unique_ptr<ExecutionBlockNode> body_;
     void accept(visitors::AstVisitor& visitor) override;
 };
 

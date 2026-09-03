@@ -53,6 +53,18 @@ Parser::parseTermDeclaration() {
             break;
         }
 
+        if (peek_type() == tokens::TokenType::KW_TEST) {
+            term_node->content_.push_back(
+                parseTestDeclaration());
+            continue;
+        }
+
+        if (peek_type() == tokens::TokenType::OPEN_BRACE) {
+            term_node->content_.push_back(
+                parseBracedExecutionConstruct());
+            continue;
+        }
+
         if (peek_type() == tokens::TokenType::KW_DEF) {
             match(tokens::TokenType::KW_DEF);
 

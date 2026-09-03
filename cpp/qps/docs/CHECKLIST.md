@@ -160,7 +160,7 @@ Remaining structural-reference proof:
 ### Reference Conformance Checkpoint
 
 - [x] Extend the active AST census to report index and non-index path-reference populations separately.
-- [x] Run the full QPS CTest suite: 14/14 passing.
+- [x] Run the full QPS CTest suite: 15/15 passing.
 - [x] Record the resulting reference-semantics baseline: 120 index path references, 0 non-index path references, 0 active structural symbol references.
 - [ ] Distill proven reference architecture into `docs/README.md`.
 
@@ -198,21 +198,21 @@ Detailed language design belongs in `docs/EXECUTION_DESIGN.md`.
 
 ### Phase 3 — testSuite Primitive Grammar
 
-- [ ] Define canonical `-test` syntax.
-- [ ] Define canonical `-assert` syntax.
-- [ ] Define canonical `-fail` syntax.
-- [ ] Define expected-error / `-raises` semantics.
-- [ ] Define pass/fail/error result model.
-- [ ] Define source-location reporting.
+- [x] Define canonical `-test` syntax.
+- [x] Define canonical `-assert` syntax.
+- [x] Define canonical `-fail` syntax.
+- [x] Define expected-error / `-raises` semantics.
+- [x] Define pass/fail/error result model.
+- [x] Define source-location reporting.
 
 ### Phase 4 — Execution Foundation
 
-- [ ] Parse canonical execution blocks.
-- [ ] Execute a plain `{}` block deterministically.
-- [ ] Establish execution context/bindings.
-- [ ] Execute assertion primitives.
-- [ ] Return structured test results.
-- [ ] Add focused parser/runtime tests.
+- [x] Parse canonical execution blocks.
+- [x] Execute a plain `{}` block deterministically.
+- [x] Establish execution context/bindings.
+- [x] Execute assertion primitives.
+- [x] Return structured test results.
+- [x] Add focused parser/runtime tests.
 
 ### Phase 5 — Bindings and Control Flow
 
@@ -241,13 +241,13 @@ Detailed language design belongs in `docs/EXECUTION_DESIGN.md`.
 - [ ] Discover `.qps` documents containing tests.
 - [ ] Register stable test identities.
 - [ ] Implement `qps test discover`.
-- [ ] Implement targeted path execution.
+- [x] Implement targeted path execution.
 
 ### Phase 8 — Runner and Reporter
 
-- [ ] Implement `qps test`.
-- [ ] Implement deterministic execution ordering.
-- [ ] Implement concise reporter.
+- [x] Implement `qps test`.
+- [x] Implement deterministic execution ordering.
+- [x] Implement concise reporter.
 - [ ] Implement verbose reporter.
 - [ ] Distinguish test failures from runtime errors.
 - [ ] Add machine-readable result representation.

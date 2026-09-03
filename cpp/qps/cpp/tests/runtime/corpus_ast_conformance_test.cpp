@@ -44,12 +44,15 @@ struct Profile {
     std::size_t execution_definitions = 0;
     std::size_t execution_calls = 0;
     std::size_t execution_actions = 0;
+    std::size_t test_declarations = 0;
 
     std::size_t lets = 0;
     std::size_t sets = 0;
     std::size_t asserts = 0;
     std::size_t breaks = 0;
     std::size_t continues = 0;
+    std::size_t fails = 0;
+    std::size_t expected_raises = 0;
     std::size_t elifs = 0;
     std::size_t elses = 0;
     std::size_t fors = 0;
@@ -193,6 +196,11 @@ public:
         if (n->getParameters()) n->getParameters()->accept(*this);
     }
 
+    void visit(qps::ast::TestDeclarationNode* n) override {
+        ++profile.test_declarations;
+        if (n->body_) n->body_->accept(*this);
+    }
+
     void visit(qps::ast::LetStatementNode* n) override {
         ++profile.lets;
         if (n->initial_value_) n->initial_value_->accept(*this);
@@ -207,6 +215,16 @@ public:
     void visit(qps::ast::AssertStatementNode* n) override {
         ++profile.asserts;
         if (n->condition_) n->condition_->accept(*this);
+    }
+
+    void visit(qps::ast::FailStatementNode* n) override {
+        ++profile.fails;
+        if (n->message_) n->message_->accept(*this);
+    }
+
+    void visit(qps::ast::RaisesStatementNode* n) override {
+        ++profile.expected_raises;
+        if (n->body_) n->body_->accept(*this);
     }
 
     void visit(qps::ast::BreakStatementNode*) override { ++profile.breaks; }
@@ -421,8 +439,14 @@ int main(int argc, char** argv) {
                   << p.execution_actions << "\n";
         std::cout << "execution_blocks="
                   << p.execution_blocks << "\n";
+        std::cout << "test_declarations="
+                  << p.test_declarations << "\n";
         std::cout << "calculations="
                   << p.calculations << "\n";
+
+        std::cout << "fails=" << p.fails << "\n";
+        std::cout << "expected_raises="
+                  << p.expected_raises << "\n";
 
         std::cout << "functions=" << p.functions << "\n";
         std::cout << "classes=" << p.classes << "\n";

@@ -1,0 +1,158 @@
+QPS_Execution_Handoff.
+
+purpose: def"
+Focused handoff for resuming canonical QPS execution-domain work.
+
+This handoff is intentionally limited to {} execution semantics,
+runtime execution, and the testSuite work already in progress.
+
+Do not broaden into unrelated Engineering, UI, Android, or HEV work
+unless execution-domain implementation requires a concrete interface.
+";
+
+repository_state: (
+branch- "main"/a;
+hev_model_commit- "0e67fdf"/a;
+root_index_commit- "186d8ba"/a;
+dc_motor_commit- "17e9161"/a;
+pump_commit- "08b0611"/a;
+alternator_commit- "d8fd045"/a;
+);
+
+execution_goal: (
+primary- "resume and complete canonical {} execution semantics"/a;
+secondary- "make qps test file-or-folder use the testSuite runtime"/a;
+output_rule- "quiet PASS per file; failures expand with path:ln and reason"/a;
+);
+
+known_qps_cli: (
+parse- "qps path/file.qps"/a;
+check- "qps path/file.qps --check"/a;
+query- "qps path/file.qps --get path.to.value"/a;
+test_target- "qps test path/file-or-folder"/a;
+test_target_status- "implemented_and_proven"/a;
+);
+
+test_output_contract: (
+pass- "path/file.qps: PASS"/a;
+fail- "path/file.qps: FAIL"/a;
+failure_location- "path/file.qps:ln"/a;
+quiet_default- true/b;
+);
+
+testSuite_status: (
+runner_exists- true/b;
+runner_file- "cpp/qps/cpp/core/src/runtime/c/test_suite.cpp"/a;
+header_file- "cpp/qps/cpp/core/src/runtime/h/test_suite.hpp"/a;
+header_truncation_repaired- true/b;
+test_outcomes- "PASSED FAILED ERROR"/a;
+captures_identity- true/b;
+captures_message- true/b;
+captures_line- true/b;
+captures_column- true/b;
+);
+
+execution_surface: (
+calculation_parser- "cpp/qps/cpp/core/src/parser/c/math.cpp"/a;
+execution_interpreter- "cpp/qps/cpp/core/src/runtime/c/interpreter.cpp"/a;
+execution_engine- "cpp/qps/cpp/core/src/runtime/c/execution_engine.cpp"/a;
+function_parser- "cpp/qps/cpp/core/src/parser/c/function.cpp"/a;
+assert_parser- "cpp/qps/cpp/core/src/parser/c/statements/assert.cpp"/a;
+test_parser- "cpp/qps/cpp/core/src/parser/c/statements/test.cpp"/a;
+raises_parser- "cpp/qps/cpp/core/src/parser/c/statements/raises.cpp"/a;
+fail_parser- "cpp/qps/cpp/core/src/parser/c/statements/fail.cpp"/a;
+);
+
+known_execution_syntax: (
+calculation- "%target: expression"/a;
+calculation_block- "{}"/a;
+let_statement- "-let"/a;
+set_statement- "-set"/a;
+assert_statement- "-assert"/a;
+test_statement- "-test"/a;
+raises_statement- "-raises"/a;
+fail_statement- "-fail"/a;
+);
+
+math_parser_state: (
+supports_add- true/b;
+supports_subtract- true/b;
+supports_multiply- true/b;
+supports_divide- true/b;
+supports_equality_comparison- true/b;
+supports_parentheses- true/b;
+supports_symbol_reference- true/b;
+);
+
+causal_domain: (
+bang_domain- "not_canonically_implemented"/a;
+rule- "do not conflate ! causal semantics with {} execution semantics"/a;
+);
+
+dirty_runtime_surface: (
+note- "These files contain unfinished QPS execution/test work and must not be reset or overwritten blindly."/a;
+
+files: (
+ast_node- "cpp/qps/cpp/core/src/ast/ast_node.hpp"/a;
+ast_utils_cpp- "cpp/qps/cpp/core/src/ast/ast_utils.cpp"/a;
+ast_utils_hpp- "cpp/qps/cpp/core/src/ast/ast_utils.hpp"/a;
+statements_cpp- "cpp/qps/cpp/core/src/ast/c/statements.cpp"/a;
+expressions_hpp- "cpp/qps/cpp/core/src/ast/h/expressions.hpp"/a;
+statements_hpp- "cpp/qps/cpp/core/src/ast/h/statements.hpp"/a;
+parser_index_cpp- "cpp/qps/cpp/core/src/parser/c/_index.cpp"/a;
+math_cpp- "cpp/qps/cpp/core/src/parser/c/math.cpp"/a;
+assert_cpp- "cpp/qps/cpp/core/src/parser/c/statements/assert.cpp"/a;
+term_cpp- "cpp/qps/cpp/core/src/parser/c/term.cpp"/a;
+parser_index_hpp- "cpp/qps/cpp/core/src/parser/h/_index.hpp"/a;
+interpreter_cpp- "cpp/qps/cpp/core/src/runtime/c/interpreter.cpp"/a;
+interpreter_hpp- "cpp/qps/cpp/core/src/runtime/h/interpreter.hpp"/a;
+lexer_cpp- "cpp/qps/cpp/core/src/tokens/c/lexer.cpp"/a;
+token_hpp- "cpp/qps/cpp/core/src/tokens/h/token.hpp"/a;
+);
+);
+
+untracked_execution_surface: (
+fail_cpp- "cpp/qps/cpp/core/src/parser/c/statements/fail.cpp"/a;
+raises_cpp- "cpp/qps/cpp/core/src/parser/c/statements/raises.cpp"/a;
+test_cpp- "cpp/qps/cpp/core/src/parser/c/statements/test.cpp"/a;
+fail_hpp- "cpp/qps/cpp/core/src/parser/h/statements/fail.hpp"/a;
+raises_hpp- "cpp/qps/cpp/core/src/parser/h/statements/raises.hpp"/a;
+test_hpp- "cpp/qps/cpp/core/src/parser/h/statements/test.hpp"/a;
+test_suite_cpp- "cpp/qps/cpp/core/src/runtime/c/test_suite.cpp"/a;
+test_suite_hpp- "cpp/qps/cpp/core/src/runtime/h/test_suite.hpp"/a;
+);
+
+known_build_state: (
+qps_cli_builds- true/b;
+pixel_build_dir- "cpp/qps/cpp/build-pixel"/a;
+qps_cli- "cpp/qps/cpp/build-pixel/qps"/a;
+);
+
+recent_proof: (
+root_qps_query- "proven"/a;
+active_corpus_count- 44;
+active_corpus_passed- 44;
+active_surface_items- 132;
+active_surface_failed- 0;
+);
+
+execution_frontier: (
+step_1- "testSuite integration implemented and proven"/a;
+step_2- "qps test path/file.qps implemented and proven"/a;
+step_3- "qps test path/folder implemented and proven"/a;
+step_4- "quiet one-line PASS reporting implemented and proven"/a;
+step_5- "failure path:ln plus reason implemented and proven"/a;
+step_6- "focused file and folder CLI regression implemented and passing"/a;
+step_7- "full QPS CTest and active Engineering corpus regression passing"/a;
+step_8- "execution and testSuite checkpoint ready for commit"/a;
+);
+
+do_not_do: (
+reset_dirty_work- false/b;
+rewrite_hev- false/b;
+rewrite_engineering_items- false/b;
+scan_entire_repository- false/b;
+mix_causal_bang_into_execution- false/b;
+);
+
+operational_root- "~/ce-os/_index.qps"/a;

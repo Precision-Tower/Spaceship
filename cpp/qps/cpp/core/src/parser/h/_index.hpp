@@ -29,6 +29,9 @@
 #include "statements/let.hpp"
 #include "statements/set.hpp"
 #include "statements/assert.hpp"
+#include "statements/fail.hpp"
+#include "statements/raises.hpp"
+#include "statements/test.hpp"
 #include "statements/break.hpp"
 #include "statements/continue.hpp"
 #include "statements/elif.hpp"
@@ -66,6 +69,7 @@ private:
     // Private helper methods for token stream management and error reporting.
     void advance();
     void match(tokens::TokenType expected_type);
+    void matchStatementTerminator(const std::string& statement_name);
     std::string match_and_get_lexeme(tokens::TokenType expected_type);
     template<typename T>
     T match_and_get_literal(tokens::TokenType expected_type);
@@ -89,6 +93,7 @@ private:
     std::unique_ptr<ast::CausalRelationshipNode> parseCausalRelationship();
     std::unique_ptr<ast::CausalRelationshipNode::CausalSide> parseCausalSide();
     std::unique_ptr<ast::CalculationNode> parseCalculation();
+    std::unique_ptr<ast::TestDeclarationNode> parseTestDeclaration();
     std::unique_ptr<ast::AstNode> parseBracedExecutionConstruct();
     std::unique_ptr<ast::ExecutionDefinitionNode>
     parseExecutionDefinition(
@@ -107,6 +112,7 @@ private:
         std::unique_ptr<ast::AstNode> source);
     std::unique_ptr<ast::ContainerNode> parseExecutionActionParameters();
     std::unique_ptr<ast::AstNode> parseExpression();
+    std::unique_ptr<ast::AstNode> parseComparisonExpression();
     std::unique_ptr<ast::AstNode> parsePrimaryExpression();
     std::unique_ptr<ast::AstNode> parseMultiplicativeExpression();
     std::unique_ptr<ast::AstNode> parseAdditiveExpression();
@@ -125,6 +131,8 @@ private:
     std::unique_ptr<ast::LetStatementNode> parseLetStatement();
     std::unique_ptr<ast::SetStatementNode> parseSetStatement();
     std::unique_ptr<ast::AssertStatementNode> parseAssertStatement();
+    std::unique_ptr<ast::FailStatementNode> parseFailStatement();
+    std::unique_ptr<ast::RaisesStatementNode> parseRaisesStatement();
     std::unique_ptr<ast::BreakStatementNode> parseBreakStatement();
     std::unique_ptr<ast::ContinueStatementNode> parseContinueStatement();
     std::unique_ptr<ast::ElifStatementNode> parseElifStatement();
