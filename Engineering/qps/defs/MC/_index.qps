@@ -30,7 +30,7 @@ vc- FD.vc/p; # Viscosity
 
 mf- FD.mf/p; # Fluid Mass
 
-fr- FD.fr/p; # Flow Rate
+frate- FD.fr/p; # Flow Rate
 
 fp- FD.fp/p; # Fluid Momentum
 

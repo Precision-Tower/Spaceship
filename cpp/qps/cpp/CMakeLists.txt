@@ -198,6 +198,25 @@ add_test(
         ${CMAKE_CURRENT_SOURCE_DIR}/../../..
 )
 
+
+add_executable(
+    qps_active_surface_graph_test
+    tests/runtime/active_surface_graph_test.cpp
+)
+
+target_link_libraries(
+    qps_active_surface_graph_test
+    PRIVATE
+    qps_core
+)
+
+add_test(
+    NAME qps_active_surface_graph_test
+    COMMAND
+        qps_active_surface_graph_test
+        ${CMAKE_CURRENT_SOURCE_DIR}/../../../Engineering/qps
+)
+
 add_test(
     NAME qps_active_corpus_conformance
     COMMAND
