@@ -1,0 +1,117 @@
+dcm. DC_Motor: def"
+A DC motor is an electrical-to-rotational mechanical Engineering Item.
+
+The Item represents the physical motor itself.
+
+Electrical state, magnetic field interaction, geometry, mechanical
+resistance, shaft state, and thermal state remain explicit so that
+causal relationships may be implemented and tested without replacing
+the underlying behavior with a summary efficiency value.
+
+The DC motor is a domain bridge:
+
+DC -> ME
+";
+
+identity: (
+item- "dc_motor"/a;
+domain_input- "DC"/a;
+domain_output- "ME"/a;
+renderable- true/b;
+);
+
+electrical_input: (
+voltage_vdc-/n;
+current_a-/n;
+electrical_resistance_ohm-/n;
+);
+
+magnetic_state: (
+magnetic_flux-/n;
+field_strength-/n;
+opposing_flux-/n;
+);
+
+stator: (
+type-/a;
+material-/a;
+outside_radius-/n;
+inside_radius-/n;
+length-/n;
+coil_count-/n;
+coil_wraps-/n;
+);
+
+rotor: (
+type-/a;
+material-/a;
+radius-/n;
+length-/n;
+mass-/n;
+pole_count-/n;
+);
+
+shaft: (
+radius-/n;
+length-/n;
+material-/a;
+torque-/n;
+rpm-/n;
+angular_velocity-/n;
+);
+
+bearings: (
+quantity-/n;
+type-/a;
+friction-/n;
+);
+
+mechanical_resistance: (
+rotor_inertia-/n;
+bearing_resistance-/n;
+load_resistance-/n;
+);
+
+electromagnetic_state: (
+back_emf-/n;
+field_interaction-/n;
+);
+
+thermal_state: (
+stator_temperature-/n;
+rotor_temperature-/n;
+bearing_temperature-/n;
+);
+
+ports: (
+electrical_positive- "DC+"/a;
+electrical_negative- "DC-"/a;
+mechanical_shaft- "shaft"/a;
+);
+
+geometry: (
+primitive- "dc_motor"/a;
+body_radius-/n;
+body_length-/n;
+shaft_radius-/n;
+shaft_length-/n;
+);
+
+input_state: (
+voltage_vdc-/n;
+current_a-/n;
+);
+
+output_state: (
+shaft_torque-/n;
+shaft_rpm-/n;
+angular_velocity-/n;
+);
+
+model_frontier: (
+electrical_to_magnetic- "unresolved"/a;
+magnetic_to_torque- "unresolved"/a;
+torque_to_angular_state- "unresolved"/a;
+load_feedback- "unresolved"/a;
+thermal_relationship- "unresolved"/a;
+);
