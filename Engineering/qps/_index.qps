@@ -1,0 +1,66 @@
+Engineering_QPS.
+
+purpose: def"
+Canonical semantic doorway into the Engineering QPS subsystem.
+
+This index owns only the immediate Engineering/qps directory surface.
+Each child directory owns its own semantic contents through its local
+_index.qps.
+
+Do not duplicate child exports here.
+Descend into the child semantic surface when deeper context is required.
+";
+
+scope: (
+root- "Engineering/qps";
+ownership- "immediate_children_only";
+recursive_rule- "each directory owns its own _index.qps surface";
+);
+
+surface: (
+defs- "Engineering/qps/defs";
+items- "Engineering/qps/items";
+assemblies- "Engineering/qps/assemblies";
+designs- "Engineering/qps/designs";
+docs- "Engineering/qps/docs";
+experiments- "Engineering/qps/experiments";
+tests- "Engineering/qps/tests";
+);
+
+indexes: (
+defs- "Engineering/qps/defs/_index.qps";
+items- "Engineering/qps/items/_index.qps";
+assemblies- "Engineering/qps/assemblies/_index.qps";
+designs- "Engineering/qps/designs/_index.qps";
+experiments- "Engineering/qps/experiments/_index.qps";
+);
+
+documents: (
+Engineering- "Engineering/qps/docs/Engineering.qps";
+KineticEnergyModel- "Engineering/qps/docs/KineticEnergyModel.qps";
+PipeSemanticContract- "Engineering/qps/docs/PipeSemanticContract.qps";
+);
+
+operations: (
+check_file- "qps path/file.qps --check";
+test_file- "qps test path/file.qps";
+test_surface- "qps test Engineering/qps";
+query- "qps Engineering/qps/_index.qps --get surface.items";
+);
+
+navigation: (
+enter_defs- "read Engineering/qps/defs/_index.qps";
+enter_items- "read Engineering/qps/items/_index.qps";
+enter_assemblies- "read Engineering/qps/assemblies/_index.qps";
+enter_designs- "read Engineering/qps/designs/_index.qps";
+enter_experiments- "read Engineering/qps/experiments/_index.qps";
+enter_docs- "read the requested canonical QPS document under Engineering/qps/docs";
+);
+
+rules: (
+local_context_first- "read this index before traversing Engineering/qps";
+descend_only_as_needed- "load deeper semantic context only when the task requires it";
+do_not_duplicate- "child semantic exports belong to the child _index.qps";
+implementation_authority- "current implementation and passing tests outrank stale documentation";
+validation- "qps test Engineering/qps is the canonical active Engineering QPS validity gate";
+);
