@@ -97,3 +97,16 @@ or runtime observation appropriate to the item.
 - [x] Reproduce Godot project export/packaging step noninteractively.
 - [x] Populate Android template assets with generated Godot payload.
 - [x] Build standalone OperatorShell APK from populated template.
+
+## Android Diagnostic Control Plane
+
+- [x] Establish Android framework control from Termux through UID 2000 / u:r:shell:s0.
+- [x] Keep SELinux enforcing; no TCP ADB dependency required.
+- [x] Add allowlisted CE-OS Android control helper.
+- [x] Force-stop installed OperatorShell deterministically.
+- [x] Cold-launch OperatorShell deterministically.
+- [x] Verify OperatorShell process through ActivityManager.
+- [x] Verify OperatorShell becomes top-resumed activity.
+- [x] Capture screenshot, UI hierarchy, and logs.
+- [x] Leave successful OperatorShell runtime visible after observation.
+- [x] Close failed/explicitly stopped OperatorShell cleanly.

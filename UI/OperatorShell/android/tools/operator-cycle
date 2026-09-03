@@ -4,24 +4,20 @@ set -euo pipefail
 ROOT="$HOME/ce-os"
 TOOLS="$ROOT/UI/OperatorShell/android/tools"
 
-cleanup() {
+cleanup_failure() {
     "$TOOLS/operator-close" >/dev/null 2>&1 || true
 }
 
-trap cleanup EXIT
+# A failed development cycle must not leave a broken runtime on screen.
+# A successful cycle deliberately removes this trap so the validated
+# OperatorShell remains foregrounded for visual diagnostics.
+trap cleanup_failure EXIT
 
 "$TOOLS/operator-preflight"
 
 echo
 echo "=== BUILD ==="
-
-if [[ -x "$TOOLS/operator-build" ]]; then
-    "$TOOLS/operator-build"
-else
-    echo "ERROR: operator-build is not implemented yet."
-    echo "Codex must establish the Godot Android export pipeline."
-    exit 2
-fi
+"$TOOLS/operator-build"
 
 echo
 echo "=== INSTALL ==="
@@ -29,7 +25,11 @@ echo "=== INSTALL ==="
 
 echo
 echo "=== OBSERVE ==="
-echo "launch -> wait -> screenshot -> UI hierarchy -> logs -> close"
+echo "kill old -> launch new -> prove foreground -> capture -> leave visible"
 "$TOOLS/operator-observe"
 
 trap - EXIT
+
+echo
+echo "=== CYCLE COMPLETE ==="
+echo "OperatorShell is validated and remains running."

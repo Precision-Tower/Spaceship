@@ -3,13 +3,14 @@ set -euo pipefail
 
 ROOT="$HOME/ce-os"
 OBS="$ROOT/state/ui-observation"
+CONTROL="$ROOT/Android/Privileged/bin/ce-os-android-shell"
 
 source "$ROOT/UI/OperatorShell/android/operator.env"
 
 mkdir -p \
-  "$OBS/screenshots" \
-  "$OBS/logs" \
-  "$OBS/ui"
+    "$OBS/screenshots" \
+    "$OBS/logs" \
+    "$OBS/ui"
 
 STAMP="$(date '+%Y%m%d-%H%M%S')"
 
@@ -21,26 +22,53 @@ LATEST_SCREEN="$OBS/latest.png"
 LATEST_LOG="$OBS/latest.log"
 LATEST_UI="$OBS/latest.xml"
 
-echo "=== LAUNCH ==="
-su -c "am force-stop '$CEOS_OPERATOR_PACKAGE'" || true
+echo "=== CLEAN OLD RUNTIME ==="
+"$CONTROL" operator.force-stop || true
 
+echo
+echo "=== LOG BOUNDARY ==="
 su -c "logcat -c" || true
 
-su -c "am start --user 0 -W \
-  -n '$CEOS_OPERATOR_PACKAGE/$CEOS_OPERATOR_ACTIVITY'"
+echo
+echo "=== LAUNCH ==="
+"$CONTROL" operator.launch
+
+echo
+echo "=== WAIT FOR FOREGROUND ==="
+
+foreground=""
+pid=""
+
+for _ in $(seq 1 30); do
+    foreground="$("$CONTROL" operator.foreground || true)"
+    pid="$("$CONTROL" operator.pid || true)"
+
+    if [[ "$foreground" == *"$CEOS_OPERATOR_PACKAGE"* && -n "$pid" ]]; then
+        break
+    fi
+
+    sleep 1
+done
+
+echo "PID=${pid:-none}"
+printf '%s\n' "$foreground"
+
+if [[ -z "$pid" ]]; then
+    echo "ERROR: OperatorShell process is not running."
+    exit 30
+fi
+
+if [[ "$foreground" != *"$CEOS_OPERATOR_PACKAGE"* ]]; then
+    echo "ERROR: OperatorShell did not become top-resumed."
+    exit 31
+fi
 
 sleep "$CEOS_OPERATOR_SETTLE_SECONDS"
 
 echo
 echo "=== SCREENSHOT ==="
 
-TMP_SCREEN="/data/local/tmp/ceos-operatorshell-$STAMP.png"
-
-su -c "screencap -p '$TMP_SCREEN'"
-su -c "cp '$TMP_SCREEN' '$SCREEN'"
-su -c "chown $(id -u):$(id -g) '$SCREEN'" || true
-su -c "rm -f '$TMP_SCREEN'"
-
+"$CONTROL" operator.screenshot "$SCREEN" >/dev/null
 cp "$SCREEN" "$LATEST_SCREEN"
 
 echo
@@ -61,12 +89,22 @@ su -c "logcat -d -v threadtime" > "$LOG" || true
 cp "$LOG" "$LATEST_LOG"
 
 echo
-echo "=== CLOSE ==="
+echo "=== FINAL FOREGROUND ==="
 
-su -c "am force-stop '$CEOS_OPERATOR_PACKAGE'" || true
+foreground="$("$CONTROL" operator.foreground || true)"
+pid="$("$CONTROL" operator.pid || true)"
+
+echo "PID=${pid:-none}"
+printf '%s\n' "$foreground"
+
+if [[ -z "$pid" || "$foreground" != *"$CEOS_OPERATOR_PACKAGE"* ]]; then
+    echo "ERROR: OperatorShell lost foreground ownership during observation."
+    exit 32
+fi
 
 echo
 echo "OBSERVATION COMPLETE"
 echo "SCREENSHOT=$LATEST_SCREEN"
 echo "UI=$LATEST_UI"
 echo "LOG=$LATEST_LOG"
+echo "OperatorShell remains running."

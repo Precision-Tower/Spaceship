@@ -2,9 +2,7 @@
 set -euo pipefail
 
 ROOT="$HOME/ce-os"
-source "$ROOT/UI/OperatorShell/android/operator.env"
+CONTROL="$ROOT/Android/Privileged/bin/ce-os-android-shell"
 
-su -c "am force-stop '$CEOS_OPERATOR_PACKAGE'" || true
-
-su -c "am start --user 0 -W \
-  -n '$CEOS_OPERATOR_PACKAGE/$CEOS_OPERATOR_ACTIVITY'"
+"$CONTROL" operator.force-stop || true
+"$CONTROL" operator.launch

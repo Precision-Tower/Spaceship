@@ -1,0 +1,186 @@
+#!/data/data/com.termux/files/usr/bin/bash
+set -euo pipefail
+
+ROOT="$HOME/ce-os"
+ENV="$ROOT/UI/OperatorShell/android/operator.env"
+
+source "$ENV"
+
+OP="${1:-health}"
+TERMUX_UID="$(id -u)"
+TERMUX_GID="$(id -g)"
+
+TMP_BASE="/data/local/tmp/ceos-android-shell-$$"
+TMP_OUT="${TMP_BASE}.out"
+TMP_APK="${TMP_BASE}.apk"
+TMP_SCREEN="${TMP_BASE}.png"
+
+cleanup() {
+    su -c "rm -f '$TMP_OUT' '$TMP_APK' '$TMP_SCREEN'" \
+        >/dev/null 2>&1 || true
+}
+trap cleanup EXIT
+
+prepare_output() {
+    su -c "
+        rm -f '$TMP_OUT'
+        touch '$TMP_OUT'
+        chown 2000:2000 '$TMP_OUT'
+        chmod 600 '$TMP_OUT'
+    "
+}
+
+run_shell_capture() {
+    local command="$1"
+    local rc=0
+
+    prepare_output
+
+    su -Z u:r:shell:s0 2000 -c \
+        "$command > '$TMP_OUT' 2>&1" || rc=$?
+
+    su -c "cat '$TMP_OUT'" 2>/dev/null || true
+
+    return "$rc"
+}
+
+require_operator_apk() {
+    local expected_dir="$ROOT/UI/OperatorShell/android/build"
+
+    if [[ ! -f "$CEOS_OPERATOR_APK" ]]; then
+        echo "ERROR: OperatorShell APK does not exist:"
+        echo "  $CEOS_OPERATOR_APK"
+        exit 20
+    fi
+
+    case "$CEOS_OPERATOR_APK" in
+        "$expected_dir"/*)
+            ;;
+        *)
+            echo "ERROR: refusing APK outside OperatorShell build directory:"
+            echo "  $CEOS_OPERATOR_APK"
+            exit 21
+            ;;
+    esac
+}
+
+case "$OP" in
+    health)
+        echo "=== ANDROID SHELL IDENTITY ==="
+        run_shell_capture "/system/bin/id"
+
+        echo
+        echo "=== ANDROID USER ==="
+        run_shell_capture "/system/bin/am get-current-user"
+        ;;
+
+    operator.install)
+        require_operator_apk
+
+        su -c "
+            cp '$CEOS_OPERATOR_APK' '$TMP_APK'
+            chown 2000:2000 '$TMP_APK'
+            chmod 644 '$TMP_APK'
+        "
+
+        echo "=== INSTALL ==="
+
+        output=""
+        rc=0
+        output="$(run_shell_capture \
+            "/system/bin/pm install -r '$TMP_APK'")" || rc=$?
+
+        printf '%s\n' "$output"
+
+        if [[ "$rc" -ne 0 || "$output" != *Success* ]]; then
+            echo
+            echo "Update failed. Attempting clean development reinstall."
+
+            run_shell_capture \
+                "/system/bin/pm uninstall --user 0 '$CEOS_OPERATOR_PACKAGE'" \
+                || true
+
+            output=""
+            rc=0
+            output="$(run_shell_capture \
+                "/system/bin/pm install '$TMP_APK'")" || rc=$?
+
+            printf '%s\n' "$output"
+
+            if [[ "$rc" -ne 0 || "$output" != *Success* ]]; then
+                echo "ERROR: OperatorShell installation failed."
+                exit 22
+            fi
+        fi
+
+        echo
+        echo "=== VERIFY PACKAGE ==="
+        verify="$(run_shell_capture \
+            "/system/bin/pm path '$CEOS_OPERATOR_PACKAGE'")"
+
+        printf '%s\n' "$verify"
+
+        if [[ "$verify" != package:* ]]; then
+            echo "ERROR: installed OperatorShell package was not found."
+            exit 23
+        fi
+        ;;
+
+    operator.force-stop)
+        run_shell_capture \
+            "/system/bin/am force-stop '$CEOS_OPERATOR_PACKAGE'"
+        ;;
+
+    operator.launch)
+        run_shell_capture \
+            "/system/bin/am start --user 0 -W -n '$CEOS_OPERATOR_PACKAGE/$CEOS_OPERATOR_ACTIVITY'"
+        ;;
+
+    operator.foreground)
+        run_shell_capture \
+            "/system/bin/dumpsys activity activities | /system/bin/grep -E 'topResumedActivity|mResumedActivity' | /system/bin/head -10"
+        ;;
+
+    operator.pid)
+        run_shell_capture \
+            "/system/bin/dumpsys activity processes | /system/bin/grep -m1 -E '[0-9]+:$CEOS_OPERATOR_PACKAGE/'"
+        ;;
+
+    operator.screenshot)
+        DEST="${2:-}"
+
+        if [[ -z "$DEST" ]]; then
+            echo "ERROR: screenshot destination required."
+            exit 24
+        fi
+
+        case "$DEST" in
+            "$ROOT/state/ui-observation/"*)
+                ;;
+            *)
+                echo "ERROR: screenshot destination outside observation state:"
+                echo "  $DEST"
+                exit 25
+                ;;
+        esac
+
+        mkdir -p "$(dirname "$DEST")"
+
+        su -Z u:r:shell:s0 2000 -c \
+            "/system/bin/screencap -p '$TMP_SCREEN'"
+
+        su -c "
+            cp '$TMP_SCREEN' '$DEST'
+            chown '$TERMUX_UID:$TERMUX_GID' '$DEST'
+            chmod 664 '$DEST'
+        "
+
+        test -s "$DEST"
+        echo "$DEST"
+        ;;
+
+    *)
+        echo "ERROR: unsupported Android control operation: $OP"
+        exit 64
+        ;;
+esac
