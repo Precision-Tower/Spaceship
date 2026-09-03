@@ -96,3 +96,52 @@ root_scope- "This _index.qps is the CE-OS root semantic surface";
 query_rule- "Query root terms directly without prefixing CE_OS";
 query_example- "qps _index.qps --get HEV.design";
 );
+
+ssh_operations: (
+purpose- "Operate the Pixel CE-OS workspace from Windows PowerShell through the CE-OS SSH wrappers";
+
+windows_to_pixel: (
+normal_command- "pixel.cmd \"command\"";
+ceos_command- "ops.cmd exec \"command\"";
+ceos_root_command- "ops.cmd root \"command\"";
+script- "ops.cmd exec-file \"C:\\path\\to\\script.sh\"";
+root_script- "ops.cmd root-file \"C:\\path\\to\\script.sh\"";
+);
+
+usage: (
+pixel_cmd- "Use pixel.cmd for direct Termux shell commands on the Pixel";
+ops_exec- "Use ops.cmd exec for normal CE-OS operations";
+ops_root- "Use ops.cmd root only when privileged Android access is required";
+exec_file- "Use exec-file for multi-line shell work instead of constructing large escaped SSH commands";
+);
+
+paths: (
+pixel_home- "/data/data/com.termux/files/home";
+ceos_repository- "/data/data/com.termux/files/home/ce-os";
+powershell_repository_alias- "~/ce-os";
+);
+
+connection: (
+ssh_port- 8022;
+probe- "pixel.cmd \"echo PIXEL_SSH_OK && pwd\"";
+expected_probe_path- "/data/data/com.termux/files/home";
+);
+
+recovery: (
+symptom- "Pixel found but sshd:8022 is not ready";
+pixel_termux_command- "sshd";
+restart_pixel_termux_command- "pkill sshd 2>/dev/null || true; sshd";
+verify_process- "pgrep -a sshd";
+verify_port- "ss -ltn | grep 8022";
+windows_reprobe- "pixel.cmd \"echo PIXEL_SSH_OK && pwd\"";
+);
+
+rules: (
+small_commands- "Prefer direct pixel.cmd or ops.cmd exec";
+multi_line_work- "Prefer ops.cmd exec-file";
+privileged_work- "Use root commands only when the operation actually requires Android root";
+repository_work- "cd ~/ce-os before repository operations";
+transport_failure- "Do not modify CE-OS code to compensate for an SSH transport failure";
+);
+
+);
