@@ -1,0 +1,248 @@
+KineticEnergyModel.
+
+identity.
+name- "Kinetic Energy Model";
+description- "A causal framework for understanding motion, pressure, and energy through explicit relationships between potential, resistance, and displacement.";
+status- "Active CE-OS engineering theory under computational development and physical evaluation";
+authority- "This document defines the model as authored. Its claims are hypotheses, definitions, axioms, rules, and derived relationships within the model; inclusion here does not independently establish physical truth.";
+
+purpose.
+primary- "construct explicit causal chains rather than collapse system behavior into summary relationships";
+engineering- "represent causal engineering systems so assumptions, resistance, displacement, domain transitions, predictions, measurements, and disagreements remain inspectable";
+goal- "model how potential resolves through structure and determine experimentally where the model succeeds, fails, or remains incomplete";
+
+foundation.
+causality- "potential overcoming resistance produces displacement";
+relationship- "p-r=d";
+potential- "p";
+resistance- "r";
+displacement- "d";
+energy- "energy is treated by this model as the relationship and resolution between causal potential and displacement rather than as an independently transported substance";
+causal_chain- "identify potential, identify resistance, observe or calculate displacement";
+explicitness- "potential, resistance, and displacement remain explicit rather than hidden behind summary metrics";
+
+domains.
+universal- "universal causal terms are defined under Engineering/qps/defs/KE/U.qps";
+field_centric- "field-centric terms are defined under Engineering/qps/defs/KE/FC.qps";
+mass_centric- "mass-centric terms are defined under Engineering/qps/defs/KE/MC.qps";
+integrity- "domain-specific causal logic remains distinct";
+bridge_rule- "no equation may combine Field-Centric and Mass-Centric terms unless a formal domain bridge is defined";
+bridge_example- "Thermal -> Fluid -> Mechanical -> Electrical";
+shared_terms- "universal causal terms such as potential, resistance, and displacement may participate across domains";
+
+laws.
+
+causality.
+name- "Law of Causality";
+claim- "all kinetic events are modeled as potential resolving against resistance into displacement";
+relationship- "p-r=d";
+interpretation- "potential exists as causal readiness under structural opposition and resolves as displacement when resistance permits";
+
+mass_motion.
+name- "Law of Mass-Motion Resolution";
+claim- "mass-centric behavior is modeled using force, acceleration, inertia, momentum, resistance, and impact relationships";
+force_relation- "f=ma";
+momentum_relation- "mv";
+impact_relation- "mv-r=f_impact";
+source_extended_relation- "p*a*m-r=v*m-r=f_impact";
+status- "model claim requiring explicit dimensional and experimental treatment before predictive use";
+
+principles.
+
+relationships.
+rule- "relationships are primary";
+description- "KE relationships describe causal structure. Predictive behavior belongs to explicitly executable domain models with stated assumptions.";
+
+resolution.
+rule- "model resolution rather than hide causal transitions";
+description- "models must show how a causal state changes through resistance and displacement rather than relying solely on aggregate outcome accounting";
+
+explicit_terms.
+rule- "causal terms remain explicit";
+description- "potential, resistance, and displacement may not be silently omitted when they are part of the modeled causal relationship";
+
+clarity.
+rule- "clarity is law";
+description- "variables, constants, assumptions, domains, and bridges must be explicitly identified";
+
+definitions.
+rule- "definitions are sacred";
+description- "terms used by axioms and theorems require standalone scoped definitions";
+
+axioms.
+rule- "axioms are foundational model claims";
+description- "an axiom must be represented as a primitive claim of this model rather than silently derived from another claim";
+
+theorems.
+rule- "theorems are derived";
+description- "derived claims must trace to the definitions, axioms, relationships, and assumptions from which they follow";
+
+causal_chains.
+rule- "causal chains are foundational";
+description- "systems are represented as sequences of explicit causal events rather than collapsed abstractions";
+
+resistance.
+rule- "resistance is explicit";
+description- "resistance is accounted for as a causal interaction and is not assigned an assumed value merely to close an equation";
+
+geometry.
+rule- "geometry may alter causal conditions";
+description- "structure and geometry may change potential, resistance, displacement, routing, concentration, or domain coupling and therefore belong in the causal model";
+
+measurement.
+rule- "prediction and measurement remain distinct";
+description- "a calculated or simulated result is not a measured physical result";
+
+validation.
+rule- "physical claims remain falsifiable";
+description- "the model must permit experimental evidence to support, contradict, constrain, or expose missing relationships";
+
+axiom_0.
+name- "Thermal Genesis";
+claim- "the model proposes primordial cold causal retraction preceding thermal expression";
+ether- "Ether is proposed as a continuous structural substrate responsive to causal tension";
+transition- "thermal expression and Hydrogen formation are proposed to arise when structural resistance reaches a transition threshold";
+consequence- "motion is not defined as requiring heat";
+status- "foundational cosmological hypothesis";
+
+axiom_1.
+name- "Field Coexistence and Influence";
+claim- "fields are modeled as distinct causal structures that may coexist and influence one another without being reduced to one another";
+coexistence- "fields may share space while retaining distinct structure";
+influence- "one field may modify the potential, resistance, or displacement conditions of another";
+ether_clause- "field resolution is modeled through Ether while Ether itself is not classified as a field";
+status- "foundational field-model hypothesis";
+
+axiom_2.
+name- "Field Alignment / Magnetic Persistence";
+claim- "persistent magnetic behavior is modeled as stable repeating field geometry";
+persistence- "resistance is proposed to be integrated into stable field structure rather than eliminated";
+interaction- "magnetic fields may alter resistance conditions in electrical and mechanical interactions";
+status- "field-model hypothesis";
+
+axiom_3.
+name- "Stellar Genesis";
+claim- "stellar formation is modeled as sustained causal retraction, condensation, thermal displacement, pressure accumulation, and eventual collapse when outward resolution fails";
+refrigerant_effect- "outward thermal displacement is proposed to permit deeper central compression";
+collapse- "Thermal Inversion Collapse is proposed as the transition into fusion";
+status- "cosmological hypothesis";
+
+axiom_4.
+name- "Reactive Threshold";
+claim- "chemical reaction is modeled as structural field reconfiguration after stored potential exceeds structural resistance";
+activation- "external excitation or internal rearrangement may raise potential or lower resistance until threshold crossing";
+catalyst- "a catalyst lowers resistance without supplying the modeled potential";
+relationship- "p-r>0";
+status- "chemical-model hypothesis";
+
+axiom_5.
+name- "Plasma Threshold";
+claim- "plasma is modeled as a structurally unstable, conductive, field-reactive state produced under extreme thermal and pressure excitation";
+relation_to_reaction- "stellar plasma and fusion are modeled as threshold behavior related to Reactive Threshold";
+status- "plasma-model hypothesis";
+
+axiom_6.
+name- "Inductive Propagation";
+claim- "electromagnetic propagation is modeled as recursive field excitation through Ether";
+mechanism- "electric and magnetic states recursively induce changes in one another";
+termination- "propagation ceases or changes when resistance exceeds potential, resolution completes, or geometry constrains propagation";
+relationship- "p-r=d";
+status- "electromagnetic propagation hypothesis";
+
+axiom_7.
+name- "Electric Conduction";
+claim- "electrical current is modeled as displacement of electric potential through structured mass rather than bulk electron transport";
+DC- "DC is modeled as directionally sustained field displacement";
+AC- "AC is modeled as cyclic field realignment";
+relationship- "p-r=d_field";
+status- "electrical-model hypothesis";
+
+axiom_8.
+name- "Gravity";
+claim- "gravity is modeled as continuous causal field pressure rather than acceleration itself";
+source_gravity_expression- "g=9.8 m/s";
+source_relation- "i/r=g";
+interaction- "acceleration of mass is treated as an effect occurring when resistance conditions permit displacement";
+ether- "gravity is proposed as an interaction with Ether / zero-point structure";
+status- "gravity-model hypothesis requiring dimensional and experimental resolution";
+
+axiom_9.
+name- "Abundance / Tesla Axiom";
+claim- "the model proposes that potential is continuously available wherever field structure exists and that energy is resolved rather than consumed";
+geometry- "scarcity of usable expression is attributed to resistance and geometry";
+status- "foundational hypothesis";
+
+axiom_10.
+name- "Energy";
+claim- "energy is the conditional relationship between causal tension and displacement";
+relationship- "p-r=d";
+potential- "potential is modeled as unresolved causal displacement under opposition";
+displacement- "displacement is modeled as resolved potential";
+boundary- "when resistance is greater than or equal to potential, sustained displacement does not occur";
+status- "foundational model definition and hypothesis";
+
+axiom_11.
+name- "Fire";
+claim- "fire is modeled as the field-level resolution region of a chemical reaction in which several causal outputs occur simultaneously";
+inputs- "fuel stored potential, oxidizer/environmental resistance conditions, and sufficient excitation";
+outputs- "thermal excitation, electromagnetic emission, and fluid expansion";
+relationship- "P_chem-R_env=D_thermal+D_EM+D_fluid_ambient";
+status- "multidomain reaction hypothesis";
+
+applications.
+engineering- "turbines, motors, pumps, generators, hydraulic systems, power conversion, and other engineered causal systems";
+field_theory- "field interactions including magnetic, electromagnetic, thermal, and gravitational hypotheses";
+education- "explicit causal decomposition of physical relationships";
+translation- "systems that bridge thermal, fluid, mechanical, and electrical domains";
+HEV- "Hydraulic Electric System modeling and experiment design";
+
+research_direction.
+statement- "More potential, more displacement";
+amplifying_potential- "investigate whether geometry or causal conditions can increase usable potential at a downstream interaction without hiding the source or resistance";
+resistance_reduction- "identify and reduce actual resistance mechanisms where possible";
+balance- "compare potential, resistance, and displacement explicitly";
+
+unresolved.
+
+energy_constant.
+claim- "the source material proposes a universal conversion constant between potential and displacement called the Energy Constant";
+symbol- "e";
+status- "unresolved hypothesis";
+
+mass_centric_energy_constant_form.
+source_model_md- "(f-r)e=mv";
+source_model_yaml- "(f-r)e=v";
+status- "source disagreement preserved; neither form is canonical until resolved";
+
+prediction_scope.
+source_model_md- "Kinetic Energy equations express relationships, not predictions";
+source_model_yaml- "Kinetic Energy equations express relationships, not predictions; Mass-centric and field-centric systems do model predictions";
+resolution- "the base causal relationship is descriptive; prediction requires an executable domain model with explicit assumptions";
+status- "working interpretation; preserve source distinction until formally accepted";
+
+linear_algebra.
+source_rule- "all relationships must resolve along a single dimension of causal flow; tensors, vector fields, and probabilistic functions are excluded from core logic";
+status- "legacy construction constraint requiring review against current Engineering geometry and simulation requirements";
+
+efficiency.
+legacy_usage- "older source prose refers to efficiency as a system constraint";
+current_rule- "efficiency is not a primitive causal input";
+derivation- "efficiency may be calculated afterward from explicit input/output states and actual loss mechanisms";
+status- "current Engineering interpretation";
+
+evidence.
+requirement- "claims must be distinguishable from measurements";
+apparatus- "physical apparatus supplies measurements";
+comparison- "predicted and measured states remain separate";
+difference- "differences between predicted and measured states must remain inspectable";
+failure_modes- "missing model, implementation error, measurement error, contradicted hypothesis, supported hypothesis, or unresolved evidence";
+
+provenance.
+source_readme- "Engineering/qps/docs/README.md";
+source_model_md- "Engineering/qps/docs/model.md";
+source_model_yaml- "Engineering/qps/docs/model.yaml";
+source_axioms- "Engineering/qps/docs/axioms.md";
+definition_universal- "Engineering/qps/defs/KE/U.qps";
+definition_field- "Engineering/qps/defs/KE/FC.qps";
+definition_mass- "Engineering/qps/defs/KE/MC.qps";
+policy- "source disagreements and unresolved claims are retained explicitly rather than silently overwritten";
