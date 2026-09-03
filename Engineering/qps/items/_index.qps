@@ -5,3 +5,5 @@ cbp- MC.cbp/p; # Combine Pulley
 tb- FD.tb/p; # Turbine
 
 dcm- Ec.dcm/p; # DC Motor
+
+pmp- FD.pu/p; # Pump

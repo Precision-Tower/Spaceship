@@ -7,3 +7,5 @@ wt- tb.wt/p; # Wind Turbine
 ht- tb.ht/p; # Hydraulic Turbine
 
 pt- tb.pt/p; # Pneumatic Turbine
+
+pu- pump.pu/p; # Pump

@@ -1,0 +1,138 @@
+pu. Pump: def"
+A pump is a rotational mechanical-to-fluid-dynamic Engineering Item.
+
+The Item represents the physical pump itself.
+
+Mechanical shaft state, pump geometry, fluid state, pressure,
+flow, resistance, and thermal behavior remain explicit so the
+ME -> FD relationship can be implemented and tested without
+collapsing the component into a summary efficiency value.
+
+The pump is a domain bridge:
+
+ME -> FD
+";
+
+identity: (
+item- "pump"/a;
+domain_input- "ME"/a;
+domain_output- "FD"/a;
+renderable- true/b;
+);
+
+mechanical_input: (
+shaft_torque-/n;
+shaft_rpm-/n;
+angular_velocity-/n;
+);
+
+shaft: (
+radius-/n;
+length-/n;
+material-/a;
+);
+
+drive: (
+type-/a;
+coupling_type-/a;
+direction-/a;
+);
+
+pump_body: (
+type-/a;
+material-/a;
+outside_radius-/n;
+inside_radius-/n;
+length-/n;
+);
+
+impeller: (
+type-/a;
+material-/a;
+radius-/n;
+width-/n;
+blade_count-/n;
+blade_height-/n;
+blade_angle-/n;
+clearance-/n;
+);
+
+fluid_input: (
+fluid-/a;
+inlet_pressure-/n;
+inlet_flow_rate-/n;
+inlet_velocity-/n;
+fluid_temperature-/n;
+fluid_density-/n;
+fluid_viscosity-/n;
+);
+
+fluid_output: (
+outlet_pressure-/n;
+outlet_flow_rate-/n;
+outlet_velocity-/n;
+fluid_temperature-/n;
+);
+
+resistance: (
+bearing_resistance-/n;
+seal_resistance-/n;
+fluid_internal_resistance-/n;
+geometry_resistance-/n;
+);
+
+bearings: (
+quantity-/n;
+type-/a;
+friction-/n;
+);
+
+seals: (
+quantity-/n;
+type-/a;
+diameter-/n;
+);
+
+thermal_state: (
+bearing_temperature-/n;
+fluid_temperature-/n;
+housing_temperature-/n;
+);
+
+ports: (
+mechanical_shaft- "shaft"/a;
+fluid_inlet- "inlet"/a;
+fluid_outlet- "outlet"/a;
+);
+
+geometry: (
+primitive- "pump"/a;
+body_radius-/n;
+body_length-/n;
+shaft_radius-/n;
+shaft_length-/n;
+inlet_radius-/n;
+outlet_radius-/n;
+);
+
+input_state: (
+shaft_torque-/n;
+shaft_rpm-/n;
+inlet_pressure-/n;
+inlet_flow_rate-/n;
+);
+
+output_state: (
+outlet_pressure-/n;
+outlet_flow_rate-/n;
+outlet_velocity-/n;
+);
+
+model_frontier: (
+shaft_to_impeller- "unresolved"/a;
+impeller_to_pressure- "unresolved"/a;
+impeller_to_flow- "unresolved"/a;
+pressure_flow_relationship- "unresolved"/a;
+load_feedback_to_shaft- "unresolved"/a;
+thermal_relationship- "unresolved"/a;
+);
