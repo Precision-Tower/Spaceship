@@ -172,16 +172,16 @@ Detailed language design belongs in `docs/EXECUTION_DESIGN.md`.
 
 ### Phase 1 — Implementation Inventory
 
-- [ ] Audit existing execution tokens.
-- [ ] Audit existing execution parser behavior.
-- [ ] Audit execution AST nodes.
-- [ ] Audit execution runtime behavior.
-- [ ] Audit current function parsing/runtime.
-- [ ] Audit control-flow parsing/runtime.
-- [ ] Audit binding/scope implementation.
-- [ ] Audit assertion/error behavior.
-- [ ] Audit calculation integration.
-- [ ] Classify each feature as implemented, partial, placeholder, legacy, or absent.
+- [x] Audit existing execution tokens.
+- [x] Audit existing execution parser behavior.
+- [x] Audit execution AST nodes.
+- [x] Audit execution runtime behavior.
+- [x] Audit current function parsing/runtime.
+- [x] Audit control-flow parsing/runtime.
+- [x] Audit binding/scope implementation.
+- [x] Audit assertion/error behavior.
+- [x] Audit calculation integration.
+- [x] Classify each feature as implemented, partial, placeholder, legacy, or absent.
 
 ### Phase 2 — Canonical Execution Grammar
 

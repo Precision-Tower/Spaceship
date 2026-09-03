@@ -458,29 +458,16 @@ The grammar must cover at minimum:
 
 ## Implementation Inventory
 
-Codex must inspect and document the current state of:
+Current inventory after auditing lexer, parser, AST, runtime, and tests against the 14/14 Pixel CTest baseline:
 
-- lexer/tokens
-- parser
-- AST
-- execution runtime
-- function runtime
-- control-flow runtime
-- calculation runtime
-- structural-reference runtime
-- tests
+- Implemented and tested: anonymous plain `{}` execution blocks, semantic Item inputs such as `[>v]- 30/n;`, `%` calculation statements, numeric arithmetic, local and semantic execution bindings, deterministic rebinding, structural-reference binding through `SymbolResolver`, geometry-qualified execution statements, reusable `{id: ...}` execution definitions/calls, source provenance for registered execution definitions, `-func` parsing/execution, positional function arguments, function-local scope, function calls as expressions, and identifier-only `-return` from functions/return-capable definitions.
+- Implemented but incompletely tested: top-level execution block dispatch through `Interpreter::executeProgram`, `ReturnStatementNode` in reusable execution definitions, and optional semicolon acceptance after function bodies.
+- Parser-only: `-let`, `-set`, `-assert`, `-if`, `-elif`, `-else`, `-loop`, `-while`, `-for`, `-try`, `-raise`, `-print`, `-break`, `-continue`, and `-pass` statement nodes. These parse through old scaffold syntax and do not yet define canonical runtime semantics.
+- AST-only or placeholder: visitor support for control-flow statements outside the runtime-supported subset, placeholder type-check and Open3D visitors, `ClassDeclarationNode` runtime behavior, and most non-geometry execution actions.
+- Legacy but preserved: `{id: ...}` reusable execution definitions and `{>id: ...}` calls, whole-definition `{@id: ...}` geometry domain selection, numeric execution identifiers, and `_` as the old execution-statement terminator in scaffolded parsers.
+- Absent: `-test`, `-fail`, `-raises`, pass/fail/error test results, test discovery, `qps test`, comparison expressions, boolean assertion evaluation, general control-flow runtime, mutable `-let`/`-set` scope semantics, fixture semantics, test filtering, fail-fast, and machine-readable test reporting.
 
-For each relevant feature classify it as:
-
-- implemented and tested
-- implemented but incompletely tested
-- parser-only
-- AST-only
-- runtime-only
-- placeholder
-- obsolete/legacy
-
-Do not assume existing code is canonical merely because it exists.
+This inventory classifies what exists. It does not make parser-only or legacy behavior canonical.
 
 ## First Implementation Milestone
 
