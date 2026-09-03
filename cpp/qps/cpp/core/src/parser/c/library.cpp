@@ -10,7 +10,7 @@ namespace parser {
 // Note: In the final integrated parser, this function will remain a member of the Parser class.
 // It is defined here to represent the content of 'library.cpp'.
 
-// Parses module-level declarations, specifically for an <index.qps file.
+// Parses module-level declarations, specifically for an _index.qps file.
 // This function would handle syntax for publicly exposing elements from a directory.
 // For now, it's a placeholder, assuming such a syntax might exist (e.g., 'expose: Identifier;')
 // or it might simply re-parse declarations that are marked for exposure.
@@ -19,7 +19,7 @@ std::unique_ptr<ast::AstNode> Parser::parseModuleManifest() {
     // A module manifest might contain declarations specifically for exposing elements.
     // As per the documentation, it defines "which elements from the directory are exposed publicly".
     // Without specific 'expose' syntax, we might recursively parse declarations,
-    // and semantic analysis would later mark them as public if they appear in <index.qps.
+    // and semantic analysis would later mark them as public if they appear in _index.qps.
 
     // For now, let's assume it could handle a simplified 'expose:' statement
     // or just process a list of declarations that make up the module's public interface.

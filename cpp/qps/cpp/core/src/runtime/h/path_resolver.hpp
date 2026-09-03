@@ -13,7 +13,7 @@ public:
 
     const std::filesystem::path& workspaceRoot() const;
 
-    // A QPS module is a directory containing <index.qps.
+    // A QPS module is a directory containing _index.qps.
     bool isModule(const std::filesystem::path& module_relative) const;
 
     // Resolve a connected QPS module from the workspace root.
@@ -28,7 +28,7 @@ public:
     std::vector<std::filesystem::path> childModules(
         const std::filesystem::path& module_relative = {}) const;
 
-    // Immediate .qps documents in a module, excluding <index.qps.
+    // Immediate .qps documents in a module, excluding _index.qps.
     std::vector<std::filesystem::path> qpsFiles(
         const std::filesystem::path& module_relative = {}) const;
 

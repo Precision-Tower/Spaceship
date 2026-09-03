@@ -17,9 +17,9 @@ PathResolver::PathResolver(fs::path workspace_root)
             "QPS workspace root is not a directory: " + root_.string());
     }
 
-    if (!fs::is_regular_file(root_ / "<index.qps")) {
+    if (!fs::is_regular_file(root_ / "_index.qps")) {
         throw std::runtime_error(
-            "QPS workspace root does not contain <index.qps: " +
+            "QPS workspace root does not contain _index.qps: " +
             root_.string());
     }
 }
@@ -49,7 +49,7 @@ void PathResolver::requireConnectedChain(
 
     fs::path current = root_;
 
-    if (!fs::is_regular_file(current / "<index.qps")) {
+    if (!fs::is_regular_file(current / "_index.qps")) {
         throw std::runtime_error(
             "Broken QPS module chain at workspace root.");
     }
@@ -62,7 +62,7 @@ void PathResolver::requireConnectedChain(
         current /= part;
 
         if (!fs::is_directory(current) ||
-            !fs::is_regular_file(current / "<index.qps")) {
+            !fs::is_regular_file(current / "_index.qps")) {
             throw std::runtime_error(
                 "Broken QPS module chain at: " + current.string());
         }
@@ -116,7 +116,7 @@ std::vector<fs::path> PathResolver::childModules(
 
     for (const auto& entry : fs::directory_iterator(module)) {
         if (entry.is_directory() &&
-            fs::is_regular_file(entry.path() / "<index.qps")) {
+            fs::is_regular_file(entry.path() / "_index.qps")) {
             result.push_back(
                 fs::relative(entry.path(), root_));
         }
@@ -140,7 +140,7 @@ std::vector<fs::path> PathResolver::qpsFiles(
         const fs::path file = entry.path();
 
         if (file.extension() == ".qps" &&
-            file.filename() != "<index.qps") {
+            file.filename() != "_index.qps") {
             result.push_back(fs::relative(file, root_));
         }
     }
@@ -152,7 +152,7 @@ std::vector<fs::path> PathResolver::qpsFiles(
 fs::path PathResolver::indexFile(
     const fs::path& module_relative) const {
 
-    return resolveModule(module_relative) / "<index.qps";
+    return resolveModule(module_relative) / "_index.qps";
 }
 
 } // namespace runtime

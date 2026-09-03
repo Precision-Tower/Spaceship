@@ -170,11 +170,11 @@ derived: def"DERIVED identifies semantic state produced through execution.";
 local: def"LOCAL identifies execution-workspace state.";
 
 modules.
-index- "<index.qps";
+index- "_index.qps";
 rule: def"A QPS directory may act as a module.";
-index_rule: def"<index.qps is the canonical module surface document for a QPS directory.";
-index_status: def"<index.qps is the active canonical module-surface filename in the current QPS runtime and corpus.";
-surface: def"<index.qps exposes symbols from documents within that module.";
+index_rule: def"_index.qps is the canonical module surface document for a QPS directory.";
+index_status: def"_index.qps is the canonical QPS module-surface filename. The underscore form is filesystem-portable across Linux, Android, and Windows. {index}.qps and <index.qps are historical names and are not canonical.";
+surface: def"_index.qps exposes symbols from documents within that module.";
 documents: def"Runtime QPS documents use the .qps extension.";
 
 punctuation.
@@ -234,17 +234,17 @@ unknowns: def"Unresolved syntax remains explicit until measured against implemen
 
 
 modules.
-surface- "<index.qps";
+surface- "_index.qps";
 surface_role- "canonical QPS module surface for a directory";
-ownership- "the directory owns its <index.qps surface";
+ownership- "the directory owns its _index.qps surface";
 implementation- "a module surface describes or exposes the subsystem; it does not replace implementation code";
 navigation- "module and file navigation is resolved by the QPS runtime";
 
 module_example.
 directory- "UI/OperatorShell";
-surface- "UI/OperatorShell/<index.qps";
+surface- "UI/OperatorShell/_index.qps";
 implementation- "Godot GDScript";
-relationship- "<index.qps webs into the existing OperatorShell directory tree";
+relationship- "_index.qps webs into the existing OperatorShell directory tree";
 
 brackets.
 dictionary- "[]";
@@ -302,13 +302,13 @@ get- "parse and return one scalar Item value addressed by path";
 automation_rule- "automated agents should prefer --check and --get and should not print the AST unless debugging a parser problem";
 
 query_examples.
-terminal_density- "qps/cpp/build/qps 'UI/OperatorShell/<index.qps' --get terminal.density";
-layout_left_panel- "qps/cpp/build/qps 'UI/OperatorShell/<index.qps' --get layout.left_panel";
-quiet_check- "qps/cpp/build/qps 'UI/OperatorShell/<index.qps' --check";
+terminal_density- "qps/cpp/build/qps 'UI/OperatorShell/_index.qps' --get terminal.density";
+layout_left_panel- "qps/cpp/build/qps 'UI/OperatorShell/_index.qps' --get layout.left_panel";
+quiet_check- "qps/cpp/build/qps 'UI/OperatorShell/_index.qps' --check";
 
 codex_interface.
 language_reference- "qps/docs/QPS.qps";
-canonical_module_surface- "<index.qps";
+canonical_module_surface- "_index.qps";
 validation- "--check";
 scalar_query- "--get";
 rule- "read this quicksheet before authoring unfamiliar QPS";
@@ -336,10 +336,10 @@ item- "An Item is a value-bearing declaration or unresolved value slot.";
 role- "Items are leaves that may carry literal values type hints units or references.";
 
 module_surface_model.
-index- "<index.qps";
-rule- "<index.qps is the active QPS surface of its directory, not an empty package marker.";
-content- "<index.qps may contain real configuration Keys Terms Items relationships exports and references.";
-extension- "Additional .qps files may deepen the module while <index.qps remains the canonical entry surface.";
+index- "_index.qps";
+rule- "_index.qps is the active QPS surface of its directory, not an empty package marker.";
+content- "_index.qps may contain real configuration Keys Terms Items relationships exports and references.";
+extension- "Additional .qps files may deepen the module while _index.qps remains the canonical entry surface.";
 
 web_model.
 rule- "QPS modules and semantic structures form a navigable web.";
@@ -370,7 +370,7 @@ left_panel- "Item inside layout";
 semantic_path- "OperatorShell.terminal.density";
 
 index_example.
-surface- "UI/OperatorShell/<index.qps";
+surface- "UI/OperatorShell/_index.qps";
 rule- "The module surface may directly contain live configuration and relationships while pointing into the existing implementation tree.";
 
 reference_model.

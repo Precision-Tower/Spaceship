@@ -57,17 +57,17 @@ int main() {
         // Canonical QPS workspace surface.
         //
         // workspace/
-        // ├── <index.qps
+        // ├── _index.qps
         // └── child/
-        //     └── <index.qps
+        //     └── _index.qps
         // ----------------------------------------------------
 
         writeFile(
-            fixture_root / "<index.qps",
+            fixture_root / "_index.qps",
             "root. name- \"root\";\n");
 
         writeFile(
-            fixture_root / "child" / "<index.qps",
+            fixture_root / "child" / "_index.qps",
             "child. name- \"child\";\n");
 
         PathResolver resolver(fixture_root);
@@ -80,23 +80,23 @@ int main() {
 
         require(
             resolver.isModule("."),
-            "Workspace root with <index.qps must be a module.");
+            "Workspace root with _index.qps must be a module.");
 
         require(
             resolver.isModule("child"),
-            "Child directory with <index.qps must be a module.");
+            "Child directory with _index.qps must be a module.");
 
         const auto child_index =
             resolver.resolveFile(
-                "child/<index.qps");
+                "child/_index.qps");
 
         require(
             child_index ==
                 std::filesystem::weakly_canonical(
                     fixture_root /
                     "child" /
-                    "<index.qps"),
-            "Child <index.qps resolution mismatch.");
+                    "_index.qps"),
+            "Child _index.qps resolution mismatch.");
 
         const auto children =
             resolver.childModules(".");
@@ -136,19 +136,49 @@ int main() {
             const std::string message = e.what();
 
             rejected =
-                message.find("<index.qps") !=
+                message.find("_index.qps") !=
                 std::string::npos;
         }
 
         require(
             rejected,
-            "Workspace without <index.qps was not rejected.");
+            "Workspace without _index.qps was not rejected.");
+
+        // Historical module-surface filenames are intentionally not accepted.
+        // _index.qps is the portable contract across Linux, Android, and Windows.
+        const auto historical_root =
+            std::filesystem::temp_directory_path() /
+            "qps_historical_index_surface_test";
+
+        std::filesystem::remove_all(historical_root);
+        std::filesystem::create_directories(historical_root);
+
+        writeFile(
+            historical_root / "{index}.qps",
+            "historical. name- \"brace\";\n");
+
+        bool historical_rejected = false;
+
+        try {
+            PathResolver historical(historical_root);
+            (void)historical;
+        }
+        catch (const std::runtime_error& e) {
+            historical_rejected =
+                std::string(e.what()).find("_index.qps") !=
+                std::string::npos;
+        }
+
+        require(
+            historical_rejected,
+            "Historical {index}.qps unexpectedly defined a QPS module.");
 
         std::filesystem::remove_all(fixture_root);
         std::filesystem::remove_all(invalid_root);
+        std::filesystem::remove_all(historical_root);
 
         std::cout
-            << "PASS canonical <index.qps module surface\n";
+            << "PASS canonical _index.qps module surface\n";
 
         return 0;
     }
@@ -156,7 +186,7 @@ int main() {
         std::filesystem::remove_all(fixture_root);
 
         std::cerr
-            << "FAIL canonical <index.qps module surface: "
+            << "FAIL canonical _index.qps module surface: "
             << e.what()
             << "\n";
 

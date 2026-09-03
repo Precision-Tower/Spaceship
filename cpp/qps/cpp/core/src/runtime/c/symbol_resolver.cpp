@@ -99,22 +99,22 @@ ResolvedSymbol SymbolResolver::resolve(
             //
             //        p- KE.p/p;
             //
-            //      -> KE/<index.qps
+            //      -> KE/_index.qps
             //      -> recursively resolve p from module KE
             //
-            // QPS modules are directories containing <index.qps.
+            // QPS modules are directories containing _index.qps.
             const fs::path child_module =
                 (module / segments.front()).lexically_normal();
 
             if (paths_.isModule(child_module)) {
                 // Module delegation currently requires exactly one surfaced
                 // symbol after the module name. Deeper traversal happens
-                // recursively through each module's own <index.qps.
+                // recursively through each module's own _index.qps.
                 //
                 // Example:
                 //
-                //   defs/<index.qps      : p- KE.p/p;
-                //   defs/KE/<index.qps   : p- U.p/p;
+                //   defs/_index.qps      : p- KE.p/p;
+                //   defs/KE/_index.qps   : p- U.p/p;
                 //
                 // The first resolution delegates to defs/KE. The second
                 // resolves U.qps normally.

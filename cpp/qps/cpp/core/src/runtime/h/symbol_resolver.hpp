@@ -28,7 +28,7 @@ struct StructuralReferenceContext {
 struct ResolvedSymbol {
     std::string symbol;
 
-    // Module whose <index.qps surfaced the symbol.
+    // Module whose _index.qps surfaced the symbol.
     std::filesystem::path surface_module;
 
     // Actual index file where the symbol was found.

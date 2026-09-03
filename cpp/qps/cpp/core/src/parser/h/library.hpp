@@ -15,7 +15,7 @@ namespace parser {
 class Parser;
 
 // This header defines the interface for parsing Library/Module-specific declarations.
-// This might include handling of implicit modules or explicit module manifest files (<index.qps).
+// This might include handling of implicit modules or explicit module manifest files (_index.qps).
 
 } // namespace parser
 } // namespace qps

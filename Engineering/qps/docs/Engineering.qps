@@ -148,7 +148,7 @@ designs: (
 path- "Engineering/qps/designs";
 role- "authored design structures";
 );
-module_rule: def"QPS directories may expose semantic surfaces through <index.qps.";
+module_rule: def"QPS directories may expose semantic surfaces through _index.qps.";
 
 engineering_flow.
 pipeline: (

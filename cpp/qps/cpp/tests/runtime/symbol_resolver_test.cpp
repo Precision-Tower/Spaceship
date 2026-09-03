@@ -462,7 +462,7 @@ int main(int argc, char** argv) {
                 symbols.resolve(
                     *reference,
                     qps::runtime::StructuralReferenceContext{
-                        "defs/<index.qps"
+                        "defs/_index.qps"
                     });
 
             if (direct.target_type != "TERM_DECLARATION") {
@@ -578,7 +578,7 @@ int main(int argc, char** argv) {
         // Two-parent module traversal.
         //
         // Current document:
-        //   items/MC/<index.qps
+        //   items/MC/_index.qps
         //
         // Reference:
         //   [>//defs/KE/U.p]
@@ -640,7 +640,7 @@ int main(int argc, char** argv) {
                 symbols.resolve(
                     *reference,
                     qps::runtime::StructuralReferenceContext{
-                        "items/MC/<index.qps"
+                        "items/MC/_index.qps"
                     });
 
             if (direct.target_identifier != "p") {
@@ -709,7 +709,7 @@ int main(int argc, char** argv) {
                 (void)symbols.resolve(
                     *reference,
                     qps::runtime::StructuralReferenceContext{
-                        "items/MC/<index.qps"
+                        "items/MC/_index.qps"
                     });
             }
             catch (const std::runtime_error& e) {

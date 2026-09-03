@@ -62,9 +62,9 @@ File Extension: All QPS source files use the .qps extension.
 The .qps file itself acts as the implicit Library or Module. It is the top-level container for all declarations within it.
 The engine automatically recognizes the file as a QPS library, even without explicit wrapping delimiters.
 
-# <index.qps (Module Manifest):
+# _index.qps (Module Manifest):
 Behaves exactly like Python's __init__.py.
-When a directory is referenced as a module, its <index.qps file is automatically processed by the runtime's PathResolver.
+When a directory is referenced as a module, its _index.qps file is automatically processed by the runtime's PathResolver.
 It defines which elements from the directory are exposed publicly and can contain module-level initialization logic.
 
 # Top-Level File Content:
