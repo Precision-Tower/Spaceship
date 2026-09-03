@@ -1,0 +1,293 @@
+PipeSemanticContract.
+
+status.
+purpose- "Architecture contract for migration of CE-OS pipe, fitting, port, connection, and routing semantics into Engineering/QPS";
+physical_validation- false/b;
+pressure_rating- false/b;
+manufacturability- false/b;
+leak_integrity- false/b;
+build_readiness- false/b;
+
+authority.
+
+Engineering: (
+owns- "pipe and fitting meaning";
+owns_dimensions- "dimensional resolution";
+owns_materials- "material assignment";
+owns_ports- "port topology";
+owns_connections- "connection topology";
+owns_compatibility- "compatibility evaluation";
+owns_placement- "placement resolution";
+owns_routing- "routing semantics";
+owns_calculation- "calculated mass and volume";
+owns_unknowns- "unresolved variables";
+owns_prohibitions- "blocked and prohibited interpretations";
+owns_geometry_requests- "geometry requests";
+owns_rebuilds- "rebuild dependency resolution";
+);
+
+QPS: (
+role- "authored semantic representation";
+);
+
+Engineering_CPP: (
+role- "executes geometry requests";
+);
+
+OCCT: (
+role- "owns native B-rep construction and native geometry operations";
+);
+
+Workbench: (
+owns_interaction- "operator gestures, dialogs, controls, and selection";
+owns_transient_state- "transient ghosts and candidate visualization";
+owns_display- "display meshes";
+owns_intent- "explicit candidate-intent submission";
+truth_rule- "Workbench does not establish Engineering truth";
+);
+
+pipe_definition.
+description- "A reusable engineering article describing a pipe family and its authored interface semantics";
+family-/a;
+nominal_size-/a;
+schedule-/a;
+material-/a;
+outside_diameter-/n;
+inside_diameter-/n;
+wall_thickness-/n;
+interface_topology-/a;
+catalog_rule- "catalog values may resolve authored nominal values into physical dimensions";
+placement_rule- "a Pipe Definition does not contain world placement";
+
+pipe_instance.
+description- "An instance referencing a Pipe Definition and supplying resolved instance state";
+object_identity-/a;
+definition_reference-/a;
+length-/n;
+placement-/a;
+run_membership-/a;
+fill_state-/a;
+resolved_dimensions-/a;
+ports-/a;
+connections-/a;
+calculated_quantities-/a;
+geometry_state-/a;
+diagnostics-/a;
+resolution_rule- "changing a Pipe Instance parameter requires Engineering resolution";
+workbench_rule- "moving a Godot node does not change authoritative Pipe Instance placement";
+
+pipe_dimensions.
+canonical_relationship- "outside diameter, inside diameter, wall thickness";
+radius_rule- "radius values may be derived for calculation or geometry execution";
+nominal_rule- "nominal size and schedule are specification identifiers and must not be silently treated as measured physical diameter";
+catalog_rule- "catalog resolution must remain explicit";
+
+fitting_definition.
+description- "A reusable pipe-interface article";
+examples- "coupling, 90 degree elbow";
+fitting_type-/a;
+standard-/a;
+nominal_size-/a;
+schedule-/a;
+material-/a;
+dimensional_rules-/a;
+interface_topology-/a;
+takeoff_rules-/a;
+
+fitting_instance.
+description- "An instance referencing a Fitting Definition";
+object_identity-/a;
+definition_reference-/a;
+placement-/a;
+roll-/n;
+resolved_dimensions-/a;
+resolved_takeoff-/n;
+ports-/a;
+connections-/a;
+geometry_state-/a;
+diagnostics-/a;
+roll_rule- "roll is an instance parameter around a constrained connection axis";
+alignment_rule- "visual alignment does not establish a valid physical joint";
+
+ports.
+definition- "Ports are Engineering interfaces";
+identity_rule- "a port has semantic identity independent of its rendered marker";
+port_id-/a;
+interface_type-/a;
+dimensional_compatibility-/a;
+local_transform-/a;
+resolved_world_transform-/a;
+state-/a;
+connection_reference-/a;
+diagnostics-/a;
+definition_rule- "Definitions establish port topology and local interface rules";
+instance_rule- "Instances resolve port transforms into Engineering space";
+render_rule- "Godot port markers are disposable representations";
+
+connections.
+definition- "Connections are first-class Engineering relationships";
+endpoint_a_object-/a;
+endpoint_a_port-/a;
+endpoint_b_object-/a;
+endpoint_b_port-/a;
+state_rule- "connection state must not be inferred solely from spatial coincidence";
+compatibility_owner- "Engineering";
+
+compatibility: (
+interface_type-/a;
+dimensions-/a;
+specification-/a;
+material_system_constraints-/a;
+connection_state-/a;
+additional_rules-/a;
+floating_point_rule- "exact floating-point equality is not a canonical compatibility rule";
+);
+
+connection_limits: (
+does_not_prove- "leak integrity";
+does_not_prove- "pressure safety";
+does_not_prove- "manufacturability";
+does_not_prove- "physical assembly";
+does_not_prove- "build readiness";
+);
+
+placement.
+definition- "Placement is Engineering instance state";
+candidate_rule- "Workbench may create transient candidate placement";
+acceptance_rule- "Engineering resolves accepted candidate placement";
+renderer_rule- "renderer-specific axis conventions are not Engineering semantics";
+godot_rule- "Godot cylinder orientation conventions must not become part of the canonical Pipe definition";
+
+routing.
+definition- "Routing creates or modifies Engineering instances and relationships";
+
+resolution: (
+endpoints-/a;
+pipe_length-/n;
+pipe_placement-/a;
+fitting_requirements-/a;
+fitting_placement-/a;
+connection_topology-/a;
+affected_run_members-/a;
+);
+
+owner- "Engineering";
+
+workbench_rule- "Workbench may author routing intent but does not resolve authoritative routes";
+
+runs.
+definition- "A run is an Engineering relationship/grouping between compatible pipe-system instances";
+parameter_rule- "run-wide parameter changes are Engineering operations";
+workbench_rule- "Workbench must not establish authoritative run membership by walking Godot nodes";
+intent_rule- "requests such as changing run outside diameter are submitted as intent";
+resolution_rule- "Engineering determines affected instances and rebuild dependencies";
+
+trim_extend.
+definition- "Trim and extend are Engineering operations";
+
+workbench_supplies: (
+target_object-/a;
+target_endpoint-/a;
+requested_amount_or_target-/a;
+operator_context-/a;
+);
+
+engineering_resolves: (
+resulting_length-/n;
+resulting_placement-/a;
+port_transforms-/a;
+connection_effects-/a;
+routing_effects-/a;
+geometry_rebuild-/a;
+diagnostics-/a;
+);
+
+authority_rule- "Workbench must not make resulting geometry authoritative by directly mutating a rendered node";
+
+calculated_quantities.
+material_volume-/n;
+contained_volume-/n;
+mass-/n;
+buoyancy_contribution-/n;
+centerline_length-/n;
+fitting_takeoff-/n;
+evidence_rule- "calculated quantities retain their evidence state";
+validation_rule- "successful calculation does not imply physical validation";
+
+geometry.
+semantic_rule- "Pipe and fitting semantics are not render primitives";
+resolution_rule- "Engineering resolves semantic instances into geometry actions";
+
+flow: (
+stage_1- "QPS authored state";
+stage_2- "Engineering resolution";
+stage_3- "geometry actions";
+stage_4- "Engineering C++";
+stage_5- "OCCT B-rep";
+stage_6- "triangulation/display contract";
+stage_7- "Workbench Godot rendering";
+);
+
+implementation_examples: (
+pipe- "cylindrical or native hollow geometry may be used internally";
+elbow- "sweep or torus-like native geometry may be used internally";
+);
+
+implementation_rule- "native geometry primitives do not define the Engineering article";
+
+godot_rule- "current Godot pipe and elbow meshes are compatibility visualization only";
+
+candidate_intent.
+definition- "Workbench produces explicit candidate intent";
+
+requests: (
+create_pipe-/b;
+create_fitting-/b;
+connect-/b;
+disconnect-/b;
+move-/b;
+trim-/b;
+extend-/b;
+change_dimension-/b;
+change_run_parameter-/b;
+delete-/b;
+);
+
+state_rule- "candidate intent is not Engineering state";
+
+Engineering_response: (
+accept-/b;
+reject-/b;
+modify-/b;
+leave_unresolved-/b;
+);
+
+return_rule- "the result returned to Workbench is an Engineering projection suitable for inspection and rendering";
+
+migration_sources.
+python_pipe- "behavioral reference for catalog resolution, hollow-cylinder accounting, fittings, ports, connections, placement, and routing";
+ghost_pipe- "reference for operator interaction and for identifying Engineering semantics that leaked into Godot";
+canonical_rule- "neither implementation is automatically canonical merely because it exists";
+
+prohibited_interpretations.
+rule_1- "rendered pipe equals Engineering pipe";
+rule_2- "ghost pipe equals Engineering pipe";
+rule_3- "visual alignment equals physical connection";
+rule_4- "connection record equals leak-free connection";
+rule_5- "fitting geometry equals pressure-rated fitting";
+rule_6- "calculated candidate equals build-ready component";
+rule_7- "successful native geometry equals manufacturability";
+rule_8- "packet loading equals validation";
+rule_9- "simulation playback equals validation";
+rule_10- "Godot mesh equals authoritative CAD";
+
+migration_rule.
+godot- "interaction and display behavior remains in Workbench";
+qps- "authored Engineering meaning moves to QPS";
+engineering- "semantic calculation and resolution belongs to Engineering";
+native- "native CAD construction belongs to Engineering C++ and OCCT";
+python- "existing Python remains reference or transitional execution until replacement is proven";
+preservation- "migration must preserve known-good behavior until the replacement path is tested";
+
+provenance.
+source- "Engineering/qps/docs/PIPE_SEMANTIC_CONTRACT.md";
