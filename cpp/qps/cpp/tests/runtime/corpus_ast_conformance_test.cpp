@@ -33,6 +33,8 @@ struct Profile {
     std::size_t nulls = 0;
     std::size_t path_references = 0;
     std::size_t symbol_references = 0;
+    std::size_t index_path_references = 0;
+    std::size_t non_index_path_references = 0;
     std::size_t identifiers = 0;
     std::size_t binary_expressions = 0;
     std::size_t function_calls = 0;
@@ -340,7 +342,23 @@ int main(int argc, char** argv) {
                     path.string());
             }
 
+            const std::size_t before_paths =
+                visitor.profile.path_references;
+
             program->accept(visitor);
+
+            const std::size_t document_paths =
+                visitor.profile.path_references -
+                before_paths;
+
+            if (path.filename() == "_index.qps") {
+                visitor.profile.index_path_references +=
+                    document_paths;
+            } else {
+                visitor.profile.non_index_path_references +=
+                    document_paths;
+            }
+
             ++documents;
         }
 
@@ -390,6 +408,10 @@ int main(int argc, char** argv) {
                   << p.path_references << "\n";
         std::cout << "symbol_references="
                   << p.symbol_references << "\n";
+        std::cout << "index_path_references="
+                  << p.index_path_references << "\n";
+        std::cout << "non_index_path_references="
+                  << p.non_index_path_references << "\n";
 
         std::cout << "execution_definitions="
                   << p.execution_definitions << "\n";

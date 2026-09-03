@@ -94,22 +94,75 @@ These counts describe the current active corpus. They are evidence, not permanen
 
 ## Active Milestone — Reference Semantics
 
-The active corpus contains 120 `PathReferenceNode` instances. The next conformance layer is to prove their semantic resolution across the active Engineering corpus.
+QPS currently has two distinct reference representations.
 
-- [ ] Inventory the current `PathReferenceNode` AST representation.
-- [ ] Inventory existing runtime/path resolver behavior used by path references.
-- [ ] Identify all semantic target types a path reference may legally resolve to.
-- [ ] Build active-corpus path-reference resolution conformance.
-- [ ] Resolve every active path reference through canonical resolver semantics.
-- [ ] Require zero unintentionally unresolved active references.
-- [ ] Census resolved terminal target types.
-- [ ] Distinguish deliberately external/deferred references if the language supports them.
-- [ ] Verify path resolution cannot escape the authorized connected workspace.
-- [ ] Verify ambiguity is rejected rather than silently selected.
-- [ ] Add reference conformance to CTest.
-- [ ] Record the resulting reference-resolution baseline.
-- [ ] Distill proven reference semantics into `docs/README.md`.
+### Legacy Path References
+
+`PathReferenceNode` is the active module-surface/document-path representation used by the current Engineering corpus.
+
+Current measured corpus baseline:
+
+- [x] 120 active `PathReferenceNode` instances observed.
+- [x] Active `PathReferenceNode` instances are authored in `_index.qps` module surfaces.
+- [x] Active module-surface resolution is validated by `qps_active_surface_graph_test`.
+- [x] Module delegation is acyclic.
+- [x] Duplicate surfaced aliases are rejected.
+- [x] Surfaced targets resolve to terminal semantic Keys.
+- [x] Resolved targets remain inside the connected workspace.
+
+- [x] Record explicit census split for `_index.qps` versus non-index `PathReferenceNode` instances: 120 index, 0 non-index.
+- [x] Require zero unintended non-index legacy path references in the active corpus unless deliberately introduced.
+
+### Structural Symbol References
+
+`SymbolReferenceNode` is the structural semantic-navigation representation used by `[>...]` and local-binding references.
+
+The runtime supports these authored origins:
+
+- `CURRENT_FILE`
+- `CURRENT_FOLDER_FILE`
+- `RELATIVE_MODULE`
+- `LOCAL_BINDING`
+
+The resolver supports these terminal semantic targets:
+
+- `KEY_DECLARATION`
+- `TERM_DECLARATION`
+- `ITEM_VALUE`
+
+Existing conformance already proves:
+
+- [x] direct structural Key resolution
+- [x] nested Term resolution
+- [x] explicit Item-value selection
+- [x] child-module structural traversal
+- [x] one-parent traversal
+- [x] two-parent traversal
+- [x] workspace-root escape rejection
+
+Current active Engineering corpus baseline:
+
+- [x] 0 active `SymbolReferenceNode` instances observed.
+- [x] Structural-reference runtime semantics are implemented independently of active corpus usage.
+
+Remaining structural-reference proof:
+
+- [x] Explicitly prove `CURRENT_FILE` origin.
+- [x] Explicitly prove `CURRENT_FOLDER_FILE` origin.
+- [x] Explicitly prove `LOCAL_BINDING` through `resolveFrom()`.
+- [x] Preserve `RELATIVE_MODULE` traversal witnesses.
+- [ ] Preserve duplicate semantic structure rejection.
+- [ ] Preserve unresolved-target rejection.
+- [ ] Preserve invalid-descent rejection.
+- [ ] Record structural-reference runtime contract in `docs/README.md`.
 - [ ] Update `docs/QPS.qps` where executable specification changes are required.
+
+### Reference Conformance Checkpoint
+
+- [x] Extend the active AST census to report index and non-index path-reference populations separately.
+- [x] Run the full QPS CTest suite: 14/14 passing.
+- [x] Record the resulting reference-semantics baseline: 120 index path references, 0 non-index path references, 0 active structural symbol references.
+- [ ] Distill proven reference architecture into `docs/README.md`.
 
 ## Future Language Milestones
 

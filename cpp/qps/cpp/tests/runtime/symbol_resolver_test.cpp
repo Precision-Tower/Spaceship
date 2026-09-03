@@ -731,6 +731,262 @@ int main(int argc, char** argv) {
                 << "\n";
         }
 
+
+        // Current-file structural reference witness.
+        //
+        // Current document:
+        //   defs/semantic_walk/shape.qps
+        //
+        // Reference:
+        //   [>shape.dimensions]
+        //
+        // Resolves the nested dimensions Term in the current document.
+        {
+            const std::string source =
+                "{Reference_Witness:"
+                "%current_file_ref: "
+                "[>shape.dimensions]"
+                "}";
+
+            qps::tokens::CharStream stream(source);
+            qps::tokens::Lexer lexer(stream);
+            qps::parser::Parser parser(lexer);
+
+            auto witness_program =
+                parser.parseProgram();
+
+            auto* definition =
+                dynamic_cast<qps::ast::ExecutionDefinitionNode*>(
+                    witness_program->statements.front().get());
+
+            if (!definition ||
+                definition->body_->statements.empty()) {
+                throw std::runtime_error(
+                    "Failed to parse current-file reference witness.");
+            }
+
+            auto* calculation =
+                dynamic_cast<qps::ast::CalculationNode*>(
+                    definition->body_->statements.front().get());
+
+            if (!calculation) {
+                throw std::runtime_error(
+                    "Current-file witness is not a CalculationNode.");
+            }
+
+            auto* reference =
+                dynamic_cast<qps::ast::SymbolReferenceNode*>(
+                    calculation->getExpression());
+
+            if (!reference) {
+                throw std::runtime_error(
+                    "Current-file witness expression is not a SymbolReferenceNode.");
+            }
+
+            if (reference->getOrigin() !=
+                qps::ast::SymbolReferenceOrigin::CURRENT_FILE) {
+                throw std::runtime_error(
+                    "Current-file witness did not preserve CURRENT_FILE origin.");
+            }
+
+            const auto direct =
+                symbols.resolve(
+                    *reference,
+                    qps::runtime::StructuralReferenceContext{
+                        "defs/semantic_walk/shape.qps"
+                    });
+
+            if (direct.target_type != "TERM_DECLARATION" ||
+                direct.target_identifier != "dimensions") {
+                throw std::runtime_error(
+                    "Current-file structural reference resolved incorrectly.");
+            }
+
+            std::cout
+                << "DIRECT CURRENT-FILE TERM: "
+                << direct.target_identifier
+                << "\n";
+        }
+
+        // Current-folder sibling-file witness.
+        //
+        // Current document:
+        //   defs/semantic_walk/_index.qps
+        //
+        // Reference:
+        //   [>.shape.shape]
+        //
+        // Resolves:
+        //   defs/semantic_walk/shape.qps
+        //   Key shape
+        {
+            const std::string source =
+                "{Reference_Witness:"
+                "%sibling_ref: "
+                "[>.shape.shape]"
+                "}";
+
+            qps::tokens::CharStream stream(source);
+            qps::tokens::Lexer lexer(stream);
+            qps::parser::Parser parser(lexer);
+
+            auto witness_program =
+                parser.parseProgram();
+
+            auto* definition =
+                dynamic_cast<qps::ast::ExecutionDefinitionNode*>(
+                    witness_program->statements.front().get());
+
+            if (!definition ||
+                definition->body_->statements.empty()) {
+                throw std::runtime_error(
+                    "Failed to parse current-folder reference witness.");
+            }
+
+            auto* calculation =
+                dynamic_cast<qps::ast::CalculationNode*>(
+                    definition->body_->statements.front().get());
+
+            if (!calculation) {
+                throw std::runtime_error(
+                    "Current-folder witness is not a CalculationNode.");
+            }
+
+            auto* reference =
+                dynamic_cast<qps::ast::SymbolReferenceNode*>(
+                    calculation->getExpression());
+
+            if (!reference) {
+                throw std::runtime_error(
+                    "Current-folder witness expression is not a SymbolReferenceNode.");
+            }
+
+            if (reference->getOrigin() !=
+                qps::ast::SymbolReferenceOrigin::CURRENT_FOLDER_FILE) {
+                throw std::runtime_error(
+                    "Current-folder witness did not preserve CURRENT_FOLDER_FILE origin.");
+            }
+
+            const auto direct =
+                symbols.resolve(
+                    *reference,
+                    qps::runtime::StructuralReferenceContext{
+                        "defs/semantic_walk/_index.qps"
+                    });
+
+            if (direct.target_type != "KEY_DECLARATION" ||
+                direct.target_identifier != "shape") {
+                throw std::runtime_error(
+                    "Current-folder structural reference resolved incorrectly.");
+            }
+
+            std::cout
+                << "DIRECT CURRENT-FOLDER KEY: "
+                << direct.target_identifier
+                << "\n";
+        }
+
+        // Local-binding rebasing witness.
+        //
+        // First resolve:
+        //   [>shape.dimensions]
+        //
+        // Then rebase local binding:
+        //   [v.cylinder]
+        //
+        // Expected terminal target:
+        //   Term cylinder
+        {
+            const std::string root_source =
+                "{Reference_Witness:"
+                "%root_ref: "
+                "[>shape.dimensions]"
+                "}";
+
+            qps::tokens::CharStream root_stream(root_source);
+            qps::tokens::Lexer root_lexer(root_stream);
+            qps::parser::Parser root_parser(root_lexer);
+
+            auto root_program =
+                root_parser.parseProgram();
+
+            auto* root_definition =
+                dynamic_cast<qps::ast::ExecutionDefinitionNode*>(
+                    root_program->statements.front().get());
+
+            auto* root_calculation =
+                dynamic_cast<qps::ast::CalculationNode*>(
+                    root_definition->body_->statements.front().get());
+
+            auto* root_reference =
+                dynamic_cast<qps::ast::SymbolReferenceNode*>(
+                    root_calculation->getExpression());
+
+            if (!root_reference) {
+                throw std::runtime_error(
+                    "Local-binding root witness is not a SymbolReferenceNode.");
+            }
+
+            const auto root =
+                symbols.resolve(
+                    *root_reference,
+                    qps::runtime::StructuralReferenceContext{
+                        "defs/semantic_walk/shape.qps"
+                    });
+
+            const std::string local_source =
+                "{Reference_Witness:"
+                "%local_ref: "
+                "[v.cylinder]"
+                "}";
+
+            qps::tokens::CharStream local_stream(local_source);
+            qps::tokens::Lexer local_lexer(local_stream);
+            qps::parser::Parser local_parser(local_lexer);
+
+            auto local_program =
+                local_parser.parseProgram();
+
+            auto* local_definition =
+                dynamic_cast<qps::ast::ExecutionDefinitionNode*>(
+                    local_program->statements.front().get());
+
+            auto* local_calculation =
+                dynamic_cast<qps::ast::CalculationNode*>(
+                    local_definition->body_->statements.front().get());
+
+            auto* local_reference =
+                dynamic_cast<qps::ast::SymbolReferenceNode*>(
+                    local_calculation->getExpression());
+
+            if (!local_reference) {
+                throw std::runtime_error(
+                    "Local-binding witness is not a SymbolReferenceNode.");
+            }
+
+            if (local_reference->getOrigin() !=
+                qps::ast::SymbolReferenceOrigin::LOCAL_BINDING) {
+                throw std::runtime_error(
+                    "Local-binding witness did not preserve LOCAL_BINDING origin.");
+            }
+
+            const auto rebound =
+                symbols.resolveFrom(
+                    root,
+                    *local_reference);
+
+            if (rebound.target_type != "TERM_DECLARATION" ||
+                rebound.target_identifier != "cylinder") {
+                throw std::runtime_error(
+                    "Local-binding structural reference resolved incorrectly.");
+            }
+
+            std::cout
+                << "DIRECT LOCAL-BINDING TERM: "
+                << rebound.target_identifier
+                << "\n";
+        }
+
         return 0;
     }
     catch (const std::exception& e) {

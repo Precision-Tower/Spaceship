@@ -71,3 +71,16 @@ The active Engineering corpus is itself a conformance surface and must remain pa
 As checklist work is completed and proven, durable language architecture and behavior are distilled into this README.
 
 `docs/QPS.qps` remains the executable language specification and should evolve with the implementation and tests.
+
+## Reference Semantics
+
+QPS currently has two distinct reference representations.
+
+`PathReferenceNode` is the legacy module-surface/document-path representation used by the active Engineering corpus. The active AST census records 120 path references, all 120 in `_index.qps` module surfaces and zero in non-index documents. The active surface-graph conformance test validates connected module delegation and terminal semantic resolution for this surface.
+
+`SymbolReferenceNode` is the structural semantic-navigation representation. It preserves authored reference origin and supports current-file, current-folder-file, relative-module, and local-binding navigation. Structural resolution can terminate on a Key, Term, or explicitly selected Item value.
+
+The structural resolver is runtime-tested for current-file navigation, sibling-file navigation, child and parent module traversal, local-binding rebasing, nested Term resolution, explicit Item-value selection, and workspace-root containment.
+
+The active Engineering corpus currently contains zero `SymbolReferenceNode` instances. Structural references are therefore an implemented and tested runtime language capability, but are not yet an authored dependency of the active Engineering corpus.
+
