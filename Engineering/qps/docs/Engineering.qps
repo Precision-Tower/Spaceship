@@ -128,7 +128,7 @@ implementation- "qps/cpp";
 corpus- "Engineering/qps";
 quicksheet- "cpp/qps/docs/QPS.qps";
 quicksheet_contract: def"QPS.qps is executable documentation and a parser conformance fixture.";
-current_test_state- "12/12 QPS tests passing";
+current_test_state- "13/13 QPS tests passing";
 current_corpus_state- "33/33 active QPS documents parsing";
 
 qps_corpus.
