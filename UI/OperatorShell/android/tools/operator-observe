@@ -19,6 +19,7 @@ LOG="$OBS/logs/$STAMP.log"
 UIXML="$OBS/ui/$STAMP.xml"
 
 LATEST_SCREEN="$OBS/latest.png"
+LATEST_FULL_SCREEN="$OBS/latest-full.png"
 LATEST_LOG="$OBS/latest.log"
 LATEST_UI="$OBS/latest.xml"
 
@@ -69,7 +70,21 @@ echo
 echo "=== SCREENSHOT ==="
 
 "$CONTROL" operator.screenshot "$SCREEN" >/dev/null
-cp "$SCREEN" "$LATEST_SCREEN"
+
+# Preserve full-resolution evidence separately.
+cp "$SCREEN" "$LATEST_FULL_SCREEN"
+
+# latest.png is intentionally the canonical AI/diagnostic image.
+# Do not require Codex, ChatGPT, or other tooling to choose between
+# full-resolution and reduced screenshots.
+if command -v ffmpeg >/dev/null 2>&1; then
+	ffmpeg 		-hide_banner 		-loglevel error 		-y 		-i "$SCREEN" 		-vf "scale=540:-2:flags=lanczos" 		-frames:v 1 		"$LATEST_SCREEN"
+else
+	echo "ERROR: ffmpeg is required to publish the canonical diagnostic screenshot."
+	exit 33
+fi
+
+test -s "$LATEST_SCREEN"
 
 echo
 echo "=== UI HIERARCHY ==="
@@ -105,6 +120,7 @@ fi
 echo
 echo "OBSERVATION COMPLETE"
 echo "SCREENSHOT=$LATEST_SCREEN"
+echo "SCREENSHOT_FULL=$LATEST_FULL_SCREEN"
 echo "UI=$LATEST_UI"
 echo "LOG=$LATEST_LOG"
 echo "OperatorShell remains running."

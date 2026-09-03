@@ -311,3 +311,17 @@ and writes the resulting temporary HTTPS URL to:
     state/ui-observation/latest.url
 
 Do not publish logs, filesystem contents, CE-OS state, tokens, or source code.
+
+## Screenshot Contract
+
+Canonical diagnostic/share image:
+
+    ~/ce-os/state/ui-observation/latest.png
+
+This image is intentionally reduced for AI and routine visual inspection.
+
+Full-resolution evidence:
+
+    ~/ce-os/state/ui-observation/latest-full.png
+
+Do not use the full-resolution screenshot for routine AI/Codex inspection unless the reduced image cannot answer a specific visual question.

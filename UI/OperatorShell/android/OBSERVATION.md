@@ -44,3 +44,18 @@ as a trusted control plane.
 
 A failed upload must not make an otherwise successful observation fail.
 Local screenshot and log artifacts remain authoritative.
+
+
+## Screenshot Contract
+
+Canonical diagnostic/share image:
+
+    ~/ce-os/state/ui-observation/latest.png
+
+This image is intentionally reduced for AI and routine visual inspection.
+
+Full-resolution evidence:
+
+    ~/ce-os/state/ui-observation/latest-full.png
+
+Do not use the full-resolution screenshot for routine AI/Codex inspection unless the reduced image cannot answer a specific visual question.
