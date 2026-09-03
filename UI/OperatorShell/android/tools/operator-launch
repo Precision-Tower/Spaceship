@@ -4,5 +4,4 @@ set -euo pipefail
 ROOT="$HOME/ce-os"
 CONTROL="$ROOT/Android/Privileged/bin/ce-os-android-shell"
 
-"$CONTROL" operator.force-stop || true
 "$CONTROL" operator.launch

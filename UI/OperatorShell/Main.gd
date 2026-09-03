@@ -35,6 +35,7 @@ const OBSERVATION_SURFACES := [
 ]
 
 var main_v_split: VSplitContainer
+var desktop_root: HBoxContainer
 var center_vbox: VBoxContainer
 var left_dock_shell: VBoxContainer
 var right_dock_shell: VBoxContainer
@@ -44,6 +45,35 @@ var left_dock_open := true
 var right_dock_open := true
 var terminal_collapsed := false
 var terminal_density_modes := ["comfortable", "compact", "dense"]
+
+enum MobileSurface {
+	FILES,
+	EDITOR,
+	TERMINAL,
+	CONTROLS
+}
+
+var mobile_mode := false
+var mobile_surface := MobileSurface.EDITOR
+var mobile_root: VBoxContainer
+var mobile_surface_stack: Control
+var mobile_surfaces := {}
+var mobile_nav: HBoxContainer
+var mobile_nav_buttons := {}
+var mobile_files_tree: Tree
+var mobile_editor: TextEdit
+var mobile_editor_path_label: Label
+var mobile_editor_status_label: Label
+var mobile_editor_save_button: Button
+var mobile_controls_status: RichTextLabel
+var mobile_editor_file_path := "scratch://welcome.gd"
+var mobile_editor_dirty := false
+var mobile_editor_loading := false
+var operator_control_server
+
+const MOBILE_WELCOME_TEXT := "# CE-OS mobile editor\n\n# Milestone 1 buffer.\n# This text surface is editable on Android and uses the system keyboard.\n\nfunc next_step() -> String:\n\treturn \"wire fs.read/fs.write through CE-OS service\"\n"
+const MOBILE_CHECKLIST_TEXT := "# Mobile IDE Checklist\n\n- Files: placeholder browser for Milestone 1\n- Editor: native editable Godot TextEdit\n- Terminal: existing runtime terminal surface\n- Controls: CE-OS state and command controls\n\nFilesystem authority remains behind the future CE-OS bridge.\n"
+const MOBILE_QPS_TEXT := "# _index.qps\n\nOperatorShell Android mobile shell\n  surfaces: Files, Editor, Terminal, Controls\n  invariant: one primary surface visible at a time\n  boundary: no direct Android traversal of Termux/root paths\n"
 
 var config: DashboardConfig
 var left_panel_control: Control
@@ -127,6 +157,11 @@ var current_status := {
 }
 
 func _toggle_terminal_dock() -> void:
+	if mobile_mode:
+		terminal_collapsed = false
+		if bottom_shell:
+			bottom_shell.custom_minimum_size = Vector2.ZERO
+		return
 	terminal_collapsed = !terminal_collapsed
 
 	if bottom_shell:
@@ -177,6 +212,7 @@ func _test_state_update() -> void:
 
 func _ready() -> void:
 	print("[OperatorShell] ready")
+	mobile_mode = OS.get_name() == "Android"
 	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 	var screen_size := DisplayServer.screen_get_size()
 	DisplayServer.window_set_size(screen_size)
@@ -185,12 +221,105 @@ func _ready() -> void:
 	var qps_config := QPSConfig.new(CliBridge.dashboard_root())
 	qps_config.apply(config)
 	_background()
+	print("[OperatorShell] build begin")
 	_build()
+	print("[OperatorShell] build complete")
+	if mobile_mode:
+		_configure_mobile_composition()
+
+	operator_control_server = load(
+		"res://runtime/OperatorControlServer.gd"
+	).new(self)
+	add_child(operator_control_server)
+
 	audit_controller = OperatorAuditController.new()
 	add_child(audit_controller)
 	audit_controller.setup(capability_panel)
 	_seed()
 	request_assist_wake.connect(_on_request_assist_wake)
+
+func _process(_delta: float) -> void:
+	if mobile_mode:
+		_update_mobile_keyboard_layout()
+
+func _update_mobile_keyboard_layout() -> void:
+	if mobile_root == null:
+		return
+	var keyboard_height := DisplayServer.virtual_keyboard_get_height()
+	mobile_root.offset_bottom = -keyboard_height if keyboard_height > 0 else 0
+
+func operator_control_surface(name: String) -> bool:
+	if not mobile_mode:
+		return false
+
+	match name.to_lower():
+		"files":
+			_set_mobile_surface(MobileSurface.FILES)
+		"editor":
+			_set_mobile_surface(MobileSurface.EDITOR)
+		"terminal":
+			_set_mobile_surface(MobileSurface.TERMINAL)
+		"controls":
+			_set_mobile_surface(MobileSurface.CONTROLS)
+		_:
+			return false
+
+	return true
+
+
+func operator_control_editor_focus() -> bool:
+	if not mobile_mode or mobile_editor == null:
+		return false
+
+	_set_mobile_surface(MobileSurface.EDITOR)
+	mobile_editor.grab_focus()
+	return true
+
+
+func operator_control_keyboard_show() -> bool:
+	if not operator_control_editor_focus():
+		return false
+
+	var editor_rect := mobile_editor.get_global_rect()
+	var caret_offset := mobile_editor.get_caret_column()
+
+	DisplayServer.virtual_keyboard_show(
+		mobile_editor.text,
+		editor_rect,
+		DisplayServer.KEYBOARD_TYPE_DEFAULT,
+		-1,
+		caret_offset,
+		caret_offset
+	)
+	return true
+
+
+func operator_control_files_refresh() -> bool:
+	if not mobile_mode or mobile_files_tree == null:
+		return false
+
+	_populate_mobile_files_tree()
+	return true
+
+
+func operator_control_status() -> String:
+	if not mobile_mode:
+		return "platform=desktop"
+
+	var surface_name := "unknown"
+
+	match mobile_surface:
+		MobileSurface.FILES:
+			surface_name = "files"
+		MobileSurface.EDITOR:
+			surface_name = "editor"
+		MobileSurface.TERMINAL:
+			surface_name = "terminal"
+		MobileSurface.CONTROLS:
+			surface_name = "controls"
+
+	return "platform=android surface=" + surface_name
+
 
 func _on_request_assist_wake() -> void:
 	_open_screen("AI Assist")
@@ -206,19 +335,19 @@ func _background() -> void:
 	add_child(bg)
 
 func _build() -> void:
-	var root := HBoxContainer.new()
-	root.set_anchors_preset(Control.PRESET_FULL_RECT)
-	root.add_theme_constant_override("separation", 0)
-	add_child(root)
+	desktop_root = HBoxContainer.new()
+	desktop_root.set_anchors_preset(Control.PRESET_FULL_RECT)
+	desktop_root.add_theme_constant_override("separation", 0)
+	add_child(desktop_root)
 
 	left_dock_shell = _build_left_dock_shell()
-	root.add_child(left_dock_shell)
+	desktop_root.add_child(left_dock_shell)
 
 	center_vbox = VBoxContainer.new()
 	center_vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	center_vbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	center_vbox.add_theme_constant_override("separation", 8)
-	root.add_child(center_vbox)
+	desktop_root.add_child(center_vbox)
 
 	center_vbox.add_child(_top_bar())
 	center_vbox.add_child(_runtime_state_bar())
@@ -238,7 +367,375 @@ func _build() -> void:
 	main_v_split.add_child(_bottom())
 
 	right_dock_shell = _build_right_dock_shell()
-	root.add_child(right_dock_shell)
+	desktop_root.add_child(right_dock_shell)
+
+
+func _mobile_nav_button(label: String, surface: int) -> Button:
+	var button := Button.new()
+	button.text = label
+	button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	button.custom_minimum_size = Vector2(0, 58)
+	button.focus_mode = Control.FOCUS_NONE
+	button.add_theme_font_size_override("font_size", 13)
+	button.pressed.connect(func(): _set_mobile_surface(surface))
+	mobile_nav_buttons[surface] = button
+	return button
+
+
+func _build_mobile_nav() -> HBoxContainer:
+	var nav := HBoxContainer.new()
+	nav.custom_minimum_size = Vector2(0, 68)
+	nav.add_theme_constant_override("separation", 4)
+
+	nav.add_child(_mobile_nav_button("Files", MobileSurface.FILES))
+	nav.add_child(_mobile_nav_button("Editor", MobileSurface.EDITOR))
+	nav.add_child(_mobile_nav_button("Terminal", MobileSurface.TERMINAL))
+	nav.add_child(_mobile_nav_button("Controls", MobileSurface.CONTROLS))
+
+	return nav
+
+
+func _configure_mobile_composition() -> void:
+	if desktop_root:
+		desktop_root.visible = false
+
+	if mobile_root == null:
+		mobile_root = VBoxContainer.new()
+		mobile_root.set_anchors_preset(Control.PRESET_FULL_RECT)
+		mobile_root.add_theme_constant_override("separation", 0)
+		mobile_root.z_index = 50
+		add_child(mobile_root)
+
+		mobile_surface_stack = Control.new()
+		mobile_surface_stack.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		mobile_surface_stack.size_flags_vertical = Control.SIZE_EXPAND_FILL
+		mobile_root.add_child(mobile_surface_stack)
+
+		_add_mobile_surface(MobileSurface.FILES, _build_mobile_files_surface())
+		_add_mobile_surface(MobileSurface.EDITOR, _build_mobile_editor_surface())
+		_add_mobile_surface(MobileSurface.TERMINAL, _build_mobile_terminal_surface())
+		_add_mobile_surface(MobileSurface.CONTROLS, _build_mobile_controls_surface())
+
+		mobile_nav = _build_mobile_nav()
+		mobile_root.add_child(mobile_nav)
+
+	_set_mobile_surface(MobileSurface.EDITOR)
+
+
+func _add_mobile_surface(surface: int, control: Control) -> void:
+	control.set_anchors_preset(Control.PRESET_FULL_RECT)
+	control.visible = false
+	mobile_surface_stack.add_child(control)
+	mobile_surfaces[surface] = control
+
+
+func _set_mobile_surface(surface: int) -> void:
+	mobile_surface = surface
+	for key in mobile_surfaces.keys():
+		var control: Control = mobile_surfaces[key]
+		control.visible = int(key) == surface
+
+	_render_mobile_nav()
+
+	if surface == MobileSurface.TERMINAL:
+		terminal_collapsed = false
+		if bottom_shell:
+			bottom_shell.custom_minimum_size = Vector2.ZERO
+		_set_bottom("Terminal")
+
+
+func _render_mobile_nav() -> void:
+	for key in mobile_nav_buttons.keys():
+		var button: Button = mobile_nav_buttons[key]
+		_button(button, int(key) == mobile_surface)
+
+
+func _mobile_surface_title(title_text: String, detail_text: String = "") -> VBoxContainer:
+	var header := VBoxContainer.new()
+	header.add_theme_constant_override("separation", 2)
+	header.custom_minimum_size = Vector2(0, 54)
+
+	var title := Label.new()
+	title.text = title_text
+	title.add_theme_font_size_override("font_size", 22)
+	title.add_theme_color_override("font_color", Palette.GOLD_BRIGHT)
+	header.add_child(title)
+
+	if detail_text != "":
+		var detail := Label.new()
+		detail.text = detail_text
+		detail.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		detail.add_theme_font_size_override("font_size", 12)
+		detail.add_theme_color_override("font_color", Palette.TEXT_DIM)
+		header.add_child(detail)
+
+	return header
+
+
+func _mobile_surface_box() -> VBoxContainer:
+	var shell := VBoxContainer.new()
+	shell.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	shell.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	shell.add_theme_constant_override("separation", 8)
+	shell.offset_left = 10
+	shell.offset_right = -10
+	shell.offset_top = 10
+	shell.offset_bottom = -10
+	return shell
+
+
+func _build_mobile_files_surface() -> Control:
+	var shell := _mobile_surface_box()
+
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 6)
+	var title_box := _mobile_surface_title("Files", "CE-OS-authorized roots will arrive through the platform bridge.")
+	title_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	row.add_child(title_box)
+
+	var spacer := Control.new()
+	spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	row.add_child(spacer)
+
+	var refresh := Button.new()
+	refresh.text = "Refresh"
+	_button(refresh, false)
+	refresh.pressed.connect(_populate_mobile_files_tree)
+	row.add_child(refresh)
+	shell.add_child(row)
+
+	mobile_files_tree = Tree.new()
+	mobile_files_tree.columns = 1
+	mobile_files_tree.hide_root = false
+	mobile_files_tree.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	mobile_files_tree.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	mobile_files_tree.item_selected.connect(_on_mobile_file_selected)
+	mobile_files_tree.item_activated.connect(_on_mobile_file_selected)
+	shell.add_child(mobile_files_tree)
+
+	_populate_mobile_files_tree()
+	return shell
+
+
+func _populate_mobile_files_tree() -> void:
+	if mobile_files_tree == null:
+		return
+	mobile_files_tree.clear()
+
+	var root := mobile_files_tree.create_item()
+	root.set_text(0, "CE-OS/")
+	root.set_collapsed(false)
+	root.set_metadata(0, {"is_dir": true, "path": "ce-os"})
+
+	var ui := _mobile_file_item(root, "UI/", "ce-os/UI", true)
+	var shell := _mobile_file_item(ui, "OperatorShell/", "ce-os/UI/OperatorShell", true)
+	_mobile_file_item(shell, "Main.gd", "ce-os/UI/OperatorShell/Main.gd", false, MOBILE_WELCOME_TEXT)
+	_mobile_file_item(shell, "MOBILE_IDE_CHECKLIST.md", "ce-os/UI/OperatorShell/MOBILE_IDE_CHECKLIST.md", false, MOBILE_CHECKLIST_TEXT)
+	_mobile_file_item(shell, "_index.qps", "ce-os/UI/OperatorShell/_index.qps", false, MOBILE_QPS_TEXT)
+
+	var android := _mobile_file_item(root, "Android/", "ce-os/Android", true)
+	_mobile_file_item(android, "Termux/", "ce-os/Android/Termux", true)
+	_mobile_file_item(android, "Privileged/", "ce-os/Android/Privileged", true)
+
+	var state := _mobile_file_item(root, "state/", "ce-os/state", true)
+	_mobile_file_item(state, "ui-observation/", "ce-os/state/ui-observation", true)
+
+
+func _mobile_file_item(
+	parent: TreeItem,
+	label: String,
+	path: String,
+	is_dir: bool,
+	content: String = ""
+) -> TreeItem:
+	var item := parent.create_child()
+	item.set_text(0, label)
+	item.set_tooltip_text(0, path)
+	item.set_collapsed(is_dir)
+	item.set_metadata(0, {
+		"is_dir": is_dir,
+		"path": path,
+		"content": content
+	})
+	return item
+
+
+func _on_mobile_file_selected() -> void:
+	if mobile_files_tree == null:
+		return
+	var selected := mobile_files_tree.get_selected()
+	if selected == null:
+		return
+	var meta = selected.get_metadata(0)
+	if typeof(meta) != TYPE_DICTIONARY:
+		return
+	var file_data: Dictionary = meta
+	if bool(file_data.get("is_dir", false)):
+		selected.set_collapsed(not selected.is_collapsed())
+		return
+	_open_mobile_placeholder_file(
+		str(file_data.get("path", "scratch://untitled")),
+		str(file_data.get("content", ""))
+	)
+
+
+func _build_mobile_editor_surface() -> Control:
+	var shell := _mobile_surface_box()
+
+	var toolbar := HBoxContainer.new()
+	toolbar.add_theme_constant_override("separation", 6)
+
+	var title_box := _mobile_surface_title("Editor", "Native Android IME through Godot TextEdit.")
+	title_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	toolbar.add_child(title_box)
+
+	mobile_editor_save_button = Button.new()
+	mobile_editor_save_button.text = "Save"
+	_button(mobile_editor_save_button, true)
+	mobile_editor_save_button.pressed.connect(_save_mobile_editor_buffer)
+	toolbar.add_child(mobile_editor_save_button)
+	shell.add_child(toolbar)
+
+	var meta_row := HBoxContainer.new()
+	meta_row.add_theme_constant_override("separation", 8)
+	mobile_editor_path_label = Label.new()
+	mobile_editor_path_label.text = mobile_editor_file_path
+	mobile_editor_path_label.clip_text = true
+	mobile_editor_path_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	mobile_editor_path_label.add_theme_color_override("font_color", Palette.TEXT)
+	meta_row.add_child(mobile_editor_path_label)
+
+	mobile_editor_status_label = Label.new()
+	mobile_editor_status_label.text = "Clean"
+	mobile_editor_status_label.add_theme_color_override("font_color", Palette.TEXT_DIM)
+	meta_row.add_child(mobile_editor_status_label)
+	shell.add_child(meta_row)
+
+	mobile_editor = TextEdit.new()
+	mobile_editor.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	mobile_editor.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	mobile_editor.focus_mode = Control.FOCUS_ALL
+	mobile_editor.placeholder_text = "Open a file or start typing."
+	mobile_editor.text = MOBILE_WELCOME_TEXT
+	mobile_editor.add_theme_font_size_override("font_size", 14)
+	mobile_editor.text_changed.connect(_on_mobile_editor_text_changed)
+	mobile_editor.focus_entered.connect(_on_mobile_editor_focus_entered)
+	shell.add_child(mobile_editor)
+
+	_set_mobile_editor_dirty(false)
+	return shell
+
+
+func _open_mobile_placeholder_file(path: String, content: String) -> void:
+	mobile_editor_file_path = path
+	if mobile_editor_path_label:
+		mobile_editor_path_label.text = path
+	if mobile_editor:
+		mobile_editor_loading = true
+		mobile_editor.text = content
+		mobile_editor_loading = false
+	_set_mobile_editor_dirty(false)
+	_set_mobile_surface(MobileSurface.EDITOR)
+
+
+func _on_mobile_editor_text_changed() -> void:
+	if mobile_editor_loading:
+		return
+	_set_mobile_editor_dirty(true)
+
+
+func _on_mobile_editor_focus_entered() -> void:
+	print("[OperatorShell] mobile editor focus")
+	if OS.get_name() == "Android":
+		operator_control_keyboard_show()
+
+
+func _set_mobile_editor_dirty(is_dirty: bool) -> void:
+	mobile_editor_dirty = is_dirty
+	if mobile_editor_status_label:
+		mobile_editor_status_label.text = "Modified" if mobile_editor_dirty else "Clean"
+		mobile_editor_status_label.add_theme_color_override(
+			"font_color",
+			Palette.GOLD_BRIGHT if mobile_editor_dirty else Palette.TEXT_DIM
+		)
+	if mobile_editor_save_button:
+		mobile_editor_save_button.disabled = not mobile_editor_dirty
+
+
+func _save_mobile_editor_buffer() -> void:
+	_set_mobile_editor_dirty(false)
+	if mobile_editor_status_label:
+		mobile_editor_status_label.text = "Saved in buffer"
+	_log("mobile editor buffer saved: " + mobile_editor_file_path)
+
+
+func _build_mobile_terminal_surface() -> Control:
+	var shell := _mobile_surface_box()
+	shell.add_child(_mobile_surface_title("Terminal", "Runtime output and operational intent."))
+	if bottom_shell:
+		_move_control_to(bottom_shell, shell)
+		bottom_shell.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		bottom_shell.size_flags_vertical = Control.SIZE_EXPAND_FILL
+		bottom_shell.custom_minimum_size = Vector2.ZERO
+	return shell
+
+
+func _build_mobile_controls_surface() -> Control:
+	var shell := _mobile_surface_box()
+	shell.add_child(_mobile_surface_title("Controls", "Live CE-OS state and explicit operator actions."))
+
+	mobile_controls_status = RichTextLabel.new()
+	mobile_controls_status.bbcode_enabled = true
+	mobile_controls_status.selection_enabled = true
+	mobile_controls_status.custom_minimum_size = Vector2(0, 155)
+	mobile_controls_status.text = _current_status_text()
+	shell.add_child(mobile_controls_status)
+
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 6)
+	shell.add_child(row)
+
+	var refresh := Button.new()
+	refresh.text = "Refresh State"
+	_button(refresh, true)
+	_connect_observed_button(refresh, "Refresh State", _refresh_state_command)
+	row.add_child(refresh)
+
+	var git_status := Button.new()
+	git_status.text = "Git Status"
+	_button(git_status, false)
+	_connect_observed_button(git_status, "Git Status", _git_status)
+	row.add_child(git_status)
+
+	var commands := VBoxContainer.new()
+	commands.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	commands.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	commands.add_theme_constant_override("separation", 6)
+	shell.add_child(commands)
+
+	for label in ["Scan Core", "List Packets", "View Latest Diff", "Test State Update"]:
+		var button := Button.new()
+		button.text = label
+		_button(button, false)
+		match label:
+			"Scan Core":
+				_connect_observed_button(button, label, _scan_core)
+			"List Packets":
+				_connect_observed_button(button, label, _list_packets)
+			"View Latest Diff":
+				_connect_observed_button(button, label, _view_latest_diff)
+			"Test State Update":
+				_connect_observed_button(button, label, _test_state_update)
+		commands.add_child(button)
+
+	return shell
+
+
+func _move_control_to(control: Control, next_parent: Node) -> void:
+	var old_parent := control.get_parent()
+	if old_parent:
+		old_parent.remove_child(control)
+	next_parent.add_child(control)
 
 
 func _build_left_dock_shell() -> VBoxContainer:
@@ -388,6 +885,8 @@ func _set_status_value(key: String, value: String) -> void:
 func _render_current_status() -> void:
 	if current_status_label:
 		current_status_label.text = _current_status_text()
+	if mobile_controls_status:
+		mobile_controls_status.text = _current_status_text()
 
 func _state_field(state_text: String, key: String, fallback: String) -> String:
 	return StatusService.field(state_text, key, fallback)
@@ -521,10 +1020,13 @@ func _apply_config() -> void:
 
 	if bottom_shell:
 		bottom_expanded = config.default_bottom_expanded
-		bottom_shell.custom_minimum_size = Vector2(
-			0,
-			config.bottom_height_expanded if bottom_expanded else config.bottom_height_collapsed
-		)
+		if mobile_mode:
+			bottom_shell.custom_minimum_size = Vector2.ZERO
+		else:
+			bottom_shell.custom_minimum_size = Vector2(
+				0,
+				config.bottom_height_expanded if bottom_expanded else config.bottom_height_collapsed
+			)
 
 		if bottom_dock:
 			bottom_dock.apply_terminal_density(config.terminal_density)
@@ -810,6 +1312,11 @@ func _button(button: Button, primary: bool) -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if audit_controller != null and audit_controller.handle_input(event):
+		get_viewport().set_input_as_handled()
+		return
+
+	if mobile_mode and event.is_action_pressed("ui_cancel") and mobile_editor and mobile_editor.has_focus():
+		mobile_editor.release_focus()
 		get_viewport().set_input_as_handled()
 		return
 

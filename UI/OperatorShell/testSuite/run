@@ -1,0 +1,37 @@
+#!/data/data/com.termux/files/usr/bin/bash
+set -euo pipefail
+
+ROOT="$HOME/ce-os"
+OPS="$ROOT/UI/OperatorShell"
+
+cd "$ROOT"
+
+echo "=== OPERATORSHELL TEST SUITE ==="
+
+echo
+echo "=== SOURCE CONTRACT ==="
+python3 "$OPS/testSuite/test_source_contract.py"
+
+echo
+echo "=== SHELL SYNTAX ==="
+
+for script in \
+    "$ROOT/bin/ops" \
+    "$OPS/android/tools/operator-preflight" \
+    "$OPS/android/tools/operator-build" \
+    "$OPS/android/tools/operator-install" \
+    "$OPS/android/tools/operator-launch" \
+    "$OPS/android/tools/operator-close" \
+    "$OPS/android/tools/operator-observe" \
+    "$OPS/android/tools/operator-cycle"
+do
+    bash -n "$script"
+    echo "OK ${script#$ROOT/}"
+done
+
+echo
+echo "=== GIT WHITESPACE ==="
+git diff --check
+
+echo
+echo "OPERATORSHELL TEST SUITE PASSED"

@@ -36,8 +36,10 @@ run_shell_capture() {
 
     prepare_output
 
+    # Android shell cannot traverse the Termux application sandbox.
+    # Always execute framework commands from an Android-shell-accessible cwd.
     su -Z u:r:shell:s0 2000 -c \
-        "$command > '$TMP_OUT' 2>&1" || rc=$?
+        "cd /data/local/tmp && $command > '$TMP_OUT' 2>&1" || rc=$?
 
     su -c "cat '$TMP_OUT'" 2>/dev/null || true
 
@@ -77,44 +79,40 @@ case "$OP" in
     operator.install)
         require_operator_apk
 
+        apk_name="$(basename "$TMP_APK")"
+
+        # Root can read the Termux build artifact. Stage it into Android's
+        # shell-owned temporary area, then make the SELinux context explicit.
         su -c "
+            rm -f '$TMP_APK'
             cp '$CEOS_OPERATOR_APK' '$TMP_APK'
             chown 2000:2000 '$TMP_APK'
             chmod 644 '$TMP_APK'
+            chcon u:object_r:shell_data_file:s0 '$TMP_APK' 2>/dev/null || restorecon '$TMP_APK' 2>/dev/null || true
         "
 
-        echo "=== INSTALL ==="
+        echo "=== STAGED APK ==="
+        su -c "ls -lZ '$TMP_APK'"
+
+        echo
+        echo "=== INSTALL UPDATE ==="
 
         output=""
         rc=0
         output="$(run_shell_capture \
-            "/system/bin/pm install -r '$TMP_APK'")" || rc=$?
+            "/system/bin/pm install -r './$apk_name'")" || rc=$?
 
         printf '%s\n' "$output"
 
         if [[ "$rc" -ne 0 || "$output" != *Success* ]]; then
-            echo
-            echo "Update failed. Attempting clean development reinstall."
-
-            run_shell_capture \
-                "/system/bin/pm uninstall --user 0 '$CEOS_OPERATOR_PACKAGE'" \
-                || true
-
-            output=""
-            rc=0
-            output="$(run_shell_capture \
-                "/system/bin/pm install '$TMP_APK'")" || rc=$?
-
-            printf '%s\n' "$output"
-
-            if [[ "$rc" -ne 0 || "$output" != *Success* ]]; then
-                echo "ERROR: OperatorShell installation failed."
-                exit 22
-            fi
+            echo "ERROR: OperatorShell update failed."
+            echo "Existing installed OperatorShell was preserved."
+            exit 22
         fi
 
         echo
         echo "=== VERIFY PACKAGE ==="
+
         verify="$(run_shell_capture \
             "/system/bin/pm path '$CEOS_OPERATOR_PACKAGE'")"
 

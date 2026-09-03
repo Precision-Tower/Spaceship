@@ -23,6 +23,38 @@ LATEST_FULL_SCREEN="$OBS/latest-full.png"
 LATEST_LOG="$OBS/latest.log"
 LATEST_UI="$OBS/latest.xml"
 
+CEOS_OBSERVE_DISPLAY_WAS_AWAKE=1
+
+restore_observation_display() {
+    if [[ "$CEOS_OBSERVE_DISPLAY_WAS_AWAKE" == "0" ]]; then
+        su -Z u:r:shell:s0 2000 -c \
+            '/system/bin/input keyevent KEYCODE_SLEEP' \
+            >/dev/null 2>&1 || true
+    fi
+}
+
+if su -Z u:r:shell:s0 2000 -c \
+    '/system/bin/dumpsys power | grep -q "Wakefulness: Awake"'
+then
+    CEOS_OBSERVE_DISPLAY_WAS_AWAKE=1
+    echo "display: already awake"
+else
+    CEOS_OBSERVE_DISPLAY_WAS_AWAKE=0
+    echo "display: waking for runtime observation"
+
+    su -Z u:r:shell:s0 2000 -c \
+        '/system/bin/input keyevent KEYCODE_WAKEUP' \
+        >/dev/null 2>&1 || true
+
+    sleep 0.5
+fi
+
+su -Z u:r:shell:s0 2000 -c \
+    '/system/bin/wm dismiss-keyguard' \
+    >/dev/null 2>&1 || true
+
+trap restore_observation_display EXIT
+
 echo "=== CLEAN OLD RUNTIME ==="
 "$CONTROL" operator.force-stop || true
 
@@ -102,6 +134,25 @@ echo "=== LOGCAT ==="
 
 su -c "logcat -d -v threadtime" > "$LOG" || true
 cp "$LOG" "$LATEST_LOG"
+
+echo
+echo "=== RUNTIME CONTRACT ==="
+
+if grep -Eq     'SCRIPT ERROR:|Parse Error:|Failed to load script|Invalid call\.'     "$LATEST_LOG"; then
+    echo "ERROR: OperatorShell runtime contains GDScript failures."
+    grep -E         'SCRIPT ERROR:|Parse Error:|Failed to load script|Invalid call\.'         "$LATEST_LOG" | tail -80
+    exit 40
+fi
+
+for required_log in     '[OperatorShell] ready'     '[OperatorShell] build complete'     '[OperatorShell] control server listening 127.0.0.1:8767'
+do
+    if ! grep -Fq "$required_log" "$LATEST_LOG"; then
+        echo "ERROR: missing runtime proof: $required_log"
+        exit 41
+    fi
+done
+
+echo "runtime contract: OK"
 
 echo
 echo "=== FINAL FOREGROUND ==="

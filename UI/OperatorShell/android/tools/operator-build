@@ -8,20 +8,11 @@ ENV="$ANDROID/operator.env"
 TEMPLATE="$ANDROID/template"
 BUILD_ROOT="$ANDROID/build"
 BUILD_TEMPLATE="$BUILD_ROOT/template"
-STAGING="/sdcard/CE-OS/OperatorShell"
-SDCARD_PCK="/sdcard/CE-OS/operatorshell.pck"
-BUILD_PCK="$BUILD_ROOT/operatorshell.pck"
 
 CEOS="$ROOT/Android/Termux/bin/ce-os"
-GODOT_PACKAGE="org.godotengine.editor.v4"
-GODOT_ACTIVITY="org.godotengine.editor.GodotEditor"
 SDK_ROOT="$ROOT/Android/SDK"
 
 source "$ENV"
-
-ROTATION_ACCELEROMETER=""
-ROTATION_USER=""
-ROTATION_LOCKED=0
 
 safe_rm_dir() {
     local target="$1"
@@ -39,50 +30,8 @@ safe_rm_dir() {
     esac
 }
 
-read_system_setting() {
-    local namespace="$1"
-    local key="$2"
-
-    su -c "settings get '$namespace' '$key'" 2>/dev/null | tr -d '\r' || true
-}
-
-write_system_setting() {
-    local namespace="$1"
-    local key="$2"
-    local value="$3"
-
-    if [[ -n "$value" && "$value" != "null" ]]; then
-        su -c "settings put '$namespace' '$key' '$value'" || true
-    fi
-}
-
-lock_editor_rotation() {
-    if [[ "$ROTATION_LOCKED" == "1" ]]; then
-        return
-    fi
-
-    ROTATION_ACCELEROMETER="$(read_system_setting system accelerometer_rotation)"
-    ROTATION_USER="$(read_system_setting system user_rotation)"
-
-    su -c "settings put system accelerometer_rotation 0" || true
-    su -c "settings put system user_rotation 1" || true
-    ROTATION_LOCKED=1
-    sleep 1
-}
-
-restore_editor_rotation() {
-    if [[ "$ROTATION_LOCKED" != "1" ]]; then
-        return
-    fi
-
-    write_system_setting system user_rotation "$ROTATION_USER"
-    write_system_setting system accelerometer_rotation "$ROTATION_ACCELEROMETER"
-    ROTATION_LOCKED=0
-}
-
 cleanup() {
-    restore_editor_rotation
-    su -c "am force-stop '$GODOT_PACKAGE'" || true
+    :
 }
 
 trap cleanup EXIT
@@ -126,21 +75,9 @@ read_preset_value() {
     fi
 }
 
-runtime_source_newer_than() {
-    local pack="$1"
-
-    find "$PROJECT" \
-        \( -path "$PROJECT/android" -o -path "$PROJECT/.godot" \) -prune -o \
-        -type f \
-        \( -name '*.gd' -o -name '*.tscn' -o -name '*.tres' -o -name 'project.godot' -o -name '_index.qps' \) \
-        -newer "$pack" \
-        -print \
-        -quit
-}
 
 patch_generated_template() {
     local manifest="$BUILD_TEMPLATE/src/main/AndroidManifest.xml"
-    local app_java="$BUILD_TEMPLATE/src/main/java/com/godot/game/GodotApp.java"
     local config_gradle="$BUILD_TEMPLATE/config.gradle"
     local build_gradle="$BUILD_TEMPLATE/build.gradle"
     local build_tools_dir
@@ -165,34 +102,6 @@ patch_generated_template() {
         sed -i '/^[[:space:]]*ndkVersion versions\.ndkVersion[[:space:]]*$/d' "$build_gradle"
     fi
 
-    python3 - "$app_java" <<'PY'
-from pathlib import Path
-import sys
-
-path = Path(sys.argv[1])
-text = path.read_text()
-
-if "operatorshell.pck" not in text:
-    text = text.replace(
-        "import android.util.Log;\n\n",
-        "import android.util.Log;\n\nimport java.util.ArrayList;\nimport java.util.List;\n\n",
-    )
-    marker = "\t@Override\n\tpublic void onCreate(Bundle savedInstanceState) {\n"
-    method = (
-        "\t@Override\n"
-        "\tpublic List<String> getCommandLine() {\n"
-        "\t\tList<String> commandLine = new ArrayList<>(super.getCommandLine());\n"
-        "\t\tcommandLine.add(\"--main-pack\");\n"
-        "\t\tcommandLine.add(\"res://operatorshell.pck\");\n"
-        "\t\treturn commandLine;\n"
-        "\t}\n\n"
-    )
-    if marker not in text:
-        raise SystemExit("GodotApp.java onCreate marker not found")
-    text = text.replace(marker, method + marker)
-
-path.write_text(text)
-PY
 }
 
 echo "=== VALIDATE PROJECT ==="
@@ -221,103 +130,75 @@ echo "project: OK"
 echo "package: $CEOS_OPERATOR_PACKAGE"
 echo "version: $version_name ($version_code)"
 
-check_compute_allowed "before export-pack"
+check_compute_allowed "before Android packaging"
 
 echo
-echo "=== SYNC GODOT STAGING ==="
+echo "=== DIRECT GODOT PROJECT ASSETS ==="
 
-mkdir -p "$(dirname "$STAGING")"
-safe_rm_dir "$STAGING" "/sdcard/CE-OS"
-cp -a "$PROJECT" "$STAGING"
-
-rm -f "$SDCARD_PCK"
-mkdir -p "$BUILD_ROOT"
-rm -f "$BUILD_PCK" "$CEOS_OPERATOR_APK"
-
-echo
-echo "=== GODOT EXPORT PACK ==="
-
-su -c "am force-stop '$GODOT_PACKAGE'" || true
-su -c "logcat -c" || true
-lock_editor_rotation
-
-su -c "am start --user 0 -W \
-  -n '$GODOT_PACKAGE/$GODOT_ACTIVITY' \
-  --esa command_line_params \
-  '--headless,--path,$STAGING,--export-pack,Android,$SDCARD_PCK'"
-
-echo
-echo "=== WAIT FOR PCK ==="
-
-for _ in $(seq 1 120); do
-    if [[ -s "$SDCARD_PCK" ]]; then
-        echo "PCK CREATED"
-        ls -lh "$SDCARD_PCK"
-        break
-    fi
-
-    sleep 1
-done
-
-pck_source="$SDCARD_PCK"
-
-if [[ ! -s "$SDCARD_PCK" ]]; then
-    echo "ERROR: Godot did not produce a PCK."
-
-    su -c "logcat -d -v brief" |
-    grep -Ei 'godot|export|savepack|error|failed' |
-    tail -120 || true
-
-    fallback_pck="${CEOS_OPERATOR_FALLBACK_PCK:-/sdcard/CE-OS/operatorshell-test.pck}"
-    newer_source=""
-    if [[ -s "$fallback_pck" ]]; then
-        newer_source="$(runtime_source_newer_than "$fallback_pck")"
-    fi
-
-    if [[ -s "$fallback_pck" && -z "$newer_source" ]]; then
-        echo
-        echo "WARNING: live export-pack failed; reusing source-current fallback PCK."
-        echo "FALLBACK_PCK=$fallback_pck"
-        pck_source="$fallback_pck"
-    else
-        if [[ -n "$newer_source" ]]; then
-            echo "ERROR: fallback PCK is stale; newer runtime source exists:"
-            echo "  $newer_source"
-        fi
-        su -c "am force-stop '$GODOT_PACKAGE'" || true
-        exit 21
-    fi
-fi
-
-echo
-echo "=== EXPORT LOG ==="
-
-su -c "logcat -d -v brief" |
-grep -Ei 'savepack|export.*(complete|failed)|error.*export|failed.*export' |
-tail -80 || true
-
-su -c "am force-stop '$GODOT_PACKAGE'" || true
-restore_editor_rotation
-
-cp "$pck_source" "$BUILD_PCK"
+echo "Current OperatorShell source will be packaged directly into APK assets."
 
 check_compute_allowed "before APK packaging"
 
 echo
 echo "=== PREPARE ANDROID TEMPLATE ==="
 
-safe_rm_dir "$BUILD_TEMPLATE" "$BUILD_ROOT"
-cp -a "$TEMPLATE" "$BUILD_TEMPLATE"
+if [[ "${CEOS_OPERATOR_CLEAN_BUILD:-0}" == "1" ]]; then
+    echo "Clean build requested."
+    safe_rm_dir "$BUILD_TEMPLATE" "$BUILD_ROOT"
+fi
+
+# Keep the generated Gradle workspace persistent across normal development
+# cycles so .gradle and build/ can retain incremental state.
+if [[ ! -f "$BUILD_TEMPLATE/gradlew" ]]; then
+    echo "Initializing persistent Android build workspace."
+    mkdir -p "$BUILD_ROOT"
+    cp -a "$TEMPLATE" "$BUILD_TEMPLATE"
+else
+    echo "Reusing persistent Android build workspace."
+fi
+
 chmod +x "$BUILD_TEMPLATE/gradlew"
 
+# Synchronize template inputs while preserving BUILD_TEMPLATE/.gradle and
+# BUILD_TEMPLATE/build.
+(
+    cd "$TEMPLATE"
+    tar \
+        --exclude='./.gradle' \
+        --exclude='./build' \
+        -cf - .
+) | (
+    cd "$BUILD_TEMPLATE"
+    tar -xf -
+)
+
+# Assets are generated input. Replace only this subtree so deleted or renamed
+# OperatorShell files cannot survive into a later APK.
+safe_rm_dir "$BUILD_TEMPLATE/src/main/assets" "$BUILD_TEMPLATE/src/main"
 mkdir -p "$BUILD_TEMPLATE/src/main/assets"
-cp "$BUILD_PCK" "$BUILD_TEMPLATE/src/main/assets/operatorshell.pck"
+
+# Godot Android library mode can load project files directly from APK assets.
+(
+    cd "$PROJECT"
+    tar \
+        --exclude='./android' \
+        --exclude='./.git' \
+        -cf - .
+) | (
+    cd "$BUILD_TEMPLATE/src/main/assets"
+    tar -xf -
+)
+
+test -f "$BUILD_TEMPLATE/src/main/assets/project.godot"
+test -f "$BUILD_TEMPLATE/src/main/assets/scenes/Main.tscn"
+test -f "$BUILD_TEMPLATE/src/main/assets/_index.qps"
+
 printf 'sdk.dir=%s\n' "$SDK_ROOT" > "$BUILD_TEMPLATE/local.properties"
 
 patch_generated_template
 
 echo "template: $BUILD_TEMPLATE"
-echo "asset: src/main/assets/operatorshell.pck"
+echo "assets: current OperatorShell project"
 
 echo
 echo "=== GRADLE APK BUILD ==="
@@ -359,7 +240,15 @@ aapt2 dump packagename "$CEOS_OPERATOR_APK"
 aapt2 dump badging "$CEOS_OPERATOR_APK" |
     grep -E "package:|launchable-activity|uses-feature: name='android.hardware.screen" || true
 
+if ! aapt2 dump permissions "$CEOS_OPERATOR_APK" |
+    grep -q 'android.permission.INTERNET'
+then
+    echo "ERROR: OperatorShell APK is missing android.permission.INTERNET"
+    exit 34
+fi
+
+echo "permission INTERNET: OK"
+
 echo
 echo "OPERATORSHELL APK READY"
 echo "APK=$CEOS_OPERATOR_APK"
-echo "PCK=$BUILD_PCK"

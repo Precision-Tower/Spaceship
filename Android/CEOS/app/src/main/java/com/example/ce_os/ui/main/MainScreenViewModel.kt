@@ -43,16 +43,16 @@ class MainScreenViewModel : ViewModel() {
     fun refresh() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val statusRequest = async {
-                    CeOsApi.status()
-                }
+                val status = CeOsApi.status()
 
-                val bootstrapRequest = async {
-                    CeOsApi.bootstrapStatus()
-                }
-
-                val status = statusRequest.await()
-                val bootstrap = bootstrapRequest.await()
+                // Privileged BOOTSTRAP control may legitimately be unpaired.
+                // That must not crash or invalidate the normal CE-OS status UI.
+                val bootstrap =
+                    try {
+                        CeOsApi.bootstrapStatus()
+                    } catch (_: Throwable) {
+                        null
+                    }
 
                 _state.value = _state.value.copy(
                     status = status,

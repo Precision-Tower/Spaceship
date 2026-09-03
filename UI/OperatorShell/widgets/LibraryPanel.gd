@@ -66,6 +66,24 @@ func refresh_tree() -> void:
 	if tree == null:
 		return
 	tree.clear()
+
+	if OS.get_name() == "Android":
+		var unavailable_item := tree.create_item()
+		unavailable_item.set_text(0, "CE-OS filesystem")
+		unavailable_item.set_tooltip_text(
+			0,
+			"Android filesystem access requires the CE-OS platform bridge."
+		)
+		unavailable_item.set_metadata(0, {
+			"path": "",
+			"relative_path": ".",
+			"is_dir": true,
+			"label": "CE-OS filesystem",
+			"populated": true
+		})
+		print("[OperatorShell] LibraryPanel using Android bridge placeholder")
+		return
+
 	root_path = CliBridge.dashboard_root()
 	var root_item := tree.create_item()
 	var root_name := root_path.get_file()
