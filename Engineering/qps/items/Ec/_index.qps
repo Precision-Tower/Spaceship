@@ -3,3 +3,5 @@ dcm- dc_motor.dcm/p; # DC Motor
 alt- alternator.alt/p; # Alternator
 
 bat- battery.bat/p; # Battery
+
+rect- rectifier.rect/p; # Rectifier / Charge Control

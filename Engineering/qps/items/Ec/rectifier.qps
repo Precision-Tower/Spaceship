@@ -1,0 +1,104 @@
+rect. Rectifier_Charge_Control: def"
+A rectifier and charge-control unit is an alternating-electrical
+to direct-electrical Engineering Item.
+
+The Item represents the physical electrical conversion and charging
+interface between the alternator and battery.
+
+AC input state, switching or diode behavior, DC output state,
+electrical resistance, control state, thermal state, and physical
+geometry remain explicit.
+
+The component is a domain bridge:
+
+AC -> DC
+";
+
+identity: (
+item- "rectifier_charge_control"/a;
+domain_input- "AC"/a;
+domain_output- "DC"/a;
+renderable- true/b;
+);
+
+ac_input: (
+voltage_vac-/n;
+current_a-/n;
+frequency_hz-/n;
+phase_count-/n;
+);
+
+rectification: (
+type-/a;
+diode_count-/n;
+switch_count-/n;
+forward_voltage-/n;
+switching_frequency-/n;
+);
+
+control_state: (
+mode-/a;
+enabled-/b;
+target_voltage_vdc-/n;
+target_current_a-/n;
+battery_feedback_voltage-/n;
+battery_feedback_temperature-/n;
+);
+
+dc_output: (
+voltage_vdc-/n;
+current_a-/n;
+polarity-/a;
+);
+
+electrical_resistance: (
+conduction_resistance-/n;
+connection_resistance-/n;
+switching_resistance-/n;
+);
+
+thermal_state: (
+device_temperature-/n;
+heat_sink_temperature-/n;
+);
+
+housing: (
+material-/a;
+length-/n;
+width-/n;
+height-/n;
+);
+
+ports: (
+ac_input- "AC"/a;
+dc_positive- "DC+"/a;
+dc_negative- "DC-"/a;
+battery_feedback- "battery_feedback"/a;
+);
+
+geometry: (
+primitive- "rectifier_charge_control"/a;
+body_length-/n;
+body_width-/n;
+body_height-/n;
+);
+
+input_state: (
+voltage_vac-/n;
+current_a-/n;
+frequency_hz-/n;
+battery_voltage_vdc-/n;
+);
+
+output_state: (
+voltage_vdc-/n;
+current_a-/n;
+);
+
+model_frontier: (
+ac_to_rectified_state- "unresolved"/a;
+rectified_state_to_dc_output- "unresolved"/a;
+battery_feedback_to_control_state- "unresolved"/a;
+control_state_to_output_state- "unresolved"/a;
+thermal_relationship- "unresolved"/a;
+);

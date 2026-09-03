@@ -11,3 +11,5 @@ pmp- FD.pu/p; # Pump
 alt- Ec.alt/p; # Alternator
 
 bat- Ec.bat/p; # Battery
+
+rect- Ec.rect/p; # Rectifier / Charge Control
