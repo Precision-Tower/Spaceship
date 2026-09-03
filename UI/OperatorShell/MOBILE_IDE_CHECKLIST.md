@@ -9,6 +9,12 @@ Use a mobile interaction model with one primary surface at a time.
 
 Linux/Desktop behavior must remain intact unless a shared abstraction explicitly improves both platforms.
 
+## Active Work Log
+
+- 2026-09-03 Milestone 1 scope: implement Android-only Files / Editor / Terminal / Controls
+  bottom navigation, one primary surface at a time, a native Godot editable text surface,
+  placeholder file entries, and visual validation through `operator-cycle`.
+
 ## Current Proven Baseline
 
 - [x] CE-OS Android diagnostic control works through UID 2000 / `u:r:shell:s0`.
@@ -222,3 +228,47 @@ Begin only after Milestone 1 is visually usable.
 - Do not fabricate CE-OS backend state.
 - Do not commit generated Android build trees or runtime observations.
 - Do not mix unrelated existing WIP into focused commits.
+
+## Headless OperatorShell Development Loop
+
+- [x] Add OperatorShell pre-build test suite.
+- [x] Reject GDScript indentation regressions before Gradle.
+- [x] Reject known invalid virtual keyboard call signatures before Gradle.
+- [x] Validate OperatorShell control-server source contract.
+- [x] Validate Android INTERNET permission contract.
+- [x] Preserve Gradle build workspace across normal development cycles.
+- [x] Add explicit clean-build escape hatch.
+- [x] Reduce Android build from full rebuild behavior to incremental reuse.
+- [x] Prove incremental build with 28/35 Gradle tasks up-to-date.
+- [x] Add post-launch runtime contract.
+- [x] Require OperatorShell ready/build-complete runtime proof.
+- [x] Require control-server startup proof.
+- [x] Add terminal `ops` control surface.
+- [x] Control Files / Editor / Terminal / Controls from SSH.
+- [x] Wake OperatorShell temporarily for headless control commands.
+- [x] Restore Pixel display to Dozing after headless commands.
+- [x] Wake / foreground / capture / sleep for `ops share`.
+- [x] Prove remote screenshots while Pixel normally remains asleep.
+- [x] Preserve hotspot and SSH as required development control plane.
+- [x] Keep CE-OS thermal guardian authoritative.
+- [x] Prove thermally blocked builds abort before Gradle.
+- [ ] Add thermal-margin admission below Android SEVERE threshold.
+- [ ] Record compact thermal diagnostics as a CE-OS command.
+
+## Mobile IDE Interaction
+
+- [ ] Files surface displays canonical CE-OS root tree.
+- [ ] Directory tree expands/collapses like VS Code explorer.
+- [ ] File selection opens selected file in Editor.
+- [ ] Editor loads real file contents through CE-OS platform service.
+- [ ] Editor writes modified files through explicit CE-OS service boundary.
+- [ ] Root-required filesystem operations use privileged CE-OS backend.
+- [ ] Editor dirty state is visible and accurate.
+- [ ] Save action is explicit and validated.
+- [ ] Android keyboard opens when Editor receives focus.
+- [ ] Keyboard layout does not hide active editor content.
+- [ ] Terminal surface remains usable on portrait Pixel.
+- [ ] Bottom navigation remains persistent and readable.
+- [ ] Files / Editor / Terminal / Controls remain remotely selectable via `ops`.
+- [ ] `ops share` captures the requested surface deterministically.
+- [ ] Runtime test suite covers new mobile IDE contracts.

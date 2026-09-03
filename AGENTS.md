@@ -199,3 +199,38 @@ Normal development transport:
 
 ADB is optional Android maintenance/debugging only.
 Fastboot is provisioning/recovery only.
+
+## OperatorShell Headless Development Contract
+
+OperatorShell development on Pixel is normally headless. The physical display
+may remain asleep during development.
+
+Use the canonical terminal control surface:
+
+    ops cycle
+    ops files
+    ops editor
+    ops terminal
+    ops controls
+    ops share
+
+`ops cycle` must run the OperatorShell test suite before expensive Android
+builds.
+
+Normal Android builds must preserve the incremental Gradle workspace. Use a
+clean build only when required:
+
+    CEOS_OPERATOR_CLEAN_BUILD=1 ops cycle
+
+Runtime-facing work is not complete until runtime observation succeeds.
+
+The OperatorShell control plane must preserve SSH, hotspot connectivity,
+the CE-OS thermal guardian, and Android safety controls. Never bypass CE-OS
+thermal admission to force a build.
+
+Shared Godot UI must not directly assume Termux or root filesystem access.
+Filesystem, privilege, Android framework, and host-specific behavior must cross
+explicit CE-OS platform-service boundaries.
+
+The Pixel may temporarily wake for OperatorShell control or visual observation.
+Headless operations should restore the display to its prior sleeping state.
