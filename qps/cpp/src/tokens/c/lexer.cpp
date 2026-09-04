@@ -289,6 +289,7 @@ Token Lexer::getNextToken() {
         case '/': stream_.advance(); return Token(TokenType::SLASH, "/", current_line_, current_column_); 
         case '=': stream_.advance(); return Token(TokenType::EQUALS, "=", current_line_, current_column_);
         case '>': stream_.advance(); return Token(TokenType::REFERENCE_OPERATOR, ">", current_line_, current_column_);
+        case '<': stream_.advance(); return Token(TokenType::OP_LESS, "<", current_line_, current_column_);
         case '|': stream_.advance(); return Token(TokenType::PIPE, "|", current_line_, current_column_);
         case '%': stream_.advance(); return Token(TokenType::CALCULATION_MARKER, "%", current_line_, current_column_);
         case '@': stream_.advance(); return Token(TokenType::GEOMETRY_MARKER, "@", current_line_, current_column_);

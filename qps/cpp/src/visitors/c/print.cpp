@@ -272,6 +272,7 @@ void PrintVisitor::visit(ast::BinaryExpressionNode* node) {
         case ast::BinaryExpressionNode::Operator::MULTIPLY: std::cout << "MULTIPLY\n"; break;
         case ast::BinaryExpressionNode::Operator::DIVIDE: std::cout << "DIVIDE\n"; break;
         case ast::BinaryExpressionNode::Operator::EQUAL: std::cout << "EQUAL\n"; break;
+        case ast::BinaryExpressionNode::Operator::LESS: std::cout << "LESS\n"; break;
     }
     std::cout << getIndent() << "Left Operand:\n";
     node->getLeft()->accept(*this);

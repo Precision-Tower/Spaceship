@@ -528,6 +528,34 @@ struct TestCase {
 } // namespace
 
 
+void ifSelectsNumericLessThanBranch() {
+    const std::string source = R"qps(
+{
+[>count]- 2;
+
+-if count < 3 {
+[>selected]- "if";
+}
+-else {
+[>selected]- "else";
+}
+}
+)qps";
+
+    const qps::runtime::ExecutionScope scope =
+        executeSource(source);
+
+    require(
+        scope.contains("selected"),
+        "numeric less-than if should bind selected.");
+
+    require(
+        scope.get("selected").value.asString(
+            "selected") == "if",
+        "2 < 3 should select if branch.");
+}
+
+
 void ifSelectsStringEqualityBranch() {
     const std::string source = R"qps(
 {
@@ -584,6 +612,7 @@ void ifSelectsElseBranch() {
 
 int main() {
     const std::vector<TestCase> tests = {
+        {"if selects numeric less-than branch", ifSelectsNumericLessThanBranch},
         {"if selects string equality branch", ifSelectsStringEqualityBranch},
         {"if selects else branch", ifSelectsElseBranch},
         {"semantic supplied and derived bindings", semanticSuppliedAndDerivedBindings},

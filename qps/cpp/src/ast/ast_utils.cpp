@@ -372,6 +372,7 @@ void printAst(const AstNode* node, int indent_level) {
             case BinaryExpressionNode::Operator::MULTIPLY: std::cout << "MULTIPLY\n"; break;
             case BinaryExpressionNode::Operator::DIVIDE: std::cout << "DIVIDE\n"; break;
             case BinaryExpressionNode::Operator::EQUAL: std::cout << "EQUAL\n"; break;
+            case BinaryExpressionNode::Operator::LESS: std::cout << "LESS\n"; break;
         }
         std::cout << indent << "  Left:\n";
         printAst(bin_expr_node->getLeft(), indent_level + 2);

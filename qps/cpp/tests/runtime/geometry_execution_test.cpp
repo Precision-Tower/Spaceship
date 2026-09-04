@@ -844,12 +844,12 @@ body: -cylinder;
     assertParameter(body, "width", 1.0, false);
 }
 
-void inputSideReferenceRemainsOutOfScope() {
+void inputSideReferenceRemainsInvalidStructuralSyntax() {
     expectParseFailure(
         R"qps({@pu1:
 [<radius]- 3/n;
 })qps",
-        {"Unrecognized character", "<"});
+        {"Unrecognized statement"});
 }
 
 void independentGeometryInstances() {
@@ -1201,7 +1201,7 @@ int main() {
         {"numeric execution regression", numericExecutionRegression},
         {"function behavior regression", functionBehaviorRegression},
         {"semantic inputs are collected and defaulted", semanticInputsAreCollectedAndDefaulted},
-        {"[<] remains out of scope", inputSideReferenceRemainsOutOfScope},
+        {"[<] remains invalid structural syntax", inputSideReferenceRemainsInvalidStructuralSyntax},
         {"independent geometry instances", independentGeometryInstances},
         {"resolver dispatch boundary", resolverDispatchBoundary},
         {"Item unit suffix parsing", itemUnitSuffixParsing},

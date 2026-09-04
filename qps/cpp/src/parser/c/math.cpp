@@ -106,16 +106,23 @@ std::unique_ptr<ast::AstNode> Parser::parseExpression() {
 std::unique_ptr<ast::AstNode> Parser::parseComparisonExpression() {
     auto left = parseAdditiveExpression();
 
-    while (peek_type() == tokens::TokenType::OP_EQUAL) {
+    while (peek_type() == tokens::TokenType::OP_EQUAL ||
+           peek_type() == tokens::TokenType::OP_LESS) {
         const int op_line = current_token_.line;
         const int op_column = current_token_.column;
-        match(tokens::TokenType::OP_EQUAL);
+        const tokens::TokenType op_type = peek_type();
+        advance();
 
         auto right = parseAdditiveExpression();
 
+        const auto op =
+            op_type == tokens::TokenType::OP_EQUAL
+                ? ast::BinaryExpressionNode::Operator::EQUAL
+                : ast::BinaryExpressionNode::Operator::LESS;
+
         left = ast::createBinaryExpressionNode(
             std::move(left),
-            ast::BinaryExpressionNode::Operator::EQUAL,
+            op,
             std::move(right),
             op_line,
             op_column);

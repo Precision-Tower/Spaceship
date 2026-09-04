@@ -1138,6 +1138,12 @@ double Interpreter::evaluate(
 
                 throw std::runtime_error(
                     "Equality comparison is boolean and cannot be evaluated as numeric.");
+
+            case ast::BinaryExpressionNode::
+                Operator::LESS:
+
+                throw std::runtime_error(
+                    "Less-than comparison is boolean and cannot be evaluated as numeric.");
         }
     }
 
@@ -1412,6 +1418,25 @@ bool Interpreter::evaluateTruth(
             dynamic_cast<
                 const ast::BinaryExpressionNode*>(
                     &node)) {
+
+        if (binary->getOperator() ==
+            ast::BinaryExpressionNode::Operator::LESS) {
+
+            const RuntimeValue left =
+                evaluateValue(*binary->getLeft());
+
+            const RuntimeValue right =
+                evaluateValue(*binary->getRight());
+
+            if (left.kind() != RuntimeValue::Kind::NUMERIC ||
+                right.kind() != RuntimeValue::Kind::NUMERIC) {
+                throw std::runtime_error(
+                    "Less-than comparison requires NUMERIC operands.");
+            }
+
+            return left.asNumber("less-than left") <
+                right.asNumber("less-than right");
+        }
 
         if (binary->getOperator() ==
             ast::BinaryExpressionNode::Operator::EQUAL) {
