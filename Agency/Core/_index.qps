@@ -1,0 +1,48 @@
+Core.
+
+purpose: def"
+Canonical semantic doorway into Agency Core.
+Core contains Agent-independent execution architecture and reusable capabilities.
+";
+
+surface: (
+agents- "Agency/Core/agents";
+capabilities- "Agency/Core/capabilities";
+foundation- "Agency/Core/foundation";
+interfaces- "Agency/Core/interfaces";
+knowledge- "Agency/Core/knowledge";
+repository- "Agency/Core/repository";
+runtime- "Agency/Core/runtime";
+state- "Agency/Core/state";
+tests- "Agency/Core/tests";
+work- "Agency/Core/work";
+);
+
+roles: (
+agents- "Agent discovery, contracts, and integration";
+capabilities- "reusable capability contracts and execution behavior";
+foundation- "path authority, guardrails, and shared helpers";
+interfaces- "CLI and remote interfaces";
+knowledge- "reasoning, memory, and knowledge management";
+repository- "repository inspection and mutation surfaces";
+runtime- "execution services, environments, profiles, and help surfaces";
+state- "runtime state, schemas, and transitions";
+tests- "Core validation";
+work- "Task, WorkPacket, Mission, and Adventure execution structures";
+);
+
+documents: (
+runtime_profiles- "Agency/Core/runtime/runtime_profiles.yaml";
+state_readme- "Agency/Core/state/README.md";
+);
+
+rules: (
+local_context_first- "read this index when entering Agency/Core";
+descend_only_as_needed- "inspect only the child surface required by the task";
+agent_independent- "Core must remain independent of concrete Agent identities";
+do_not_duplicate- "child implementation details remain owned by their local surface";
+);
+
+operations: (
+validate_agency- "python Agency/unittest.py";
+);
