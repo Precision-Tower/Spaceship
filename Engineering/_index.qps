@@ -1,0 +1,59 @@
+Engineering.
+
+purpose: def"
+Canonical semantic doorway into the CE-OS Engineering subsystem.
+
+This index owns only the immediate Engineering directory surface.
+Deeper engineering meaning belongs to the semantic module responsible
+for that surface.
+";
+
+scope: (
+root- "Engineering";
+ownership- "immediate_children_only";
+recursive_rule- "descend into the responsible subsystem rather than duplicating its contents here";
+);
+
+surface: (
+cpp- "Engineering/cpp";
+py- "Engineering/py";
+qps- "Engineering/qps";
+docs- "Engineering/docs";
+);
+
+roles: (
+cpp- "native Engineering implementation, model, geometry, and CAD integration";
+py- "Python engineering capabilities, workflows, projects, packet generation, and compatibility surfaces";
+qps- "authored Engineering semantic corpus and executable engineering representation";
+docs- "supporting Engineering documentation not authoritative over current implementation or canonical QPS knowledge";
+);
+
+semantic_entrypoints: (
+engineering_qps- "Engineering/qps/_index.qps";
+engineering_definition- "Engineering/qps/docs/Engineering.qps";
+);
+
+authority: (
+engineering- "engineering interpretation, calculation, execution, model translation, and geometry construction";
+qps- "authored declarative engineering intent and semantic representation";
+occt- "generated native B-rep geometry";
+workbench- "operator-facing interaction and visualization";
+agency- "bounded automation through explicit Engineering interfaces";
+apparatus- "physical measurement and validation";
+);
+
+rules: (
+local_context_first- "read this index when entering Engineering";
+descend_only_as_needed- "load only the child surface required by the task";
+do_not_duplicate- "child implementation and semantic exports remain owned by their child surface";
+generated_state- "__pycache__ is not part of the Engineering semantic surface";
+python_package- "__init__.py supports Python packaging and is not an Engineering semantic module";
+implementation_authority- "current implementation and passing tests outrank stale documentation";
+qps_door- "Engineering/qps/_index.qps is the canonical doorway into authored Engineering QPS";
+);
+
+operations: (
+enter_qps- "read Engineering/qps/_index.qps";
+engineering_qps_test- "qps test Engineering/qps";
+engineering_definition- "qps Engineering/qps/docs/Engineering.qps --check";
+);

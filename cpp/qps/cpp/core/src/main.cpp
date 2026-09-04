@@ -401,6 +401,75 @@ int runTestCommand(int argc, char* argv[]) {
 
         bool successful = true;
         bool tested_any = false;
+        const bool folder_target = fs::is_directory(target);
+
+        if (folder_target) {
+            for (const auto& file : files) {
+                const std::string rendered_path = displayPath(file);
+
+                try {
+                    std::unique_ptr<qps::ast::ProgramNode> ast_root =
+                        parseFileQuiet(file.string());
+
+                    qps::runtime::TestSuiteRunner runner;
+                    qps::runtime::TestSuiteSummary summary =
+                        runner.run(*ast_root);
+
+                    tested_any = true;
+
+                    if (!summary.successful() && summary.total() > 0) {
+                        successful = false;
+
+                        for (const auto& result : summary.results) {
+                            if (result.outcome ==
+                                qps::runtime::TestOutcome::PASSED) {
+                                continue;
+                            }
+
+                            std::cout
+                                << rendered_path
+                                << ":"
+                                << lineOrOne(result.line)
+                                << " "
+                                << resultReason(result)
+                                << "\n";
+                        }
+                    }
+                } catch (const std::exception& e) {
+                    tested_any = true;
+                    successful = false;
+
+                    const std::string message = e.what();
+
+                    std::cout
+                        << rendered_path
+                        << ":"
+                        << extractLineFromMessage(message)
+                        << " "
+                        << compactErrorMessage(message)
+                        << "\n";
+                }
+            }
+
+            if (!tested_any) {
+                std::cout << displayPath(target) << ": FAIL\n";
+                std::cout << displayPath(target)
+                          << ":1 no qps files discovered\n";
+                return 1;
+            }
+
+            if (successful) {
+                std::cout
+                    << displayPath(target)
+                    << ": PASS ("
+                    << files.size()
+                    << " files)\n";
+                return 0;
+            }
+
+            std::cout << displayPath(target) << ": FAIL\n";
+            return 1;
+        }
 
         for (const auto& file : files) {
             if (!runTestFile(file, tested_any)) {
@@ -410,7 +479,7 @@ int runTestCommand(int argc, char* argv[]) {
 
         if (!tested_any) {
             std::cout << displayPath(target) << ": FAIL\n";
-            std::cout << displayPath(target) << ":1 no tests discovered\n";
+            std::cout << displayPath(target) << ":1 no qps files discovered\n";
             return 1;
         }
 

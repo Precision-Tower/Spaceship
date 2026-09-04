@@ -176,9 +176,9 @@ def main():
         require_process(
             run_qps_test(success_dir),
             0,
-            f"{success_a}: PASS\n{success_b}: PASS\n",
+            f"{success_dir}: PASS (2 files)\n",
             "",
-            "folder success reports one line per file",
+            "folder success collapses to one summary line",
         )
 
         mixed_dir = root / "mixed_dir"
@@ -205,11 +205,10 @@ def main():
         require_process(
             run_qps_test(mixed_dir),
             1,
-            f"{mixed_pass}: PASS\n"
-            f"{mixed_fail}: FAIL\n"
-            f"{mixed_fail}:3 folder failure\n",
+            f"{mixed_fail}:3 folder failure\n"
+            f"{mixed_dir}: FAIL\n",
             "",
-            "folder failure reports failing file and line",
+            "folder failure reports only failing files plus folder summary",
         )
 
     print("PASS qps testSuite CLI")
