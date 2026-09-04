@@ -1,0 +1,40 @@
+Workbench.
+
+purpose: def"
+Canonical semantic doorway into the CE-OS Workbench subsystem.
+";
+
+surface: (
+Main- "UI/Workbench/Main";
+actions- "UI/Workbench/actions";
+audit- "UI/Workbench/audit";
+config- "UI/Workbench/config";
+contracts- "UI/Workbench/contracts";
+core- "UI/Workbench/core";
+docs- "UI/Workbench/docs";
+inspectors- "UI/Workbench/inspectors";
+interaction- "UI/Workbench/interaction";
+layout- "UI/Workbench/layout";
+packet- "UI/Workbench/packet";
+rendering- "UI/Workbench/rendering";
+scenes- "UI/Workbench/scenes";
+selection- "UI/Workbench/selection";
+widgets- "UI/Workbench/widgets";
+);
+
+documents: (
+readme- "UI/Workbench/docs/README.md";
+checklist- "UI/Workbench/docs/CHECKLIST.md";
+);
+
+rules: (
+local_context_first- "read this index when entering Workbench";
+descend_only_as_needed- "inspect only the child surface required by the current task";
+do_not_duplicate- "child implementation details remain owned by their local surface";
+engineering_authority- "Workbench presents and manipulates Engineering intent but does not establish Engineering truth";
+);
+
+operations: (
+read_docs- "read UI/Workbench/docs/README.md";
+read_checklist- "read UI/Workbench/docs/CHECKLIST.md";
+);

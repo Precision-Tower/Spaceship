@@ -16,8 +16,8 @@ surface: (
 Engineering- "Engineering/_index.qps";
 Agency- "Agency";
 Android- "Android";
-UI- "UI";
-cpp- "cpp";
+UI- "UI/_index.qps";
+cpp- "cpp/_index.qps";
 );
 
 qps: (

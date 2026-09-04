@@ -1,0 +1,27 @@
+UI.
+
+purpose: def"
+Canonical semantic doorway into the CE-OS user-interface subsystem.
+";
+
+surface: (
+OperatorShell- "UI/OperatorShell";
+Workbench- "UI/Workbench";
+);
+
+doors: (
+OperatorShell- "UI/OperatorShell/_index.qps";
+Workbench- "UI/Workbench/_index.qps";
+);
+
+rules: (
+local_context_first- "read this index when entering UI";
+operator_shell_door- "read UI/OperatorShell/_index.qps before working deeper in OperatorShell";
+workbench_door- "read UI/Workbench/_index.qps before working deeper in Workbench";
+do_not_duplicate- "OperatorShell and Workbench internals remain owned by their local surfaces";
+);
+
+operations: (
+enter_operator_shell- "read UI/OperatorShell/_index.qps";
+enter_workbench- "read UI/Workbench/_index.qps";
+);
