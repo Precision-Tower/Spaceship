@@ -44,8 +44,12 @@ struct ResolvedSymbol : public StructuralHandle {
     // Authored/surfaced symbol requested from the bootstrap resolver.
     std::string symbol;
 
-    // Index file that surfaced a legacy module symbol, when applicable.
+    // Bootstrap resolver provenance retained by the legacy surfaced-symbol
+    // namespace, not by runtime structural values.
+    std::filesystem::path surface_module;
     std::filesystem::path index_file;
+    std::filesystem::path document_file;
+    std::vector<std::string> semantic_path;
 };
 
 class SymbolResolver : public StructuralResolver {

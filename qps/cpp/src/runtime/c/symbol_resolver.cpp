@@ -655,20 +655,8 @@ StructuralHandle SymbolResolver::resolve(
     auto document_ast =
         documents_.get(document_file);
 
-    ResolvedSymbol result;
-    result.symbol = reference.getSymbol();
-    result.surface_module =
-        document_relative.parent_path();
-    result.document_file = document_file;
+    StructuralHandle result;
     result.document_owner = document_ast;
-
-    for (std::size_t i = semantic_start;
-         i < segments.size();
-         ++i) {
-
-        result.semantic_path.push_back(
-            segments[i].name);
-    }
 
     if (semantic_start >= segments.size()) {
         throw std::runtime_error(

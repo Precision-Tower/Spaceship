@@ -21,17 +21,8 @@ class ProgramNode;
 namespace runtime {
 
 struct StructuralHandle {
-    // Module context from which this structure was resolved.
-    // Retained for local structural rebasing during bootstrap resolution.
-    std::filesystem::path surface_module;
-
-    // Physical QPS document that owns the target.
-    std::filesystem::path document_file;
-
-    // Semantic path inside the owning document.
-    std::vector<std::string> semantic_path;
-
-    // Stable terminal identity exposed to runtime consumers.
+    // Derived terminal identity retained temporarily for compatibility.
+    // Runtime structural identity itself is document_owner + target_node.
     std::string target_type;
     std::string target_identifier;
 
