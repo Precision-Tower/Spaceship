@@ -177,14 +177,6 @@ void structureChildReturnsOpaqueStructure() {
         dynamic_cast<qps::ast::TermDeclarationNode*>(
             handle.target_node) != nullptr,
         "structure_child did not select the child Term.");
-
-    require(
-        handle.target_type.empty(),
-        "structure_child populated compatibility target_type.");
-
-    require(
-        handle.target_identifier.empty(),
-        "structure_child populated compatibility target_identifier.");
 }
 
 void structureItemReturnsOpaqueStructure() {
@@ -224,14 +216,6 @@ void structureItemReturnsOpaqueStructure() {
         dynamic_cast<qps::ast::ItemDeclarationNode*>(
             handle.target_node) != nullptr,
         "structure_item did not select the Item declaration.");
-
-    require(
-        handle.target_type.empty(),
-        "structure_item populated compatibility target_type.");
-
-    require(
-        handle.target_identifier.empty(),
-        "structure_item populated compatibility target_identifier.");
 }
 
 void structureActionsRejectMissingSelection() {

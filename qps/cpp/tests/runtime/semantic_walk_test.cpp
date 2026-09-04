@@ -295,18 +295,7 @@ void requireSameIdentity(
             native.target_node,
         witness +
             " target node mismatch.");
-
-    require(
-        authored.target_type.empty(),
-        witness +
-            " authored walk classified target_type.");
-
-    require(
-        authored.target_identifier.empty(),
-        witness +
-            " authored walk classified target_identifier.");
-
-    std::cout
+std::cout
         << witness
         << ": PASS\n";
 }

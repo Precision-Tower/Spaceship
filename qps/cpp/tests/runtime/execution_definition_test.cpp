@@ -1278,16 +1278,6 @@ v1: [v.cylinder];
             "structural binding v");
 
     require(
-        structure.target_identifier ==
-            "dimensions",
-        "Structural execution binding should resolve dimensions.");
-
-    require(
-        structure.target_type ==
-            "TERM_DECLARATION",
-        "Structural execution binding should resolve a Term.");
-
-    require(
         dynamic_cast<
             qps::ast::TermDeclarationNode*>(
                 structure.target_node) != nullptr,
@@ -1306,16 +1296,6 @@ v1: [v.cylinder];
     const auto& local_structure =
         local_binding.value.asStructure(
             "structural binding v1");
-
-    require(
-        local_structure.target_identifier ==
-            "cylinder",
-        "Local structural descent should resolve cylinder.");
-
-    require(
-        local_structure.target_type ==
-            "TERM_DECLARATION",
-        "Local structural descent should resolve a Term.");
 
     require(
         dynamic_cast<

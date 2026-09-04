@@ -21,11 +21,7 @@ class ProgramNode;
 namespace runtime {
 
 struct StructuralHandle {
-    // Derived terminal identity retained temporarily for compatibility.
-    // Runtime structural identity itself is document_owner + target_node.
-    std::string target_type;
-    std::string target_identifier;
-
+    // Runtime structural identity is document_owner + target_node.
     // Keeps the parsed document alive for target lifetime.
     std::shared_ptr<ast::ProgramNode> document_owner;
 

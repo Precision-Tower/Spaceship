@@ -97,25 +97,19 @@ int main(int argc, char** argv) {
                         witness_document
                     });
 
-            if (direct.target_type != "KEY_DECLARATION") {
-                throw std::runtime_error(
-                    "Direct structural Key reference did not resolve as Key.");
-            }
-
-            if (direct.target_identifier != key_name) {
-                throw std::runtime_error(
-                    "Direct structural Key reference resolved wrong identifier.");
-            }
-
             if (!dynamic_cast<qps::ast::KeyDeclarationNode*>(
                     direct.target_node)) {
                 throw std::runtime_error(
                     "Direct structural Key reference did not retain Key AST target.");
             }
 
+            auto* key =
+                dynamic_cast<qps::ast::KeyDeclarationNode*>(
+                    direct.target_node);
+
             std::cout
                 << "DIRECT STRUCTURAL KEY: "
-                << direct.target_identifier
+                << (key ? key->identifier_ : "<invalid>")
                 << "\n";
         }
 
@@ -183,16 +177,6 @@ int main(int argc, char** argv) {
                         "defs/semantic_walk/shape.qps"
                     });
 
-            if (direct.target_type != "TERM_DECLARATION") {
-                throw std::runtime_error(
-                    "Nested structural reference did not resolve as Term.");
-            }
-
-            if (direct.target_identifier != "cylinder") {
-                throw std::runtime_error(
-                    "Nested structural reference resolved wrong Term.");
-            }
-
             auto* cylinder =
                 dynamic_cast<qps::ast::TermDeclarationNode*>(
                     direct.target_node);
@@ -204,7 +188,7 @@ int main(int argc, char** argv) {
 
             std::cout
                 << "DIRECT STRUCTURAL TERM: "
-                << direct.target_identifier
+                << cylinder->identifier_
                 << "\n";
         }
 
@@ -272,12 +256,19 @@ int main(int argc, char** argv) {
                         "defs/semantic_walk/shape.qps"
                     });
 
-            if (direct.target_type != "ITEM_VALUE") {
-                throw std::runtime_error(
-                    "Explicit Item reference did not resolve as ITEM_VALUE.");
-            }
-
-            if (direct.target_identifier != "radius") {
+            if (!([&]() {
+                    auto* item =
+                        dynamic_cast<qps::ast::ItemDeclarationNode*>(
+                            direct.target_node);
+                    if (!item) {
+                        return false;
+                    }
+                    auto* identifier =
+                        dynamic_cast<qps::ast::IdentifierNode*>(
+                            item->getTarget());
+                    return identifier &&
+                        identifier->name_ == "radius";
+                })()) {
                 throw std::runtime_error(
                     "Explicit Item reference resolved wrong identifier.");
             }
@@ -313,7 +304,7 @@ int main(int argc, char** argv) {
 
             std::cout
                 << "DIRECT ITEM VALUE: "
-                << direct.target_identifier
+                << "<AST structural identity>"
                 << " = "
                 << numeric->value_
                 << "/"
@@ -383,12 +374,13 @@ int main(int argc, char** argv) {
                         "defs/_index.qps"
                     });
 
-            if (direct.target_type != "TERM_DECLARATION") {
-                throw std::runtime_error(
-                    "Child-module structural reference did not resolve as Term.");
-            }
-
-            if (direct.target_identifier != "cylinder") {
+            if (!([&]() {
+                    auto* node =
+                        dynamic_cast<qps::ast::TermDeclarationNode*>(
+                            direct.target_node);
+                    return node &&
+                        node->identifier_ == "cylinder";
+                })()) {
                 throw std::runtime_error(
                     "Child-module structural reference resolved wrong Term.");
             }
@@ -404,7 +396,7 @@ int main(int argc, char** argv) {
 
             std::cout
                 << "DIRECT CHILD-MODULE TERM: "
-                << direct.target_identifier
+                << "<AST structural identity>"
                 << "\n";
         }
 
@@ -476,7 +468,12 @@ int main(int argc, char** argv) {
                         "defs/semantic_walk/shape.qps"
                     });
 
-            if (direct.target_identifier != "p") {
+            auto* key =
+                dynamic_cast<qps::ast::KeyDeclarationNode*>(
+                    direct.target_node);
+
+            if (!key ||
+                key->identifier_ != "p") {
                 throw std::runtime_error(
                     "One-parent reference resolved wrong semantic target.");
             }
@@ -489,7 +486,7 @@ int main(int argc, char** argv) {
 
             std::cout
                 << "DIRECT ONE-PARENT: "
-                << direct.target_identifier
+                << "<AST structural identity>"
                 << "\n";
         }
 
@@ -561,7 +558,12 @@ int main(int argc, char** argv) {
                         "items/MC/_index.qps"
                     });
 
-            if (direct.target_identifier != "p") {
+            auto* key =
+                dynamic_cast<qps::ast::KeyDeclarationNode*>(
+                    direct.target_node);
+
+            if (!key ||
+                key->identifier_ != "p") {
                 throw std::runtime_error(
                     "Two-parent reference resolved wrong semantic target.");
             }
@@ -574,7 +576,7 @@ int main(int argc, char** argv) {
 
             std::cout
                 << "DIRECT TWO-PARENT: "
-                << direct.target_identifier
+                << "<AST structural identity>"
                 << "\n";
         }
 
@@ -714,15 +716,20 @@ int main(int argc, char** argv) {
                         "defs/semantic_walk/shape.qps"
                     });
 
-            if (direct.target_type != "TERM_DECLARATION" ||
-                direct.target_identifier != "dimensions") {
+            if (!([&]() {
+                    auto* node =
+                        dynamic_cast<qps::ast::TermDeclarationNode*>(
+                            direct.target_node);
+                    return node &&
+                        node->identifier_ == "dimensions";
+                })()) {
                 throw std::runtime_error(
                     "Current-file structural reference resolved incorrectly.");
             }
 
             std::cout
                 << "DIRECT CURRENT-FILE TERM: "
-                << direct.target_identifier
+                << "<AST structural identity>"
                 << "\n";
         }
 
@@ -792,15 +799,20 @@ int main(int argc, char** argv) {
                         "defs/semantic_walk/_index.qps"
                     });
 
-            if (direct.target_type != "KEY_DECLARATION" ||
-                direct.target_identifier != "shape") {
+            if (!([&]() {
+                    auto* node =
+                        dynamic_cast<qps::ast::KeyDeclarationNode*>(
+                            direct.target_node);
+                    return node &&
+                        node->identifier_ == "shape";
+                })()) {
                 throw std::runtime_error(
                     "Current-folder structural reference resolved incorrectly.");
             }
 
             std::cout
                 << "DIRECT CURRENT-FOLDER KEY: "
-                << direct.target_identifier
+                << "<AST structural identity>"
                 << "\n";
         }
 
@@ -891,23 +903,26 @@ int main(int argc, char** argv) {
             // Local rebasing must depend only on the owned AST and
             // selected node, not reconstructed resolver path metadata.
             auto minimal_root = root;
-            minimal_root.target_type.clear();
-            minimal_root.target_identifier.clear();
 
             const auto rebound =
                 symbols.resolveFrom(
                     minimal_root,
                     *local_reference);
 
-            if (rebound.target_type != "TERM_DECLARATION" ||
-                rebound.target_identifier != "cylinder") {
+            if (!([&]() {
+                    auto* node =
+                        dynamic_cast<qps::ast::TermDeclarationNode*>(
+                            rebound.target_node);
+                    return node &&
+                        node->identifier_ == "cylinder";
+                })()) {
                 throw std::runtime_error(
                     "Local-binding structural reference resolved incorrectly.");
             }
 
             std::cout
                 << "DIRECT LOCAL-BINDING TERM: "
-                << rebound.target_identifier
+                << "<AST structural identity>"
                 << "\n";
         }
 

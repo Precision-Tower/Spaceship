@@ -291,49 +291,6 @@ StructuralHandle walkSemanticStructureAuthored(
             "Authored semantic walker returned incomplete structure.");
     }
 
-    // Classification remains native compatibility metadata.
-    // Traversal policy is owned by semantic_walk.qps.
-    if (auto* resolved_key =
-            dynamic_cast<ast::KeyDeclarationNode*>(
-                result.target_node)) {
-
-        result.target_type =
-            "KEY_DECLARATION";
-        result.target_identifier =
-            resolved_key->identifier_;
-    }
-    else if (auto* resolved_term =
-                 dynamic_cast<ast::TermDeclarationNode*>(
-                     result.target_node)) {
-
-        result.target_type =
-            "TERM_DECLARATION";
-        result.target_identifier =
-            resolved_term->identifier_;
-    }
-    else if (auto* resolved_item =
-                 dynamic_cast<ast::ItemDeclarationNode*>(
-                     result.target_node)) {
-
-        auto* identifier =
-            dynamic_cast<ast::IdentifierNode*>(
-                resolved_item->getTarget());
-
-        if (!identifier) {
-            throw std::runtime_error(
-                "Resolved semantic Item does not have an identifier target.");
-        }
-
-        result.target_type =
-            "ITEM_VALUE";
-        result.target_identifier =
-            identifier->name_;
-    }
-    else {
-        throw std::runtime_error(
-            "Structural QPS reference resolved to unsupported AST node.");
-    }
-
     return result;
 }
 
