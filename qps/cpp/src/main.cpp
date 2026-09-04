@@ -1280,7 +1280,11 @@ bool runTestFile(
         qps::runtime::PathResolver paths(fs::current_path());
         qps::runtime::DocumentLoader loader;
         qps::runtime::DocumentStore documents(loader);
-        qps::runtime::SymbolResolver symbols(paths, documents);
+        qps::runtime::SymbolResolver symbols(
+            paths,
+            documents,
+            findCeOsRoot(fs::current_path()) /
+                "qps/qps/reference_document.qps");
 
         qps::runtime::TestSuiteRunner runner;
         qps::runtime::TestSuiteSummary summary =
@@ -1360,7 +1364,11 @@ int runTestCommand(int argc, char* argv[]) {
                     qps::runtime::PathResolver paths(fs::current_path());
                     qps::runtime::DocumentLoader loader;
                     qps::runtime::DocumentStore documents(loader);
-                    qps::runtime::SymbolResolver symbols(paths, documents);
+                    qps::runtime::SymbolResolver symbols(
+                        paths,
+                        documents,
+                        findCeOsRoot(fs::current_path()) /
+                            "qps/qps/reference_document.qps");
 
                     qps::runtime::TestSuiteRunner runner;
                     qps::runtime::TestSuiteSummary summary =

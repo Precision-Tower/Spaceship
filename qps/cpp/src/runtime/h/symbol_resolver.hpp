@@ -36,6 +36,16 @@ ReferenceDocumentPlan planReferenceDocument(
     const ast::SymbolReferenceNode& reference,
     const StructuralReferenceContext& context);
 
+// Execute the QPS-authored reference-document planner.
+//
+// AST reference facts are transported into the authored planner as
+// runtime values. The planner owns document-selection policy; native
+// code retains filesystem access, parsing, and runtime execution.
+ReferenceDocumentPlan planReferenceDocumentAuthored(
+    const ast::SymbolReferenceNode& reference,
+    const StructuralReferenceContext& context,
+    const std::filesystem::path& planner_file);
+
 class StructuralResolver {
 public:
     virtual ~StructuralResolver() = default;
@@ -53,7 +63,8 @@ class SymbolResolver : public StructuralResolver {
 public:
     SymbolResolver(
         PathResolver& paths,
-        DocumentStore& documents);
+        DocumentStore& documents,
+        std::filesystem::path reference_planner);
 
     // Resolve an explicit structural QPS reference from document context.
     //
@@ -87,6 +98,7 @@ public:
 private:
     PathResolver& paths_;
     DocumentStore& documents_;
+    std::filesystem::path reference_planner_;
 };
 
 } // namespace runtime

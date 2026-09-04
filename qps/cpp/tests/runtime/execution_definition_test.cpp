@@ -23,6 +23,9 @@
 
 namespace {
 
+std::filesystem::path g_structural_workspace;
+std::filesystem::path g_reference_planner;
+
 [[noreturn]] void fail(const std::string& message) {
     throw std::runtime_error(message);
 }
@@ -1233,26 +1236,16 @@ v1: [v.cylinder];
     const auto& definition =
         requireDefinition(*program);
 
-    const std::filesystem::path dashboard_root =
-        std::filesystem::path(__FILE__)
-            .parent_path()  // runtime
-            .parent_path()  // tests
-            .parent_path()  // cpp
-            .parent_path()  // qps
-            .parent_path(); // ce-os
-
-    const std::filesystem::path engineering_workspace =
-        dashboard_root / "Engineering" / "qps";
-
     qps::runtime::PathResolver paths(
-        engineering_workspace);
+        g_structural_workspace);
 
     qps::runtime::DocumentLoader loader;
     qps::runtime::DocumentStore documents(loader);
 
     qps::runtime::SymbolResolver symbols(
         paths,
-        documents);
+        documents,
+        g_reference_planner);
 
     qps::runtime::ExecutionEngine engine(symbols);
 
@@ -1542,7 +1535,21 @@ struct TestCase {
 
 } // namespace
 
-int main() {
+int main(int argc, char** argv) {
+    if (argc != 3) {
+        std::cerr
+            << "Usage: "
+            << argv[0]
+            << " <workspace-root> <reference-planner>\n";
+        return 2;
+    }
+
+    g_structural_workspace =
+        std::filesystem::path(argv[1]);
+
+    g_reference_planner =
+        std::filesystem::path(argv[2]);
+
     const std::vector<TestCase> tests = {
         {"QPS path kind policy executes above native filesystem fact", qpsPathKindPolicyExecutesAboveNativeFilesystemFact},
         {"QPS derives module identity from filesystem facts", qpsDerivesModuleIdentityFromFilesystemFacts},

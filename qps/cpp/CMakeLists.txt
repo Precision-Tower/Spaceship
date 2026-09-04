@@ -160,6 +160,8 @@ add_test(
 add_test(
     NAME qps_execution_definition_test
     COMMAND qps_execution_definition_test
+        "${CMAKE_CURRENT_SOURCE_DIR}/../../Engineering/qps"
+        "${CMAKE_CURRENT_SOURCE_DIR}/../qps/reference_document.qps"
 )
 
 add_test(
@@ -211,6 +213,7 @@ add_test(
     NAME qps_symbol_resolver_defs_p
     COMMAND qps_symbol_resolver_test
         "${CMAKE_CURRENT_SOURCE_DIR}/../../Engineering/qps"
+        "${CMAKE_CURRENT_SOURCE_DIR}/../qps/reference_document.qps"
 )
 
 

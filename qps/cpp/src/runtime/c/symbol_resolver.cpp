@@ -1,11 +1,18 @@
 #include "../h/symbol_resolver.hpp"
 
 #include "../h/document_store.hpp"
+#include "../h/interpreter.hpp"
 #include "../h/path_resolver.hpp"
 
 #include "../../ast/ast_node.hpp"
 #include "../../ast/structural_selection.hpp"
+#include "../../parser/h/_index.hpp"
+#include "../../tokens/h/char_stream.hpp"
+#include "../../tokens/h/lexer.hpp"
 
+#include <fstream>
+#include <iterator>
+#include <optional>
 #include <stdexcept>
 #include <utility>
 
@@ -16,9 +23,12 @@ namespace fs = std::filesystem;
 
 SymbolResolver::SymbolResolver(
     PathResolver& paths,
-    DocumentStore& documents)
+    DocumentStore& documents,
+    fs::path reference_planner)
     : paths_(paths),
-      documents_(documents) {}
+      documents_(documents),
+      reference_planner_(
+          std::move(reference_planner)) {}
 
 StructuralHandle SymbolResolver::resolveFrom(
     const StructuralHandle& root,
@@ -265,14 +275,239 @@ ReferenceDocumentPlan planReferenceDocument(
 }
 
 
+
+namespace {
+
+std::string referenceOriginName(
+    ast::SymbolReferenceOrigin origin) {
+
+    switch (origin) {
+        case ast::SymbolReferenceOrigin::CURRENT_FILE:
+            return "CURRENT_FILE";
+
+        case ast::SymbolReferenceOrigin::CURRENT_FOLDER_FILE:
+            return "CURRENT_FOLDER_FILE";
+
+        case ast::SymbolReferenceOrigin::RELATIVE_MODULE:
+            return "RELATIVE_MODULE";
+
+        case ast::SymbolReferenceOrigin::LOCAL_BINDING:
+            return "LOCAL_BINDING";
+    }
+
+    throw std::runtime_error(
+        "Unsupported structural reference origin.");
+}
+
+std::string referenceSeparatorName(
+    ast::SymbolReferenceSeparator separator) {
+
+    switch (separator) {
+        case ast::SymbolReferenceSeparator::ROOT:
+            return "ROOT";
+
+        case ast::SymbolReferenceSeparator::DOT:
+            return "DOT";
+
+        case ast::SymbolReferenceSeparator::SLASH:
+            return "SLASH";
+    }
+
+    throw std::runtime_error(
+        "Unsupported structural reference separator.");
+}
+
+RuntimeValue referenceSegmentsValue(
+    const ast::SymbolReferenceNode& reference) {
+
+    std::vector<RuntimeDictionaryEntry> entries;
+
+    int id = 1;
+
+    for (const auto& segment :
+         reference.getSegments()) {
+
+        std::vector<RuntimeDictionaryEntry> facts;
+
+        facts.push_back({
+            1,
+            RuntimeValue::string(segment.name)
+        });
+
+        facts.push_back({
+            2,
+            RuntimeValue::string(
+                referenceSeparatorName(
+                    segment.separator))
+        });
+
+        entries.push_back({
+            id,
+            RuntimeValue::dictionary(
+                std::move(facts))
+        });
+
+        ++id;
+    }
+
+    return RuntimeValue::dictionary(
+        std::move(entries));
+}
+
+const RuntimeValue& referencePlanEntry(
+    const std::vector<RuntimeDictionaryEntry>& dictionary,
+    int id) {
+
+    for (const auto& entry : dictionary) {
+        if (entry.id == id) {
+            return entry.value;
+        }
+    }
+
+    throw std::runtime_error(
+        "Authored reference planner result missing Dictionary entry " +
+        std::to_string(id) +
+        ".");
+}
+
+} // namespace
+
+
+ReferenceDocumentPlan planReferenceDocumentAuthored(
+    const ast::SymbolReferenceNode& reference,
+    const StructuralReferenceContext& context,
+    const fs::path& planner_file) {
+
+    std::ifstream input(planner_file);
+
+    if (!input) {
+        throw std::runtime_error(
+            "Could not open authored reference planner: " +
+            planner_file.string());
+    }
+
+    const std::string source{
+        std::istreambuf_iterator<char>(input),
+        std::istreambuf_iterator<char>()};
+
+    tokens::CharStream char_stream(source);
+    tokens::Lexer lexer(char_stream);
+    parser::Parser parser(lexer);
+
+    auto program =
+        parser.parseProgram();
+
+    if (program->statements.size() != 1) {
+        throw std::runtime_error(
+            "Authored reference planner must contain exactly one "
+            "top-level statement.");
+    }
+
+    const auto* planner =
+        dynamic_cast<const ast::ExecutionBlockNode*>(
+            program->statements.front().get());
+
+    if (!planner) {
+        throw std::runtime_error(
+            "Authored reference planner top-level statement "
+            "must be an execution block.");
+    }
+
+    ExecutionScope scope;
+
+    scope.bind(
+        "current_document",
+        RuntimeValue::string(
+            context.current_document.generic_string()),
+        std::nullopt,
+        BindingOrigin::SUPPLIED);
+
+    scope.bind(
+        "origin",
+        RuntimeValue::string(
+            referenceOriginName(
+                reference.getOrigin())),
+        std::nullopt,
+        BindingOrigin::SUPPLIED);
+
+    scope.bind(
+        "parent_depth",
+        RuntimeValue::numeric(
+            reference.getParentDepth()),
+        std::nullopt,
+        BindingOrigin::SUPPLIED);
+
+    scope.bind(
+        "segments",
+        referenceSegmentsValue(reference),
+        std::nullopt,
+        BindingOrigin::SUPPLIED);
+
+    InterpreterOptions options;
+    options.allow_return = true;
+    options.symbol_resolver = nullptr;
+
+    Interpreter interpreter(
+        scope,
+        FunctionTable{},
+        options);
+
+    const auto result =
+        interpreter.executeForResult(*planner);
+
+    if (!result.has_value() ||
+        !result->isDictionary()) {
+
+        throw std::runtime_error(
+            "Authored reference planner must return a Dictionary.");
+    }
+
+    const auto& dictionary =
+        result->asDictionary(
+            "authored reference plan");
+
+    const auto& document =
+        referencePlanEntry(dictionary, 1);
+
+    const auto& semantic_start =
+        referencePlanEntry(dictionary, 2);
+
+    if (!document.isString()) {
+        throw std::runtime_error(
+            "Authored reference planner document_relative "
+            "must be a string.");
+    }
+
+    if (!semantic_start.isNumeric()) {
+        throw std::runtime_error(
+            "Authored reference planner semantic_start "
+            "must be numeric.");
+    }
+
+    ReferenceDocumentPlan plan;
+
+    plan.document_relative =
+        document.asString(
+            "authored document_relative");
+
+    plan.semantic_start =
+        static_cast<std::size_t>(
+            semantic_start.asNumber(
+                "authored semantic_start"));
+
+    return plan;
+}
+
+
 StructuralHandle SymbolResolver::resolve(
     const ast::SymbolReferenceNode& reference,
     const StructuralReferenceContext& context) const {
 
     const ReferenceDocumentPlan plan =
-        planReferenceDocument(
+        planReferenceDocumentAuthored(
             reference,
-            context);
+            context,
+            reference_planner_);
 
     const fs::path document_relative =
         plan.document_relative;
