@@ -723,6 +723,65 @@ arm- 4/n;
 }
 
 
+
+void hevDcMotorRelationshipExecutesIntoInstanceScope() {
+    const auto instances = executeProgram(R"qps({DC_Motor_Electromagnetic_State:
+[>voltage_vdc]-
+[>current_a]-
+[>electrical_resistance_ohm]-
+[>torque_constant]-
+[>back_emf_constant]-
+
+%[>resistive_voltage_drop]: current_a * electrical_resistance_ohm
+%[>back_emf]: voltage_vdc - resistive_voltage_drop
+%[>shaft_torque]: current_a * torque_constant
+%[>angular_velocity]: back_emf / back_emf_constant
+}
+
+{>DC_Motor_Electromagnetic_State:
+voltage_vdc- 12/n;
+current_a- 10/n;
+electrical_resistance_ohm- 0.2/n;
+torque_constant- 0.05/n;
+back_emf_constant- 0.05/n;
+})qps");
+
+    require(
+        instances.size() == 1,
+        "Expected one HEV DC motor execution instance.");
+
+    const auto& scope = instances[0].scope;
+
+    assertBinding(
+        scope,
+        "resistive_voltage_drop",
+        2.0,
+        qps::runtime::BindingOrigin::DERIVED,
+        "resistive_voltage_drop");
+
+    assertBinding(
+        scope,
+        "back_emf",
+        10.0,
+        qps::runtime::BindingOrigin::DERIVED,
+        "back_emf");
+
+    assertBinding(
+        scope,
+        "shaft_torque",
+        0.5,
+        qps::runtime::BindingOrigin::DERIVED,
+        "shaft_torque");
+
+    assertBinding(
+        scope,
+        "angular_velocity",
+        200.0,
+        qps::runtime::BindingOrigin::DERIVED,
+        "angular_velocity");
+}
+
+
 void executionDefinitionInspectionExposesStructuralInputs() {
     auto program = parseSource(R"qps({Leverage_Equation:
 [>f]-
@@ -1059,6 +1118,7 @@ int main() {
         {"two calls with different inputs are independent", twoCallsWithDifferentInputsAreIndependent},
         {"calling a definition does not mutate defaults", callingDefinitionDoesNotMutateDefaults},
         {"derived semantic outputs execute inside instance", derivedSemanticOutputsExecuteInsideInstance},
+        {"HEV DC motor relationship executes into instance scope", hevDcMotorRelationshipExecutesIntoInstanceScope},
         {"execution definition inspection exposes structural inputs", executionDefinitionInspectionExposesStructuralInputs},
         {"registered definition inspection preserves optional source identity", registeredDefinitionInspectionPreservesOptionalSourceIdentity},
         {"execution instance preserves registered source identity", executionInstancePreservesRegisteredSourceIdentity},
