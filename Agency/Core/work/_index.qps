@@ -1,0 +1,40 @@
+Work.
+
+purpose: def"
+Canonical semantic doorway into Agency work orchestration.
+";
+
+surface: (
+tasks- "Agency/Core/work/tasks";
+work_packets- "Agency/Core/work/work_packets";
+missions- "Agency/Core/work/missions";
+adventures- "Agency/Core/work/adventures";
+planning- "Agency/Core/work/planning";
+);
+
+hierarchy: (
+task- "primitive bounded execution";
+work_packet- "supervised sequence of Tasks";
+mission- "higher-level orchestration over WorkPackets";
+adventure- "broader autonomy layer over Missions";
+order- "Task -> WorkPacket -> Mission -> Adventure";
+);
+
+roles: (
+tasks- "primitive work units";
+work_packets- "ordered bounded execution with contracts evidence and persistence";
+missions- "mission specification runtime and orchestration";
+adventures- "future broader autonomy coordination";
+planning- "goal formation prompting memory proposal generation and mission planning";
+);
+
+rules: (
+local_context_first- "read this index when entering Agency/Core/work";
+descend_only_as_needed- "inspect only the work layer required by the current task";
+hierarchy_preserved- "higher work layers coordinate lower layers without erasing their authority boundaries";
+do_not_duplicate- "implementation details remain owned by their local work surface";
+);
+
+operations: (
+validate_agency- "python Agency/unittest.py";
+);

@@ -15,7 +15,7 @@ repository- "Agency/Core/repository";
 runtime- "Agency/Core/runtime";
 state- "Agency/Core/state";
 tests- "Agency/Core/tests";
-work- "Agency/Core/work";
+work- "Agency/Core/work/_index.qps";
 );
 
 roles: (
