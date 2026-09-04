@@ -22,11 +22,14 @@ qps- "qps/_index.qps";
 
 qps: (
 language- "Quick Parse Standard";
+door- "qps/_index.qps";
 build- "qps build";
+build_authority- "qps/qps/build.qps";
 check- "qps path/file.qps --check";
 test- "qps test path/file-or-folder";
 query- "qps qry <selector> [path]";
 cipher- "qps cipher <source> [--report]";
+cipher_authority- "qps/qps/cipher.qps";
 );
 
 navigation: (
