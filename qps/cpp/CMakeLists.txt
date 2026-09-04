@@ -106,6 +106,11 @@ add_qps_test(
 )
 
 add_qps_test(
+    qps_runtime_dictionary_test
+    tests/runtime/runtime_dictionary_test.cpp
+)
+
+add_qps_test(
     qps_execution_definition_test
     tests/runtime/execution_definition_test.cpp
 )
@@ -139,6 +144,11 @@ add_test(
 add_test(
     NAME qps_runtime_semantics_test
     COMMAND qps_runtime_semantics_test
+)
+
+add_test(
+    NAME qps_runtime_dictionary_test
+    COMMAND qps_runtime_dictionary_test
 )
 
 

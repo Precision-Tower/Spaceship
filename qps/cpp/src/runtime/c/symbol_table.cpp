@@ -13,6 +13,7 @@ RuntimeValue::RuntimeValue(
     std::variant<
         double,
         std::string,
+        std::vector<RuntimeDictionaryEntry>,
         GeometryHandle,
         StructuralHandle> value)
     : value_(std::move(value)) {}
@@ -27,6 +28,12 @@ RuntimeValue RuntimeValue::string(
     std::string value) {
 
     return RuntimeValue(std::move(value));
+}
+
+RuntimeValue RuntimeValue::dictionary(
+    std::vector<RuntimeDictionaryEntry> entries) {
+
+    return RuntimeValue(std::move(entries));
 }
 
 RuntimeValue RuntimeValue::geometry(
@@ -50,6 +57,10 @@ RuntimeValue::Kind RuntimeValue::kind() const {
         return Kind::STRING;
     }
 
+    if (isDictionary()) {
+        return Kind::DICTIONARY;
+    }
+
     if (isGeometry()) {
         return Kind::GEOMETRY;
     }
@@ -63,6 +74,11 @@ bool RuntimeValue::isNumeric() const {
 
 bool RuntimeValue::isString() const {
     return std::holds_alternative<std::string>(value_);
+}
+
+bool RuntimeValue::isDictionary() const {
+    return std::holds_alternative<
+        std::vector<RuntimeDictionaryEntry>>(value_);
 }
 
 bool RuntimeValue::isGeometry() const {
@@ -111,6 +127,30 @@ const std::string& RuntimeValue::asString(
     throw std::runtime_error(
         prefix +
         " expected string value but found " +
+        std::string(runtimeValueKindName(kind())) +
+        ".");
+}
+
+const std::vector<RuntimeDictionaryEntry>&
+RuntimeValue::asDictionary(
+    const std::string& context) const {
+
+    if (const auto* dictionary =
+            std::get_if<
+                std::vector<RuntimeDictionaryEntry>>(
+                    &value_)) {
+
+        return *dictionary;
+    }
+
+    const std::string prefix =
+        context.empty()
+            ? "Runtime value"
+            : context;
+
+    throw std::runtime_error(
+        prefix +
+        " expected dictionary value but found " +
         std::string(runtimeValueKindName(kind())) +
         ".");
 }
@@ -248,6 +288,9 @@ const char* runtimeValueKindName(
 
         case RuntimeValue::Kind::STRING:
             return "string";
+
+        case RuntimeValue::Kind::DICTIONARY:
+            return "dictionary";
 
         case RuntimeValue::Kind::GEOMETRY:
             return "geometry";

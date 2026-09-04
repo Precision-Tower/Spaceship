@@ -1020,6 +1020,37 @@ RuntimeValue Interpreter::evaluateValue(
             string->value_);
     }
 
+    if (auto* dictionary =
+            dynamic_cast<
+                const ast::DictionaryDeclarationNode*>(
+                    &node)) {
+
+        std::vector<RuntimeDictionaryEntry> entries;
+        entries.reserve(dictionary->entries.size());
+
+        for (const auto& entry_node :
+             dictionary->entries) {
+
+            if (!entry_node ||
+                !entry_node->value_node_) {
+                throw std::runtime_error(
+                    "Dictionary entry has no value.");
+            }
+
+            RuntimeDictionaryEntry entry;
+            entry.id = entry_node->id_;
+            entry.value =
+                evaluateValue(
+                    *entry_node->value_node_);
+
+            entries.push_back(
+                std::move(entry));
+        }
+
+        return RuntimeValue::dictionary(
+            std::move(entries));
+    }
+
     if (auto* identifier =
             dynamic_cast<
                 const ast::IdentifierNode*>(

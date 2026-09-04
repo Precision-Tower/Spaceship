@@ -39,6 +39,8 @@ struct GeometryParameterValue {
     bool explicit_override = false;
 };
 
+struct RuntimeDictionaryEntry;
+
 struct GeometryHandle {
     std::size_t id = 0;
 
@@ -57,6 +59,7 @@ public:
     enum class Kind {
         NUMERIC,
         STRING,
+        DICTIONARY,
         GEOMETRY,
         STRUCTURE
     };
@@ -65,6 +68,8 @@ public:
 
     static RuntimeValue numeric(double value);
     static RuntimeValue string(std::string value);
+    static RuntimeValue dictionary(
+        std::vector<RuntimeDictionaryEntry> entries);
     static RuntimeValue geometry(GeometryHandle handle);
     static RuntimeValue structure(StructuralHandle structure);
 
@@ -72,6 +77,7 @@ public:
 
     bool isNumeric() const;
     bool isString() const;
+    bool isDictionary() const;
     bool isGeometry() const;
     bool isStructure() const;
 
@@ -79,6 +85,9 @@ public:
         const std::string& context = "") const;
 
     const std::string& asString(
+        const std::string& context = "") const;
+
+    const std::vector<RuntimeDictionaryEntry>& asDictionary(
         const std::string& context = "") const;
 
     const GeometryHandle& asGeometry(
@@ -98,14 +107,21 @@ private:
         std::variant<
             double,
             std::string,
+            std::vector<RuntimeDictionaryEntry>,
             GeometryHandle,
             StructuralHandle> value);
 
     std::variant<
         double,
         std::string,
+        std::vector<RuntimeDictionaryEntry>,
         GeometryHandle,
         StructuralHandle> value_;
+};
+
+struct RuntimeDictionaryEntry {
+    int id = 0;
+    RuntimeValue value;
 };
 
 enum class BindingOrigin {
