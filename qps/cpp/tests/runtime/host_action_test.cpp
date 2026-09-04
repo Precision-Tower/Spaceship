@@ -20,6 +20,35 @@ void processPrimitiveExists() {
     host.execute("process");
 }
 
+void processAcceptsRuntimeStringParameters() {
+    qps::runtime::HostActionInvocation invocation;
+    invocation.action_name = "process";
+
+    invocation.parameters.emplace(
+        "program",
+        qps::runtime::RuntimeValue::string("printf"));
+
+    invocation.parameters.emplace(
+        "arg_0",
+        qps::runtime::RuntimeValue::string(
+            "QPS_PROCESS_OK"));
+
+    require(
+        invocation.parameters.at("program")
+                .asString("program") ==
+            "printf",
+        "Process program runtime value was not preserved.");
+
+    require(
+        invocation.parameters.at("arg_0")
+                .asString("arg_0") ==
+            "QPS_PROCESS_OK",
+        "Process argument runtime value was not preserved.");
+
+    qps::runtime::HostActionDispatcher host;
+    host.execute(invocation);
+}
+
 void unknownPrimitiveFails() {
     qps::runtime::HostActionDispatcher host;
 
@@ -48,6 +77,10 @@ int main() {
         processPrimitiveExists();
         std::cout
             << "PASS process host primitive exists\n";
+
+        processAcceptsRuntimeStringParameters();
+        std::cout
+            << "PASS process accepts runtime string parameters\n";
 
         unknownPrimitiveFails();
         std::cout

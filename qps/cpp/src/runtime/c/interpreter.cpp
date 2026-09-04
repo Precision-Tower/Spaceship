@@ -376,8 +376,60 @@ void Interpreter::executeStatement(
         if (options_.domain ==
             ast::ExecutionDomain::GENERIC) {
 
+            HostActionInvocation invocation;
+            invocation.action_name =
+                action->action_name_;
+
+            if (action->getParameters()) {
+                for (const auto& element :
+                     action->getParameters()->elements) {
+
+                    auto* item =
+                        dynamic_cast<
+                            const ast::ItemDeclarationNode*>(
+                                element.get());
+
+                    if (!item) {
+                        throw std::runtime_error(
+                            "Host action parameter must use Item syntax.");
+                    }
+
+                    auto* target =
+                        dynamic_cast<
+                            const ast::IdentifierNode*>(
+                                item->getTarget());
+
+                    if (!target) {
+                        throw std::runtime_error(
+                            "Host action parameter target must be a local Item identifier.");
+                    }
+
+                    if (!item->value_node_) {
+                        throw std::runtime_error(
+                            "Host action parameter '" +
+                            target->name_ +
+                            "' has no value.");
+                    }
+
+                    if (invocation.parameters.find(
+                            target->name_) !=
+                        invocation.parameters.end()) {
+
+                        throw std::runtime_error(
+                            "Duplicate host action parameter '" +
+                            target->name_ +
+                            "'.");
+                    }
+
+                    invocation.parameters.emplace(
+                        target->name_,
+                        evaluateValue(
+                            *item->value_node_));
+                }
+            }
+
             HostActionDispatcher host;
-            host.execute(action->action_name_);
+            host.execute(invocation);
             return;
         }
 
