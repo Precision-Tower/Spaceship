@@ -697,6 +697,60 @@ arm- 5/n;
     assertBinding(instances[0].scope, "T", 50.0, qps::runtime::BindingOrigin::DERIVED, "T");
 }
 
+void stringInputCanBeOverriddenPerInstance() {
+    const auto instances = executeProgram(R"qps({Cipher_Path:
+[>source]- "default.py";
+
+captured: -process(
+program- "printf";
+arg_0- "%s";
+arg_1- source;
+);
+
+-assert captured_exit_code == 0;
+}
+
+{>Cipher_Path:
+source- "Engineering/py/cipher/probe.py";
+})qps");
+
+    require(
+        instances.size() == 1,
+        "Expected one string override-backed instance.");
+
+    const auto& source =
+        requireBinding(
+            instances[0].scope,
+            "source");
+
+    require(
+        source.value.kind() ==
+            qps::runtime::RuntimeValue::Kind::STRING,
+        "String execution override should remain STRING.");
+
+    require(
+        source.value.asString(
+            "string execution override") ==
+            "Engineering/py/cipher/probe.py",
+        "String execution override value mismatch.");
+
+    require(
+        source.origin ==
+            qps::runtime::BindingOrigin::SUPPLIED,
+        "String execution override should be SUPPLIED.");
+
+    const auto& output =
+        requireBinding(
+            instances[0].scope,
+            "captured_stdout");
+
+    require(
+        output.value.asString(
+            "captured process stdout") ==
+            "Engineering/py/cipher/probe.py",
+        "Host action should receive string execution input.");
+}
+
 void unknownOverrideNameFailsClearly() {
     expectRuntimeFailure(R"qps({Leverage_Equation:
 [>f]-
@@ -773,60 +827,6 @@ void derivedSemanticOutputsExecuteInsideInstance() {
     const auto instances = executeProgram(R"qps({Leverage_Equation:
 [>f]-
 [>arm]-
-void stringInputCanBeOverriddenPerInstance() {
-    const auto instances = executeProgram(R"qps({Cipher_Path:
-[>source]- "default.py";
-
-captured: -process(
-program- "printf";
-arg_0- "%s";
-arg_1- source;
-);
-
--assert captured_exit_code == 0;
-}
-
-{>Cipher_Path:
-source- "Engineering/py/cipher/probe.py";
-})qps");
-
-    require(
-        instances.size() == 1,
-        "Expected one string override-backed instance.");
-
-    const auto& source =
-        requireBinding(
-            instances[0].scope,
-            "source");
-
-    require(
-        source.value.kind() ==
-            qps::runtime::RuntimeValue::Kind::STRING,
-        "String execution override should remain STRING.");
-
-    require(
-        source.value.asString(
-            "string execution override") ==
-            "Engineering/py/cipher/probe.py",
-        "String execution override value mismatch.");
-
-    require(
-        source.origin ==
-            qps::runtime::BindingOrigin::SUPPLIED,
-        "String execution override should be SUPPLIED.");
-
-    const auto& output =
-        requireBinding(
-            instances[0].scope,
-            "captured_stdout");
-
-    require(
-        output.value.asString(
-            "captured process stdout") ==
-            "Engineering/py/cipher/probe.py",
-        "Host action should receive string execution input.");
-}
-
 
 %[>T]: f * arm
 }
@@ -1040,7 +1040,7 @@ back_emf_constant- 0.05/n;
 shaft_torque- shaft_torque;
 angular_velocity- angular_velocity;
 })qps",
-        "Unsupported expression node in numeric evaluator.");
+        "Undefined execution value: shaft_torque");
 }
 
 
@@ -1167,7 +1167,7 @@ void executionInstancePreservesRegisteredSourceIdentity() {
         engine.registerDefinition(definition);
 
         const auto execution =
-            engine.instantiate(
+            engine.instantiateNumeric(
                 "Leverage_Equation",
                 {{"f", 10.0}});
 
@@ -1183,7 +1183,7 @@ void executionInstancePreservesRegisteredSourceIdentity() {
             "designs/leverage.qps");
 
         const auto execution =
-            engine.instantiate(
+            engine.instantiateNumeric(
                 "Leverage_Equation",
                 {{"f", 10.0}});
 
@@ -1375,6 +1375,7 @@ int main() {
         {"missing required input fails clearly", missingRequiredInputFailsClearly},
         {"default input is used when not overridden", defaultInputUsedWhenNotOverridden},
         {"default input can be overridden per instance", defaultInputCanBeOverriddenPerInstance},
+        {"string input can be overridden per instance", stringInputCanBeOverriddenPerInstance},
         {"unknown override name fails clearly", unknownOverrideNameFailsClearly},
         {"two calls with different inputs are independent", twoCallsWithDifferentInputsAreIndependent},
         {"calling a definition does not mutate defaults", callingDefinitionDoesNotMutateDefaults},
@@ -1408,4 +1409,3 @@ int main() {
 
     return 0;
 }
-        {"string input can be overridden per instance", stringInputCanBeOverriddenPerInstance},

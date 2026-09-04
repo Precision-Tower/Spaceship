@@ -209,7 +209,7 @@ qps::runtime::ExecutionInstance instantiateGeometry(
 
     qps::runtime::ExecutionEngine engine;
     engine.registerDefinition(definition);
-    return engine.instantiate(definition.identifier_, overrides);
+    return engine.instantiateNumeric(definition.identifier_, overrides);
 }
 
 std::vector<qps::runtime::ExecutionInstance> executeProgram(
@@ -867,10 +867,10 @@ radius- 0.5/n;
     const auto& definition = requireDefinition(*program);
     engine.registerDefinition(definition);
 
-    const auto first = engine.instantiate(
+    const auto first = engine.instantiateNumeric(
         "pu1",
         {{"radius", 3.0}, {"width", 1.0}});
-    const auto second = engine.instantiate(
+    const auto second = engine.instantiateNumeric(
         "pu1",
         {{"radius", 6.0}, {"width", 2.0}});
 

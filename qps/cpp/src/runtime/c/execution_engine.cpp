@@ -134,7 +134,7 @@ RuntimeValue evaluateValue(
     ExecutionScope& scope) {
 
     Interpreter interpreter(scope);
-    return interpreter.evaluate(node);
+    return interpreter.evaluateValue(node);
 }
 
 std::string causalName(
@@ -406,9 +406,27 @@ ExecutionInstance ExecutionEngine::instantiate(
         causal_inputs);
 }
 
-ExecutionInstance ExecutionEngine::instantiate(
+ExecutionInstance ExecutionEngine::instantiateNumeric(
     const std::string& definition_id,
     const std::unordered_map<std::string, double>& overrides) const {
+
+    std::unordered_map<std::string, RuntimeValue>
+        runtime_overrides;
+
+    for (const auto& [name, value] : overrides) {
+        runtime_overrides.emplace(
+            name,
+            RuntimeValue::numeric(value));
+    }
+
+    return instantiate(
+        definition_id,
+        runtime_overrides);
+}
+
+ExecutionInstance ExecutionEngine::instantiate(
+    const std::string& definition_id,
+    const std::unordered_map<std::string, RuntimeValue>& overrides) const {
 
     return instantiate(
         definition_id,
@@ -416,7 +434,7 @@ ExecutionInstance ExecutionEngine::instantiate(
         std::unordered_map<std::string, CausalInput>{});
 }
 
-ExecutionInstance ExecutionEngine::instantiateNumeric(
+ExecutionInstance ExecutionEngine::instantiate(
     const std::string& definition_id,
     const std::unordered_map<std::string, RuntimeValue>& overrides,
     const std::unordered_map<std::string, CausalInput>&
@@ -455,24 +473,6 @@ ExecutionInstance ExecutionEngine::instantiateNumeric(
                 definition.identifier_ +
                 "'.");
         }
-    std::unordered_map<std::string, RuntimeValue>
-        runtime_overrides;
-
-    for (const auto& [name, value] : overrides) {
-        runtime_overrides.emplace(
-            name,
-            RuntimeValue::numeric(value));
-    }
-
-    return instantiate(
-        definition_id,
-        runtime_overrides);
-}
-
-ExecutionInstance ExecutionEngine::instantiate(
-    const std::string& definition_id,
-    const std::unordered_map<std::string, RuntimeValue>& overrides) const {
-
     }
 
     for (const auto& input : inputs) {
