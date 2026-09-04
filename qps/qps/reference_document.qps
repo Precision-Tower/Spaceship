@@ -17,7 +17,12 @@ value- segment;
 index- 0;
 );
 
+-if current_module == "" {
+[>document_relative]- segment_name + ".qps";
+}
+-else {
 [>document_relative]- current_module + "/" + segment_name + ".qps";
+}
 [>semantic_start]- 1;
 }
 
@@ -104,7 +109,12 @@ value- document_segment;
 index- 0;
 );
 
+-if base_module == "" {
+[>document_relative]- document_name + ".qps";
+}
+-else {
 [>document_relative]- base_module + "/" + document_name + ".qps";
+}
 [>semantic_start]- document_index + 1;
 }
 

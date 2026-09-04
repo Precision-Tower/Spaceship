@@ -539,7 +539,170 @@ int main(
             "items/MC/_index.qps",
             "TWO_PARENT");
 
+        // Root current-folder document: [>.shape.shape]
+        requireParity(
+            *planner,
+            reference(
+                ".shape.shape",
+                SymbolReferenceOrigin::CURRENT_FOLDER_FILE,
+                0,
+                {
+                    {
+                        "shape",
+                        SymbolReferenceSeparator::ROOT
+                    },
+                    {
+                        "shape",
+                        SymbolReferenceSeparator::DOT
+                    }
+                }),
+            "_index.qps",
+            "ROOT_CURRENT_FOLDER_FILE");
+
+        // Root relative-module document: [>shape.shape]
+        requireParity(
+            *planner,
+            reference(
+                "shape.shape",
+                SymbolReferenceOrigin::RELATIVE_MODULE,
+                0,
+                {
+                    {
+                        "shape",
+                        SymbolReferenceSeparator::ROOT
+                    },
+                    {
+                        "shape",
+                        SymbolReferenceSeparator::DOT
+                    }
+                }),
+            "_index.qps",
+            "ROOT_RELATIVE_MODULE");
+
         requireEscapeParity(*planner);
+
+        // Native path-fact contract retained by the authored bridge.
+        {
+            auto ref = reference(
+                "shape.dimensions",
+                SymbolReferenceOrigin::CURRENT_FILE,
+                0,
+                {
+                    {
+                        "shape",
+                        SymbolReferenceSeparator::ROOT
+                    },
+                    {
+                        "dimensions",
+                        SymbolReferenceSeparator::DOT
+                    }
+                });
+
+            const auto requireSameFailure =
+                [&](const std::filesystem::path& current_document,
+                    const std::string& fragment,
+                    const std::string& witness) {
+
+                    std::string native_error;
+                    std::string authored_error;
+
+                    try {
+                        (void)runtime::planReferenceDocument(
+                            ref,
+                            {current_document});
+                    }
+                    catch (const std::exception& error) {
+                        native_error = error.what();
+                    }
+
+                    try {
+                        (void)runtime::planReferenceDocumentAuthored(
+                            ref,
+                            {current_document},
+                            argv[1]);
+                    }
+                    catch (const std::exception& error) {
+                        authored_error = error.what();
+                    }
+
+                    require(
+                        native_error.find(fragment) !=
+                            std::string::npos,
+                        witness +
+                        " native planner did not reject as expected.");
+
+                    require(
+                        authored_error.find(fragment) !=
+                            std::string::npos,
+                        witness +
+                        " authored planner did not reject as expected.");
+
+                    std::cout
+                        << witness
+                        << ": PASS\n";
+                };
+
+            requireSameFailure(
+                {},
+                "requires a current document",
+                "EMPTY_CURRENT_DOCUMENT");
+
+            requireSameFailure(
+                "/tmp/shape.qps",
+                "must be workspace-relative",
+                "ABSOLUTE_CURRENT_DOCUMENT");
+
+            requireSameFailure(
+                "defs/shape.txt",
+                "must use .qps extension",
+                "NON_QPS_CURRENT_DOCUMENT");
+        }
+
+        // Both paths must normalize before policy execution.
+        {
+            auto ref = reference(
+                "shape.dimensions",
+                SymbolReferenceOrigin::CURRENT_FILE,
+                0,
+                {
+                    {
+                        "shape",
+                        SymbolReferenceSeparator::ROOT
+                    },
+                    {
+                        "dimensions",
+                        SymbolReferenceSeparator::DOT
+                    }
+                });
+
+            const std::filesystem::path current_document =
+                "defs/semantic_walk/../semantic_walk/shape.qps";
+
+            const auto native =
+                runtime::planReferenceDocument(
+                    ref,
+                    {current_document});
+
+            const auto authored =
+                runtime::planReferenceDocumentAuthored(
+                    ref,
+                    {current_document},
+                    argv[1]);
+
+            requirePlan(
+                authored,
+                native,
+                "NORMALIZED_CURRENT_DOCUMENT");
+
+            require(
+                authored.document_relative ==
+                    std::filesystem::path(
+                        "defs/semantic_walk/shape.qps"),
+                "Normalized current document retained lexical traversal.");
+
+            std::cout
+                << "NORMALIZED_CURRENT_DOCUMENT: PASS\n";
+        }
 
         std::cout
             << "QPS AUTHORED REFERENCE PLANNER: PASS\n";

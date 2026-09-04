@@ -378,6 +378,24 @@ ReferenceDocumentPlan planReferenceDocumentAuthored(
     const StructuralReferenceContext& context,
     const fs::path& planner_file) {
 
+    if (context.current_document.empty()) {
+        throw std::runtime_error(
+            "Structural QPS resolution requires a current document.");
+    }
+
+    if (context.current_document.is_absolute()) {
+        throw std::runtime_error(
+            "Structural QPS current document must be workspace-relative.");
+    }
+
+    if (context.current_document.extension() != ".qps") {
+        throw std::runtime_error(
+            "Structural QPS current document must use .qps extension.");
+    }
+
+    const fs::path current_document =
+        context.current_document.lexically_normal();
+
     std::ifstream input(planner_file);
 
     if (!input) {
@@ -418,7 +436,7 @@ ReferenceDocumentPlan planReferenceDocumentAuthored(
     scope.bind(
         "current_document",
         RuntimeValue::string(
-            context.current_document.generic_string()),
+            current_document.generic_string()),
         std::nullopt,
         BindingOrigin::SUPPLIED);
 
