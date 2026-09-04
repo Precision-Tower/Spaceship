@@ -5,12 +5,14 @@ Canonical semantic doorway into the Quick Parse Standard subsystem.
 ";
 
 surface: (
+qps- "qps/qps";
 cpp- "qps/cpp";
 docs- "qps/qps/docs";
 );
 
 doors: (
-implementation- "qps/cpp";
+language- "qps/qps";
+native- "qps/cpp";
 documentation- "qps/qps/docs";
 );
 
@@ -22,7 +24,10 @@ execution_handoff- "qps/qps/docs/EXECUTION_HANDOFF.qps";
 );
 
 operations: (
-build_pixel- "cmake --build qps/cpp/build-pixel -j2";
+build- "qps build";
+build_authority- "qps/qps/build.qps";
+cipher- "qps cipher <source> [--report]";
+cipher_authority- "qps/qps/cipher.qps";
 test_all- "ctest --test-dir qps/cpp/build-pixel --output-on-failure";
 test_qps_surface- "qps test path/file-or-folder";
 check_qps_file- "qps path/file.qps --check";
@@ -33,6 +38,8 @@ rules: (
 local_context_first- "read this index when entering qps";
 language_reference- "read qps/qps/docs/QPS.qps for canonical language syntax";
 work_status- "read qps/qps/docs/CHECKLIST.md for current implementation status";
-implementation- "QPS implementation lives under qps/cpp";
+qps_authority- "QPS-authored orchestration and semantic authority live under qps/qps";
+native_boundary- "qps/cpp is the native substrate and current kernel-discovery quarry";
+kernel_discovery- "probe native code to discover the irreducible kernel; do not assume its implementation language";
 do_not_duplicate- "grammar and runtime details belong to their owning files, not this index";
 );
