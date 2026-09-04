@@ -10,6 +10,7 @@
 #include <algorithm>
 #include <cctype>
 #include <filesystem>
+#include <fstream>
 #include <cstdio>
 #include <array>
 
@@ -985,6 +986,138 @@ void printDirectoryTree(
     }
 }
 
+
+int runProbeCommand(
+    int argc,
+    char* argv[]) {
+
+    if (argc != 4 && argc != 5) {
+        std::cerr
+            << "Usage: "
+            << argv[0]
+            << " probe <file> <line> [radius]"
+            << std::endl;
+        return 1;
+    }
+
+    try {
+        const fs::path target =
+            fs::absolute(
+                fs::path(argv[2]));
+
+        if (!fs::exists(target)) {
+            throw std::runtime_error(
+                "Probe target does not exist: " +
+                target.string());
+        }
+
+        if (!fs::is_regular_file(target)) {
+            throw std::runtime_error(
+                "Probe target is not a file: " +
+                target.string());
+        }
+
+        const auto parse_non_negative =
+            [](const std::string& text,
+               const std::string& label)
+                -> std::size_t {
+
+                std::size_t consumed = 0;
+
+                const unsigned long value =
+                    std::stoul(
+                        text,
+                        &consumed);
+
+                if (consumed != text.size()) {
+                    throw std::runtime_error(
+                        label +
+                        " must be a non-negative integer.");
+                }
+
+                return
+                    static_cast<std::size_t>(
+                        value);
+            };
+
+        const std::size_t center =
+            parse_non_negative(
+                argv[3],
+                "Probe line");
+
+        if (center == 0) {
+            throw std::runtime_error(
+                "Probe line must be greater than zero.");
+        }
+
+        const std::size_t radius =
+            argc == 5
+                ? parse_non_negative(
+                    argv[4],
+                    "Probe radius")
+                : 10;
+
+        std::ifstream input(target);
+
+        if (!input) {
+            throw std::runtime_error(
+                "Unable to open probe target: " +
+                target.string());
+        }
+
+        std::vector<std::string> lines;
+        std::string line;
+
+        while (std::getline(input, line)) {
+            lines.push_back(line);
+        }
+
+        if (center > lines.size()) {
+            throw std::runtime_error(
+                "Probe line exceeds file length.");
+        }
+
+        const std::size_t first =
+            center > radius
+                ? center - radius
+                : 1;
+
+        const std::size_t last =
+            std::min(
+                lines.size(),
+                center + radius);
+
+        std::cout
+            << target.string()
+            << ":"
+            << first
+            << "-"
+            << last
+            << "\n";
+
+        for (
+            std::size_t number = first;
+            number <= last;
+            ++number) {
+
+            std::cout
+                << number
+                << ": "
+                << lines[number - 1]
+                << "\n";
+        }
+
+        return 0;
+    }
+    catch (const std::exception& e) {
+        std::cerr
+            << "Error: "
+            << e.what()
+            << std::endl;
+        return 1;
+    }
+}
+
 int runDirectoryCommand(
     int argc,
     char* argv[]) {
@@ -1329,6 +1462,10 @@ int main(int argc, char* argv[]) {
 
     if (argc >= 2 && std::string(argv[1]) == "dir") {
         return runDirectoryCommand(argc, argv);
+    }
+
+    if (argc >= 2 && std::string(argv[1]) == "probe") {
+        return runProbeCommand(argc, argv);
     }
 
     if (argc >= 2 && std::string(argv[1]) == "cipher") {

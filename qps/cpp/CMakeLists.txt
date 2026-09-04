@@ -249,6 +249,14 @@ add_test(
 )
 
 add_test(
+    NAME qps_probe_cli
+    COMMAND
+        ${Python3_EXECUTABLE}
+        ${CMAKE_CURRENT_SOURCE_DIR}/tests/runtime/probe_cli_test.py
+        $<TARGET_FILE:qps>
+)
+
+add_test(
     NAME qps_dir_cli
     COMMAND
         ${Python3_EXECUTABLE}
