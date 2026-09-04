@@ -115,6 +115,11 @@ add_qps_test(
     tests/runtime/geometry_execution_test.cpp
 )
 
+add_qps_test(
+    qps_host_action_test
+    tests/runtime/host_action_test.cpp
+)
+
 
 add_test(
     NAME qps_runtime_semantics_test
@@ -135,6 +140,11 @@ add_test(
 add_test(
     NAME qps_geometry_execution_test
     COMMAND qps_geometry_execution_test
+)
+
+add_test(
+    NAME qps_host_action_test
+    COMMAND qps_host_action_test
 )
 
 

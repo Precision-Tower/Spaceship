@@ -525,7 +525,7 @@ body: -dragon_cannon;
         {"Unknown GEOMETRY action", "-dragon_cannon"});
 }
 
-void geometryActionDoesNotRunInGenericDomain() {
+void geometryPrimitiveIsNotAHostPrimitive() {
     auto program = parseSource(R"qps({@pu1:
 [>radius]- 3/n;
 [>width]- 1/n;
@@ -542,7 +542,7 @@ body: -cylinder;
         [&]() {
             interpreter.executeStatement(action);
         },
-        {"Execution action", "-cylinder", "GEOMETRY execution domain"});
+        {"Unknown host execution action", "-cylinder"});
 }
 
 void geometryResultTypeIsOpaqueGeometry() {
@@ -1187,7 +1187,7 @@ int main() {
         {"explicit Item override wins", explicitItemOverrideWins},
         {"missing required parameter fails clearly", missingRequiredParameterFailsClearly},
         {"unknown action fails at runtime", unknownActionFailsAtRuntime},
-        {"geometry action rejected in generic domain", geometryActionDoesNotRunInGenericDomain},
+        {"geometry primitive is not a host primitive", geometryPrimitiveIsNotAHostPrimitive},
         {"geometry result type is opaque geometry", geometryResultTypeIsOpaqueGeometry},
         {"feature stage stored in scope", featureStageStoredInScope},
         {"source chaining preserves feature history", sourceChainingPreservesFeatureHistory},

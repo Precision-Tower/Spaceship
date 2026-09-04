@@ -1,6 +1,7 @@
 #include "../h/interpreter.hpp"
 #include "../h/symbol_resolver.hpp"
 #include "../h/geometry_action_resolver.hpp"
+#include "../h/host_actions.hpp"
 
 #include "../../ast/ast_node.hpp"
 
@@ -362,20 +363,28 @@ void Interpreter::executeStatement(
                 const ast::ExecutionActionNode*>(
                     &statement)) {
 
-        if (options_.domain !=
+        if (options_.domain ==
             ast::ExecutionDomain::GEOMETRY) {
 
-            throw std::runtime_error(
-                "Execution action '-" +
-                action->action_name_ +
-                "' requires GEOMETRY execution domain.");
+            (void)executeGeometryAction(
+                *action,
+                std::nullopt);
+
+            return;
         }
 
-        (void)executeGeometryAction(
-            *action,
-            std::nullopt);
+        if (options_.domain ==
+            ast::ExecutionDomain::GENERIC) {
 
-        return;
+            HostActionDispatcher host;
+            host.execute(action->action_name_);
+            return;
+        }
+
+        throw std::runtime_error(
+            "Execution action '-" +
+            action->action_name_ +
+            "' has no runtime dispatcher.");
     }
 
     if (dynamic_cast<const ast::PassStatementNode*>(&statement)) {

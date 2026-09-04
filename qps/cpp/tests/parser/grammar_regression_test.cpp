@@ -503,6 +503,36 @@ $slaveplacement:;
 }
 
 
+
+void genericExecutionActionParsesStructurally() {
+    auto program = parseSource(R"qps({host_probe:
+-process;
+})qps");
+
+    assert(program != nullptr);
+    assert(program->statements.size() == 1);
+
+    auto* definition =
+        dynamic_cast<qps::ast::ExecutionDefinitionNode*>(
+            program->statements.front().get());
+
+    assert(definition != nullptr);
+    assert(
+        definition->domain_ ==
+        qps::ast::ExecutionDomain::GENERIC);
+
+    assert(definition->body_ != nullptr);
+    assert(definition->body_->statements.size() == 1);
+
+    auto* action =
+        dynamic_cast<qps::ast::ExecutionActionNode*>(
+            definition->body_->statements.front().get());
+
+    assert(action != nullptr);
+    assert(action->action_name_ == "process");
+}
+
+
 void statementGeometryQualificationSurvivesParsing() {
     auto program = parseSource(R"qps({model:
 master: [>shape.dimensions];
@@ -564,6 +594,8 @@ int main() {
         {"pulley schema AST hierarchy parses", pulleySchemaAstHierarchyParses},
         {"combine pulley schema AST hierarchy parses", combinePulleySchemaAstHierarchyParses},
         {"leading decimal numeric literal parses", leadingDecimalNumericLiteralParses},
+        {"generic execution action parses structurally", genericExecutionActionParsesStructurally},
+
         {"statement @ qualification survives parsing", statementGeometryQualificationSurvivesParsing},
         {"pulley system $ authoring frontier remains unimplemented", pulleySystemAuthoringFrontier},
     };

@@ -234,6 +234,13 @@ Parser::parseExecutionDefinitionStatement() {
         return parseCalculation();
     }
 
+    // Execution actions are domain-neutral syntax.
+    // Runtime dispatch decides whether a given action is valid
+    // for GENERIC, GEOMETRY, or another execution domain.
+    if (peek_type() == tokens::TokenType::EXECUTION_ACTION) {
+        return parseStatement();
+    }
+
     if (current_execution_domain_ == ast::ExecutionDomain::GEOMETRY) {
         return parseStatement();
     }

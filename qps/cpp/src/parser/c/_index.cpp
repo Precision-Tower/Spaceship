@@ -324,11 +324,8 @@ std::unique_ptr<ast::AstNode> Parser::parseStatement() {
         // Domain-specific validity is enforced by the interpreter.
         return parseExecutionTermStatement();
     } else if (peek_type() == tokens::TokenType::EXECUTION_ACTION) {
-        if (current_execution_domain_ != ast::ExecutionDomain::GEOMETRY) {
-            error("Execution action " + current_token_.lexeme +
-                  " requires a GEOMETRY execution domain.");
-        }
-
+        // ExecutionActionNode is domain-neutral syntax.
+        // The active execution domain selects runtime dispatch.
         auto action = parseExecutionActionInvocation(nullptr);
         match(tokens::TokenType::SEMICOLON);
         return action;
