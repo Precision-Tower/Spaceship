@@ -81,6 +81,11 @@ add_qps_test(
 )
 
 add_qps_test(
+    qps_structural_selection_test
+    tests/runtime/structural_selection_test.cpp
+)
+
+add_qps_test(
     qps_path_resolver_test
     tests/runtime/path_resolver_test.cpp
 )
@@ -120,6 +125,11 @@ add_qps_test(
     tests/runtime/host_action_test.cpp
 )
 
+
+add_test(
+    NAME qps_structural_selection_test
+    COMMAND qps_structural_selection_test
+)
 
 add_test(
     NAME qps_runtime_semantics_test
