@@ -773,6 +773,60 @@ void derivedSemanticOutputsExecuteInsideInstance() {
     const auto instances = executeProgram(R"qps({Leverage_Equation:
 [>f]-
 [>arm]-
+void stringInputCanBeOverriddenPerInstance() {
+    const auto instances = executeProgram(R"qps({Cipher_Path:
+[>source]- "default.py";
+
+captured: -process(
+program- "printf";
+arg_0- "%s";
+arg_1- source;
+);
+
+-assert captured_exit_code == 0;
+}
+
+{>Cipher_Path:
+source- "Engineering/py/cipher/probe.py";
+})qps");
+
+    require(
+        instances.size() == 1,
+        "Expected one string override-backed instance.");
+
+    const auto& source =
+        requireBinding(
+            instances[0].scope,
+            "source");
+
+    require(
+        source.value.kind() ==
+            qps::runtime::RuntimeValue::Kind::STRING,
+        "String execution override should remain STRING.");
+
+    require(
+        source.value.asString(
+            "string execution override") ==
+            "Engineering/py/cipher/probe.py",
+        "String execution override value mismatch.");
+
+    require(
+        source.origin ==
+            qps::runtime::BindingOrigin::SUPPLIED,
+        "String execution override should be SUPPLIED.");
+
+    const auto& output =
+        requireBinding(
+            instances[0].scope,
+            "captured_stdout");
+
+    require(
+        output.value.asString(
+            "captured process stdout") ==
+            "Engineering/py/cipher/probe.py",
+        "Host action should receive string execution input.");
+}
+
 
 %[>T]: f * arm
 }
@@ -1354,3 +1408,4 @@ int main() {
 
     return 0;
 }
+        {"string input can be overridden per instance", stringInputCanBeOverriddenPerInstance},

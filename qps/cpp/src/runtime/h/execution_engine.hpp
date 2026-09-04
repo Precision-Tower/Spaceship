@@ -125,7 +125,13 @@ public:
 
     ExecutionInstance instantiate(
         const std::string& definition_id,
+    // RuntimeValue is the canonical execution override representation.
         const std::unordered_map<std::string, double>& overrides) const;
+        const std::string& definition_id,
+        const std::unordered_map<std::string, RuntimeValue>& overrides) const;
+
+    // Explicit numeric convenience for native callers.
+    ExecutionInstance instantiateNumeric(
 
     std::vector<ExecutionInstance> execute(
         const ast::ProgramNode& program);
@@ -150,7 +156,7 @@ private:
 
     ExecutionInstance instantiate(
         const std::string& definition_id,
-        const std::unordered_map<std::string, double>& overrides,
+        const std::unordered_map<std::string, RuntimeValue>& overrides,
         const std::unordered_map<std::string, CausalInput>&
             causal_inputs) const;
 

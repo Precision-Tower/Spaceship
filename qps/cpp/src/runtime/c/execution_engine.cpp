@@ -129,7 +129,7 @@ std::string overrideName(
     return identifier->name_;
 }
 
-double evaluateValue(
+RuntimeValue evaluateValue(
     const ast::AstNode& node,
     ExecutionScope& scope) {
 
@@ -362,7 +362,7 @@ ExecutionInstance ExecutionEngine::instantiate(
     const auto inputs = collectInputSpecs(definition);
     const auto input_index = indexInputs(inputs);
 
-    std::unordered_map<std::string, double> overrides;
+    std::unordered_map<std::string, RuntimeValue> overrides;
     ExecutionScope override_scope;
 
     for (const auto& argument : call.arguments_) {
@@ -416,9 +416,9 @@ ExecutionInstance ExecutionEngine::instantiate(
         std::unordered_map<std::string, CausalInput>{});
 }
 
-ExecutionInstance ExecutionEngine::instantiate(
+ExecutionInstance ExecutionEngine::instantiateNumeric(
     const std::string& definition_id,
-    const std::unordered_map<std::string, double>& overrides,
+    const std::unordered_map<std::string, RuntimeValue>& overrides,
     const std::unordered_map<std::string, CausalInput>&
         causal_inputs) const {
 
@@ -455,6 +455,24 @@ ExecutionInstance ExecutionEngine::instantiate(
                 definition.identifier_ +
                 "'.");
         }
+    std::unordered_map<std::string, RuntimeValue>
+        runtime_overrides;
+
+    for (const auto& [name, value] : overrides) {
+        runtime_overrides.emplace(
+            name,
+            RuntimeValue::numeric(value));
+    }
+
+    return instantiate(
+        definition_id,
+        runtime_overrides);
+}
+
+ExecutionInstance ExecutionEngine::instantiate(
+    const std::string& definition_id,
+    const std::unordered_map<std::string, RuntimeValue>& overrides) const {
+
     }
 
     for (const auto& input : inputs) {
@@ -485,12 +503,13 @@ ExecutionInstance ExecutionEngine::instantiate(
         const auto causal_input =
             causal_inputs.find(input.info.name);
 
-        double value = 0.0;
+        RuntimeValue value;
 
         if (override != overrides.end()) {
             value = override->second;
         } else if (causal_input != causal_inputs.end()) {
-            value = causal_input->second.value;
+            value = RuntimeValue::numeric(
+                causal_input->second.value);
         } else {
             value = evaluateValue(
                 *input.item->value_node_,

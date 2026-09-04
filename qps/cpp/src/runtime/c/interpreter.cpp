@@ -941,6 +941,31 @@ RuntimeValue Interpreter::evaluateValue(
             string->value_);
     }
 
+    if (auto* identifier =
+            dynamic_cast<
+                const ast::IdentifierNode*>(
+                    &node)) {
+
+        return scope_
+            .get(identifier->name_)
+            .value;
+    }
+
+    if (auto* path =
+            dynamic_cast<
+                const ast::PathReferenceNode*>(
+                    &node)) {
+
+        const auto& segments =
+            path->getPathSegments();
+
+        if (segments.size() == 1) {
+            return scope_
+                .get(segments.front())
+                .value;
+        }
+    }
+
     return RuntimeValue::numeric(
         evaluate(node));
 }
