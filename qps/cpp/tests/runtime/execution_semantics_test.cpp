@@ -6,6 +6,8 @@
 #include "tokens/h/lexer.hpp"
 
 #include <cmath>
+#include <filesystem>
+#include <fstream>
 #include <functional>
 #include <iostream>
 #include <optional>
@@ -520,6 +522,147 @@ void itemValuesComposeStringsAndNumbers() {
         "numeric RuntimeValue addition mismatch.");
 }
 
+void qpsDerivesConnectedModuleAncestryFromFilesystemFacts() {
+    namespace fs = std::filesystem;
+
+    const fs::path fixture =
+        fs::absolute("__qps_connected_ancestry_fixture__")
+            .lexically_normal();
+
+    fs::remove_all(fixture);
+
+    fs::create_directories(fixture / "connected/child");
+    fs::create_directories(fixture / "broken/child");
+
+    {
+        std::ofstream root_index(fixture / "_index.qps");
+        require(
+            static_cast<bool>(root_index),
+            "Expected root fixture index to be writable.");
+        root_index << "fixture.\\n\\n";
+
+        std::ofstream connected_index(
+            fixture / "connected/_index.qps");
+        require(
+            static_cast<bool>(connected_index),
+            "Expected connected fixture index to be writable.");
+        connected_index << "connected.\\n\\n";
+
+        std::ofstream child_index(
+            fixture / "connected/child/_index.qps");
+        require(
+            static_cast<bool>(child_index),
+            "Expected connected child index to be writable.");
+        child_index << "child.\\n\\n";
+
+        std::ofstream broken_child_index(
+            fixture / "broken/child/_index.qps");
+        require(
+            static_cast<bool>(broken_child_index),
+            "Expected broken child index to be writable.");
+        broken_child_index << "child.\\n\\n";
+    }
+
+    const auto run_policy =
+        [&](const fs::path& target) {
+
+            const std::string root =
+                fixture.generic_string();
+
+            const std::string path =
+                target.generic_string();
+
+            const std::string source =
+                "{\n"
+                "[>root]- \"" + root + "\";\n"
+                "[>path]- \"" + path + "\";\n"
+                "\n"
+                "[>current]- path;\n"
+                "[>active]- 1;\n"
+                "[>connected]- 1;\n"
+                "\n"
+                "-while active == 1 {\n"
+                "[>index_path]- current + \"/_index.qps\";\n"
+                "\n"
+                "directory_kind: -path_kind(\n"
+                "path- current;\n"
+                ");\n"
+                "\n"
+                "index_kind: -path_kind(\n"
+                "path- index_path;\n"
+                ");\n"
+                "\n"
+                "-if directory_kind == \"directory\" {\n"
+                "-if index_kind == \"file\" {\n"
+                "[>active]- active;\n"
+                "}\n"
+                "-else {\n"
+                "[>connected]- 0;\n"
+                "[>active]- 0;\n"
+                "}\n"
+                "}\n"
+                "-else {\n"
+                "[>connected]- 0;\n"
+                "[>active]- 0;\n"
+                "}\n"
+                "\n"
+                "-if active == 1 {\n"
+                "-if current == root {\n"
+                "[>active]- 0;\n"
+                "}\n"
+                "-else {\n"
+                "parent: -path_parent(\n"
+                "path- current;\n"
+                ");\n"
+                "[>current]- parent;\n"
+                "}\n"
+                "}\n"
+                "}\n"
+                "}\n";
+
+            return executeSource(source);
+        };
+
+    try {
+        const auto connected =
+            run_policy(fixture / "connected/child");
+
+        require(
+            requireBinding(
+                connected,
+                "connected").value.asNumber(
+                    "connected ancestry result") == 1.0,
+            "Fully indexed ancestry should be connected.");
+
+        const auto broken =
+            run_policy(fixture / "broken/child");
+
+        require(
+            requireBinding(
+                broken,
+                "connected").value.asNumber(
+                    "broken ancestry result") == 0.0,
+            "Missing ancestor _index.qps should break connectivity.");
+
+        const auto root =
+            run_policy(fixture);
+
+        require(
+            requireBinding(
+                root,
+                "connected").value.asNumber(
+                    "root ancestry result") == 1.0,
+            "Workspace root should satisfy its own module boundary.");
+    }
+    catch (...) {
+        fs::remove_all(fixture);
+        throw;
+    }
+
+    fs::remove_all(fixture);
+}
+
+
 struct TestCase {
     const char* name;
     std::function<void()> run;
@@ -641,6 +784,7 @@ void ifSelectsElseBranch() {
 
 int main() {
     const std::vector<TestCase> tests = {
+        {"QPS derives connected module ancestry from filesystem facts", qpsDerivesConnectedModuleAncestryFromFilesystemFacts},
         {"while rebinds local Item until condition is false", whileRebindsLocalItemUntilConditionIsFalse},
         {"if selects numeric less-than branch", ifSelectsNumericLessThanBranch},
         {"if selects string equality branch", ifSelectsStringEqualityBranch},
