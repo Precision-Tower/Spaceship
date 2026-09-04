@@ -26,12 +26,18 @@ struct ProcessResult {
     std::string stderr_text;
 };
 
+struct HostActionResult {
+    int exit_code = 0;
+    std::string stdout_text;
+    std::string stderr_text;
+};
+
 class HostActionDispatcher {
 public:
-    ProcessResult execute(
+    HostActionResult execute(
         const HostActionInvocation& invocation) const;
 
-    ProcessResult execute(
+    HostActionResult execute(
         const std::string& action_name) const;
 };
 

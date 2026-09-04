@@ -358,7 +358,7 @@ void Interpreter::executeStatement(
                         const ast::ExecutionActionNode*>(
                             term->content_.front().get())) {
 
-                const ProcessResult result =
+                const HostActionResult result =
                     executeHostAction(*action);
 
                 scope_.bind(
@@ -713,7 +713,7 @@ void Interpreter::executeGeometryFeature(
         BindingOrigin::LOCAL);
 }
 
-ProcessResult Interpreter::executeHostAction(
+HostActionResult Interpreter::executeHostAction(
     const ast::ExecutionActionNode& action) {
 
     HostActionInvocation invocation;

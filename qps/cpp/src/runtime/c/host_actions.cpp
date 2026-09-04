@@ -4,6 +4,7 @@
 #include <array>
 #include <cerrno>
 #include <cstring>
+#include <iostream>
 #include <poll.h>
 #include <stdexcept>
 #include <string>
@@ -356,12 +357,63 @@ ProcessResult runProcess(
 
 } // namespace
 
-ProcessResult HostActionDispatcher::execute(
+HostActionResult HostActionDispatcher::execute(
     const HostActionInvocation& invocation) const {
 
     if (invocation.action_name == "process") {
-        return runProcess(
-            resolveProcessRequest(invocation));
+        const ProcessResult process =
+            runProcess(
+                resolveProcessRequest(invocation));
+
+        return HostActionResult{
+            process.exit_code,
+            process.stdout_text,
+            process.stderr_text
+        };
+    }
+
+    if (invocation.action_name == "write") {
+        const std::string stream =
+            requireParameter(
+                invocation,
+                "stream")
+                .asString("write stream");
+
+        const std::string value =
+            requireParameter(
+                invocation,
+                "value")
+                .asString("write value");
+
+        for (const auto& [name, parameter] :
+             invocation.parameters) {
+
+            (void)parameter;
+
+            if (name != "stream" &&
+                name != "value") {
+
+                throw std::runtime_error(
+                    "Unknown write parameter '" +
+                    name +
+                    "'.");
+            }
+        }
+
+        if (stream == "stdout") {
+            std::cout << value;
+            std::cout.flush();
+        }
+        else if (stream == "stderr") {
+            std::cerr << value;
+            std::cerr.flush();
+        }
+        else {
+            throw std::runtime_error(
+                "Write stream must be 'stdout' or 'stderr'.");
+        }
+
+        return HostActionResult{};
     }
 
     throw std::runtime_error(
@@ -369,7 +421,7 @@ ProcessResult HostActionDispatcher::execute(
         invocation.action_name + "'.");
 }
 
-ProcessResult HostActionDispatcher::execute(
+HostActionResult HostActionDispatcher::execute(
     const std::string& action_name) const {
 
     return execute(HostActionInvocation{

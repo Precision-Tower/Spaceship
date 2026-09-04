@@ -130,6 +130,66 @@ void processDrainsStdoutAndStderrTogether() {
         "dual-pipe stderr content mismatch.");
 }
 
+void writeAcceptsRuntimeStringValue() {
+    qps::runtime::HostActionInvocation invocation;
+    invocation.action_name = "write";
+
+    invocation.parameters.emplace(
+        "stream",
+        qps::runtime::RuntimeValue::string(
+            "stdout"));
+
+    invocation.parameters.emplace(
+        "value",
+        qps::runtime::RuntimeValue::string(
+            ""));
+
+    qps::runtime::HostActionDispatcher host;
+
+    const auto result =
+        host.execute(invocation);
+
+    require(
+        result.exit_code == 0,
+        "write primitive should succeed.");
+
+    require(
+        result.stdout_text.empty() &&
+        result.stderr_text.empty(),
+        "write primitive should not manufacture captured output.");
+}
+
+void invalidWriteStreamFails() {
+    qps::runtime::HostActionInvocation invocation;
+    invocation.action_name = "write";
+
+    invocation.parameters.emplace(
+        "stream",
+        qps::runtime::RuntimeValue::string(
+            "sideways"));
+
+    invocation.parameters.emplace(
+        "value",
+        qps::runtime::RuntimeValue::string(
+            "ignored"));
+
+    qps::runtime::HostActionDispatcher host;
+
+    try {
+        (void)host.execute(invocation);
+    }
+    catch (const std::runtime_error& e) {
+        require(
+            std::string(e.what()).find(
+                "stdout") != std::string::npos,
+            "Unexpected invalid-stream failure.");
+        return;
+    }
+
+    throw std::runtime_error(
+        "Invalid write stream unexpectedly succeeded.");
+}
+
 void unknownPrimitiveFails() {
     qps::runtime::HostActionDispatcher host;
 
@@ -166,6 +226,14 @@ int main() {
         processDrainsStdoutAndStderrTogether();
         std::cout
             << "PASS process drains stdout and stderr together\n";
+
+        writeAcceptsRuntimeStringValue();
+        std::cout
+            << "PASS write accepts runtime string value\n";
+
+        invalidWriteStreamFails();
+        std::cout
+            << "PASS invalid write stream fails\n";
 
         unknownPrimitiveFails();
         std::cout

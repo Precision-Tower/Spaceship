@@ -69,7 +69,7 @@ public:
 };
 
 class SymbolResolver;
-struct ProcessResult;
+struct HostActionResult;
 
 using FunctionTable =
     std::unordered_map<
@@ -182,7 +182,7 @@ private:
         const std::optional<std::string>&
             result_stage_name);
 
-    ProcessResult executeHostAction(
+    HostActionResult executeHostAction(
         const ast::ExecutionActionNode& action);
 
     RuntimeValue evaluateReturn(
