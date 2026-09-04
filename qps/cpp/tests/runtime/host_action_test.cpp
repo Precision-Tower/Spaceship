@@ -79,6 +79,57 @@ void processAcceptsRuntimeStringParameters() {
         "printf stderr should be empty.");
 }
 
+void processDrainsStdoutAndStderrTogether() {
+    qps::runtime::HostActionInvocation invocation;
+    invocation.action_name = "process";
+
+    invocation.parameters.emplace(
+        "program",
+        qps::runtime::RuntimeValue::string(
+            "python3"));
+
+    invocation.parameters.emplace(
+        "arg_0",
+        qps::runtime::RuntimeValue::string(
+            "-c"));
+
+    invocation.parameters.emplace(
+        "arg_1",
+        qps::runtime::RuntimeValue::string(
+            "import sys;"
+            "sys.stderr.write('E' * 262144);"
+            "sys.stderr.flush();"
+            "sys.stdout.write('O' * 262144);"
+            "sys.stdout.flush()"));
+
+    qps::runtime::HostActionDispatcher host;
+
+    const auto result =
+        host.execute(invocation);
+
+    require(
+        result.exit_code == 0,
+        "dual-pipe process should exit successfully.");
+
+    require(
+        result.stdout_text.size() == 262144,
+        "dual-pipe stdout size mismatch.");
+
+    require(
+        result.stderr_text.size() == 262144,
+        "dual-pipe stderr size mismatch.");
+
+    require(
+        result.stdout_text.front() == 'O' &&
+        result.stdout_text.back() == 'O',
+        "dual-pipe stdout content mismatch.");
+
+    require(
+        result.stderr_text.front() == 'E' &&
+        result.stderr_text.back() == 'E',
+        "dual-pipe stderr content mismatch.");
+}
+
 void unknownPrimitiveFails() {
     qps::runtime::HostActionDispatcher host;
 
@@ -111,6 +162,10 @@ int main() {
         processAcceptsRuntimeStringParameters();
         std::cout
             << "PASS process accepts runtime string parameters\n";
+
+        processDrainsStdoutAndStderrTogether();
+        std::cout
+            << "PASS process drains stdout and stderr together\n";
 
         unknownPrimitiveFails();
         std::cout

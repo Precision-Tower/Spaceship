@@ -4,6 +4,7 @@
 #include <array>
 #include <cerrno>
 #include <cstring>
+#include <poll.h>
 #include <stdexcept>
 #include <string>
 #include <sys/types.h>
@@ -122,8 +123,10 @@ ProcessRequest resolveProcessRequest(
     return request;
 }
 
-std::string readAll(int fd) {
-    std::string output;
+void drainReadyPipe(
+    int& fd,
+    std::string& output) {
+
     std::array<char, 4096> buffer{};
 
     while (true) {
@@ -137,11 +140,13 @@ std::string readAll(int fd) {
             output.append(
                 buffer.data(),
                 static_cast<std::size_t>(count));
-            continue;
+            return;
         }
 
         if (count == 0) {
-            break;
+            ::close(fd);
+            fd = -1;
+            return;
         }
 
         if (errno == EINTR) {
@@ -152,8 +157,76 @@ std::string readAll(int fd) {
             "Process pipe read failed: " +
             std::string(std::strerror(errno)));
     }
+}
 
-    return output;
+void captureProcessOutput(
+    int stdout_fd,
+    int stderr_fd,
+    ProcessResult& result) {
+
+    int stdout_open = stdout_fd;
+    int stderr_open = stderr_fd;
+
+    while (stdout_open >= 0 ||
+           stderr_open >= 0) {
+
+        pollfd descriptors[2]{};
+
+        descriptors[0].fd = stdout_open;
+        descriptors[0].events =
+            stdout_open >= 0 ? POLLIN : 0;
+
+        descriptors[1].fd = stderr_open;
+        descriptors[1].events =
+            stderr_open >= 0 ? POLLIN : 0;
+
+        int ready = 0;
+
+        do {
+            ready =
+                ::poll(
+                    descriptors,
+                    2,
+                    -1);
+        } while (ready < 0 &&
+                 errno == EINTR);
+
+        if (ready < 0) {
+            if (stdout_open >= 0) {
+                ::close(stdout_open);
+            }
+
+            if (stderr_open >= 0) {
+                ::close(stderr_open);
+            }
+
+            throw std::runtime_error(
+                "Process pipe poll failed: " +
+                std::string(
+                    std::strerror(errno)));
+        }
+
+        const short readable =
+            POLLIN | POLLHUP | POLLERR;
+
+        if (stdout_open >= 0 &&
+            (descriptors[0].revents &
+             readable)) {
+
+            drainReadyPipe(
+                stdout_open,
+                result.stdout_text);
+        }
+
+        if (stderr_open >= 0 &&
+            (descriptors[1].revents &
+             readable)) {
+
+            drainReadyPipe(
+                stderr_open,
+                result.stderr_text);
+        }
+    }
 }
 
 ProcessResult runProcess(
@@ -253,14 +326,10 @@ ProcessResult runProcess(
 
     ProcessResult result;
 
-    result.stdout_text =
-        readAll(stdout_pipe[0]);
-
-    result.stderr_text =
-        readAll(stderr_pipe[0]);
-
-    ::close(stdout_pipe[0]);
-    ::close(stderr_pipe[0]);
+    captureProcessOutput(
+        stdout_pipe[0],
+        stderr_pipe[0],
+        result);
 
     int status = 0;
 
