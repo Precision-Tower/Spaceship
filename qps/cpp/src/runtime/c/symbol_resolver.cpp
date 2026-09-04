@@ -247,7 +247,7 @@ ResolvedSymbol SymbolResolver::resolve(
 }
 
 
-ResolvedSymbol SymbolResolver::resolveFrom(
+StructuralHandle SymbolResolver::resolveFrom(
     const StructuralHandle& root,
     const ast::SymbolReferenceNode& reference) const {
 
@@ -350,7 +350,7 @@ ResolvedSymbol SymbolResolver::resolveFrom(
         });
 }
 
-ResolvedSymbol SymbolResolver::resolve(
+StructuralHandle SymbolResolver::resolve(
     const ast::SymbolReferenceNode& reference,
     const StructuralReferenceContext& context) const {
 

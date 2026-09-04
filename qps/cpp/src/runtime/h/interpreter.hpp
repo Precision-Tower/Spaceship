@@ -3,6 +3,7 @@
 
 #include "geometry_actions.hpp"
 #include "symbol_table.hpp"
+#include "symbol_resolver.hpp"
 
 #include "../../ast/h/statements.hpp"
 
@@ -68,7 +69,6 @@ public:
         : RuntimeDiagnostic(message, line, column) {}
 };
 
-class SymbolResolver;
 struct HostActionResult;
 
 using FunctionTable =
@@ -91,7 +91,7 @@ struct InterpreterOptions {
     //
     // Required when execution contains:
     //   v: [>shape.dimensions]
-    SymbolResolver* symbol_resolver = nullptr;
+    StructuralResolver* symbol_resolver = nullptr;
 
     std::string current_document;
 };

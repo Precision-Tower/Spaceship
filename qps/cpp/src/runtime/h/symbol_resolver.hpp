@@ -27,6 +27,19 @@ struct StructuralReferenceContext {
     std::filesystem::path current_document;
 };
 
+class StructuralResolver {
+public:
+    virtual ~StructuralResolver() = default;
+
+    virtual StructuralHandle resolve(
+        const ast::SymbolReferenceNode& reference,
+        const StructuralReferenceContext& context) const = 0;
+
+    virtual StructuralHandle resolveFrom(
+        const StructuralHandle& root,
+        const ast::SymbolReferenceNode& reference) const = 0;
+};
+
 struct ResolvedSymbol : public StructuralHandle {
     // Authored/surfaced symbol requested from the bootstrap resolver.
     std::string symbol;
@@ -35,7 +48,7 @@ struct ResolvedSymbol : public StructuralHandle {
     std::filesystem::path index_file;
 };
 
-class SymbolResolver {
+class SymbolResolver : public StructuralResolver {
 public:
     SymbolResolver(
         PathResolver& paths,
@@ -57,9 +70,9 @@ public:
     //
     // Structural names may resolve to Keys or Terms. Filesystem and
     // semantic traversal remain separate and are preserved by the AST.
-    ResolvedSymbol resolve(
+    StructuralHandle resolve(
         const ast::SymbolReferenceNode& reference,
-        const StructuralReferenceContext& context) const;
+        const StructuralReferenceContext& context) const override;
 
     // Continue structural navigation from an already-resolved local root.
     //
@@ -71,9 +84,9 @@ public:
     // resolves the same document path as:
     //
     //   [>shape.dimensions.cylinder]
-    ResolvedSymbol resolveFrom(
+    StructuralHandle resolveFrom(
         const StructuralHandle& root,
-        const ast::SymbolReferenceNode& reference) const;
+        const ast::SymbolReferenceNode& reference) const override;
 
 private:
     PathResolver& paths_;
