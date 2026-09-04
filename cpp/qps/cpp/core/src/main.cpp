@@ -331,6 +331,269 @@ std::vector<fs::path> collectQpsFiles(const fs::path& target) {
     return files;
 }
 
+
+enum class QuerySelectorKind {
+    ITEM,
+    TERM,
+    KEY,
+    FUNCTION,
+    IDENTIFIER
+};
+
+struct QuerySelector {
+    QuerySelectorKind kind;
+    std::string identifier;
+};
+
+QuerySelector parseQuerySelector(const std::string& selector) {
+    if (selector == "item-") {
+        return {QuerySelectorKind::ITEM, ""};
+    }
+    if (selector == "term:") {
+        return {QuerySelectorKind::TERM, ""};
+    }
+    if (selector == "key.") {
+        return {QuerySelectorKind::KEY, ""};
+    }
+    if (selector == "-func") {
+        return {QuerySelectorKind::FUNCTION, ""};
+    }
+
+    return {QuerySelectorKind::IDENTIFIER, selector};
+}
+
+std::string itemIdentifier(const qps::ast::ItemDeclarationNode& item) {
+    if (const auto* identifier =
+            dynamic_cast<const qps::ast::IdentifierNode*>(
+                item.getTarget())) {
+        return identifier->name_;
+    }
+
+    return "";
+}
+
+bool queryMatches(
+    const qps::ast::AstNode& node,
+    const QuerySelector& selector,
+    std::string& identifier,
+    std::string& suffix) {
+
+    if (const auto* item =
+            dynamic_cast<const qps::ast::ItemDeclarationNode*>(&node)) {
+        identifier = itemIdentifier(*item);
+        suffix = "-";
+
+        if (identifier.empty()) {
+            return false;
+        }
+
+        return selector.kind == QuerySelectorKind::ITEM ||
+               (selector.kind == QuerySelectorKind::IDENTIFIER &&
+                selector.identifier == identifier);
+    }
+
+    if (const auto* term =
+            dynamic_cast<const qps::ast::TermDeclarationNode*>(&node)) {
+        identifier = term->identifier_;
+        suffix = ":";
+
+        return selector.kind == QuerySelectorKind::TERM ||
+               (selector.kind == QuerySelectorKind::IDENTIFIER &&
+                selector.identifier == identifier);
+    }
+
+    if (const auto* key =
+            dynamic_cast<const qps::ast::KeyDeclarationNode*>(&node)) {
+        identifier = key->identifier_;
+        suffix = ".";
+
+        return selector.kind == QuerySelectorKind::KEY ||
+               (selector.kind == QuerySelectorKind::IDENTIFIER &&
+                selector.identifier == identifier);
+    }
+
+    if (const auto* function =
+            dynamic_cast<const qps::ast::FunctionDeclarationNode*>(&node)) {
+        identifier = function->name_;
+        suffix = "";
+
+        return selector.kind == QuerySelectorKind::FUNCTION ||
+               (selector.kind == QuerySelectorKind::IDENTIFIER &&
+                selector.identifier == identifier);
+    }
+
+    return false;
+}
+
+std::string joinSemanticPath(
+    const std::vector<std::string>& ancestors,
+    const std::string& leaf,
+    const std::string& suffix) {
+
+    std::ostringstream out;
+
+    for (const auto& segment : ancestors) {
+        if (!segment.empty()) {
+            out << "." << segment;
+        }
+    }
+
+    if (!leaf.empty()) {
+        out << "." << leaf << suffix;
+    }
+
+    return out.str();
+}
+
+void queryWalkNode(
+    const qps::ast::AstNode& node,
+    const QuerySelector& selector,
+    const fs::path& file,
+    std::vector<std::string>& ancestors,
+    std::vector<std::string>& results) {
+
+    std::string identifier;
+    std::string suffix;
+
+    if (queryMatches(node, selector, identifier, suffix)) {
+        std::ostringstream result;
+        result
+            << displayPath(file)
+            << joinSemanticPath(ancestors, identifier, suffix)
+            << ":"
+            << lineOrOne(node.getLine());
+
+        results.push_back(result.str());
+    }
+
+    if (const auto* key =
+            dynamic_cast<const qps::ast::KeyDeclarationNode*>(&node)) {
+        ancestors.push_back(key->identifier_);
+        for (const auto& child : key->content_) {
+            queryWalkNode(
+                *child, selector, file, ancestors, results);
+        }
+        ancestors.pop_back();
+        return;
+    }
+
+    if (const auto* term =
+            dynamic_cast<const qps::ast::TermDeclarationNode*>(&node)) {
+        ancestors.push_back(term->identifier_);
+        for (const auto& child : term->content_) {
+            queryWalkNode(
+                *child, selector, file, ancestors, results);
+        }
+        ancestors.pop_back();
+        return;
+    }
+
+    if (const auto* container =
+            dynamic_cast<const qps::ast::ContainerNode*>(&node)) {
+        for (const auto& child : container->elements) {
+            queryWalkNode(
+                *child, selector, file, ancestors, results);
+        }
+        return;
+    }
+
+    if (const auto* dictionary =
+            dynamic_cast<const qps::ast::DictionaryDeclarationNode*>(&node)) {
+        for (const auto& entry : dictionary->entries) {
+            if (entry && entry->value_node_) {
+                queryWalkNode(
+                    *entry->value_node_,
+                    selector,
+                    file,
+                    ancestors,
+                    results);
+            }
+        }
+        return;
+    }
+
+    if (const auto* klass =
+            dynamic_cast<const qps::ast::ClassDeclarationNode*>(&node)) {
+        ancestors.push_back(klass->name_);
+        for (const auto& member : klass->members) {
+            queryWalkNode(
+                *member, selector, file, ancestors, results);
+        }
+        ancestors.pop_back();
+        return;
+    }
+}
+
+void queryWalkProgram(
+    const qps::ast::ProgramNode& program,
+    const QuerySelector& selector,
+    const fs::path& file,
+    std::vector<std::string>& results) {
+
+    std::vector<std::string> ancestors;
+
+    for (const auto& statement : program.statements) {
+        queryWalkNode(
+            *statement,
+            selector,
+            file,
+            ancestors,
+            results);
+    }
+}
+
+int runQueryCommand(int argc, char* argv[]) {
+    if (argc != 3 && argc != 4) {
+        std::cerr
+            << "Usage: "
+            << argv[0]
+            << " qry <selector> [path/file.qps|path/folder]"
+            << std::endl;
+        return 1;
+    }
+
+    try {
+        const QuerySelector selector =
+            parseQuerySelector(argv[2]);
+
+        const fs::path target =
+            argc == 4
+                ? fs::path(argv[3])
+                : fs::current_path();
+
+        const std::vector<fs::path> files =
+            collectQpsFiles(target);
+
+        std::vector<std::string> results;
+
+        for (const auto& file : files) {
+            std::unique_ptr<qps::ast::ProgramNode> ast_root =
+                parseFileQuiet(file.string());
+
+            queryWalkProgram(
+                *ast_root,
+                selector,
+                file,
+                results);
+        }
+
+        std::sort(results.begin(), results.end());
+
+        for (const auto& result : results) {
+            std::cout << result << "\n";
+        }
+
+        return 0;
+    }
+    catch (const std::exception& e) {
+        std::cerr
+            << "Error: "
+            << e.what()
+            << std::endl;
+        return 1;
+    }
+}
+
 bool runTestFile(
     const fs::path& file,
     bool& tested_any) {
@@ -514,6 +777,10 @@ int runTestCommand(int argc, char* argv[]) {
 int main(int argc, char* argv[]) {
     if (argc >= 2 && std::string(argv[1]) == "test") {
         return runTestCommand(argc, argv);
+    }
+
+    if (argc >= 2 && std::string(argv[1]) == "qry") {
+        return runQueryCommand(argc, argv);
     }
 
     if (argc < 2) {

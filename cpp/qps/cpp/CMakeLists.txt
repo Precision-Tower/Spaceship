@@ -237,3 +237,11 @@ add_test(
         python3
         ${CMAKE_CURRENT_SOURCE_DIR}/tests/runtime/test_suite_cli_test.py
 )
+
+add_test(
+    NAME qps_query_cli
+    COMMAND
+        python3
+        ${CMAKE_CURRENT_SOURCE_DIR}/tests/runtime/query_cli_test.py
+        $<TARGET_FILE:qps>
+)
