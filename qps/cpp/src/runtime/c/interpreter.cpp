@@ -721,7 +721,7 @@ void Interpreter::executeStructuralBinding(
                 root_name +
                 "'");
 
-        ResolvedSymbol resolved =
+        StructuralHandle resolved =
             options_.symbol_resolver->resolveFrom(
                 root,
                 *reference);
@@ -743,7 +743,7 @@ void Interpreter::executeStructuralBinding(
             "' requires current document context.");
     }
 
-    ResolvedSymbol resolved =
+    StructuralHandle resolved =
         options_.symbol_resolver->resolve(
             *reference,
             StructuralReferenceContext{
@@ -1194,7 +1194,7 @@ double Interpreter::evaluate(
                 "' requires a SymbolResolver.");
         }
 
-        ResolvedSymbol resolved;
+        StructuralHandle resolved;
 
         if (reference->getOrigin() ==
             ast::SymbolReferenceOrigin::LOCAL_BINDING) {
