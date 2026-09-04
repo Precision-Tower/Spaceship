@@ -268,87 +268,262 @@ StructuralHandle SymbolResolver::resolveFrom(
             "' must identify a binding and child structure.");
     }
 
-    if (root.document_file.empty() ||
-        !root.document_owner ||
+    if (!root.document_owner ||
         root.target_node == nullptr) {
 
         throw std::runtime_error(
             "Local structural root is incomplete.");
     }
 
-    if (root.semantic_path.empty()) {
-        throw std::runtime_error(
-            "Local structural root has no semantic path.");
-    }
+    StructuralHandle result;
+    result.document_owner = root.document_owner;
 
-    std::vector<ast::SymbolReferenceSegment>
-        combined_segments;
+    ast::AstNode* current =
+        root.target_node;
 
-    combined_segments.reserve(
-        root.semantic_path.size() +
-        local_segments.size() - 1);
+    const auto find_named_structure =
+        [&](const auto& self,
+            const std::vector<std::unique_ptr<ast::AstNode>>& nodes,
+            const std::string& name)
+            -> ast::AstNode* {
 
-    for (std::size_t i = 0;
-         i < root.semantic_path.size();
-         ++i) {
+            ast::AstNode* match = nullptr;
 
-        combined_segments.push_back({
-            root.semantic_path[i],
-            i == 0
-                ? ast::SymbolReferenceSeparator::ROOT
-                : ast::SymbolReferenceSeparator::DOT
-        });
-    }
+            for (const auto& child : nodes) {
+                ast::AstNode* candidate = nullptr;
+
+                if (auto* key =
+                        dynamic_cast<ast::KeyDeclarationNode*>(
+                            child.get())) {
+
+                    if (key->identifier_ == name) {
+                        candidate = key;
+                    }
+                }
+                else if (auto* term =
+                             dynamic_cast<ast::TermDeclarationNode*>(
+                                 child.get())) {
+
+                    if (term->identifier_ == name) {
+                        candidate = term;
+                    }
+                }
+                else if (auto* container =
+                             dynamic_cast<ast::ContainerNode*>(
+                                 child.get())) {
+
+                    candidate =
+                        self(
+                            self,
+                            container->elements,
+                            name);
+                }
+
+                if (!candidate) {
+                    continue;
+                }
+
+                if (match != nullptr) {
+                    throw std::runtime_error(
+                        "Duplicate semantic structure '" +
+                        name +
+                        "' while resolving '" +
+                        reference.getSymbol() +
+                        "'.");
+                }
+
+                match = candidate;
+            }
+
+            return match;
+        };
+
+    const std::size_t structural_end =
+        reference.selectsItemValue()
+            ? local_segments.size() - 1
+            : local_segments.size();
 
     // Segment zero is the local runtime binding name.
-    // Everything after it continues navigation from the bound root.
+    // Navigation begins directly at the bound AST node.
     for (std::size_t i = 1;
-         i < local_segments.size();
+         i < structural_end;
          ++i) {
 
-        combined_segments.push_back({
-            local_segments[i].name,
-            ast::SymbolReferenceSeparator::DOT
-        });
-    }
+        const std::vector<std::unique_ptr<ast::AstNode>>*
+            children = nullptr;
 
-    std::string combined_symbol;
+        if (auto* parent_key =
+                dynamic_cast<ast::KeyDeclarationNode*>(
+                    current)) {
 
-    for (std::size_t i = 0;
-         i < combined_segments.size();
-         ++i) {
+            children =
+                &parent_key->content_;
+        }
+        else if (auto* parent_term =
+                     dynamic_cast<ast::TermDeclarationNode*>(
+                         current)) {
 
-        if (i != 0) {
-            combined_symbol += ".";
+            children =
+                &parent_term->content_;
+        }
+        else {
+            throw std::runtime_error(
+                "Cannot descend through non-structural semantic node while resolving '" +
+                reference.getSymbol() +
+                "'.");
         }
 
-        combined_symbol +=
-            combined_segments[i].name;
+        ast::AstNode* match =
+            find_named_structure(
+                find_named_structure,
+                *children,
+                local_segments[i].name);
+
+        if (!match) {
+            throw std::runtime_error(
+                "Semantic structure '" +
+                local_segments[i].name +
+                "' not found while resolving '" +
+                reference.getSymbol() +
+                "'.");
+        }
+
+        current = match;
     }
 
     if (reference.selectsItemValue()) {
-        combined_symbol += "-";
+        const std::string& item_name =
+            local_segments.back().name;
+
+        const std::vector<std::unique_ptr<ast::AstNode>>*
+            children = nullptr;
+
+        if (auto* parent_key =
+                dynamic_cast<ast::KeyDeclarationNode*>(
+                    current)) {
+
+            children =
+                &parent_key->content_;
+        }
+        else if (auto* parent_term =
+                     dynamic_cast<ast::TermDeclarationNode*>(
+                         current)) {
+
+            children =
+                &parent_term->content_;
+        }
+        else {
+            throw std::runtime_error(
+                "Cannot select Item value through non-structural semantic node while resolving '" +
+                reference.getSymbol() +
+                "'.");
+        }
+
+        ast::ItemDeclarationNode* match = nullptr;
+
+        const auto find_direct_item =
+            [&](const auto& self,
+                const std::vector<std::unique_ptr<ast::AstNode>>& nodes)
+                -> void {
+
+                for (const auto& child : nodes) {
+                    if (auto* item =
+                            dynamic_cast<ast::ItemDeclarationNode*>(
+                                child.get())) {
+
+                        auto* identifier =
+                            dynamic_cast<ast::IdentifierNode*>(
+                                item->getTarget());
+
+                        if (!identifier ||
+                            identifier->name_ != item_name) {
+                            continue;
+                        }
+
+                        if (match != nullptr) {
+                            throw std::runtime_error(
+                                "Duplicate semantic Item '" +
+                                item_name +
+                                "' while resolving '" +
+                                reference.getSymbol() +
+                                "'.");
+                        }
+
+                        match = item;
+                        continue;
+                    }
+
+                    if (auto* container =
+                            dynamic_cast<ast::ContainerNode*>(
+                                child.get())) {
+
+                        self(self, container->elements);
+                    }
+                }
+            };
+
+        find_direct_item(
+            find_direct_item,
+            *children);
+
+        if (!match) {
+            throw std::runtime_error(
+                "Semantic Item '" +
+                item_name +
+                "' not found while resolving '" +
+                reference.getSymbol() +
+                "'.");
+        }
+
+        current = match;
     }
 
-    ast::SymbolReferenceNode rebound(
-        combined_symbol,
-        ast::SymbolReferenceOrigin::CURRENT_FILE,
-        0,
-        std::move(combined_segments),
-        reference.selectsItemValue(),
-        0,
-        0);
+    if (auto* resolved_key =
+            dynamic_cast<ast::KeyDeclarationNode*>(
+                current)) {
 
-    const fs::path current_document =
-        root.surface_module /
-        root.document_file.filename();
+        result.target_type =
+            "KEY_DECLARATION";
+        result.target_identifier =
+            resolved_key->identifier_;
+    }
+    else if (auto* resolved_term =
+                 dynamic_cast<ast::TermDeclarationNode*>(
+                     current)) {
 
-    return resolve(
-        rebound,
-        StructuralReferenceContext{
-            current_document
-        });
+        result.target_type =
+            "TERM_DECLARATION";
+        result.target_identifier =
+            resolved_term->identifier_;
+    }
+    else if (auto* resolved_item =
+                 dynamic_cast<ast::ItemDeclarationNode*>(
+                     current)) {
+
+        auto* identifier =
+            dynamic_cast<ast::IdentifierNode*>(
+                resolved_item->getTarget());
+
+        if (!identifier) {
+            throw std::runtime_error(
+                "Resolved semantic Item does not have an identifier target.");
+        }
+
+        result.target_type =
+            "ITEM_VALUE";
+        result.target_identifier =
+            identifier->name_;
+    }
+    else {
+        throw std::runtime_error(
+            "Structural QPS reference resolved to unsupported AST node.");
+    }
+
+    result.target_node = current;
+
+    return result;
 }
+
 
 StructuralHandle SymbolResolver::resolve(
     const ast::SymbolReferenceNode& reference,

@@ -970,9 +970,18 @@ int main(int argc, char** argv) {
                     "Local-binding witness did not preserve LOCAL_BINDING origin.");
             }
 
+            // Local rebasing must depend only on the owned AST and
+            // selected node, not reconstructed resolver path metadata.
+            auto minimal_root = root;
+            minimal_root.surface_module.clear();
+            minimal_root.document_file.clear();
+            minimal_root.semantic_path.clear();
+            minimal_root.target_type.clear();
+            minimal_root.target_identifier.clear();
+
             const auto rebound =
                 symbols.resolveFrom(
-                    root,
+                    minimal_root,
                     *local_reference);
 
             if (rebound.target_type != "TERM_DECLARATION" ||
