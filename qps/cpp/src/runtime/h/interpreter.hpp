@@ -162,6 +162,9 @@ private:
     void executeCalculation(
         const ast::CalculationNode& calculation);
 
+    void executeIf(
+        const ast::IfStatementNode& statement);
+
     void executeAssert(
         const ast::AssertStatementNode& statement) const;
 

@@ -17,7 +17,7 @@ std::unique_ptr<ast::IfStatementNode> Parser::parseIfStatement() {
     match(tokens::TokenType::KW_IF); // Consume '-if'
 
     // Parse the condition for the if block
-    std::unique_ptr<ast::AstNode> condition_expr = parseAdditiveExpression(); // Condition is an expression
+    std::unique_ptr<ast::AstNode> condition_expr = parseExpression();
 
     // Parse the main body of the if block
     std::unique_ptr<ast::ExecutionBlockNode> body_block = parseExecutionBlock();
@@ -33,8 +33,6 @@ std::unique_ptr<ast::IfStatementNode> Parser::parseIfStatement() {
     if (peek_type() == tokens::TokenType::KW_ELSE) {
         if_node->setElseBlock(parseElseStatement()); // Assuming parseElseStatement exists
     }
-
-    match(tokens::TokenType::EXEC_DELIMITER); // Consume '_' that terminates the entire if-elif-else block
 
     return if_node;
 }

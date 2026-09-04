@@ -296,6 +296,15 @@ void Interpreter::executeStatement(
         return;
     }
 
+    if (auto* if_statement =
+            dynamic_cast<
+                const ast::IfStatementNode*>(
+                    &statement)) {
+
+        executeIf(*if_statement);
+        return;
+    }
+
     if (auto* assert_statement =
             dynamic_cast<
                 const ast::AssertStatementNode*>(
@@ -452,6 +461,34 @@ void Interpreter::executeStatement(
 
     throw std::runtime_error(
         "Interpreter does not yet support AST node type in execution block.");
+}
+
+void Interpreter::executeIf(
+    const ast::IfStatementNode& statement) {
+
+    if (!statement.condition_) {
+        throw std::runtime_error(
+            "If statement requires a condition.");
+    }
+
+    if (!statement.body_) {
+        throw std::runtime_error(
+            "If statement requires a body.");
+    }
+
+    if (evaluateTruth(*statement.condition_)) {
+        execute(*statement.body_);
+        return;
+    }
+
+    if (statement.else_block_) {
+        if (!statement.else_block_->body_) {
+            throw std::runtime_error(
+                "Else statement requires a body.");
+        }
+
+        execute(*statement.else_block_->body_);
+    }
 }
 
 void Interpreter::executeAssert(
@@ -1344,15 +1381,39 @@ bool Interpreter::evaluateTruth(
         if (binary->getOperator() ==
             ast::BinaryExpressionNode::Operator::EQUAL) {
 
-            const double left = evaluate(*binary->getLeft());
-            const double right = evaluate(*binary->getRight());
+            const RuntimeValue left =
+                evaluateValue(*binary->getLeft());
 
-            return std::fabs(left - right) <= 0.000000001;
+            const RuntimeValue right =
+                evaluateValue(*binary->getRight());
+
+            if (left.kind() != right.kind()) {
+                return false;
+            }
+
+            if (left.kind() ==
+                RuntimeValue::Kind::NUMERIC) {
+
+                return std::fabs(
+                    left.asNumber("equality left") -
+                    right.asNumber("equality right")) <=
+                    0.000000001;
+            }
+
+            if (left.kind() ==
+                RuntimeValue::Kind::STRING) {
+
+                return left.asString("equality left") ==
+                    right.asString("equality right");
+            }
+
+            throw std::runtime_error(
+                "Equality is not defined for this runtime value kind.");
         }
     }
 
     throw std::runtime_error(
-        "Assertion condition must be a boolean literal or numeric equality expression.");
+        "Condition must be a boolean literal or supported equality expression.");
 }
 
 std::string Interpreter::evaluateMessage(

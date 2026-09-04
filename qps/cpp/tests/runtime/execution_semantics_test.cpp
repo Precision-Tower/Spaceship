@@ -477,8 +477,65 @@ struct TestCase {
 
 } // namespace
 
+
+void ifSelectsStringEqualityBranch() {
+    const std::string source = R"qps(
+{
+[>kind]- "directory";
+
+-if kind == "directory" {
+[>selected]- "if";
+}
+-else {
+[>selected]- "else";
+}
+}
+)qps";
+
+    const qps::runtime::ExecutionScope scope =
+        executeSource(source);
+
+    require(
+        scope.contains("selected"),
+        "if should bind selected.");
+
+    require(
+        scope.get("selected").value.asString(
+            "selected") == "if",
+        "true string equality should select if branch.");
+}
+
+void ifSelectsElseBranch() {
+    const std::string source = R"qps(
+{
+[>kind]- "file";
+
+-if kind == "directory" {
+[>selected]- "if";
+}
+-else {
+[>selected]- "else";
+}
+}
+)qps";
+
+    const qps::runtime::ExecutionScope scope =
+        executeSource(source);
+
+    require(
+        scope.contains("selected"),
+        "else should bind selected.");
+
+    require(
+        scope.get("selected").value.asString(
+            "selected") == "else",
+        "false string equality should select else branch.");
+}
+
 int main() {
     const std::vector<TestCase> tests = {
+        {"if selects string equality branch", ifSelectsStringEqualityBranch},
+        {"if selects else branch", ifSelectsElseBranch},
         {"semantic supplied and derived bindings", semanticSuppliedAndDerivedBindings},
         {"string Items become runtime values", stringItemsBecomeRuntimeValues},
         {"named host action binds process result", namedHostActionBindsProcessResult},
