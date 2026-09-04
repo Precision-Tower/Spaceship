@@ -15,9 +15,24 @@ void require(
     }
 }
 
-void processPrimitiveExists() {
+void processRequiresProgram() {
     qps::runtime::HostActionDispatcher host;
-    host.execute("process");
+
+    try {
+        (void)host.execute("process");
+    }
+    catch (const std::runtime_error& e) {
+        require(
+            std::string(e.what()).find(
+                "requires parameter 'program'") !=
+                std::string::npos,
+            "Unexpected missing-program failure.");
+
+        return;
+    }
+
+    throw std::runtime_error(
+        "Process without program unexpectedly succeeded.");
 }
 
 void processAcceptsRuntimeStringParameters() {
@@ -46,7 +61,22 @@ void processAcceptsRuntimeStringParameters() {
         "Process argument runtime value was not preserved.");
 
     qps::runtime::HostActionDispatcher host;
-    host.execute(invocation);
+
+    const auto result =
+        host.execute(invocation);
+
+    require(
+        result.exit_code == 0,
+        "printf process should exit successfully.");
+
+    require(
+        result.stdout_text ==
+            "QPS_PROCESS_OK",
+        "printf stdout mismatch.");
+
+    require(
+        result.stderr_text.empty(),
+        "printf stderr should be empty.");
 }
 
 void unknownPrimitiveFails() {
@@ -74,9 +104,9 @@ void unknownPrimitiveFails() {
 
 int main() {
     try {
-        processPrimitiveExists();
+        processRequiresProgram();
         std::cout
-            << "PASS process host primitive exists\n";
+            << "PASS process requires program\n";
 
         processAcceptsRuntimeStringParameters();
         std::cout

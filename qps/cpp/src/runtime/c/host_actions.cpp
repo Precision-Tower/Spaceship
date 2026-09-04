@@ -1,19 +1,298 @@
 #include "host_actions.hpp"
 
+#include <algorithm>
+#include <array>
+#include <cerrno>
+#include <cstring>
 #include <stdexcept>
+#include <string>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <unistd.h>
+#include <vector>
 
 namespace qps::runtime {
 
-void HostActionDispatcher::execute(
+namespace {
+
+const RuntimeValue& requireParameter(
+    const HostActionInvocation& invocation,
+    const std::string& name) {
+
+    const auto found =
+        invocation.parameters.find(name);
+
+    if (found == invocation.parameters.end()) {
+        throw std::runtime_error(
+            "Host action '-" +
+            invocation.action_name +
+            "' requires parameter '" +
+            name +
+            "'.");
+    }
+
+    return found->second;
+}
+
+ProcessRequest resolveProcessRequest(
+    const HostActionInvocation& invocation) {
+
+    ProcessRequest request;
+
+    request.program =
+        requireParameter(invocation, "program")
+            .asString("process program");
+
+    if (request.program.empty()) {
+        throw std::runtime_error(
+            "Process program cannot be empty.");
+    }
+
+    const auto cwd =
+        invocation.parameters.find("cwd");
+
+    if (cwd != invocation.parameters.end()) {
+        request.cwd =
+            cwd->second.asString("process cwd");
+    }
+
+    std::vector<std::pair<int, std::string>> indexed;
+
+    for (const auto& [name, value] :
+         invocation.parameters) {
+
+        if (name.rfind("arg_", 0) != 0) {
+            continue;
+        }
+
+        const std::string suffix =
+            name.substr(4);
+
+        if (suffix.empty() ||
+            !std::all_of(
+                suffix.begin(),
+                suffix.end(),
+                [](unsigned char c) {
+                    return c >= '0' && c <= '9';
+                })) {
+
+            throw std::runtime_error(
+                "Invalid process argument parameter '" +
+                name +
+                "'. Expected arg_N.");
+        }
+
+        indexed.emplace_back(
+            std::stoi(suffix),
+            value.asString(
+                "process argument '" +
+                name +
+                "'"));
+    }
+
+    std::sort(
+        indexed.begin(),
+        indexed.end(),
+        [](const auto& left, const auto& right) {
+            return left.first < right.first;
+        });
+
+    for (const auto& [index, value] : indexed) {
+        (void)index;
+        request.arguments.push_back(value);
+    }
+
+    for (const auto& [name, value] :
+         invocation.parameters) {
+
+        (void)value;
+
+        if (name == "program" ||
+            name == "cwd" ||
+            name.rfind("arg_", 0) == 0) {
+            continue;
+        }
+
+        throw std::runtime_error(
+            "Unknown process parameter '" +
+            name +
+            "'.");
+    }
+
+    return request;
+}
+
+std::string readAll(int fd) {
+    std::string output;
+    std::array<char, 4096> buffer{};
+
+    while (true) {
+        const ssize_t count =
+            ::read(
+                fd,
+                buffer.data(),
+                buffer.size());
+
+        if (count > 0) {
+            output.append(
+                buffer.data(),
+                static_cast<std::size_t>(count));
+            continue;
+        }
+
+        if (count == 0) {
+            break;
+        }
+
+        if (errno == EINTR) {
+            continue;
+        }
+
+        throw std::runtime_error(
+            "Process pipe read failed: " +
+            std::string(std::strerror(errno)));
+    }
+
+    return output;
+}
+
+ProcessResult runProcess(
+    const ProcessRequest& request) {
+
+    int stdout_pipe[2];
+    int stderr_pipe[2];
+
+    if (::pipe(stdout_pipe) != 0 ||
+        ::pipe(stderr_pipe) != 0) {
+
+        throw std::runtime_error(
+            "Unable to create process pipes.");
+    }
+
+    const pid_t pid = ::fork();
+
+    if (pid < 0) {
+        throw std::runtime_error(
+            "Unable to fork process.");
+    }
+
+    if (pid == 0) {
+        ::close(stdout_pipe[0]);
+        ::close(stderr_pipe[0]);
+
+        ::dup2(
+            stdout_pipe[1],
+            STDOUT_FILENO);
+
+        ::dup2(
+            stderr_pipe[1],
+            STDERR_FILENO);
+
+        ::close(stdout_pipe[1]);
+        ::close(stderr_pipe[1]);
+
+        if (request.cwd.has_value() &&
+            ::chdir(request.cwd->c_str()) != 0) {
+
+            const std::string message =
+                "Unable to change process directory to '" +
+                *request.cwd +
+                "': " +
+                std::strerror(errno) +
+                "\n";
+
+            ::write(
+                STDERR_FILENO,
+                message.data(),
+                message.size());
+
+            _exit(126);
+        }
+
+        std::vector<std::string> storage;
+        storage.reserve(
+            request.arguments.size() + 1);
+
+        storage.push_back(request.program);
+
+        for (const auto& argument :
+             request.arguments) {
+            storage.push_back(argument);
+        }
+
+        std::vector<char*> argv;
+        argv.reserve(storage.size() + 1);
+
+        for (auto& value : storage) {
+            argv.push_back(value.data());
+        }
+
+        argv.push_back(nullptr);
+
+        ::execvp(
+            request.program.c_str(),
+            argv.data());
+
+        const std::string message =
+            "Unable to execute process '" +
+            request.program +
+            "': " +
+            std::strerror(errno) +
+            "\n";
+
+        ::write(
+            STDERR_FILENO,
+            message.data(),
+            message.size());
+
+        _exit(127);
+    }
+
+    ::close(stdout_pipe[1]);
+    ::close(stderr_pipe[1]);
+
+    ProcessResult result;
+
+    result.stdout_text =
+        readAll(stdout_pipe[0]);
+
+    result.stderr_text =
+        readAll(stderr_pipe[0]);
+
+    ::close(stdout_pipe[0]);
+    ::close(stderr_pipe[0]);
+
+    int status = 0;
+
+    while (::waitpid(pid, &status, 0) < 0) {
+        if (errno == EINTR) {
+            continue;
+        }
+
+        throw std::runtime_error(
+            "Unable to wait for process.");
+    }
+
+    if (WIFEXITED(status)) {
+        result.exit_code =
+            WEXITSTATUS(status);
+    }
+    else if (WIFSIGNALED(status)) {
+        result.exit_code =
+            128 + WTERMSIG(status);
+    }
+
+    return result;
+}
+
+} // namespace
+
+ProcessResult HostActionDispatcher::execute(
     const HostActionInvocation& invocation) const {
 
     if (invocation.action_name == "process") {
-        // Primitive exists. Process invocation semantics are
-        // intentionally not implemented yet.
-        //
-        // Parameters have crossed the AST/runtime boundary and are
-        // represented only as RuntimeValue objects here.
-        return;
+        return runProcess(
+            resolveProcessRequest(invocation));
     }
 
     throw std::runtime_error(
@@ -21,10 +300,10 @@ void HostActionDispatcher::execute(
         invocation.action_name + "'.");
 }
 
-void HostActionDispatcher::execute(
+ProcessResult HostActionDispatcher::execute(
     const std::string& action_name) const {
 
-    execute(HostActionInvocation{
+    return execute(HostActionInvocation{
         action_name,
         {}
     });
