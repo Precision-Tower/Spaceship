@@ -830,77 +830,10 @@ int runCipherCommand(int argc, char* argv[]) {
 
 
 
-struct CapturedCommandResult {
-    int status = 1;
-    std::string output;
-};
+int runBuildCommand(
+    int argc,
+    char* argv[]) {
 
-CapturedCommandResult runCapturedCommand(
-    const std::string& command) {
-
-    CapturedCommandResult result;
-
-    FILE* pipe =
-        popen((command + " 2>&1").c_str(), "r");
-
-    if (pipe == nullptr) {
-        return result;
-    }
-
-    std::array<char, 4096> buffer{};
-
-    while (
-        std::fgets(
-            buffer.data(),
-            static_cast<int>(buffer.size()),
-            pipe) != nullptr) {
-
-        result.output += buffer.data();
-    }
-
-    result.status = pclose(pipe);
-    return result;
-}
-
-void printCompactCtestOutput(
-    const std::string& output) {
-
-    std::istringstream input(output);
-    std::string line;
-
-    while (std::getline(input, line)) {
-        if (
-            line.rfind(
-                "Internal ctest changing into directory:",
-                0) == 0 ||
-            line.rfind("Test project ", 0) == 0 ||
-            line.find("% tests passed,") !=
-                std::string::npos ||
-            line.rfind("Total Test time", 0) == 0) {
-
-            std::cout << line << "\n";
-        }
-    }
-}
-
-int runShellCommand(
-    const std::string& command,
-    const std::string& failure_label) {
-
-    const int status = std::system(command.c_str());
-
-    if (status != 0) {
-        std::cerr
-            << failure_label
-            << " failed."
-            << std::endl;
-        return 1;
-    }
-
-    return 0;
-}
-
-int runBuildCommand(int argc, char* argv[]) {
     if (argc != 2) {
         std::cerr
             << "Usage: "
@@ -912,89 +845,26 @@ int runBuildCommand(int argc, char* argv[]) {
 
     try {
         const fs::path root =
-            findCeOsRoot(fs::current_path());
+            findCeOsRoot(
+                fs::current_path());
 
-        const fs::path source =
-            root / "qps/cpp";
+        const fs::path build_source =
+            root /
+            "qps/qps/build.qps";
 
-        const fs::path build =
-            source / "build-pixel";
+        std::unique_ptr<
+            qps::ast::ProgramNode>
+            program =
+                parseFileQuiet(
+                    build_source.string());
 
-        const fs::path qps =
-            build / "qps";
-
-        std::cout
-            << "=== BUILD ==="
-            << std::endl;
-
-        const std::string configure_command =
-            "cmake -S " +
-            shellQuote(source.string()) +
-            " -B " +
-            shellQuote(build.string());
-
-        if (runShellCommand(
-                configure_command,
-                "QPS configure") != 0) {
-            return 1;
+        if (!program) {
+            throw std::runtime_error(
+                "QPS build source produced no program.");
         }
 
-        const std::string build_command =
-            "cmake --build " +
-            shellQuote(build.string()) +
-            " -j2";
-
-        if (runShellCommand(
-                build_command,
-                "QPS build") != 0) {
-            return 1;
-        }
-
-        std::cout
-            << "QPS build: PASS\n\n"
-            << "=== FULL CTEST ==="
-            << std::endl;
-
-        const std::string ctest_command =
-            "ctest --test-dir " +
-            shellQuote(build.string()) +
-            " --output-on-failure";
-
-        const CapturedCommandResult ctest =
-            runCapturedCommand(ctest_command);
-
-        if (ctest.status != 0) {
-            std::cerr << ctest.output;
-
-            std::cerr
-                << "QPS CTest failed."
-                << std::endl;
-
-            return 1;
-        }
-
-        printCompactCtestOutput(ctest.output);
-
-        std::cout
-            << "\n=== ENGINEERING ==="
-            << std::endl;
-
-        const std::string engineering_command =
-            "cd " +
-            shellQuote(root.string()) +
-            " && " +
-            shellQuote(qps.string()) +
-            " test Engineering/qps";
-
-        if (runShellCommand(
-                engineering_command,
-                "Engineering QPS") != 0) {
-            return 1;
-        }
-
-        std::cout
-            << "\nQPS_BUILD_PASS"
-            << std::endl;
+        qps::runtime::ExecutionEngine engine;
+        (void)engine.execute(*program);
 
         return 0;
     }
