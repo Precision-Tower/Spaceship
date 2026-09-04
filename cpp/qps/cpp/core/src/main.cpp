@@ -362,14 +362,22 @@ QuerySelector parseQuerySelector(const std::string& selector) {
     return {QuerySelectorKind::IDENTIFIER, selector};
 }
 
-std::string itemIdentifier(const qps::ast::ItemDeclarationNode& item) {
+std::string queryTargetIdentifier(const qps::ast::AstNode* target) {
     if (const auto* identifier =
-            dynamic_cast<const qps::ast::IdentifierNode*>(
-                item.getTarget())) {
+            dynamic_cast<const qps::ast::IdentifierNode*>(target)) {
         return identifier->name_;
     }
 
+    if (const auto* reference =
+            dynamic_cast<const qps::ast::SymbolReferenceNode*>(target)) {
+        return reference->getSymbol();
+    }
+
     return "";
+}
+
+std::string itemIdentifier(const qps::ast::ItemDeclarationNode& item) {
+    return queryTargetIdentifier(item.getTarget());
 }
 
 bool queryMatches(
@@ -390,6 +398,20 @@ bool queryMatches(
         return selector.kind == QuerySelectorKind::ITEM ||
                (selector.kind == QuerySelectorKind::IDENTIFIER &&
                 selector.identifier == identifier);
+    }
+
+    if (const auto* calculation =
+            dynamic_cast<const qps::ast::CalculationNode*>(&node)) {
+        identifier =
+            queryTargetIdentifier(calculation->getTarget());
+        suffix = ":";
+
+        if (identifier.empty()) {
+            return false;
+        }
+
+        return selector.kind == QuerySelectorKind::IDENTIFIER &&
+               selector.identifier == identifier;
     }
 
     if (const auto* term =
@@ -520,6 +542,109 @@ void queryWalkNode(
                 *member, selector, file, ancestors, results);
         }
         ancestors.pop_back();
+        return;
+    }
+
+    if (const auto* function =
+            dynamic_cast<const qps::ast::FunctionDeclarationNode*>(&node)) {
+        ancestors.push_back(function->name_);
+
+        if (function->params_node_) {
+            queryWalkNode(
+                *function->params_node_,
+                selector,
+                file,
+                ancestors,
+                results);
+        }
+
+        if (function->body_) {
+            queryWalkNode(
+                *function->body_,
+                selector,
+                file,
+                ancestors,
+                results);
+        }
+
+        ancestors.pop_back();
+        return;
+    }
+
+    if (const auto* execution =
+            dynamic_cast<const qps::ast::ExecutionDefinitionNode*>(&node)) {
+        ancestors.push_back(execution->identifier_);
+
+        if (execution->body_) {
+            queryWalkNode(
+                *execution->body_,
+                selector,
+                file,
+                ancestors,
+                results);
+        }
+
+        ancestors.pop_back();
+        return;
+    }
+
+    if (const auto* block =
+            dynamic_cast<const qps::ast::ExecutionBlockNode*>(&node)) {
+        for (const auto& statement : block->statements) {
+            queryWalkNode(
+                *statement,
+                selector,
+                file,
+                ancestors,
+                results);
+        }
+        return;
+    }
+
+    if (const auto* causal =
+            dynamic_cast<const qps::ast::CausalDefinitionNode*>(&node)) {
+        ancestors.push_back(causal->identifier_);
+
+        for (const auto& relationship : causal->relationships) {
+            queryWalkNode(
+                *relationship,
+                selector,
+                file,
+                ancestors,
+                results);
+        }
+
+        ancestors.pop_back();
+        return;
+    }
+
+    if (const auto* relationship =
+            dynamic_cast<const qps::ast::CausalRelationshipNode*>(&node)) {
+        for (const auto& side : relationship->sides_) {
+            if (!side) {
+                continue;
+            }
+
+            if (side->entity) {
+                queryWalkNode(
+                    *side->entity,
+                    selector,
+                    file,
+                    ancestors,
+                    results);
+            }
+
+            for (const auto& domain : side->domain_chain) {
+                if (domain) {
+                    queryWalkNode(
+                        *domain,
+                        selector,
+                        file,
+                        ancestors,
+                        results);
+                }
+            }
+        }
         return;
     }
 }

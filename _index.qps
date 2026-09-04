@@ -24,7 +24,7 @@ qps: (
 language- "Quick Parse Standard";
 check- "qps path/file.qps --check";
 test- "qps test path/file-or-folder";
-query- "qps path/file.qps --get path.to.value";
+query- "qps qry <selector> [path]";
 );
 
 navigation: (

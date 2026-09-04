@@ -104,6 +104,66 @@ def main():
             f"missing Key identity:\n{keys.stdout}",
         )
 
+        executable = root / "executable.qps"
+        executable.write_text(
+            "-func leverage(\n"
+            "f-/n;\n"
+            "arm-/n;\n"
+            "){\n"
+            "%product: f * arm\n"
+            "-return product;\n"
+            "}\n"
+            "\n"
+            "{calculate:\n"
+            "[>input]-\n"
+            "%output: input * 2\n"
+            "}\n"
+            "\n"
+            "{!drive:\n"
+            "Motor: (DC = ME) = Pump: (ME = FD);\n"
+            "}\n"
+        )
+
+        functions = run(qps, "qry", "-func", executable)
+        require(functions.returncode == 0, functions.stderr)
+        require(
+            any(
+                line.endswith("executable.qps.leverage:1")
+                for line in functions.stdout.splitlines()
+            ),
+            f"missing function identity:\n{functions.stdout}",
+        )
+
+        product = run(qps, "qry", "product", executable)
+        require(product.returncode == 0, product.stderr)
+        require(
+            any(
+                line.endswith("executable.qps.leverage.product::5")
+                for line in product.stdout.splitlines()
+            ),
+            f"missing function-body calculation:\n{product.stdout}",
+        )
+
+        output = run(qps, "qry", "output", executable)
+        require(output.returncode == 0, output.stderr)
+        require(
+            any(
+                line.endswith("executable.qps.calculate.output::11")
+                for line in output.stdout.splitlines()
+            ),
+            f"missing execution-definition calculation:\n{output.stdout}",
+        )
+
+        supplied = run(qps, "qry", "input", executable)
+        require(supplied.returncode == 0, supplied.stderr)
+        require(
+            any(
+                line.endswith("executable.qps.calculate.input-:10")
+                for line in supplied.stdout.splitlines()
+            ),
+            f"missing SymbolReference-target Item:\n{supplied.stdout}",
+        )
+
         first = run(qps, "qry", "item-", root)
         second_run = run(qps, "qry", "item-", root)
 
