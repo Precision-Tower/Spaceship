@@ -30,6 +30,7 @@ struct HostActionResult {
     int exit_code = 0;
     std::string stdout_text;
     std::string stderr_text;
+    std::optional<RuntimeValue> value;
 };
 
 class HostActionDispatcher {

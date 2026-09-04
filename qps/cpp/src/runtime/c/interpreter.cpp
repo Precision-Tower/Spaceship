@@ -383,6 +383,14 @@ void Interpreter::executeStatement(
                     std::nullopt,
                     BindingOrigin::LOCAL);
 
+                if (result.value.has_value()) {
+                    scope_.bind(
+                        term->identifier_,
+                        *result.value,
+                        std::nullopt,
+                        BindingOrigin::LOCAL);
+                }
+
                 return;
             }
         }

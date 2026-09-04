@@ -373,7 +373,8 @@ HostActionResult HostActionDispatcher::execute(
         return HostActionResult{
             process.exit_code,
             process.stdout_text,
-            process.stderr_text
+            process.stderr_text,
+            std::nullopt
         };
     }
 
