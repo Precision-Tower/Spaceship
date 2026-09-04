@@ -470,6 +470,56 @@ arg_1- "import sys;sys.stdout.write('OUT');sys.stderr.write('ERR');sys.exit(7)";
         "process stderr mismatch");
 }
 
+
+void itemValuesComposeStringsAndNumbers() {
+    const auto scope = executeSource(R"qps({
+[>path]- "qps";
+[>index]- path + "/_index.qps";
+
+[>prefix]- "root/";
+[>nested]- prefix + path + "/_index.qps";
+
+[>left]- 2/n;
+[>right]- 3/n;
+[>sum]- left + right;
+})qps");
+
+    const auto& index =
+        requireBinding(scope, "index");
+
+    require(
+        index.value.isString(),
+        "composed index path should be STRING.");
+
+    require(
+        index.value.asString("index") ==
+            "qps/_index.qps",
+        "string Item composition mismatch.");
+
+    const auto& nested =
+        requireBinding(scope, "nested");
+
+    require(
+        nested.value.isString(),
+        "nested composed path should be STRING.");
+
+    require(
+        nested.value.asString("nested") ==
+            "root/qps/_index.qps",
+        "chained string Item composition mismatch.");
+
+    const auto& sum =
+        requireBinding(scope, "sum");
+
+    require(
+        sum.value.isNumeric(),
+        "numeric Item addition should remain NUMERIC.");
+
+    require(
+        sum.value.asNumber("sum") == 5.0,
+        "numeric RuntimeValue addition mismatch.");
+}
+
 struct TestCase {
     const char* name;
     std::function<void()> run;
@@ -538,6 +588,7 @@ int main() {
         {"if selects else branch", ifSelectsElseBranch},
         {"semantic supplied and derived bindings", semanticSuppliedAndDerivedBindings},
         {"string Items become runtime values", stringItemsBecomeRuntimeValues},
+        {"Item values compose strings and numbers", itemValuesComposeStringsAndNumbers},
         {"named host action binds process result", namedHostActionBindsProcessResult},
         {"local derived bindings and chained calculations", localDerivedBindingsAndChainsUseEarlierBindings},
         {"arithmetic operators", arithmeticOperatorsEvaluate},

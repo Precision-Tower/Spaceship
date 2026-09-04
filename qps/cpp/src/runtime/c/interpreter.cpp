@@ -996,6 +996,43 @@ RuntimeValue Interpreter::evaluateValue(
             .value;
     }
 
+    if (auto* binary =
+            dynamic_cast<
+                const ast::BinaryExpressionNode*>(
+                    &node)) {
+
+        if (binary->getOperator() ==
+            ast::BinaryExpressionNode::Operator::ADD) {
+
+            const RuntimeValue left =
+                evaluateValue(
+                    *binary->getLeft());
+
+            const RuntimeValue right =
+                evaluateValue(
+                    *binary->getRight());
+
+            if (left.isNumeric() &&
+                right.isNumeric()) {
+
+                return RuntimeValue::numeric(
+                    left.asNumber("addition left") +
+                    right.asNumber("addition right"));
+            }
+
+            if (left.isString() &&
+                right.isString()) {
+
+                return RuntimeValue::string(
+                    left.asString("addition left") +
+                    right.asString("addition right"));
+            }
+
+            throw std::runtime_error(
+                "Runtime addition requires matching NUMERIC or STRING values.");
+        }
+    }
+
     if (auto* path =
             dynamic_cast<
                 const ast::PathReferenceNode*>(

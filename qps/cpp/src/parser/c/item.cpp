@@ -97,6 +97,29 @@ std::unique_ptr<ast::ItemDeclarationNode> Parser::parseItemDeclaration() {
         }
     }
 
+    // Item values may compose through '+' without surrendering '/' to the
+    // mathematical parser. '/' remains available for Item unit suffixes such
+    // as 30/n;.
+    while (value_node &&
+           peek_type() == tokens::TokenType::OP_ADD) {
+
+        const int op_line = current_token_.line;
+        const int op_column = current_token_.column;
+
+        match(tokens::TokenType::OP_ADD);
+
+        auto right =
+            parsePrimaryExpression();
+
+        value_node =
+            ast::createBinaryExpressionNode(
+                std::move(value_node),
+                ast::BinaryExpressionNode::Operator::ADD,
+                std::move(right),
+                op_line,
+                op_column);
+    }
+
     // Typed suffixes remain optional. They may annotate either a populated
     // Item or an empty Item.
     std::optional<tokens::TokenType> type_hint;
@@ -185,6 +208,29 @@ Parser::parseSemanticItemDeclaration() {
         error(
             "Expected a literal or reference after semantic Item target. Found: " +
             current_token_.toString());
+    }
+
+    // Item values may compose through '+' without surrendering '/' to the
+    // mathematical parser. '/' remains available for Item unit suffixes such
+    // as 30/n;.
+    while (value_node &&
+           peek_type() == tokens::TokenType::OP_ADD) {
+
+        const int op_line = current_token_.line;
+        const int op_column = current_token_.column;
+
+        match(tokens::TokenType::OP_ADD);
+
+        auto right =
+            parsePrimaryExpression();
+
+        value_node =
+            ast::createBinaryExpressionNode(
+                std::move(value_node),
+                ast::BinaryExpressionNode::Operator::ADD,
+                std::move(right),
+                op_line,
+                op_column);
     }
 
     std::optional<std::string> unit_hint;
