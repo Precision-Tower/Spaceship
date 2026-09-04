@@ -197,6 +197,12 @@ Parser::parseExecutionDefinitionStatement() {
         return parseExecutionDefinitionInput();
     }
 
+    if (peek_type() == tokens::TokenType::IDENTIFIER &&
+        peek_next_type() == tokens::TokenType::OP_SUBTRACT) {
+
+        return parseItemDeclaration();
+    }
+
     // Local structural bindings belong to the shared execution workspace,
     // not to any one execution domain:
     //

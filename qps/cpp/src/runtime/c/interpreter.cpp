@@ -244,11 +244,18 @@ Interpreter::executeForResult(
         for (const auto& statement :
              block.statements) {
 
-            if (skip_item_declarations &&
-                dynamic_cast<
-                    const ast::ItemDeclarationNode*>(
-                        statement.get())) {
-                continue;
+            if (skip_item_declarations) {
+                if (auto* item =
+                        dynamic_cast<
+                            const ast::ItemDeclarationNode*>(
+                                statement.get())) {
+
+                    if (dynamic_cast<
+                            const ast::SymbolReferenceNode*>(
+                                item->getTarget())) {
+                        continue;
+                    }
+                }
             }
 
             executeLocatedStatement(*statement);

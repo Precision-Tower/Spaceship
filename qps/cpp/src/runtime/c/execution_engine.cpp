@@ -43,8 +43,9 @@ std::vector<InputSpec> collectInputSpecs(
                     item->getTarget());
 
             if (!semantic) {
-                throw std::runtime_error(
-                    "Execution definition input must use a semantic target.");
+                // Identifier-target Items are local runtime state.
+                // Only semantic [>...] Items define the execution interface.
+                continue;
             }
 
             const std::string& name = semantic->getSymbol();

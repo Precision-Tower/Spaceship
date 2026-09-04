@@ -10,6 +10,7 @@
 #include "tokens/h/lexer.hpp"
 
 #include <cmath>
+#include <fstream>
 #include <functional>
 #include <filesystem>
 #include <iostream>
@@ -1424,6 +1425,116 @@ path- "__qps_missing_path_policy_fixture__";
         "Native path_kind fact should report directory.");
 }
 
+
+void qpsDerivesModuleIdentityFromFilesystemFacts() {
+    namespace fs = std::filesystem;
+
+    const fs::path fixture =
+        "__qps_module_policy_fixture__";
+
+    fs::remove_all(fixture);
+    fs::create_directories(fixture / "module");
+    fs::create_directories(fixture / "plain");
+
+    {
+        std::ofstream index(fixture / "module/_index.qps");
+        require(
+            static_cast<bool>(index),
+            "Expected module fixture index to be writable.");
+        index << "fixture.\n\n";
+    }
+
+    try {
+        const auto instances = executeProgram(R"qps(
+{Path_Module_Policy:
+[>path]-
+
+index_path- path + "/_index.qps";
+
+directory_kind: -path_kind(
+path- path;
+);
+
+index_kind: -path_kind(
+path- index_path;
+);
+
+-if directory_kind == "directory" {
+-if index_kind == "file" {
+-return "module";
+}
+}
+
+-return "not-module";
+}
+
+{>Path_Module_Policy:
+path- "__qps_module_policy_fixture__/module";
+}
+
+{>Path_Module_Policy:
+path- "__qps_module_policy_fixture__/plain";
+}
+
+{>Path_Module_Policy:
+path- "__qps_module_policy_fixture__/missing";
+}
+)qps");
+
+        require(
+            instances.size() == 3,
+            "Expected three module-policy execution instances.");
+
+        require(
+            instances[0].result.has_value(),
+            "module policy should return a result.");
+
+        require(
+            instances[0].result->asString(
+                "module result") == "module",
+            "Directory with _index.qps should be a module.");
+
+        require(
+            instances[1].result.has_value(),
+            "plain directory policy should return a result.");
+
+        require(
+            instances[1].result->asString(
+                "plain directory result") == "not-module",
+            "Directory without _index.qps should not be a module.");
+
+        require(
+            instances[2].result.has_value(),
+            "missing path policy should return a result.");
+
+        require(
+            instances[2].result->asString(
+                "missing path result") == "not-module",
+            "Missing path should not be a module.");
+
+        const auto& index_path =
+            requireBinding(
+                instances[0].scope,
+                "index_path");
+
+        require(
+            index_path.value.isString(),
+            "QPS-built index path should be STRING.");
+
+        require(
+            index_path.value.asString(
+                "index_path") ==
+                "__qps_module_policy_fixture__/module/_index.qps",
+            "QPS should construct the module index path.");
+    }
+    catch (...) {
+        fs::remove_all(fixture);
+        throw;
+    }
+
+    fs::remove_all(fixture);
+}
+
 struct TestCase {
     const char* name;
     std::function<void()> run;
@@ -1434,6 +1545,7 @@ struct TestCase {
 int main() {
     const std::vector<TestCase> tests = {
         {"QPS path kind policy executes above native filesystem fact", qpsPathKindPolicyExecutesAboveNativeFilesystemFact},
+        {"QPS derives module identity from filesystem facts", qpsDerivesModuleIdentityFromFilesystemFacts},
         {"structural semantic references preserve navigation", structuralSemanticReferencesPreserveNavigation},
         {"named reusable execution definition parses", namedReusableExecutionDefinitionParses},
         {"geometry execution domain parses structurally", geometryExecutionDomainParsesStructurally},
