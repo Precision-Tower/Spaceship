@@ -297,16 +297,13 @@ void requirePlan(
     }
 }
 
-void requireParity(
+void requireAuthoredPlan(
     const ast::ExecutionBlockNode& planner,
     const ast::SymbolReferenceNode& reference,
     const fs::path& current_document,
+    const fs::path& expected_document,
+    std::size_t expected_semantic_start,
     const std::string& witness) {
-
-    const auto native =
-        runtime::planReferenceDocument(
-            reference,
-            {current_document});
 
     const auto authored =
         executeAuthoredPlanner(
@@ -314,9 +311,13 @@ void requireParity(
             reference,
             current_document);
 
+    runtime::ReferenceDocumentPlan expected;
+    expected.document_relative = expected_document;
+    expected.semantic_start = expected_semantic_start;
+
     requirePlan(
         authored,
-        native,
+        expected,
         witness);
 
     std::cout
@@ -324,11 +325,10 @@ void requireParity(
         << ": PASS\n";
 }
 
-void requireEscapeParity(
+void requireWorkspaceEscape(
     const ast::ExecutionBlockNode& planner) {
 
     using ast::SymbolReferenceOrigin;
-    using ast::SymbolReferenceSegment;
     using ast::SymbolReferenceSeparator;
 
     auto ref = reference(
@@ -345,17 +345,7 @@ void requireEscapeParity(
     const fs::path current_document =
         "items/MC/_index.qps";
 
-    std::string native_error;
     std::string authored_error;
-
-    try {
-        (void)runtime::planReferenceDocument(
-            ref,
-            {current_document});
-    }
-    catch (const std::exception& error) {
-        native_error = error.what();
-    }
 
     try {
         (void)executeAuthoredPlanner(
@@ -369,11 +359,6 @@ void requireEscapeParity(
 
     const std::string fragment =
         "escapes the workspace root";
-
-    require(
-        native_error.find(fragment) !=
-            std::string::npos,
-        "Native planner did not reject workspace escape.");
 
     require(
         authored_error.find(fragment) !=
@@ -420,7 +405,7 @@ int main(
         using ast::SymbolReferenceSeparator;
 
         // [>shape.dimensions]
-        requireParity(
+        requireAuthoredPlan(
             *planner,
             reference(
                 "shape.dimensions",
@@ -437,10 +422,12 @@ int main(
                     }
                 }),
             "defs/semantic_walk/shape.qps",
+            "defs/semantic_walk/shape.qps",
+            0,
             "CURRENT_FILE");
 
         // [>.shape.shape]
-        requireParity(
+        requireAuthoredPlan(
             *planner,
             reference(
                 ".shape.shape",
@@ -457,10 +444,12 @@ int main(
                     }
                 }),
             "defs/semantic_walk/_index.qps",
+            "defs/semantic_walk/shape.qps",
+            1,
             "CURRENT_FOLDER_FILE");
 
         // [>semantic_walk/shape.shape.dimensions]
-        requireParity(
+        requireAuthoredPlan(
             *planner,
             reference(
                 "semantic_walk/shape.shape.dimensions",
@@ -485,10 +474,12 @@ int main(
                     }
                 }),
             "defs/_index.qps",
+            "defs/semantic_walk/shape.qps",
+            2,
             "CHILD_MODULE");
 
         // [>/KE/U.p]
-        requireParity(
+        requireAuthoredPlan(
             *planner,
             reference(
                 "/KE/U.p",
@@ -509,10 +500,12 @@ int main(
                     }
                 }),
             "defs/semantic_walk/shape.qps",
+            "defs/KE/U.qps",
+            2,
             "ONE_PARENT");
 
         // [>//defs/KE/U.p]
-        requireParity(
+        requireAuthoredPlan(
             *planner,
             reference(
                 "//defs/KE/U.p",
@@ -537,10 +530,12 @@ int main(
                     }
                 }),
             "items/MC/_index.qps",
+            "defs/KE/U.qps",
+            3,
             "TWO_PARENT");
 
         // Root current-folder document: [>.shape.shape]
-        requireParity(
+        requireAuthoredPlan(
             *planner,
             reference(
                 ".shape.shape",
@@ -557,10 +552,12 @@ int main(
                     }
                 }),
             "_index.qps",
+            "shape.qps",
+            1,
             "ROOT_CURRENT_FOLDER_FILE");
 
         // Root relative-module document: [>shape.shape]
-        requireParity(
+        requireAuthoredPlan(
             *planner,
             reference(
                 "shape.shape",
@@ -577,9 +574,11 @@ int main(
                     }
                 }),
             "_index.qps",
+            "shape.qps",
+            1,
             "ROOT_RELATIVE_MODULE");
 
-        requireEscapeParity(*planner);
+        requireWorkspaceEscape(*planner);
 
         // Native path-fact contract retained by the authored bridge.
         {
@@ -598,22 +597,12 @@ int main(
                     }
                 });
 
-            const auto requireSameFailure =
+            const auto requireFailure =
                 [&](const std::filesystem::path& current_document,
                     const std::string& fragment,
                     const std::string& witness) {
 
-                    std::string native_error;
                     std::string authored_error;
-
-                    try {
-                        (void)runtime::planReferenceDocument(
-                            ref,
-                            {current_document});
-                    }
-                    catch (const std::exception& error) {
-                        native_error = error.what();
-                    }
 
                     try {
                         (void)runtime::planReferenceDocumentAuthored(
@@ -626,12 +615,6 @@ int main(
                     }
 
                     require(
-                        native_error.find(fragment) !=
-                            std::string::npos,
-                        witness +
-                        " native planner did not reject as expected.");
-
-                    require(
                         authored_error.find(fragment) !=
                             std::string::npos,
                         witness +
@@ -642,17 +625,17 @@ int main(
                         << ": PASS\n";
                 };
 
-            requireSameFailure(
+            requireFailure(
                 {},
                 "requires a current document",
                 "EMPTY_CURRENT_DOCUMENT");
 
-            requireSameFailure(
+            requireFailure(
                 "/tmp/shape.qps",
                 "must be workspace-relative",
                 "ABSOLUTE_CURRENT_DOCUMENT");
 
-            requireSameFailure(
+            requireFailure(
                 "defs/shape.txt",
                 "must use .qps extension",
                 "NON_QPS_CURRENT_DOCUMENT");
@@ -678,27 +661,21 @@ int main(
             const std::filesystem::path current_document =
                 "defs/semantic_walk/../semantic_walk/shape.qps";
 
-            const auto native =
-                runtime::planReferenceDocument(
-                    ref,
-                    {current_document});
-
             const auto authored =
                 runtime::planReferenceDocumentAuthored(
                     ref,
                     {current_document},
                     argv[1]);
 
+            runtime::ReferenceDocumentPlan expected;
+            expected.document_relative =
+                "defs/semantic_walk/shape.qps";
+            expected.semantic_start = 0;
+
             requirePlan(
                 authored,
-                native,
+                expected,
                 "NORMALIZED_CURRENT_DOCUMENT");
-
-            require(
-                authored.document_relative ==
-                    std::filesystem::path(
-                        "defs/semantic_walk/shape.qps"),
-                "Normalized current document retained lexical traversal.");
 
             std::cout
                 << "NORMALIZED_CURRENT_DOCUMENT: PASS\n";

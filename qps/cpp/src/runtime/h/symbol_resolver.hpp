@@ -32,9 +32,6 @@ struct ReferenceDocumentPlan {
     std::size_t semantic_start = 0;
 };
 
-ReferenceDocumentPlan planReferenceDocument(
-    const ast::SymbolReferenceNode& reference,
-    const StructuralReferenceContext& context);
 
 // Execute the QPS-authored reference-document planner.
 //
