@@ -30,48 +30,28 @@ SymbolResolver::SymbolResolver(
       reference_planner_(
           std::move(reference_planner)) {}
 
-StructuralHandle SymbolResolver::resolveFrom(
-    const StructuralHandle& root,
-    const ast::SymbolReferenceNode& reference) const {
+namespace {
 
-    if (reference.getOrigin() !=
-        ast::SymbolReferenceOrigin::LOCAL_BINDING) {
+StructuralHandle walkSemanticStructure(
+    std::shared_ptr<ast::ProgramNode> document_owner,
+    ast::AstNode* current,
+    const ast::SymbolReferenceNode& reference,
+    std::size_t structural_start) {
 
+    if (!document_owner || current == nullptr) {
         throw std::runtime_error(
-            "Local structural rebasing requires LOCAL_BINDING reference origin.");
+            "Structural semantic walk requires an owned AST root.");
     }
 
-    const auto& local_segments =
+    const auto& segments =
         reference.getSegments();
-
-    if (local_segments.size() < 2) {
-        throw std::runtime_error(
-            "Local structural reference '" +
-            reference.getSymbol() +
-            "' must identify a binding and child structure.");
-    }
-
-    if (!root.document_owner ||
-        root.target_node == nullptr) {
-
-        throw std::runtime_error(
-            "Local structural root is incomplete.");
-    }
-
-    StructuralHandle result;
-    result.document_owner = root.document_owner;
-
-    ast::AstNode* current =
-        root.target_node;
 
     const std::size_t structural_end =
         reference.selectsItemValue()
-            ? local_segments.size() - 1
-            : local_segments.size();
+            ? segments.size() - 1
+            : segments.size();
 
-    // Segment zero is the local runtime binding name.
-    // Navigation begins directly at the bound AST node.
-    for (std::size_t i = 1;
+    for (std::size_t i = structural_start;
          i < structural_end;
          ++i) {
 
@@ -81,7 +61,7 @@ StructuralHandle SymbolResolver::resolveFrom(
             match =
                 ast::selectStructuralChild(
                     *current,
-                    local_segments[i].name);
+                    segments[i].name);
         }
         catch (const std::runtime_error& error) {
             throw std::runtime_error(
@@ -94,7 +74,7 @@ StructuralHandle SymbolResolver::resolveFrom(
         if (!match) {
             throw std::runtime_error(
                 "Semantic structure '" +
-                local_segments[i].name +
+                segments[i].name +
                 "' not found while resolving '" +
                 reference.getSymbol() +
                 "'.");
@@ -105,7 +85,7 @@ StructuralHandle SymbolResolver::resolveFrom(
 
     if (reference.selectsItemValue()) {
         const std::string& item_name =
-            local_segments.back().name;
+            segments.back().name;
 
         ast::ItemDeclarationNode* match = nullptr;
 
@@ -134,6 +114,10 @@ StructuralHandle SymbolResolver::resolveFrom(
 
         current = match;
     }
+
+    StructuralHandle result;
+    result.document_owner =
+        std::move(document_owner);
 
     if (auto* resolved_key =
             dynamic_cast<ast::KeyDeclarationNode*>(
@@ -179,6 +163,47 @@ StructuralHandle SymbolResolver::resolveFrom(
     result.target_node = current;
 
     return result;
+}
+
+} // namespace
+
+
+StructuralHandle SymbolResolver::resolveFrom(
+    const StructuralHandle& root,
+    const ast::SymbolReferenceNode& reference) const {
+
+    if (reference.getOrigin() !=
+        ast::SymbolReferenceOrigin::LOCAL_BINDING) {
+
+        throw std::runtime_error(
+            "Local structural rebasing requires LOCAL_BINDING reference origin.");
+    }
+
+    const auto& local_segments =
+        reference.getSegments();
+
+    if (local_segments.size() < 2) {
+        throw std::runtime_error(
+            "Local structural reference '" +
+            reference.getSymbol() +
+            "' must identify a binding and child structure.");
+    }
+
+    if (!root.document_owner ||
+        root.target_node == nullptr) {
+
+        throw std::runtime_error(
+            "Local structural root is incomplete.");
+    }
+
+    // Segment zero is the local runtime binding name.
+    // Navigation begins directly at the bound AST node.
+    return walkSemanticStructure(
+        root.document_owner,
+        root.target_node,
+        reference,
+        1);
+
 }
 
 
@@ -469,9 +494,6 @@ StructuralHandle SymbolResolver::resolve(
     auto document_ast =
         documents_.get(document_file);
 
-    StructuralHandle result;
-    result.document_owner = document_ast;
-
     if (semantic_start >= segments.size()) {
         throw std::runtime_error(
             "Structural QPS reference '" +
@@ -517,119 +539,11 @@ StructuralHandle SymbolResolver::resolve(
     //
     //   [>shape.shape.dimensions.cylinder]
     //   [>shape.shape.dimensions.cylinder.radius-]
-    const std::size_t structural_end =
-        reference.selectsItemValue()
-            ? segments.size() - 1
-            : segments.size();
-
-    for (std::size_t i = semantic_start + 1;
-         i < structural_end;
-         ++i) {
-
-        ast::AstNode* match = nullptr;
-
-        try {
-            match =
-                ast::selectStructuralChild(
-                    *current,
-                    segments[i].name);
-        }
-        catch (const std::runtime_error& error) {
-            throw std::runtime_error(
-                std::string(error.what()) +
-                " while resolving '" +
-                reference.getSymbol() +
-                "'.");
-        }
-
-        if (!match) {
-            throw std::runtime_error(
-                "Semantic structure '" +
-                segments[i].name +
-                "' not found while resolving '" +
-                reference.getSymbol() +
-                "'.");
-        }
-
-        current = match;
-    }
-
-    if (reference.selectsItemValue()) {
-        const std::string& item_name =
-            segments.back().name;
-
-        ast::ItemDeclarationNode* match = nullptr;
-
-        try {
-            match =
-                ast::selectStructuralItem(
-                    *current,
-                    item_name);
-        }
-        catch (const std::runtime_error& error) {
-            throw std::runtime_error(
-                std::string(error.what()) +
-                " while resolving '" +
-                reference.getSymbol() +
-                "'.");
-        }
-
-        if (!match) {
-            throw std::runtime_error(
-                "Semantic Item '" +
-                item_name +
-                "' not found while resolving '" +
-                reference.getSymbol() +
-                "'.");
-        }
-
-        current = match;
-    }
-
-    if (auto* resolved_key =
-            dynamic_cast<ast::KeyDeclarationNode*>(
-                current)) {
-
-        result.target_type =
-            "KEY_DECLARATION";
-        result.target_identifier =
-            resolved_key->identifier_;
-    }
-    else if (auto* resolved_term =
-                 dynamic_cast<ast::TermDeclarationNode*>(
-                     current)) {
-
-        result.target_type =
-            "TERM_DECLARATION";
-        result.target_identifier =
-            resolved_term->identifier_;
-    }
-    else if (auto* resolved_item =
-                 dynamic_cast<ast::ItemDeclarationNode*>(
-                     current)) {
-
-        auto* identifier =
-            dynamic_cast<ast::IdentifierNode*>(
-                resolved_item->getTarget());
-
-        if (!identifier) {
-            throw std::runtime_error(
-                "Resolved semantic Item does not have an identifier target.");
-        }
-
-        result.target_type =
-            "ITEM_VALUE";
-        result.target_identifier =
-            identifier->name_;
-    }
-    else {
-        throw std::runtime_error(
-            "Structural QPS reference resolved to unsupported AST node.");
-    }
-
-    result.target_node = current;
-
-    return result;
+    return walkSemanticStructure(
+        document_ast,
+        current,
+        reference,
+        semantic_start + 1);
 }
 
 
