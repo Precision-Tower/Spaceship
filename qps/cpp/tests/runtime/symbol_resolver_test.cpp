@@ -11,11 +11,11 @@
 #include <string>
 
 int main(int argc, char** argv) {
-    if (argc != 4) {
+    if (argc != 2) {
         std::cerr
             << "Usage: "
             << argv[0]
-            << " <workspace-root> <start-module> <symbol>\n";
+            << " <workspace-root>\n";
         return 2;
     }
 
@@ -28,93 +28,11 @@ int main(int argc, char** argv) {
             paths,
             documents);
 
-        const auto result =
-            symbols.resolve(argv[3], argv[2]);
+        const std::filesystem::path witness_document =
+            "defs/semantic_walk/shape.qps";
 
-        std::cout
-            << "SYMBOL: "
-            << result.symbol
-            << "\n";
-
-        std::cout
-            << "SURFACE MODULE: "
-            << result.surface_module.string()
-            << "\n";
-
-        std::cout
-            << "INDEX: "
-            << result.index_file.string()
-            << "\n";
-
-        std::cout
-            << "DOCUMENT: "
-            << result.document_file.string()
-            << "\n";
-
-        std::cout << "SEMANTIC PATH:";
-
-        for (const auto& segment :
-             result.semantic_path) {
-            std::cout << " " << segment;
-        }
-
-        std::cout << "\n";
-
-        std::cout
-            << "TARGET TYPE: "
-            << result.target_type
-            << "\n";
-
-        std::cout
-            << "TARGET IDENTIFIER: "
-            << result.target_identifier
-            << "\n";
-
-        std::cout
-            << "CACHED DOCUMENTS: "
-            << documents.cachedDocumentCount()
-            << "\n";
-
-        auto* key =
-            dynamic_cast<qps::ast::KeyDeclarationNode*>(
-                result.target_node);
-
-        if (!key) {
-            throw std::runtime_error(
-                "Resolved target is not a KeyDeclarationNode.");
-        }
-
-        std::cout
-            << "TARGET CONTENT COUNT: "
-            << key->content_.size()
-            << "\n";
-
-        for (const auto& child : key->content_) {
-            if (auto* term =
-                    dynamic_cast<qps::ast::TermDeclarationNode*>(
-                        child.get())) {
-
-                std::cout
-                    << "TERM: "
-                    << term->identifier_
-                    << "\n";
-
-                for (const auto& term_child :
-                     term->content_) {
-
-                    if (auto* str =
-                            dynamic_cast<
-                                qps::ast::StringLiteralNode*>(
-                                term_child.get())) {
-
-                        std::cout
-                            << "DEFINITION: "
-                            << str->value_
-                            << "\n";
-                    }
-                }
-            }
-        }
+        const std::string witness_key =
+            "shape";
 
         // Structural-reference resolver witnesses.
         //
@@ -123,10 +41,10 @@ int main(int argc, char** argv) {
         // crosses the actual QPS syntax -> AST -> resolver boundary.
         {
             const auto document_stem =
-                result.document_file.stem().string();
+                witness_document.stem().string();
 
             const auto key_name =
-                result.target_identifier;
+                witness_key;
 
             const std::string source =
                 "{Reference_Witness:"
@@ -175,8 +93,7 @@ int main(int argc, char** argv) {
                 symbols.resolve(
                     *reference,
                     qps::runtime::StructuralReferenceContext{
-                        result.document_file.lexically_relative(
-                            paths.workspaceRoot())
+                        witness_document
                     });
 
             if (direct.target_type != "KEY_DECLARATION") {

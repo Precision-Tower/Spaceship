@@ -40,28 +40,11 @@ public:
         const ast::SymbolReferenceNode& reference) const = 0;
 };
 
-struct ResolvedSymbol : public StructuralHandle {
-    // Authored/surfaced symbol requested from the bootstrap resolver.
-    std::string symbol;
-
-    // Bootstrap resolver provenance retained by the legacy surfaced-symbol
-    // namespace, not by runtime structural values.
-    std::filesystem::path surface_module;
-    std::filesystem::path index_file;
-    std::filesystem::path document_file;
-    std::vector<std::string> semantic_path;
-};
-
 class SymbolResolver : public StructuralResolver {
 public:
     SymbolResolver(
         PathResolver& paths,
         DocumentStore& documents);
-
-    // Resolve the legacy surfaced-symbol/index namespace.
-    ResolvedSymbol resolve(
-        const std::string& symbol,
-        const std::filesystem::path& start_module) const;
 
     // Resolve an explicit structural QPS reference from document context.
     //
