@@ -80,15 +80,15 @@ std::vector<InputSpec> collectInputSpecs(
             continue;
         }
 
-        // Preserve legacy whole-definition GEOMETRY forms.
-        if (definition.domain_ == ast::ExecutionDomain::GEOMETRY) {
-            if (dynamic_cast<const ast::ExecutionActionNode*>(
-                    statement.get()) ||
-                dynamic_cast<const ast::ReturnStatementNode*>(
-                    statement.get())) {
+        // Execution actions and returns are runtime body content.
+        // The execution domain selects their runtime behavior; input
+        // inspection must not reject GENERIC host actions.
+        if (dynamic_cast<const ast::ExecutionActionNode*>(
+                statement.get()) ||
+            dynamic_cast<const ast::ReturnStatementNode*>(
+                statement.get())) {
 
-                continue;
-            }
+            continue;
         }
 
         throw std::runtime_error(

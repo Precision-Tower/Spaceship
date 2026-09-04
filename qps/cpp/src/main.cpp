@@ -20,6 +20,7 @@
 #include "runtime/h/document_loader.hpp"
 #include "runtime/h/document_store.hpp"
 #include "runtime/h/symbol_resolver.hpp"
+#include "runtime/h/execution_engine.hpp"
 #include "visitors/ast_interface.hpp"
 #include "visitors/h/print.hpp"
 #include "utils.hpp"
@@ -27,6 +28,20 @@
 namespace {
 
 namespace fs = std::filesystem;
+
+bool programHasExecutionCall(
+    const qps::ast::ProgramNode& program) {
+
+    for (const auto& statement : program.statements) {
+        if (dynamic_cast<
+                const qps::ast::ExecutionCallNode*>(
+                    statement.get())) {
+            return true;
+        }
+    }
+
+    return false;
+}
 
 std::vector<std::string> splitPath(const std::string& path) {
     std::vector<std::string> segments;
@@ -1317,6 +1332,12 @@ int main(int argc, char* argv[]) {
 
         qps::utils::logMessage(
             "Parsing complete. AST generated.");
+
+        if (programHasExecutionCall(*ast_root)) {
+            qps::runtime::ExecutionEngine engine;
+            (void)engine.execute(*ast_root);
+            return 0;
+        }
 
         qps::visitors::PrintVisitor printer;
 
