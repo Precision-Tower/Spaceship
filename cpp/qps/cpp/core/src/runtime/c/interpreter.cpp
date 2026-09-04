@@ -909,13 +909,104 @@ double Interpreter::evaluate(
         }
     }
 
-    if (dynamic_cast<
-            const ast::SymbolReferenceNode*>(
-                &node)) {
+    if (auto* reference =
+            dynamic_cast<
+                const ast::SymbolReferenceNode*>(
+                    &node)) {
 
-        throw std::runtime_error(
-            "Semantic symbol references are not yet numeric operands. "
-            "Bind them into execution scope first.");
+        if (!reference->selectsItemValue()) {
+            throw std::runtime_error(
+                "Structural semantic reference '" +
+                reference->getSymbol() +
+                "' cannot be used as a numeric operand. "
+                "Select an Item value with '-'.");
+        }
+
+        if (options_.symbol_resolver == nullptr) {
+            throw std::runtime_error(
+                "Semantic Item-value reference '" +
+                reference->getSymbol() +
+                "' requires a SymbolResolver.");
+        }
+
+        ResolvedSymbol resolved;
+
+        if (reference->getOrigin() ==
+            ast::SymbolReferenceOrigin::LOCAL_BINDING) {
+
+            const auto& segments =
+                reference->getSegments();
+
+            if (segments.empty()) {
+                throw std::runtime_error(
+                    "Local semantic Item-value reference '" +
+                    reference->getSymbol() +
+                    "' has no root binding.");
+            }
+
+            const std::string& root_name =
+                segments.front().name;
+
+            if (!scope_.contains(root_name)) {
+                throw std::runtime_error(
+                    "Unknown local structural binding '" +
+                    root_name +
+                    "' while evaluating Item value '" +
+                    reference->getSymbol() +
+                    "'.");
+            }
+
+            const ResolvedSymbol& root =
+                scope_
+                    .get(root_name)
+                    .value
+                    .asStructure(
+                        "Local structural binding '" +
+                        root_name +
+                        "'");
+
+            resolved =
+                options_.symbol_resolver->resolveFrom(
+                    root,
+                    *reference);
+        }
+        else {
+            if (options_.current_document.empty()) {
+                throw std::runtime_error(
+                    "Semantic Item-value reference '" +
+                    reference->getSymbol() +
+                    "' requires current document context.");
+            }
+
+            resolved =
+                options_.symbol_resolver->resolve(
+                    *reference,
+                    StructuralReferenceContext{
+                        options_.current_document
+                    });
+        }
+
+        auto* item =
+            dynamic_cast<
+                ast::ItemDeclarationNode*>(
+                    resolved.target_node);
+
+        if (!item) {
+            throw std::runtime_error(
+                "Semantic Item-value reference '" +
+                reference->getSymbol() +
+                "' did not resolve to an Item.");
+        }
+
+        if (!item->value_node_) {
+            throw std::runtime_error(
+                "Semantic Item-value reference '" +
+                reference->getSymbol() +
+                "' resolved to an Item with no value.");
+        }
+
+        return evaluate(
+            *item->value_node_);
     }
 
     throw std::runtime_error(

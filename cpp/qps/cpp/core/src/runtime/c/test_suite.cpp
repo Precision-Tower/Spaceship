@@ -154,7 +154,9 @@ void registerTopLevelFunctions(
 
 TestResult runOne(
     const ast::ProgramNode& program,
-    const DiscoveredTest& test) {
+    const DiscoveredTest& test,
+    SymbolResolver* symbol_resolver,
+    const std::filesystem::path& current_document) {
 
     TestResult result;
     result.identity = test.identity;
@@ -171,7 +173,15 @@ TestResult runOne(
 
     try {
         ExecutionScope scope;
-        Interpreter interpreter(scope);
+
+        InterpreterOptions options;
+        options.symbol_resolver = symbol_resolver;
+        options.current_document = current_document;
+
+        Interpreter interpreter(
+            scope,
+            FunctionTable{},
+            options);
 
         registerTopLevelFunctions(program, interpreter);
         interpreter.execute(*test.declaration->body_);
@@ -237,13 +247,19 @@ bool TestSuiteSummary::successful() const {
 }
 
 TestSuiteSummary TestSuiteRunner::run(
-    const ast::ProgramNode& program) const {
+    const ast::ProgramNode& program,
+    SymbolResolver* symbol_resolver,
+    const std::filesystem::path& current_document) const {
 
     TestSuiteSummary summary;
 
     for (const auto& test : discoverTests(program)) {
         summary.results.push_back(
-            runOne(program, test));
+            runOne(
+                program,
+                test,
+                symbol_resolver,
+                current_document));
     }
 
     return summary;

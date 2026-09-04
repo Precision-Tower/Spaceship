@@ -1,0 +1,36 @@
+HEV_DC_Motor_Execution_Probe.
+
+motor: (
+voltage_vdc- 12;
+current_a- 10;
+electrical_resistance_ohm- 0.2;
+back_emf_v- 10;
+torque_constant- 0.05;
+back_emf_constant- 0.05;
+angular_velocity_rad_s- 200;
+);
+
+{electrical_state:
+m: [>motor];
+
+%resistive_voltage_drop: [m.current_a-] * [m.electrical_resistance_ohm-]
+%predicted_back_emf: [m.voltage_vdc-] - resistive_voltage_drop
+%predicted_torque: [m.current_a-] * [m.torque_constant-]
+%predicted_angular_velocity: predicted_back_emf / [m.back_emf_constant-]
+}
+
+tests.
+
+motor_edge: -test {
+    m: [>motor];
+
+    %resistive_voltage_drop: [m.current_a-] * [m.electrical_resistance_ohm-]
+    %predicted_back_emf: [m.voltage_vdc-] - resistive_voltage_drop
+    %predicted_torque: [m.current_a-] * [m.torque_constant-]
+    %predicted_angular_velocity: predicted_back_emf / [m.back_emf_constant-]
+
+    -assert resistive_voltage_drop == 2;
+    -assert predicted_back_emf == 10;
+    -assert predicted_torque == 0.5;
+    -assert predicted_angular_velocity == 200;
+};

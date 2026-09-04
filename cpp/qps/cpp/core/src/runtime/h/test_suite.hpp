@@ -1,6 +1,7 @@
 #ifndef QPS_RUNTIME_H_TEST_SUITE_HPP
 #define QPS_RUNTIME_H_TEST_SUITE_HPP
 
+#include <filesystem>
 #include <cstddef>
 #include <string>
 #include <vector>
@@ -11,6 +12,8 @@ class ProgramNode;
 }
 
 namespace runtime {
+
+class SymbolResolver;
 
 enum class TestOutcome {
     PASSED,
@@ -39,7 +42,9 @@ struct TestSuiteSummary {
 class TestSuiteRunner {
 public:
     TestSuiteSummary run(
-        const ast::ProgramNode& program) const;
+        const ast::ProgramNode& program,
+        SymbolResolver* symbol_resolver = nullptr,
+        const std::filesystem::path& current_document = {}) const;
 };
 
 const char* testOutcomeName(

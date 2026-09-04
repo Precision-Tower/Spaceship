@@ -378,13 +378,6 @@ ResolvedSymbol SymbolResolver::resolve(
     const auto& segments =
         reference.getSegments();
 
-    if (segments.size() < 2) {
-        throw std::runtime_error(
-            "Structural QPS reference '" +
-            reference.getSymbol() +
-            "' must identify a document and semantic target.");
-    }
-
     // Resolve document scope from the authored reference origin.
     //
     // CURRENT_FILE:
@@ -460,9 +453,29 @@ ResolvedSymbol SymbolResolver::resolve(
             document_index + 1;
     }
 
-    const fs::path document_file =
+    fs::path document_file;
 
-        paths_.resolveFile(document_relative);
+    if (reference.getOrigin() ==
+        ast::SymbolReferenceOrigin::CURRENT_FILE) {
+
+        // CURRENT_FILE already identifies the authored document.
+        // It does not traverse the QPS module web, so its parent
+        // directory is not required to be a QPS module.
+        document_file =
+            (paths_.workspaceRoot() / document_relative)
+                .lexically_normal();
+
+        if (!fs::is_regular_file(document_file)) {
+            throw std::runtime_error(
+                "QPS current document not found: " +
+                document_file.string());
+        }
+    }
+    else {
+        // Cross-document references traverse the QPS module web.
+        document_file =
+            paths_.resolveFile(document_relative);
+    }
 
     auto document_ast =
         documents_.get(document_file);

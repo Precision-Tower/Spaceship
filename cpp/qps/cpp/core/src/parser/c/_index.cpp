@@ -318,8 +318,10 @@ std::unique_ptr<ast::AstNode> Parser::parseStatement() {
     } else if (peek_type() == tokens::TokenType::KW_PASS) {
         return parsePassStatement();
     } else if (peek_type() == tokens::TokenType::IDENTIFIER &&
-               peek_next_type() == tokens::TokenType::COLON &&
-               current_execution_domain_ == ast::ExecutionDomain::GEOMETRY) {
+               peek_next_type() == tokens::TokenType::COLON) {
+        // Execution Terms are shared workspace statements.
+        // Structural bindings are valid independently of execution domain.
+        // Domain-specific validity is enforced by the interpreter.
         return parseExecutionTermStatement();
     } else if (peek_type() == tokens::TokenType::EXECUTION_ACTION) {
         if (current_execution_domain_ != ast::ExecutionDomain::GEOMETRY) {

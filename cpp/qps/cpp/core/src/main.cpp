@@ -14,6 +14,10 @@
 #include "parser/h/_index.hpp"
 #include "ast/ast_node.hpp"
 #include "runtime/h/test_suite.hpp"
+#include "runtime/h/path_resolver.hpp"
+#include "runtime/h/document_loader.hpp"
+#include "runtime/h/document_store.hpp"
+#include "runtime/h/symbol_resolver.hpp"
 #include "visitors/ast_interface.hpp"
 #include "visitors/h/print.hpp"
 #include "utils.hpp"
@@ -337,8 +341,14 @@ bool runTestFile(
         std::unique_ptr<qps::ast::ProgramNode> ast_root =
             parseFileQuiet(file.string());
 
+        qps::runtime::PathResolver paths(fs::current_path());
+        qps::runtime::DocumentLoader loader;
+        qps::runtime::DocumentStore documents(loader);
+        qps::runtime::SymbolResolver symbols(paths, documents);
+
         qps::runtime::TestSuiteRunner runner;
-        qps::runtime::TestSuiteSummary summary = runner.run(*ast_root);
+        qps::runtime::TestSuiteSummary summary =
+            runner.run(*ast_root, &symbols, file);
 
         if (summary.total() == 0) {
             tested_any = true;
@@ -411,9 +421,14 @@ int runTestCommand(int argc, char* argv[]) {
                     std::unique_ptr<qps::ast::ProgramNode> ast_root =
                         parseFileQuiet(file.string());
 
+                    qps::runtime::PathResolver paths(fs::current_path());
+                    qps::runtime::DocumentLoader loader;
+                    qps::runtime::DocumentStore documents(loader);
+                    qps::runtime::SymbolResolver symbols(paths, documents);
+
                     qps::runtime::TestSuiteRunner runner;
                     qps::runtime::TestSuiteSummary summary =
-                        runner.run(*ast_root);
+                        runner.run(*ast_root, &symbols, file);
 
                     tested_any = true;
 
