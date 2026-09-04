@@ -1,9 +1,11 @@
 from __future__ import annotations
 
 import argparse
+import sys
 from pathlib import Path
 
 from .emit.qps_emitter import emit_qps
+from .emit.convergence_qps import emit_convergence_qps
 from .reports.report import summarize
 
 
@@ -35,15 +37,23 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("source")
     parser.add_argument("--report", action="store_true")
+    parser.add_argument(
+        "--converge",
+        action="store_true",
+        help="emit semantic convergence QPS",
+    )
     args = parser.parse_args()
 
     path = Path(args.source)
     document = load_source(path)
 
-    print(emit_qps(document), end="")
+    if args.converge:
+        print(emit_convergence_qps(document), end="")
+    else:
+        print(emit_qps(document), end="")
 
     if args.report:
-        print(summarize(document))
+        print(summarize(document), file=sys.stderr)
 
     return 0
 

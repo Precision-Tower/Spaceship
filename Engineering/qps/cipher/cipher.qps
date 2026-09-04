@@ -1,0 +1,67 @@
+Cipher_Contract.
+
+Source: (
+identity- /n;
+language- /n;
+path- /n;
+provenance- /n;
+);
+
+Dependency: (
+identity- /n;
+source- /n;
+package- /n;
+module- /n;
+version- /n;
+provenance- /n;
+);
+
+Symbol: (
+identity- /n;
+dependency- /n;
+source_name- /n;
+semantic_identity- /n;
+translation_state- "unresolved";
+provenance- /n;
+);
+
+Semantic_Identity: (
+identity- /n;
+meaning- /n;
+implementation- /n;
+provenance- /n;
+);
+
+Convergence: (
+source_identity- /n;
+target_identity- /n;
+relationship- "equivalent capability";
+translation_state- "unresolved";
+provenance- /n;
+);
+
+Implementation: (
+semantic_identity- /n;
+kind- /n;
+source- /n;
+backend- /n;
+provenance- /n;
+);
+
+Development_Lifecycle: (
+Python: (
+role- "rapid development and external ecosystem integration";
+);
+
+Cipher: (
+role- "dependency discovery, provenance preservation, semantic resolution, and convergence";
+);
+
+QPS: (
+role- "canonical CE-OS semantic representation";
+);
+
+CPP: (
+role- "compiled native implementation and backend integration";
+);
+);

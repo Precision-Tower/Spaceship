@@ -9,6 +9,8 @@
 #include <algorithm>
 #include <cctype>
 #include <filesystem>
+#include <cstdio>
+#include <array>
 
 #include "tokens/h/lexer.hpp"
 #include "parser/h/_index.hpp"
@@ -667,6 +669,150 @@ void queryWalkProgram(
     }
 }
 
+
+std::string shellQuote(const std::string& value) {
+    std::string quoted = "'";
+
+    for (char c : value) {
+        if (c == '\'') {
+            quoted += "'\\''";
+        } else {
+            quoted.push_back(c);
+        }
+    }
+
+    quoted += "'";
+    return quoted;
+}
+
+fs::path findCeOsRoot(fs::path start) {
+    start = fs::absolute(start);
+
+    while (true) {
+        if (
+            fs::exists(start / "_index.qps") &&
+            fs::exists(
+                start /
+                "Engineering/py/cipher/cipher.py")) {
+            return start;
+        }
+
+        const fs::path parent = start.parent_path();
+
+        if (parent == start || parent.empty()) {
+            break;
+        }
+
+        start = parent;
+    }
+
+    throw std::runtime_error(
+        "Unable to locate CE-OS root for Cipher backend.");
+}
+
+int runCipherCommand(int argc, char* argv[]) {
+    if (argc != 3 && argc != 4) {
+        std::cerr
+            << "Usage: "
+            << argv[0]
+            << " cipher <source> [--report]"
+            << std::endl;
+        return 1;
+    }
+
+    if (
+        argc == 4 &&
+        std::string(argv[3]) != "--report") {
+        std::cerr
+            << "Usage: "
+            << argv[0]
+            << " cipher <source> [--report]"
+            << std::endl;
+        return 1;
+    }
+
+    try {
+        const fs::path invocation_directory =
+            fs::current_path();
+
+        const fs::path source =
+            fs::absolute(fs::path(argv[2]));
+
+        if (!fs::exists(source)) {
+            throw std::runtime_error(
+                "Cipher source does not exist: " +
+                displayPath(source));
+        }
+
+        const fs::path root =
+            findCeOsRoot(invocation_directory);
+
+        std::string command =
+            "cd " +
+            shellQuote(root.string()) +
+            " && PYTHONPATH=" +
+            shellQuote(root.string()) +
+            " python3 -m Engineering.py.cipher.cipher " +
+            shellQuote(source.string()) +
+            " --converge";
+
+        if (argc == 4) {
+            command += " --report";
+        }
+
+        FILE* pipe =
+            popen(command.c_str(), "r");
+
+        if (pipe == nullptr) {
+            throw std::runtime_error(
+                "Unable to start Cipher development backend.");
+        }
+
+        std::string output;
+        std::array<char, 4096> buffer{};
+
+        while (
+            std::fgets(
+                buffer.data(),
+                static_cast<int>(buffer.size()),
+                pipe) != nullptr) {
+
+            output += buffer.data();
+        }
+
+        const int status = pclose(pipe);
+
+        if (status != 0) {
+            throw std::runtime_error(
+                "Cipher development backend failed.");
+        }
+
+        // Cipher stdout is a QPS contract. Validate it with the
+        // native parser before exposing it to the caller.
+        qps::tokens::CharStream char_stream(output);
+        qps::tokens::Lexer lexer(char_stream);
+        qps::parser::Parser parser(lexer);
+
+        std::unique_ptr<qps::ast::ProgramNode> ast_root =
+            parser.parseProgram();
+
+        if (!ast_root) {
+            throw std::runtime_error(
+                "Cipher emitted no QPS program.");
+        }
+
+        std::cout << output;
+        return 0;
+    }
+    catch (const std::exception& e) {
+        std::cerr
+            << "Error: "
+            << e.what()
+            << std::endl;
+        return 1;
+    }
+}
+
 int runQueryCommand(int argc, char* argv[]) {
     if (argc != 3 && argc != 4) {
         std::cerr
@@ -906,6 +1052,10 @@ int main(int argc, char* argv[]) {
 
     if (argc >= 2 && std::string(argv[1]) == "qry") {
         return runQueryCommand(argc, argv);
+    }
+
+    if (argc >= 2 && std::string(argv[1]) == "cipher") {
+        return runCipherCommand(argc, argv);
     }
 
     if (argc < 2) {

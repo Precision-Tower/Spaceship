@@ -25,6 +25,7 @@ language- "Quick Parse Standard";
 check- "qps path/file.qps --check";
 test- "qps test path/file-or-folder";
 query- "qps qry <selector> [path]";
+cipher- "qps cipher <source> [--report]";
 );
 
 navigation: (

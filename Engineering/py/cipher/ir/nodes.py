@@ -23,6 +23,17 @@ class SourceRef:
 
 
 @dataclass
+class DependencyRef:
+    package: str
+    module: str | None = None
+    symbol: str | None = None
+    alias: str | None = None
+    version: str | None = None
+    semantic_identity: str | None = None
+    source: SourceRef | None = None
+
+
+@dataclass
 class CipherNode:
     kind: str
     name: str | None = None
@@ -31,3 +42,4 @@ class CipherNode:
     source: SourceRef | None = None
     state: TranslationState = TranslationState.DIRECT
     notes: list[str] = field(default_factory=list)
+    dependencies: list[DependencyRef] = field(default_factory=list)

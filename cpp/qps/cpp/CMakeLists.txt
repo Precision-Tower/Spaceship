@@ -245,3 +245,11 @@ add_test(
         ${CMAKE_CURRENT_SOURCE_DIR}/tests/runtime/query_cli_test.py
         $<TARGET_FILE:qps>
 )
+
+add_test(
+    NAME qps_cipher_cli
+    COMMAND
+        python3
+        ${CMAKE_CURRENT_SOURCE_DIR}/tests/runtime/cipher_cli_test.py
+        $<TARGET_FILE:qps>
+)

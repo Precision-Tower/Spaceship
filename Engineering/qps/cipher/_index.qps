@@ -1,0 +1,58 @@
+Cipher.
+
+purpose: def"
+CE-OS convergence engine.
+
+Build capabilities rapidly in Python using the external ecosystem.
+Cipher inspects those working implementations, preserves provenance,
+resolves equivalent capabilities already represented in QPS, and
+converges missing meaning into canonical QPS identities.
+
+Native implementation may then be compiled in C++ where required.
+";
+
+lifecycle: (
+prototype- "Engineering/py";
+discover- "Python source plus imported dependency structure";
+converge- "Engineering/qps";
+compile- "Engineering/cpp";
+);
+
+pipeline: (
+source- "working external or CE-OS implementation";
+dependency- "external package, module, library, or implementation dependency";
+symbol- "specific capability actually used from a dependency";
+identity- "canonical CE-OS semantic identity";
+provenance- "where the meaning and implementation were obtained";
+convergence- "resolve equivalent capabilities before creating another representation";
+implementation- "QPS, Python reference, native C++, or backend binding";
+);
+
+translation_state: (
+direct- "meaning represented directly without interpretation";
+mapped- "source construct mapped to an existing CE-OS semantic identity";
+inferred- "mapping inferred and must retain that status";
+unresolved- "meaning not yet resolved";
+unsupported- "source construct is outside current Cipher capability";
+deferred- "evidence preserved for later convergence";
+);
+
+rules: (
+meaning_first- "Convert capabilities and relationships, not files mechanically";
+preserve_provenance- "Never lose the source package, module, symbol, file, or implementation lineage";
+resolve_before_create- "Search existing QPS identity before creating another semantic representation";
+no_duplicate_authority- "Equivalent implementations converge on one semantic identity";
+python_is_development- "Python and pip are the preferred rapid-development surface";
+qps_is_authority- "QPS owns converged CE-OS meaning";
+cpp_is_native- "C++ owns compiled native implementation where required";
+source_is_evidence- "External libraries and Python implementations remain provenance, not competing semantic authority";
+file_directory_identity- "A QPS semantic identity may expand from one file into a directory without changing what consumers address";
+);
+
+operations: (
+cipher- "qps cipher <source> [--report]";
+);
+
+doors: (
+contract- "Engineering/qps/cipher/cipher.qps";
+);

@@ -5,6 +5,7 @@ import re
 
 from ..ir.document import CipherDocument
 from ..ir.nodes import CipherNode
+from .dependencies import resolve_symbols
 
 
 @dataclass(frozen=True)
@@ -53,6 +54,33 @@ def geometry_capabilities(
         tuple[str, str, str, int | None],
         GeometryCapability,
     ] = {}
+
+    # Resolve Python calls through their actual import provenance first.
+    for resolved in resolve_symbols(document):
+        symbol_tail = (
+            resolved.implementation_symbol
+            .replace("::", ".")
+            .rsplit(".", 1)[-1]
+        )
+
+        semantic = _SYMBOL_CAPABILITIES.get(symbol_tail)
+
+        if semantic is not None:
+            capability = GeometryCapability(
+                semantic_name=semantic,
+                implementation_symbol=symbol_tail,
+                source_path=resolved.source_path,
+                source_line=resolved.source_line,
+            )
+
+            found[
+                (
+                    semantic,
+                    symbol_tail,
+                    resolved.source_path,
+                    resolved.source_line,
+                )
+            ] = capability
 
     for root in document.children:
         for node in _walk(root):

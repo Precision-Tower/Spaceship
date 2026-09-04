@@ -7,6 +7,7 @@ from typing import Any
 from ..ir.document import CipherDocument
 from ..ir.nodes import (
     CipherNode,
+    DependencyRef,
     SourceRef,
     TranslationState,
 )
@@ -39,20 +40,26 @@ def _assignment(
 ) -> CipherNode:
     value, state = _literal(value_node)
 
-    notes: list[str] = []
-
-    if state == TranslationState.UNRESOLVED:
-        notes.append(
-            "Python assignment expression is not a direct literal."
+    if state == TranslationState.DIRECT:
+        return CipherNode(
+            kind="item",
+            name=name,
+            value=value,
+            source=_source(path, value_node),
+            state=state,
         )
 
     return CipherNode(
-        kind="item",
+        kind="assignment",
         name=name,
-        value=value,
+        children=[
+            expression_node(path, value_node)
+        ],
         source=_source(path, value_node),
-        state=state,
-        notes=notes,
+        state=TranslationState.MAPPED,
+        notes=[
+            "Python assignment expression preserved structurally."
+        ],
     )
 
 
@@ -178,17 +185,7 @@ def _statement(
 
     if isinstance(node, (ast.Import, ast.ImportFrom)):
         names = []
-
-        for alias in node.names:
-            names.append(
-                CipherNode(
-                    kind="import_name",
-                    name=alias.name,
-                    value=alias.asname,
-                    source=source,
-                    state=TranslationState.DIRECT,
-                )
-            )
+        dependencies = []
 
         module = (
             node.module
@@ -196,12 +193,44 @@ def _statement(
             else None
         )
 
+        for alias in node.names:
+            if module is None:
+                package = alias.name.split(".", 1)[0]
+                dependency_module = alias.name
+                symbol = None
+            else:
+                package = module.split(".", 1)[0]
+                dependency_module = module
+                symbol = alias.name
+
+            dependency = DependencyRef(
+                package=package,
+                module=dependency_module,
+                symbol=symbol,
+                alias=alias.asname,
+                source=source,
+            )
+
+            dependencies.append(dependency)
+
+            names.append(
+                CipherNode(
+                    kind="import_name",
+                    name=alias.name,
+                    value=alias.asname,
+                    source=source,
+                    state=TranslationState.DIRECT,
+                    dependencies=[dependency],
+                )
+            )
+
         return CipherNode(
             kind="import",
             name=module,
             children=names,
             source=source,
             state=TranslationState.MAPPED,
+            dependencies=dependencies,
         )
 
     if isinstance(node, ast.Return):
@@ -509,6 +538,10 @@ def load_python(path: str | Path) -> CipherDocument:
         )
 
     for node in tree.body:
+        if isinstance(node, (ast.Import, ast.ImportFrom)):
+            children.append(_statement(p, node))
+            continue
+
         if isinstance(node, ast.ClassDef):
             children.append(_class(p, node))
             continue
