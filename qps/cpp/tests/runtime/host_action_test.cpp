@@ -1,4 +1,8 @@
 #include "runtime/h/host_actions.hpp"
+#include "ast/structural_selection.hpp"
+#include "parser/h/_index.hpp"
+#include "tokens/h/char_stream.hpp"
+#include "tokens/h/lexer.hpp"
 
 #include <filesystem>
 #include <fstream>
@@ -84,6 +88,258 @@ qps::runtime::HostActionResult runDictionaryAt(
 
     qps::runtime::HostActionDispatcher host;
     return host.execute(invocation);
+}
+
+std::shared_ptr<qps::ast::ProgramNode> parseStructureFixture() {
+    const std::string source = R"qps(
+root.
+child: (
+value- "opaque";
+);
+)qps";
+
+    qps::tokens::CharStream char_stream(source);
+    qps::tokens::Lexer lexer(char_stream);
+    qps::parser::Parser parser(lexer);
+
+    auto parsed =
+        parser.parseProgram();
+
+    return std::shared_ptr<qps::ast::ProgramNode>(
+        std::move(parsed));
+}
+
+qps::runtime::RuntimeValue makeStructureFixture() {
+    auto owner =
+        parseStructureFixture();
+
+    qps::ast::AstNode* root =
+        qps::ast::selectDocumentStructure(
+            *owner,
+            "root");
+
+    require(
+        root != nullptr,
+        "Structure fixture root was not found.");
+
+    qps::runtime::StructuralHandle handle;
+    handle.document_owner = owner;
+    handle.target_node = root;
+
+    return qps::runtime::RuntimeValue::structure(
+        std::move(handle));
+}
+
+qps::runtime::HostActionResult runStructureAction(
+    const std::string& action,
+    qps::runtime::RuntimeValue structure,
+    const std::string& name) {
+
+    qps::runtime::HostActionInvocation invocation;
+    invocation.action_name = action;
+
+    invocation.parameters.emplace(
+        "structure",
+        std::move(structure));
+
+    invocation.parameters.emplace(
+        "name",
+        qps::runtime::RuntimeValue::string(name));
+
+    qps::runtime::HostActionDispatcher host;
+    return host.execute(invocation);
+}
+
+void structureChildReturnsOpaqueStructure() {
+    const auto result =
+        runStructureAction(
+            "structure_child",
+            makeStructureFixture(),
+            "child");
+
+    require(
+        result.value.has_value(),
+        "structure_child returned no value.");
+
+    const auto& handle =
+        result.value->asStructure(
+            "structure_child result");
+
+    require(
+        handle.document_owner != nullptr,
+        "structure_child lost document ownership.");
+
+    require(
+        handle.target_node != nullptr,
+        "structure_child returned no target node.");
+
+    require(
+        dynamic_cast<qps::ast::TermDeclarationNode*>(
+            handle.target_node) != nullptr,
+        "structure_child did not select the child Term.");
+
+    require(
+        handle.target_type.empty(),
+        "structure_child populated compatibility target_type.");
+
+    require(
+        handle.target_identifier.empty(),
+        "structure_child populated compatibility target_identifier.");
+}
+
+void structureItemReturnsOpaqueStructure() {
+    const auto child =
+        runStructureAction(
+            "structure_child",
+            makeStructureFixture(),
+            "child");
+
+    require(
+        child.value.has_value(),
+        "structure_child returned no fixture child.");
+
+    const auto item =
+        runStructureAction(
+            "structure_item",
+            *child.value,
+            "value");
+
+    require(
+        item.value.has_value(),
+        "structure_item returned no value.");
+
+    const auto& handle =
+        item.value->asStructure(
+            "structure_item result");
+
+    require(
+        handle.document_owner != nullptr,
+        "structure_item lost document ownership.");
+
+    require(
+        handle.target_node != nullptr,
+        "structure_item returned no target node.");
+
+    require(
+        dynamic_cast<qps::ast::ItemDeclarationNode*>(
+            handle.target_node) != nullptr,
+        "structure_item did not select the Item declaration.");
+
+    require(
+        handle.target_type.empty(),
+        "structure_item populated compatibility target_type.");
+
+    require(
+        handle.target_identifier.empty(),
+        "structure_item populated compatibility target_identifier.");
+}
+
+void structureActionsRejectMissingSelection() {
+    expectFailureContaining(
+        []() {
+            (void)runStructureAction(
+                "structure_child",
+                makeStructureFixture(),
+                "missing");
+        },
+        "Structural child 'missing' not found",
+        "structure_child missing selection");
+
+    const auto child =
+        runStructureAction(
+            "structure_child",
+            makeStructureFixture(),
+            "child");
+
+    require(
+        child.value.has_value(),
+        "structure_child returned no fixture child.");
+
+    expectFailureContaining(
+        [&child]() {
+            (void)runStructureAction(
+                "structure_item",
+                *child.value,
+                "missing");
+        },
+        "Structural Item 'missing' not found",
+        "structure_item missing selection");
+}
+
+void structureActionsRejectWrongTypes() {
+    expectFailureContaining(
+        []() {
+            (void)runStructureAction(
+                "structure_child",
+                qps::runtime::RuntimeValue::string(
+                    "not-structure"),
+                "child");
+        },
+        "expected structure value",
+        "structure_child non-structure input");
+
+    qps::runtime::HostActionInvocation invocation;
+    invocation.action_name = "structure_child";
+
+    invocation.parameters.emplace(
+        "structure",
+        makeStructureFixture());
+
+    invocation.parameters.emplace(
+        "name",
+        qps::runtime::RuntimeValue::numeric(1.0));
+
+    qps::runtime::HostActionDispatcher host;
+
+    expectFailureContaining(
+        [&host, &invocation]() {
+            (void)host.execute(invocation);
+        },
+        "expected string value",
+        "structure_child non-string name");
+}
+
+void structureActionsRejectIncompleteHandles() {
+    qps::runtime::StructuralHandle incomplete;
+
+    expectFailureContaining(
+        [&incomplete]() {
+            (void)runStructureAction(
+                "structure_child",
+                qps::runtime::RuntimeValue::structure(
+                    incomplete),
+                "child");
+        },
+        "complete structural handle",
+        "structure_child incomplete handle");
+}
+
+void structureActionsRejectUnknownParameters() {
+    qps::runtime::HostActionInvocation invocation;
+    invocation.action_name = "structure_child";
+
+    invocation.parameters.emplace(
+        "structure",
+        makeStructureFixture());
+
+    invocation.parameters.emplace(
+        "name",
+        qps::runtime::RuntimeValue::string(
+            "child"));
+
+    invocation.parameters.emplace(
+        "extra",
+        qps::runtime::RuntimeValue::numeric(
+            1.0));
+
+    qps::runtime::HostActionDispatcher host;
+
+    expectFailureContaining(
+        [&host, &invocation]() {
+            (void)host.execute(invocation);
+        },
+        "Unknown structure_child parameter 'extra'",
+        "structure_child unknown parameter");
 }
 
 void processRequiresProgram() {
@@ -743,6 +999,30 @@ int main() {
         dictionaryAtRejectsInvalidInputs();
         std::cout
             << "PASS dictionary_at rejects invalid inputs\n";
+
+        structureChildReturnsOpaqueStructure();
+        std::cout
+            << "PASS structure_child returns opaque structure\n";
+
+        structureItemReturnsOpaqueStructure();
+        std::cout
+            << "PASS structure_item returns opaque structure\n";
+
+        structureActionsRejectMissingSelection();
+        std::cout
+            << "PASS structure actions reject missing selection\n";
+
+        structureActionsRejectWrongTypes();
+        std::cout
+            << "PASS structure actions reject wrong types\n";
+
+        structureActionsRejectIncompleteHandles();
+        std::cout
+            << "PASS structure actions reject incomplete handles\n";
+
+        structureActionsRejectUnknownParameters();
+        std::cout
+            << "PASS structure actions reject unknown parameters\n";
 
         unknownPrimitiveFails();
         std::cout

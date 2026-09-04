@@ -1,5 +1,7 @@
 #include "host_actions.hpp"
 
+#include "../../ast/structural_selection.hpp"
+
 #include "../../parser/h/_index.hpp"
 #include "../../tokens/h/char_stream.hpp"
 #include "../../tokens/h/lexer.hpp"
@@ -594,6 +596,112 @@ HostActionResult HostActionDispatcher::execute(
         result.value =
             RuntimeValue::string(
                 canonical.string());
+
+        return result;
+    }
+
+    if (invocation.action_name == "structure_child") {
+        const RuntimeValue& value =
+            requireParameter(
+                invocation,
+                "structure");
+
+        const std::string name =
+            requireParameter(
+                invocation,
+                "name")
+                .asString("structure_child name");
+
+        rejectUnknownParameters(
+            invocation,
+            {"structure", "name"});
+
+        const StructuralHandle& source =
+            value.asStructure(
+                "structure_child structure");
+
+        if (!source.document_owner ||
+            source.target_node == nullptr) {
+
+            throw std::runtime_error(
+                "structure_child requires a complete structural handle.");
+        }
+
+        ast::AstNode* selected =
+            ast::selectStructuralChild(
+                *source.target_node,
+                name);
+
+        if (!selected) {
+            throw std::runtime_error(
+                "Structural child '" +
+                name +
+                "' not found.");
+        }
+
+        StructuralHandle result_handle;
+        result_handle.document_owner =
+            source.document_owner;
+        result_handle.target_node =
+            selected;
+
+        HostActionResult result;
+        result.value =
+            RuntimeValue::structure(
+                std::move(result_handle));
+
+        return result;
+    }
+
+    if (invocation.action_name == "structure_item") {
+        const RuntimeValue& value =
+            requireParameter(
+                invocation,
+                "structure");
+
+        const std::string name =
+            requireParameter(
+                invocation,
+                "name")
+                .asString("structure_item name");
+
+        rejectUnknownParameters(
+            invocation,
+            {"structure", "name"});
+
+        const StructuralHandle& source =
+            value.asStructure(
+                "structure_item structure");
+
+        if (!source.document_owner ||
+            source.target_node == nullptr) {
+
+            throw std::runtime_error(
+                "structure_item requires a complete structural handle.");
+        }
+
+        ast::ItemDeclarationNode* selected =
+            ast::selectStructuralItem(
+                *source.target_node,
+                name);
+
+        if (!selected) {
+            throw std::runtime_error(
+                "Structural Item '" +
+                name +
+                "' not found.");
+        }
+
+        StructuralHandle result_handle;
+        result_handle.document_owner =
+            source.document_owner;
+        result_handle.target_node =
+            selected;
+
+        HostActionResult result;
+        result.value =
+            RuntimeValue::structure(
+                std::move(result_handle));
 
         return result;
     }
