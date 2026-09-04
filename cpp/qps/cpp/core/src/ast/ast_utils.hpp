@@ -105,6 +105,11 @@ std::unique_ptr<TestDeclarationNode> createTestDeclarationNode(
     int line,
     int column);
 
+std::unique_ptr<CausalDefinitionNode> createCausalDefinitionNode(
+    const std::string& identifier,
+    int line,
+    int column);
+
 std::unique_ptr<CausalRelationshipNode::CausalSide> createCausalSide(
     std::unique_ptr<AstNode> entity,
     std::unique_ptr<AstNode> input,

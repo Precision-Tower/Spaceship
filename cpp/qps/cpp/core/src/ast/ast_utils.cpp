@@ -177,6 +177,16 @@ std::unique_ptr<TestDeclarationNode> createTestDeclarationNode(
         column);
 }
 
+std::unique_ptr<CausalDefinitionNode> createCausalDefinitionNode(
+    const std::string& identifier,
+    int line,
+    int column) {
+    return std::make_unique<CausalDefinitionNode>(
+        identifier,
+        line,
+        column);
+}
+
 std::unique_ptr<CausalRelationshipNode::CausalSide> createCausalSide(
     std::unique_ptr<AstNode> entity, std::unique_ptr<AstNode> input, std::unique_ptr<AstNode> output) {
     return std::make_unique<CausalRelationshipNode::CausalSide>(

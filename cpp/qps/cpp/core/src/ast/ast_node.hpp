@@ -22,6 +22,7 @@ namespace ast {
     class DictionaryEntryNode;
     class ContainerNode;
     class CausalRelationshipNode;
+    class CausalDefinitionNode;
     class FunctionDeclarationNode;
     class ClassDeclarationNode;
     class StringLiteralNode;
@@ -78,6 +79,7 @@ enum class AstNodeType {
     DICTIONARY_DECLARATION,
     CONTAINER,
     CAUSAL_RELATIONSHIP,
+    CAUSAL_DEFINITION,
     FUNCTION_DECLARATION,
     CLASS_DECLARATION,
     DEFINITION_STRING, // Special type for 'def"..."' string literal content

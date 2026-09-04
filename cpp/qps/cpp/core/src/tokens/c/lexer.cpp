@@ -293,6 +293,7 @@ Token Lexer::getNextToken() {
         case '%': stream_.advance(); return Token(TokenType::CALCULATION_MARKER, "%", current_line_, current_column_);
         case '@': stream_.advance(); return Token(TokenType::GEOMETRY_MARKER, "@", current_line_, current_column_);
         case '$': stream_.advance(); return Token(TokenType::MODEL_MARKER, "$", current_line_, current_column_);
+        case '!': stream_.advance(); return Token(TokenType::CAUSAL_MARKER, "!", current_line_, current_column_);
         case '\\': stream_.advance(); return Token(TokenType::BACKSLASH, "\\", current_line_, current_column_);
         case '+': stream_.advance(); return Token(TokenType::OP_ADD, "+", current_line_, current_column_);
         case '-': stream_.advance(); return Token(TokenType::OP_SUBTRACT, "-", current_line_, current_column_);

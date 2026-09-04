@@ -89,6 +89,70 @@ void assertBinding(
         name + " semantic symbol mismatch.");
 }
 
+void assertCausalTransfer(
+    const qps::runtime::ExecutionInstance& instance,
+    std::size_t index,
+    const std::string& semantic_symbol,
+    double value) {
+
+    require(
+        instance.causal_transfers.size() > index,
+        "Expected causal transfer " + std::to_string(index) + ".");
+
+    const auto& transfer =
+        instance.causal_transfers[index];
+
+    require(
+        transfer.relationship.causal_definition_id == "motor_to_pump",
+        "Causal definition identity mismatch.");
+    require(
+        transfer.relationship.source_entity == "DC_Motor",
+        "Causal source entity mismatch.");
+    require(
+        transfer.relationship.source_input_state == "electrical_state",
+        "Causal source input state mismatch.");
+    require(
+        transfer.relationship.source_output_state == "mechanical_state",
+        "Causal source output state mismatch.");
+    require(
+        transfer.relationship.destination_entity == "Pump",
+        "Causal destination entity mismatch.");
+    require(
+        transfer.relationship.destination_input_state == "mechanical_state",
+        "Causal destination input state mismatch.");
+    require(
+        transfer.relationship.destination_output_state == "fluid_state",
+        "Causal destination output state mismatch.");
+
+    require(
+        transfer.source_definition_id == "DC_Motor",
+        "Causal transfer source definition mismatch.");
+    require(
+        transfer.destination_definition_id == "Pump_Mechanical_Input",
+        "Causal transfer destination definition mismatch.");
+    require(
+        transfer.semantic_symbol == semantic_symbol,
+        "Causal transfer semantic symbol mismatch.");
+    require(
+        transfer.source_semantic_symbol.has_value() &&
+            *transfer.source_semantic_symbol == semantic_symbol,
+        "Causal transfer source semantic symbol mismatch.");
+
+    assertNear(
+        transfer.value,
+        value,
+        semantic_symbol + " causal transfer value");
+
+    require(
+        transfer.source_origin ==
+            qps::runtime::BindingOrigin::DERIVED,
+        "Causal transfer source origin mismatch.");
+    require(
+        transfer.destination_origin ==
+            qps::runtime::BindingOrigin::SUPPLIED,
+        "Causal transfer destination origin mismatch.");
+}
+
 void assertBindingOrder(
     const qps::runtime::ExecutionScope& scope,
     const std::vector<std::string>& expected_names) {
@@ -782,6 +846,150 @@ back_emf_constant- 0.05/n;
 }
 
 
+
+void hevMotorDerivedOutputsFeedPumpInputs() {
+    const auto instances = executeProgram(R"qps({DC_Motor:
+[>voltage_vdc]-
+[>current_a]-
+[>electrical_resistance_ohm]-
+[>torque_constant]-
+[>back_emf_constant]-
+
+%[>resistive_voltage_drop]: current_a * electrical_resistance_ohm
+%[>back_emf]: voltage_vdc - resistive_voltage_drop
+%[>shaft_torque]: current_a * torque_constant
+%[>angular_velocity]: back_emf / back_emf_constant
+}
+
+{Pump_Mechanical_Input:
+[>shaft_torque]-
+[>angular_velocity]-
+
+%[>received_shaft_torque]: shaft_torque
+%[>received_angular_velocity]: angular_velocity
+}
+
+{!motor_to_pump:
+DC_Motor: (electrical_state = mechanical_state)
+=
+Pump: (mechanical_state = fluid_state);
+}
+
+{>DC_Motor:
+voltage_vdc- 12/n;
+current_a- 10/n;
+electrical_resistance_ohm- 0.2/n;
+torque_constant- 0.05/n;
+back_emf_constant- 0.05/n;
+}
+
+{>Pump_Mechanical_Input:
+})qps");
+
+    require(
+        instances.size() == 2,
+        "Expected motor and pump execution instances.");
+
+    assertBinding(
+        instances[0].scope,
+        "shaft_torque",
+        0.5,
+        qps::runtime::BindingOrigin::DERIVED,
+        "shaft_torque");
+
+    assertBinding(
+        instances[0].scope,
+        "angular_velocity",
+        200.0,
+        qps::runtime::BindingOrigin::DERIVED,
+        "angular_velocity");
+
+    assertBinding(
+        instances[1].scope,
+        "shaft_torque",
+        0.5,
+        qps::runtime::BindingOrigin::SUPPLIED,
+        "shaft_torque");
+
+    assertBinding(
+        instances[1].scope,
+        "angular_velocity",
+        200.0,
+        qps::runtime::BindingOrigin::SUPPLIED,
+        "angular_velocity");
+
+    assertBinding(
+        instances[1].scope,
+        "received_shaft_torque",
+        0.5,
+        qps::runtime::BindingOrigin::DERIVED,
+        "received_shaft_torque");
+
+    assertBinding(
+        instances[1].scope,
+        "received_angular_velocity",
+        200.0,
+        qps::runtime::BindingOrigin::DERIVED,
+        "received_angular_velocity");
+
+    require(
+        instances[0].causal_transfers.empty(),
+        "Motor instance should not receive causal transfers.");
+    require(
+        instances[1].causal_transfers.size() == 2,
+        "Pump instance should receive two explicit causal transfers.");
+
+    assertCausalTransfer(
+        instances[1],
+        0,
+        "shaft_torque",
+        0.5);
+    assertCausalTransfer(
+        instances[1],
+        1,
+        "angular_velocity",
+        200.0);
+}
+
+
+void bareIdentifierOverridesDoNotReadPreviousExecutionInstances() {
+    expectRuntimeFailure(R"qps({DC_Motor:
+[>voltage_vdc]-
+[>current_a]-
+[>electrical_resistance_ohm]-
+[>torque_constant]-
+[>back_emf_constant]-
+
+%[>resistive_voltage_drop]: current_a * electrical_resistance_ohm
+%[>back_emf]: voltage_vdc - resistive_voltage_drop
+%[>shaft_torque]: current_a * torque_constant
+%[>angular_velocity]: back_emf / back_emf_constant
+}
+
+{Pump_Mechanical_Input:
+[>shaft_torque]-
+[>angular_velocity]-
+
+%[>received_shaft_torque]: shaft_torque
+%[>received_angular_velocity]: angular_velocity
+}
+
+{>DC_Motor:
+voltage_vdc- 12/n;
+current_a- 10/n;
+electrical_resistance_ohm- 0.2/n;
+torque_constant- 0.05/n;
+back_emf_constant- 0.05/n;
+}
+
+{>Pump_Mechanical_Input:
+shaft_torque- shaft_torque;
+angular_velocity- angular_velocity;
+})qps",
+        "Unsupported expression node in numeric evaluator.");
+}
+
+
 void executionDefinitionInspectionExposesStructuralInputs() {
     auto program = parseSource(R"qps({Leverage_Equation:
 [>f]-
@@ -1119,6 +1327,8 @@ int main() {
         {"calling a definition does not mutate defaults", callingDefinitionDoesNotMutateDefaults},
         {"derived semantic outputs execute inside instance", derivedSemanticOutputsExecuteInsideInstance},
         {"HEV DC motor relationship executes into instance scope", hevDcMotorRelationshipExecutesIntoInstanceScope},
+        {"HEV motor derived outputs feed pump inputs", hevMotorDerivedOutputsFeedPumpInputs},
+        {"bare identifier overrides do not read previous execution instances", bareIdentifierOverridesDoNotReadPreviousExecutionInstances},
         {"execution definition inspection exposes structural inputs", executionDefinitionInspectionExposesStructuralInputs},
         {"registered definition inspection preserves optional source identity", registeredDefinitionInspectionPreservesOptionalSourceIdentity},
         {"execution instance preserves registered source identity", executionInstancePreservesRegisteredSourceIdentity},

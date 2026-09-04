@@ -15,6 +15,7 @@ namespace ast {
     class DictionaryEntryNode;
     class ContainerNode;
     class CausalRelationshipNode;
+    class CausalDefinitionNode;
     class FunctionDeclarationNode;
     class ClassDeclarationNode;
     class StringLiteralNode;
@@ -72,6 +73,7 @@ public:
     virtual void visit(ast::DictionaryDeclarationNode* node) = 0;
     virtual void visit(ast::DictionaryEntryNode* node) = 0;
     virtual void visit(ast::ContainerNode* node) = 0;
+    virtual void visit(ast::CausalDefinitionNode* node) = 0;
     virtual void visit(ast::CausalRelationshipNode* node) = 0;
     virtual void visit(ast::FunctionDeclarationNode* node) = 0;
     virtual void visit(ast::ClassDeclarationNode* node) = 0;

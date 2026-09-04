@@ -119,6 +119,17 @@ public:
     void accept(visitors::AstVisitor& visitor) override;
 };
 
+// CausalDefinitionNode: Owns explicit causal relationships inside {!id: ...}.
+class CausalDefinitionNode : public AstNode {
+public:
+    CausalDefinitionNode(const std::string& identifier, int line, int column);
+
+    std::string identifier_;
+    std::vector<std::unique_ptr<AstNode>> relationships;
+
+    void accept(visitors::AstVisitor& visitor) override;
+};
+
 // CausalRelationshipNode: Represents an 'EntityA: (InputA = OutputA) = EntityB: (InputB = OutputB);'
 class CausalRelationshipNode : public AstNode {
 public:

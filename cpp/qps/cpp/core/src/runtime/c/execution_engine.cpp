@@ -135,6 +135,115 @@ double evaluateValue(
     return interpreter.evaluate(node);
 }
 
+std::string causalName(
+    const ast::AstNode* node,
+    const std::string& context) {
+
+    if (node == nullptr) {
+        throw std::runtime_error(
+            "Causal relationship " +
+            context +
+            " is missing.");
+    }
+
+    if (auto* identifier =
+            dynamic_cast<const ast::IdentifierNode*>(
+                node)) {
+
+        return identifier->name_;
+    }
+
+    if (auto* reference =
+            dynamic_cast<const ast::SymbolReferenceNode*>(
+                node)) {
+
+        return reference->getSymbol();
+    }
+
+    throw std::runtime_error(
+        "Causal relationship " +
+        context +
+        " must be an identifier or semantic reference.");
+}
+
+CausalRelationshipInfo inspectCausalRelationship(
+    const std::string& causal_definition_id,
+    const ast::CausalRelationshipNode& relationship) {
+
+    if (!relationship.left_side_ ||
+        !relationship.right_side_) {
+
+        throw std::runtime_error(
+            "Causal definition '" +
+            causal_definition_id +
+            "' contains an incomplete relationship.");
+    }
+
+    CausalRelationshipInfo info;
+    info.causal_definition_id = causal_definition_id;
+
+    info.source_entity =
+        causalName(
+            relationship.left_side_->entity.get(),
+            "source entity");
+    info.source_input_state =
+        causalName(
+            relationship.left_side_->input.get(),
+            "source input state");
+    info.source_output_state =
+        causalName(
+            relationship.left_side_->output.get(),
+            "source output state");
+
+    info.destination_entity =
+        causalName(
+            relationship.right_side_->entity.get(),
+            "destination entity");
+    info.destination_input_state =
+        causalName(
+            relationship.right_side_->input.get(),
+            "destination input state");
+    info.destination_output_state =
+        causalName(
+            relationship.right_side_->output.get(),
+            "destination output state");
+
+    return info;
+}
+
+bool definitionMatchesCausalEntity(
+    const std::string& definition_id,
+    const std::string& entity) {
+
+    if (definition_id == entity) {
+        return true;
+    }
+
+    const std::string entity_prefix =
+        entity + "_";
+
+    return definition_id.rfind(entity_prefix, 0) == 0;
+}
+
+bool canTransferAcross(
+    const CausalRelationshipInfo& relationship) {
+
+    return relationship.source_output_state ==
+           relationship.destination_input_state;
+}
+
+std::unordered_set<std::string> explicitOverrideNames(
+    const ast::ExecutionCallNode& call) {
+
+    std::unordered_set<std::string> names;
+
+    for (const auto& argument : call.arguments_) {
+        names.insert(overrideName(*argument));
+    }
+
+    return names;
+}
+
 } // namespace
 
 void ExecutionEngine::registerDefinition(
@@ -228,6 +337,16 @@ ExecutionDefinitionInfo ExecutionEngine::inspectRegisteredDefinition(
 ExecutionInstance ExecutionEngine::instantiate(
     const ast::ExecutionCallNode& call) const {
 
+    return instantiate(
+        call,
+        std::unordered_map<std::string, CausalInput>{});
+}
+
+ExecutionInstance ExecutionEngine::instantiate(
+    const ast::ExecutionCallNode& call,
+    const std::unordered_map<std::string, CausalInput>&
+        causal_inputs) const {
+
     auto found = definitions_.find(call.identifier_);
 
     if (found == definitions_.end()) {
@@ -279,12 +398,27 @@ ExecutionInstance ExecutionEngine::instantiate(
                 override_scope));
     }
 
-    return instantiate(call.identifier_, overrides);
+    return instantiate(
+        call.identifier_,
+        overrides,
+        causal_inputs);
 }
 
 ExecutionInstance ExecutionEngine::instantiate(
     const std::string& definition_id,
     const std::unordered_map<std::string, double>& overrides) const {
+
+    return instantiate(
+        definition_id,
+        overrides,
+        std::unordered_map<std::string, CausalInput>{});
+}
+
+ExecutionInstance ExecutionEngine::instantiate(
+    const std::string& definition_id,
+    const std::unordered_map<std::string, double>& overrides,
+    const std::unordered_map<std::string, CausalInput>&
+        causal_inputs) const {
 
     auto found = definitions_.find(definition_id);
 
@@ -310,9 +444,22 @@ ExecutionInstance ExecutionEngine::instantiate(
         }
     }
 
+    for (const auto& causal_entry : causal_inputs) {
+        if (input_index.find(causal_entry.first) == input_index.end()) {
+            throw std::runtime_error(
+                "Unknown causal input '" +
+                causal_entry.first +
+                "' for execution definition '" +
+                definition.identifier_ +
+                "'.");
+        }
+    }
+
     for (const auto& input : inputs) {
         if (!input.info.has_default &&
-            overrides.find(input.info.name) == overrides.end()) {
+            overrides.find(input.info.name) == overrides.end() &&
+            causal_inputs.find(input.info.name) ==
+                causal_inputs.end()) {
 
             throw std::runtime_error(
                 "Missing required execution input '" +
@@ -333,10 +480,15 @@ ExecutionInstance ExecutionEngine::instantiate(
         const auto override =
             overrides.find(input.info.name);
 
+        const auto causal_input =
+            causal_inputs.find(input.info.name);
+
         double value = 0.0;
 
         if (override != overrides.end()) {
             value = override->second;
+        } else if (causal_input != causal_inputs.end()) {
+            value = causal_input->second.value;
         } else {
             value = evaluateValue(
                 *input.item->value_node_,
@@ -348,6 +500,20 @@ ExecutionInstance ExecutionEngine::instantiate(
             value,
             input.info.name,
             BindingOrigin::SUPPLIED);
+
+        if (override == overrides.end() &&
+            causal_input != causal_inputs.end()) {
+
+            CausalTransferTrace trace =
+                causal_input->second.trace;
+            trace.destination_definition_id =
+                definition.identifier_;
+            trace.destination_origin =
+                BindingOrigin::SUPPLIED;
+
+            instance.causal_transfers.push_back(
+                std::move(trace));
+        }
     }
 
     FakeGeometryActionDispatcher fallback_geometry_dispatcher;
@@ -397,12 +563,40 @@ ExecutionInstance ExecutionEngine::instantiate(
 std::vector<ExecutionInstance> ExecutionEngine::execute(
     const ast::ProgramNode& program) {
 
+    std::vector<CausalRelationshipInfo> causal_relationships;
+
     for (const auto& statement : program.statements) {
         if (auto* definition =
                 dynamic_cast<const ast::ExecutionDefinitionNode*>(
                     statement.get())) {
 
             registerDefinition(*definition);
+            continue;
+        }
+
+        if (auto* causal_definition =
+                dynamic_cast<const ast::CausalDefinitionNode*>(
+                    statement.get())) {
+
+            for (const auto& relationship_node :
+                 causal_definition->relationships) {
+
+                auto* relationship =
+                    dynamic_cast<const ast::CausalRelationshipNode*>(
+                        relationship_node.get());
+
+                if (!relationship) {
+                    throw std::runtime_error(
+                        "Causal definition '" +
+                        causal_definition->identifier_ +
+                        "' contains an unsupported relationship node.");
+                }
+
+                causal_relationships.push_back(
+                    inspectCausalRelationship(
+                        causal_definition->identifier_,
+                        *relationship));
+            }
         }
     }
 
@@ -413,17 +607,154 @@ std::vector<ExecutionInstance> ExecutionEngine::execute(
                 dynamic_cast<const ast::ExecutionCallNode*>(
                     statement.get())) {
 
-            instances.push_back(instantiate(*call));
+            std::unordered_map<std::string, CausalInput>
+                causal_inputs;
+
+            const auto definition =
+                definitions_.find(call->identifier_);
+
+            if (definition != definitions_.end()) {
+                const auto inputs =
+                    collectInputSpecs(
+                        *definition->second.definition);
+
+                const auto explicit_overrides =
+                    explicitOverrideNames(*call);
+
+                for (const auto& relationship :
+                     causal_relationships) {
+
+                    if (!canTransferAcross(relationship) ||
+                        !definitionMatchesCausalEntity(
+                            call->identifier_,
+                            relationship.destination_entity)) {
+
+                        continue;
+                    }
+
+                    for (const auto& input : inputs) {
+                        if (input.info.has_default ||
+                            explicit_overrides.find(input.info.name) !=
+                                explicit_overrides.end()) {
+
+                            continue;
+                        }
+
+                        const ExecutionInstance* source_instance =
+                            nullptr;
+                        const RuntimeBinding* source_binding =
+                            nullptr;
+
+                        for (const auto& previous : instances) {
+                            if (!definitionMatchesCausalEntity(
+                                    previous.definition_id,
+                                    relationship.source_entity)) {
+
+                                continue;
+                            }
+
+                            if (!previous.scope.contains(
+                                    input.info.name)) {
+
+                                continue;
+                            }
+
+                            const RuntimeBinding& candidate =
+                                previous.scope.get(input.info.name);
+
+                            if (candidate.origin !=
+                                BindingOrigin::DERIVED) {
+
+                                continue;
+                            }
+
+                            if (!candidate.semantic_symbol ||
+                                *candidate.semantic_symbol !=
+                                    input.info.name) {
+
+                                continue;
+                            }
+
+                            if (source_binding != nullptr) {
+                                throw std::runtime_error(
+                                    "Ambiguous causal transfer for input '" +
+                                    input.info.name +
+                                    "' into execution definition '" +
+                                    call->identifier_ +
+                                    "'.");
+                            }
+
+                            source_instance = &previous;
+                            source_binding = &candidate;
+                        }
+
+                        if (source_binding == nullptr ||
+                            source_instance == nullptr) {
+
+                            continue;
+                        }
+
+                        if (causal_inputs.find(input.info.name) !=
+                            causal_inputs.end()) {
+
+                            throw std::runtime_error(
+                                "Ambiguous causal transfer for input '" +
+                                input.info.name +
+                                "' into execution definition '" +
+                                call->identifier_ +
+                                "'.");
+                        }
+
+                        CausalInput causal_input;
+                        causal_input.value =
+                            source_binding->value.asNumber(
+                                "Causal transfer '" +
+                                relationship.causal_definition_id +
+                                "' semantic '" +
+                                input.info.name +
+                                "'");
+
+                        causal_input.trace.relationship =
+                            relationship;
+                        causal_input.trace.source_definition_id =
+                            source_instance->definition_id;
+                        causal_input.trace.destination_definition_id =
+                            call->identifier_;
+                        causal_input.trace.semantic_symbol =
+                            input.info.name;
+                        causal_input.trace.source_semantic_symbol =
+                            source_binding->semantic_symbol;
+                        causal_input.trace.value =
+                            causal_input.value;
+                        causal_input.trace.source_origin =
+                            source_binding->origin;
+                        causal_input.trace.destination_origin =
+                            BindingOrigin::SUPPLIED;
+
+                        causal_inputs.emplace(
+                            input.info.name,
+                            std::move(causal_input));
+                    }
+                }
+            }
+
+            instances.push_back(
+                instantiate(
+                    *call,
+                    causal_inputs));
             continue;
         }
 
         if (dynamic_cast<const ast::ExecutionDefinitionNode*>(
+                statement.get()) ||
+            dynamic_cast<const ast::CausalDefinitionNode*>(
                 statement.get())) {
             continue;
         }
 
         throw std::runtime_error(
-            "ExecutionEngine supports execution definitions and calls only.");
+            "ExecutionEngine supports execution definitions, "
+            "causal definitions, and calls only.");
     }
 
     return instances;

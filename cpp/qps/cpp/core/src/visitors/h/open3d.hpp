@@ -33,6 +33,7 @@ public:
     void visit(ast::DictionaryDeclarationNode* node) override;
     void visit(ast::DictionaryEntryNode* node) override;
     void visit(ast::ContainerNode* node) override;
+    void visit(ast::CausalDefinitionNode* node) override;
     void visit(ast::CausalRelationshipNode* node) override;
     void visit(ast::FunctionDeclarationNode* node) override;
     void visit(ast::ClassDeclarationNode* node) override;

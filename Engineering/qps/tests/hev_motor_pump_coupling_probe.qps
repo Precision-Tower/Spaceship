@@ -1,0 +1,39 @@
+HEV_Motor_Pump_Coupling_Probe.
+
+{DC_Motor:
+[>voltage_vdc]-
+[>current_a]-
+[>electrical_resistance_ohm]-
+[>torque_constant]-
+[>back_emf_constant]-
+
+%[>resistive_voltage_drop]: current_a * electrical_resistance_ohm
+%[>back_emf]: voltage_vdc - resistive_voltage_drop
+%[>shaft_torque]: current_a * torque_constant
+%[>angular_velocity]: back_emf / back_emf_constant
+}
+
+{Pump_Mechanical_Input:
+[>shaft_torque]-
+[>angular_velocity]-
+
+%[>received_shaft_torque]: shaft_torque
+%[>received_angular_velocity]: angular_velocity
+}
+
+{!motor_to_pump:
+DC_Motor: (electrical_state = mechanical_state)
+=
+Pump: (mechanical_state = fluid_state);
+}
+
+{>DC_Motor:
+voltage_vdc- 12/n;
+current_a- 10/n;
+electrical_resistance_ohm- 0.2/n;
+torque_constant- 0.05/n;
+back_emf_constant- 0.05/n;
+}
+
+{>Pump_Mechanical_Input:
+}

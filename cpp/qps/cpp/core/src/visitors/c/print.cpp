@@ -144,6 +144,20 @@ void PrintVisitor::visit(ast::ContainerNode* node) {
     indent_level_--;
 }
 
+void PrintVisitor::visit(ast::CausalDefinitionNode* node) {
+    std::cout << getIndent()
+              << "CAUSAL_DEFINITION "
+              << node->identifier_
+              << " (L" << node->getLine()
+              << ", C" << node->getColumn() << ")\n";
+
+    indent_level_++;
+    for (const auto& relationship : node->relationships) {
+        relationship->accept(*this);
+    }
+    indent_level_--;
+}
+
 void PrintVisitor::visit(ast::CausalRelationshipNode* node) {
     std::cout << getIndent() << "CAUSAL_RELATIONSHIP (L" << node->getLine() << ", C" << node->getColumn() << ")\n";
     indent_level_++;

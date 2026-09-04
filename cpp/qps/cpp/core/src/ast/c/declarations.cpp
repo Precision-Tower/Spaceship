@@ -67,6 +67,18 @@ void DictionaryDeclarationNode::accept(visitors::AstVisitor& visitor) {
     visitor.visit(this);
 }
 
+// CausalDefinitionNode
+CausalDefinitionNode::CausalDefinitionNode(
+    const std::string& identifier,
+    int line,
+    int column)
+    : AstNode(AstNodeType::CAUSAL_DEFINITION, line, column),
+      identifier_(identifier) {}
+
+void CausalDefinitionNode::accept(visitors::AstVisitor& visitor) {
+    visitor.visit(this);
+}
+
 // CausalRelationshipNode
 CausalRelationshipNode::CausalRelationshipNode(std::unique_ptr<CausalSide> left, std::unique_ptr<CausalSide> right, int line, int column)
     : AstNode(AstNodeType::CAUSAL_RELATIONSHIP, line, column), left_side_(std::move(left)), right_side_(std::move(right)) {}

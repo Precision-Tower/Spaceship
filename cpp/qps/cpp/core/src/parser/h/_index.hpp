@@ -90,6 +90,9 @@ private:
     std::unique_ptr<ast::ContainerNode> parseContainer();
     std::unique_ptr<ast::DictionaryDeclarationNode> parseDictionaryDeclaration();
     std::unique_ptr<ast::DictionaryEntryNode> parseDictionaryEntry();
+    std::unique_ptr<ast::CausalDefinitionNode> parseCausalDefinition(
+        int line,
+        int column);
     std::unique_ptr<ast::CausalRelationshipNode> parseCausalRelationship();
     std::unique_ptr<ast::CausalRelationshipNode::CausalSide> parseCausalSide();
     std::unique_ptr<ast::CalculationNode> parseCalculation();

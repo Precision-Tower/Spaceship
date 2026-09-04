@@ -14,6 +14,11 @@ std::unique_ptr<ast::AstNode> Parser::parseBracedExecutionConstruct() {
         return parseExecutionCall(line, column);
     }
 
+    if (peek_type() == tokens::TokenType::CAUSAL_MARKER) {
+        match(tokens::TokenType::CAUSAL_MARKER);
+        return parseCausalDefinition(line, column);
+    }
+
     // Geometry is the first explicit domain-qualified
     // execution definition:
     //
@@ -568,6 +573,43 @@ bool Parser::isExecutionDefinitionInputBoundary() const {
              (peek_type() == tokens::TokenType::IDENTIFIER &&
               peek_next_type() == tokens::TokenType::COLON)));
 }
+
+
+std::unique_ptr<ast::CausalDefinitionNode>
+Parser::parseCausalDefinition(
+    int line,
+    int column) {
+
+    const std::string identifier =
+        match_and_get_lexeme(tokens::TokenType::IDENTIFIER);
+
+    match(tokens::TokenType::COLON);
+
+    auto definition =
+        ast::createCausalDefinitionNode(
+            identifier,
+            line,
+            column);
+
+    while (peek_type() != tokens::TokenType::CLOSE_BRACE &&
+           peek_type() != tokens::TokenType::END_OF_FILE) {
+
+        while (peek_type() == tokens::TokenType::PARAGRAPH_BREAK) {
+            match(tokens::TokenType::PARAGRAPH_BREAK);
+        }
+
+        if (peek_type() == tokens::TokenType::CLOSE_BRACE) {
+            break;
+        }
+
+        definition->relationships.push_back(
+            parseCausalRelationship());
+    }
+
+    match(tokens::TokenType::CLOSE_BRACE);
+    return definition;
+}
+
 
 } // namespace parser
 } // namespace qps

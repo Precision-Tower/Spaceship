@@ -44,6 +44,31 @@ struct ExecutionDefinitionInfo {
     std::optional<ExecutionDefinitionSourceInfo> source;
 };
 
+struct CausalRelationshipInfo {
+    std::string causal_definition_id;
+
+    std::string source_entity;
+    std::string source_input_state;
+    std::string source_output_state;
+
+    std::string destination_entity;
+    std::string destination_input_state;
+    std::string destination_output_state;
+};
+
+struct CausalTransferTrace {
+    CausalRelationshipInfo relationship;
+
+    std::string source_definition_id;
+    std::string destination_definition_id;
+    std::string semantic_symbol;
+    std::optional<std::string> source_semantic_symbol;
+
+    double value = 0.0;
+    BindingOrigin source_origin = BindingOrigin::LOCAL;
+    BindingOrigin destination_origin = BindingOrigin::SUPPLIED;
+};
+
 struct ExecutionInstance {
     std::string definition_id;
     bool identifier_is_numeric = false;
@@ -62,6 +87,10 @@ struct ExecutionInstance {
     // semantic bindings. GEOMETRY definitions may additionally return
     // the final opaque geometry state.
     std::optional<RuntimeValue> result;
+
+    // Explicit causal runtime transfers received while constructing
+    // this instance. Empty for ordinary non-causal execution calls.
+    std::vector<CausalTransferTrace> causal_transfers;
 };
 
 class ExecutionEngine {
@@ -108,6 +137,22 @@ private:
         const ast::ExecutionDefinitionNode* definition = nullptr;
         std::optional<ExecutionDefinitionSourceInfo> source;
     };
+
+    struct CausalInput {
+        double value = 0.0;
+        CausalTransferTrace trace;
+    };
+
+    ExecutionInstance instantiate(
+        const ast::ExecutionCallNode& call,
+        const std::unordered_map<std::string, CausalInput>&
+            causal_inputs) const;
+
+    ExecutionInstance instantiate(
+        const std::string& definition_id,
+        const std::unordered_map<std::string, double>& overrides,
+        const std::unordered_map<std::string, CausalInput>&
+            causal_inputs) const;
 
     std::unordered_map<
         std::string,

@@ -23,6 +23,7 @@ struct Profile {
     std::size_t dictionaries = 0;
     std::size_t dictionary_entries = 0;
     std::size_t containers = 0;
+    std::size_t causal_definitions = 0;
     std::size_t causal_relationships = 0;
     std::size_t functions = 0;
     std::size_t classes = 0;
@@ -123,6 +124,14 @@ public:
     void visit(qps::ast::ContainerNode* n) override {
         ++profile.containers;
         for (const auto& x : n->elements) x->accept(*this);
+    }
+
+    void visit(qps::ast::CausalDefinitionNode* n) override {
+        ++profile.causal_definitions;
+
+        for (const auto& relationship : n->relationships) {
+            relationship->accept(*this);
+        }
     }
 
     void visit(qps::ast::CausalRelationshipNode* n) override {
@@ -450,6 +459,8 @@ int main(int argc, char** argv) {
 
         std::cout << "functions=" << p.functions << "\n";
         std::cout << "classes=" << p.classes << "\n";
+        std::cout << "causal_definitions="
+                  << p.causal_definitions << "\n";
         std::cout << "causal_relationships="
                   << p.causal_relationships << "\n";
 

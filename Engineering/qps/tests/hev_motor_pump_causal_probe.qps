@@ -1,0 +1,7 @@
+HEV_Motor_Pump_Causal_Probe.
+
+{!motor_to_pump:
+DC_Motor: (electrical_state = mechanical_state)
+=
+Pump: (mechanical_state = fluid_state);
+}
