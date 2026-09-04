@@ -15,7 +15,7 @@ Do not duplicate knowledge that belongs deeper in the repository.
 surface: (
 Engineering- "Engineering/_index.qps";
 Agency- "Agency/_index.qps";
-Android- "Android";
+Android- "Android/_index.qps";
 UI- "UI/_index.qps";
 cpp- "cpp/_index.qps";
 );

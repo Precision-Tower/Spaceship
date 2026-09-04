@@ -1,0 +1,43 @@
+Android.
+
+purpose: def"
+Canonical semantic doorway into the CE-OS Android subsystem.
+";
+
+surface: (
+CEOS- "Android/CEOS";
+Godot- "Android/Godot";
+Privileged- "Android/Privileged";
+SDK- "Android/SDK";
+Termux- "Android/Termux";
+docs- "Android/docs";
+layout- "Android/layout.env";
+);
+
+roles: (
+CEOS- "Android-side CE-OS integration";
+Godot- "Android Godot runtime and integration";
+Privileged- "privileged Android operations";
+SDK- "Android SDK and platform tooling";
+Termux- "Termux runtime, shell, services, and CE-OS command surfaces";
+docs- "Android architecture and validation documentation";
+layout- "Android layout and environment configuration";
+);
+
+documents: (
+readme- "Android/docs/README.md";
+checklist- "Android/docs/CHECKLIST.md";
+);
+
+rules: (
+local_context_first- "read this index when entering Android";
+descend_only_as_needed- "inspect only the child surface required by the task";
+privilege_boundary- "privileged Android operations remain distinct from normal Termux and application operations";
+do_not_duplicate- "child implementation details remain owned by their local surface";
+);
+
+operations: (
+enter_termux- "enter Android/Termux and inspect its immediate surface";
+enter_privileged- "enter Android/Privileged and inspect its immediate surface";
+read_docs- "read Android/docs/README.md";
+);
