@@ -9,6 +9,7 @@
 #include <array>
 #include <cerrno>
 #include <cstring>
+#include <filesystem>
 #include <iostream>
 #include <poll.h>
 #include <stdexcept>
@@ -455,6 +456,87 @@ HostActionResult HostActionDispatcher::execute(
         }
 
         return HostActionResult{};
+    }
+
+    if (invocation.action_name == "path_kind") {
+        const std::string path =
+            requireParameter(
+                invocation,
+                "path")
+                .asString("path_kind path");
+
+        for (const auto& [name, value] :
+             invocation.parameters) {
+
+            (void)value;
+
+            if (name != "path") {
+                throw std::runtime_error(
+                    "Unknown path_kind parameter '" +
+                    name +
+                    "'.");
+            }
+        }
+
+        namespace fs = std::filesystem;
+
+        std::string kind = "missing";
+
+        std::error_code error;
+        const fs::file_status status =
+            fs::status(
+                fs::path(path),
+                error);
+
+        if (!error) {
+            if (fs::is_regular_file(status)) {
+                kind = "file";
+            }
+            else if (fs::is_directory(status)) {
+                kind = "directory";
+            }
+        }
+
+        HostActionResult result;
+        result.value =
+            RuntimeValue::string(
+                std::move(kind));
+
+        return result;
+    }
+
+    if (invocation.action_name == "path_canonical") {
+        const std::string path =
+            requireParameter(
+                invocation,
+                "path")
+                .asString("path_canonical path");
+
+        for (const auto& [name, value] :
+             invocation.parameters) {
+
+            (void)value;
+
+            if (name != "path") {
+                throw std::runtime_error(
+                    "Unknown path_canonical parameter '" +
+                    name +
+                    "'.");
+            }
+        }
+
+        namespace fs = std::filesystem;
+
+        const fs::path canonical =
+            fs::weakly_canonical(
+                fs::path(path));
+
+        HostActionResult result;
+        result.value =
+            RuntimeValue::string(
+                canonical.string());
+
+        return result;
     }
 
     throw std::runtime_error(

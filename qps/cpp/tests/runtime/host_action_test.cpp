@@ -1,5 +1,7 @@
 #include "runtime/h/host_actions.hpp"
 
+#include <filesystem>
+#include <fstream>
 #include <iostream>
 #include <stdexcept>
 #include <string>
@@ -231,6 +233,108 @@ void qpsCheckRejectsInvalidSource() {
         "qps_check unexpectedly accepted invalid QPS.");
 }
 
+void pathKindReturnsFilesystemFact() {
+    namespace fs = std::filesystem;
+
+    const fs::path root =
+        fs::temp_directory_path() /
+        "qps_host_path_kind_test";
+
+    fs::remove_all(root);
+    fs::create_directories(root);
+
+    const fs::path file =
+        root / "probe.txt";
+
+    {
+        std::ofstream out(file);
+        out << "probe";
+    }
+
+    qps::runtime::HostActionDispatcher host;
+
+    const auto run =
+        [&](const fs::path& path) {
+            qps::runtime::HostActionInvocation invocation;
+            invocation.action_name = "path_kind";
+
+            invocation.parameters.emplace(
+                "path",
+                qps::runtime::RuntimeValue::string(
+                    path.string()));
+
+            return host.execute(invocation);
+        };
+
+    const auto directory = run(root);
+    require(
+        directory.value.has_value(),
+        "path_kind directory returned no runtime value.");
+    require(
+        directory.value->asString("directory kind") ==
+            "directory",
+        "path_kind directory mismatch.");
+
+    const auto regular = run(file);
+    require(
+        regular.value.has_value(),
+        "path_kind file returned no runtime value.");
+    require(
+        regular.value->asString("file kind") ==
+            "file",
+        "path_kind file mismatch.");
+
+    const auto missing =
+        run(root / "missing");
+
+    require(
+        missing.value.has_value(),
+        "path_kind missing returned no runtime value.");
+    require(
+        missing.value->asString("missing kind") ==
+            "missing",
+        "path_kind missing mismatch.");
+
+    fs::remove_all(root);
+}
+
+void pathCanonicalReturnsCanonicalPath() {
+    namespace fs = std::filesystem;
+
+    const fs::path root =
+        fs::temp_directory_path() /
+        "qps_host_path_canonical_test";
+
+    fs::remove_all(root);
+    fs::create_directories(
+        root / "child");
+
+    qps::runtime::HostActionInvocation invocation;
+    invocation.action_name = "path_canonical";
+
+    invocation.parameters.emplace(
+        "path",
+        qps::runtime::RuntimeValue::string(
+            (root / "child" / ".." / "child").string()));
+
+    qps::runtime::HostActionDispatcher host;
+
+    const auto result =
+        host.execute(invocation);
+
+    require(
+        result.value.has_value(),
+        "path_canonical returned no runtime value.");
+
+    require(
+        result.value->asString("canonical path") ==
+            fs::weakly_canonical(
+                root / "child").string(),
+        "path_canonical mismatch.");
+
+    fs::remove_all(root);
+}
+
 void unknownPrimitiveFails() {
     qps::runtime::HostActionDispatcher host;
 
@@ -283,6 +387,14 @@ int main() {
         qpsCheckRejectsInvalidSource();
         std::cout
             << "PASS qps_check rejects invalid source\n";
+
+        pathKindReturnsFilesystemFact();
+        std::cout
+            << "PASS path_kind returns filesystem fact\n";
+
+        pathCanonicalReturnsCanonicalPath();
+        std::cout
+            << "PASS path_canonical returns canonical path\n";
 
         unknownPrimitiveFails();
         std::cout
