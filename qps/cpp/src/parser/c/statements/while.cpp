@@ -16,15 +16,18 @@ std::unique_ptr<ast::WhileStatementNode> Parser::parseWhileStatement() {
     int column = current_token_.column;
     match(tokens::TokenType::KW_WHILE); // Consume '-while'
 
-    // Parse the condition for the while loop
-    std::unique_ptr<ast::AstNode> condition_expr = parseAdditiveExpression(); // Condition is an expression
+    // While conditions use the same expression grammar as -if.
+    std::unique_ptr<ast::AstNode> condition_expr =
+        parseExpression();
 
-    // Parse the loop body (Execution Block)
-    std::unique_ptr<ast::ExecutionBlockNode> body_block = parseExecutionBlock();
+    std::unique_ptr<ast::ExecutionBlockNode> body_block =
+        parseExecutionBlock();
 
-    match(tokens::TokenType::EXEC_DELIMITER); // Consume '_' that terminates the statement
-
-    return ast::createWhileStatementNode(std::move(condition_expr), std::move(body_block), line, column);
+    return ast::createWhileStatementNode(
+        std::move(condition_expr),
+        std::move(body_block),
+        line,
+        column);
 }
 
 } // namespace parser

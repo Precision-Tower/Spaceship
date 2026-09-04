@@ -165,6 +165,9 @@ private:
     void executeIf(
         const ast::IfStatementNode& statement);
 
+    void executeWhile(
+        const ast::WhileStatementNode& statement);
+
     void executeAssert(
         const ast::AssertStatementNode& statement) const;
 

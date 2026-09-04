@@ -528,6 +528,35 @@ struct TestCase {
 } // namespace
 
 
+void whileRebindsLocalItemUntilConditionIsFalse() {
+    const std::string source = R"qps(
+{
+[>count]- 0;
+
+-while count < 3 {
+[>count]- count + 1;
+}
+}
+)qps";
+
+    const qps::runtime::ExecutionScope scope =
+        executeSource(source);
+
+    require(
+        scope.contains("count"),
+        "while loop should preserve count binding.");
+
+    require(
+        scope.get("count").value.isNumeric(),
+        "while loop count should remain NUMERIC.");
+
+    require(
+        scope.get("count").value.asNumber(
+            "count") == 3.0,
+        "while loop should stop when count reaches 3.");
+}
+
+
 void ifSelectsNumericLessThanBranch() {
     const std::string source = R"qps(
 {
@@ -612,6 +641,7 @@ void ifSelectsElseBranch() {
 
 int main() {
     const std::vector<TestCase> tests = {
+        {"while rebinds local Item until condition is false", whileRebindsLocalItemUntilConditionIsFalse},
         {"if selects numeric less-than branch", ifSelectsNumericLessThanBranch},
         {"if selects string equality branch", ifSelectsStringEqualityBranch},
         {"if selects else branch", ifSelectsElseBranch},

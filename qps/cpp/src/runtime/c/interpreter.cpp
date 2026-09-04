@@ -312,6 +312,15 @@ void Interpreter::executeStatement(
         return;
     }
 
+    if (auto* while_statement =
+            dynamic_cast<
+                const ast::WhileStatementNode*>(
+                    &statement)) {
+
+        executeWhile(*while_statement);
+        return;
+    }
+
     if (auto* assert_statement =
             dynamic_cast<
                 const ast::AssertStatementNode*>(
@@ -468,6 +477,24 @@ void Interpreter::executeStatement(
 
     throw std::runtime_error(
         "Interpreter does not yet support AST node type in execution block.");
+}
+
+void Interpreter::executeWhile(
+    const ast::WhileStatementNode& statement) {
+
+    if (!statement.condition_) {
+        throw std::runtime_error(
+            "While statement requires a condition.");
+    }
+
+    if (!statement.body_) {
+        throw std::runtime_error(
+            "While statement requires a body.");
+    }
+
+    while (evaluateTruth(*statement.condition_)) {
+        execute(*statement.body_);
+    }
 }
 
 void Interpreter::executeIf(
