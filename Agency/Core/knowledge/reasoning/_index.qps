@@ -1,0 +1,43 @@
+Reasoning.
+
+purpose: def"
+Canonical semantic doorway into Agency reasoning.
+Reasoning constructs bounded context, preserves evidence-backed reasoning contracts, and selects high-value evidence.
+";
+
+surface: (
+context- "Agency/Core/knowledge/reasoning/context.py";
+contracts- "Agency/Core/knowledge/reasoning/contracts.py";
+evidence- "Agency/Core/knowledge/reasoning/evidence.py";
+selection- "Agency/Core/knowledge/reasoning/selection.py";
+tests- "Agency/Core/knowledge/reasoning/tests";
+);
+
+roles: (
+context- "construct bounded reasoning context from artifacts evidence readiness coverage and resourcefulness";
+contracts- "define evidence findings assumptions unresolved questions system models policies and reasoning results";
+evidence- "resolve and normalize evidence references against inspected observations";
+selection- "select bounded high-value evidence by coverage structure recency and observation kind";
+tests- "validate reasoning context contracts and evidence selection";
+);
+
+contracts: (
+authority- "reasoning_only";
+findings_require_evidence- true;
+preserve_unresolveds- true;
+repository_access_default- false;
+mutation_default- false;
+);
+
+rules: (
+local_context_first- "read this index before inspecting reasoning implementation";
+bounded_context- "reasoning receives selected context rather than the complete inspected surface";
+evidence_traceability- "findings retain references to the observations that support them";
+preserve_uncertainty- "assumptions and unresolved questions remain explicit reasoning outputs";
+selection_is_context_reduction- "evidence selection reduces reasoning context without replacing source evidence";
+do_not_duplicate- "implementation details remain owned by the Python source until intentionally migrated";
+);
+
+operations: (
+validate_agency- "python Agency/unittest.py";
+);

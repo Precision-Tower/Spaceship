@@ -6,7 +6,7 @@ Canonical semantic doorway into Agency knowledge management.
 
 surface: (
 memory- "Agency/Core/knowledge/memory";
-reasoning- "Agency/Core/knowledge/reasoning";
+reasoning- "Agency/Core/knowledge/reasoning/_index.qps";
 );
 
 roles: (
