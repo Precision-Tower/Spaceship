@@ -98,6 +98,69 @@ int main() {
                     "_index.qps"),
             "Child _index.qps resolution mismatch.");
 
+        writeFile(
+            fixture_root / "child" / "nested" / "_index.qps",
+            "nested. name- \"nested\";\n");
+
+        writeFile(
+            fixture_root / "alpha.qps",
+            "Alpha. value- 1;\n");
+
+        writeFile(
+            fixture_root / "zeta.qps",
+            "Zeta. value- 2;\n");
+
+        writeFile(
+            fixture_root / "ignore.txt",
+            "not qps\n");
+
+        writeFile(
+            fixture_root / "disconnected" / "leaf" / "_index.qps",
+            "leaf. name- \"leaf\";\n");
+
+        require(
+            resolver.isModule("child/nested"),
+            "Connected nested module was not recognized.");
+
+        require(
+            !resolver.isModule("disconnected/leaf"),
+            "Module with disconnected parent chain was accepted.");
+
+        require(
+            !resolver.isModule("../escape"),
+            "Parent traversal unexpectedly defined a module.");
+
+        require(
+            !resolver.isModule(
+                std::filesystem::absolute(fixture_root)),
+            "Absolute module path unexpectedly accepted.");
+
+        bool non_qps_rejected = false;
+
+        try {
+            (void)resolver.resolveFile("ignore.txt");
+        }
+        catch (const std::runtime_error&) {
+            non_qps_rejected = true;
+        }
+
+        require(
+            non_qps_rejected,
+            "Non-.qps document unexpectedly resolved.");
+
+        bool missing_qps_rejected = false;
+
+        try {
+            (void)resolver.resolveFile("missing.qps");
+        }
+        catch (const std::runtime_error&) {
+            missing_qps_rejected = true;
+        }
+
+        require(
+            missing_qps_rejected,
+            "Missing .qps document unexpectedly resolved.");
+
         const auto children =
             resolver.childModules(".");
 
@@ -113,6 +176,47 @@ int main() {
         require(
             found_child,
             "childModules(.) did not expose child module.");
+
+        require(
+            children ==
+                std::vector<std::filesystem::path>{
+                    std::filesystem::path("child")
+                },
+            "childModules(.) must expose only immediate connected modules in deterministic order.");
+
+        const auto files =
+            resolver.qpsFiles(".");
+
+        require(
+            files ==
+                std::vector<std::filesystem::path>{
+                    std::filesystem::path("alpha.qps"),
+                    std::filesystem::path("zeta.qps")
+                },
+            "qpsFiles(.) must expose sorted .qps documents excluding _index.qps.");
+
+        require(
+            resolver.indexFile("child/nested") ==
+                std::filesystem::weakly_canonical(
+                    fixture_root /
+                    "child" /
+                    "nested") /
+                "_index.qps",
+            "Nested module indexFile mismatch.");
+
+        bool escape_file_rejected = false;
+
+        try {
+            (void)resolver.resolveFile("../escape.qps");
+        }
+        catch (const std::runtime_error&) {
+            escape_file_rejected = true;
+        }
+
+        require(
+            escape_file_rejected,
+            "Parent traversal unexpectedly resolved a document.");
+
 
         // ----------------------------------------------------
         // Workspace without canonical surface must fail.
