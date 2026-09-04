@@ -1,0 +1,36 @@
+Chroma.
+
+purpose: def"
+Derived vector retrieval backend for Agent memory.
+";
+
+surface: (
+build_index- "Agency/Core/knowledge/memory/Chroma/build_index.py";
+query_index- "Agency/Core/knowledge/memory/Chroma/query_index.py";
+);
+
+roles: (
+build_index- "expand configured Agent memory sources, chunk source text, embed chunks, and build a persistent Agent retrieval index";
+query_index- "retrieve ranked source chunks from an Agent memory index";
+);
+
+authority: (
+index- "retrieval_only_not_source_authority";
+source_path_preserved- true;
+chunk_identity_preserved- true;
+);
+
+behavior: (
+embedding_model- "sentence-transformers/all-MiniLM-L6-v2";
+build_source- "Agency/Agents/<agent>/memory/sources.yaml";
+storage- "Agency/Agents/<agent>/memory/Chroma";
+exact_path_boost- true;
+);
+
+rules: (
+derived_index- "Chroma content is derived from source files";
+source_wins- "retrieved content does not become authoritative by being indexed";
+path_traceability- "retrieval results preserve source path and chunk identity";
+fuzzy_discovery- "use vector retrieval when the exact semantic address is not already known";
+do_not_duplicate- "implementation details remain owned by build_index.py and query_index.py";
+);

@@ -1,0 +1,19 @@
+Memory.
+
+purpose: def"
+Canonical semantic doorway into Agency memory and retrieval infrastructure.
+";
+
+surface: (
+Chroma- "Agency/Core/knowledge/memory/Chroma/_index.qps";
+);
+
+roles: (
+Chroma- "derived semantic retrieval index over authoritative source material";
+);
+
+rules: (
+local_context_first- "read this index when entering Agency/Core/knowledge/memory";
+retrieval_not_authority- "memory retrieval may locate source material but does not replace source authority";
+descend_only_as_needed- "enter a memory backend only when retrieval is required";
+);
