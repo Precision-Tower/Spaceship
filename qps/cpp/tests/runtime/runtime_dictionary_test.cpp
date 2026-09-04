@@ -104,7 +104,69 @@ int main() {
             "Nested dictionary entry mismatch.");
 
         std::cout << "RUNTIME DICTIONARY: PASS\n";
-        return 0;
+
+    {
+        auto program = parseSource(R"qps({
+-return [
+1: "defs/shape.qps",
+2: 2
+];;
+})qps");
+
+        require(
+            program->statements.size() == 1,
+            "Expected one top-level execution block.");
+
+        const auto* execution =
+            dynamic_cast<const qps::ast::ExecutionBlockNode*>(
+                program->statements.front().get());
+
+        require(
+            execution != nullptr,
+            "Expected parsed source to be an execution block.");
+
+        qps::runtime::ExecutionScope scope;
+
+        qps::runtime::InterpreterOptions options;
+        options.allow_return = true;
+
+        qps::runtime::Interpreter interpreter(
+            scope,
+            {},
+            options);
+
+        const auto result =
+            interpreter.executeForResult(*execution);
+
+        require(
+            result.has_value(),
+            "Expected Dictionary return expression to produce a value.");
+
+        require(
+            result->isDictionary(),
+            "Expected Dictionary return expression to produce a Dictionary.");
+
+        const auto& dictionary =
+            result->asDictionary("returned Dictionary");
+
+        require(
+            dictionary.size() == 2,
+            "Returned Dictionary size mismatch.");
+
+        require(
+            dictionary[0].id == 1 &&
+            dictionary[0].value.isString() &&
+            dictionary[0].value.asString("entry 1") == "defs/shape.qps",
+            "Returned Dictionary entry 1 mismatch.");
+
+        require(
+            dictionary[1].id == 2 &&
+            dictionary[1].value.isNumeric() &&
+            dictionary[1].value.asNumber("entry 2") == 2.0,
+            "Returned Dictionary entry 2 mismatch.");
+    }
+
+    return 0;
     }
     catch (const std::exception& error) {
         std::cerr << "ERROR: " << error.what() << "\n";

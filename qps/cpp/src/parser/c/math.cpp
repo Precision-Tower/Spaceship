@@ -143,6 +143,12 @@ std::unique_ptr<ast::AstNode> Parser::parsePrimaryExpression() {
         return expr;
     } else if (
         peek_type() == tokens::TokenType::OPEN_BRACKET &&
+        peek_next_type() != tokens::TokenType::REFERENCE_OPERATOR &&
+        peek_next_type() != tokens::TokenType::IDENTIFIER) {
+
+        return parseDictionaryDeclaration();
+    } else if (
+        peek_type() == tokens::TokenType::OPEN_BRACKET &&
         (peek_next_type() == tokens::TokenType::REFERENCE_OPERATOR ||
          peek_next_type() == tokens::TokenType::IDENTIFIER)) {
 
