@@ -5,19 +5,19 @@ Canonical semantic doorway into CE-OS native C++ source.
 ";
 
 surface: (
-qps- "cpp/qps";
+qps- "qps";
 );
 
 doors: (
-qps- "cpp/qps/_index.qps";
+qps- "qps/_index.qps";
 );
 
 rules: (
 local_context_first- "read this index when entering cpp";
-descend_only_as_needed- "read cpp/qps/_index.qps before working deeper in QPS";
-do_not_duplicate- "QPS implementation details belong under cpp/qps";
+descend_only_as_needed- "read qps/_index.qps before working deeper in QPS";
+do_not_duplicate- "QPS implementation details belong under qps";
 );
 
 operations: (
-enter_qps- "read cpp/qps/_index.qps";
+enter_qps- "read qps/_index.qps";
 );

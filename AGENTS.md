@@ -145,14 +145,14 @@ not in `AGENTS.md`.
 
 Canonical QPS implementation:
 
-    ~/ce-os/cpp/qps/cpp
+    ~/ce-os/qps/cpp
 
 The QPS CTest suite must remain green.
 
 Validate QPS with:
 
-    cmake --build ~/ce-os/cpp/qps/cpp/build-pixel -j1
-    ctest --test-dir ~/ce-os/cpp/qps/cpp/build-pixel --output-on-failure
+    cmake --build ~/ce-os/qps/cpp/build-pixel -j1
+    ctest --test-dir ~/ce-os/qps/cpp/build-pixel --output-on-failure
 
 Avoid clean rebuilds unless required.
 

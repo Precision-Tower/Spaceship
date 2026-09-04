@@ -42,8 +42,8 @@ quiet_default- true/b;
 
 testSuite_status: (
 runner_exists- true/b;
-runner_file- "cpp/qps/cpp/core/src/runtime/c/test_suite.cpp"/a;
-header_file- "cpp/qps/cpp/core/src/runtime/h/test_suite.hpp"/a;
+runner_file- "qps/cpp/src/runtime/c/test_suite.cpp"/a;
+header_file- "qps/cpp/src/runtime/h/test_suite.hpp"/a;
 header_truncation_repaired- true/b;
 test_outcomes- "PASSED FAILED ERROR"/a;
 captures_identity- true/b;
@@ -53,14 +53,14 @@ captures_column- true/b;
 );
 
 execution_surface: (
-calculation_parser- "cpp/qps/cpp/core/src/parser/c/math.cpp"/a;
-execution_interpreter- "cpp/qps/cpp/core/src/runtime/c/interpreter.cpp"/a;
-execution_engine- "cpp/qps/cpp/core/src/runtime/c/execution_engine.cpp"/a;
-function_parser- "cpp/qps/cpp/core/src/parser/c/function.cpp"/a;
-assert_parser- "cpp/qps/cpp/core/src/parser/c/statements/assert.cpp"/a;
-test_parser- "cpp/qps/cpp/core/src/parser/c/statements/test.cpp"/a;
-raises_parser- "cpp/qps/cpp/core/src/parser/c/statements/raises.cpp"/a;
-fail_parser- "cpp/qps/cpp/core/src/parser/c/statements/fail.cpp"/a;
+calculation_parser- "qps/cpp/src/parser/c/math.cpp"/a;
+execution_interpreter- "qps/cpp/src/runtime/c/interpreter.cpp"/a;
+execution_engine- "qps/cpp/src/runtime/c/execution_engine.cpp"/a;
+function_parser- "qps/cpp/src/parser/c/function.cpp"/a;
+assert_parser- "qps/cpp/src/parser/c/statements/assert.cpp"/a;
+test_parser- "qps/cpp/src/parser/c/statements/test.cpp"/a;
+raises_parser- "qps/cpp/src/parser/c/statements/raises.cpp"/a;
+fail_parser- "qps/cpp/src/parser/c/statements/fail.cpp"/a;
 );
 
 known_execution_syntax: (
@@ -93,39 +93,39 @@ dirty_runtime_surface: (
 note- "These files contain unfinished QPS execution/test work and must not be reset or overwritten blindly."/a;
 
 files: (
-ast_node- "cpp/qps/cpp/core/src/ast/ast_node.hpp"/a;
-ast_utils_cpp- "cpp/qps/cpp/core/src/ast/ast_utils.cpp"/a;
-ast_utils_hpp- "cpp/qps/cpp/core/src/ast/ast_utils.hpp"/a;
-statements_cpp- "cpp/qps/cpp/core/src/ast/c/statements.cpp"/a;
-expressions_hpp- "cpp/qps/cpp/core/src/ast/h/expressions.hpp"/a;
-statements_hpp- "cpp/qps/cpp/core/src/ast/h/statements.hpp"/a;
-parser_index_cpp- "cpp/qps/cpp/core/src/parser/c/_index.cpp"/a;
-math_cpp- "cpp/qps/cpp/core/src/parser/c/math.cpp"/a;
-assert_cpp- "cpp/qps/cpp/core/src/parser/c/statements/assert.cpp"/a;
-term_cpp- "cpp/qps/cpp/core/src/parser/c/term.cpp"/a;
-parser_index_hpp- "cpp/qps/cpp/core/src/parser/h/_index.hpp"/a;
-interpreter_cpp- "cpp/qps/cpp/core/src/runtime/c/interpreter.cpp"/a;
-interpreter_hpp- "cpp/qps/cpp/core/src/runtime/h/interpreter.hpp"/a;
-lexer_cpp- "cpp/qps/cpp/core/src/tokens/c/lexer.cpp"/a;
-token_hpp- "cpp/qps/cpp/core/src/tokens/h/token.hpp"/a;
+ast_node- "qps/cpp/src/ast/ast_node.hpp"/a;
+ast_utils_cpp- "qps/cpp/src/ast/ast_utils.cpp"/a;
+ast_utils_hpp- "qps/cpp/src/ast/ast_utils.hpp"/a;
+statements_cpp- "qps/cpp/src/ast/c/statements.cpp"/a;
+expressions_hpp- "qps/cpp/src/ast/h/expressions.hpp"/a;
+statements_hpp- "qps/cpp/src/ast/h/statements.hpp"/a;
+parser_index_cpp- "qps/cpp/src/parser/c/_index.cpp"/a;
+math_cpp- "qps/cpp/src/parser/c/math.cpp"/a;
+assert_cpp- "qps/cpp/src/parser/c/statements/assert.cpp"/a;
+term_cpp- "qps/cpp/src/parser/c/term.cpp"/a;
+parser_index_hpp- "qps/cpp/src/parser/h/_index.hpp"/a;
+interpreter_cpp- "qps/cpp/src/runtime/c/interpreter.cpp"/a;
+interpreter_hpp- "qps/cpp/src/runtime/h/interpreter.hpp"/a;
+lexer_cpp- "qps/cpp/src/tokens/c/lexer.cpp"/a;
+token_hpp- "qps/cpp/src/tokens/h/token.hpp"/a;
 );
 );
 
 untracked_execution_surface: (
-fail_cpp- "cpp/qps/cpp/core/src/parser/c/statements/fail.cpp"/a;
-raises_cpp- "cpp/qps/cpp/core/src/parser/c/statements/raises.cpp"/a;
-test_cpp- "cpp/qps/cpp/core/src/parser/c/statements/test.cpp"/a;
-fail_hpp- "cpp/qps/cpp/core/src/parser/h/statements/fail.hpp"/a;
-raises_hpp- "cpp/qps/cpp/core/src/parser/h/statements/raises.hpp"/a;
-test_hpp- "cpp/qps/cpp/core/src/parser/h/statements/test.hpp"/a;
-test_suite_cpp- "cpp/qps/cpp/core/src/runtime/c/test_suite.cpp"/a;
-test_suite_hpp- "cpp/qps/cpp/core/src/runtime/h/test_suite.hpp"/a;
+fail_cpp- "qps/cpp/src/parser/c/statements/fail.cpp"/a;
+raises_cpp- "qps/cpp/src/parser/c/statements/raises.cpp"/a;
+test_cpp- "qps/cpp/src/parser/c/statements/test.cpp"/a;
+fail_hpp- "qps/cpp/src/parser/h/statements/fail.hpp"/a;
+raises_hpp- "qps/cpp/src/parser/h/statements/raises.hpp"/a;
+test_hpp- "qps/cpp/src/parser/h/statements/test.hpp"/a;
+test_suite_cpp- "qps/cpp/src/runtime/c/test_suite.cpp"/a;
+test_suite_hpp- "qps/cpp/src/runtime/h/test_suite.hpp"/a;
 );
 
 known_build_state: (
 qps_cli_builds- true/b;
-pixel_build_dir- "cpp/qps/cpp/build-pixel"/a;
-qps_cli- "cpp/qps/cpp/build-pixel/qps"/a;
+pixel_build_dir- "qps/cpp/build-pixel"/a;
+qps_cli- "qps/cpp/build-pixel/qps"/a;
 );
 
 recent_proof: (

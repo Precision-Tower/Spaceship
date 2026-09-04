@@ -900,7 +900,7 @@ int runBuildCommand(int argc, char* argv[]) {
             findCeOsRoot(fs::current_path());
 
         const fs::path source =
-            root / "cpp/qps/cpp";
+            root / "qps/cpp";
 
         const fs::path build =
             source / "build-pixel";

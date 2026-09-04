@@ -12,7 +12,7 @@ Build QPS into the compact, deterministic structural language used by CE-OS Engi
 
 ### Parser and Corpus
 
-- [x] Active QPS C++ implementation established under `cpp/qps/cpp`.
+- [x] Active QPS C++ implementation established under `qps/cpp`.
 - [x] QPS CLI supports document parsing.
 - [x] QPS CLI supports `--check`.
 - [x] QPS CLI supports `--get <path>`.
@@ -344,11 +344,11 @@ Before expensive work:
 
 Canonical QPS build:
 
-    cmake --build ~/ce-os/cpp/qps/cpp/build-pixel -j1
+    cmake --build ~/ce-os/qps/cpp/build-pixel -j1
 
 Canonical QPS test:
 
-    ctest --test-dir ~/ce-os/cpp/qps/cpp/build-pixel --output-on-failure
+    ctest --test-dir ~/ce-os/qps/cpp/build-pixel --output-on-failure
 
 Before committing:
 

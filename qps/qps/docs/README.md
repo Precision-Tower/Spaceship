@@ -2,7 +2,7 @@
 
 Quick Parse Standard (QPS) is the CE-OS structural language used to express engineering and simulation information in compact `.qps` documents.
 
-The active QPS implementation lives under `cpp/qps/cpp`.
+The active QPS implementation lives under `qps/cpp`.
 
 `docs/QPS.qps`, the parser/runtime implementation, automated tests, and active Engineering corpus together define the executable language. Historical documentation does not override behavior established by the current implementation and proven corpus.
 
@@ -57,8 +57,8 @@ The QPS command-line interface supports:
 
 Canonical Pixel build and test baseline:
 
-    cmake --build ~/ce-os/cpp/qps/cpp/build-pixel -j1
-    ctest --test-dir ~/ce-os/cpp/qps/cpp/build-pixel --output-on-failure
+    cmake --build ~/ce-os/qps/cpp/build-pixel -j1
+    ctest --test-dir ~/ce-os/qps/cpp/build-pixel --output-on-failure
 
 The established checkpoint is 14/14 QPS tests passing.
 

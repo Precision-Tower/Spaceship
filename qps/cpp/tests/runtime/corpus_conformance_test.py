@@ -9,7 +9,7 @@ ROOT = Path(os.environ.get("CEOS_ROOT", str(Path.home() / "ce-os")))
 QPS = Path(
     os.environ.get(
         "QPS_EXECUTABLE",
-        str(ROOT / "cpp/qps/cpp/build-pixel/qps"),
+        str(ROOT / "qps/cpp/build-pixel/qps"),
     )
 )
 CORPUS = ROOT / "Engineering/qps"

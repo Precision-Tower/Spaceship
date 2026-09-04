@@ -9,7 +9,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 enable_testing()
 
 # Define source directories
-set(QPS_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/core/src)
+set(QPS_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 # Define all source files for the QPS executable
 file(GLOB_RECURSE LEXER_SOURCES
@@ -162,14 +162,14 @@ add_test(
 add_test(
     NAME qps_parser_golden_QPS_quicksheet
     COMMAND qps
-        ${CMAKE_CURRENT_SOURCE_DIR}/../docs/QPS.qps
+        ${CMAKE_CURRENT_SOURCE_DIR}/../qps/docs/QPS.qps
 )
 
 
 add_test(
     NAME qps_symbol_resolver_defs_p
     COMMAND qps_symbol_resolver_test
-        "${CMAKE_CURRENT_SOURCE_DIR}/../../../Engineering/qps"
+        "${CMAKE_CURRENT_SOURCE_DIR}/../../Engineering/qps"
         "defs"
         "p"
 )
@@ -195,7 +195,7 @@ add_test(
     NAME qps_corpus_ast_conformance_test
     COMMAND
         qps_corpus_ast_conformance_test
-        ${CMAKE_CURRENT_SOURCE_DIR}/../../..
+        ${CMAKE_CURRENT_SOURCE_DIR}/../..
 )
 
 
@@ -214,7 +214,7 @@ add_test(
     NAME qps_active_surface_graph_test
     COMMAND
         qps_active_surface_graph_test
-        ${CMAKE_CURRENT_SOURCE_DIR}/../../../Engineering/qps
+        ${CMAKE_CURRENT_SOURCE_DIR}/../../Engineering/qps
 )
 
 add_test(
@@ -222,7 +222,7 @@ add_test(
     COMMAND
         ${CMAKE_COMMAND} -E env
         QPS_EXECUTABLE=$<TARGET_FILE:qps>
-        CEOS_ROOT=${CMAKE_CURRENT_SOURCE_DIR}/../../..
+        CEOS_ROOT=${CMAKE_CURRENT_SOURCE_DIR}/../..
         python3
         ${CMAKE_CURRENT_SOURCE_DIR}/tests/runtime/corpus_conformance_test.py
 )
@@ -233,7 +233,7 @@ add_test(
     COMMAND
         ${CMAKE_COMMAND} -E env
         QPS_EXECUTABLE=$<TARGET_FILE:qps>
-        CEOS_ROOT=${CMAKE_CURRENT_SOURCE_DIR}/../../..
+        CEOS_ROOT=${CMAKE_CURRENT_SOURCE_DIR}/../..
         python3
         ${CMAKE_CURRENT_SOURCE_DIR}/tests/runtime/test_suite_cli_test.py
 )

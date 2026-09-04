@@ -1184,7 +1184,6 @@ v1: [v.cylinder];
             .parent_path()  // tests
             .parent_path()  // cpp
             .parent_path()  // qps
-            .parent_path()  // cpp
             .parent_path(); // ce-os
 
     const std::filesystem::path engineering_workspace =

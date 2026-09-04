@@ -1,9 +1,9 @@
-#include "../../core/src/ast/ast_node.hpp"
-#include "../../core/src/visitors/ast_interface.hpp"
-#include "../../core/src/parser/h/_index.hpp"
-#include "../../core/src/tokens/h/char_stream.hpp"
-#include "../../core/src/tokens/h/lexer.hpp"
-#include "../../core/src/utils.hpp"
+#include "../../src/ast/ast_node.hpp"
+#include "../../src/visitors/ast_interface.hpp"
+#include "../../src/parser/h/_index.hpp"
+#include "../../src/tokens/h/char_stream.hpp"
+#include "../../src/tokens/h/lexer.hpp"
+#include "../../src/utils.hpp"
 
 #include <cstdlib>
 #include <filesystem>

@@ -1,0 +1,38 @@
+QPS.
+
+purpose: def"
+Canonical semantic doorway into the Quick Parse Standard subsystem.
+";
+
+surface: (
+cpp- "qps/cpp";
+docs- "qps/qps/docs";
+);
+
+doors: (
+implementation- "qps/cpp";
+documentation- "qps/qps/docs";
+);
+
+documents: (
+quicksheet- "qps/qps/docs/QPS.qps";
+checklist- "qps/qps/docs/CHECKLIST.md";
+readme- "qps/qps/docs/README.md";
+execution_handoff- "qps/qps/docs/EXECUTION_HANDOFF.qps";
+);
+
+operations: (
+build_pixel- "cmake --build qps/cpp/build-pixel -j2";
+test_all- "ctest --test-dir qps/cpp/build-pixel --output-on-failure";
+test_qps_surface- "qps test path/file-or-folder";
+check_qps_file- "qps path/file.qps --check";
+query_qps- "qps path/file.qps --get path.to.value";
+);
+
+rules: (
+local_context_first- "read this index when entering qps";
+language_reference- "read qps/qps/docs/QPS.qps for canonical language syntax";
+work_status- "read qps/qps/docs/CHECKLIST.md for current implementation status";
+implementation- "QPS implementation lives under qps/cpp";
+do_not_duplicate- "grammar and runtime details belong to their owning files, not this index";
+);
