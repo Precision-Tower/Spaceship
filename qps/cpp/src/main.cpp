@@ -926,6 +926,162 @@ int runBuildCommand(
     }
 }
 
+
+void printDirectoryTree(
+    const fs::path& path,
+    std::size_t current_depth,
+    const std::optional<std::size_t>& max_depth) {
+
+    if (
+        max_depth.has_value() &&
+        current_depth > *max_depth) {
+
+        return;
+    }
+
+    std::vector<fs::directory_entry> entries;
+
+    for (const auto& entry :
+         fs::directory_iterator(path)) {
+
+        entries.push_back(entry);
+    }
+
+    std::sort(
+        entries.begin(),
+        entries.end(),
+        [](const auto& lhs, const auto& rhs) {
+            return lhs.path().filename().string() <
+                   rhs.path().filename().string();
+        });
+
+    for (const auto& entry : entries) {
+        const std::string name =
+            entry.path().filename().string();
+
+        if (entry.is_directory()) {
+            std::cout
+                << name
+                << ":(";
+
+            const bool may_descend =
+                !max_depth.has_value() ||
+                current_depth < *max_depth;
+
+            if (may_descend) {
+                printDirectoryTree(
+                    entry.path(),
+                    current_depth + 1,
+                    max_depth);
+            }
+
+            std::cout << ")";
+        }
+        else {
+            std::cout
+                << name
+                << "-;";
+        }
+    }
+}
+
+int runDirectoryCommand(
+    int argc,
+    char* argv[]) {
+
+    if (argc != 3 && argc != 4) {
+        std::cerr
+            << "Usage: "
+            << argv[0]
+            << " dir <path> [depth]"
+            << std::endl;
+        return 1;
+    }
+
+    try {
+        const fs::path target =
+            fs::absolute(
+                fs::path(argv[2]));
+
+        if (!fs::exists(target)) {
+            throw std::runtime_error(
+                "Directory target does not exist: " +
+                target.string());
+        }
+
+        if (!fs::is_directory(target)) {
+            throw std::runtime_error(
+                "Directory target is not a directory: " +
+                target.string());
+        }
+
+        std::optional<std::size_t> max_depth;
+
+        if (argc == 4) {
+            const std::string depth_text =
+                argv[3];
+
+            std::size_t consumed = 0;
+
+            const unsigned long parsed =
+                std::stoul(
+                    depth_text,
+                    &consumed);
+
+            if (consumed != depth_text.size()) {
+                throw std::runtime_error(
+                    "Directory depth must be a non-negative integer.");
+            }
+
+            max_depth =
+                static_cast<std::size_t>(
+                    parsed);
+        }
+
+        std::string root_name =
+            target.filename().string();
+
+        if (root_name.empty()) {
+            root_name =
+                target.root_name().string();
+
+            if (root_name.empty()) {
+                root_name = "root";
+            }
+        }
+
+        std::cout
+            << root_name
+            << ".\n";
+
+        if (
+            !max_depth.has_value() ||
+            *max_depth > 0) {
+
+            printDirectoryTree(
+                target,
+                1,
+                max_depth);
+
+            std::cout << "\n\n";
+        }
+        else {
+            // The Key already emitted its first newline.
+            // One additional newline owns Key closure.
+            std::cout << "\n";
+        }
+
+        return 0;
+    }
+    catch (const std::exception& e) {
+        std::cerr
+            << "Error: "
+            << e.what()
+            << std::endl;
+        return 1;
+    }
+}
+
 int runQueryCommand(int argc, char* argv[]) {
     if (argc != 3 && argc != 4) {
         std::cerr
@@ -1169,6 +1325,10 @@ int main(int argc, char* argv[]) {
 
     if (argc >= 2 && std::string(argv[1]) == "qry") {
         return runQueryCommand(argc, argv);
+    }
+
+    if (argc >= 2 && std::string(argv[1]) == "dir") {
+        return runDirectoryCommand(argc, argv);
     }
 
     if (argc >= 2 && std::string(argv[1]) == "cipher") {
