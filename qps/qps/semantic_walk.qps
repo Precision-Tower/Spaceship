@@ -1,0 +1,60 @@
+{
+[>current]- current_structure;
+[>index]- structural_start;
+[>walking]- 1;
+
+segment_count: -dictionary_size(
+value- segments;
+);
+
+-while walking == 1 {
+-if index < segment_count {
+segment: -dictionary_at(
+value- segments;
+index- index;
+);
+
+segment_name: -dictionary_at(
+value- segment;
+index- 0;
+);
+
+[>next_index]- index + 1;
+
+-if selects_item_value == 1 {
+-if next_index == segment_count {
+item_structure: -structure_item(
+structure- current;
+name- segment_name;
+);
+
+[>current]- item_structure;
+[>walking]- 0;
+}
+-else {
+next_structure: -structure_child(
+structure- current;
+name- segment_name;
+);
+
+[>current]- next_structure;
+[>index]- next_index;
+}
+}
+-else {
+next_structure: -structure_child(
+structure- current;
+name- segment_name;
+);
+
+[>current]- next_structure;
+[>index]- next_index;
+}
+}
+-else {
+[>walking]- 0;
+}
+}
+
+-return current;
+}

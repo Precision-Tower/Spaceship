@@ -203,6 +203,17 @@ add_test(
 )
 
 
+add_qps_test(
+    qps_semantic_walk_test
+    tests/runtime/semantic_walk_test.cpp
+)
+
+add_test(
+    NAME qps_semantic_walk_test
+    COMMAND qps_semantic_walk_test
+        ${CMAKE_CURRENT_SOURCE_DIR}/../qps/semantic_walk.qps
+)
+
 add_test(
     NAME qps_reference_document_plan_test
     COMMAND qps_reference_document_plan_test
