@@ -1,0 +1,60 @@
+{Cipher_Run:
+[>source]-
+[>root]-
+
+cipher: -process(
+program- "python3";
+arg_0- "-m";
+arg_1- "Engineering.py.cipher.cipher";
+arg_2- source;
+arg_3- "--converge";
+cwd- root;
+);
+
+-assert cipher_exit_code == 0;
+
+-qps_check(
+source- cipher_stdout;
+);
+
+-write(
+stream- "stdout";
+value- cipher_stdout;
+);
+
+-write(
+stream- "stderr";
+value- cipher_stderr;
+);
+}
+
+{Cipher_Report:
+[>source]-
+[>root]-
+
+cipher: -process(
+program- "python3";
+arg_0- "-m";
+arg_1- "Engineering.py.cipher.cipher";
+arg_2- source;
+arg_3- "--converge";
+arg_4- "--report";
+cwd- root;
+);
+
+-assert cipher_exit_code == 0;
+
+-qps_check(
+source- cipher_stdout;
+);
+
+-write(
+stream- "stdout";
+value- cipher_stdout;
+);
+
+-write(
+stream- "stderr";
+value- cipher_stderr;
+);
+}

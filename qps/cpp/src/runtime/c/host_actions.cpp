@@ -1,5 +1,10 @@
 #include "host_actions.hpp"
 
+#include "../../parser/h/_index.hpp"
+#include "../../tokens/h/char_stream.hpp"
+#include "../../tokens/h/lexer.hpp"
+
+
 #include <algorithm>
 #include <array>
 #include <cerrno>
@@ -411,6 +416,41 @@ HostActionResult HostActionDispatcher::execute(
         else {
             throw std::runtime_error(
                 "Write stream must be 'stdout' or 'stderr'.");
+        }
+
+        return HostActionResult{};
+    }
+
+    if (invocation.action_name == "qps_check") {
+        const std::string source =
+            requireParameter(
+                invocation,
+                "source")
+                .asString("qps_check source");
+
+        for (const auto& [name, value] :
+             invocation.parameters) {
+
+            (void)value;
+
+            if (name != "source") {
+                throw std::runtime_error(
+                    "Unknown qps_check parameter '" +
+                    name +
+                    "'.");
+            }
+        }
+
+        qps::tokens::CharStream char_stream(source);
+        qps::tokens::Lexer lexer(char_stream);
+        qps::parser::Parser parser(lexer);
+
+        std::unique_ptr<qps::ast::ProgramNode> program =
+            parser.parseProgram();
+
+        if (!program) {
+            throw std::runtime_error(
+                "QPS validation produced no program.");
         }
 
         return HostActionResult{};

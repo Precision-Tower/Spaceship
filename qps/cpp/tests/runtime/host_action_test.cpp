@@ -190,6 +190,47 @@ void invalidWriteStreamFails() {
         "Invalid write stream unexpectedly succeeded.");
 }
 
+void qpsCheckAcceptsValidSource() {
+    qps::runtime::HostActionInvocation invocation;
+    invocation.action_name = "qps_check";
+
+    invocation.parameters.emplace(
+        "source",
+        qps::runtime::RuntimeValue::string(
+            "Probe.\nvalue- 1;\n"));
+
+    qps::runtime::HostActionDispatcher host;
+
+    const auto result =
+        host.execute(invocation);
+
+    require(
+        result.exit_code == 0,
+        "qps_check should accept valid QPS.");
+}
+
+void qpsCheckRejectsInvalidSource() {
+    qps::runtime::HostActionInvocation invocation;
+    invocation.action_name = "qps_check";
+
+    invocation.parameters.emplace(
+        "source",
+        qps::runtime::RuntimeValue::string(
+            "Probe.\nvalue- @@@;\n"));
+
+    qps::runtime::HostActionDispatcher host;
+
+    try {
+        (void)host.execute(invocation);
+    }
+    catch (const std::exception&) {
+        return;
+    }
+
+    throw std::runtime_error(
+        "qps_check unexpectedly accepted invalid QPS.");
+}
+
 void unknownPrimitiveFails() {
     qps::runtime::HostActionDispatcher host;
 
@@ -234,6 +275,14 @@ int main() {
         invalidWriteStreamFails();
         std::cout
             << "PASS invalid write stream fails\n";
+
+        qpsCheckAcceptsValidSource();
+        std::cout
+            << "PASS qps_check accepts valid source\n";
+
+        qpsCheckRejectsInvalidSource();
+        std::cout
+            << "PASS qps_check rejects invalid source\n";
 
         unknownPrimitiveFails();
         std::cout

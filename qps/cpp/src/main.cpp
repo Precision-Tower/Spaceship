@@ -768,20 +768,6 @@ void queryWalkProgram(
 }
 
 
-std::string shellQuote(const std::string& value) {
-    std::string quoted = "'";
-
-    for (char c : value) {
-        if (c == '\'') {
-            quoted += "'\\''";
-        } else {
-            quoted.push_back(c);
-        }
-    }
-
-    quoted += "'";
-    return quoted;
-}
 
 fs::path findCeOsRoot(fs::path start) {
     start = fs::absolute(start);
@@ -821,6 +807,7 @@ int runCipherCommand(int argc, char* argv[]) {
     if (
         argc == 4 &&
         std::string(argv[3]) != "--report") {
+
         std::cerr
             << "Usage: "
             << argv[0]
@@ -830,76 +817,55 @@ int runCipherCommand(int argc, char* argv[]) {
     }
 
     try {
-        const fs::path invocation_directory =
-            fs::current_path();
+        const fs::path root =
+            findCeOsRoot(fs::current_path());
 
         const fs::path source =
-            fs::absolute(fs::path(argv[2]));
+            fs::absolute(
+                fs::path(argv[2]));
 
-        if (!fs::exists(source)) {
+        const fs::path cipher_source =
+            root / "qps/qps/cipher.qps";
+
+        std::unique_ptr<qps::ast::ProgramNode>
+            program =
+                parseFileQuiet(
+                    cipher_source.string());
+
+        if (!program) {
             throw std::runtime_error(
-                "Cipher source does not exist: " +
-                displayPath(source));
+                "QPS Cipher source produced no program.");
         }
 
-        const fs::path root =
-            findCeOsRoot(invocation_directory);
+        qps::runtime::ExecutionEngine engine;
 
-        std::string command =
-            "cd " +
-            shellQuote(root.string()) +
-            " && PYTHONPATH=" +
-            shellQuote(root.string()) +
-            " python3 -m Engineering.py.cipher.cipher " +
-            shellQuote(source.string()) +
-            " --converge";
+        // Register authored Cipher definitions.
+        (void)engine.execute(*program);
 
-        if (argc == 4) {
-            command += " --report";
-        }
+        std::unordered_map<
+            std::string,
+            qps::runtime::RuntimeValue
+        > inputs;
 
-        FILE* pipe =
-            popen(command.c_str(), "r");
+        inputs.emplace(
+            "source",
+            qps::runtime::RuntimeValue::string(
+                source.string()));
 
-        if (pipe == nullptr) {
-            throw std::runtime_error(
-                "Unable to start Cipher development backend.");
-        }
+        inputs.emplace(
+            "root",
+            qps::runtime::RuntimeValue::string(
+                root.string()));
 
-        std::string output;
-        std::array<char, 4096> buffer{};
+        const std::string definition =
+            argc == 4
+                ? "Cipher_Report"
+                : "Cipher_Run";
 
-        while (
-            std::fgets(
-                buffer.data(),
-                static_cast<int>(buffer.size()),
-                pipe) != nullptr) {
+        (void)engine.instantiate(
+            definition,
+            inputs);
 
-            output += buffer.data();
-        }
-
-        const int status = pclose(pipe);
-
-        if (status != 0) {
-            throw std::runtime_error(
-                "Cipher development backend failed.");
-        }
-
-        // Cipher stdout is a QPS contract. Validate it with the
-        // native parser before exposing it to the caller.
-        qps::tokens::CharStream char_stream(output);
-        qps::tokens::Lexer lexer(char_stream);
-        qps::parser::Parser parser(lexer);
-
-        std::unique_ptr<qps::ast::ProgramNode> ast_root =
-            parser.parseProgram();
-
-        if (!ast_root) {
-            throw std::runtime_error(
-                "Cipher emitted no QPS program.");
-        }
-
-        std::cout << output;
         return 0;
     }
     catch (const std::exception& e) {
