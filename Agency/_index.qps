@@ -1,0 +1,62 @@
+Agency.
+
+purpose: def"
+Canonical semantic doorway into the CE-OS Agency subsystem.
+Agency transforms authorized intent into bounded, reconstructable work.
+";
+
+surface: (
+Agents- "Agency/Agents";
+Core- "Agency/Core";
+Datasets- "Agency/Datasets";
+Documentation- "Agency/Documentation";
+Archive- "Agency/Archive";
+UI- "Agency/UI";
+audit- "Agency/audit";
+docs- "Agency/docs";
+local- "Agency/local";
+);
+
+roles: (
+Agents- "agent identities, policy, memory, configuration, runtime state, and work artifacts";
+Core- "shared agent-independent execution architecture and capabilities";
+Datasets- "reference material and source corpora";
+Documentation- "long-form architecture and design material";
+Archive- "historical material excluded from active architecture and runtime authority";
+UI- "Agency operator interface and Godot runtime";
+audit- "operational checks and generated evidence";
+);
+
+work: (
+hierarchy- "Task -> WorkPacket -> Mission -> Adventure";
+task- "primitive bounded execution";
+work_packet- "supervised sequence of Tasks";
+mission- "higher-level orchestration";
+adventure- "future broader autonomy layer";
+);
+
+operations: (
+validate- "python Agency/unittest.py";
+agent_help- "python run.py agent -h";
+editor_help- "python run.py agent Editor -h";
+task_help- "python run.py task -h";
+work_packet_help- "python run.py work-packet -h";
+mission_help- "python run.py mission -h";
+);
+
+documents: (
+readme- "Agency/README.md";
+architecture- "Agency/architecture.yaml";
+checklist- "Agency/docs/CHECKLIST.md";
+);
+
+rules: (
+local_context_first- "read this index when entering Agency";
+descend_only_as_needed- "inspect only the child surface required by the current task";
+core_independence- "Core must not depend on a concrete Agent implementation";
+agents_consume_core- "Agents consume Core and do not duplicate Core implementation";
+archive_boundary- "Agency/Archive is historical and excluded from active runtime authority";
+execution_direction- "execution flows downward; evidence status unresolveds and next-decision control flow upward";
+preserve_authority- "mutation requires authorization and verification does not equal acceptance";
+do_not_duplicate- "detailed Agency architecture remains owned by its local documents and child surfaces";
+);
