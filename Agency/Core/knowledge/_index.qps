@@ -1,0 +1,26 @@
+Knowledge.
+
+purpose: def"
+Canonical semantic doorway into Agency knowledge management.
+";
+
+surface: (
+memory- "Agency/Core/knowledge/memory";
+reasoning- "Agency/Core/knowledge/reasoning";
+);
+
+roles: (
+memory- "Agency memory and retained knowledge surfaces";
+reasoning- "context, contracts, evidence, and selection used by Agency reasoning";
+);
+
+rules: (
+local_context_first- "read this index when entering Agency/Core/knowledge";
+descend_only_as_needed- "inspect memory or reasoning only when the task requires that surface";
+do_not_duplicate- "memory and reasoning internals remain owned by their local surfaces";
+);
+
+operations: (
+enter_memory- "enter Agency/Core/knowledge/memory and inspect its immediate surface";
+enter_reasoning- "enter Agency/Core/knowledge/reasoning and inspect its immediate surface";
+);

@@ -10,7 +10,7 @@ agents- "Agency/Core/agents";
 capabilities- "Agency/Core/capabilities";
 foundation- "Agency/Core/foundation";
 interfaces- "Agency/Core/interfaces";
-knowledge- "Agency/Core/knowledge";
+knowledge- "Agency/Core/knowledge/_index.qps";
 repository- "Agency/Core/repository";
 runtime- "Agency/Core/runtime";
 state- "Agency/Core/state";
