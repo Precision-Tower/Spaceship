@@ -67,36 +67,10 @@ std::vector<InputSpec> collectInputSpecs(
             continue;
         }
 
-        if (dynamic_cast<const ast::CalculationNode*>(statement.get())) {
-            continue;
-        }
-
-        // Terms are executable workspace statements regardless of the
-        // definition's legacy whole-block domain. Their own preserved
-        // qualification determines runtime behavior.
-        if (dynamic_cast<const ast::TermDeclarationNode*>(
-                statement.get())) {
-
-            continue;
-        }
-
-        // Execution actions and returns are runtime body content.
-        // The execution domain selects their runtime behavior; input
-        // inspection must not reject GENERIC host actions.
-        if (dynamic_cast<const ast::ExecutionActionNode*>(
-                statement.get()) ||
-            dynamic_cast<const ast::AssertStatementNode*>(
-                statement.get()) ||
-            dynamic_cast<const ast::ReturnStatementNode*>(
-                statement.get())) {
-
-            continue;
-        }
-
-        throw std::runtime_error(
-            "Unsupported statement in execution definition '" +
-            definition.identifier_ +
-            "'.");
+        // Non-input execution body statements are runtime content.
+        // Their validity belongs to the parser/interpreter, not input
+        // inspection.
+        continue;
     }
 
     return inputs;

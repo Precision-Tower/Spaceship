@@ -178,6 +178,15 @@ Parser::parseExecutionCall(
 
 std::unique_ptr<ast::AstNode>
 Parser::parseExecutionDefinitionStatement() {
+    // Ordinary executable control flow belongs to the common statement
+    // grammar. Execution definitions retain only their definition-specific
+    // input and domain-qualified parsing below.
+    if (peek_type() == tokens::TokenType::KW_IF ||
+        peek_type() == tokens::TokenType::KW_RETURN) {
+
+        return parseStatement();
+    }
+
     if (peek_type() == tokens::TokenType::KW_ASSERT) {
         return parseAssertStatement();
     }

@@ -1354,6 +1354,76 @@ v1: [v.cylinder];
         "Structural execution without SymbolResolver should fail explicitly.");
 }
 
+
+void qpsPathKindPolicyExecutesAboveNativeFilesystemFact() {
+    const auto instances = executeProgram(R"qps(
+{Path_Kind_Policy:
+[>path]-
+
+kind: -path_kind(
+path- path;
+);
+
+-if kind == "directory" {
+-return "directory";
+}
+-else {
+-return "not-directory";
+}
+}
+
+{>Path_Kind_Policy:
+path- ".";
+}
+
+{>Path_Kind_Policy:
+path- "__qps_missing_path_policy_fixture__";
+}
+)qps");
+
+    require(
+        instances.size() == 2,
+        "Expected two path-policy execution instances.");
+
+    require(
+        instances[0].result.has_value(),
+        "Directory path policy should return a result.");
+
+    require(
+        instances[0].result->isString(),
+        "Directory path policy result should be STRING.");
+
+    require(
+        instances[0].result->asString(
+            "directory path policy result") == "directory",
+        "Existing directory should select QPS directory policy branch.");
+
+    require(
+        instances[1].result.has_value(),
+        "Missing path policy should return a result.");
+
+    require(
+        instances[1].result->isString(),
+        "Missing path policy result should be STRING.");
+
+    require(
+        instances[1].result->asString(
+            "missing path policy result") == "not-directory",
+        "Missing path should select QPS fallback policy branch.");
+
+    const auto& directory_kind =
+        requireBinding(instances[0].scope, "kind");
+
+    require(
+        directory_kind.value.isString(),
+        "Native path_kind fact should bind directly as STRING.");
+
+    require(
+        directory_kind.value.asString(
+            "native path kind fact") == "directory",
+        "Native path_kind fact should report directory.");
+}
+
 struct TestCase {
     const char* name;
     std::function<void()> run;
@@ -1363,6 +1433,7 @@ struct TestCase {
 
 int main() {
     const std::vector<TestCase> tests = {
+        {"QPS path kind policy executes above native filesystem fact", qpsPathKindPolicyExecutesAboveNativeFilesystemFact},
         {"structural semantic references preserve navigation", structuralSemanticReferencesPreserveNavigation},
         {"named reusable execution definition parses", namedReusableExecutionDefinitionParses},
         {"geometry execution domain parses structurally", geometryExecutionDomainParsesStructurally},

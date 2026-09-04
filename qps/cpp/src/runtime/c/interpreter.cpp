@@ -1215,35 +1215,26 @@ RuntimeValue Interpreter::evaluateReturn(
         throw std::runtime_error(
             "Execution '" +
             execution_name +
-            "' return statement requires an identifier.");
+            "' return statement requires a value.");
     }
 
-    auto* identifier =
-        dynamic_cast<
-            const ast::IdentifierNode*>(
-                statement.expression_.get());
+    if (auto* identifier =
+            dynamic_cast<
+                const ast::IdentifierNode*>(
+                    statement.expression_.get())) {
 
-    if (!identifier) {
-        throw std::runtime_error(
-            "Execution '" +
-            execution_name +
-            "' return statement supports identifier returns only.");
+        if (!scope_.contains(identifier->name_)) {
+            throw std::runtime_error(
+                "Undefined return identifier '" +
+                identifier->name_ +
+                "' in execution '" +
+                execution_name +
+                "'.");
+        }
     }
 
-    if (!scope_.contains(
-            identifier->name_)) {
-
-        throw std::runtime_error(
-            "Undefined return identifier '" +
-            identifier->name_ +
-            "' in execution '" +
-            execution_name +
-            "'.");
-    }
-
-    return scope_
-        .get(identifier->name_)
-        .value;
+    return evaluateValue(
+        *statement.expression_);
 }
 
 double Interpreter::invokeFunction(
