@@ -36,6 +36,7 @@ class RuntimeValue {
 public:
     enum class Kind {
         NUMERIC,
+        STRING,
         GEOMETRY,
         STRUCTURE
     };
@@ -43,16 +44,21 @@ public:
     RuntimeValue();
 
     static RuntimeValue numeric(double value);
+    static RuntimeValue string(std::string value);
     static RuntimeValue geometry(GeometryHandle handle);
     static RuntimeValue structure(ResolvedSymbol structure);
 
     Kind kind() const;
 
     bool isNumeric() const;
+    bool isString() const;
     bool isGeometry() const;
     bool isStructure() const;
 
     double asNumber(
+        const std::string& context = "") const;
+
+    const std::string& asString(
         const std::string& context = "") const;
 
     const GeometryHandle& asGeometry(
@@ -71,11 +77,13 @@ private:
     explicit RuntimeValue(
         std::variant<
             double,
+            std::string,
             GeometryHandle,
             ResolvedSymbol> value);
 
     std::variant<
         double,
+        std::string,
         GeometryHandle,
         ResolvedSymbol> value_;
 };

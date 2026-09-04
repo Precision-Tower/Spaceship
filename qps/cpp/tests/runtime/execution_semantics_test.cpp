@@ -366,6 +366,56 @@ void semanticAndLocalRebindingShareOverwriteBehaviorButKeepDifferentMetadata() {
     assertNoBindingWithValue(scope, 5.0, "prior semantic and local values");
 }
 
+void stringItemsBecomeRuntimeValues() {
+    const auto scope = executeSource(R"qps({
+[>program]- "cmake";
+[>cwd]- "qps/cpp";
+})qps");
+
+    const auto& program =
+        requireBinding(scope, "program");
+
+    require(
+        program.value.kind() ==
+            qps::runtime::RuntimeValue::Kind::STRING,
+        "program should have STRING runtime kind.");
+
+    require(
+        program.value.asString("program") == "cmake",
+        "program should preserve authored string value.");
+
+    assertOrigin(
+        program,
+        qps::runtime::BindingOrigin::SUPPLIED,
+        "program");
+
+    assertSemanticSymbol(
+        program,
+        std::optional<std::string>("program"),
+        "program");
+
+    const auto& cwd =
+        requireBinding(scope, "cwd");
+
+    require(
+        cwd.value.isString(),
+        "cwd should be a string runtime value.");
+
+    require(
+        cwd.value.asString("cwd") == "qps/cpp",
+        "cwd should preserve authored string value.");
+
+    assertOrigin(
+        cwd,
+        qps::runtime::BindingOrigin::SUPPLIED,
+        "cwd");
+
+    assertSemanticSymbol(
+        cwd,
+        std::optional<std::string>("cwd"),
+        "cwd");
+}
+
 struct TestCase {
     const char* name;
     std::function<void()> run;
@@ -376,6 +426,7 @@ struct TestCase {
 int main() {
     const std::vector<TestCase> tests = {
         {"semantic supplied and derived bindings", semanticSuppliedAndDerivedBindings},
+        {"string Items become runtime values", stringItemsBecomeRuntimeValues},
         {"local derived bindings and chained calculations", localDerivedBindingsAndChainsUseEarlierBindings},
         {"arithmetic operators", arithmeticOperatorsEvaluate},
         {"parenthesized arithmetic", parenthesizedArithmeticEvaluates},

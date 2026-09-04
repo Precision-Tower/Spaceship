@@ -130,6 +130,10 @@ public:
     double evaluate(
         const ast::AstNode& node) const;
 
+    // Runtime Item values may be non-numeric.
+    RuntimeValue evaluateValue(
+        const ast::AstNode& node) const;
+
 private:
     Interpreter(
         ExecutionScope& scope,

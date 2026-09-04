@@ -512,12 +512,12 @@ void Interpreter::executeItem(
             "Item binding has no value.");
     }
 
-    const double value =
-        evaluate(*item.value_node_);
+    RuntimeValue value =
+        evaluateValue(*item.value_node_);
 
     bindTarget(
         *item.getTarget(),
-        value,
+        std::move(value),
         false);
 }
 
@@ -834,6 +834,22 @@ Interpreter::executeGeometryAction(
     }
 
     return result;
+}
+
+RuntimeValue Interpreter::evaluateValue(
+    const ast::AstNode& node) const {
+
+    if (auto* string =
+            dynamic_cast<
+                const ast::StringLiteralNode*>(
+                    &node)) {
+
+        return RuntimeValue::string(
+            string->value_);
+    }
+
+    return RuntimeValue::numeric(
+        evaluate(node));
 }
 
 double Interpreter::evaluate(

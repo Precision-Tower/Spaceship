@@ -12,6 +12,7 @@ RuntimeValue::RuntimeValue()
 RuntimeValue::RuntimeValue(
     std::variant<
         double,
+        std::string,
         GeometryHandle,
         ResolvedSymbol> value)
     : value_(std::move(value)) {}
@@ -20,6 +21,12 @@ RuntimeValue RuntimeValue::numeric(
     double value) {
 
     return RuntimeValue(value);
+}
+
+RuntimeValue RuntimeValue::string(
+    std::string value) {
+
+    return RuntimeValue(std::move(value));
 }
 
 RuntimeValue RuntimeValue::geometry(
@@ -39,6 +46,10 @@ RuntimeValue::Kind RuntimeValue::kind() const {
         return Kind::NUMERIC;
     }
 
+    if (isString()) {
+        return Kind::STRING;
+    }
+
     if (isGeometry()) {
         return Kind::GEOMETRY;
     }
@@ -48,6 +59,10 @@ RuntimeValue::Kind RuntimeValue::kind() const {
 
 bool RuntimeValue::isNumeric() const {
     return std::holds_alternative<double>(value_);
+}
+
+bool RuntimeValue::isString() const {
+    return std::holds_alternative<std::string>(value_);
 }
 
 bool RuntimeValue::isGeometry() const {
@@ -75,10 +90,28 @@ double RuntimeValue::asNumber(
     throw std::runtime_error(
         prefix +
         " expected numeric value but found " +
-        std::string(
-            isGeometry()
-                ? "geometry"
-                : "structure") +
+        std::string(runtimeValueKindName(kind())) +
+        ".");
+}
+
+const std::string& RuntimeValue::asString(
+    const std::string& context) const {
+
+    if (const auto* text =
+            std::get_if<std::string>(&value_)) {
+
+        return *text;
+    }
+
+    const std::string prefix =
+        context.empty()
+            ? "Runtime value"
+            : context;
+
+    throw std::runtime_error(
+        prefix +
+        " expected string value but found " +
+        std::string(runtimeValueKindName(kind())) +
         ".");
 }
 
@@ -99,10 +132,7 @@ const GeometryHandle& RuntimeValue::asGeometry(
     throw std::runtime_error(
         prefix +
         " expected geometry value but found " +
-        std::string(
-            isNumeric()
-                ? "numeric"
-                : "structure") +
+        std::string(runtimeValueKindName(kind())) +
         ".");
 }
 
@@ -123,10 +153,7 @@ const ResolvedSymbol& RuntimeValue::asStructure(
     throw std::runtime_error(
         prefix +
         " expected structure value but found " +
-        std::string(
-            isNumeric()
-                ? "numeric"
-                : "geometry") +
+        std::string(runtimeValueKindName(kind())) +
         ".");
 }
 
@@ -218,6 +245,9 @@ const char* runtimeValueKindName(
     switch (kind) {
         case RuntimeValue::Kind::NUMERIC:
             return "numeric";
+
+        case RuntimeValue::Kind::STRING:
+            return "string";
 
         case RuntimeValue::Kind::GEOMETRY:
             return "geometry";
