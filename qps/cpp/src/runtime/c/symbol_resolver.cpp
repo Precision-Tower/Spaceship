@@ -32,6 +32,13 @@ SymbolResolver::SymbolResolver(
 
 namespace {
 
+StructuralHandle walkSemanticStructureAuthored(
+    std::shared_ptr<ast::ProgramNode> document_owner,
+    ast::AstNode* current,
+    const ast::SymbolReferenceNode& reference,
+    std::size_t structural_start,
+    const fs::path& walker_file);
+
 StructuralHandle walkSemanticStructure(
     std::shared_ptr<ast::ProgramNode> document_owner,
     ast::AstNode* current,
@@ -198,11 +205,13 @@ StructuralHandle SymbolResolver::resolveFrom(
 
     // Segment zero is the local runtime binding name.
     // Navigation begins directly at the bound AST node.
-    return walkSemanticStructure(
+    return walkSemanticStructureAuthored(
         root.document_owner,
         root.target_node,
         reference,
-        1);
+        1,
+        reference_planner_.parent_path() /
+            "semantic_walk.qps");
 
 }
 
@@ -299,6 +308,166 @@ const RuntimeValue& referencePlanEntry(
         "Authored reference planner result missing Dictionary entry " +
         std::to_string(id) +
         ".");
+}
+
+
+StructuralHandle walkSemanticStructureAuthored(
+    std::shared_ptr<ast::ProgramNode> document_owner,
+    ast::AstNode* current,
+    const ast::SymbolReferenceNode& reference,
+    std::size_t structural_start,
+    const fs::path& walker_file) {
+
+    if (!document_owner || current == nullptr) {
+        throw std::runtime_error(
+            "Structural semantic walk requires an owned AST root.");
+    }
+
+    std::ifstream input(walker_file);
+
+    if (!input) {
+        throw std::runtime_error(
+            "Could not open authored semantic walker: " +
+            walker_file.string());
+    }
+
+    const std::string source{
+        std::istreambuf_iterator<char>(input),
+        std::istreambuf_iterator<char>()};
+
+    tokens::CharStream char_stream(source);
+    tokens::Lexer lexer(char_stream);
+    parser::Parser parser(lexer);
+
+    auto program =
+        parser.parseProgram();
+
+    if (program->statements.size() != 1) {
+        throw std::runtime_error(
+            "Authored semantic walker must contain exactly one "
+            "top-level statement.");
+    }
+
+    const auto* walker =
+        dynamic_cast<const ast::ExecutionBlockNode*>(
+            program->statements.front().get());
+
+    if (!walker) {
+        throw std::runtime_error(
+            "Authored semantic walker top-level statement "
+            "must be an execution block.");
+    }
+
+    StructuralHandle start_handle;
+    start_handle.document_owner = document_owner;
+    start_handle.target_node = current;
+
+    ExecutionScope scope;
+
+    scope.bind(
+        "current_structure",
+        RuntimeValue::structure(
+            std::move(start_handle)),
+        std::nullopt,
+        BindingOrigin::SUPPLIED);
+
+    scope.bind(
+        "segments",
+        referenceSegmentsValue(reference),
+        std::nullopt,
+        BindingOrigin::SUPPLIED);
+
+    scope.bind(
+        "structural_start",
+        RuntimeValue::numeric(
+            static_cast<double>(
+                structural_start)),
+        std::nullopt,
+        BindingOrigin::SUPPLIED);
+
+    scope.bind(
+        "selects_item_value",
+        RuntimeValue::numeric(
+            reference.selectsItemValue()
+                ? 1.0
+                : 0.0),
+        std::nullopt,
+        BindingOrigin::SUPPLIED);
+
+    InterpreterOptions options;
+    options.allow_return = true;
+    options.symbol_resolver = nullptr;
+
+    Interpreter interpreter(
+        scope,
+        FunctionTable{},
+        options);
+
+    const auto value =
+        interpreter.executeForResult(*walker);
+
+    if (!value.has_value() ||
+        !value->isStructure()) {
+
+        throw std::runtime_error(
+            "Authored semantic walker must return STRUCTURE.");
+    }
+
+    StructuralHandle result =
+        value->asStructure(
+            "authored semantic walk");
+
+    if (!result.document_owner ||
+        result.target_node == nullptr) {
+
+        throw std::runtime_error(
+            "Authored semantic walker returned incomplete structure.");
+    }
+
+    // Classification remains native compatibility metadata.
+    // Traversal policy is owned by semantic_walk.qps.
+    if (auto* resolved_key =
+            dynamic_cast<ast::KeyDeclarationNode*>(
+                result.target_node)) {
+
+        result.target_type =
+            "KEY_DECLARATION";
+        result.target_identifier =
+            resolved_key->identifier_;
+    }
+    else if (auto* resolved_term =
+                 dynamic_cast<ast::TermDeclarationNode*>(
+                     result.target_node)) {
+
+        result.target_type =
+            "TERM_DECLARATION";
+        result.target_identifier =
+            resolved_term->identifier_;
+    }
+    else if (auto* resolved_item =
+                 dynamic_cast<ast::ItemDeclarationNode*>(
+                     result.target_node)) {
+
+        auto* identifier =
+            dynamic_cast<ast::IdentifierNode*>(
+                resolved_item->getTarget());
+
+        if (!identifier) {
+            throw std::runtime_error(
+                "Resolved semantic Item does not have an identifier target.");
+        }
+
+        result.target_type =
+            "ITEM_VALUE";
+        result.target_identifier =
+            identifier->name_;
+    }
+    else {
+        throw std::runtime_error(
+            "Structural QPS reference resolved to unsupported AST node.");
+    }
+
+    return result;
 }
 
 } // namespace
@@ -539,11 +708,13 @@ StructuralHandle SymbolResolver::resolve(
     //
     //   [>shape.shape.dimensions.cylinder]
     //   [>shape.shape.dimensions.cylinder.radius-]
-    return walkSemanticStructure(
+    return walkSemanticStructureAuthored(
         document_ast,
         current,
         reference,
-        semantic_start + 1);
+        semantic_start + 1,
+        reference_planner_.parent_path() /
+            "semantic_walk.qps");
 }
 
 
