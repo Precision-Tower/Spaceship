@@ -204,6 +204,7 @@ add_test(
 add_test(
     NAME qps_reference_document_plan_test
     COMMAND qps_reference_document_plan_test
+        "${CMAKE_CURRENT_SOURCE_DIR}/../qps/reference_document.qps"
 )
 
 add_test(

@@ -1,0 +1,115 @@
+{
+[>document_relative]- current_document;
+[>semantic_start]- 0;
+
+-if origin == "CURRENT_FOLDER_FILE" {
+current_module: -path_parent(
+path- current_document;
+);
+
+segment: -dictionary_at(
+value- segments;
+index- 0;
+);
+
+segment_name: -dictionary_at(
+value- segment;
+index- 0;
+);
+
+[>document_relative]- current_module + "/" + segment_name + ".qps";
+[>semantic_start]- 1;
+}
+
+
+-if origin == "RELATIVE_MODULE" {
+base_module: -path_parent(
+path- current_document;
+);
+
+[>parent_index]- 0;
+
+-while parent_index < parent_depth {
+-if base_module == "" {
+-raise "Structural QPS reference escapes the workspace root";
+}
+
+parent_module: -path_parent(
+path- base_module;
+);
+
+[>base_module]- parent_module;
+[>parent_index]- parent_index + 1;
+}
+
+[>segment_index]- 0;
+[>document_index]- 0;
+[>scanning]- 1;
+
+segment_count: -dictionary_size(
+value- segments;
+);
+
+-while scanning == 1 {
+segment: -dictionary_at(
+value- segments;
+index- segment_index;
+);
+
+segment_name: -dictionary_at(
+value- segment;
+index- 0;
+);
+
+[>next_index]- segment_index + 1;
+
+-if next_index < segment_count {
+next_segment: -dictionary_at(
+value- segments;
+index- next_index;
+);
+
+next_separator: -dictionary_at(
+value- next_segment;
+index- 1;
+);
+
+-if next_separator == "SLASH" {
+-if base_module == "" {
+[>base_module]- segment_name;
+}
+-else {
+[>base_module]- base_module + "/" + segment_name;
+}
+[>segment_index]- next_index;
+}
+-else {
+[>document_index]- segment_index;
+[>scanning]- 0;
+}
+}
+-else {
+[>document_index]- segment_index;
+[>scanning]- 0;
+}
+}
+
+document_segment: -dictionary_at(
+value- segments;
+index- document_index;
+);
+
+document_name: -dictionary_at(
+value- document_segment;
+index- 0;
+);
+
+[>document_relative]- base_module + "/" + document_name + ".qps";
+[>semantic_start]- document_index + 1;
+}
+
+-return [
+1: document_relative,
+2: semantic_start
+];;
+}
