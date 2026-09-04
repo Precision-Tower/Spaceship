@@ -253,10 +253,11 @@ Parser::parseExecutionDefinitionStatement() {
         return parseCalculation();
     }
 
-    // Execution actions are domain-neutral syntax.
-    // Runtime dispatch decides whether a given action is valid
-    // for GENERIC, GEOMETRY, or another execution domain.
-    if (peek_type() == tokens::TokenType::EXECUTION_ACTION) {
+    // Execution actions and explicit runtime raises are
+    // domain-neutral execution statements.
+    if (peek_type() == tokens::TokenType::EXECUTION_ACTION ||
+        peek_type() == tokens::TokenType::KW_RAISE) {
+
         return parseStatement();
     }
 

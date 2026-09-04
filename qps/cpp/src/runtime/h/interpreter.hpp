@@ -26,6 +26,7 @@ class CalculationNode;
 class ProgramNode;
 class AssertStatementNode;
 class FailStatementNode;
+class RaiseStatementNode;
 class RaisesStatementNode;
 class ReturnStatementNode;
 class TermDeclarationNode;
@@ -173,6 +174,9 @@ private:
 
     void executeFail(
         const ast::FailStatementNode& statement) const;
+
+    void executeRaise(
+        const ast::RaiseStatementNode& statement) const;
 
     void executeRaises(
         const ast::RaisesStatementNode& statement);

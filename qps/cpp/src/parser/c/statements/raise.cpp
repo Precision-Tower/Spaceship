@@ -19,7 +19,7 @@ std::unique_ptr<ast::RaiseStatementNode> Parser::parseRaiseStatement() {
     // The message or error object to be raised can be any expression.
     std::unique_ptr<ast::AstNode> raise_message = parseAdditiveExpression(); // Parse the expression
 
-    match(tokens::TokenType::EXEC_DELIMITER); // Consume '_' that terminates the statement
+    match(tokens::TokenType::SEMICOLON);
 
     return ast::createRaiseStatementNode(std::move(raise_message), line, column);
 }

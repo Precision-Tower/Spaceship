@@ -339,6 +339,15 @@ void Interpreter::executeStatement(
         return;
     }
 
+    if (auto* raise_statement =
+            dynamic_cast<
+                const ast::RaiseStatementNode*>(
+                    &statement)) {
+
+        executeRaise(*raise_statement);
+        return;
+    }
+
     if (auto* raises_statement =
             dynamic_cast<
                 const ast::RaisesStatementNode*>(
@@ -553,6 +562,22 @@ void Interpreter::executeFail(
     }
 
     throw AssertionFailure(
+        message,
+        statement.getLine(),
+        statement.getColumn());
+}
+
+void Interpreter::executeRaise(
+    const ast::RaiseStatementNode& statement) const {
+
+    std::string message =
+        evaluateMessage(statement.message_.get());
+
+    if (message.empty()) {
+        message = "explicit runtime error";
+    }
+
+    throw RuntimeDiagnostic(
         message,
         statement.getLine(),
         statement.getColumn());
