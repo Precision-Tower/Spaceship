@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <string>
+#include <type_traits>
 #include <vector>
 #include <memory>
 #include <stdexcept>
@@ -489,6 +490,105 @@ void queryWalkNode(
     const QuerySelector& selector,
     const fs::path& file,
     std::vector<std::string>& ancestors,
+    std::vector<std::string>& results);
+
+template <typename T, typename = void>
+struct HasCausalSides : std::false_type {};
+
+template <typename T>
+struct HasCausalSides<
+    T,
+    std::void_t<
+        decltype(std::declval<const T&>().sides_)
+    >
+> : std::true_type {};
+
+template <typename T>
+void queryWalkCausalRelationship(
+    const T& relationship,
+    const QuerySelector& selector,
+    const fs::path& file,
+    std::vector<std::string>& ancestors,
+    std::vector<std::string>& results) {
+
+    if constexpr (HasCausalSides<T>::value) {
+        for (const auto& side : relationship.sides_) {
+            if (!side) {
+                continue;
+            }
+
+            if (side->entity) {
+                queryWalkNode(
+                    *side->entity,
+                    selector,
+                    file,
+                    ancestors,
+                    results);
+            }
+
+            for (const auto& domain : side->domain_chain) {
+                if (domain) {
+                    queryWalkNode(
+                        *domain,
+                        selector,
+                        file,
+                        ancestors,
+                        results);
+                }
+            }
+        }
+
+        return;
+    }
+    else {
+        const auto walk_legacy_side =
+            [&](const auto* side) {
+
+                if (!side) {
+                    return;
+                }
+
+                if (side->entity) {
+                    queryWalkNode(
+                        *side->entity,
+                        selector,
+                        file,
+                        ancestors,
+                        results);
+                }
+
+                if (side->input) {
+                    queryWalkNode(
+                        *side->input,
+                        selector,
+                        file,
+                        ancestors,
+                        results);
+                }
+
+                if (side->output) {
+                    queryWalkNode(
+                        *side->output,
+                        selector,
+                        file,
+                        ancestors,
+                        results);
+                }
+            };
+
+        walk_legacy_side(
+            relationship.left_side_.get());
+
+        walk_legacy_side(
+            relationship.right_side_.get());
+    }
+}
+
+void queryWalkNode(
+    const qps::ast::AstNode& node,
+    const QuerySelector& selector,
+    const fs::path& file,
+    std::vector<std::string>& ancestors,
     std::vector<std::string>& results) {
 
     std::string identifier;
@@ -637,31 +737,14 @@ void queryWalkNode(
 
     if (const auto* relationship =
             dynamic_cast<const qps::ast::CausalRelationshipNode*>(&node)) {
-        for (const auto& side : relationship->sides_) {
-            if (!side) {
-                continue;
-            }
 
-            if (side->entity) {
-                queryWalkNode(
-                    *side->entity,
-                    selector,
-                    file,
-                    ancestors,
-                    results);
-            }
+        queryWalkCausalRelationship(
+            *relationship,
+            selector,
+            file,
+            ancestors,
+            results);
 
-            for (const auto& domain : side->domain_chain) {
-                if (domain) {
-                    queryWalkNode(
-                        *domain,
-                        selector,
-                        file,
-                        ancestors,
-                        results);
-                }
-            }
-        }
         return;
     }
 }
