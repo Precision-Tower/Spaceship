@@ -116,6 +116,15 @@ void findStructuralItem(
 
 } // namespace
 
+AstNode* selectDocumentStructure(
+    ProgramNode& document,
+    const std::string& name) {
+
+    return findStructuralChild(
+        document.statements,
+        name);
+}
+
 AstNode* selectStructuralChild(
     AstNode& parent,
     const std::string& name) {

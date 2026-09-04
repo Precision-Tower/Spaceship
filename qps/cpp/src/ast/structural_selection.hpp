@@ -6,6 +6,10 @@
 
 namespace qps::ast {
 
+AstNode* selectDocumentStructure(
+    ProgramNode& document,
+    const std::string& name);
+
 AstNode* selectStructuralChild(
     AstNode& parent,
     const std::string& name);

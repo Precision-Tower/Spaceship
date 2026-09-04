@@ -32,6 +32,34 @@ int main() {
     try {
         using namespace qps::ast;
 
+        ProgramNode document(1, 1);
+
+        auto surface_container =
+            std::make_unique<ContainerNode>(
+                1,
+                1);
+
+        surface_container->elements.push_back(
+            std::make_unique<KeyDeclarationNode>(
+                "surface",
+                1,
+                1));
+
+        document.statements.push_back(
+            std::move(surface_container));
+
+        require(
+            selectDocumentStructure(
+                document,
+                "surface") != nullptr,
+            "document surface selection failed");
+
+        require(
+            selectDocumentStructure(
+                document,
+                "missing") == nullptr,
+            "missing document structure must return nullptr");
+
         KeyDeclarationNode root("root", 1, 1);
 
         auto direct =

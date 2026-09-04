@@ -542,73 +542,24 @@ StructuralHandle SymbolResolver::resolve(
 
     ast::AstNode* current = nullptr;
 
-    const auto find_named_structure =
-        [&](const auto& self,
-            const std::vector<std::unique_ptr<ast::AstNode>>& nodes,
-            const std::string& name)
-            -> ast::AstNode* {
-
-            ast::AstNode* match = nullptr;
-
-            for (const auto& child : nodes) {
-                ast::AstNode* candidate = nullptr;
-
-                if (auto* key =
-                        dynamic_cast<ast::KeyDeclarationNode*>(
-                            child.get())) {
-
-                    if (key->identifier_ == name) {
-                        candidate = key;
-                    }
-                }
-                else if (auto* term =
-                             dynamic_cast<ast::TermDeclarationNode*>(
-                                 child.get())) {
-
-                    if (term->identifier_ == name) {
-                        candidate = term;
-                    }
-                }
-                else if (auto* container =
-                             dynamic_cast<ast::ContainerNode*>(
-                                 child.get())) {
-
-                    candidate =
-                        self(
-                            self,
-                            container->elements,
-                            name);
-                }
-
-                if (!candidate) {
-                    continue;
-                }
-
-                if (match != nullptr) {
-                    throw std::runtime_error(
-                        "Duplicate semantic structure '" +
-                        name +
-                        "' while resolving '" +
-                        reference.getSymbol() +
-                        "'.");
-                }
-
-                match = candidate;
-            }
-
-            return match;
-        };
-
     // First semantic segment is resolved from the document surface.
     {
         const std::string& name =
             segments[semantic_start].name;
 
-        current =
-            find_named_structure(
-                find_named_structure,
-                document_ast->statements,
-                name);
+        try {
+            current =
+                ast::selectDocumentStructure(
+                    *document_ast,
+                    name);
+        }
+        catch (const std::runtime_error& error) {
+            throw std::runtime_error(
+                std::string(error.what()) +
+                " while resolving '" +
+                reference.getSymbol() +
+                "'.");
+        }
 
         if (!current) {
             throw std::runtime_error(
