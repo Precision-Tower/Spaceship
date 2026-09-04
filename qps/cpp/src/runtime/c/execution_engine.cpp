@@ -85,6 +85,8 @@ std::vector<InputSpec> collectInputSpecs(
         // inspection must not reject GENERIC host actions.
         if (dynamic_cast<const ast::ExecutionActionNode*>(
                 statement.get()) ||
+            dynamic_cast<const ast::AssertStatementNode*>(
+                statement.get()) ||
             dynamic_cast<const ast::ReturnStatementNode*>(
                 statement.get())) {
 

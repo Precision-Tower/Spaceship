@@ -1,0 +1,40 @@
+{QPS_Build:
+configure: -process(
+program- "cmake";
+arg_0- "-S";
+arg_1- "qps/cpp";
+arg_2- "-B";
+arg_3- "qps/cpp/build-pixel";
+);
+
+-assert configure_exit_code == 0;
+
+compile: -process(
+program- "cmake";
+arg_0- "--build";
+arg_1- "qps/cpp/build-pixel";
+arg_2- "-j2";
+);
+
+-assert compile_exit_code == 0;
+
+ctest: -process(
+program- "ctest";
+arg_0- "--test-dir";
+arg_1- "qps/cpp/build-pixel";
+arg_2- "--output-on-failure";
+);
+
+-assert ctest_exit_code == 0;
+
+engineering: -process(
+program- "qps/cpp/build-pixel/qps";
+arg_0- "test";
+arg_1- "Engineering/qps";
+);
+
+-assert engineering_exit_code == 0;
+}
+
+{>QPS_Build:
+}

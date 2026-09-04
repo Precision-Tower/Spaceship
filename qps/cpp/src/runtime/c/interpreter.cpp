@@ -352,6 +352,41 @@ void Interpreter::executeStatement(
             return;
         }
 
+        if (term->content_.size() == 1) {
+            if (auto* action =
+                    dynamic_cast<
+                        const ast::ExecutionActionNode*>(
+                            term->content_.front().get())) {
+
+                const ProcessResult result =
+                    executeHostAction(*action);
+
+                scope_.bind(
+                    term->identifier_ + "_exit_code",
+                    RuntimeValue::numeric(
+                        static_cast<double>(
+                            result.exit_code)),
+                    std::nullopt,
+                    BindingOrigin::LOCAL);
+
+                scope_.bind(
+                    term->identifier_ + "_stdout",
+                    RuntimeValue::string(
+                        result.stdout_text),
+                    std::nullopt,
+                    BindingOrigin::LOCAL);
+
+                scope_.bind(
+                    term->identifier_ + "_stderr",
+                    RuntimeValue::string(
+                        result.stderr_text),
+                    std::nullopt,
+                    BindingOrigin::LOCAL);
+
+                return;
+            }
+        }
+
         throw std::runtime_error(
             "Unqualified execution Term '" +
             term->identifier_ +
@@ -376,60 +411,7 @@ void Interpreter::executeStatement(
         if (options_.domain ==
             ast::ExecutionDomain::GENERIC) {
 
-            HostActionInvocation invocation;
-            invocation.action_name =
-                action->action_name_;
-
-            if (action->getParameters()) {
-                for (const auto& element :
-                     action->getParameters()->elements) {
-
-                    auto* item =
-                        dynamic_cast<
-                            const ast::ItemDeclarationNode*>(
-                                element.get());
-
-                    if (!item) {
-                        throw std::runtime_error(
-                            "Host action parameter must use Item syntax.");
-                    }
-
-                    auto* target =
-                        dynamic_cast<
-                            const ast::IdentifierNode*>(
-                                item->getTarget());
-
-                    if (!target) {
-                        throw std::runtime_error(
-                            "Host action parameter target must be a local Item identifier.");
-                    }
-
-                    if (!item->value_node_) {
-                        throw std::runtime_error(
-                            "Host action parameter '" +
-                            target->name_ +
-                            "' has no value.");
-                    }
-
-                    if (invocation.parameters.find(
-                            target->name_) !=
-                        invocation.parameters.end()) {
-
-                        throw std::runtime_error(
-                            "Duplicate host action parameter '" +
-                            target->name_ +
-                            "'.");
-                    }
-
-                    invocation.parameters.emplace(
-                        target->name_,
-                        evaluateValue(
-                            *item->value_node_));
-                }
-            }
-
-            HostActionDispatcher host;
-            host.execute(invocation);
+            (void)executeHostAction(*action);
             return;
         }
 
@@ -729,6 +711,65 @@ void Interpreter::executeGeometryFeature(
         std::move(result),
         std::nullopt,
         BindingOrigin::LOCAL);
+}
+
+ProcessResult Interpreter::executeHostAction(
+    const ast::ExecutionActionNode& action) {
+
+    HostActionInvocation invocation;
+    invocation.action_name =
+        action.action_name_;
+
+    if (action.getParameters()) {
+        for (const auto& element :
+             action.getParameters()->elements) {
+
+            auto* item =
+                dynamic_cast<
+                    const ast::ItemDeclarationNode*>(
+                        element.get());
+
+            if (!item) {
+                throw std::runtime_error(
+                    "Host action parameter must use Item syntax.");
+            }
+
+            auto* target =
+                dynamic_cast<
+                    const ast::IdentifierNode*>(
+                        item->getTarget());
+
+            if (!target) {
+                throw std::runtime_error(
+                    "Host action parameter target must be a local Item identifier.");
+            }
+
+            if (!item->value_node_) {
+                throw std::runtime_error(
+                    "Host action parameter '" +
+                    target->name_ +
+                    "' has no value.");
+            }
+
+            if (invocation.parameters.find(
+                    target->name_) !=
+                invocation.parameters.end()) {
+
+                throw std::runtime_error(
+                    "Duplicate host action parameter '" +
+                    target->name_ +
+                    "'.");
+            }
+
+            invocation.parameters.emplace(
+                target->name_,
+                evaluateValue(
+                    *item->value_node_));
+        }
+    }
+
+    HostActionDispatcher host;
+    return host.execute(invocation);
 }
 
 RuntimeValue

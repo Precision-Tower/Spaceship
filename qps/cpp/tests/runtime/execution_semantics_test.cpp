@@ -416,6 +416,60 @@ void stringItemsBecomeRuntimeValues() {
         "cwd");
 }
 
+void namedHostActionBindsProcessResult() {
+    const auto scope = executeSource(R"qps({
+[>fixture]- 0/n;
+
+probe: -process(
+program- "python3";
+arg_0- "-c";
+arg_1- "import sys;sys.stdout.write('OUT');sys.stderr.write('ERR');sys.exit(7)";
+);
+})qps");
+
+    const auto& exit_code =
+        requireBinding(
+            scope,
+            "probe_exit_code");
+
+    require(
+        exit_code.value.isNumeric(),
+        "process exit code should be numeric");
+
+    require(
+        exit_code.value.asNumber(
+            "probe_exit_code") == 7.0,
+        "process exit code mismatch");
+
+    const auto& stdout_value =
+        requireBinding(
+            scope,
+            "probe_stdout");
+
+    require(
+        stdout_value.value.isString(),
+        "process stdout should be string");
+
+    require(
+        stdout_value.value.asString(
+            "probe_stdout") == "OUT",
+        "process stdout mismatch");
+
+    const auto& stderr_value =
+        requireBinding(
+            scope,
+            "probe_stderr");
+
+    require(
+        stderr_value.value.isString(),
+        "process stderr should be string");
+
+    require(
+        stderr_value.value.asString(
+            "probe_stderr") == "ERR",
+        "process stderr mismatch");
+}
+
 struct TestCase {
     const char* name;
     std::function<void()> run;
@@ -427,6 +481,7 @@ int main() {
     const std::vector<TestCase> tests = {
         {"semantic supplied and derived bindings", semanticSuppliedAndDerivedBindings},
         {"string Items become runtime values", stringItemsBecomeRuntimeValues},
+        {"named host action binds process result", namedHostActionBindsProcessResult},
         {"local derived bindings and chained calculations", localDerivedBindingsAndChainsUseEarlierBindings},
         {"arithmetic operators", arithmeticOperatorsEvaluate},
         {"parenthesized arithmetic", parenthesizedArithmeticEvaluates},

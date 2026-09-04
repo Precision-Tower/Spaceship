@@ -178,6 +178,10 @@ Parser::parseExecutionCall(
 
 std::unique_ptr<ast::AstNode>
 Parser::parseExecutionDefinitionStatement() {
+    if (peek_type() == tokens::TokenType::KW_ASSERT) {
+        return parseAssertStatement();
+    }
+
     if (peek_type() == tokens::TokenType::OPEN_BRACKET &&
         peek_next_type() == tokens::TokenType::REFERENCE_OPERATOR) {
 
