@@ -27,6 +27,15 @@ struct StructuralReferenceContext {
     std::filesystem::path current_document;
 };
 
+struct ReferenceDocumentPlan {
+    std::filesystem::path document_relative;
+    std::size_t semantic_start = 0;
+};
+
+ReferenceDocumentPlan planReferenceDocument(
+    const ast::SymbolReferenceNode& reference,
+    const StructuralReferenceContext& context);
+
 class StructuralResolver {
 public:
     virtual ~StructuralResolver() = default;

@@ -172,9 +172,9 @@ StructuralHandle SymbolResolver::resolveFrom(
 }
 
 
-StructuralHandle SymbolResolver::resolve(
+ReferenceDocumentPlan planReferenceDocument(
     const ast::SymbolReferenceNode& reference,
-    const StructuralReferenceContext& context) const {
+    const StructuralReferenceContext& context) {
 
     if (context.current_document.empty()) {
         throw std::runtime_error(
@@ -200,80 +200,88 @@ StructuralHandle SymbolResolver::resolve(
     const auto& segments =
         reference.getSegments();
 
-    // Resolve document scope from the authored reference origin.
-    //
-    // CURRENT_FILE:
-    //   [>dimensions]
-    //
-    // CURRENT_FOLDER_FILE:
-    //   [>.shape.dimensions]
-    //
-    // RELATIVE_MODULE:
-    //   [>semantic_walk/shape.dimensions]
-    //   [>/shape.dimensions]
-    //   [>//shape.dimensions]
-    fs::path document_relative;
-    std::size_t semantic_start = 0;
+    ReferenceDocumentPlan plan;
 
     if (reference.getOrigin() ==
         ast::SymbolReferenceOrigin::CURRENT_FILE) {
 
-        document_relative =
+        plan.document_relative =
             current_document;
 
-        semantic_start = 0;
+        plan.semantic_start = 0;
+
+        return plan;
     }
-    else {
-        fs::path base_module =
-            current_module;
 
-        const int parent_depth =
-            reference.getParentDepth();
+    fs::path base_module =
+        current_module;
 
-        for (int i = 0; i < parent_depth; ++i) {
-            if (base_module.empty()) {
-                throw std::runtime_error(
-                    "Structural QPS reference '" +
-                    reference.getSymbol() +
-                    "' escapes the workspace root.");
-            }
+    const int parent_depth =
+        reference.getParentDepth();
 
-            base_module =
-                base_module.parent_path();
-        }
-
-        std::size_t document_index = 0;
-
-        if (reference.getOrigin() ==
-            ast::SymbolReferenceOrigin::RELATIVE_MODULE) {
-
-            while (document_index + 1 < segments.size() &&
-                   segments[document_index + 1].separator ==
-                       ast::SymbolReferenceSeparator::SLASH) {
-
-                base_module /=
-                    segments[document_index].name;
-
-                paths_.resolveModule(base_module);
-
-                ++document_index;
-            }
-        }
-
-        if (document_index >= segments.size()) {
+    for (int i = 0; i < parent_depth; ++i) {
+        if (base_module.empty()) {
             throw std::runtime_error(
                 "Structural QPS reference '" +
                 reference.getSymbol() +
-                "' does not identify a document.");
+                "' escapes the workspace root.");
         }
 
-        document_relative =
-            base_module /
-            (segments[document_index].name + ".qps");
-
-        semantic_start =
-            document_index + 1;
+        base_module =
+            base_module.parent_path();
     }
+
+    std::size_t document_index = 0;
+
+    if (reference.getOrigin() ==
+        ast::SymbolReferenceOrigin::RELATIVE_MODULE) {
+
+        while (document_index + 1 < segments.size() &&
+               segments[document_index + 1].separator ==
+                   ast::SymbolReferenceSeparator::SLASH) {
+
+            base_module /=
+                segments[document_index].name;
+
+            ++document_index;
+        }
+    }
+
+    if (document_index >= segments.size()) {
+        throw std::runtime_error(
+            "Structural QPS reference '" +
+            reference.getSymbol() +
+            "' does not identify a document.");
+    }
+
+    plan.document_relative =
+        base_module /
+        (segments[document_index].name + ".qps");
+
+    plan.semantic_start =
+        document_index + 1;
+
+    return plan;
+}
+
+
+StructuralHandle SymbolResolver::resolve(
+    const ast::SymbolReferenceNode& reference,
+    const StructuralReferenceContext& context) const {
+
+    const ReferenceDocumentPlan plan =
+        planReferenceDocument(
+            reference,
+            context);
+
+    const fs::path document_relative =
+        plan.document_relative;
+
+    const std::size_t semantic_start =
+        plan.semantic_start;
+
+    const auto& segments =
+        reference.getSegments();
 
     fs::path document_file;
 
