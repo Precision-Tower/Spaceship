@@ -505,6 +505,38 @@ HostActionResult HostActionDispatcher::execute(
         return result;
     }
 
+    if (invocation.action_name == "path_parent") {
+        const std::string path =
+            requireParameter(
+                invocation,
+                "path")
+                .asString("path_parent path");
+
+        for (const auto& [name, value] :
+             invocation.parameters) {
+
+            (void)value;
+
+            if (name != "path") {
+                throw std::runtime_error(
+                    "Unknown path_parent parameter '" +
+                    name +
+                    "'.");
+            }
+        }
+
+        namespace fs = std::filesystem;
+
+        HostActionResult result;
+        result.value =
+            RuntimeValue::string(
+                fs::path(path)
+                    .parent_path()
+                    .string());
+
+        return result;
+    }
+
     if (invocation.action_name == "path_canonical") {
         const std::string path =
             requireParameter(

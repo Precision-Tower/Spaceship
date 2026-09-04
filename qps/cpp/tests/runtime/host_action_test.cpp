@@ -298,6 +298,54 @@ void pathKindReturnsFilesystemFact() {
     fs::remove_all(root);
 }
 
+void pathParentReturnsParentPath() {
+    qps::runtime::HostActionDispatcher host;
+
+    const auto run =
+        [&](const std::string& path) {
+            qps::runtime::HostActionInvocation invocation;
+            invocation.action_name = "path_parent";
+
+            invocation.parameters.emplace(
+                "path",
+                qps::runtime::RuntimeValue::string(path));
+
+            return host.execute(invocation);
+        };
+
+    const auto nested = run("a/b/c");
+    require(
+        nested.value.has_value(),
+        "path_parent nested path returned no runtime value.");
+    require(
+        nested.value->asString("nested parent") == "a/b",
+        "path_parent nested path mismatch.");
+
+    const auto child = run("a/b");
+    require(
+        child.value.has_value(),
+        "path_parent child path returned no runtime value.");
+    require(
+        child.value->asString("child parent") == "a",
+        "path_parent child path mismatch.");
+
+    const auto root_child = run("a");
+    require(
+        root_child.value.has_value(),
+        "path_parent root child returned no runtime value.");
+    require(
+        root_child.value->asString("root child parent").empty(),
+        "path_parent root child should return empty parent.");
+
+    const auto current = run(".");
+    require(
+        current.value.has_value(),
+        "path_parent current path returned no runtime value.");
+    require(
+        current.value->asString("current parent").empty(),
+        "path_parent current path should return empty parent.");
+}
+
 void pathCanonicalReturnsCanonicalPath() {
     namespace fs = std::filesystem;
 
@@ -391,6 +439,10 @@ int main() {
         pathKindReturnsFilesystemFact();
         std::cout
             << "PASS path_kind returns filesystem fact\n";
+
+        pathParentReturnsParentPath();
+        std::cout
+            << "PASS path_parent returns parent path\n";
 
         pathCanonicalReturnsCanonicalPath();
         std::cout
