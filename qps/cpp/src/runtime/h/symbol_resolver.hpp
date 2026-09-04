@@ -1,6 +1,8 @@
 #ifndef QPS_RUNTIME_H_SYMBOL_RESOLVER_HPP
 #define QPS_RUNTIME_H_SYMBOL_RESOLVER_HPP
 
+#include "symbol_table.hpp"
+
 #include <filesystem>
 #include <memory>
 #include <string>
@@ -25,34 +27,12 @@ struct StructuralReferenceContext {
     std::filesystem::path current_document;
 };
 
-struct ResolvedSymbol {
+struct ResolvedSymbol : public StructuralHandle {
+    // Authored/surfaced symbol requested from the bootstrap resolver.
     std::string symbol;
 
-    // Module whose _index.qps surfaced the symbol.
-    std::filesystem::path surface_module;
-
-    // Actual index file where the symbol was found.
+    // Index file that surfaced a legacy module symbol, when applicable.
     std::filesystem::path index_file;
-
-    // Physical .qps document containing the target.
-    std::filesystem::path document_file;
-
-    // Semantic path inside that document.
-    // Example: uni.p -> document=uni.qps, semantic_path={"p"}
-    std::vector<std::string> semantic_path;
-
-    // Verified terminal semantic object.
-    //
-    // Structural resolution may terminate on a Key, Term, or explicit
-    // Item-value selection while retaining the owning document AST.
-    std::string target_type;
-    std::string target_identifier;
-
-    // Keeps the parsed document alive for target lifetime.
-    std::shared_ptr<ast::ProgramNode> document_owner;
-
-    // Non-owning pointer into document_owner.
-    ast::AstNode* target_node = nullptr;
 };
 
 class SymbolResolver {
@@ -92,7 +72,7 @@ public:
     //
     //   [>shape.dimensions.cylinder]
     ResolvedSymbol resolveFrom(
-        const ResolvedSymbol& root,
+        const StructuralHandle& root,
         const ast::SymbolReferenceNode& reference) const;
 
 private:

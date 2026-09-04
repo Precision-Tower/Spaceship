@@ -28,7 +28,7 @@ struct GeometryActionInvocation {
     // Named structural packages supplied as action arguments.
     // QPS resolves execution-scope names but does not interpret
     // Engineering geometry structure here.
-    std::vector<ResolvedSymbol> structural_arguments;
+    std::vector<StructuralHandle> structural_arguments;
 
     const ExecutionScope* scope = nullptr;
 };

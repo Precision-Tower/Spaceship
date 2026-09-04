@@ -28,7 +28,7 @@ struct ResolvedGeometryAction {
 
     // Structural packages remain intact across the QPS/Engineering
     // dispatch boundary. Engineering decides how a primitive consumes them.
-    std::vector<ResolvedSymbol> structural_arguments;
+    std::vector<StructuralHandle> structural_arguments;
 };
 
 class GeometryActionResolver {

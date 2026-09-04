@@ -248,7 +248,7 @@ ResolvedSymbol SymbolResolver::resolve(
 
 
 ResolvedSymbol SymbolResolver::resolveFrom(
-    const ResolvedSymbol& root,
+    const StructuralHandle& root,
     const ast::SymbolReferenceNode& reference) const {
 
     if (reference.getOrigin() !=

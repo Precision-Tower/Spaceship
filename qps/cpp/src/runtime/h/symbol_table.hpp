@@ -2,16 +2,45 @@
 #define QPS_RUNTIME_H_SYMBOL_TABLE_HPP
 
 #include <cstddef>
+#include <filesystem>
+#include <memory>
 #include <optional>
 #include <string>
 #include <unordered_map>
 #include <variant>
 #include <vector>
 
-#include "symbol_resolver.hpp"
 
 namespace qps {
+
+namespace ast {
+class AstNode;
+class ProgramNode;
+}
+
 namespace runtime {
+
+struct StructuralHandle {
+    // Module context from which this structure was resolved.
+    // Retained for local structural rebasing during bootstrap resolution.
+    std::filesystem::path surface_module;
+
+    // Physical QPS document that owns the target.
+    std::filesystem::path document_file;
+
+    // Semantic path inside the owning document.
+    std::vector<std::string> semantic_path;
+
+    // Stable terminal identity exposed to runtime consumers.
+    std::string target_type;
+    std::string target_identifier;
+
+    // Keeps the parsed document alive for target lifetime.
+    std::shared_ptr<ast::ProgramNode> document_owner;
+
+    // Non-owning structural view into document_owner.
+    ast::AstNode* target_node = nullptr;
+};
 
 struct GeometryParameterValue {
     std::string name;
@@ -46,7 +75,7 @@ public:
     static RuntimeValue numeric(double value);
     static RuntimeValue string(std::string value);
     static RuntimeValue geometry(GeometryHandle handle);
-    static RuntimeValue structure(ResolvedSymbol structure);
+    static RuntimeValue structure(StructuralHandle structure);
 
     Kind kind() const;
 
@@ -64,7 +93,7 @@ public:
     const GeometryHandle& asGeometry(
         const std::string& context = "") const;
 
-    const ResolvedSymbol& asStructure(
+    const StructuralHandle& asStructure(
         const std::string& context = "") const;
 
     // Compatibility with existing numeric QPS runtime code.
@@ -79,13 +108,13 @@ private:
             double,
             std::string,
             GeometryHandle,
-            ResolvedSymbol> value);
+            StructuralHandle> value);
 
     std::variant<
         double,
         std::string,
         GeometryHandle,
-        ResolvedSymbol> value_;
+        StructuralHandle> value_;
 };
 
 enum class BindingOrigin {

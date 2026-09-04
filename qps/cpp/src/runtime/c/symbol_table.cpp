@@ -14,7 +14,7 @@ RuntimeValue::RuntimeValue(
         double,
         std::string,
         GeometryHandle,
-        ResolvedSymbol> value)
+        StructuralHandle> value)
     : value_(std::move(value)) {}
 
 RuntimeValue RuntimeValue::numeric(
@@ -36,7 +36,7 @@ RuntimeValue RuntimeValue::geometry(
 }
 
 RuntimeValue RuntimeValue::structure(
-    ResolvedSymbol structure) {
+    StructuralHandle structure) {
 
     return RuntimeValue(std::move(structure));
 }
@@ -70,7 +70,7 @@ bool RuntimeValue::isGeometry() const {
 }
 
 bool RuntimeValue::isStructure() const {
-    return std::holds_alternative<ResolvedSymbol>(value_);
+    return std::holds_alternative<StructuralHandle>(value_);
 }
 
 double RuntimeValue::asNumber(
@@ -136,11 +136,11 @@ const GeometryHandle& RuntimeValue::asGeometry(
         ".");
 }
 
-const ResolvedSymbol& RuntimeValue::asStructure(
+const StructuralHandle& RuntimeValue::asStructure(
     const std::string& context) const {
 
     if (const auto* structure =
-            std::get_if<ResolvedSymbol>(&value_)) {
+            std::get_if<StructuralHandle>(&value_)) {
 
         return *structure;
     }

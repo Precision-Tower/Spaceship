@@ -715,7 +715,7 @@ void Interpreter::executeStructuralBinding(
         const auto& root_binding =
             scope_.get(root_name);
 
-        const ResolvedSymbol& root =
+        const StructuralHandle& root =
             root_binding.value.asStructure(
                 "Local structural binding '" +
                 root_name +
@@ -1221,7 +1221,7 @@ double Interpreter::evaluate(
                     "'.");
             }
 
-            const ResolvedSymbol& root =
+            const StructuralHandle& root =
                 scope_
                     .get(root_name)
                     .value
