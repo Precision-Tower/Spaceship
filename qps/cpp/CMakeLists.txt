@@ -81,6 +81,11 @@ add_qps_test(
 )
 
 add_qps_test(
+    qps_reference_document_plan_test
+    tests/runtime/reference_document_plan_test.cpp
+)
+
+add_qps_test(
     qps_structural_selection_test
     tests/runtime/structural_selection_test.cpp
 )
@@ -185,6 +190,11 @@ add_test(
         ${CMAKE_CURRENT_SOURCE_DIR}/../qps/docs/QPS.qps
 )
 
+
+add_test(
+    NAME qps_reference_document_plan_test
+    COMMAND qps_reference_document_plan_test
+)
 
 add_test(
     NAME qps_symbol_resolver_defs_p
