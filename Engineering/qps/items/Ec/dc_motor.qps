@@ -74,6 +74,8 @@ load_resistance-/n;
 
 electromagnetic_state: (
 back_emf-/n;
+torque_constant-/n;
+back_emf_constant-/n;
 field_interaction-/n;
 );
 
@@ -109,8 +111,9 @@ angular_velocity-/n;
 );
 
 model_frontier: (
-electrical_to_magnetic- "unresolved"/a;
-magnetic_to_torque- "unresolved"/a;
+electrical_resistance_relationship- "structured"/a;
+back_emf_relationship- "structured"/a;
+current_to_torque_relationship- "structured"/a;
 torque_to_angular_state- "unresolved"/a;
 load_feedback- "unresolved"/a;
 thermal_relationship- "unresolved"/a;
