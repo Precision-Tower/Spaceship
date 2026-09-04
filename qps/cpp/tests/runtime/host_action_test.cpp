@@ -2,9 +2,12 @@
 
 #include <filesystem>
 #include <fstream>
+#include <functional>
 #include <iostream>
 #include <stdexcept>
 #include <string>
+#include <utility>
+#include <vector>
 
 namespace {
 
@@ -15,6 +18,72 @@ void require(
     if (!condition) {
         throw std::runtime_error(message);
     }
+}
+
+void expectFailureContaining(
+    const std::function<void()>& action,
+    const std::string& expected,
+    const std::string& context) {
+
+    try {
+        action();
+    }
+    catch (const std::runtime_error& e) {
+        const std::string message = e.what();
+
+        require(
+            message.find(expected) !=
+                std::string::npos,
+            context +
+            " produced unexpected failure: " +
+            message);
+
+        return;
+    }
+
+    throw std::runtime_error(
+        context +
+        " unexpectedly succeeded.");
+}
+
+qps::runtime::RuntimeValue makeDictionary(
+    std::vector<qps::runtime::RuntimeDictionaryEntry> entries) {
+
+    return qps::runtime::RuntimeValue::dictionary(
+        std::move(entries));
+}
+
+qps::runtime::HostActionResult runDictionarySize(
+    qps::runtime::RuntimeValue value) {
+
+    qps::runtime::HostActionInvocation invocation;
+    invocation.action_name = "dictionary_size";
+
+    invocation.parameters.emplace(
+        "value",
+        std::move(value));
+
+    qps::runtime::HostActionDispatcher host;
+    return host.execute(invocation);
+}
+
+qps::runtime::HostActionResult runDictionaryAt(
+    qps::runtime::RuntimeValue value,
+    double index) {
+
+    qps::runtime::HostActionInvocation invocation;
+    invocation.action_name = "dictionary_at";
+
+    invocation.parameters.emplace(
+        "value",
+        std::move(value));
+
+    invocation.parameters.emplace(
+        "index",
+        qps::runtime::RuntimeValue::numeric(index));
+
+    qps::runtime::HostActionDispatcher host;
+    return host.execute(invocation);
 }
 
 void processRequiresProgram() {
@@ -383,6 +452,217 @@ void pathCanonicalReturnsCanonicalPath() {
     fs::remove_all(root);
 }
 
+void dictionarySizeReturnsCounts() {
+    const auto empty =
+        runDictionarySize(
+            makeDictionary({}));
+
+    require(
+        empty.value.has_value(),
+        "dictionary_size empty dictionary returned no value.");
+
+    require(
+        empty.value->asNumber(
+            "empty dictionary size") == 0.0,
+        "dictionary_size empty dictionary mismatch.");
+
+    const auto multi_entry =
+        runDictionarySize(
+            makeDictionary({
+                {
+                    10,
+                    qps::runtime::RuntimeValue::string(
+                        "compact")
+                },
+                {
+                    20,
+                    qps::runtime::RuntimeValue::numeric(42.0)
+                },
+                {
+                    30,
+                    qps::runtime::RuntimeValue::string(
+                        "dense")
+                }
+            }));
+
+    require(
+        multi_entry.value.has_value(),
+        "dictionary_size multi-entry dictionary returned no value.");
+
+    require(
+        multi_entry.value->asNumber(
+            "multi-entry dictionary size") == 3.0,
+        "dictionary_size multi-entry dictionary mismatch.");
+}
+
+void dictionarySizeRejectsNonDictionaryInput() {
+    expectFailureContaining(
+        []() {
+            (void)runDictionarySize(
+                qps::runtime::RuntimeValue::numeric(1.0));
+        },
+        "expected dictionary",
+        "dictionary_size non-dictionary input");
+}
+
+void dictionaryAtReturnsOrderedValues() {
+    const auto dictionary =
+        makeDictionary({
+            {
+                10,
+                qps::runtime::RuntimeValue::string(
+                    "first")
+            },
+            {
+                20,
+                qps::runtime::RuntimeValue::numeric(42.0)
+            }
+        });
+
+    const auto first =
+        runDictionaryAt(
+            dictionary,
+            0.0);
+
+    require(
+        first.value.has_value(),
+        "dictionary_at first entry returned no value.");
+
+    require(
+        first.value->asString(
+            "dictionary_at first entry") == "first",
+        "dictionary_at first string entry mismatch.");
+
+    const auto numeric =
+        runDictionaryAt(
+            dictionary,
+            1.0);
+
+    require(
+        numeric.value.has_value(),
+        "dictionary_at numeric entry returned no value.");
+
+    require(
+        numeric.value->asNumber(
+            "dictionary_at numeric entry") == 42.0,
+        "dictionary_at numeric entry mismatch.");
+
+    auto nested =
+        makeDictionary({
+            {
+                1,
+                qps::runtime::RuntimeValue::string(
+                    "nested")
+            }
+        });
+
+    const auto nested_result =
+        runDictionaryAt(
+            makeDictionary({
+                {
+                    10,
+                    qps::runtime::RuntimeValue::string(
+                        "outer")
+                },
+                {
+                    20,
+                    std::move(nested)
+                }
+            }),
+            1.0);
+
+    require(
+        nested_result.value.has_value(),
+        "dictionary_at nested entry returned no value.");
+
+    require(
+        nested_result.value->isDictionary(),
+        "dictionary_at nested entry was not a dictionary.");
+
+    const auto& nested_dictionary =
+        nested_result.value->asDictionary(
+            "dictionary_at nested entry");
+
+    require(
+        nested_dictionary.size() == 1 &&
+        nested_dictionary[0].id == 1 &&
+        nested_dictionary[0].value.asString(
+            "dictionary_at nested value") == "nested",
+        "dictionary_at nested dictionary mismatch.");
+}
+
+void dictionaryAtRejectsInvalidInputs() {
+    const auto single_entry = []() {
+        return makeDictionary({
+            {
+                1,
+                qps::runtime::RuntimeValue::string(
+                    "first")
+            }
+        });
+    };
+
+    expectFailureContaining(
+        [&single_entry]() {
+            (void)runDictionaryAt(
+                single_entry(),
+                -1.0);
+        },
+        "non-negative",
+        "dictionary_at negative index");
+
+    expectFailureContaining(
+        [&single_entry]() {
+            (void)runDictionaryAt(
+                single_entry(),
+                1.0);
+        },
+        "out of range",
+        "dictionary_at out-of-range index");
+
+    expectFailureContaining(
+        [&single_entry]() {
+            (void)runDictionaryAt(
+                single_entry(),
+                0.5);
+        },
+        "integral",
+        "dictionary_at fractional index");
+
+    expectFailureContaining(
+        []() {
+            (void)runDictionaryAt(
+                qps::runtime::RuntimeValue::numeric(1.0),
+                0.0);
+        },
+        "expected dictionary",
+        "dictionary_at non-dictionary input");
+
+    qps::runtime::HostActionInvocation invocation;
+    invocation.action_name = "dictionary_at";
+
+    invocation.parameters.emplace(
+        "value",
+        single_entry());
+
+    invocation.parameters.emplace(
+        "index",
+        qps::runtime::RuntimeValue::numeric(0.0));
+
+    invocation.parameters.emplace(
+        "extra",
+        qps::runtime::RuntimeValue::numeric(1.0));
+
+    qps::runtime::HostActionDispatcher host;
+
+    expectFailureContaining(
+        [&host, &invocation]() {
+            (void)host.execute(invocation);
+        },
+        "Unknown dictionary_at parameter 'extra'",
+        "dictionary_at unknown parameter");
+}
+
 void unknownPrimitiveFails() {
     qps::runtime::HostActionDispatcher host;
 
@@ -447,6 +727,22 @@ int main() {
         pathCanonicalReturnsCanonicalPath();
         std::cout
             << "PASS path_canonical returns canonical path\n";
+
+        dictionarySizeReturnsCounts();
+        std::cout
+            << "PASS dictionary_size returns counts\n";
+
+        dictionarySizeRejectsNonDictionaryInput();
+        std::cout
+            << "PASS dictionary_size rejects non-dictionary input\n";
+
+        dictionaryAtReturnsOrderedValues();
+        std::cout
+            << "PASS dictionary_at returns ordered values\n";
+
+        dictionaryAtRejectsInvalidInputs();
+        std::cout
+            << "PASS dictionary_at rejects invalid inputs\n";
 
         unknownPrimitiveFails();
         std::cout

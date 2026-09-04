@@ -8,8 +8,10 @@
 #include <algorithm>
 #include <array>
 #include <cerrno>
+#include <cmath>
 #include <cstring>
 #include <filesystem>
+#include <initializer_list>
 #include <iostream>
 #include <poll.h>
 #include <stdexcept>
@@ -40,6 +42,31 @@ const RuntimeValue& requireParameter(
     }
 
     return found->second;
+}
+
+void rejectUnknownParameters(
+    const HostActionInvocation& invocation,
+    std::initializer_list<std::string> allowed_names) {
+
+    for (const auto& [name, value] :
+         invocation.parameters) {
+
+        (void)value;
+
+        if (std::find(
+                allowed_names.begin(),
+                allowed_names.end(),
+                name) != allowed_names.end()) {
+            continue;
+        }
+
+        throw std::runtime_error(
+            "Unknown " +
+            invocation.action_name +
+            " parameter '" +
+            name +
+            "'.");
+    }
 }
 
 ProcessRequest resolveProcessRequest(
@@ -567,6 +594,75 @@ HostActionResult HostActionDispatcher::execute(
         result.value =
             RuntimeValue::string(
                 canonical.string());
+
+        return result;
+    }
+
+    if (invocation.action_name == "dictionary_size") {
+        const RuntimeValue& value =
+            requireParameter(
+                invocation,
+                "value");
+
+        rejectUnknownParameters(
+            invocation,
+            {"value"});
+
+        const auto& dictionary =
+            value.asDictionary(
+                "dictionary_size value");
+
+        HostActionResult result;
+        result.value =
+            RuntimeValue::numeric(
+                static_cast<double>(
+                    dictionary.size()));
+
+        return result;
+    }
+
+    if (invocation.action_name == "dictionary_at") {
+        const RuntimeValue& value =
+            requireParameter(
+                invocation,
+                "value");
+
+        const RuntimeValue& index =
+            requireParameter(
+                invocation,
+                "index");
+
+        rejectUnknownParameters(
+            invocation,
+            {"value", "index"});
+
+        const auto& dictionary =
+            value.asDictionary(
+                "dictionary_at value");
+
+        const double index_value =
+            index.asNumber(
+                "dictionary_at index");
+
+        if (index_value < 0.0) {
+            throw std::runtime_error(
+                "dictionary_at index must be non-negative.");
+        }
+
+        if (std::floor(index_value) != index_value) {
+            throw std::runtime_error(
+                "dictionary_at index must be integral.");
+        }
+
+        if (index_value >=
+            static_cast<double>(dictionary.size())) {
+            throw std::runtime_error(
+                "dictionary_at index out of range.");
+        }
+
+        HostActionResult result;
+        result.value =
+            dictionary[static_cast<std::size_t>(index_value)].value;
 
         return result;
     }
