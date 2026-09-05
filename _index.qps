@@ -30,6 +30,9 @@ test- "qps test path/file-or-folder";
 query- "qps qry <selector> [path]";
 cipher- "qps cipher <source> [--report]";
 cipher_authority- "qps/qps/cipher.qps";
+reference_document_authority- "qps/qps/reference_document.qps";
+semantic_walk_authority- "qps/qps/semantic_walk.qps";
+implementation_proof_authority- "qps/qps/checklist.qps";
 );
 
 navigation: (
@@ -67,6 +70,7 @@ preserve_work- "Do not overwrite, reset, clean, or stage unrelated unfinished wo
 bounded_search- "Start with the smallest relevant directory and widen only when evidence requires it";
 test_smallest_surface- "Test the smallest affected surface first";
 implementation_authority- "Current implementation and passing tests outrank stale documentation";
+proof_boundary- "External observations produce evidence; authored QPS proof policy decides what supplied evidence means";
 source_location- "Use path/file.qps:ln as the canonical failure coordinate";
 stage_feature_only- "Stage only files belonging to the feature being checkpointed";
 );

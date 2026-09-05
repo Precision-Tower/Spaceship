@@ -76,6 +76,10 @@ Canonical door:
 Move orchestration and semantic authority into QPS when existing QPS primitives
 can express and prove the behavior.
 
+Authored QPS proof policy may decide what supplied evidence means, but it does
+not produce or replace external evidence. Reality produces evidence; QPS decides
+what that evidence means.
+
 Keep native implementation only where runtime, host, backend, bootstrap, or
 machine capability currently requires it.
 
