@@ -208,10 +208,21 @@ add_qps_test(
     tests/runtime/semantic_walk_test.cpp
 )
 
+add_qps_test(
+    qps_checklist_policy_test
+    tests/runtime/checklist_policy_test.cpp
+)
+
 add_test(
     NAME qps_semantic_walk_test
     COMMAND qps_semantic_walk_test
         ${CMAKE_CURRENT_SOURCE_DIR}/../qps/semantic_walk.qps
+)
+
+add_test(
+    NAME qps_checklist_policy_test
+    COMMAND qps_checklist_policy_test
+        ${CMAKE_CURRENT_SOURCE_DIR}/../qps/checklist.qps
 )
 
 add_test(

@@ -1,0 +1,106 @@
+{
+[>runtime_dictionary]- 0;
+
+runtime_dictionary_evidence: -dictionary_at(
+value- evidence;
+index- 0;
+);
+
+runtime_dictionary_id: -dictionary_at(
+value- runtime_dictionary_evidence;
+index- 0;
+);
+
+runtime_dictionary_fact: -dictionary_at(
+value- runtime_dictionary_evidence;
+index- 1;
+);
+
+reference_test_evidence: -dictionary_at(
+value- evidence;
+index- 1;
+);
+
+reference_test_id: -dictionary_at(
+value- reference_test_evidence;
+index- 0;
+);
+
+reference_test_fact: -dictionary_at(
+value- reference_test_evidence;
+index- 1;
+);
+
+reference_parity_evidence: -dictionary_at(
+value- evidence;
+index- 2;
+);
+
+reference_parity_id: -dictionary_at(
+value- reference_parity_evidence;
+index- 0;
+);
+
+reference_parity_fact: -dictionary_at(
+value- reference_parity_evidence;
+index- 1;
+);
+
+structural_handle_evidence: -dictionary_at(
+value- evidence;
+index- 3;
+);
+
+structural_handle_id: -dictionary_at(
+value- structural_handle_evidence;
+index- 0;
+);
+
+structural_handle_fact: -dictionary_at(
+value- structural_handle_evidence;
+index- 1;
+);
+
+-if runtime_dictionary_id == "ctest.runtime_dictionary" {
+-if runtime_dictionary_fact == 1 {
+[>runtime_dictionary]- 1;
+}
+}
+
+[>reference_document]- 0;
+
+-if reference_test_id == "ctest.reference_document_plan" {
+-if reference_test_fact == 1 {
+-if reference_parity_id == "authored.reference_document_parity" {
+-if reference_parity_fact == 1 {
+[>reference_document]- 1;
+}
+}
+}
+}
+
+[>structural_handle_minimal]- 0;
+
+-if structural_handle_id == "invariant.structural_handle_owner_node_only" {
+-if structural_handle_fact == 1 {
+[>structural_handle_minimal]- 1;
+}
+}
+
+[>overall]- 0;
+
+-if runtime_dictionary == 1 {
+-if reference_document == 1 {
+-if structural_handle_minimal == 1 {
+[>overall]- 1;
+}
+}
+}
+
+-return [
+1: runtime_dictionary,
+2: reference_document,
+3: structural_handle_minimal,
+4: overall
+];;
+}
