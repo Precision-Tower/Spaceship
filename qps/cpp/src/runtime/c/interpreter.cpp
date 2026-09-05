@@ -673,13 +673,13 @@ void Interpreter::executeCalculation(
             "Calculation has no expression.");
     }
 
-    const double value =
-        evaluate(
+    RuntimeValue value =
+        evaluateValue(
             *calculation.getExpression());
 
     bindTarget(
         *calculation.getTarget(),
-        value,
+        std::move(value),
         true);
 }
 

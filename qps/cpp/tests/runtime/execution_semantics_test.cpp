@@ -700,6 +700,54 @@ void whileRebindsLocalItemUntilConditionIsFalse() {
 }
 
 
+void calculationBindsDictionaryRuntimeValue() {
+    const std::string source = R"qps(
+{
+%record: [
+1: "evidence.id",
+2: 1
+];
+}
+)qps";
+
+    const qps::runtime::ExecutionScope scope =
+        executeSource(source);
+
+    require(
+        scope.contains("record"),
+        "Dictionary calculation should bind record.");
+
+    const auto& value =
+        scope.get("record").value;
+
+    require(
+        value.isDictionary(),
+        "Dictionary calculation should produce DICTIONARY runtime value.");
+
+    const auto& dictionary =
+        value.asDictionary(
+            "calculation record");
+
+    require(
+        dictionary.size() == 2,
+        "Dictionary calculation size mismatch.");
+
+    require(
+        dictionary[0].id == 1 &&
+        dictionary[0].value.isString() &&
+        dictionary[0].value.asString(
+            "calculation entry 1") == "evidence.id",
+        "Dictionary calculation entry 1 mismatch.");
+
+    require(
+        dictionary[1].id == 2 &&
+        dictionary[1].value.isNumeric() &&
+        dictionary[1].value.asNumber(
+            "calculation entry 2") == 1.0,
+        "Dictionary calculation entry 2 mismatch.");
+}
+
+
 void ifSelectsNumericLessThanBranch() {
     const std::string source = R"qps(
 {
@@ -786,6 +834,7 @@ int main() {
     const std::vector<TestCase> tests = {
         {"QPS derives connected module ancestry from filesystem facts", qpsDerivesConnectedModuleAncestryFromFilesystemFacts},
         {"while rebinds local Item until condition is false", whileRebindsLocalItemUntilConditionIsFalse},
+        {"calculation binds Dictionary runtime value", calculationBindsDictionaryRuntimeValue},
         {"if selects numeric less-than branch", ifSelectsNumericLessThanBranch},
         {"if selects string equality branch", ifSelectsStringEqualityBranch},
         {"if selects else branch", ifSelectsElseBranch},
