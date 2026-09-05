@@ -857,3 +857,17 @@ index- 1;
 ];;
 
 }
+
+dif: def"
+A reversible difference between two identified states.
+
+The goal is to let QPS carry an active implementation change as a
+reversible object: apply a candidate state, test it, and return to the
+previous proven state if the candidate fails.
+
+Structural identity should be preferred over line-only targeting.
+Paths and line coordinates remain useful source coordinates.
+
+The exact representation and execution semantics remain to be discovered
+through implementation.
+";
