@@ -61,6 +61,96 @@ value- structural_handle_evidence;
 index- 1;
 );
 
+semantic_walk_test_evidence: -dictionary_at(
+value- evidence;
+index- 4;
+);
+
+semantic_walk_test_id: -dictionary_at(
+value- semantic_walk_test_evidence;
+index- 0;
+);
+
+semantic_walk_test_fact: -dictionary_at(
+value- semantic_walk_test_evidence;
+index- 1;
+);
+
+semantic_walk_parity_evidence: -dictionary_at(
+value- evidence;
+index- 5;
+);
+
+semantic_walk_parity_id: -dictionary_at(
+value- semantic_walk_parity_evidence;
+index- 0;
+);
+
+semantic_walk_parity_fact: -dictionary_at(
+value- semantic_walk_parity_evidence;
+index- 1;
+);
+
+semantic_walk_cutover_evidence: -dictionary_at(
+value- evidence;
+index- 6;
+);
+
+semantic_walk_cutover_id: -dictionary_at(
+value- semantic_walk_cutover_evidence;
+index- 0;
+);
+
+semantic_walk_cutover_fact: -dictionary_at(
+value- semantic_walk_cutover_evidence;
+index- 1;
+);
+
+compatibility_absence_evidence: -dictionary_at(
+value- evidence;
+index- 7;
+);
+
+compatibility_absence_id: -dictionary_at(
+value- compatibility_absence_evidence;
+index- 0;
+);
+
+compatibility_absence_fact: -dictionary_at(
+value- compatibility_absence_evidence;
+index- 1;
+);
+
+native_reference_absence_evidence: -dictionary_at(
+value- evidence;
+index- 8;
+);
+
+native_reference_absence_id: -dictionary_at(
+value- native_reference_absence_evidence;
+index- 0;
+);
+
+native_reference_absence_fact: -dictionary_at(
+value- native_reference_absence_evidence;
+index- 1;
+);
+
+native_walk_absence_evidence: -dictionary_at(
+value- evidence;
+index- 9;
+);
+
+native_walk_absence_id: -dictionary_at(
+value- native_walk_absence_evidence;
+index- 0;
+);
+
+native_walk_absence_fact: -dictionary_at(
+value- native_walk_absence_evidence;
+index- 1;
+);
+
 -if runtime_dictionary_id == "ctest.runtime_dictionary" {
 -if runtime_dictionary_fact == 1 {
 [>runtime_dictionary]- 1;
@@ -87,12 +177,48 @@ index- 1;
 }
 }
 
+[>semantic_walk]- 0;
+
+-if semantic_walk_test_id == "ctest.semantic_walk" {
+-if semantic_walk_test_fact == 1 {
+-if semantic_walk_parity_id == "authored.semantic_walk.parity" {
+-if semantic_walk_parity_fact == 1 {
+-if semantic_walk_cutover_id == "production.semantic_walk.cutover" {
+-if semantic_walk_cutover_fact == 1 {
+[>semantic_walk]- 1;
+}
+}
+}
+}
+}
+}
+
+[>native_policy_minimal]- 0;
+
+-if structural_handle_minimal == 1 {
+-if compatibility_absence_id == "absence.structural_handle.compatibility_metadata" {
+-if compatibility_absence_fact == 1 {
+-if native_reference_absence_id == "absence.native.reference_policy" {
+-if native_reference_absence_fact == 1 {
+-if native_walk_absence_id == "absence.native.semantic_walk" {
+-if native_walk_absence_fact == 1 {
+[>native_policy_minimal]- 1;
+}
+}
+}
+}
+}
+}
+}
+
 [>overall]- 0;
 
 -if runtime_dictionary == 1 {
 -if reference_document == 1 {
--if structural_handle_minimal == 1 {
+-if semantic_walk == 1 {
+-if native_policy_minimal == 1 {
 [>overall]- 1;
+}
 }
 }
 }
@@ -101,6 +227,8 @@ index- 1;
 1: runtime_dictionary,
 2: reference_document,
 3: structural_handle_minimal,
-4: overall
+4: semantic_walk,
+5: native_policy_minimal,
+6: overall
 ];;
 }

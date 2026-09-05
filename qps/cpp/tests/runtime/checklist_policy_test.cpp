@@ -101,7 +101,13 @@ runtime::RuntimeValue evidence(
     bool runtime_dictionary,
     bool reference_test,
     bool reference_parity,
-    bool structural_handle) {
+    bool structural_handle,
+    bool semantic_walk_test,
+    bool semantic_walk_parity,
+    bool semantic_walk_cutover,
+    bool compatibility_absent,
+    bool native_reference_absent,
+    bool native_walk_absent) {
 
     std::vector<runtime::RuntimeDictionaryEntry> entries;
 
@@ -131,6 +137,48 @@ runtime::RuntimeValue evidence(
         evidenceEntry(
             "invariant.structural_handle_owner_node_only",
             structural_handle)
+    });
+
+    entries.push_back({
+        5,
+        evidenceEntry(
+            "ctest.semantic_walk",
+            semantic_walk_test)
+    });
+
+    entries.push_back({
+        6,
+        evidenceEntry(
+            "authored.semantic_walk.parity",
+            semantic_walk_parity)
+    });
+
+    entries.push_back({
+        7,
+        evidenceEntry(
+            "production.semantic_walk.cutover",
+            semantic_walk_cutover)
+    });
+
+    entries.push_back({
+        8,
+        evidenceEntry(
+            "absence.structural_handle.compatibility_metadata",
+            compatibility_absent)
+    });
+
+    entries.push_back({
+        9,
+        evidenceEntry(
+            "absence.native.reference_policy",
+            native_reference_absent)
+    });
+
+    entries.push_back({
+        10,
+        evidenceEntry(
+            "absence.native.semantic_walk",
+            native_walk_absent)
     });
 
     return runtime::RuntimeValue::dictionary(
@@ -202,6 +250,12 @@ void allEvidenceProvesPolicy(
                 true,
                 true,
                 true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
                 true));
 
     require(
@@ -226,6 +280,18 @@ void allEvidenceProvesPolicy(
         resultState(
             result,
             4) == 1.0,
+        "policy.semantic_walk was not proven.");
+
+    require(
+        resultState(
+            result,
+            5) == 1.0,
+        "kernel.native_policy_minimal was not proven.");
+
+    require(
+        resultState(
+            result,
+            6) == 1.0,
         "Required checklist did not prove.");
 
     std::cout
@@ -242,6 +308,12 @@ void missingRequiredEvidenceFailsOverall(
                 true,
                 true,
                 false,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
                 true));
 
     require(
@@ -265,11 +337,91 @@ void missingRequiredEvidenceFailsOverall(
     require(
         resultState(
             result,
-            4) == 0.0,
+            6) == 0.0,
         "Required checklist incorrectly proved.");
 
     std::cout
         << "MISSING_REQUIRED_EVIDENCE: PASS\n";
+}
+
+void missingSemanticWalkCutoverDoesNotProve(
+    const ast::ExecutionBlockNode& policy) {
+
+    const auto result =
+        executePolicy(
+            policy,
+            evidence(
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                false,
+                true,
+                true,
+                true));
+
+    require(
+        resultState(
+            result,
+            4) == 0.0,
+        "Semantic walk incorrectly proved without production cutover.");
+
+    require(
+        resultState(
+            result,
+            5) == 1.0,
+        "Unrelated native policy minimal proof changed.");
+
+    require(
+        resultState(
+            result,
+            6) == 0.0,
+        "Required checklist incorrectly proved without semantic walk cutover.");
+
+    std::cout
+        << "MISSING_SEMANTIC_WALK_CUTOVER: PASS\n";
+}
+
+void missingNativePolicyAbsenceDoesNotProve(
+    const ast::ExecutionBlockNode& policy) {
+
+    const auto result =
+        executePolicy(
+            policy,
+            evidence(
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                false));
+
+    require(
+        resultState(
+            result,
+            4) == 1.0,
+        "Unrelated semantic walk proof changed.");
+
+    require(
+        resultState(
+            result,
+            5) == 0.0,
+        "Native policy minimal incorrectly proved with native semantic walk present.");
+
+    require(
+        resultState(
+            result,
+            6) == 0.0,
+        "Required checklist incorrectly proved with native policy residue.");
+
+    std::cout
+        << "MISSING_NATIVE_POLICY_ABSENCE: PASS\n";
 }
 
 void wrongEvidenceIdentityDoesNotProve(
@@ -305,6 +457,48 @@ void wrongEvidenceIdentityDoesNotProve(
             true)
     });
 
+    entries.push_back({
+        5,
+        evidenceEntry(
+            "ctest.semantic_walk",
+            true)
+    });
+
+    entries.push_back({
+        6,
+        evidenceEntry(
+            "authored.semantic_walk.parity",
+            true)
+    });
+
+    entries.push_back({
+        7,
+        evidenceEntry(
+            "production.semantic_walk.cutover",
+            true)
+    });
+
+    entries.push_back({
+        8,
+        evidenceEntry(
+            "absence.structural_handle.compatibility_metadata",
+            true)
+    });
+
+    entries.push_back({
+        9,
+        evidenceEntry(
+            "absence.native.reference_policy",
+            true)
+    });
+
+    entries.push_back({
+        10,
+        evidenceEntry(
+            "absence.native.semantic_walk",
+            true)
+    });
+
     const auto result =
         executePolicy(
             policy,
@@ -320,7 +514,7 @@ void wrongEvidenceIdentityDoesNotProve(
     require(
         resultState(
             result,
-            4) == 0.0,
+            6) == 0.0,
         "Wrong evidence identity incorrectly proved required checklist.");
 
     std::cout
@@ -360,6 +554,8 @@ int main(
 
         allEvidenceProvesPolicy(*policy);
         missingRequiredEvidenceFailsOverall(*policy);
+        missingSemanticWalkCutoverDoesNotProve(*policy);
+        missingNativePolicyAbsenceDoesNotProve(*policy);
         wrongEvidenceIdentityDoesNotProve(*policy);
 
         std::cout
