@@ -333,6 +333,69 @@ runtime::RuntimeValue evidence(
             authored_authorities)
     });
 
+    entries.push_back({
+        30,
+        evidenceEntry(
+            "transaction.git.clean_before",
+            true)
+    });
+
+    entries.push_back({
+        31,
+        evidenceEntry(
+            "transaction.git.changed_files_scoped",
+            true)
+    });
+
+    entries.push_back({
+        32,
+        evidenceEntry(
+            "transaction.git.diff_check_clean",
+            true)
+    });
+
+    entries.push_back({
+        33,
+        evidenceEntry(
+            "transaction.test.focused",
+            true)
+    });
+
+    entries.push_back({
+        34,
+        evidenceEntry(
+            "transaction.test.full",
+            true)
+    });
+
+    entries.push_back({
+        35,
+        evidenceEntry(
+            "transaction.qps_test.engineering",
+            true)
+    });
+
+    entries.push_back({
+        36,
+        evidenceEntry(
+            "transaction.git.staged_set_exact",
+            true)
+    });
+
+    entries.push_back({
+        37,
+        evidenceEntry(
+            "transaction.git.commit_identity_recorded",
+            true)
+    });
+
+    entries.push_back({
+        38,
+        evidenceEntry(
+            "transaction.git.clean_after",
+            true)
+    });
+
     return runtime::RuntimeValue::dictionary(
         std::move(entries));
 }
@@ -371,7 +434,16 @@ runtime::RuntimeValue completePhaseAEvidence(
         "ctest.cli.cipher",
         "ctest.cli.source_execution",
         "qps_test.engineering",
-        "invariant.authored_authorities_present"
+        "invariant.authored_authorities_present",
+        "transaction.git.clean_before",
+        "transaction.git.changed_files_scoped",
+        "transaction.git.diff_check_clean",
+        "transaction.test.focused",
+        "transaction.test.full",
+        "transaction.qps_test.engineering",
+        "transaction.git.staged_set_exact",
+        "transaction.git.commit_identity_recorded",
+        "transaction.git.clean_after"
     };
 
     int entry_id = 1;
@@ -554,6 +626,18 @@ void allEvidenceProvesPolicy(
             result,
             15) == 1.0,
         "kernel.reduction was not proven.");
+
+    require(
+        resultState(
+            result,
+            16) == 1.0,
+        "transaction.ready was not proven.");
+
+    require(
+        resultState(
+            result,
+            17) == 1.0,
+        "transaction.committed was not proven.");
 
     std::cout
         << "ALL_EVIDENCE_PRESENT: PASS\n";
@@ -912,6 +996,106 @@ void missingAuthoredAuthorityEvidenceDoesNotProve(
 }
 
 
+void transactionCanBeReadyBeforeCommit(
+    const ast::ExecutionBlockNode& policy) {
+
+    const auto result =
+        executePolicy(
+            policy,
+            completePhaseAEvidence(37));
+
+    require(
+        resultState(result, 9) == 1.0,
+        "Implementation proof changed before transaction commit.");
+
+    require(
+        resultState(result, 16) == 1.0,
+        "Transaction was not ready before commit identity existed.");
+
+    require(
+        resultState(result, 17) == 0.0,
+        "Transaction incorrectly became committed without commit identity.");
+
+    std::cout
+        << "TRANSACTION_READY_BEFORE_COMMIT: PASS\n";
+}
+
+
+void transactionScopeFailureDoesNotUnproveImplementation(
+    const ast::ExecutionBlockNode& policy) {
+
+    const auto result =
+        executePolicy(
+            policy,
+            completePhaseAEvidence(31));
+
+    require(
+        resultState(result, 9) == 1.0,
+        "Transaction scope failure incorrectly unproved implementation.");
+
+    require(
+        resultState(result, 16) == 0.0,
+        "Transaction incorrectly became ready with unscoped changes.");
+
+    require(
+        resultState(result, 17) == 0.0,
+        "Unready transaction incorrectly became committed.");
+
+    std::cout
+        << "TRANSACTION_SCOPE_INDEPENDENT: PASS\n";
+}
+
+
+void transactionTestFailureDoesNotUnproveImplementation(
+    const ast::ExecutionBlockNode& policy) {
+
+    const auto result =
+        executePolicy(
+            policy,
+            completePhaseAEvidence(34));
+
+    require(
+        resultState(result, 9) == 1.0,
+        "Transaction test failure incorrectly unproved implementation.");
+
+    require(
+        resultState(result, 16) == 0.0,
+        "Transaction incorrectly became ready without full tests.");
+
+    require(
+        resultState(result, 17) == 0.0,
+        "Failed transaction incorrectly became committed.");
+
+    std::cout
+        << "TRANSACTION_TEST_INDEPENDENT: PASS\n";
+}
+
+
+void committedTransactionRequiresCleanAfter(
+    const ast::ExecutionBlockNode& policy) {
+
+    const auto result =
+        executePolicy(
+            policy,
+            completePhaseAEvidence(38));
+
+    require(
+        resultState(result, 9) == 1.0,
+        "Post-commit cleanliness incorrectly changed implementation proof.");
+
+    require(
+        resultState(result, 16) == 1.0,
+        "Post-commit cleanliness incorrectly changed ready state.");
+
+    require(
+        resultState(result, 17) == 0.0,
+        "Transaction incorrectly committed without clean-after evidence.");
+
+    std::cout
+        << "TRANSACTION_CLEAN_AFTER_REQUIRED: PASS\n";
+}
+
+
 void wrongEvidenceIdentityDoesNotProve(
     const ast::ExecutionBlockNode& policy) {
 
@@ -1120,6 +1304,69 @@ void wrongEvidenceIdentityDoesNotProve(
             true)
     });
 
+    entries.push_back({
+        30,
+        evidenceEntry(
+            "transaction.git.clean_before",
+            true)
+    });
+
+    entries.push_back({
+        31,
+        evidenceEntry(
+            "transaction.git.changed_files_scoped",
+            true)
+    });
+
+    entries.push_back({
+        32,
+        evidenceEntry(
+            "transaction.git.diff_check_clean",
+            true)
+    });
+
+    entries.push_back({
+        33,
+        evidenceEntry(
+            "transaction.test.focused",
+            true)
+    });
+
+    entries.push_back({
+        34,
+        evidenceEntry(
+            "transaction.test.full",
+            true)
+    });
+
+    entries.push_back({
+        35,
+        evidenceEntry(
+            "transaction.qps_test.engineering",
+            true)
+    });
+
+    entries.push_back({
+        36,
+        evidenceEntry(
+            "transaction.git.staged_set_exact",
+            true)
+    });
+
+    entries.push_back({
+        37,
+        evidenceEntry(
+            "transaction.git.commit_identity_recorded",
+            true)
+    });
+
+    entries.push_back({
+        38,
+        evidenceEntry(
+            "transaction.git.clean_after",
+            true)
+    });
+
     const auto result =
         executePolicy(
             policy,
@@ -1190,6 +1437,10 @@ int main(
         missingCliEvidenceDoesNotProve(*policy);
         missingEngineeringEvidenceDoesNotProve(*policy);
         missingAuthoredAuthorityEvidenceDoesNotProve(*policy);
+        transactionCanBeReadyBeforeCommit(*policy);
+        transactionScopeFailureDoesNotUnproveImplementation(*policy);
+        transactionTestFailureDoesNotUnproveImplementation(*policy);
+        committedTransactionRequiresCleanAfter(*policy);
         wrongEvidenceIdentityDoesNotProve(*policy);
 
         std::cout

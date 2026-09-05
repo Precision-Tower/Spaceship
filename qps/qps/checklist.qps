@@ -438,6 +438,142 @@ value- authored_authorities_evidence;
 index- 1;
 );
 
+
+transaction_clean_before_evidence: -dictionary_at(
+value- evidence;
+index- 29;
+);
+
+transaction_clean_before_id: -dictionary_at(
+value- transaction_clean_before_evidence;
+index- 0;
+);
+
+transaction_clean_before_fact: -dictionary_at(
+value- transaction_clean_before_evidence;
+index- 1;
+);
+
+transaction_changed_files_evidence: -dictionary_at(
+value- evidence;
+index- 30;
+);
+
+transaction_changed_files_id: -dictionary_at(
+value- transaction_changed_files_evidence;
+index- 0;
+);
+
+transaction_changed_files_fact: -dictionary_at(
+value- transaction_changed_files_evidence;
+index- 1;
+);
+
+transaction_diff_check_evidence: -dictionary_at(
+value- evidence;
+index- 31;
+);
+
+transaction_diff_check_id: -dictionary_at(
+value- transaction_diff_check_evidence;
+index- 0;
+);
+
+transaction_diff_check_fact: -dictionary_at(
+value- transaction_diff_check_evidence;
+index- 1;
+);
+
+transaction_focused_tests_evidence: -dictionary_at(
+value- evidence;
+index- 32;
+);
+
+transaction_focused_tests_id: -dictionary_at(
+value- transaction_focused_tests_evidence;
+index- 0;
+);
+
+transaction_focused_tests_fact: -dictionary_at(
+value- transaction_focused_tests_evidence;
+index- 1;
+);
+
+transaction_full_tests_evidence: -dictionary_at(
+value- evidence;
+index- 33;
+);
+
+transaction_full_tests_id: -dictionary_at(
+value- transaction_full_tests_evidence;
+index- 0;
+);
+
+transaction_full_tests_fact: -dictionary_at(
+value- transaction_full_tests_evidence;
+index- 1;
+);
+
+transaction_engineering_evidence: -dictionary_at(
+value- evidence;
+index- 34;
+);
+
+transaction_engineering_id: -dictionary_at(
+value- transaction_engineering_evidence;
+index- 0;
+);
+
+transaction_engineering_fact: -dictionary_at(
+value- transaction_engineering_evidence;
+index- 1;
+);
+
+transaction_staged_set_evidence: -dictionary_at(
+value- evidence;
+index- 35;
+);
+
+transaction_staged_set_id: -dictionary_at(
+value- transaction_staged_set_evidence;
+index- 0;
+);
+
+transaction_staged_set_fact: -dictionary_at(
+value- transaction_staged_set_evidence;
+index- 1;
+);
+
+transaction_commit_identity_evidence: -dictionary_at(
+value- evidence;
+index- 36;
+);
+
+transaction_commit_identity_id: -dictionary_at(
+value- transaction_commit_identity_evidence;
+index- 0;
+);
+
+transaction_commit_identity_fact: -dictionary_at(
+value- transaction_commit_identity_evidence;
+index- 1;
+);
+
+transaction_clean_after_evidence: -dictionary_at(
+value- evidence;
+index- 37;
+);
+
+transaction_clean_after_id: -dictionary_at(
+value- transaction_clean_after_evidence;
+index- 0;
+);
+
+transaction_clean_after_fact: -dictionary_at(
+value- transaction_clean_after_evidence;
+index- 1;
+);
+
 -if runtime_dictionary_id == "ctest.runtime_dictionary" {
 -if runtime_dictionary_fact == 1 {
 [>runtime_dictionary]- 1;
@@ -652,6 +788,52 @@ index- 1;
 }
 }
 
+[>transaction_ready]- 0;
+
+-if transaction_clean_before_id == "transaction.git.clean_before" {
+-if transaction_clean_before_fact == 1 {
+-if transaction_changed_files_id == "transaction.git.changed_files_scoped" {
+-if transaction_changed_files_fact == 1 {
+-if transaction_diff_check_id == "transaction.git.diff_check_clean" {
+-if transaction_diff_check_fact == 1 {
+-if transaction_focused_tests_id == "transaction.test.focused" {
+-if transaction_focused_tests_fact == 1 {
+-if transaction_full_tests_id == "transaction.test.full" {
+-if transaction_full_tests_fact == 1 {
+-if transaction_engineering_id == "transaction.qps_test.engineering" {
+-if transaction_engineering_fact == 1 {
+-if transaction_staged_set_id == "transaction.git.staged_set_exact" {
+-if transaction_staged_set_fact == 1 {
+[>transaction_ready]- 1;
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+
+[>transaction_committed]- 0;
+
+-if transaction_ready == 1 {
+-if transaction_commit_identity_id == "transaction.git.commit_identity_recorded" {
+-if transaction_commit_identity_fact == 1 {
+-if transaction_clean_after_id == "transaction.git.clean_after" {
+-if transaction_clean_after_fact == 1 {
+[>transaction_committed]- 1;
+}
+}
+}
+}
+}
+
 -return [
 1: runtime_dictionary,
 2: reference_document,
@@ -667,6 +849,8 @@ index- 1;
 12: host_boundary,
 13: cli_contract,
 14: engineering_surface,
-15: kernel_reduction
+15: kernel_reduction,
+16: transaction_ready,
+17: transaction_committed
 ];;
 }
