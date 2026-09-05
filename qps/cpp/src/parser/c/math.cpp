@@ -136,6 +136,21 @@ std::unique_ptr<ast::AstNode> Parser::parsePrimaryExpression() {
     int line = current_token_.line;
     int column = current_token_.column;
 
+    if (peek_type() == tokens::TokenType::OPEN_BRACE) {
+        auto construct =
+            parseBracedExecutionConstruct();
+
+        if (!dynamic_cast<ast::ExecutionCallNode*>(
+                construct.get())) {
+
+            error(
+                "Only an execution call may be used "
+                "as a braced value expression.");
+        }
+
+        return construct;
+    }
+
     if (peek_type() == tokens::TokenType::OPEN_PAREN) {
         match(tokens::TokenType::OPEN_PAREN);
         auto expr = parseExpression();

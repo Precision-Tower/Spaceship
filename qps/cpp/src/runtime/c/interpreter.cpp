@@ -1076,6 +1076,21 @@ RuntimeValue Interpreter::evaluateValue(
             std::move(entries));
     }
 
+    if (auto* call =
+            dynamic_cast<
+                const ast::ExecutionCallNode*>(
+                    &node)) {
+
+        if (!options_.execution_call) {
+            throw std::runtime_error(
+                "Execution call value requires "
+                "ExecutionEngine context.");
+        }
+
+        return options_.execution_call(
+            *call);
+    }
+
     if (auto* identifier =
             dynamic_cast<
                 const ast::IdentifierNode*>(

@@ -7,6 +7,7 @@
 
 #include "../../ast/h/statements.hpp"
 
+#include <functional>
 #include <optional>
 #include <stdexcept>
 #include <string>
@@ -18,6 +19,7 @@ namespace qps {
 namespace ast {
 class AstNode;
 class ExecutionActionNode;
+class ExecutionCallNode;
 class ExecutionBlockNode;
 class FunctionCallNode;
 class FunctionDeclarationNode;
@@ -95,6 +97,13 @@ struct InterpreterOptions {
     StructuralResolver* symbol_resolver = nullptr;
 
     std::string current_document;
+
+    // Optional bridge for evaluating reusable execution calls
+    // as ordinary RuntimeValue expressions.
+    std::function<
+        RuntimeValue(
+            const ast::ExecutionCallNode&)>
+        execution_call;
 };
 
 class Interpreter {

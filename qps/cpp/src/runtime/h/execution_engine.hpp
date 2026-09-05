@@ -123,6 +123,12 @@ public:
     ExecutionInstance instantiate(
         const ast::ExecutionCallNode& call) const;
 
+    // Expression-position execution calls evaluate their explicit
+    // overrides against the calling execution scope.
+    ExecutionInstance instantiate(
+        const ast::ExecutionCallNode& call,
+        ExecutionScope& caller_scope) const;
+
     // RuntimeValue is the canonical execution override representation.
     ExecutionInstance instantiate(
         const std::string& definition_id,
@@ -151,6 +157,7 @@ private:
 
     ExecutionInstance instantiate(
         const ast::ExecutionCallNode& call,
+        ExecutionScope& override_scope,
         const std::unordered_map<std::string, CausalInput>&
             causal_inputs) const;
 

@@ -1329,6 +1329,72 @@ v1: [v.cylinder];
 }
 
 
+void executionCallResultComposesAsRuntimeValue() {
+    const auto instances = executeProgram(R"qps(
+{Produce:
+-return [
+1: "hello",
+2: 42
+];;
+}
+
+{Consume:
+[>input]-
+
+-return input;
+}
+
+{Compose:
+%produced: {>Produce:
+}
+
+%consumed: {>Consume:
+input- produced;
+}
+
+-return consumed;
+}
+
+{>Compose:
+}
+)qps");
+
+    require(
+        instances.size() == 1,
+        "Expected one top-level Compose execution.");
+
+    require(
+        instances[0].result.has_value(),
+        "Compose should return a result.");
+
+    require(
+        instances[0].result->isDictionary(),
+        "Composed execution result should remain Dictionary.");
+
+    const auto& dictionary =
+        instances[0].result->asDictionary(
+            "composed execution result");
+
+    require(
+        dictionary.size() == 2,
+        "Composed Dictionary size mismatch.");
+
+    require(
+        dictionary[0].id == 1 &&
+        dictionary[0].value.isString() &&
+        dictionary[0].value.asString(
+            "composed entry 1") == "hello",
+        "Composed Dictionary string entry mismatch.");
+
+    require(
+        dictionary[1].id == 2 &&
+        dictionary[1].value.isNumeric() &&
+        dictionary[1].value.asNumber(
+            "composed entry 2") == 42.0,
+        "Composed Dictionary numeric entry mismatch.");
+}
+
+
 void qpsPathKindPolicyExecutesAboveNativeFilesystemFact() {
     const auto instances = executeProgram(R"qps(
 {Path_Kind_Policy:
@@ -1531,6 +1597,7 @@ int main(int argc, char** argv) {
         std::filesystem::path(argv[2]);
 
     const std::vector<TestCase> tests = {
+        {"execution call result composes as RuntimeValue", executionCallResultComposesAsRuntimeValue},
         {"QPS path kind policy executes above native filesystem fact", qpsPathKindPolicyExecutesAboveNativeFilesystemFact},
         {"QPS derives module identity from filesystem facts", qpsDerivesModuleIdentityFromFilesystemFacts},
         {"structural semantic references preserve navigation", structuralSemanticReferencesPreserveNavigation},

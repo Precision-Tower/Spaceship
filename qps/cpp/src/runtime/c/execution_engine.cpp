@@ -314,13 +314,27 @@ ExecutionDefinitionInfo ExecutionEngine::inspectRegisteredDefinition(
 ExecutionInstance ExecutionEngine::instantiate(
     const ast::ExecutionCallNode& call) const {
 
+    ExecutionScope override_scope;
+
     return instantiate(
         call,
+        override_scope,
         std::unordered_map<std::string, CausalInput>{});
 }
 
 ExecutionInstance ExecutionEngine::instantiate(
     const ast::ExecutionCallNode& call,
+    ExecutionScope& caller_scope) const {
+
+    return instantiate(
+        call,
+        caller_scope,
+        std::unordered_map<std::string, CausalInput>{});
+}
+
+ExecutionInstance ExecutionEngine::instantiate(
+    const ast::ExecutionCallNode& call,
+    ExecutionScope& override_scope,
     const std::unordered_map<std::string, CausalInput>&
         causal_inputs) const {
 
@@ -338,7 +352,6 @@ ExecutionInstance ExecutionEngine::instantiate(
     const auto input_index = indexInputs(inputs);
 
     std::unordered_map<std::string, RuntimeValue> overrides;
-    ExecutionScope override_scope;
 
     for (const auto& argument : call.arguments_) {
         const std::string name = overrideName(*argument);
@@ -538,6 +551,26 @@ ExecutionInstance ExecutionEngine::instantiate(
     options.symbol_resolver =
         symbol_resolver_;
 
+    options.execution_call =
+        [this, &instance](
+            const ast::ExecutionCallNode& call)
+            -> RuntimeValue {
+
+            ExecutionInstance nested =
+                instantiate(
+                    call,
+                    instance.scope);
+
+            if (!nested.result.has_value()) {
+                throw std::runtime_error(
+                    "Execution call '" +
+                    call.identifier_ +
+                    "' used as a value returned no value.");
+            }
+
+            return *nested.result;
+        };
+
     if (found->second.source) {
         options.current_document =
             found->second.source->source_document;
@@ -735,9 +768,13 @@ std::vector<ExecutionInstance> ExecutionEngine::execute(
             }
 
             instances.push_back(
-                instantiate(
-                    *call,
-                    causal_inputs));
+                [&]() {
+                    ExecutionScope override_scope;
+                    return instantiate(
+                        *call,
+                        override_scope,
+                        causal_inputs);
+                }());
             continue;
         }
 
