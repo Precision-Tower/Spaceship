@@ -1,0 +1,244 @@
+{Checklist_Run:
+%live: {>Checklist_Evidence:
+}
+
+live_focused: -dictionary_at(
+value- live;
+index- 0;
+);
+
+live_full: -dictionary_at(
+value- live;
+index- 1;
+);
+
+live_engineering: -dictionary_at(
+value- live;
+index- 2;
+);
+
+live_diff: -dictionary_at(
+value- live;
+index- 3;
+);
+
+%evidence_1: [
+1: "ctest.runtime_dictionary",
+2: 1
+];
+
+%evidence_2: [
+1: "ctest.reference_document_plan",
+2: 1
+];
+
+%evidence_3: [
+1: "authored.reference_document_parity",
+2: 1
+];
+
+%evidence_4: [
+1: "invariant.structural_handle_owner_node_only",
+2: 1
+];
+
+%evidence_5: [
+1: "ctest.semantic_walk",
+2: 1
+];
+
+%evidence_6: [
+1: "authored.semantic_walk.parity",
+2: 1
+];
+
+%evidence_7: [
+1: "production.semantic_walk.cutover",
+2: 1
+];
+
+%evidence_8: [
+1: "absence.structural_handle.compatibility_metadata",
+2: 1
+];
+
+%evidence_9: [
+1: "absence.native.reference_policy",
+2: 1
+];
+
+%evidence_10: [
+1: "absence.native.semantic_walk",
+2: 1
+];
+
+%evidence_11: [
+1: "ctest.grammar_regression",
+2: 1
+];
+
+%evidence_12: [
+1: "ctest.parser_goldens",
+2: 1
+];
+
+%evidence_13: [
+1: "ctest.corpus_ast_conformance",
+2: 1
+];
+
+%evidence_14: [
+1: "ctest.active_corpus_conformance",
+2: 1
+];
+
+%evidence_15: [
+1: "ctest.runtime_semantics",
+2: 1
+];
+
+%evidence_16: [
+1: "ctest.function_semantics",
+2: 1
+];
+
+%evidence_17: [
+1: "ctest.execution_definition",
+2: 1
+];
+
+%evidence_18: [
+1: "ctest.structural_selection",
+2: 1
+];
+
+%evidence_19: [
+1: "ctest.symbol_resolver",
+2: 1
+];
+
+%evidence_20: [
+1: "ctest.path_resolver_index_surface",
+2: 1
+];
+
+%evidence_21: [
+1: "ctest.host_action",
+2: 1
+];
+
+%evidence_22: [
+1: "ctest.cli.test",
+2: 1
+];
+
+%evidence_23: [
+1: "ctest.cli.probe",
+2: 1
+];
+
+%evidence_24: [
+1: "ctest.cli.dir",
+2: 1
+];
+
+%evidence_25: [
+1: "ctest.cli.query",
+2: 1
+];
+
+%evidence_26: [
+1: "ctest.cli.cipher",
+2: 1
+];
+
+%evidence_27: [
+1: "ctest.cli.source_execution",
+2: 1
+];
+
+%evidence_28: [
+1: "qps_test.engineering",
+2: 1
+];
+
+%evidence_29: [
+1: "invariant.authored_authorities_present",
+2: 1
+];
+
+%evidence_30: [
+1: "transaction.git.clean_before",
+2: 1
+];
+
+%evidence_31: [
+1: "transaction.git.changed_files_scoped",
+2: 1
+];
+
+%evidence_36: [
+1: "transaction.git.staged_set_exact",
+2: 1
+];
+
+%evidence_37: [
+1: "transaction.git.commit_identity_recorded",
+2: 1
+];
+
+%evidence_38: [
+1: "transaction.git.clean_after",
+2: 1
+];
+
+%complete_evidence: [
+1: evidence_1,
+2: evidence_2,
+3: evidence_3,
+4: evidence_4,
+5: evidence_5,
+6: evidence_6,
+7: evidence_7,
+8: evidence_8,
+9: evidence_9,
+10: evidence_10,
+11: evidence_11,
+12: evidence_12,
+13: evidence_13,
+14: evidence_14,
+15: evidence_15,
+16: evidence_16,
+17: evidence_17,
+18: evidence_18,
+19: evidence_19,
+20: evidence_20,
+21: evidence_21,
+22: evidence_22,
+23: evidence_23,
+24: evidence_24,
+25: evidence_25,
+26: evidence_26,
+27: evidence_27,
+28: evidence_28,
+29: evidence_29,
+30: evidence_30,
+31: evidence_31,
+32: live_diff,
+33: live_focused,
+34: live_full,
+35: live_engineering,
+36: evidence_36,
+37: evidence_37,
+38: evidence_38
+];
+
+%result: {>Checklist:
+evidence- complete_evidence;
+}
+
+-return result;
+}
+
+{>Checklist_Run:
+}

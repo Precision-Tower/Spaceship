@@ -1,4 +1,6 @@
-{
+{Checklist:
+[>evidence]-
+
 [>runtime_dictionary]- 0;
 
 runtime_dictionary_evidence: -dictionary_at(
@@ -853,4 +855,5 @@ index- 1;
 16: transaction_ready,
 17: transaction_committed
 ];;
+
 }

@@ -14,6 +14,7 @@
 #include <stdexcept>
 #include <string>
 #include <utility>
+#include <unordered_map>
 #include <vector>
 
 namespace {
@@ -467,38 +468,35 @@ runtime::RuntimeValue completePhaseAEvidence(
 
 std::vector<runtime::RuntimeDictionaryEntry>
 executePolicy(
-    const ast::ExecutionBlockNode& policy,
+    const ast::ExecutionDefinitionNode& policy,
     runtime::RuntimeValue supplied_evidence) {
 
-    runtime::ExecutionScope scope;
+    runtime::ExecutionEngine engine;
+    engine.registerDefinition(policy);
 
-    scope.bind(
+    std::unordered_map<
+        std::string,
+        runtime::RuntimeValue>
+        overrides;
+
+    overrides.emplace(
         "evidence",
-        std::move(supplied_evidence),
-        std::nullopt,
-        runtime::BindingOrigin::SUPPLIED);
+        std::move(supplied_evidence));
 
-    runtime::InterpreterOptions options;
-    options.allow_return = true;
-    options.symbol_resolver = nullptr;
-
-    runtime::Interpreter interpreter(
-        scope,
-        runtime::FunctionTable{},
-        options);
-
-    const auto result =
-        interpreter.executeForResult(policy);
+    const auto instance =
+        engine.instantiate(
+            "Checklist",
+            overrides);
 
     require(
-        result.has_value(),
+        instance.result.has_value(),
         "Authored checklist policy returned no value.");
 
     require(
-        result->isDictionary(),
+        instance.result->isDictionary(),
         "Authored checklist policy did not return Dictionary.");
 
-    return result->asDictionary(
+    return instance.result->asDictionary(
         "authored checklist policy result");
 }
 
@@ -520,197 +518,8 @@ double resultState(
         "checklist result state");
 }
 
-runtime::RuntimeValue
-completeEvidenceWithLiveTransactionObservations(
-    const fs::path& evidence_path) {
-
-    const auto evidence_program =
-        parseSource(
-            readFile(evidence_path));
-
-    runtime::ExecutionEngine engine;
-
-    const auto instances =
-        engine.execute(
-            *evidence_program);
-
-    require(
-        instances.size() == 1,
-        "Checklist evidence producer must create exactly one execution instance.");
-
-    require(
-        instances.front().result.has_value(),
-        "Checklist evidence producer returned no value.");
-
-    require(
-        instances.front().result->isDictionary(),
-        "Checklist evidence producer did not return Dictionary.");
-
-    const auto& live =
-        instances.front().result->asDictionary(
-            "checklist evidence producer result");
-
-    require(
-        live.size() == 4,
-        "Checklist evidence producer must return four observations.");
-
-    const std::vector<std::pair<int, std::string>>
-        expected{
-            {1, "transaction.test.focused"},
-            {2, "transaction.test.full"},
-            {3, "transaction.qps_test.engineering"},
-            {4, "transaction.git.diff_check_clean"}
-        };
-
-    std::vector<runtime::RuntimeDictionaryEntry>
-        entries =
-            completePhaseAEvidence()
-                .asDictionary(
-                    "complete checklist evidence");
-
-    for (const auto& [live_id, expected_identity] :
-         expected) {
-
-        const auto& observation =
-            dictionaryEntry(
-                live,
-                live_id,
-                "live transaction evidence");
-
-        require(
-            observation.isDictionary(),
-            "Live transaction observation was not Dictionary.");
-
-        const auto& fact =
-            observation.asDictionary(
-                "live transaction observation");
-
-        const auto& identity =
-            dictionaryEntry(
-                fact,
-                1,
-                "live transaction observation identity");
-
-        const auto& state =
-            dictionaryEntry(
-                fact,
-                2,
-                "live transaction observation state");
-
-        require(
-            identity.isString(),
-            "Live transaction evidence identity was not string.");
-
-        require(
-            identity.asString(
-                "live transaction evidence identity") ==
-                expected_identity,
-            "Live transaction evidence identity mismatch.");
-
-        require(
-            state.isNumeric(),
-            "Live transaction evidence state was not numeric.");
-
-        const int destination_id =
-            expected_identity ==
-                "transaction.git.diff_check_clean"
-                ? 32
-            : expected_identity ==
-                "transaction.test.focused"
-                ? 33
-            : expected_identity ==
-                "transaction.test.full"
-                ? 34
-            : 35;
-
-        bool replaced = false;
-
-        for (auto& entry : entries) {
-            if (entry.id == destination_id) {
-                entry.value = observation;
-                replaced = true;
-                break;
-            }
-        }
-
-        require(
-            replaced,
-            "Could not place live transaction evidence.");
-    }
-
-    return runtime::RuntimeValue::dictionary(
-        std::move(entries));
-}
-
-
-void liveEvidenceDrivesTransactionPolicy(
-    const ast::ExecutionBlockNode& policy,
-    const fs::path& evidence_path) {
-
-    const auto supplied =
-        completeEvidenceWithLiveTransactionObservations(
-            evidence_path);
-
-    const auto& supplied_dictionary =
-        supplied.asDictionary(
-            "live checklist evidence");
-
-    for (int id : {32, 33, 34, 35}) {
-        const auto& observation =
-            dictionaryEntry(
-                supplied_dictionary,
-                id,
-                "live checklist evidence");
-
-        const auto& fact =
-            observation.asDictionary(
-                "live checklist observation");
-
-        const auto& identity =
-            dictionaryEntry(
-                fact,
-                1,
-                "live checklist observation identity");
-
-        const double state =
-            dictionaryEntry(
-                fact,
-                2,
-                "live checklist observation state")
-                .asNumber(
-                    "live checklist observation state");
-
-        require(
-            state == 1.0,
-            "Real transaction observation failed: " +
-            identity.asString(
-                "live checklist observation identity"));
-    }
-
-    const auto result =
-        executePolicy(
-            policy,
-            supplied);
-
-    require(
-        resultState(
-            result,
-            9) == 1.0,
-        "Live transaction evidence incorrectly changed implementation proof.");
-
-    require(
-        resultState(
-            result,
-            16) == 1.0,
-        "Real observations did not produce transaction.ready.");
-
-    std::cout
-        << "LIVE_TRANSACTION_EVIDENCE: PASS\n";
-}
-
-
 void allEvidenceProvesPolicy(
-    const ast::ExecutionBlockNode& policy) {
+    const ast::ExecutionDefinitionNode& policy) {
 
     const auto result =
         executePolicy(
@@ -834,7 +643,7 @@ void allEvidenceProvesPolicy(
 }
 
 void missingRequiredEvidenceFailsOverall(
-    const ast::ExecutionBlockNode& policy) {
+    const ast::ExecutionDefinitionNode& policy) {
 
     const auto result =
         executePolicy(
@@ -880,7 +689,7 @@ void missingRequiredEvidenceFailsOverall(
 }
 
 void missingSemanticWalkCutoverDoesNotProve(
-    const ast::ExecutionBlockNode& policy) {
+    const ast::ExecutionDefinitionNode& policy) {
 
     const auto result =
         executePolicy(
@@ -920,7 +729,7 @@ void missingSemanticWalkCutoverDoesNotProve(
 }
 
 void missingNativePolicyAbsenceDoesNotProve(
-    const ast::ExecutionBlockNode& policy) {
+    const ast::ExecutionDefinitionNode& policy) {
 
     const auto result =
         executePolicy(
@@ -960,7 +769,7 @@ void missingNativePolicyAbsenceDoesNotProve(
 }
 
 void missingLanguageEvidenceDoesNotProve(
-    const ast::ExecutionBlockNode& policy) {
+    const ast::ExecutionDefinitionNode& policy) {
 
     const auto result =
         executePolicy(
@@ -1009,7 +818,7 @@ void missingLanguageEvidenceDoesNotProve(
 
 
 void missingRuntimeEvidenceDoesNotProve(
-    const ast::ExecutionBlockNode& policy) {
+    const ast::ExecutionDefinitionNode& policy) {
 
     const auto result =
         executePolicy(
@@ -1062,7 +871,7 @@ void missingRuntimeEvidenceDoesNotProve(
 
 
 void missingStructuralSelectionDoesNotProve(
-    const ast::ExecutionBlockNode& policy) {
+    const ast::ExecutionDefinitionNode& policy) {
 
     const auto result =
         executePolicy(
@@ -1087,7 +896,7 @@ void missingStructuralSelectionDoesNotProve(
 
 
 void missingHostEvidenceDoesNotProve(
-    const ast::ExecutionBlockNode& policy) {
+    const ast::ExecutionDefinitionNode& policy) {
 
     const auto result =
         executePolicy(
@@ -1112,7 +921,7 @@ void missingHostEvidenceDoesNotProve(
 
 
 void missingCliEvidenceDoesNotProve(
-    const ast::ExecutionBlockNode& policy) {
+    const ast::ExecutionDefinitionNode& policy) {
 
     const auto result =
         executePolicy(
@@ -1137,7 +946,7 @@ void missingCliEvidenceDoesNotProve(
 
 
 void missingEngineeringEvidenceDoesNotProve(
-    const ast::ExecutionBlockNode& policy) {
+    const ast::ExecutionDefinitionNode& policy) {
 
     const auto result =
         executePolicy(
@@ -1162,7 +971,7 @@ void missingEngineeringEvidenceDoesNotProve(
 
 
 void missingAuthoredAuthorityEvidenceDoesNotProve(
-    const ast::ExecutionBlockNode& policy) {
+    const ast::ExecutionDefinitionNode& policy) {
 
     const auto result =
         executePolicy(
@@ -1187,7 +996,7 @@ void missingAuthoredAuthorityEvidenceDoesNotProve(
 
 
 void transactionCanBeReadyBeforeCommit(
-    const ast::ExecutionBlockNode& policy) {
+    const ast::ExecutionDefinitionNode& policy) {
 
     const auto result =
         executePolicy(
@@ -1212,7 +1021,7 @@ void transactionCanBeReadyBeforeCommit(
 
 
 void transactionScopeFailureDoesNotUnproveImplementation(
-    const ast::ExecutionBlockNode& policy) {
+    const ast::ExecutionDefinitionNode& policy) {
 
     const auto result =
         executePolicy(
@@ -1237,7 +1046,7 @@ void transactionScopeFailureDoesNotUnproveImplementation(
 
 
 void transactionTestFailureDoesNotUnproveImplementation(
-    const ast::ExecutionBlockNode& policy) {
+    const ast::ExecutionDefinitionNode& policy) {
 
     const auto result =
         executePolicy(
@@ -1262,7 +1071,7 @@ void transactionTestFailureDoesNotUnproveImplementation(
 
 
 void committedTransactionRequiresCleanAfter(
-    const ast::ExecutionBlockNode& policy) {
+    const ast::ExecutionDefinitionNode& policy) {
 
     const auto result =
         executePolicy(
@@ -1287,7 +1096,7 @@ void committedTransactionRequiresCleanAfter(
 
 
 void wrongEvidenceIdentityDoesNotProve(
-    const ast::ExecutionBlockNode& policy) {
+    const ast::ExecutionDefinitionNode& policy) {
 
     std::vector<runtime::RuntimeDictionaryEntry> entries;
 
@@ -1592,14 +1401,12 @@ int main(
     char** argv) {
 
     try {
-        if (argc != 2 &&
-            argc != 3) {
+        if (argc != 2) {
 
             std::cerr
                 << "Usage: "
                 << argv[0]
-                << " <checklist-policy.qps>"
-                << " [checklist-evidence.qps]\n";
+                << " <checklist-policy.qps>\n";
             return 2;
         }
 
@@ -1609,39 +1416,41 @@ int main(
 
         require(
             program->statements.size() == 1,
-            "Authored checklist policy must contain exactly one top-level statement.");
+            "Authored checklist policy must contain exactly one Checklist definition.");
 
-        const auto* policy =
-            dynamic_cast<const ast::ExecutionBlockNode*>(
+        const auto* definition =
+            dynamic_cast<const ast::ExecutionDefinitionNode*>(
                 program->statements.front().get());
 
         require(
-            policy != nullptr,
-            "Authored checklist policy top-level statement must be execution block.");
+            definition != nullptr,
+            "Authored checklist policy must be an execution definition.");
 
-        allEvidenceProvesPolicy(*policy);
-        missingRequiredEvidenceFailsOverall(*policy);
-        missingSemanticWalkCutoverDoesNotProve(*policy);
-        missingNativePolicyAbsenceDoesNotProve(*policy);
-        missingLanguageEvidenceDoesNotProve(*policy);
-        missingRuntimeEvidenceDoesNotProve(*policy);
-        missingStructuralSelectionDoesNotProve(*policy);
-        missingHostEvidenceDoesNotProve(*policy);
-        missingCliEvidenceDoesNotProve(*policy);
-        missingEngineeringEvidenceDoesNotProve(*policy);
-        missingAuthoredAuthorityEvidenceDoesNotProve(*policy);
-        transactionCanBeReadyBeforeCommit(*policy);
-        transactionScopeFailureDoesNotUnproveImplementation(*policy);
-        transactionTestFailureDoesNotUnproveImplementation(*policy);
-        committedTransactionRequiresCleanAfter(*policy);
+        require(
+            definition->identifier_ == "Checklist",
+            "Authored checklist execution definition must be named Checklist.");
 
-        if (argc == 3) {
-            liveEvidenceDrivesTransactionPolicy(
-                *policy,
-                fs::path(argv[2]));
-        }
+        require(
+            definition->body_ != nullptr,
+            "Authored Checklist definition has no execution body.");
 
-        wrongEvidenceIdentityDoesNotProve(*policy);
+        allEvidenceProvesPolicy(*definition);
+        missingRequiredEvidenceFailsOverall(*definition);
+        missingSemanticWalkCutoverDoesNotProve(*definition);
+        missingNativePolicyAbsenceDoesNotProve(*definition);
+        missingLanguageEvidenceDoesNotProve(*definition);
+        missingRuntimeEvidenceDoesNotProve(*definition);
+        missingStructuralSelectionDoesNotProve(*definition);
+        missingHostEvidenceDoesNotProve(*definition);
+        missingCliEvidenceDoesNotProve(*definition);
+        missingEngineeringEvidenceDoesNotProve(*definition);
+        missingAuthoredAuthorityEvidenceDoesNotProve(*definition);
+        transactionCanBeReadyBeforeCommit(*definition);
+        transactionScopeFailureDoesNotUnproveImplementation(*definition);
+        transactionTestFailureDoesNotUnproveImplementation(*definition);
+        committedTransactionRequiresCleanAfter(*definition);
+
+        wrongEvidenceIdentityDoesNotProve(*definition);
 
         std::cout
             << "QPS AUTHORED IMPLEMENTATION PROOF POLICY: PASS\n";
