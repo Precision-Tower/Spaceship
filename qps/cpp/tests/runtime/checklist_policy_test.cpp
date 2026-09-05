@@ -1,6 +1,7 @@
 #include "ast/ast_node.hpp"
 #include "parser/h/_index.hpp"
 #include "runtime/h/interpreter.hpp"
+#include "runtime/h/execution_engine.hpp"
 #include "runtime/h/symbol_table.hpp"
 #include "tokens/h/char_stream.hpp"
 #include "tokens/h/lexer.hpp"
@@ -518,6 +519,195 @@ double resultState(
     return state.asNumber(
         "checklist result state");
 }
+
+runtime::RuntimeValue
+completeEvidenceWithLiveTransactionObservations(
+    const fs::path& evidence_path) {
+
+    const auto evidence_program =
+        parseSource(
+            readFile(evidence_path));
+
+    runtime::ExecutionEngine engine;
+
+    const auto instances =
+        engine.execute(
+            *evidence_program);
+
+    require(
+        instances.size() == 1,
+        "Checklist evidence producer must create exactly one execution instance.");
+
+    require(
+        instances.front().result.has_value(),
+        "Checklist evidence producer returned no value.");
+
+    require(
+        instances.front().result->isDictionary(),
+        "Checklist evidence producer did not return Dictionary.");
+
+    const auto& live =
+        instances.front().result->asDictionary(
+            "checklist evidence producer result");
+
+    require(
+        live.size() == 4,
+        "Checklist evidence producer must return four observations.");
+
+    const std::vector<std::pair<int, std::string>>
+        expected{
+            {1, "transaction.test.focused"},
+            {2, "transaction.test.full"},
+            {3, "transaction.qps_test.engineering"},
+            {4, "transaction.git.diff_check_clean"}
+        };
+
+    std::vector<runtime::RuntimeDictionaryEntry>
+        entries =
+            completePhaseAEvidence()
+                .asDictionary(
+                    "complete checklist evidence");
+
+    for (const auto& [live_id, expected_identity] :
+         expected) {
+
+        const auto& observation =
+            dictionaryEntry(
+                live,
+                live_id,
+                "live transaction evidence");
+
+        require(
+            observation.isDictionary(),
+            "Live transaction observation was not Dictionary.");
+
+        const auto& fact =
+            observation.asDictionary(
+                "live transaction observation");
+
+        const auto& identity =
+            dictionaryEntry(
+                fact,
+                1,
+                "live transaction observation identity");
+
+        const auto& state =
+            dictionaryEntry(
+                fact,
+                2,
+                "live transaction observation state");
+
+        require(
+            identity.isString(),
+            "Live transaction evidence identity was not string.");
+
+        require(
+            identity.asString(
+                "live transaction evidence identity") ==
+                expected_identity,
+            "Live transaction evidence identity mismatch.");
+
+        require(
+            state.isNumeric(),
+            "Live transaction evidence state was not numeric.");
+
+        const int destination_id =
+            expected_identity ==
+                "transaction.git.diff_check_clean"
+                ? 32
+            : expected_identity ==
+                "transaction.test.focused"
+                ? 33
+            : expected_identity ==
+                "transaction.test.full"
+                ? 34
+            : 35;
+
+        bool replaced = false;
+
+        for (auto& entry : entries) {
+            if (entry.id == destination_id) {
+                entry.value = observation;
+                replaced = true;
+                break;
+            }
+        }
+
+        require(
+            replaced,
+            "Could not place live transaction evidence.");
+    }
+
+    return runtime::RuntimeValue::dictionary(
+        std::move(entries));
+}
+
+
+void liveEvidenceDrivesTransactionPolicy(
+    const ast::ExecutionBlockNode& policy,
+    const fs::path& evidence_path) {
+
+    const auto supplied =
+        completeEvidenceWithLiveTransactionObservations(
+            evidence_path);
+
+    const auto& supplied_dictionary =
+        supplied.asDictionary(
+            "live checklist evidence");
+
+    for (int id : {32, 33, 34, 35}) {
+        const auto& observation =
+            dictionaryEntry(
+                supplied_dictionary,
+                id,
+                "live checklist evidence");
+
+        const auto& fact =
+            observation.asDictionary(
+                "live checklist observation");
+
+        const auto& identity =
+            dictionaryEntry(
+                fact,
+                1,
+                "live checklist observation identity");
+
+        const double state =
+            dictionaryEntry(
+                fact,
+                2,
+                "live checklist observation state")
+                .asNumber(
+                    "live checklist observation state");
+
+        require(
+            state == 1.0,
+            "Real transaction observation failed: " +
+            identity.asString(
+                "live checklist observation identity"));
+    }
+
+    const auto result =
+        executePolicy(
+            policy,
+            supplied);
+
+    require(
+        resultState(
+            result,
+            9) == 1.0,
+        "Live transaction evidence incorrectly changed implementation proof.");
+
+    require(
+        resultState(
+            result,
+            16) == 1.0,
+        "Real observations did not produce transaction.ready.");
+
+    std::cout
+        << "LIVE_TRANSACTION_EVIDENCE: PASS\n";
+}
+
 
 void allEvidenceProvesPolicy(
     const ast::ExecutionBlockNode& policy) {
@@ -1402,11 +1592,14 @@ int main(
     char** argv) {
 
     try {
-        if (argc != 2) {
+        if (argc != 2 &&
+            argc != 3) {
+
             std::cerr
                 << "Usage: "
                 << argv[0]
-                << " <checklist-policy.qps>\n";
+                << " <checklist-policy.qps>"
+                << " [checklist-evidence.qps]\n";
             return 2;
         }
 
@@ -1441,6 +1634,13 @@ int main(
         transactionScopeFailureDoesNotUnproveImplementation(*policy);
         transactionTestFailureDoesNotUnproveImplementation(*policy);
         committedTransactionRequiresCleanAfter(*policy);
+
+        if (argc == 3) {
+            liveEvidenceDrivesTransactionPolicy(
+                *policy,
+                fs::path(argv[2]));
+        }
+
         wrongEvidenceIdentityDoesNotProve(*policy);
 
         std::cout

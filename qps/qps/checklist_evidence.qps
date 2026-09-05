@@ -1,0 +1,80 @@
+{Checklist_Evidence:
+[>focused_fact]- 0;
+[>full_fact]- 0;
+[>engineering_fact]- 0;
+[>diff_fact]- 0;
+
+focused: -process(
+program- "ctest";
+arg_0- "--test-dir";
+arg_1- "qps/cpp/build-pixel";
+arg_2- "-R";
+arg_3- "^qps_checklist_policy_test$";
+arg_4- "--output-on-failure";
+);
+
+-if focused_exit_code == 0 {
+[>focused_fact]- 1;
+}
+
+full: -process(
+program- "ctest";
+arg_0- "--test-dir";
+arg_1- "qps/cpp/build-pixel";
+arg_2- "--output-on-failure";
+);
+
+-if full_exit_code == 0 {
+[>full_fact]- 1;
+}
+
+engineering: -process(
+program- "qps/cpp/build-pixel/qps";
+arg_0- "test";
+arg_1- "Engineering/qps";
+);
+
+-if engineering_exit_code == 0 {
+[>engineering_fact]- 1;
+}
+
+diff_check: -process(
+program- "git";
+arg_0- "diff";
+arg_1- "--check";
+);
+
+-if diff_check_exit_code == 0 {
+[>diff_fact]- 1;
+}
+
+%focused_evidence: [
+1: "transaction.test.focused",
+2: focused_fact
+];
+
+%full_evidence: [
+1: "transaction.test.full",
+2: full_fact
+];
+
+%engineering_evidence: [
+1: "transaction.qps_test.engineering",
+2: engineering_fact
+];
+
+%diff_evidence: [
+1: "transaction.git.diff_check_clean",
+2: diff_fact
+];
+
+-return [
+1: focused_evidence,
+2: full_evidence,
+3: engineering_evidence,
+4: diff_evidence
+];;
+}
+
+{>Checklist_Evidence:
+}
