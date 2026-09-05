@@ -107,7 +107,26 @@ runtime::RuntimeValue evidence(
     bool semantic_walk_cutover,
     bool compatibility_absent,
     bool native_reference_absent,
-    bool native_walk_absent) {
+    bool native_walk_absent,
+    bool grammar_regression = true,
+    bool parser_goldens = true,
+    bool corpus_ast_conformance = true,
+    bool active_corpus_conformance = true,
+    bool runtime_semantics = true,
+    bool function_semantics = true,
+    bool execution_definition = true,
+    bool structural_selection = true,
+    bool symbol_resolver = true,
+    bool path_resolver = true,
+    bool host_action = true,
+    bool cli_test = true,
+    bool cli_probe = true,
+    bool cli_dir = true,
+    bool cli_query = true,
+    bool cli_cipher = true,
+    bool cli_source_execution = true,
+    bool engineering_qps = true,
+    bool authored_authorities = true) {
 
     std::vector<runtime::RuntimeDictionaryEntry> entries;
 
@@ -181,9 +200,197 @@ runtime::RuntimeValue evidence(
             native_walk_absent)
     });
 
+    entries.push_back({
+        11,
+        evidenceEntry(
+            "ctest.grammar_regression",
+            grammar_regression)
+    });
+
+    entries.push_back({
+        12,
+        evidenceEntry(
+            "ctest.parser_goldens",
+            parser_goldens)
+    });
+
+    entries.push_back({
+        13,
+        evidenceEntry(
+            "ctest.corpus_ast_conformance",
+            corpus_ast_conformance)
+    });
+
+    entries.push_back({
+        14,
+        evidenceEntry(
+            "ctest.active_corpus_conformance",
+            active_corpus_conformance)
+    });
+
+    entries.push_back({
+        15,
+        evidenceEntry(
+            "ctest.runtime_semantics",
+            runtime_semantics)
+    });
+
+    entries.push_back({
+        16,
+        evidenceEntry(
+            "ctest.function_semantics",
+            function_semantics)
+    });
+
+    entries.push_back({
+        17,
+        evidenceEntry(
+            "ctest.execution_definition",
+            execution_definition)
+    });
+
+    entries.push_back({
+        18,
+        evidenceEntry(
+            "ctest.structural_selection",
+            structural_selection)
+    });
+
+    entries.push_back({
+        19,
+        evidenceEntry(
+            "ctest.symbol_resolver",
+            symbol_resolver)
+    });
+
+    entries.push_back({
+        20,
+        evidenceEntry(
+            "ctest.path_resolver_index_surface",
+            path_resolver)
+    });
+
+    entries.push_back({
+        21,
+        evidenceEntry(
+            "ctest.host_action",
+            host_action)
+    });
+
+    entries.push_back({
+        22,
+        evidenceEntry(
+            "ctest.cli.test",
+            cli_test)
+    });
+
+    entries.push_back({
+        23,
+        evidenceEntry(
+            "ctest.cli.probe",
+            cli_probe)
+    });
+
+    entries.push_back({
+        24,
+        evidenceEntry(
+            "ctest.cli.dir",
+            cli_dir)
+    });
+
+    entries.push_back({
+        25,
+        evidenceEntry(
+            "ctest.cli.query",
+            cli_query)
+    });
+
+    entries.push_back({
+        26,
+        evidenceEntry(
+            "ctest.cli.cipher",
+            cli_cipher)
+    });
+
+    entries.push_back({
+        27,
+        evidenceEntry(
+            "ctest.cli.source_execution",
+            cli_source_execution)
+    });
+
+    entries.push_back({
+        28,
+        evidenceEntry(
+            "qps_test.engineering",
+            engineering_qps)
+    });
+
+    entries.push_back({
+        29,
+        evidenceEntry(
+            "invariant.authored_authorities_present",
+            authored_authorities)
+    });
+
     return runtime::RuntimeValue::dictionary(
         std::move(entries));
 }
+
+runtime::RuntimeValue completePhaseAEvidence(
+    int missing_entry = 0) {
+
+    std::vector<runtime::RuntimeDictionaryEntry> entries;
+
+    const std::vector<std::string> ids{
+        "ctest.runtime_dictionary",
+        "ctest.reference_document_plan",
+        "authored.reference_document_parity",
+        "invariant.structural_handle_owner_node_only",
+        "ctest.semantic_walk",
+        "authored.semantic_walk.parity",
+        "production.semantic_walk.cutover",
+        "absence.structural_handle.compatibility_metadata",
+        "absence.native.reference_policy",
+        "absence.native.semantic_walk",
+        "ctest.grammar_regression",
+        "ctest.parser_goldens",
+        "ctest.corpus_ast_conformance",
+        "ctest.active_corpus_conformance",
+        "ctest.runtime_semantics",
+        "ctest.function_semantics",
+        "ctest.execution_definition",
+        "ctest.structural_selection",
+        "ctest.symbol_resolver",
+        "ctest.path_resolver_index_surface",
+        "ctest.host_action",
+        "ctest.cli.test",
+        "ctest.cli.probe",
+        "ctest.cli.dir",
+        "ctest.cli.query",
+        "ctest.cli.cipher",
+        "ctest.cli.source_execution",
+        "qps_test.engineering",
+        "invariant.authored_authorities_present"
+    };
+
+    int entry_id = 1;
+
+    for (const auto& id : ids) {
+        entries.push_back({
+            entry_id,
+            evidenceEntry(
+                id,
+                entry_id != missing_entry)
+        });
+
+        ++entry_id;
+    }
+
+    return runtime::RuntimeValue::dictionary(
+        std::move(entries));
+}
+
 
 std::vector<runtime::RuntimeDictionaryEntry>
 executePolicy(
@@ -293,6 +500,60 @@ void allEvidenceProvesPolicy(
             result,
             6) == 1.0,
         "Required checklist did not prove.");
+
+    require(
+        resultState(
+            result,
+            7) == 1.0,
+        "language.conformance was not proven.");
+
+    require(
+        resultState(
+            result,
+            8) == 1.0,
+        "runtime.execution was not proven.");
+
+    require(
+        resultState(
+            result,
+            9) == 1.0,
+        "implementation.required was not proven.");
+
+    require(
+        resultState(
+            result,
+            10) == 1.0,
+        "reference.resolution was not proven.");
+
+    require(
+        resultState(
+            result,
+            11) == 1.0,
+        "structural.runtime was not proven.");
+
+    require(
+        resultState(
+            result,
+            12) == 1.0,
+        "host.boundary was not proven.");
+
+    require(
+        resultState(
+            result,
+            13) == 1.0,
+        "cli.contract was not proven.");
+
+    require(
+        resultState(
+            result,
+            14) == 1.0,
+        "engineering.surface was not proven.");
+
+    require(
+        resultState(
+            result,
+            15) == 1.0,
+        "kernel.reduction was not proven.");
 
     std::cout
         << "ALL_EVIDENCE_PRESENT: PASS\n";
@@ -424,6 +685,233 @@ void missingNativePolicyAbsenceDoesNotProve(
         << "MISSING_NATIVE_POLICY_ABSENCE: PASS\n";
 }
 
+void missingLanguageEvidenceDoesNotProve(
+    const ast::ExecutionBlockNode& policy) {
+
+    const auto result =
+        executePolicy(
+            policy,
+            evidence(
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                false));
+
+    require(
+        resultState(
+            result,
+            6) == 1.0,
+        "Legacy proof aggregate changed with language evidence.");
+
+    require(
+        resultState(
+            result,
+            7) == 0.0,
+        "Language conformance incorrectly proved without parser goldens.");
+
+    require(
+        resultState(
+            result,
+            8) == 1.0,
+        "Unrelated runtime execution proof changed.");
+
+    require(
+        resultState(
+            result,
+            9) == 0.0,
+        "Implementation incorrectly proved without language conformance.");
+
+    std::cout
+        << "MISSING_LANGUAGE_EVIDENCE: PASS\n";
+}
+
+
+void missingRuntimeEvidenceDoesNotProve(
+    const ast::ExecutionBlockNode& policy) {
+
+    const auto result =
+        executePolicy(
+            policy,
+            evidence(
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                false));
+
+    require(
+        resultState(
+            result,
+            6) == 1.0,
+        "Legacy proof aggregate changed with runtime evidence.");
+
+    require(
+        resultState(
+            result,
+            7) == 1.0,
+        "Unrelated language conformance proof changed.");
+
+    require(
+        resultState(
+            result,
+            8) == 0.0,
+        "Runtime execution incorrectly proved without function semantics.");
+
+    require(
+        resultState(
+            result,
+            9) == 0.0,
+        "Implementation incorrectly proved without runtime execution.");
+
+    std::cout
+        << "MISSING_RUNTIME_EVIDENCE: PASS\n";
+}
+
+
+void missingStructuralSelectionDoesNotProve(
+    const ast::ExecutionBlockNode& policy) {
+
+    const auto result =
+        executePolicy(
+            policy,
+            completePhaseAEvidence(18));
+
+    require(
+        resultState(result, 10) == 1.0,
+        "Unrelated reference resolution proof changed.");
+
+    require(
+        resultState(result, 11) == 0.0,
+        "Structural runtime incorrectly proved without structural selection.");
+
+    require(
+        resultState(result, 9) == 0.0,
+        "Implementation incorrectly proved without structural runtime.");
+
+    std::cout
+        << "MISSING_STRUCTURAL_SELECTION: PASS\n";
+}
+
+
+void missingHostEvidenceDoesNotProve(
+    const ast::ExecutionBlockNode& policy) {
+
+    const auto result =
+        executePolicy(
+            policy,
+            completePhaseAEvidence(21));
+
+    require(
+        resultState(result, 12) == 0.0,
+        "Host boundary incorrectly proved without host action evidence.");
+
+    require(
+        resultState(result, 13) == 1.0,
+        "Unrelated CLI contract proof changed.");
+
+    require(
+        resultState(result, 9) == 0.0,
+        "Implementation incorrectly proved without host boundary.");
+
+    std::cout
+        << "MISSING_HOST_EVIDENCE: PASS\n";
+}
+
+
+void missingCliEvidenceDoesNotProve(
+    const ast::ExecutionBlockNode& policy) {
+
+    const auto result =
+        executePolicy(
+            policy,
+            completePhaseAEvidence(25));
+
+    require(
+        resultState(result, 13) == 0.0,
+        "CLI contract incorrectly proved without query evidence.");
+
+    require(
+        resultState(result, 12) == 1.0,
+        "Unrelated host boundary proof changed.");
+
+    require(
+        resultState(result, 9) == 0.0,
+        "Implementation incorrectly proved without CLI contract.");
+
+    std::cout
+        << "MISSING_CLI_EVIDENCE: PASS\n";
+}
+
+
+void missingEngineeringEvidenceDoesNotProve(
+    const ast::ExecutionBlockNode& policy) {
+
+    const auto result =
+        executePolicy(
+            policy,
+            completePhaseAEvidence(28));
+
+    require(
+        resultState(result, 14) == 0.0,
+        "Engineering surface incorrectly proved without corpus evidence.");
+
+    require(
+        resultState(result, 15) == 1.0,
+        "Unrelated kernel reduction proof changed.");
+
+    require(
+        resultState(result, 9) == 0.0,
+        "Implementation incorrectly proved without Engineering surface.");
+
+    std::cout
+        << "MISSING_ENGINEERING_EVIDENCE: PASS\n";
+}
+
+
+void missingAuthoredAuthorityEvidenceDoesNotProve(
+    const ast::ExecutionBlockNode& policy) {
+
+    const auto result =
+        executePolicy(
+            policy,
+            completePhaseAEvidence(29));
+
+    require(
+        resultState(result, 15) == 0.0,
+        "Kernel reduction incorrectly proved without authored authorities.");
+
+    require(
+        resultState(result, 14) == 1.0,
+        "Unrelated Engineering surface proof changed.");
+
+    require(
+        resultState(result, 9) == 0.0,
+        "Implementation incorrectly proved without kernel reduction.");
+
+    std::cout
+        << "MISSING_AUTHORED_AUTHORITY_EVIDENCE: PASS\n";
+}
+
+
 void wrongEvidenceIdentityDoesNotProve(
     const ast::ExecutionBlockNode& policy) {
 
@@ -499,6 +987,139 @@ void wrongEvidenceIdentityDoesNotProve(
             true)
     });
 
+    entries.push_back({
+        11,
+        evidenceEntry(
+            "ctest.grammar_regression",
+            true)
+    });
+
+    entries.push_back({
+        12,
+        evidenceEntry(
+            "ctest.parser_goldens",
+            true)
+    });
+
+    entries.push_back({
+        13,
+        evidenceEntry(
+            "ctest.corpus_ast_conformance",
+            true)
+    });
+
+    entries.push_back({
+        14,
+        evidenceEntry(
+            "ctest.active_corpus_conformance",
+            true)
+    });
+
+    entries.push_back({
+        15,
+        evidenceEntry(
+            "ctest.runtime_semantics",
+            true)
+    });
+
+    entries.push_back({
+        16,
+        evidenceEntry(
+            "ctest.function_semantics",
+            true)
+    });
+
+    entries.push_back({
+        17,
+        evidenceEntry(
+            "ctest.execution_definition",
+            true)
+    });
+
+    entries.push_back({
+        18,
+        evidenceEntry(
+            "ctest.structural_selection",
+            true)
+    });
+
+    entries.push_back({
+        19,
+        evidenceEntry(
+            "ctest.symbol_resolver",
+            true)
+    });
+
+    entries.push_back({
+        20,
+        evidenceEntry(
+            "ctest.path_resolver_index_surface",
+            true)
+    });
+
+    entries.push_back({
+        21,
+        evidenceEntry(
+            "ctest.host_action",
+            true)
+    });
+
+    entries.push_back({
+        22,
+        evidenceEntry(
+            "ctest.cli.test",
+            true)
+    });
+
+    entries.push_back({
+        23,
+        evidenceEntry(
+            "ctest.cli.probe",
+            true)
+    });
+
+    entries.push_back({
+        24,
+        evidenceEntry(
+            "ctest.cli.dir",
+            true)
+    });
+
+    entries.push_back({
+        25,
+        evidenceEntry(
+            "ctest.cli.query",
+            true)
+    });
+
+    entries.push_back({
+        26,
+        evidenceEntry(
+            "ctest.cli.cipher",
+            true)
+    });
+
+    entries.push_back({
+        27,
+        evidenceEntry(
+            "ctest.cli.source_execution",
+            true)
+    });
+
+    entries.push_back({
+        28,
+        evidenceEntry(
+            "qps_test.engineering",
+            true)
+    });
+
+    entries.push_back({
+        29,
+        evidenceEntry(
+            "invariant.authored_authorities_present",
+            true)
+    });
+
     const auto result =
         executePolicy(
             policy,
@@ -516,6 +1137,12 @@ void wrongEvidenceIdentityDoesNotProve(
             result,
             6) == 0.0,
         "Wrong evidence identity incorrectly proved required checklist.");
+
+    require(
+        resultState(
+            result,
+            9) == 0.0,
+        "Wrong evidence identity incorrectly proved implementation.required.");
 
     std::cout
         << "WRONG_EVIDENCE_IDENTITY: PASS\n";
@@ -556,6 +1183,13 @@ int main(
         missingRequiredEvidenceFailsOverall(*policy);
         missingSemanticWalkCutoverDoesNotProve(*policy);
         missingNativePolicyAbsenceDoesNotProve(*policy);
+        missingLanguageEvidenceDoesNotProve(*policy);
+        missingRuntimeEvidenceDoesNotProve(*policy);
+        missingStructuralSelectionDoesNotProve(*policy);
+        missingHostEvidenceDoesNotProve(*policy);
+        missingCliEvidenceDoesNotProve(*policy);
+        missingEngineeringEvidenceDoesNotProve(*policy);
+        missingAuthoredAuthorityEvidenceDoesNotProve(*policy);
         wrongEvidenceIdentityDoesNotProve(*policy);
 
         std::cout

@@ -151,6 +151,293 @@ value- native_walk_absence_evidence;
 index- 1;
 );
 
+
+grammar_evidence: -dictionary_at(
+value- evidence;
+index- 10;
+);
+
+grammar_id: -dictionary_at(
+value- grammar_evidence;
+index- 0;
+);
+
+grammar_fact: -dictionary_at(
+value- grammar_evidence;
+index- 1;
+);
+
+parser_goldens_evidence: -dictionary_at(
+value- evidence;
+index- 11;
+);
+
+parser_goldens_id: -dictionary_at(
+value- parser_goldens_evidence;
+index- 0;
+);
+
+parser_goldens_fact: -dictionary_at(
+value- parser_goldens_evidence;
+index- 1;
+);
+
+corpus_ast_evidence: -dictionary_at(
+value- evidence;
+index- 12;
+);
+
+corpus_ast_id: -dictionary_at(
+value- corpus_ast_evidence;
+index- 0;
+);
+
+corpus_ast_fact: -dictionary_at(
+value- corpus_ast_evidence;
+index- 1;
+);
+
+active_corpus_evidence: -dictionary_at(
+value- evidence;
+index- 13;
+);
+
+active_corpus_id: -dictionary_at(
+value- active_corpus_evidence;
+index- 0;
+);
+
+active_corpus_fact: -dictionary_at(
+value- active_corpus_evidence;
+index- 1;
+);
+
+runtime_semantics_evidence: -dictionary_at(
+value- evidence;
+index- 14;
+);
+
+runtime_semantics_id: -dictionary_at(
+value- runtime_semantics_evidence;
+index- 0;
+);
+
+runtime_semantics_fact: -dictionary_at(
+value- runtime_semantics_evidence;
+index- 1;
+);
+
+function_semantics_evidence: -dictionary_at(
+value- evidence;
+index- 15;
+);
+
+function_semantics_id: -dictionary_at(
+value- function_semantics_evidence;
+index- 0;
+);
+
+function_semantics_fact: -dictionary_at(
+value- function_semantics_evidence;
+index- 1;
+);
+
+execution_definition_evidence: -dictionary_at(
+value- evidence;
+index- 16;
+);
+
+execution_definition_id: -dictionary_at(
+value- execution_definition_evidence;
+index- 0;
+);
+
+execution_definition_fact: -dictionary_at(
+value- execution_definition_evidence;
+index- 1;
+);
+
+
+structural_selection_evidence: -dictionary_at(
+value- evidence;
+index- 17;
+);
+
+structural_selection_id: -dictionary_at(
+value- structural_selection_evidence;
+index- 0;
+);
+
+structural_selection_fact: -dictionary_at(
+value- structural_selection_evidence;
+index- 1;
+);
+
+symbol_resolver_evidence: -dictionary_at(
+value- evidence;
+index- 18;
+);
+
+symbol_resolver_id: -dictionary_at(
+value- symbol_resolver_evidence;
+index- 0;
+);
+
+symbol_resolver_fact: -dictionary_at(
+value- symbol_resolver_evidence;
+index- 1;
+);
+
+path_resolver_evidence: -dictionary_at(
+value- evidence;
+index- 19;
+);
+
+path_resolver_id: -dictionary_at(
+value- path_resolver_evidence;
+index- 0;
+);
+
+path_resolver_fact: -dictionary_at(
+value- path_resolver_evidence;
+index- 1;
+);
+
+host_action_evidence: -dictionary_at(
+value- evidence;
+index- 20;
+);
+
+host_action_id: -dictionary_at(
+value- host_action_evidence;
+index- 0;
+);
+
+host_action_fact: -dictionary_at(
+value- host_action_evidence;
+index- 1;
+);
+
+cli_test_evidence: -dictionary_at(
+value- evidence;
+index- 21;
+);
+
+cli_test_id: -dictionary_at(
+value- cli_test_evidence;
+index- 0;
+);
+
+cli_test_fact: -dictionary_at(
+value- cli_test_evidence;
+index- 1;
+);
+
+cli_probe_evidence: -dictionary_at(
+value- evidence;
+index- 22;
+);
+
+cli_probe_id: -dictionary_at(
+value- cli_probe_evidence;
+index- 0;
+);
+
+cli_probe_fact: -dictionary_at(
+value- cli_probe_evidence;
+index- 1;
+);
+
+cli_dir_evidence: -dictionary_at(
+value- evidence;
+index- 23;
+);
+
+cli_dir_id: -dictionary_at(
+value- cli_dir_evidence;
+index- 0;
+);
+
+cli_dir_fact: -dictionary_at(
+value- cli_dir_evidence;
+index- 1;
+);
+
+cli_query_evidence: -dictionary_at(
+value- evidence;
+index- 24;
+);
+
+cli_query_id: -dictionary_at(
+value- cli_query_evidence;
+index- 0;
+);
+
+cli_query_fact: -dictionary_at(
+value- cli_query_evidence;
+index- 1;
+);
+
+cli_cipher_evidence: -dictionary_at(
+value- evidence;
+index- 25;
+);
+
+cli_cipher_id: -dictionary_at(
+value- cli_cipher_evidence;
+index- 0;
+);
+
+cli_cipher_fact: -dictionary_at(
+value- cli_cipher_evidence;
+index- 1;
+);
+
+cli_source_execution_evidence: -dictionary_at(
+value- evidence;
+index- 26;
+);
+
+cli_source_execution_id: -dictionary_at(
+value- cli_source_execution_evidence;
+index- 0;
+);
+
+cli_source_execution_fact: -dictionary_at(
+value- cli_source_execution_evidence;
+index- 1;
+);
+
+engineering_evidence: -dictionary_at(
+value- evidence;
+index- 27;
+);
+
+engineering_id: -dictionary_at(
+value- engineering_evidence;
+index- 0;
+);
+
+engineering_fact: -dictionary_at(
+value- engineering_evidence;
+index- 1;
+);
+
+authored_authorities_evidence: -dictionary_at(
+value- evidence;
+index- 28;
+);
+
+authored_authorities_id: -dictionary_at(
+value- authored_authorities_evidence;
+index- 0;
+);
+
+authored_authorities_fact: -dictionary_at(
+value- authored_authorities_evidence;
+index- 1;
+);
+
 -if runtime_dictionary_id == "ctest.runtime_dictionary" {
 -if runtime_dictionary_fact == 1 {
 [>runtime_dictionary]- 1;
@@ -223,12 +510,163 @@ index- 1;
 }
 }
 
+[>language_conformance]- 0;
+
+-if grammar_id == "ctest.grammar_regression" {
+-if grammar_fact == 1 {
+-if parser_goldens_id == "ctest.parser_goldens" {
+-if parser_goldens_fact == 1 {
+-if corpus_ast_id == "ctest.corpus_ast_conformance" {
+-if corpus_ast_fact == 1 {
+-if active_corpus_id == "ctest.active_corpus_conformance" {
+-if active_corpus_fact == 1 {
+[>language_conformance]- 1;
+}
+}
+}
+}
+}
+}
+}
+}
+
+[>runtime_execution]- 0;
+
+-if runtime_dictionary == 1 {
+-if runtime_semantics_id == "ctest.runtime_semantics" {
+-if runtime_semantics_fact == 1 {
+-if function_semantics_id == "ctest.function_semantics" {
+-if function_semantics_fact == 1 {
+-if execution_definition_id == "ctest.execution_definition" {
+-if execution_definition_fact == 1 {
+[>runtime_execution]- 1;
+}
+}
+}
+}
+}
+}
+}
+
+[>reference_resolution]- 0;
+
+-if reference_document == 1 {
+-if symbol_resolver_id == "ctest.symbol_resolver" {
+-if symbol_resolver_fact == 1 {
+-if path_resolver_id == "ctest.path_resolver_index_surface" {
+-if path_resolver_fact == 1 {
+[>reference_resolution]- 1;
+}
+}
+}
+}
+}
+
+[>structural_runtime]- 0;
+
+-if structural_selection_id == "ctest.structural_selection" {
+-if structural_selection_fact == 1 {
+-if semantic_walk == 1 {
+-if structural_handle_minimal == 1 {
+[>structural_runtime]- 1;
+}
+}
+}
+}
+
+[>host_boundary]- 0;
+
+-if host_action_id == "ctest.host_action" {
+-if host_action_fact == 1 {
+[>host_boundary]- 1;
+}
+}
+
+[>cli_contract]- 0;
+
+-if cli_test_id == "ctest.cli.test" {
+-if cli_test_fact == 1 {
+-if cli_probe_id == "ctest.cli.probe" {
+-if cli_probe_fact == 1 {
+-if cli_dir_id == "ctest.cli.dir" {
+-if cli_dir_fact == 1 {
+-if cli_query_id == "ctest.cli.query" {
+-if cli_query_fact == 1 {
+-if cli_cipher_id == "ctest.cli.cipher" {
+-if cli_cipher_fact == 1 {
+-if cli_source_execution_id == "ctest.cli.source_execution" {
+-if cli_source_execution_fact == 1 {
+[>cli_contract]- 1;
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+
+[>engineering_surface]- 0;
+
+-if engineering_id == "qps_test.engineering" {
+-if engineering_fact == 1 {
+-if execution_definition_id == "ctest.execution_definition" {
+-if execution_definition_fact == 1 {
+[>engineering_surface]- 1;
+}
+}
+}
+}
+
+[>kernel_reduction]- 0;
+
+-if native_policy_minimal == 1 {
+-if authored_authorities_id == "invariant.authored_authorities_present" {
+-if authored_authorities_fact == 1 {
+[>kernel_reduction]- 1;
+}
+}
+}
+
+[>implementation_required]- 0;
+
+-if language_conformance == 1 {
+-if runtime_execution == 1 {
+-if reference_resolution == 1 {
+-if structural_runtime == 1 {
+-if host_boundary == 1 {
+-if cli_contract == 1 {
+-if engineering_surface == 1 {
+-if kernel_reduction == 1 {
+[>implementation_required]- 1;
+}
+}
+}
+}
+}
+}
+}
+}
+
 -return [
 1: runtime_dictionary,
 2: reference_document,
 3: structural_handle_minimal,
 4: semantic_walk,
 5: native_policy_minimal,
-6: overall
+6: overall,
+7: language_conformance,
+8: runtime_execution,
+9: implementation_required,
+10: reference_resolution,
+11: structural_runtime,
+12: host_boundary,
+13: cli_contract,
+14: engineering_surface,
+15: kernel_reduction
 ];;
 }
