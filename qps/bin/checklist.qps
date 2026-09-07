@@ -1,0 +1,511 @@
+CHECKLIST.
+
+current_work: (
+tasks: (
+
+task_1: (
+identity- "bin.change_value";
+summary- "Implement cv as the first QPS-aware terminal mutation command";
+state- "complete";
+
+product- "From any CE-OS terminal location, a user can run cv <structural-path/item-> <new-value> to change exactly one authored QPS Item while preserving relative working-directory context and structural validity";
+
+current: (
+item_1- "The intended command surface is cv <path/item-> <newValue>";
+item_2- "The command should operate on QPS structure rather than textual grep-and-replace";
+item_3- "Python is the preferred initial command implementation language";
+item_4- "Candidate QPS must validate before the source file is replaced";
+);
+
+documentation: (
+required- true;
+authority- "qps/bin/_index.qps";
+goal- "Document the proven cv command contract, path resolution behavior, validation boundary, and publication behavior";
+state- "complete";
+);
+
+steps: (
+
+step_1: (
+goal- "Define cv path resolution from the terminal current working directory";
+product- "A structural target can be resolved relative to the operator's current CE-OS location without rebasing every command to repository root";
+state- "complete";
+);
+
+step_2: (
+goal- "Resolve the requested QPS Item structurally and identify the exact value/source ownership that may be replaced";
+product- "cv changes the selected Item only and does not accidentally mutate matching text elsewhere";
+state- "complete";
+);
+
+step_3: (
+goal- "Construct a complete candidate QPS document containing the new Item value";
+product- "Mutation happens against candidate bytes rather than directly editing authoritative source";
+state- "complete";
+);
+
+step_4: (
+goal- "Validate the candidate with QPS parsing before publication";
+product- "Malformed replacement values cannot corrupt the authored QPS file";
+state- "complete";
+);
+
+step_5: (
+goal- "Publish the validated candidate atomically and return concise terminal evidence";
+product- "cv either completes one valid structural value change or leaves the original file unchanged";
+state- "complete";
+);
+
+step_6: (
+goal- "Prove scalar string, numeric, boolean, reference, and expression-valued Items as supported cases or explicitly document unsupported cases";
+product- "The command contract is based on proven QPS value semantics rather than assumptions";
+state- "complete";
+);
+
+);
+
+findings: (
+finding_1- "The terminal mutation layer should preserve familiar command simplicity while using QPS structure underneath";
+finding_2- "cv should be a structural editor, not a shorthand wrapper around sed substitution";
+finding_3- "The current working directory is useful semantic context and should normally be inherited rather than discarded";
+finding_4- "cv now resolves a target as an extensionless or .qps file path plus a document-local structural Item path from the terminal current working directory";
+finding_5- "cv delegates Item resolution to qps scope, so the replacement span comes from QPS structural selection rather than textual matching";
+finding_6- "cv writes a complete candidate document, validates it with qps --check, and publishes through os.replace only after validation succeeds";
+finding_7- "The proof covers string, numeric, boolean, reference, and expression-valued Items plus invalid replacement rollback and same-name sibling preservation";
+);
+
+observed_evidence: (
+file_1- "qps/bin/cv";
+file_2- "qps/bin/tests/cv_test.py";
+file_3- "qps/bin/_index.qps";
+test_1- "python3 qps/bin/tests/cv_test.py qps/bin/cv => qps/bin cv: PASS";
+check_1- "qps qps/bin/_index.qps --check => PASS";
+check_2- "qps qps/bin/checklist.qps --check => PASS";
+);
+
+next- "Ready for qps save 3 1 once the user chooses to accept this completed task into History";
+
+done_when: (
+condition_1- "cv can change one structurally identified Item from the terminal";
+condition_2- "The command preserves relative current-directory behavior";
+condition_3- "Invalid replacement values produce no source mutation";
+condition_4- "Successful replacement changes only the selected Item";
+condition_5- "qps/bin/_index.qps documents the proven command behavior";
+);
+);
+
+
+task_2: (
+identity- "bin.inline_qps_terminal";
+summary- "Implement QPS Inline as the compact terminal source surface [< code]";
+state- "ready";
+
+product- "A user or agent can execute transient QPS directly from the terminal using one syntax, [< code], with the terminal current working directory preserved as execution context";
+
+syntax: (
+name- "QPS Inline";
+surface- "[< code]";
+open- "[<";
+close- "]";
+content- "Everything between [< and the matching ] is transient QPS source";
+single_and_multiline- "Single-line and multiline input are the same construct; multiline is not a separate syntax";
+no_alternate_close- "There is no >] or [<>] form";
+);
+
+examples: (
+single_line- "[< cv config.mode- \"active\";]";
+multiline- "[< newline cv config.mode- \"active\"; newline cv config.timeout- 30; newline ]";
+);
+
+execution_model: (
+source- "The enclosed content is parsed as transient QPS rather than requiring a permanent .qps file";
+working_directory- "Execution inherits the terminal current working directory";
+relative_paths- "Relative paths and imports resolve from the inherited terminal context unless authored QPS explicitly changes context";
+stdout- "QPS stdout remains terminal stdout";
+stderr- "QPS errors remain terminal stderr";
+status- "QPS execution status propagates back to the terminal";
+);
+
+current: (
+item_1- "Bash/Python heredoc syntax such as python3 - <<'PY' is functional but unnecessarily verbose for CE-OS terminal work";
+item_2- "The desired QPS-facing replacement is one bracketed source form: [< code]";
+item_3- "The same construct must accept both one-line and multiline source without alternate grammar";
+item_4- "qps/bin is the intended implementation area for the terminal bridge";
+item_5- "OperatorShell multiline terminal input is now an explicit dependency: Shift+Enter must insert a newline without submitting before QPS Inline multiline interaction is considered nominal";
+);
+
+documentation: (
+required- true;
+authority- "qps/bin/_index.qps";
+goal- "Document the proven QPS Inline syntax, execution context, source boundary, and terminal behavior";
+state- "waiting";
+);
+
+steps: (
+
+step_1: (
+goal- "Implement a terminal bridge that recognizes [< code] and forwards the enclosed bytes as transient QPS source";
+product- "Inline QPS can execute without creating a permanent source file";
+state- "ready";
+);
+
+step_2: (
+goal- "Use the same parser/execution path for single-line and multiline QPS Inline input";
+product- "There is one syntax and one runtime contract regardless of source length";
+state- "waiting";
+);
+
+step_3: (
+goal- "Preserve terminal current-working-directory context during transient execution";
+product- "Relative QPS paths and imports behave naturally from the operator's present repository location";
+state- "waiting";
+);
+
+step_4: (
+goal- "Define matching-bracket, quoting, nested-container, and literal-bracket behavior sufficiently for real QPS source";
+product- "The terminal can determine where [< code] ends without corrupting valid QPS syntax";
+state- "waiting";
+);
+
+step_5: (
+goal- "Prove stdout, stderr, exit status, parse failure, and runtime failure behavior";
+product- "QPS Inline behaves predictably enough for humans, scripts, and agents";
+state- "waiting";
+);
+
+step_6: (
+goal- "Use QPS Inline to perform a real repository operation such as cv against a disposable QPS document";
+product- "The inline surface is proven as useful execution infrastructure rather than syntax-only sugar";
+state- "waiting";
+);
+
+);
+
+findings: (
+finding_1- "The brackets themselves define the source boundary: [< begins QPS Inline and ] closes it";
+finding_2- "The less-than symbol means source is entering QPS execution; no second closing operator is needed";
+finding_3- "Multiline input is the general case and single-line input is simply a multiline-capable block containing one line";
+finding_4- "QPS Inline should replace verbose shell heredoc ceremony for transient QPS operations while preserving ordinary terminal context";
+);
+
+next- "Wait for operatorshell.multiline_terminal_input to prove Shift+Enter editing, then prototype the smallest [< code] recognizer using that shared terminal-buffer behavior";
+
+done_when: (
+condition_1- "[< code] is the only canonical QPS Inline syntax";
+condition_2- "One-line and multiline source use the same parser and execution path";
+condition_3- "The enclosed source executes as transient QPS";
+condition_4- "Terminal working-directory context is preserved";
+condition_5- "Errors and exit status propagate predictably";
+condition_6- "qps/bin/_index.qps documents the proven interface";
+);
+);
+
+task_3: (
+identity- "bin.semantic_search_policy";
+summary- "Unify probe, scope, and scout around repository-aware QPS discovery policy";
+state- "waiting";
+
+product- "QPS semantic search tools share one definition of current-source evidence while remaining free to use rg, grep, sed, parser traversal, or future mechanisms underneath";
+
+current: (
+item_1- "History is one global root ledger and may become very large";
+item_2- "Historical identifiers and paths must not pollute ordinary current-source discovery";
+item_3- "probe, scope, and scout already represent distinct operator-facing QPS search concepts";
+);
+
+steps: (
+
+step_1: (
+goal- "Define generic document roles or discovery policy in authored repository authority";
+product- "Documents such as ledgers, generated material, or archives can be excluded from ordinary semantic discovery without hard-coding filenames into search engines";
+state- "waiting";
+);
+
+step_2: (
+goal- "Make scout honor the shared discovery policy";
+product- "scout searches current authored evidence without returning stale History matches by default";
+state- "waiting";
+);
+
+step_3: (
+goal- "Decide how probe and scope interact with explicitly addressed excluded documents";
+product- "Direct evidence inspection remains possible even when a document is excluded from broad discovery";
+state- "waiting";
+);
+
+step_4: (
+goal- "Decide whether qps/bin search commands wrap stock utilities, patched utilities, or native parser traversal per operation";
+product- "Implementation mechanism can evolve without changing operator-facing command semantics";
+state- "waiting";
+);
+
+);
+
+next- "Defer implementation until Checklist/Save/History reaches nominal state, then create a red witness showing whether root history.qps contaminates scout discovery";
+
+done_when: (
+condition_1- "Current-source discovery and historical query are clearly separated";
+condition_2- "History does not pollute ordinary scout results";
+condition_3- "Explicit historical inspection remains available";
+condition_4- "Underlying search mechanism is replaceable without changing QPS command semantics";
+);
+);
+
+
+task_4: (
+identity- "bin.native_toolchain";
+summary- "Create CE-OS-owned copies of the shell tools used underneath QPS terminal operations";
+state- "ready";
+
+product- "qps/bin owns an isolated modifiable command toolchain for search, text transformation, filesystem discovery, comparison, and terminal composition without modifying the host system commands";
+
+current: (
+item_1- "System rg, grep, sed, find, and related commands currently remain external host utilities";
+item_2- "CE-OS should own copies that may be modified independently while preserving the original commands";
+item_3- "probe, scope, scout, cv, and future terminal tools may use these owned binaries as replaceable mechanisms";
+item_4- "Native command output often repeats identical file paths on every line, wasting context without adding evidence";
+item_5- "CE-OS-owned commands should preserve useful native search and transformation behavior while compacting presentation for humans and constrained-context agents";
+);
+
+tools: (
+search- "rg, grep";
+transform- "sed, awk, cut, tr";
+filesystem- "find";
+stream- "cat, head, tail";
+collection- "sort, uniq, xargs";
+difference- "diff, patch";
+);
+
+findings: (
+finding_1- "The host inventory shows rg, grep, sed, find, xargs, diff, and patch as standalone command paths; cat, head, tail, sort, uniq, cut, and tr resolve through the coreutils multicall binary; awk resolves through gawk";
+finding_2- "Owning a command does not require changing its useful operation: CE-OS may retain the underlying implementation while replacing verbose presentation";
+finding_3- "Repeated per-line path prefixes are presentation redundancy and should be collapsed into one path plus compact line or range evidence";
+finding_4- "Compact rendering is part of the qps/bin command contract because terminal output is consumed by constrained-context local agents as well as humans";
+finding_5- "The first owned rg keeps a byte-for-byte copy of the host ripgrep engine as rg.bin while qps/bin/native/rg owns CE-OS evidence presentation, separating matching semantics from rendering semantics";
+finding_6- "The first compact-rg witness was invalid because it wrote search output inside the searched corpus, causing recursive self-matches; proof fixtures must keep corpus and generated evidence in separate directories";
+finding_7- "Owned rg is proven: rg.bin is byte-identical to host ripgrep 15.2.0, matching output is equivalent on an isolated corpus, compact rendering preserves every matched physical line, repeated path output is reduced, and total output size is smaller";
+finding_8- "Owned grep follows the same engine-versus-renderer boundary as rg; search-result compaction is a presentation concern while the copied host binary remains the matching authority";
+finding_9- "The remaining regular shell mechanisms are now copied into qps/bin/native as owned engines; evidence-oriented tools are candidates for compact rendering while data, composition, and mutation tools preserve native output until a concrete CE-OS need is proven";
+finding_10- "Termux coreutils is a multicall implementation selected by argv[0]; qps/bin therefore owns one coreutils.bin engine and correctly named cat, head, tail, sort, uniq, cut, and tr entrypoints rather than renamed independent binary copies";
+finding_11- "Owned coreutils entrypoints now match host behavior for cat, head, tail, sort, uniq, cut, and tr after preserving the multicall argv[0] contract";
+finding_12- "The final owned implementation is moving from copied host binaries to source-owned builds; host binaries remain behavioral parity references";
+finding_13- "Upstream source is acquired under qps/bin/src at pinned revisions: coreutils bff0e5412, ripgrep 3fce3b5, sed 0c1fe22, grep e187ca5, findutils db41ebaf, gawk 6c7fd0eb2, diffutils ba490bf, patch a2b1922";
+finding_14- "Source families cover the current tool substrate: coreutils owns cat/head/tail/sort/uniq/cut/tr, findutils owns find/xargs, with grep, sed, gawk, diffutils, patch, and ripgrep owning their corresponding commands";
+finding_15- "The Pixel build environment now has clang 20.1.7, GNU Make 4.4.1, CMake 3.31.6, Autoconf 2.73, Automake 1.18.1, M4 1.4.19, Perl 5.42.2, Rust/Cargo 1.98.1, plus autopoint, bison, gettext, gperf, makeinfo, and texi2pdf";
+finding_16- "Coreutils bootstrap completed successfully from the acquired development source tree and generated configure/build infrastructure";
+finding_17- "The first out-of-tree Coreutils configure initially stopped at linker discovery; installing lld and compiler runtime support resolved the toolchain blocker";
+finding_18- "Coreutils configure now completes successfully on the rooted Pixel using the Termux Clang/LLVM toolchain";
+finding_19- "Direct leaf builds such as make src/cat do not reliably prepare every Coreutils BUILT_SOURCES prerequisite first; the intended top-level make correctly generates the gnulib/configuration substrate";
+finding_20- "A full top-level Coreutils build completes successfully on the Pixel";
+finding_21- "The resulting source-built cat reports GNU coreutils 9.11.270-bff0e and matches host cat output on the parity witness";
+finding_22- "Ripgrep builds successfully from acquired source revision 3fce3b5 using Cargo and reports ripgrep 15.2.0";
+finding_23- "Source-built ripgrep and host ripgrep produce the same four-match result set on an isolated corpus";
+finding_24- "Raw ripgrep output order differs across builds because filesystem traversal order is not stable; matcher parity is defined by normalized result-set equivalence rather than incidental emission order";
+finding_25- "GNU grep builds successfully from acquired source revision e187ca5 and reports grep 3.12.41-e187";
+finding_26- "Source-built GNU grep and host grep produce the same four-match normalized result set on the isolated corpus";
+finding_27- "GNU sed builds successfully from acquired source revision 0c1fe22 when configured with --without-selinux on the rooted Pixel";
+finding_28- "Android exposes SELinux headers and libselinux but not every GNU userspace symbol sed expects, so header and library presence alone are insufficient capability evidence";
+finding_29- "The sed configure probe also reports ACL support unavailable on this host; this is a non-fatal platform capability boundary for the current build";
+finding_30- "The resulting source-built sed reports GNU sed 4.9.40-0c1f-dirty and matches host sed behavior on the transformation parity witness";
+finding_31- "GNU findutils bootstrap and configure complete successfully from acquired development source revision db41ebaf on the rooted Pixel";
+finding_32- "GNU findutils builds successfully from source and produces find and xargs 4.11.0.29-db41e-modified";
+finding_33- "Source-built find matches host find on the isolated filesystem-selection witness after deterministic sorting";
+finding_34- "Source-built xargs matches host xargs on the isolated argument-composition witness";
+finding_35- "The gawk development checkout carried generated autotools metadata expecting aclocal-1.16 while the owned Pixel build environment provides a newer Automake toolchain";
+finding_36- "Regenerating gawk autotools metadata with the current Autoconf, Automake, and Libtool toolchain succeeds, showing the versioned aclocal failure belongs to inherited build scaffolding rather than gawk language semantics";
+finding_37- "Android Bionic provides fwrite_unlocked but gates its declaration by Android API surface, while gawk configure detected the linkable symbol and enabled HAVE_FWRITE_UNLOCKED";
+finding_38- "A native symbol existing or linking successfully does not by itself prove that the symbol is declared and usable by the active compilation surface";
+);
+
+steps: (
+
+step_1: (
+goal- "Inventory the actual executable, symlink, script, multicall, and dynamic-library form of each host command";
+product- "We know which tools can safely be copied directly and which require a different acquisition or build strategy";
+state- "complete";
+);
+
+step_2: (
+goal- "Create CE-OS-owned command implementations while preserving native matching and transformation behavior and replacing verbose output with canonical compact evidence where applicable";
+product- "CE-OS has private command implementations that preserve the useful underlying result while avoiding repeated path and presentation token bloat";
+state- "active";
+);
+
+step_3: (
+goal- "Record each copied tool's source path, implementation, version, and replacement policy in qps/bin/_index.qps";
+product- "The local toolchain is reproducible and understandable by another agent";
+state- "waiting";
+);
+
+step_4: (
+goal- "Put qps/bin ahead of host utilities only inside CE-OS-controlled execution contexts";
+product- "OperatorShell and QPS semantic tools can use CE-OS copies while the surrounding Android or Ubuntu environment remains untouched";
+state- "waiting";
+);
+
+step_5: (
+goal- "Prove copied tools behave identically before applying CE-OS-specific changes";
+product- "Any later behavioral difference is intentional rather than an accidental consequence of copying";
+state- "waiting";
+);
+
+step_6: (
+goal- "Introduce CE-OS-specific behavior only where semantic tools require it";
+product- "rg, grep, sed, or other owned mechanisms may evolve underneath probe, scope, scout, and mutation tools without changing their public semantic contract";
+state- "waiting";
+);
+
+);
+
+next- "Build gawk from acquired source with quiet progress and prove source-built awk parity against the host reference, then continue through diffutils and patch before promoting source-built outputs into qps/bin/native";
+
+done_when: (
+condition_1- "The regularly used command substrate exists under qps/bin/native";
+condition_2- "Host commands remain unchanged";
+condition_3- "Each owned tool has recorded provenance";
+condition_4- "Baseline parity with the original command is proven";
+condition_5- "QPS semantic commands can explicitly select the owned toolchain";
+condition_6- "Search-oriented owned commands prove result equivalence with their host implementation while eliminating unnecessary repeated path output";
+);
+);
+
+task_5: (
+identity- "operatorshell.multiline_terminal_input";
+summary- "Make Shift+Enter insert a newline without executing the current OperatorShell terminal command";
+state- "active";
+
+product- "OperatorShell supports normal multiline command composition so Bash commands, Python heredocs, QPS Inline, and future CE-OS shell source can be authored without chaining everything through &&";
+
+ownership: (
+implementation- "UI/OperatorShell";
+reference_shell- "Bash/readline is current behavioral evidence, not permanent authority";
+future_runtime- "The proven interaction contract is intended to become QPS-owned behavior compiled into the CE-OS C++ terminal/runtime";
+working_memory- "qps/bin/checklist.qps";
+documentation- "The proven terminal interaction contract belongs in the closest OperatorShell _index.qps authority";
+);
+
+behavior: (
+enter- "Execute or submit the current shell command according to the active terminal application's input contract";
+shift_enter- "Insert a newline into the current shell editing state without executing it";
+raw_terminal- "Normal terminal applications continue receiving interactive key input through the PTY";
+no_duplicate_editor- "Do not introduce a second OperatorShell command editor merely to implement multiline Bash input unless direct terminal semantics prove insufficient";
+);
+
+terminal_architecture: (
+surface- "UI/OperatorShell/widgets/TerminalSurface.gd";
+input_path- "_on_terminal_gui_input -> _event_to_sequence -> TerminalClient.write_input";
+display- "RichTextLabel is a rendered PTY screen, not an editable command buffer";
+echo- "Typed characters are sent to the PTY and become visible only when terminal output is read back and rendered";
+service- "Agency/Core/runtime/terminal/pty_service.py";
+service_write- "write_input accepts arbitrary UTF-8 strings and writes them directly to the PTY master";
+session_process- "The PTY service tracks the original interactive Bash process and PTY master but does not currently track foreground child process groups";
+);
+
+reference_behavior: (
+readline_mode- "Current Bash runs with readline emacs mode enabled";
+accept_line- "Readline binds accept-line to Ctrl+J and Ctrl+M";
+quoted_insert- "Readline exposes quoted-insert through Ctrl+Q, Ctrl+V, and Escape-[2~ at the readline layer";
+ui_boundary- "Physical Ctrl+V is consumed as paste by the terminal/UI path, demonstrating that terminal key events and readline byte bindings are different layers";
+goal- "Determine a distinct Shift+Enter terminal sequence and shell/editor behavior that inserts a newline without accepting the command";
+);
+
+relationship_to_qps_inline: (
+dependency- "QPS Inline should inherit the same terminal multiline behavior rather than inventing a separate multiline-entry mechanism";
+surface- "[< code]";
+single_and_multiline- "One-line and multiline QPS Inline use the same syntax; Shift+Enter only controls terminal editing, not QPS grammar";
+);
+
+current: (
+item_1- "TerminalSurface currently forwards each key event directly to the active PTY session";
+item_2- "Plain Enter is translated to newline and therefore submits the Bash/readline command";
+item_3- "There is no OperatorShell-owned editable terminal command buffer";
+item_4- "The PTY service already accepts arbitrary input strings and does not need modification merely to carry multiline source";
+item_5- "A manual Ctrl+V then Ctrl+J attempt executed instead of inserting a usable newline because the UI treats Ctrl+V as paste before readline receives the quoted-insert byte";
+item_6- "Bash/readline remains useful as a behavioral reference while CE-OS is being built from the foundation and later Ciphered into QPS/C++";
+);
+
+documentation: (
+required- true;
+authority- "UI/OperatorShell/_index.qps";
+goal- "Document the proven Enter/Shift+Enter terminal contract, raw PTY boundary, and eventual CE-OS ownership after the implementation is proven";
+state- "waiting";
+);
+
+steps: (
+
+step_1: (
+goal- "Locate the exact OperatorShell terminal key-event, PTY write, output-rendering, and PTY-service seams";
+product- "The current terminal architecture is understood before behavior is changed";
+state- "complete";
+);
+
+step_2: (
+goal- "Determine and prove a terminal/readline mechanism where a distinct Shift+Enter sequence inserts a newline into the current command without accepting it";
+product- "Multiline command editing works through the existing terminal stack without introducing a duplicate command buffer";
+state- "active";
+);
+
+step_3: (
+goal- "Map Shift+Enter in TerminalSurface to the proven distinct terminal sequence while leaving plain Enter unchanged";
+product- "OperatorShell exposes the desired hotkey directly from the terminal UI";
+state- "waiting";
+);
+
+step_4: (
+goal- "Prove normal readline editing remains intact across arrows, history, tab completion, deletion, paste, Ctrl+C, and ordinary Enter";
+product- "The multiline hotkey does not regress normal shell interaction";
+state- "waiting";
+);
+
+step_5: (
+goal- "Prove interactive terminal applications remain raw PTY applications and are not forced through an OperatorShell compose buffer";
+product- "Editors such as the future Micro-derived open path surface can continue to own terminal interaction correctly";
+state- "waiting";
+);
+
+step_6: (
+goal- "Prove a Python heredoc can be authored interactively using Shift+Enter and submitted normally";
+product- "Multiline terminal source becomes practically usable without && chaining";
+state- "waiting";
+);
+
+step_7: (
+goal- "Prove multiline [< code] can use the same terminal editing behavior once QPS Inline is implemented";
+product- "QPS Inline inherits the general terminal interaction contract";
+state- "waiting";
+);
+
+step_8: (
+goal- "Distill the proven terminal interaction semantics into durable QPS authority for eventual Cipher/C++ ownership";
+product- "CE-OS preserves the desired behavior without permanently depending on Bash/readline implementation details";
+state- "waiting";
+);
+
+);
+
+findings: (
+finding_1- "TerminalSurface is a raw PTY frontend: RichTextLabel renders output but does not own an editable command buffer";
+finding_2- "Every current key event is translated into a terminal sequence and immediately passed through TerminalClient.write_input";
+finding_3- "The PTY service launches interactive Bash with pty.openpty and tracks the Bash process, master fd, dimensions, output, and lifecycle";
+finding_4- "The PTY service does not currently track foreground child process groups, and that machinery is not required merely to investigate Shift+Enter";
+finding_5- "OperatorShell already contains TextEdit primitives elsewhere, but creating a second command editor is unnecessary unless the native terminal approach proves insufficient";
+finding_6- "The desired behavior should be learned from mature shell/terminal mechanisms and then reduced to a CE-OS semantic contract rather than preserved as a permanent Bash hack";
+finding_7- "The stable product contract is simple: Enter submits; Shift+Enter inserts newline; interactive terminal applications retain raw PTY ownership";
+);
+
+next- "Prove a distinct terminal escape sequence can be bound by Bash/readline to insert a literal newline without accept-line, then map Shift+Enter to that sequence in TerminalSurface.gd";
+
+done_when: (
+condition_1- "Shift+Enter visibly inserts a newline into the current shell command without execution";
+condition_2- "Plain Enter continues to execute the command normally";
+condition_3- "Normal readline editing and terminal control keys remain functional";
+condition_4- "Interactive PTY applications remain usable without a duplicate OperatorShell command buffer";
+condition_5- "A Python heredoc can be entered interactively without && chaining";
+condition_6- "Multiline [< code] can later use the same terminal interaction";
+condition_7- "The proven behavior is documented as CE-OS semantic authority rather than a permanent Bash-specific dependency";
+);
+);
+
+
+);
+);

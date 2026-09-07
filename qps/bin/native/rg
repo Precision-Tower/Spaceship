@@ -1,0 +1,143 @@
+#!/usr/bin/env python3
+
+import json
+import subprocess
+import sys
+from pathlib import Path
+
+
+HERE = Path(__file__).resolve().parent
+ENGINE = HERE / "rg.bin"
+
+
+def passthrough(args):
+    return subprocess.run(
+        [str(ENGINE), *args]
+    ).returncode
+
+
+def compact_search(args):
+    proc = subprocess.run(
+        [str(ENGINE), "--json", *args],
+        text=True,
+        capture_output=True,
+    )
+
+    if proc.stderr:
+        sys.stderr.write(proc.stderr)
+
+    if proc.returncode not in (0, 1):
+        return proc.returncode
+
+    blocks = []
+    current = None
+
+    for raw in proc.stdout.splitlines():
+        if not raw:
+            continue
+
+        event = json.loads(raw)
+        kind = event.get("type")
+
+        if kind not in ("match", "context"):
+            continue
+
+        data = event["data"]
+
+        path_data = data.get("path") or {}
+        path = path_data.get("text")
+
+        if path is None:
+            # rg can represent non-UTF-8 paths as bytes.
+            # Preserve native behavior rather than guessing.
+            return passthrough(args)
+
+        line_number = data.get("line_number")
+        lines = data.get("lines") or {}
+        text = lines.get("text")
+
+        if line_number is None or text is None:
+            return passthrough(args)
+
+        text = text.rstrip("\n")
+
+        if (
+            current is None
+            or current["path"] != path
+            or line_number > current["end"] + 1
+        ):
+            current = {
+                "path": path,
+                "start": line_number,
+                "end": line_number,
+                "lines": [],
+            }
+            blocks.append(current)
+
+        current["end"] = max(
+            current["end"],
+            line_number,
+        )
+
+        # One physical source line should appear once even if
+        # multiple submatches occur on that line.
+        if (
+            not current["lines"]
+            or current["lines"][-1][0] != line_number
+        ):
+            current["lines"].append(
+                (line_number, text)
+            )
+
+    for block in blocks:
+        if block["start"] == block["end"]:
+            location = (
+                f'{block["path"]}:{block["start"]}'
+            )
+        else:
+            location = (
+                f'{block["path"]}:'
+                f'{block["start"]}-{block["end"]}'
+            )
+
+        print(location)
+
+        for line_number, text in block["lines"]:
+            print(f"    {line_number}: {text}")
+
+    return proc.returncode
+
+
+def main():
+    args = sys.argv[1:]
+
+    # Modes whose native output is itself the requested product are
+    # passed through unchanged. Compact evidence rendering currently
+    # owns ordinary content-search output only.
+    passthrough_flags = {
+        "--help",
+        "-h",
+        "--version",
+        "-V",
+        "--json",
+        "--files",
+        "--type-list",
+        "--files-with-matches",
+        "-l",
+        "--files-without-match",
+        "--count",
+        "-c",
+        "--count-matches",
+        "--vimgrep",
+        "--replace",
+        "-r",
+    }
+
+    if any(arg in passthrough_flags for arg in args):
+        return passthrough(args)
+
+    return compact_search(args)
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

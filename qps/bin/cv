@@ -1,0 +1,255 @@
+#!/usr/bin/env python3
+
+import os
+import re
+import shutil
+import stat
+import subprocess
+import sys
+import tempfile
+from pathlib import Path
+
+
+HEADER_RE = re.compile(r"^(.+):(\d+)(?:-(\d+))?$")
+
+
+class CvError(Exception):
+    pass
+
+
+def fail(message):
+    print(f"CV=FAIL {message}", file=sys.stderr)
+    return 1
+
+
+def display_path(path):
+    try:
+        return os.path.relpath(path, Path.cwd())
+    except ValueError:
+        return str(path)
+
+
+def qps_binary():
+    env_qps = os.environ.get("QPS")
+    if env_qps:
+        candidate = Path(env_qps).expanduser()
+        if candidate.is_file():
+            return str(candidate)
+
+    repo_root = Path(__file__).resolve().parents[2]
+    repo_qps = repo_root / "qps" / "cpp" / "build-pixel" / "qps"
+    if repo_qps.is_file():
+        return str(repo_qps)
+
+    path_qps = shutil.which("qps")
+    if path_qps:
+        return path_qps
+
+    raise CvError("qps executable not found")
+
+
+def resolve_file_path(file_text):
+    raw = Path(file_text).expanduser()
+    path = raw if raw.is_absolute() else Path.cwd() / raw
+
+    if path.suffix != ".qps":
+        path = path.with_name(path.name + ".qps")
+
+    path = path.resolve()
+
+    if not path.is_file():
+        raise CvError(f"target QPS file not found: {path}")
+
+    return path
+
+
+def split_target(target):
+    if not target.endswith("-"):
+        raise CvError("target must end with an Item selector '-'")
+
+    for separator in (".qps:", ".qps."):
+        index = target.find(separator)
+        if index != -1:
+            file_text = target[: index + len(".qps")]
+            structural_path = target[index + len(separator):]
+            if not structural_path:
+                raise CvError("target has no structural Item path")
+            return resolve_file_path(file_text), structural_path
+
+    slash = target.rfind("/")
+    candidates = []
+
+    for index, char in enumerate(target):
+        if index <= slash or char != ".":
+            continue
+
+        file_text = target[:index]
+        structural_path = target[index + 1:]
+        if not file_text or not structural_path:
+            continue
+
+        try:
+            path = resolve_file_path(file_text)
+        except CvError:
+            continue
+
+        candidates.append((path, structural_path))
+
+    if not candidates:
+        raise CvError(
+            "target must be <file>.<structural.item-> or <file.qps>:<structural.item->"
+        )
+
+    return candidates[0]
+
+
+def item_name(structural_path):
+    leaf = structural_path[:-1].split(".")[-1]
+    if not leaf:
+        raise CvError("target Item name is empty")
+    return leaf
+
+
+def run_qps_scope(qps, source, structural_path):
+    result = subprocess.run(
+        [qps, "scope", str(source), structural_path],
+        cwd=Path.cwd(),
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    )
+
+    if result.returncode != 0:
+        detail = result.stderr.strip() or result.stdout.strip()
+        raise CvError(detail or "QPS scope failed")
+
+    lines = result.stdout.splitlines()
+    if not lines:
+        raise CvError("QPS scope returned no source span")
+
+    match = HEADER_RE.match(lines[0])
+    if not match:
+        raise CvError(f"unrecognized QPS scope header: {lines[0]}")
+
+    start = int(match.group(2))
+    end = int(match.group(3) or match.group(2))
+    if start < 1 or end < start:
+        raise CvError(f"invalid QPS scope line range: {lines[0]}")
+
+    return start, end
+
+
+def declaration_line(original, name, value_text, end_line_follows):
+    first = original.rstrip("\r\n")
+    indent = first[: len(first) - len(first.lstrip())]
+
+    if not re.match(rf"^\s*{re.escape(name)}\s*-", first):
+        raise CvError("resolved span does not start with the selected Item declaration")
+
+    stripped_value = value_text.strip()
+    if not stripped_value:
+        raise CvError("new value is empty")
+
+    terminator = "" if stripped_value.endswith(";") else ";"
+
+    if original.endswith("\r\n"):
+        newline = "\r\n"
+    elif original.endswith("\n"):
+        newline = "\n"
+    elif end_line_follows:
+        newline = "\n"
+    else:
+        newline = ""
+
+    return f"{indent}{name}- {stripped_value}{terminator}{newline}"
+
+
+def validate_candidate(qps, candidate):
+    result = subprocess.run(
+        [qps, str(candidate), "--check"],
+        cwd=Path.cwd(),
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    )
+    if result.returncode != 0:
+        detail = result.stderr.strip() or result.stdout.strip()
+        raise CvError(detail or "candidate QPS validation failed")
+
+
+def publish(source, candidate):
+    os.replace(candidate, source)
+
+
+def change_value(target, value_parts):
+    source, structural_path = split_target(target)
+    name = item_name(structural_path)
+    qps = qps_binary()
+
+    start, end = run_qps_scope(qps, source, structural_path)
+
+    original_text = source.read_text(encoding="utf-8")
+    lines = original_text.splitlines(keepends=True)
+    if end > len(lines):
+        raise CvError("resolved span exceeds source length")
+
+    value_text = " ".join(value_parts)
+    replacement = declaration_line(
+        lines[start - 1],
+        name,
+        value_text,
+        end < len(lines),
+    )
+
+    candidate_text = "".join(lines[: start - 1] + [replacement] + lines[end:])
+
+    fd, candidate_name = tempfile.mkstemp(
+        prefix=f".{source.name}.cv-",
+        suffix=".qps",
+        dir=source.parent,
+        text=True,
+    )
+    candidate = Path(candidate_name)
+
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8") as handle:
+            handle.write(candidate_text)
+
+        mode = stat.S_IMODE(source.stat().st_mode)
+        os.chmod(candidate, mode)
+
+        validate_candidate(qps, candidate)
+        publish(source, candidate)
+    except Exception:
+        try:
+            candidate.unlink()
+        except FileNotFoundError:
+            pass
+        raise
+
+    if start == end:
+        span = str(start)
+    else:
+        span = f"{start}-{end}"
+
+    print("CV=PASS")
+    print(f"file={display_path(source)}")
+    print(f"target={structural_path}")
+    print(f"span={span}")
+
+
+def main(argv):
+    if len(argv) < 3:
+        print("Usage: cv <file.structural.item-> <new-value>", file=sys.stderr)
+        print("       cv <file.qps>:<structural.item-> <new-value>", file=sys.stderr)
+        return 1
+
+    try:
+        change_value(argv[1], argv[2:])
+        return 0
+    except CvError as error:
+        return fail(str(error))
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv))

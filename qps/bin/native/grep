@@ -1,0 +1,141 @@
+#!/usr/bin/env python3
+
+import subprocess
+import sys
+from pathlib import Path
+
+
+HERE = Path(__file__).resolve().parent
+ENGINE = HERE / "grep.bin"
+
+
+def passthrough(args):
+    return subprocess.run(
+        [str(ENGINE), *args]
+    ).returncode
+
+
+def parse_match_line(raw):
+    # Expected engine form:
+    # path:line:text
+    #
+    # Split only twice so colons inside the source text survive.
+    parts = raw.rstrip("\n").split(":", 2)
+
+    if len(parts) != 3:
+        return None
+
+    path, line_text, text = parts
+
+    try:
+        line = int(line_text)
+    except ValueError:
+        return None
+
+    return path, line, text
+
+
+def compact_search(args):
+    # We explicitly request recursive filename + line evidence.
+    engine_args = [
+        "-H",
+        "-n",
+        *args,
+    ]
+
+    proc = subprocess.run(
+        [str(ENGINE), *engine_args],
+        text=True,
+        capture_output=True,
+    )
+
+    if proc.stderr:
+        sys.stderr.write(proc.stderr)
+
+    if proc.returncode not in (0, 1):
+        return proc.returncode
+
+    blocks = []
+    current = None
+
+    for raw in proc.stdout.splitlines():
+        parsed = parse_match_line(raw)
+
+        if parsed is None:
+            # Preserve native behavior rather than guessing about
+            # an output mode we do not yet own.
+            return passthrough(args)
+
+        path, line, text = parsed
+
+        if (
+            current is None
+            or current["path"] != path
+            or line > current["end"] + 1
+        ):
+            current = {
+                "path": path,
+                "start": line,
+                "end": line,
+                "lines": [],
+            }
+            blocks.append(current)
+
+        current["end"] = max(
+            current["end"],
+            line,
+        )
+
+        if (
+            not current["lines"]
+            or current["lines"][-1][0] != line
+        ):
+            current["lines"].append(
+                (line, text)
+            )
+
+    for block in blocks:
+        if block["start"] == block["end"]:
+            location = (
+                f'{block["path"]}:{block["start"]}'
+            )
+        else:
+            location = (
+                f'{block["path"]}:'
+                f'{block["start"]}-{block["end"]}'
+            )
+
+        print(location)
+
+        for line, text in block["lines"]:
+            print(f"    {line}: {text}")
+
+    return proc.returncode
+
+
+def main():
+    args = sys.argv[1:]
+
+    # Preserve modes whose output is itself the requested product.
+    passthrough_flags = {
+        "--help",
+        "--version",
+        "-V",
+        "-l",
+        "-L",
+        "-c",
+        "--count",
+        "-o",
+        "--only-matching",
+        "-q",
+        "--quiet",
+    }
+
+    if any(arg in passthrough_flags for arg in args):
+        return passthrough(args)
+
+    return compact_search(args)
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

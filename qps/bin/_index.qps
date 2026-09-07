@@ -1,0 +1,207 @@
+QPS_BIN.
+
+purpose: def"
+Operator-facing QPS terminal tools.
+
+qps/bin owns small command surfaces that make structural QPS navigation,
+inspection, search, and mutation convenient from the terminal.
+
+These commands may use Python, sed, rg, grep, the QPS parser/runtime,
+or other replaceable mechanisms underneath. The operator-facing semantics
+belong to QPS and CE-OS rather than to any particular underlying utility.
+";
+
+implementation: (
+language- "Python is the preferred first implementation language for terminal orchestration and command composition";
+mechanisms- "sed, rg, grep, filesystem operations, QPS parser/runtime APIs, and native helpers may be used underneath";
+boundary- "Command semantics must not depend on one specific underlying Unix utility";
+);
+
+commands: (
+probe- "Inspect exact physical or structural QPS evidence";
+scope- "Inspect structural ownership and neighborhood";
+scout- "Discover authored identities across the permitted current-source corpus";
+cv- "Change the value of one structurally resolved QPS Item";
+);
+
+terminal_model: (
+working_directory- "Commands inherit the terminal current working directory and preserve relative repository context";
+qps_paths- "Structural QPS addresses are preferred over textual search-and-replace for mutation";
+candidate_first- "Mutating commands construct and validate candidate QPS before publication";
+atomicity- "A mutation publishes only after the resulting QPS parses successfully";
+);
+
+change_value: (
+command- "cv <file.structural.item-> <new-value>";
+alternate_file_separator- "cv <file.qps>:<structural.item-> <new-value>";
+implementation- "qps/bin/cv is a Python terminal command that delegates target resolution to qps scope";
+path_resolution- "The file portion resolves from the terminal current working directory; extensionless QPS file identities receive .qps before lookup";
+structural_boundary- "The target must end in the QPS Item selector - and must resolve as exactly one authored Item through QPS structural selection";
+value_model- "The new value is the QPS Item value expression supplied after the target; cv appends the terminating semicolon when it is omitted";
+candidate_validation- "cv writes a complete candidate QPS document beside the source and validates it with qps --check before publication";
+publication- "After validation succeeds, cv atomically replaces the source file with the candidate document; failed validation removes the candidate and leaves the source unchanged";
+evidence- "Successful mutation prints CV=PASS, the resolved file, structural target, and source span";
+proof- "String, numeric, boolean, reference, expression-valued Item replacement, relative cwd resolution, selected-Item-only replacement, and invalid-value rollback are proven by qps/bin/tests/cv_test.py";
+);
+
+evidence_rendering: (
+goal- "Preserve useful command evidence while minimizing tokens consumed by repeated presentation";
+path_once- "Print a file path once per contiguous result block rather than repeating the same path on every result line";
+line_numbers- "Preserve line numbers as compact source coordinates";
+ranges- "Represent contiguous evidence as path:start-end when a range is clearer than repeated path-prefixed lines";
+merge- "Merge overlapping or adjacent context ranges when doing so preserves the same evidence";
+context- "Render requested context inside the owning file block without repeating the file path";
+repeat_suppression- "Do not repeat path prefixes, labels, or structural context when the surrounding evidence already identifies them";
+semantic_preservation- "Output compaction must preserve the underlying search or transformation result rather than silently changing what matched";
+agent_context- "Canonical terminal evidence is optimized for humans and constrained-context local agents";
+);
+
+search_model: (
+semantic_tools- "probe, scope, and scout are QPS-aware operator interfaces";
+mechanism_tools- "rg, grep, sed, parser traversal, or future search mechanisms may implement those interfaces";
+history_boundary- "The root history.qps ledger should not contaminate ordinary current-source discovery; History is queried explicitly through qps history";
+);
+
+owned_toolchain: (
+location- "qps/bin/native";
+
+rg: (
+command- "qps/bin/native/rg";
+engine- "qps/bin/native/rg.bin";
+source- "/data/data/com.termux/files/usr/bin/rg";
+version- "ripgrep 15.2.0";
+implementation- "Python compact evidence renderer above an owned byte-for-byte ripgrep engine copy";
+matching- "Preserve ripgrep matching semantics";
+rendering- "Group evidence by file and contiguous line range so the path is emitted once per block";
+proof- "Host ripgrep matching parity, matched-line preservation, path deduplication, output compaction, and isolated proof corpus are proven";
+);
+
+grep: (
+command- "qps/bin/native/grep";
+engine- "qps/bin/native/grep.bin";
+source- "/data/data/com.termux/files/usr/bin/grep";
+version- "grep (GNU grep) 3.12";
+implementation- "Python compact evidence renderer above an owned byte-for-byte grep engine copy";
+matching- "Preserve host grep matching semantics";
+rendering- "Group evidence by file and contiguous line range so the path is emitted once per block";
+);
+);
+
+
+remaining_tools: (
+coreutils_model- "cat, head, tail, sort, uniq, cut, and tr are argv[0]-selected entrypoints into one owned coreutils.bin multicall implementation";
+
+sed: (
+engine- "qps/bin/native/sed.bin";
+source- "/data/data/com.termux/files/usr/bin/sed";
+role- "data";
+version- "/data/data/com.termux/files/usr/bin/sed (GNU sed) 4.9";
+policy- "Preserve native behavior initially; change presentation only when a proven CE-OS requirement exists";
+);
+
+find: (
+engine- "qps/bin/native/find.bin";
+source- "/data/data/com.termux/files/usr/bin/find";
+role- "evidence";
+version- "find (GNU findutils) 4.10.0";
+policy- "Preserve native behavior initially; change presentation only when a proven CE-OS requirement exists";
+);
+
+cat: (
+command- "qps/bin/native/cat";
+engine- "qps/bin/native/coreutils.bin";
+source- "/data/data/com.termux/files/usr/bin/coreutils";
+role- "data";
+version- "coreutils (GNU coreutils) 9.7";
+policy- "Preserve native behavior initially; change presentation only when a proven CE-OS requirement exists";
+);
+
+head: (
+command- "qps/bin/native/head";
+engine- "qps/bin/native/coreutils.bin";
+source- "/data/data/com.termux/files/usr/bin/coreutils";
+role- "data";
+version- "coreutils (GNU coreutils) 9.7";
+policy- "Preserve native behavior initially; change presentation only when a proven CE-OS requirement exists";
+);
+
+tail: (
+command- "qps/bin/native/tail";
+engine- "qps/bin/native/coreutils.bin";
+source- "/data/data/com.termux/files/usr/bin/coreutils";
+role- "data";
+version- "coreutils (GNU coreutils) 9.7";
+policy- "Preserve native behavior initially; change presentation only when a proven CE-OS requirement exists";
+);
+
+sort: (
+command- "qps/bin/native/sort";
+engine- "qps/bin/native/coreutils.bin";
+source- "/data/data/com.termux/files/usr/bin/coreutils";
+role- "data";
+version- "coreutils (GNU coreutils) 9.7";
+policy- "Preserve native behavior initially; change presentation only when a proven CE-OS requirement exists";
+);
+
+uniq: (
+command- "qps/bin/native/uniq";
+engine- "qps/bin/native/coreutils.bin";
+source- "/data/data/com.termux/files/usr/bin/coreutils";
+role- "data";
+version- "coreutils (GNU coreutils) 9.7";
+policy- "Preserve native behavior initially; change presentation only when a proven CE-OS requirement exists";
+);
+
+cut: (
+command- "qps/bin/native/cut";
+engine- "qps/bin/native/coreutils.bin";
+source- "/data/data/com.termux/files/usr/bin/coreutils";
+role- "data";
+version- "coreutils (GNU coreutils) 9.7";
+policy- "Preserve native behavior initially; change presentation only when a proven CE-OS requirement exists";
+);
+
+tr: (
+command- "qps/bin/native/tr";
+engine- "qps/bin/native/coreutils.bin";
+source- "/data/data/com.termux/files/usr/bin/coreutils";
+role- "data";
+version- "coreutils (GNU coreutils) 9.7";
+policy- "Preserve native behavior initially; change presentation only when a proven CE-OS requirement exists";
+);
+
+xargs: (
+engine- "qps/bin/native/xargs.bin";
+source- "/data/data/com.termux/files/usr/bin/xargs";
+role- "composition";
+version- "xargs (GNU findutils) 4.10.0";
+policy- "Preserve native behavior initially; change presentation only when a proven CE-OS requirement exists";
+);
+
+awk: (
+engine- "qps/bin/native/awk.bin";
+source- "/data/data/com.termux/files/usr/bin/gawk";
+role- "data";
+version- "GNU Awk 5.3.1, API 4.0, (GNU MPFR 4.2.1, GNU MP 6.3.0)";
+policy- "Preserve native behavior initially; change presentation only when a proven CE-OS requirement exists";
+);
+
+diff: (
+engine- "qps/bin/native/diff.bin";
+source- "/data/data/com.termux/files/usr/bin/diff";
+role- "evidence";
+version- "diff (GNU diffutils) 3.12";
+policy- "Preserve native behavior initially; change presentation only when a proven CE-OS requirement exists";
+);
+
+patch: (
+engine- "qps/bin/native/patch.bin";
+source- "/data/data/com.termux/files/usr/bin/patch";
+role- "mutation";
+version- "GNU patch 2.8";
+policy- "Preserve native behavior initially; change presentation only when a proven CE-OS requirement exists";
+);
+
+);
+
+continuation- "Run qps checklist and inspect this directory Checklist for unfinished qps/bin work";
