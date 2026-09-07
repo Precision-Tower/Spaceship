@@ -1,0 +1,47 @@
+#cloud-config
+#
+# CE-OS Ubuntu LTS autoinstall TEMPLATE.
+# This file is intentionally incomplete until target-machine identity,
+# credentials, accepted Ubuntu image, and storage device are supplied.
+#
+# It MUST NOT be used unattended without resolving every __CEOS_* value.
+
+autoinstall:
+  version: 1
+
+  locale: en_US.UTF-8
+  keyboard:
+    layout: us
+
+  identity:
+    hostname: __CEOS_HOSTNAME__
+    username: __CEOS_ADMIN_USER__
+    password: __CEOS_PASSWORD_HASH__
+
+  ssh:
+    install-server: true
+    allow-pw: false
+    authorized-keys:
+      - __CEOS_ADMIN_SSH_PUBLIC_KEY__
+
+  # Deliberately unresolved. CE-OS does not commit a destructive disk target.
+  storage:
+    config:
+      - __CEOS_REVIEWED_STORAGE_CONFIGURATION__
+
+  packages:
+    - git
+    - ca-certificates
+    - curl
+    - build-essential
+    - cmake
+    - ninja-build
+    - python3
+    - python3-venv
+
+  late-commands:
+    - curtin in-target --target=/target -- mkdir -p /var/lib/ce-os
+    - curtin in-target --target=/target -- sh -c 'printf "%s\n" "CE-OS substrate installed; portable seed reconstruction pending" > /var/lib/ce-os/substrate-state'
+
+  user-data:
+    disable_root: true

@@ -1,0 +1,103 @@
+PACKAGE.
+
+identity- "package";
+
+role- "CE-OS portable provisioning, installation, verification, recovery, and machine-enrollment authority";
+
+root_model: (
+single_root- "The package transports and reconstructs the one CE-OS system; it does not create a congruent CE-OS repository or competing authority root";
+current_root- "~/ce-os";
+destination_direction- "CE-OS is intended to move outward toward the operator home root rather than multiply into sibling roots";
+);
+
+substrate: (
+target- "stable Ubuntu LTS";
+relationship- "Ubuntu supplies the initial kernel, bootloader, drivers, filesystem, networking, package manager, and init substrate while CE-OS owns the authored reconstruction above that substrate";
+source_policy- "Do not fork or rebuild the complete Ubuntu distribution merely to brand it CE-OS; pin and verify the upstream Ubuntu LTS substrate and source-build CE-OS-owned or intentionally patched components";
+future_ownership- "Lower substrate layers may become CE-OS-owned incrementally when evidence justifies that maintenance responsibility";
+);
+
+portable_seed: (
+current_seed- "rooted Pixel 6";
+purpose- "Carry source, manifests, machine profiles, required artifacts, provenance, checksums, reconstruction knowledge, and installer inputs needed to provision another CE-OS host";
+independence- "A reconstructed host must not require the Pixel or conversational context after successful enrollment";
+preservation- "Creating or validating the portable seed must not delete the authoritative Pixel checkout";
+);
+
+single_install: (
+goal- "One initialization flow provisions the Ubuntu LTS substrate and then reconstructs and validates CE-OS without requiring an undocumented manual installation sequence";
+stages- "verify_seed -> provision_ubuntu_lts -> locate_ce_os_payload -> restore_source_and_state -> install_dependencies -> build_owned_components -> apply_ce_os_authorities -> verify -> enroll -> reboot_or_enter_operator_environment";
+failure_rule- "A failed stage must stop with an explicit diagnostic and must not claim enrollment";
+);
+
+payload: (
+required- "CE-OS source and Git identity, QPS source/runtime/bootstrap requirements, Agency-required assets, Engineering, UI, Android cross-host knowledge, package authority, configuration, services, machine profiles, dependency manifests, provenance, checksums, and reconstruction instructions";
+generated_policy- "Generated or rebuildable artifacts are included only when needed for offline bootstrap or when their exact preservation is part of the recovery contract";
+large_payload_policy- "Large datasets, models, SDKs, binaries, and build outputs must be classified explicitly as required, reconstructable, optional, or excluded before the seed is finalized";
+);
+
+provenance: (
+git- "Record exact CE-OS commit identity and dirty-state disposition";
+external_source- "Record upstream project, revision or release, retrieval origin, license metadata where applicable, patches, build recipe, and produced artifact checksum for source-built external components";
+ubuntu- "Record exact Ubuntu LTS image identity and checksum before it becomes accepted installer input";
+integrity- "Portable artifacts require machine-verifiable cryptographic checksums";
+);
+
+recovery: (
+independent- "Provisioning and recovery remain usable independently of OperatorShell";
+verification- "Recovery proof must validate seed integrity before mutation and validate reconstructed CE-OS after installation";
+pixel_freeze- "Pixel development may be frozen only after the portable seed and reconstruction evidence are complete and verified";
+);
+
+phone_boot_boundary: (
+goal- "The Pixel may act as the physical carrier and boot/provisioning device for another machine";
+safety- "Do not repartition, reflash, wipe, disable, reboot, or otherwise risk the Pixel Android installation or its hotspot/SSH control plane while developing the package";
+implementation_gate- "Any operation that changes USB gadget behavior, block exposure, boot media, Android runtime, networking, partitions, or filesystems requires a separately verified rollback-safe plan before execution";
+);
+
+machine_profiles: (
+authority- "package/config/machines";
+selection- "PT_MACHINE_PROFILE";
+compatibility_default- "precision-tower";
+explicit_override- "PT_HARDWARE_POLICY_FILE";
+precision_profile- "package/config/machines/precision-tower.env";
+legacy_policy- "package/config/hardware.env remains a compatibility fallback while Precision behavior is generalized rather than deleted";
+rule- "Host-specific acceptance policy belongs to a machine profile; portable package behavior must not hard-code one target machine";
+);
+
+existing_package: (
+origin- "The existing package surface is a Precision Tower deployment package and is preserved as implementation evidence rather than overwritten";
+current_capability- "It verifies host and hardware prerequisites, installs operator wrappers and a managed environment file, tests package contracts, and safely uninstalls artifacts it owns";
+known_gap- "It does not yet install OS packages, configure firewall rules, enable services, select a persistent Agency daemon, provision Ubuntu, or carry a complete CE-OS recovery payload";
+generalization_rule- "Generalize the existing package incrementally so Precision-specific policy becomes a machine profile rather than silently deleting proven behavior";
+);
+
+authorities: (
+checklist- "package/checklist.qps";
+legacy_config- "package/config/package.yaml";
+installer- "package/install.sh";
+verification- "package/verify.sh";
+tests- "package/tests";
+);
+
+acceptance: (
+portable_seed- "A complete seed can be produced and cryptographically verified from the CE-OS root";
+single_initialization- "A clean supported Ubuntu LTS target can reconstruct CE-OS through one documented entry flow";
+offline_boundary- "The package explicitly states which installation stages are fully offline and which require network retrieval";
+machine_profile- "Target-specific hardware policy is separated from portable CE-OS authority";
+non_destructive_proof- "Lifecycle tests use repository-local disposable state and do not mutate the live Android, boot, network, or disk control plane";
+recovery- "The resulting host can validate CE-OS identity and operate without depending on the Pixel";
+backup- "The final Pixel preservation artifact records exact Git identity, package manifest, checksums, and recovery procedure";
+);
+
+machine_enrollment:
+(
+  authority- "package/tools/enroll_host.py";
+  purpose- "record reconstructed host identity, CE-OS authorities, machine profile, launch surfaces, and service activation boundary";
+  state- "candidate while source worktree is dirty; enrolled only from a clean accepted source identity";
+  service_boundary- "enrollment records service intent but does not enable or start host services";
+  operator_shell- "UI/OperatorShell/project.godot";
+  workbench- "UI/Workbench/project.godot";
+  agency- "Agency/_index.qps";
+  engineering- "Engineering/_index.qps";
+);

@@ -1,0 +1,17 @@
+MACHINES.
+
+identity- "package.machine_profiles";
+
+role- "Host-specific acceptance and provisioning policy separated from portable CE-OS package authority";
+
+rules: (
+portable_package- "Package behavior is portable; machine profiles select host-specific hardware and provisioning constraints";
+precision_legacy- "precision-tower.env preserves the existing Precision Tower hardware contract and tests";
+selection- "PT_MACHINE_PROFILE selects a package-owned profile by identity; PT_HARDWARE_POLICY_FILE remains an explicit compatibility override";
+default- "precision-tower is the compatibility default until another machine profile is intentionally selected";
+mutation- "Machine profile selection does not itself mutate hardware, Android, networking, boot media, partitions, or filesystems";
+);
+
+profiles: (
+precision_tower- "package/config/machines/precision-tower.env";
+);

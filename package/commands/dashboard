@@ -3,23 +3,48 @@ set -Eeuo pipefail
 SCRIPT_DIR="$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/../lib/common.sh"
 pt_initialize
+
 CHECK_ONLY=false
 [[ "${1:-}" == "--check" ]] && CHECK_ONLY=true
-pt_print_line "Precision Tower Dashboard launcher"
+
+pt_print_line "CE-OS OperatorShell launcher"
 pt_require_dashboard_root || exit 1
-LAUNCHER="$REPO_ROOT/run-dashboard.sh"
-if [[ ! -x "$LAUNCHER" ]]; then
-    pt_status_line "MISSING" "dashboard launcher" "$LAUNCHER is missing or not executable"
+
+LEGACY_LAUNCHER="$REPO_ROOT/run-dashboard.sh"
+OPERATOR_PROJECT="$REPO_ROOT/UI/OperatorShell/project.godot"
+
+if [[ -x "$LEGACY_LAUNCHER" ]]; then
+    LAUNCH_KIND="legacy"
+    LAUNCH_TARGET="$LEGACY_LAUNCHER"
+elif [[ -f "$OPERATOR_PROJECT" ]]; then
+    LAUNCH_KIND="operatorshell"
+    LAUNCH_TARGET="$OPERATOR_PROJECT"
+else
+    pt_status_line "MISSING" "dashboard launcher" "neither executable $LEGACY_LAUNCHER nor $OPERATOR_PROJECT exists"
     exit 1
 fi
-pt_status_line "PASS" "dashboard launcher" "$LAUNCHER"
+
+pt_status_line "PASS" "dashboard launcher" "$LAUNCH_TARGET"
+
 if [[ "$CHECK_ONLY" == true ]]; then
-    pt_status_line "PASS" "dashboard check" "launcher exists; not launching because --check was supplied"
+    pt_status_line "PASS" "dashboard check" "launch surface exists; not launching because --check was supplied"
     exit 0
 fi
+
 if ! pt_has_launch_surface; then
-    pt_status_line "WARNING" "dashboard launch" "No DISPLAY or local virtual console detected; refusing to invoke fullscreen launcher from this session."
+    pt_status_line "WARNING" "dashboard launch" "No DISPLAY or local virtual console detected; refusing to invoke graphical OperatorShell from this session."
     exit 2
 fi
-pt_status_line "PASS" "dashboard launch" "executing existing run-dashboard.sh"
-exec "$LAUNCHER"
+
+if [[ "$LAUNCH_KIND" == "legacy" ]]; then
+    exec "$LEGACY_LAUNCHER"
+fi
+
+GODOT_BIN="$(pt_godot_path || true)"
+if [[ -z "$GODOT_BIN" || "$GODOT_BIN" == "UNRESOLVED" ]]; then
+    pt_status_line "MISSING" "Godot" "OperatorShell project exists but no Godot executable was resolved"
+    exit 1
+fi
+
+pt_status_line "PASS" "dashboard launch" "executing OperatorShell project with $GODOT_BIN"
+exec "$GODOT_BIN" --path "$REPO_ROOT/UI/OperatorShell"

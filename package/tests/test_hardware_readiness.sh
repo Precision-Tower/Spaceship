@@ -7,7 +7,7 @@ pt_initialize
 fail() { pt_status_line "MISSING" "$1" "$2"; exit 1; }
 pt_print_line "Precision Tower hardware readiness test"
 
-tmp="$(mktemp -d)"
+tmp="$(mktemp -d "$PT_TEST_TMP_ROOT/tmp.XXXXXXXXXX")"
 trap 'rm -rf "$tmp"' EXIT
 policy="$tmp/hardware.env"
 cat > "$policy" <<'EOF'
@@ -40,11 +40,21 @@ EOF
 #!/usr/bin/env bash
 printf '01:00.0 VGA compatible controller: NVIDIA Corporation %s\\n' '$gpu_name'
 EOF
-    cat > "$dir/lsmod" <<'EOF'
+    cat > "$dir/uname" <<'EOF'
+#!/usr/bin/env bash
+if [[ "${1:-}" == "-m" ]]; then
+    printf '%s\n' x86_64
+else
+    /data/data/com.termux/files/usr/bin/uname "$@"
+fi
+EOF
+chmod +x "$dir/uname"
+
+cat > "$dir/lsmod" <<'EOF'
 #!/usr/bin/env bash
 printf 'nvidia 105357312 53\n'
 EOF
-    chmod +x "$dir/nvidia-smi" "$dir/nvcc" "$dir/lspci" "$dir/lsmod"
+    chmod +x "$dir/nvidia-smi" "$dir/nvcc" "$dir/lspci" "$dir/lsmod" "$dir/uname"
 }
 
 pass_bin="$tmp/pass-bin"

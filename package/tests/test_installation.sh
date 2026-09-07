@@ -5,7 +5,7 @@ source "$SCRIPT_DIR/../lib/common.sh"
 pt_initialize
 fail() { pt_status_line "MISSING" "$1" "$2"; exit 1; }
 pt_print_line "Precision Tower controlled installation test"
-tmp="$(mktemp -d)"
+tmp="$(mktemp -d "$PT_TEST_TMP_ROOT/tmp.XXXXXXXXXX")"
 trap 'rm -rf "$tmp"' EXIT
 bin_dir="$tmp/bin"
 env_dir="$tmp/etc/precision-tower-node"
@@ -42,13 +42,21 @@ cat > "$mock_bin/lsmod" <<'EOF'
 #!/usr/bin/env bash
 printf 'nvidia 105357312 53\n'
 EOF
-chmod +x "$mock_bin/nvidia-smi" "$mock_bin/nvcc" "$mock_bin/lspci" "$mock_bin/lsmod"
-PATH="$mock_bin:$PATH" PT_HARDWARE_POLICY_FILE="$policy" PRECISION_BIN_DIR="$bin_dir" PRECISION_ENV_DIR="$env_dir" "$PACKAGE_ROOT/install.sh" --dry-run >/tmp/precision-tower-install-dry-run.out
+cat > "$mock_bin/uname" <<'EOF'
+#!/usr/bin/env bash
+if [[ "${1:-}" == "-m" ]]; then
+    printf '%s\n' x86_64
+else
+    exec /data/data/com.termux/files/usr/bin/uname "$@"
+fi
+EOF
+chmod +x "$mock_bin/nvidia-smi" "$mock_bin/nvcc" "$mock_bin/lspci" "$mock_bin/lsmod" "$mock_bin/uname"
+PATH="$mock_bin:$PATH" PT_HARDWARE_POLICY_FILE="$policy" PRECISION_BIN_DIR="$bin_dir" PRECISION_ENV_DIR="$env_dir" "$PACKAGE_ROOT/install.sh" --dry-run >"$PT_TEST_TMP_ROOT/precision-tower-install-dry-run.out"
 [[ ! -e "$bin_dir" ]] || fail "dry-run" "$bin_dir was created during dry-run"
 [[ ! -e "$env_dir/default.env" ]] || fail "dry-run" "$env_dir/default.env was created during dry-run"
-grep -q 'PASS       precision tower acceptance' /tmp/precision-tower-install-dry-run.out || fail "dry-run hardware gate" "accepted mock hardware was not reported"
+grep -q 'PASS       precision tower acceptance' "$PT_TEST_TMP_ROOT/precision-tower-install-dry-run.out" || fail "dry-run hardware gate" "accepted mock hardware was not reported"
 pt_status_line "PASS" "dry-run" "no filesystem mutation in temporary destinations"
-PATH="$mock_bin:$PATH" PT_HARDWARE_POLICY_FILE="$policy" PRECISION_BIN_DIR="$bin_dir" PRECISION_ENV_DIR="$env_dir" "$PACKAGE_ROOT/install.sh" --apply >/tmp/precision-tower-install-apply.out
+PATH="$mock_bin:$PATH" PT_HARDWARE_POLICY_FILE="$policy" PRECISION_BIN_DIR="$bin_dir" PRECISION_ENV_DIR="$env_dir" "$PACKAGE_ROOT/install.sh" --apply >"$PT_TEST_TMP_ROOT/precision-tower-install-apply.out"
 while IFS= read -r command_name; do dest="$bin_dir/$command_name"; src="$PACKAGE_COMMANDS/$command_name"; [[ -L "$dest" ]] || fail "installed wrapper" "$dest is not a symlink"; [[ "$(readlink "$dest")" == "$src" ]] || fail "installed wrapper" "$dest does not point to $src"; done < <(pt_operator_commands)
 pt_status_line "PASS" "wrapper install" "all operator wrappers installed as symlinks"
 [[ -f "$env_dir/default.env" ]] || fail "env install" "$env_dir/default.env missing"
@@ -62,7 +70,7 @@ pt_status_line "PASS" "env install" "$env_dir/default.env"
 [[ ! -e "$PACKAGE_SYSTEMD/agency.service" ]] || fail "agency.service" "installable agency.service exists"
 [[ -f "$PACKAGE_SYSTEMD/agency.service.unresolved" ]] || fail "agency.service.unresolved" "non-installable Agency draft missing"
 pt_status_line "PASS" "agency service classification" "no installable agency.service exists"
-PRECISION_BIN_DIR="$bin_dir" PRECISION_ENV_DIR="$env_dir" "$PACKAGE_ROOT/uninstall.sh" --apply >/tmp/precision-tower-uninstall-apply.out
+PRECISION_BIN_DIR="$bin_dir" PRECISION_ENV_DIR="$env_dir" "$PACKAGE_ROOT/uninstall.sh" --apply >"$PT_TEST_TMP_ROOT/precision-tower-uninstall-apply.out"
 while IFS= read -r command_name; do [[ ! -e "$bin_dir/$command_name" && ! -L "$bin_dir/$command_name" ]] || fail "uninstalled wrapper" "$bin_dir/$command_name remains"; done < <(pt_operator_commands)
 [[ ! -e "$env_dir/default.env" ]] || fail "uninstalled env" "$env_dir/default.env remains"
 pt_status_line "PASS" "uninstall" "package-owned temporary destinations removed"

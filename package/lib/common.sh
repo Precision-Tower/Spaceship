@@ -107,10 +107,10 @@ pt_python() {
 }
 
 pt_require_dashboard_root() {
-    if [[ -f "$REPO_ROOT/run.py" && -d "$REPO_ROOT/Agency" ]]; then
+    if pt_is_repository_root "$REPO_ROOT"; then
         return 0
     fi
-    pt_status_line "MISSING" "repository root" "$REPO_ROOT is not a Dashboard repository root"
+    pt_status_line "MISSING" "repository root" "$REPO_ROOT is not a CE-OS repository root"
     return 1
 }
 
@@ -172,17 +172,21 @@ pt_godot_path() {
 pt_launcher_env_value() {
     local key="$1"
     local fallback="${2:-}"
-    case "$key" in
-        OPERATOR_PTY_HOST)
-            grep '^OPERATOR_PTY_HOST=' "$REPO_ROOT/run-dashboard.sh" 2>/dev/null | head -n 1 | sed -n 's#.*:-\([^}]*\)}.*#\1#p'
-            ;;
-        OPERATOR_PTY_PORT)
-            grep '^OPERATOR_PTY_PORT=' "$REPO_ROOT/run-dashboard.sh" 2>/dev/null | head -n 1 | sed -n 's#.*:-\([^}]*\)}.*#\1#p'
-            ;;
-        *)
-            printf '%s\n' "$fallback"
-            ;;
-    esac | awk -v fallback="$fallback" 'NF {print; found=1} END {if (!found) print fallback}'
+    local launcher="$REPO_ROOT/run-dashboard.sh"
+    local value=""
+
+    if [[ -f "$launcher" ]]; then
+        case "$key" in
+            OPERATOR_PTY_HOST)
+                value="$(grep '^OPERATOR_PTY_HOST=' "$launcher" 2>/dev/null | head -n 1 | sed -n 's#.*:-\([^}]*\)}.*#\1#p' || true)"
+                ;;
+            OPERATOR_PTY_PORT)
+                value="$(grep '^OPERATOR_PTY_PORT=' "$launcher" 2>/dev/null | head -n 1 | sed -n 's#.*:-\([^}]*\)}.*#\1#p' || true)"
+                ;;
+        esac
+    fi
+
+    printf '%s\n' "${value:-$fallback}"
 }
 
 pt_agency_runtime_status() {
@@ -198,6 +202,15 @@ pt_agency_runtime_status() {
 pt_requires_privilege_for_install_destinations() {
     [[ "$PRECISION_BIN_DIR" == /usr/* || "$PRECISION_BIN_DIR" == /bin/* || "$PRECISION_ENV_DIR" == /etc/* ]]
 }
+
+
+pt_is_repository_root() {
+    local root="${1:-$REPO_ROOT}"
+    [[ -f "$root/_index.qps" ]] &&
+    [[ -d "$root/package" ]] &&
+    [[ -d "$root/qps" ]]
+}
+
 
 pt_initialize() {
     pt_resolve_layout

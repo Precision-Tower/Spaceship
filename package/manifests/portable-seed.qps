@@ -1,0 +1,66 @@
+PORTABLE_SEED.
+
+identity- "package.portable_seed_manifest";
+
+schema_version- "1";
+
+purpose- "Machine-verifiable description of a CE-OS preservation and reconstruction seed";
+
+root_model: (
+single_root- true;
+seed_is_transport- true;
+duplicate_live_root- false;
+);
+
+identity_fields: (
+git_commit- true;
+git_branch- true;
+git_dirty_state- true;
+manifest_version- true;
+created_utc- true;
+source_host_role- true;
+);
+
+integrity: (
+algorithm- "sha256";
+verify_before_apply- true;
+failure_policy- "Missing or mismatched required payload blocks reconstruction";
+);
+
+ubuntu_substrate: (
+release_identity- true;
+architecture- true;
+image_filename- true;
+image_sha256- true;
+source_origin- true;
+status- "Unresolved until exact supported Ubuntu LTS installer image is selected and verified";
+);
+
+payload_entry: (
+fields- "path, class, inclusion, reason, size_bytes, tracked_state";
+classes- "required, reconstructable, optional, excluded, machine_local";
+);
+
+offline_boundary: (
+required- true;
+rule- "Every reconstruction dependency must state whether it is carried in the seed or requires network retrieval";
+);
+
+git_preservation: (
+exact_commit- true;
+portable_history_artifact- true;
+dirty_state_must_be_resolved_or_preserved- true;
+raw_git_directory_not_seed_authority- true;
+);
+
+reconstruction: (
+dry_run_required- true;
+apply_required- true;
+post_install_verification_required- true;
+);
+
+pixel_preservation: (
+delete_source_after_seed- false;
+freeze_only_after_verified_recovery- true;
+phone_carrier_activation_separate_gate- true;
+);

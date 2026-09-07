@@ -15,7 +15,20 @@ _pt_hw_bool_true() {
 }
 
 pt_hardware_policy_file() {
-    printf '%s\n' "${PT_HARDWARE_POLICY_FILE:-$PACKAGE_ROOT/config/hardware.env}"
+    if [[ -n "${PT_HARDWARE_POLICY_FILE:-}" ]]; then
+        printf '%s\n' "$PT_HARDWARE_POLICY_FILE"
+        return 0
+    fi
+
+    local profile="${PT_MACHINE_PROFILE:-precision-tower}"
+    local profile_file="$PACKAGE_ROOT/config/machines/${profile}.env"
+
+    if [[ -r "$profile_file" ]]; then
+        printf '%s\n' "$profile_file"
+        return 0
+    fi
+
+    printf '%s\n' "$PACKAGE_ROOT/config/hardware.env"
 }
 
 pt_hardware_load_policy() {

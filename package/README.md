@@ -18,7 +18,7 @@ services, modify SSH or Tailscale, or select a persistent Agency daemon.
 
 ## Hardware readiness
 
-`config/hardware.env` defines the package-owned target hardware policy.
+`config/machines/precision-tower.env` is the explicit Precision Tower machine profile. `PT_MACHINE_PROFILE` selects package-owned machine policy, while `PT_HARDWARE_POLICY_FILE` remains an explicit compatibility override and `config/hardware.env` remains the legacy fallback during generalization.
 `verify.sh` reports host inventory, NVIDIA detection, driver visibility, CUDA
 runtime/toolkit visibility, VRAM, and Precision Tower acceptance.
 

@@ -1,0 +1,66 @@
+UBUNTU_SUBSTRATE.
+
+identity- "package.ubuntu_lts_substrate";
+
+role- "Initial stable Ubuntu LTS substrate used to reconstruct CE-OS on a clean supported machine";
+
+ownership: (
+ubuntu- "kernel, bootloader, drivers, base filesystem, apt, init, and hardware enablement substrate";
+ce_os- "portable seed verification, source reconstruction, owned toolchain build, configuration, services, machine profile, UI, Agency, Engineering, and enrollment above the substrate";
+);
+
+release: (
+channel- "stable Ubuntu LTS";
+exact_release- "UNRESOLVED";
+exact_image_filename- "UNRESOLVED";
+exact_image_sha256- "UNRESOLVED";
+source_origin- "UNRESOLVED";
+acceptance- "Exact installer image is accepted only after release identity, origin, architecture, and SHA-256 are explicitly recorded and verified";
+);
+
+architecture: (
+supported_initial_target- "x86_64";
+selection- "Machine profile and accepted Ubuntu image architecture must agree";
+);
+
+autoinstall: (
+format- "cloud-init compatible Ubuntu autoinstall input";
+user_data_template- "package/ubuntu/autoinstall/user-data.template";
+meta_data- "package/ubuntu/autoinstall/meta-data";
+mutation_state- "input_definition_only";
+boot_media_written- false;
+);
+
+installation_boundary: (
+stage_1- "Boot accepted Ubuntu LTS installer";
+stage_2- "Apply explicitly reviewed disk and identity policy";
+stage_3- "Install Ubuntu substrate";
+stage_4- "Locate CE-OS portable seed";
+stage_5- "Verify seed before CE-OS reconstruction";
+stage_6- "Invoke CE-OS reconstruction entrypoint";
+stage_7- "Verify CE-OS enrollment before declaring success";
+);
+
+secrets: (
+tracked_password- false;
+tracked_ssh_private_key- false;
+tracked_auth_token- false;
+rule- "Machine identity, password hashes, SSH administrator keys, and enrollment secrets are injected outside tracked repository authority";
+);
+
+disk_safety: (
+automatic_destructive_layout- false;
+rule- "Tracked template does not nominate a concrete installation disk or authorize destructive storage mutation";
+activation_gate- "Concrete target-disk selection belongs to the later physical installation step and requires Operator-visible evidence";
+);
+
+network: (
+offline_goal- "Seed should carry enough CE-OS material for reconstruction where practical";
+network_required_dependencies- "Must be explicitly declared before claiming fully offline installation";
+);
+
+source_rebuild: (
+ubuntu_full_rebuild- false;
+rule- "CE-OS does not assume responsibility for rebuilding the complete Ubuntu distribution";
+owned_components- "CE-OS-owned and intentionally patched components may be built from pinned source with provenance";
+);

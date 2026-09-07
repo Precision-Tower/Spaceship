@@ -3,6 +3,8 @@ set -Eeuo pipefail
 SCRIPT_DIR="$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/lib/common.sh"
 pt_initialize
+PT_RUNTIME_TMP_ROOT="${PT_RUNTIME_TMP_ROOT:-$REPO_ROOT/trash/tmp/package-runtime}"
+mkdir -p "$PT_RUNTIME_TMP_ROOT"
 APPLY=false
 for arg in "$@"; do case "$arg" in --apply) APPLY=true ;; --dry-run|--plan) APPLY=false ;; -h|--help) pt_print_line "usage: package/uninstall.sh [--dry-run|--apply]"; exit 0 ;; *) pt_status_line "WARNING" "usage" "unknown argument: $arg"; exit 2 ;; esac; done
 SUDO_CMD=()

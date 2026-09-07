@@ -1,0 +1,39 @@
+PAYLOAD_POLICY.
+
+identity- "package.payload_classification";
+
+classes: (
+required- "Authoritative CE-OS source or state required for reconstruction";
+reconstructable- "Generated or derivable state rebuilt from preserved authority";
+optional- "Non-authoritative payload worth preserving";
+excluded- "Disposable content omitted from the seed";
+machine_local- "Host-specific state preserved separately from portable authority";
+);
+
+precedence: (
+rule_1- "trash is excluded";
+rule_2- "tracked repository files are required unless authored policy explicitly says otherwise";
+rule_3- "raw Git implementation storage is reconstructable through an explicit portable history artifact";
+rule_4- "build, cache, bytecode, editor, and generated dependency trees are reconstructable";
+rule_5- "credentials, enrollment material, and host-local runtime state are machine_local";
+rule_6- "unknown untracked or ignored non-disposable payload defaults to optional preservation";
+);
+
+inclusion: (
+required- "seed";
+reconstructable- "rebuild";
+optional- "seed";
+excluded- "omit";
+machine_local- "preserve_separately";
+);
+
+large_payload_threshold_bytes- "104857600";
+
+operator_intent- "Do not lose unique CE-OS material during the Pixel-to-Ubuntu transition";
+
+forbidden: (
+item_1- "Do not silently omit an unknown large payload";
+item_2- "Do not copy machine-local secrets into ordinary portable authority";
+item_3- "Do not treat build products as authoritative merely because they are large";
+item_4- "Do not delete the Pixel checkout after creating a seed";
+);

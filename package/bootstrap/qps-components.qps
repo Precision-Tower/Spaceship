@@ -1,0 +1,78 @@
+QPS_COMPONENTS.
+
+identity- "package.qps_components";
+
+role- "Pinned reconstruction authority for QPS and CE-OS-owned native command components";
+
+qps_runtime: (
+source- "qps/cpp";
+build_system- "cmake";
+language- "C++17";
+configure- "cmake -S qps/cpp -B <build-directory>";
+build- "cmake --build <build-directory> --target qps";
+artifact- "<build-directory>/qps";
+install_policy- "Build into repository-local reconstruction scratch first; publication into the reconstructed CE-OS environment is a separate explicit action";
+);
+
+native_tools: (
+location- "qps/bin/native";
+policy- "Reconstruct native tools from the pinned source revisions below when accepted seed artifacts are unavailable or fail integrity verification";
+
+ripgrep: (
+source- "qps/bin/src/ripgrep";
+revision- "3fce3b5bb0236da2df6d99672afb8a719642eca7";
+);
+
+grep: (
+source- "qps/bin/src/grep";
+revision- "e187ca53198c7aafb28da64da86d1bd59244c3cc";
+);
+
+sed: (
+source- "qps/bin/src/sed";
+revision- "0c1fe22ccacf4887e0be6c11deb4e9c83acc287d";
+);
+
+findutils: (
+source- "qps/bin/src/findutils";
+revision- "db41ebaf0486e9903745c46a59fed9ccc4d5938b";
+artifacts- "find, xargs";
+);
+
+gawk: (
+source- "qps/bin/src/gawk";
+revision- "6c7fd0eb2ee568f5f2a30646f0c91ccb4a65ecc4";
+artifact- "awk";
+);
+
+diffutils: (
+source- "qps/bin/src/diffutils";
+revision- "ba490bf17c1938e7cd0c2309a08d9a59b962bdff";
+artifact- "diff";
+);
+
+patch: (
+source- "qps/bin/src/patch";
+revision- "a2b192295d7046bafc18d54973436bb3faa659d7";
+artifact- "patch";
+);
+
+coreutils: (
+source- "qps/bin/src/coreutils";
+revision- "bff0e5412db91410d759e2eefbbca3df80a1e672";
+artifacts- "cat, head, tail, sort, uniq, cut, tr";
+implementation- "one coreutils multicall engine with argv[0]-selected command entrypoints";
+);
+);
+
+integrity: (
+source_revision_required- true;
+mismatch_policy- "fail closed";
+accepted_seed_artifact_policy- "Artifact reuse is allowed only when the portable seed manifest cryptographically identifies and verifies it";
+host_binary_policy- "Host binaries are not reconstruction authority";
+);
+
+offline_boundary: (
+pinned_sources_present- "Native source trees carried by the CE-OS payload permit source reconstruction without fetching replacement source revisions";
+dependencies- "Compiler, CMake, build utilities, and project-specific build dependencies remain Ubuntu substrate dependencies and must be satisfied by the reconstruction dependency stage";
+);

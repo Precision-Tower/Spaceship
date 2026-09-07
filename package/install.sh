@@ -4,6 +4,8 @@ SCRIPT_DIR="$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/lib/common.sh"
 source "$SCRIPT_DIR/lib/hardware.sh"
 pt_initialize
+PT_RUNTIME_TMP_ROOT="${PT_RUNTIME_TMP_ROOT:-$REPO_ROOT/trash/tmp/package-runtime}"
+mkdir -p "$PT_RUNTIME_TMP_ROOT"
 
 APPLY=false
 for arg in "$@"; do
@@ -51,12 +53,9 @@ usage_context() {
 require_files() {
     local missing=0 relative command_name
     local required=(
-        "Agency/Core/paths.py"
         "Agency/Core/runtime/runtime_profiles.yaml"
         "Agency/Core/runtime/model_server_manager.py"
         "Agency/Core/runtime/terminal/pty_service.py"
-        "run.py"
-        "run-dashboard.sh"
         "package/install.sh"
         "package/uninstall.sh"
         "package/verify.sh"
@@ -66,6 +65,8 @@ require_files() {
         "package/config/default.env.example"
         "package/config/firewall.rules"
         "package/config/hardware.env"
+        "package/config/machines/_index.qps"
+        "package/config/machines/precision-tower.env"
         "package/config/tty-map.conf"
         "package/manifests/packages.txt"
         "package/manifests/commands.txt"
@@ -81,6 +82,7 @@ require_files() {
         "package/tests/test_services.sh"
         "package/tests/test_remote_access.sh"
         "package/tests/test_hardware_readiness.sh"
+        "package/tests/test_machine_profiles.sh"
         "package/tests/test_operator_commands.sh"
         "package/tests/test_installation.sh"
     )
@@ -150,7 +152,10 @@ write_generated_env() {
     pty_host="$(pt_launcher_env_value OPERATOR_PTY_HOST 127.0.0.1)"
     pty_port="$(pt_launcher_env_value OPERATOR_PTY_PORT 8765)"
     user_name="$(id -un)"
-    user_home="$(getent passwd "$user_name" | cut -d: -f6 || true)"
+    user_home=""
+    if pt_have_command getent; then
+        user_home="$(getent passwd "$user_name" 2>/dev/null | cut -d: -f6 || true)"
+    fi
     user_home="${user_home:-$HOME}"
     wine_prefix="$user_home/Applications/wine/operator"
     tailscale_key="$PRECISION_ENV_DIR/tailscale-auth.key"
@@ -244,7 +249,7 @@ install_env_file() {
         return 0
     fi
     if [[ "$APPLY" != true ]]; then
-        tmp="$(mktemp)"
+        tmp="$(mktemp "$PT_RUNTIME_TMP_ROOT/tmp.XXXXXXXXXX")"
         write_generated_env "$tmp"
         pt_status_line "DRY-RUN" "$PRECISION_ENV_DIR" "would create if missing"
         pt_status_line "DRY-RUN" "$PRECISION_ENV_FILE" "would write generated environment"
@@ -259,7 +264,7 @@ install_env_file() {
     else
         pt_status_line "PRESERVED" "$PRECISION_ENV_DIR"
     fi
-    tmp="$(mktemp)"
+    tmp="$(mktemp "$PT_RUNTIME_TMP_ROOT/tmp.XXXXXXXXXX")"
     write_generated_env "$tmp"
     "${SUDO_CMD[@]}" install -m 0644 "$tmp" "$PRECISION_ENV_FILE"
     rm -f "$tmp"
@@ -279,7 +284,7 @@ main() {
     pt_print_line
     pt_print_line "Running read-only verification"
     local verify_output verify_status
-    verify_output="$(mktemp)"
+    verify_output="$(mktemp "$PT_RUNTIME_TMP_ROOT/tmp.XXXXXXXXXX")"
     if "$PACKAGE_VERIFY" >"$verify_output"; then
         pt_status_line "PASS" "verification" "package/verify.sh exited 0"
     else

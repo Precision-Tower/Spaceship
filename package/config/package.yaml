@@ -41,9 +41,13 @@ policy:
     desktop_starts_at_boot: false
     dashboard_owns_agency_runtime: false
   hardware_readiness:
-    source: package/config/hardware.env
+    source: package/config/machines/precision-tower.env
+    profile_selector: PT_MACHINE_PROFILE
+    compatibility_default: precision-tower
+    explicit_override: PT_HARDWARE_POLICY_FILE
+    legacy_fallback: package/config/hardware.env
     status: detection_and_apply_gate
-    ownership: package_deployment_policy
+    ownership: package_machine_profile_policy
     mutation: none
   remote_access:
     network: tailscale_private_network

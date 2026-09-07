@@ -1,0 +1,2 @@
+instance-id: ce-os-portable-install
+local-hostname: __CEOS_HOSTNAME__

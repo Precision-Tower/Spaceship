@@ -4,6 +4,8 @@ SCRIPT_DIR="$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/lib/common.sh"
 source "$SCRIPT_DIR/lib/hardware.sh"
 pt_initialize
+PT_RUNTIME_TMP_ROOT="${PT_RUNTIME_TMP_ROOT:-$REPO_ROOT/trash/tmp/package-runtime}"
+mkdir -p "$PT_RUNTIME_TMP_ROOT"
 FATALS=0
 fatal_line() { pt_status_line "$@"; FATALS=$((FATALS + 1)); }
 version_line() { pt_have_command "$1" && pt_run_quick 5 "$@" 2>&1 | head -n 1 || true; }
