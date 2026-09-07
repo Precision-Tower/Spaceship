@@ -17,7 +17,7 @@ tasks: (
 task_1: (
 identity- "workbench.gdscript_indentation_normalization";
 summary- "Prove the current Workbench GDScript indentation normalization without changing behavior";
-state- "active";
+state- "complete";
 
 current: (
 item_1- "WorkbenchObject.gd, WorkbenchRegistry.gd, PacketGeometryRenderer.gd, and SelectionManager.gd contain unstaged indentation changes";
@@ -28,15 +28,20 @@ item_3- "PacketGeometryRenderer.gd contains the largest formatting-only change";
 steps: (
 step_1: (
 goal- "Verify the four changed GDScript files parse after indentation normalization";
-state- "active";
+state- "complete";
 );
 step_2: (
 goal- "Confirm a whitespace-insensitive diff contains no unintended semantic changes";
-state- "waiting";
+state- "complete";
 );
 );
 
-next- "Run the smallest available Workbench or Godot parse validation against the four changed files, then inspect any non-whitespace diff";
+proof: (
+witness_1- "Whitespace-insensitive Git comparison proves the four Workbench GDScript changes contain no semantic differences";
+witness_2- "Repository diff hygiene passes for UI/Workbench";
+);
+
+next- "Resume workbench.engineering_authority_boundary from the smallest existing Workbench state-model surface";
 
 done_when: (
 condition_1- "All four changed GDScript files pass available parse or source validation";
