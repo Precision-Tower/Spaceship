@@ -1,0 +1,19 @@
+Core.
+
+purpose: def"
+Canonical Cipher-managed external library namespace.
+";
+
+scope: (
+root- "/data/data/com.termux/files/home/ce-os/qps/libs/Python/OCC/Core";
+ownership- "immediate_children_only";
+);
+
+surface: (
+BRepPrimAPI- "BRepPrimAPI/_index.qps";
+);
+
+rules: (
+generated_by- "Cipher";
+ownership- "immediate_children_only";
+);

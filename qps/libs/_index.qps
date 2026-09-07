@@ -1,0 +1,32 @@
+QPS_LIBRARIES.
+
+purpose: def"
+Canonical indexed CE-OS namespace for external source libraries absorbed by Cipher.
+
+Library knowledge is demand-populated at the smallest proven semantic symbol boundary.
+Every directory below qps/libs owns an _index.qps and exposes only its immediate children.
+";
+
+scope: (
+root- "qps/libs";
+ownership- "immediate_children_only";
+recursive_rule- "Every Cipher-created library directory must contain an _index.qps before publication";
+);
+
+surface: (
+Python- "Python/_index.qps";
+);
+
+rules: (
+indexed_tree- "qps/libs uses the same indexed filesystem navigation model as the rest of CE-OS";
+no_flat_registry- "External library knowledge is not duplicated into one global manifest";
+canonical_identity- "Library storage follows canonical source namespace rather than consumer aliases";
+demand_population- "Cipher adds only required semantic symbols and their required dependencies";
+deduplication- "An already indexed canonical symbol is reused rather than regenerated";
+transaction_boundary- "New library symbols, changed parent indexes, and consuming conversion outputs belong to one validated Cipher publication transaction";
+local_alias_boundary- "Source aliases remain consumer-local bindings and never create duplicate canonical library files";
+);
+
+navigation: (
+enter_python- "read qps/libs/Python/_index.qps";
+);

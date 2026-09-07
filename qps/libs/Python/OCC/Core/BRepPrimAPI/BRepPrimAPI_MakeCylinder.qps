@@ -1,0 +1,28 @@
+BRepPrimAPI_MakeCylinder.
+
+identity- "construct.cylinder";
+
+source: (
+family- "Python";
+module- "OCC.Core.BRepPrimAPI";
+symbol- "BRepPrimAPI_MakeCylinder";
+);
+
+implementation: (
+family- "native-binary";
+library- "libTKPrim.so";
+native_lookup- "BRepPrimAPI_MakeCylinder";
+resolver- "host-native-binary";
+);
+
+proof: (
+state- "resolved";
+observed_architecture- "AArch64";
+exported_matches- 15;
+);
+
+rules: (
+canonical_identity- "Source aliases do not alter this library identity";
+host_path_boundary- "Physical binary paths are resolved by the current host and are not canonical library identity";
+reuse- "Later Cipher conversions reuse this indexed symbol rather than duplicate it";
+);

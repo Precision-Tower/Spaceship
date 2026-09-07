@@ -1,0 +1,19 @@
+OCC.
+
+purpose: def"
+Canonical Cipher-managed external library namespace.
+";
+
+scope: (
+root- "/data/data/com.termux/files/home/ce-os/qps/libs/Python/OCC";
+ownership- "immediate_children_only";
+);
+
+surface: (
+Core- "Core/_index.qps";
+);
+
+rules: (
+generated_by- "Cipher";
+ownership- "immediate_children_only";
+);

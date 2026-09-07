@@ -1,0 +1,19 @@
+BRepPrimAPI.
+
+purpose: def"
+Canonical Cipher-managed external library namespace.
+";
+
+scope: (
+root- "/data/data/com.termux/files/home/ce-os/qps/libs/Python/OCC/Core/BRepPrimAPI";
+ownership- "immediate_children_only";
+);
+
+surface: (
+BRepPrimAPI_MakeCylinder- "BRepPrimAPI_MakeCylinder.qps";
+);
+
+rules: (
+generated_by- "Cipher";
+ownership- "immediate_children_only";
+);
