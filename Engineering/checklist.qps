@@ -1,0 +1,60 @@
+ENGINEERING_WORK.
+
+purpose: def"
+Persistent working memory for unfinished Engineering work not already owned by
+the Cipher checklist.
+";
+
+ownership: (
+surface- "Engineering";
+qps_surface- "Engineering/qps";
+cipher_owner- "qps/qps/checklist.qps:cipher.foreign_and_structured_semantics";
+supporting_checklist- "Engineering/docs/CHECKLIST.md";
+);
+
+current_work: (
+tasks: (
+
+task_1: (
+identity- "engineering.causal_domain_topology";
+summary- "Prove the recovered Engineering causal-domain topology and design corpus against current QPS execution semantics";
+state- "active";
+
+current: (
+item_1- "Engineering/qps/docs/Engineering.qps records causal_domain and causal_bang as working_domain_topology";
+item_2- "The unresolved causal frontier is explicit domain-interface contracts replacing provisional scalar binding transfer";
+item_3- "HEV motor-to-pump probes use canonical DC, ME, and FD domain symbols";
+item_4- "Recovered DWT, EDS, and ICE designs are registered in Engineering/qps/designs/_index.qps";
+item_5- "DWT, EDS, and ICE preserve historical causal chains while explicitly treating domain transformations as non-numeric equality";
+item_6- "Engineering/qps/experiments/safety_factor_floor.qps adds a bounded causal execution experiment";
+item_7- "No existing checklist task was found owning DWT, EDS, ICE, safety_factor_floor, or the HEV causal probes";
+item_8- "Cipher implementation remains owned separately by qps/qps/checklist.qps:cipher.foreign_and_structured_semantics";
+);
+
+steps: (
+step_1: (
+goal- "Validate the new and modified Engineering QPS sources with the smallest applicable QPS checks";
+state- "ready";
+);
+step_2: (
+goal- "Run the bounded Engineering QPS test surface and record causal-domain failures or proof";
+state- "waiting";
+);
+step_3: (
+goal- "Replace provisional scalar binding transfer with explicit domain-interface contracts where current execution evidence requires it";
+state- "waiting";
+);
+);
+
+next- "Run syntax checks for the changed Engineering QPS corpus, then the bounded Engineering/qps test surface";
+
+done_when: (
+condition_1- "Changed Engineering QPS sources pass applicable syntax checks";
+condition_2- "Engineering/qps bounded tests establish current causal-domain behavior";
+condition_3- "Recovered design registrations resolve through the Engineering design index";
+condition_4- "Any remaining causal-domain limitation is represented explicitly rather than claimed as complete";
+);
+);
+
+);
+);

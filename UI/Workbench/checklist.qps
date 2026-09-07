@@ -1,0 +1,85 @@
+WORKBENCH_WORK.
+
+purpose: def"
+Persistent working memory for unfinished Workbench implementation owned by
+UI/Workbench.
+";
+
+ownership: (
+surface- "UI/Workbench";
+supporting_checklist- "UI/Workbench/docs/CHECKLIST.md";
+migration_record- "UI/Workbench/docs/migration_checklist.md";
+);
+
+current_work: (
+tasks: (
+
+task_1: (
+identity- "workbench.gdscript_indentation_normalization";
+summary- "Prove the current Workbench GDScript indentation normalization without changing behavior";
+state- "active";
+
+current: (
+item_1- "WorkbenchObject.gd, WorkbenchRegistry.gd, PacketGeometryRenderer.gd, and SelectionManager.gd contain unstaged indentation changes";
+item_2- "Observed diffs replace space indentation with tabs while preserving statements and control flow";
+item_3- "PacketGeometryRenderer.gd contains the largest formatting-only change";
+);
+
+steps: (
+step_1: (
+goal- "Verify the four changed GDScript files parse after indentation normalization";
+state- "active";
+);
+step_2: (
+goal- "Confirm a whitespace-insensitive diff contains no unintended semantic changes";
+state- "waiting";
+);
+);
+
+next- "Run the smallest available Workbench or Godot parse validation against the four changed files, then inspect any non-whitespace diff";
+
+done_when: (
+condition_1- "All four changed GDScript files pass available parse or source validation";
+condition_2- "Whitespace-insensitive comparison shows no unintended semantic changes";
+);
+);
+
+task_2: (
+identity- "workbench.engineering_authority_boundary";
+summary- "Continue the Workbench migration so UI state remains a projection of Engineering truth rather than an authority";
+state- "ready";
+
+current: (
+item_1- "The migration record identifies overlapping WorkbenchSession, WorkbenchProject, WorkbenchObject, WorkbenchRegistry, packet-derived dictionaries, transient ghost state, and display-node state";
+item_2- "WorkbenchSession is explicitly a projection/cache and transient interaction surface rather than Engineering truth";
+item_3- "Required migration separates Engineering projection state, selection state, display-node lifecycle, and transient authoring state";
+item_4- "Required validation preserves object identity, packet lineage, unresolved state, and evidence-state distinctions";
+);
+
+steps: (
+step_1: (
+goal- "Establish the smallest projection-state boundary from WorkbenchObject and WorkbenchRegistry without changing Engineering semantics";
+state- "ready";
+);
+step_2: (
+goal- "Separate selection state and display-node lifecycle from semantic object identity";
+state- "waiting";
+);
+step_3: (
+goal- "Prove packet and Engineering projections remain transport and inspection contracts rather than Workbench truth";
+state- "waiting";
+);
+);
+
+next- "Resume from the smallest existing Workbench state-model surface after the current indentation-only changes are proven";
+
+done_when: (
+condition_1- "Workbench object identity survives display-node destruction and recreation";
+condition_2- "UI selection does not mutate Engineering meaning";
+condition_3- "Transient authoring state cannot be mistaken for resolved Engineering state";
+condition_4- "Packet loading does not silently promote transport data to Engineering truth";
+);
+);
+
+);
+);

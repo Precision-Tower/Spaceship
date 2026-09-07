@@ -47,7 +47,8 @@ mission_help- "python run.py mission -h";
 documents: (
 readme- "Agency/README.md";
 architecture- "Agency/architecture.yaml";
-checklist- "Agency/docs/CHECKLIST.md";
+checklist- "Agency/checklist.qps";
+docs_checklist- "Agency/docs/CHECKLIST.md";
 );
 
 rules: (
@@ -58,5 +59,6 @@ agents_consume_core- "Agents consume Core and do not duplicate Core implementati
 archive_boundary- "Agency/Archive is historical and excluded from active runtime authority";
 execution_direction- "execution flows downward; evidence status unresolveds and next-decision control flow upward";
 preserve_authority- "mutation requires authorization and verification does not equal acceptance";
+work_control- "Agency/checklist.qps is the authored current-work surface; Agency/docs/CHECKLIST.md remains supporting Markdown documentation";
 do_not_duplicate- "detailed Agency architecture remains owned by its local documents and child surfaces";
 );

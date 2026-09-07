@@ -1,0 +1,208 @@
+CHECKLIST.
+
+current_work: (
+tasks: (
+
+task_1: (
+identity- "agency.model_plan_audit";
+summary- "Prove the bounded local model-plan capability in the Agency audit";
+state- "ready";
+
+product- "Agency has current Pixel evidence for the local model-plan command path, including valid and invalid scope behavior, model-server failure behavior, healthy generation, required plan sections, declared-scope inspection, source preservation, model invocation evidence, and active pinboard publication";
+
+current: (
+item_1- "Agency/audit/output/agency_state.md reports Repository /home/spaztic/Core/Dashboard and Generated 2026-07-28T00:43:36.391191+00:00, so the latest checked-in audit is not current Pixel evidence for ~/ce-os";
+item_2- "Agency/audit/output/agency_state.md reports PASS 15, FAIL 0, and UNTESTED 9";
+item_3- "Agency/audit/output/agency_state.md lists local.model_plan.01 through local.model_plan.09 as UNTESTED";
+item_4- "The listed untested checks cover bounded engineering scopes, invalid scope rejection, stopped model-server failure, healthy nonempty plan generation, required plan sections, declared-scope inspection, source preservation, model invocation evidence, and active model-plan pinboard state";
+item_5- "Agency/Core/runtime/model_service.py and Agency/Core/work/planning own model invocation, planning context, and proposal generation surfaces inspected during grounding";
+);
+
+steps: (
+
+step_1: (
+goal- "Locate the current model-plan CLI, runtime, pinboard, and audit paths from Agency authority and implementation";
+product- "The proof target is grounded in current code rather than stale audit text";
+state- "ready";
+);
+
+step_2: (
+goal- "Run the smallest model-plan audit or test subset on the Pixel checkout";
+product- "The local.model_plan checks have observed PASS or actionable failure evidence from ~/ce-os";
+state- "waiting";
+);
+
+step_3: (
+goal- "Prove valid bounded scopes and invalid scope rejection";
+product- "Model-plan scope handling has the same bounded-authority character as the proven Agency proposal commands";
+state- "waiting";
+);
+
+step_4: (
+goal- "Prove stopped-server and healthy-server behavior separately";
+product- "Runtime capability state is reported explicitly instead of being inferred from documentation";
+state- "waiting";
+);
+
+step_5: (
+goal- "Prove generated plan content, declared-scope inspection, source preservation, invocation evidence, and pinboard publication";
+product- "The model-plan capability becomes demonstrable work-control evidence rather than an untested audit row";
+state- "waiting";
+);
+
+step_6: (
+goal- "Refresh Agency audit output after proof without treating stale generated files as current proof";
+product- "Agency/audit/output reflects the current checkout and records the model-plan result truthfully";
+state- "waiting";
+);
+
+);
+
+findings: (
+finding_1- "The current checked-in audit distinguishes proven safety capabilities from untested model-plan capability rows";
+finding_2- "The audit output is path-stale for this Pixel checkout, so it can identify unfinished work but cannot by itself prove current behavior";
+finding_3- "The model-plan checklist is already specific enough to drive bounded proof without inventing new Agency features";
+);
+
+next- "Resolve the current model-plan invocation path and run the smallest audit subset that exercises local.model_plan.01 through local.model_plan.09 on ~/ce-os";
+
+done_when: (
+condition_1- "local.model_plan.01 through local.model_plan.09 have current observed PASS or explicitly recorded blocking evidence";
+condition_2- "Valid and invalid model-plan scopes are proven against the current Pixel checkout";
+condition_3- "Stopped and healthy model-server paths are distinguished by observed output";
+condition_4- "Generated plan artifacts contain required sections and only inspect declared scopes";
+condition_5- "Source preservation, model invocation evidence, and active pinboard publication are proven";
+condition_6- "Agency audit output no longer presents the model-plan capability as merely UNTESTED for the current checkout";
+);
+);
+
+
+task_2: (
+identity- "agency.cli_entrypoint_authority";
+summary- "Align Agency documented terminal entrypoints with the implemented CLI spine";
+state- "ready";
+
+product- "Agency terminal operations named in Agency/_index.qps resolve to executable, tested commands in the current checkout, and future agents can run the documented help and validation commands exactly as written";
+
+current: (
+item_1- "Agency/_index.qps documents operation examples such as python run.py agent -h, python run.py task -h, python run.py work-packet -h, and python run.py mission -h";
+item_2- "Read-only discovery found no run.py under the repository root at maxdepth 4";
+item_3- "Agency/Core/interfaces/cli/dashboard_cli.py implements the current argparse command spine";
+item_4- "Agency/Core/interfaces/cli/registry/commands.yaml registers command authority for scan-repo, git-status, propose-diff, gemini-analyze, gemini-list-models, apply-code, refs, tree, and related commands";
+item_5- "Agency/unittest.py remains the documented validation command in Agency/_index.qps";
+);
+
+steps: (
+
+step_1: (
+goal- "Decide whether Agency should restore a repository-root run.py wrapper or update its authority to the implemented dashboard_cli entrypoint";
+product- "There is one documented command surface that matches implementation reality";
+state- "ready";
+);
+
+step_2: (
+goal- "Add or update the smallest help-command tests for the selected Agency entrypoint";
+product- "Documented help commands fail in tests if they drift away from executable reality";
+state- "waiting";
+);
+
+step_3: (
+goal- "Update Agency/_index.qps and any nearby supporting docs after the executable surface is proven";
+product- "The Agency doorway sends future operators to commands that exist";
+state- "waiting";
+);
+
+step_4: (
+goal- "Run Agency/unittest.py or the smallest CLI-focused subset that proves the entrypoint contract";
+product- "The entrypoint update is backed by current implementation evidence";
+state- "waiting";
+);
+
+);
+
+findings: (
+finding_1- "Agency/_index.qps currently names a run.py command family that is absent in this checkout";
+finding_2- "The implemented CLI authority path is registry-mediated through Agency/Core/interfaces/cli/dashboard_cli.py";
+finding_3- "Current implementation and passing tests must outrank the stale command examples until the intended entrypoint is restored or redocumented";
+);
+
+next- "Choose the smallest authority-preserving path: restore a thin run.py dispatcher if that is still the intended operator surface, or revise Agency/_index.qps to the existing dashboard_cli command form and prove help output";
+
+done_when: (
+condition_1- "Every Agency operation example in Agency/_index.qps resolves to an executable command in ~/ce-os";
+condition_2- "Help output for agent, task, work-packet, and mission surfaces is proven or unsupported surfaces are explicitly removed from current authority";
+condition_3- "Command authority remains registry-enforced for mutation-capable operations";
+condition_4- "Agency validation includes a regression check for documented entrypoint drift";
+);
+);
+
+
+task_3: (
+identity- "agency.model_backed_propose_diff";
+summary- "Replace deterministic placeholder diff proposals with scoped model-backed proposals without weakening safety gates";
+state- "waiting";
+
+product- "propose-diff can create a reviewable, evidence-backed source diff for an authorized scope while remaining proposal-only, preserving source files, validating diff targets, and requiring separate approval before any mutation";
+
+current: (
+item_1- "Agency/Core/interfaces/cli/registry/commands.yaml registers propose-diff as propose_only";
+item_2- "Agency/audit/output/agency_state.md reports agency.propose_diff as PASS for generating proposal.json, proposed.diff, and evidence.json without changing application source Git status";
+item_3- "Agency/Core/interfaces/cli/commands/patch_commands.py records current limitations: Deterministic placeholder generator only; no AI model was called";
+item_4- "Agency/Core/interfaces/cli/commands/patch_commands.py records current limitations: No application source file changes are proposed in this implementation";
+item_5- "Agency/audit/output/agency_state.md reports agency.apply_code_gate, agency.review_diff, agency.approved_mutation, and agency.verify_reconstruction as PASS, showing existing safety gates that must be preserved";
+);
+
+steps: (
+
+step_1: (
+goal- "Capture the current passing proposal-only, review, approval, and reconstruction safety tests before changing proposal generation";
+product- "Safety behavior has a baseline that future model-backed generation must preserve";
+state- "ready";
+);
+
+step_2: (
+goal- "Wait for agency.model_plan_audit or equivalent proof to establish a current model invocation and planning evidence contract";
+product- "Model-backed diff generation builds on proven model-plan behavior rather than untested runtime assumptions";
+state- "waiting";
+);
+
+step_3: (
+goal- "Connect scoped model planning output to propose-diff while keeping generated artifacts inside the proposal directory until review";
+product- "A model can propose source changes without directly mutating source files";
+state- "waiting";
+);
+
+step_4: (
+goal- "Validate proposed diff targets, reject path escapes, and run git apply --check before publication as proposal evidence";
+product- "Generated diffs are reviewable and bounded to declared scopes";
+state- "waiting";
+);
+
+step_5: (
+goal- "Replace placeholder limitation evidence with current model-backed proof in tests and audit output";
+product- "propose-diff PASS means more than placeholder artifact creation";
+state- "waiting";
+);
+
+);
+
+findings: (
+finding_1- "The placeholder propose-diff path is a safe current capability but not the finished Agency proposal product";
+finding_2- "The existing approval and reconstruction gates are proven assets and should constrain, not block, model-backed proposal work";
+finding_3- "Model-backed proposal generation should remain downstream of bounded scope evidence and upstream of human or explicit approval";
+);
+
+next- "After model-plan proof exists, implement the smallest model-backed propose-diff path that preserves the current propose_only authority and produces a git-apply-checkable proposed.diff";
+
+done_when: (
+condition_1- "propose-diff creates a non-placeholder proposed.diff for a bounded declared scope";
+condition_2- "The command records inspected files, skipped files, model invocation evidence, and target validation";
+condition_3- "No source file is changed by propose-diff";
+condition_4- "Out-of-scope, traversal, missing, and symlink-escape targets remain rejected";
+condition_5- "Review and explicit approval remain separate from proposal generation";
+condition_6- "Agency audit evidence distinguishes model-backed proposal success from deterministic placeholder behavior";
+);
+);
+
+);
+);

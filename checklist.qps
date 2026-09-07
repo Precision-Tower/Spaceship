@@ -1,0 +1,137 @@
+CHECKLIST.
+
+purpose: def"
+Canonical CE-OS Checklist workflow and example.
+
+Checklist documents are persistent working memory for humans and agents.
+Information required to understand, resume, supervise, or complete work belongs
+in the repository Checklist rather than depending on conversational memory.
+";
+
+workflow: (
+discover- "Run qps checklist to regenerate the repository Checklist index";
+inspect- "Run qps checklist <checklist-index> <task-number> to read the entire authored task";
+work- "Maintain the selected task as implementation reality changes";
+complete- "Mark a task complete only after its authored done_when conditions are proven";
+save- "Complete work remains visible until qps save accepts it";
+history- "Saved work leaves the active Checklist view and remains recoverable through qps history";
+);
+
+task_contract: (
+required- "Every task_N owns identity-, summary-, and state-";
+memory- "A task may contain any authored structure useful for understanding and resuming the work";
+recommended- "Nontrivial work should normally record product, current, steps, findings, decisions, proof, next, and done_when";
+rendering- "qps checklist <checklist-index> <task-number> renders the complete authored task rather than a fixed selection of fields";
+);
+
+discovery_rules: (
+current_task- "If newly discovered work is required to complete the current objective, record it inside the current task as a step, finding, dependency, decision, or other appropriate working memory";
+deferred_work- "If newly discovered work should be done later, create a new task in the Checklist belonging to the implementation area that owns that work";
+location- "Place deferred work according to where the implementation belongs, not according to which task happened to discover it";
+memory- "Do not rely on chat history for a fact, decision, dependency, or next action required to resume repository work";
+documentation- "For nontrivial work, explicitly record whether durable subsystem documentation changes; when required, name the applicable _index.qps authority and complete that update before marking the task complete";
+);
+
+states: (
+ready- "Prepared to begin";
+active- "Currently being implemented";
+waiting- "Known work intentionally waiting";
+blocked- "Cannot proceed until an authored dependency or condition is satisfied";
+complete- "Implementation and proof are finished but the accomplishment has not yet been accepted by qps save";
+saved- "qps save accepted the accomplishment into History";
+);
+
+example_task: (
+identity- "example.capability";
+summary- "Example shape for a nontrivial Checklist task";
+state- "saved";
+
+product- "Describe what the user or system will have when this task is finished";
+
+current- "Describe the presently proven implementation state";
+
+documentation: (
+required- true;
+authority- "path/to/_index.qps";
+goal- "Describe durable subsystem truth that must be updated before this task can become complete";
+state- "waiting";
+);
+
+steps: (
+step_1: (
+goal- "Describe one meaningful implementation step";
+product- "Describe what becomes true or usable after this step";
+state- "saved";
+);
+);
+
+findings: (
+finding_1- "Record durable facts discovered while implementing the task";
+);
+
+decisions: (
+decision_1- "Record decisions another agent must preserve when resuming the work";
+);
+
+proof: (
+witness_1- "Record the observable evidence supporting completion";
+);
+
+next- "State the exact next implementation move or experiment";
+
+done_when: (
+condition_1- "State a concrete observable completion condition";
+);
+);
+
+current_work: (
+tasks: (
+
+task_1: (
+identity- "root.repository_authority_artifacts";
+summary- "Validate and reconcile the new root CE-OS authority documents and remove accidental zero-byte root artifacts";
+state- "active";
+
+current: (
+item_1- "_index.qps now documents Checklist, Save, History, structural navigation, QPS syntax, continuation authority, and goals.qps as directional rather than implementation evidence";
+item_2- "goals.qps defines intended CE-OS architecture, conversion, kernel discovery, HostPlatform, provisioning, compute, and QPS-owned userspace direction";
+item_3- "docs/CAUSAL_ENGINEERING_PRINCIPLE.md records the whitebox causal Engineering principle and HEV modeling intent";
+item_4- "history.qps is the repository-root semantic history ledger and already contains accepted QPS and Cipher accomplishments";
+item_5- "Eight untracked zero-byte root files exist: 0, =, IdentifierNode, SymbolReferenceNode, TYPE_NUMERIC, none, v-], and void";
+item_6- "The zero-byte names resemble leaked command or parser tokens rather than authored CE-OS repository documents";
+);
+
+documentation: (
+required- true;
+authority- "_index.qps";
+goal- "Keep root durable authority consistent with goals.qps, Checklist/Save/History lifecycle, and current QPS navigation semantics";
+state- "active";
+);
+
+steps: (
+step_1: (
+goal- "Validate root QPS authority documents with the current QPS checker";
+state- "ready";
+);
+step_2: (
+goal- "Determine whether the eight zero-byte root files are accidental artifacts and remove them only if repository evidence confirms they have no authored ownership";
+state- "ready";
+);
+step_3: (
+goal- "Verify root documentation and checklist index after reconciliation";
+state- "waiting";
+);
+);
+
+next- "Check root authority documents and search bounded repository references for the eight zero-byte root filenames before changing them";
+
+done_when: (
+condition_1- "_index.qps, goals.qps, checklist.qps, and history.qps pass applicable QPS validation";
+condition_2- "Root authority documents have explicit non-conflicting roles";
+condition_3- "Accidental zero-byte root artifacts are removed only after bounded evidence establishes no authored ownership";
+condition_4- "qps checklist regenerates successfully after reconciliation";
+);
+);
+
+);
+);

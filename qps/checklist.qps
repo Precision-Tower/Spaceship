@@ -1,0 +1,101 @@
+QPS_NATIVE_WORK.
+
+purpose: def"
+Persistent development state for the native QPS runtime, host boundary,
+operating-system integration, and CE-OS kernel discovery.
+";
+
+ownership: (
+native_runtime- "qps/cpp";
+host_boundary- "Linux and Android mechanisms required by CE-OS";
+kernel_catalog- "qps/kernel/_index.qps";
+authored_language- "qps/qps/checklist.qps";
+);
+
+runtime_refactor: (
+status- "PAUSED";
+
+execution_environment- "Proven: connected QPS module assembly is extracted into ExecutionEnvironment while module selection remains caller policy";
+
+resolution_environment- "Proven: PathResolver, DocumentStore, and SymbolResolver lifetime assembly is extracted into ResolutionEnvironment";
+
+module_discovery- "Proven: PathResolver owns containing-module discovery through authored _index.qps topology";
+
+root_discovery- "Proven: repository root discovery is reduced to indexed ancestry";
+
+authority_selection- "Proven: native runtime consumes authored authority paths from _index.qps rather than owning those semantic choices";
+
+document_loading- "Proven: ordinary document loading is centralized instead of duplicating lexer/parser construction in orchestration";
+
+structural_selection- "Proven: structural path interpretation is centralized in AST structural selection and consumed by query and probe";
+
+source_span- "Proven: physical source evidence uses one normalized SourceSpan representation and renderer";
+
+probe- "Proven: qps probe supports physical source ranges and parser-aware exact structural selection for QPS documents";
+
+pause_reason- "Do not continue reducing native code merely because it is native; resume when authored tooling or machine access proves a missing primitive";
+);
+
+unfinished_runtime: (
+named_policy_migration- "NOT PROVEN";
+
+reference_document- "Migration from anonymous policy execution to Reference_Document named execution exposed undeclared execution-input override requirements";
+
+semantic_walk- "Migration from anonymous policy execution to Semantic_Walk named execution exposed parser differences including -while support";
+
+test_contract- "Reference planner tests still encode the anonymous execution-block contract";
+
+resume_rule- "First determine whether named execution definitions should gain the missing language capability or whether policy execution remains a legitimate distinct authored surface";
+);
+
+kernel_driver_discovery: (
+status- "PLANNED";
+
+goal- "Discover the hardware and operating-system capabilities actually exposed on the rooted Pixel, identify their callable userspace contracts, and represent those contracts in QPS";
+
+destination- "qps/kernel/_index.qps";
+
+start- "Observe actual exposed devices, services, and subsystem interfaces rather than beginning from implementation source";
+
+surfaces- "/dev, /sys/class, /sys/bus, /sys/devices, /proc, Android services, HAL and Binder surfaces, loaded driver bindings, and relevant Linux UAPI headers";
+
+path- "device or service -> driver or subsystem -> userspace ABI -> operation -> parameters and results -> QPS representation";
+
+driver_rule- "Finding the driver is not enough; identify the interface through which userspace communicates with it";
+
+interface_examples- "read, write, ioctl, mmap, sysfs, netlink, Binder, HAL, DRM, V4L2, IIO, ALSA, input, GPIO, and other subsystem ABIs";
+
+contract_rule- "Preserve ABI facts including integer widths, signedness, enum values, structure layout, buffer sizes, alignment, request identifiers, ownership, and lifetime";
+
+native_rule- "Use the thinnest native adapter necessary to invoke the discovered contract; do not translate complete native implementations merely because they are native";
+
+discovery_rule- "Do not recursively vacuum the filesystem; follow observed device, service, subsystem, and authored index relationships";
+
+next- "When kernel work resumes, inventory the Pixel's actual exposed interfaces and create qps/kernel/_index.qps from observed capability contracts";
+);
+
+current_work: (
+
+tasks: (
+
+task_1: (
+identity- "native.named_policy_migration";
+summary- "Resolve the remaining named reusable-execution contract exposed by Reference_Document and Semantic_Walk without duplicating authored execution semantics";
+state- "complete";
+);
+
+task_2: (
+identity- "kernel.driver_discovery";
+summary- "Inventory the rooted Pixel userspace hardware and operating-system interfaces and represent their observed capability contracts in qps/kernel";
+state- "waiting";
+);
+
+);
+
+);
+
+continuation: (
+runtime- "Resume qps/cpp work only when a concrete missing primitive is demonstrated";
+kernel- "Begin system reconnaissance from actual Pixel interfaces when this lane becomes active";
+language- "Current authored QPS continuation lives in qps/qps/checklist.qps";
+);

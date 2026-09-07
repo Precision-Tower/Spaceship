@@ -1,0 +1,263 @@
+CE_OS_History.
+
+purpose: def"
+Authoritative semantic history ledger for CE-OS.
+
+History records accepted accomplishments and capabilities rather than
+reproducing Git commit history.
+
+The ledger is global. Directory-local history is produced by filtering
+entries by their recorded repository scopes.
+";
+
+schema: (
+version- "1";
+
+entry_fields: (
+timestamp- "machine-readable accepted timestamp";
+identity- "stable semantic history identity";
+scope- "one or more repository paths associated with the accomplishment";
+summary- "concise description suitable for default qps history output";
+meaning- "why the accepted work matters";
+proof- "accepted proof and validation state";
+relevant- "important repository paths";
+remaining- "known limitations or intentionally unfinished work";
+source_checklist- "Checklist that produced the accepted history entry";
+backing_state- "optional Git or other physical saved-state identity";
+);
+);
+
+rules: (
+single_authority- "~/ce-os/history.qps";
+append_semantics- "accepted history is not rewritten as ordinary active work";
+semantic_not_byte_history- true;
+proven_work_only- true;
+locality- "scope determines where an entry appears through qps history <path>";
+concise_default- true;
+evidence_lazy- "Checklist and implementation evidence are loaded only when explicitly requested";
+duplicate_identity- "one accepted semantic identity and Checklist state must not produce duplicate entries";
+);
+
+entries: (
+
+h_20260906_082729_759: (
+timestamp- "2026-09-06T08:27:29Z";
+identity- "qps.checklist_history_foundation";
+summary- "Checklist and History now expose concise repository-local views of unfinished and accepted CE-OS work";
+meaning- "CE-OS can discover unfinished work with qps checklist and accepted work by repository scope with qps history, without requiring an agent to infer project state from Git history or prior conversation context";
+
+scope: (
+path_1- "qps/qps";
+path_2- "qps/cpp";
+path_3- "history.qps";
+);
+
+proof: (
+checklist_cli- "PASS";
+history_cli- "PASS";
+checklist_qps- "PASS";
+history_qps- "PASS";
+diff_check- "PASS";
+);
+
+relevant: (
+path_1- "qps/qps/checklist.qps";
+path_2- "history.qps";
+path_3- "qps/cpp/src/main.cpp";
+path_4- "qps/cpp/tests/runtime/checklist_cli_test.py";
+path_5- "qps/cpp/tests/runtime/history_cli_test.py";
+);
+
+remaining: (
+item_1- "qps save automatic history publication is not yet implemented";
+item_2- "history --full and history --id detail views remain future work";
+);
+
+source_checklist- "qps/qps/checklist.qps";
+backing_state- "";
+);
+
+h_20260906_084340_948: (
+timestamp- "2026-09-06T08:43:40Z";
+identity- "qps.save_history_lifecycle";
+summary- "Checklist Save and History now form a complete semantic work lifecycle";
+meaning- "CE-OS can list unfinished work with qps checklist, accept proven work with qps save, automatically transition completed tasks to saved state, and retrieve accepted accomplishments by repository scope with qps history";
+
+scope: (
+path_1- "qps/qps";
+path_2- "qps/cpp";
+path_3- "history.qps";
+path_4- "_index.qps";
+);
+
+proof: (
+save_cli- "PASS";
+history_cli- "PASS";
+checklist_cli- "PASS";
+save_transition- "PASS";
+save_stack- "PASS";
+root_index- "PASS";
+diff_check- "PASS";
+);
+
+relevant: (
+path_1- "qps/qps/checklist.qps";
+path_2- "qps/qps/save.qps";
+path_3- "qps/qps/history.qps";
+path_4- "history.qps";
+path_5- "_index.qps";
+path_6- "qps/cpp/src/main.cpp";
+path_7- "qps/cpp/src/runtime/c/checklist_save_transition.cpp";
+path_8- "qps/cpp/src/runtime/h/checklist_save_transition.hpp";
+path_9- "qps/cpp/tests/runtime/save_cli_test.py";
+path_10- "qps/cpp/tests/runtime/history_cli_test.py";
+path_11- "qps/cpp/tests/runtime/checklist_cli_test.py";
+path_12- "qps/cpp/tests/runtime/checklist_save_transition_test.cpp";
+);
+
+remaining: (
+item_1- "History --full and --id detailed views remain future extensions";
+item_2- "Git remains the byte-level backing substrate";
+);
+
+source_checklist- "qps/qps/checklist.qps";
+backing_state- "";
+);
+
+h_20260906_085027_089: (
+timestamp- "2026-09-06T08:50:27Z";
+identity- "cipher.semantic_preflight";
+summary- "Cipher now provides a semantic no-write preflight through qps cipher test";
+meaning- "Before conversion, Cipher can build a read-only ConversionPlan, inspect translation support, identify foreign dependencies and unsupported semantics, return a failing status when conversion is incomplete, and leave the destination tree untouched";
+
+scope: (
+path_1- "Engineering/py/cipher";
+path_2- "qps/qps";
+path_3- "qps/cpp";
+);
+
+proof: (
+conversion_plan- "PASS";
+semantic_support- "PASS";
+cipher_cli- "PASS";
+native_preflight- "PASS";
+no_write- "PASS";
+diff_check- "PASS";
+);
+
+relevant: (
+path_1- "Engineering/py/cipher/plan.py";
+path_2- "Engineering/py/cipher/support.py";
+path_3- "Engineering/py/cipher/cipher.py";
+path_4- "Engineering/py/cipher/tests/test_plan.py";
+path_5- "Engineering/py/cipher/tests/test_support.py";
+path_6- "qps/qps/cipher.qps";
+path_7- "qps/cpp/src/main.cpp";
+path_8- "qps/cpp/tests/runtime/cipher_cli_test.py";
+);
+
+remaining: (
+item_1- "Normal qps cipher still writes during traversal rather than publishing from a complete validated ConversionPlan";
+item_2- "Foreign libraries and unsupported Python object semantics remain explicit preflight blockers";
+);
+
+source_checklist- "qps/qps/checklist.qps";
+backing_state- "";
+);
+
+h_20260906_085451_191: (
+timestamp- "2026-09-06T08:54:51Z";
+identity- "cipher.transactional_publication";
+summary- "Cipher now publishes only complete validated conversion sets and rolls back failed publication transactions";
+meaning- "Normal qps cipher now uses the same semantic ConversionPlan as qps cipher test, refuses partial or blocked conversions before mutation, stages and validates the complete candidate output set, publishes only after all validation passes, and removes outputs created by the transaction if publication fails midway";
+
+scope: (
+path_1- "Engineering/py/cipher";
+path_2- "qps/qps";
+path_3- "qps/cpp";
+);
+
+proof: (
+conversion_plan- "PASS";
+semantic_support- "PASS";
+transactional_publish- "PASS";
+rollback_injection- "PASS";
+cipher_cli- "PASS";
+foreign_boundary- "PASS";
+diff_check- "PASS";
+);
+
+relevant: (
+path_1- "Engineering/py/cipher/plan.py";
+path_2- "Engineering/py/cipher/support.py";
+path_3- "Engineering/py/cipher/publish.py";
+path_4- "Engineering/py/cipher/cipher.py";
+path_5- "Engineering/py/cipher/tests/test_plan.py";
+path_6- "Engineering/py/cipher/tests/test_support.py";
+path_7- "Engineering/py/cipher/tests/test_publish.py";
+path_8- "qps/qps/cipher.qps";
+path_9- "qps/cpp/src/main.cpp";
+path_10- "qps/cpp/tests/runtime/cipher_cli_test.py";
+);
+
+remaining: (
+item_1- "Foreign dependencies remain explicit blockers until external-library semantics are defined";
+item_2- "Structured keyword-constructor returns and keyword arguments remain incomplete";
+item_3- "Dataclass and value-object lowering remain incomplete";
+);
+
+source_checklist- "qps/qps/checklist.qps";
+backing_state- "";
+);
+
+h_20260906_095302_073: (
+timestamp- "2026-09-06T09:53:02Z";
+identity- "cipher.boolean_truth";
+summary- "Cipher test now proves exact conversion truth without publishing destination output";
+meaning- "qps cipher test now returns ready only after Cipher has generated the exact candidate bytes owned by the ConversionPlan, verified semantic support, validated those exact bytes as QPS, and confirmed the conversion can proceed without writing destination output; normal publication commits the candidate bytes owned by that proven plan rather than translating them again";
+
+scope: (
+path_1- "Engineering/py/cipher";
+path_2- "qps/qps";
+path_3- "qps/cpp";
+);
+
+proof: (
+candidate_identity- "PASS";
+candidate_qps_validation- "PASS";
+boolean_truth- "PASS";
+transaction_candidate- "PASS";
+test_no_write- "PASS";
+publication_commit_only- "PASS";
+cli_true- "PASS";
+cli_publish- "PASS";
+published_qps_validation- "PASS";
+source_provenance- "PASS";
+diff_check- "PASS";
+);
+
+relevant: (
+path_1- "Engineering/py/cipher/plan.py";
+path_2- "Engineering/py/cipher/publish.py";
+path_3- "Engineering/py/cipher/cipher.py";
+path_4- "Engineering/py/cipher/emit/provenance_qps.py";
+path_5- "Engineering/py/cipher/emit/qps_emitter.py";
+path_6- "Engineering/py/cipher/emit/convergence_qps.py";
+path_7- "Engineering/py/cipher/tests/test_boolean_truth.py";
+path_8- "Engineering/py/cipher/tests/test_transaction_candidate.py";
+path_9- "Engineering/py/cipher/tests/test_emitted_provenance.py";
+path_10- "Engineering/py/cipher/tests/test_convergence_provenance.py";
+path_11- "qps/qps/cipher.qps";
+path_12- "qps/cpp/src/main.cpp";
+);
+
+remaining: (
+item_1- "Expand the set of source constructs and external-library semantics that can satisfy the strict Cipher true condition";
+item_2- "Directory conversion still needs the same complete dependency and library closure semantics as single-file Python planning";
+item_3- "Structured keyword-constructor returns, keyword arguments, dataclass lowering, and value-object lowering remain incomplete";
+);
+
+source_checklist- "qps/qps/checklist.qps";
+backing_state- "";
+);
+);

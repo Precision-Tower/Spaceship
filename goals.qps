@@ -1,0 +1,281 @@
+CE_OS_Goals.
+
+purpose: def"
+Define the architectural direction of CE-OS.
+
+This document describes intended direction, not proven implementation state.
+Implementation, tests, runtime evidence, and the owning subsystem authorities
+remain the source of truth for what CE-OS can currently do.
+";
+
+identity: (
+name- "CE-OS";
+meaning- "Causal Engine Operating System";
+language- "QPS";
+operator_surface- "OperatorShell";
+engineering_surface- "Workbench";
+agent_surface- "Agency";
+);
+
+direction: (
+operating_system- "CE-OS is the operating system, not merely an application hosted by another operating environment";
+qps_authority- "Move semantic authority, structure, policy, orchestration, and composition into authored QPS wherever QPS can express and prove the behavior";
+operator_shell- "OperatorShell becomes the primary human and agent control surface for the machine";
+native_reduction- "Reduce native implementation until the remaining native surface is an irreducible capability boundary";
+kernel_discovery- "Discover the CE-OS kernel experimentally by removing native responsibility that can be expressed and proven in QPS";
+linux_relationship- "Use Linux kernel mechanisms as machine capabilities without unnecessarily inheriting Linux userspace semantics as CE-OS authority";
+);
+
+qps: (
+goal- "Make QPS the authored structural and executable language of CE-OS";
+structure- "Represent system identity, relationships, requirements, policy, execution, and composition in a common structural language";
+composition- "Allow authored executions to consume and produce authored runtime values without unnecessary native semantic glue";
+capabilities- "Expose irreducible machine operations through small general capabilities rather than subsystem-specific native policy";
+proof- "Reality produces evidence; QPS decides what supplied evidence means";
+reduction_rule- "If existing QPS semantics can express and prove a behavior, native semantic duplication should be removed";
+);
+
+operator_shell: (
+goal- "Replace the inherited user-facing operating environment with OperatorShell";
+ownership- "Present CE-OS concepts instead of requiring the operator to reason directly in terms of unrelated package, shell, service, and desktop interfaces";
+packages- "External packages may remain implementation capabilities while CE-OS assumes semantic ownership of how they are selected, composed, invoked, and presented";
+workspace- "Provide a unified surface for machine control, files, terminal execution, Engineering, Agency, Workbench, compatibility software, and external resources";
+);
+
+agency: (
+goal- "Build agents specialized primarily on QPS and the authored CE-OS world";
+local_knowledge- "Prefer CE-OS authored structure, local evidence, local memory, and subsystem authorities";
+navigation- "Use _index.qps surfaces to enter the smallest sufficient semantic context";
+specialization- "Agents should know the portion of CE-OS required for their role instead of carrying unnecessary general software knowledge";
+external_knowledge- "When knowledge outside CE-OS is required, query an external knowledge capability and treat its response as supplied information rather than CE-OS authority";
+authority_rule- "External models may inform CE-OS; they do not silently define CE-OS state";
+);
+
+conversion: (
+first_device- "Rooted Pixel 6";
+first_goal- "Discover the complete conversion procedure and expose hidden platform assumptions";
+
+second_device- "Ubuntu LTS gaming laptop";
+second_goal- "Repeat the conversion, remove Android-specific assumptions, generalize HostPlatform boundaries, and exercise CUDA capabilities";
+
+third_device- "Precision workstation";
+third_goal- "Repeat the generalized conversion at larger memory, GPU, agent, and Engineering scale and optimize the resulting architecture";
+
+pattern_goal- "By the third conversion, separate universal CE-OS semantics from platform profiles and device-specific capabilities";
+
+future_device- "A new machine should increasingly become capability discovery, HostPlatform binding, CE-OS authority application, and OperatorShell launch rather than a new architectural port";
+);
+
+kernel: (
+question- "What capabilities must remain below authored QPS for CE-OS to control the machine?";
+method- "Do not assume the kernel boundary in advance; quarry existing native implementation and require each surviving responsibility to justify why it cannot move upward";
+target- "A minimal general capability boundary between authored QPS semantics and kernel or hardware mechanisms";
+linux- "Linux may remain the scheduler, memory manager, VFS, networking stack, driver framework, and hardware substrate while CE-OS owns the authored operating model above it";
+);
+
+method: (
+step_1- "Find an existing implementation responsibility";
+step_2- "Determine whether the responsibility is mechanism or semantic policy";
+step_3- "Attempt to express semantic responsibility using existing QPS primitives";
+step_4- "If QPS lacks something, require evidence that the missing feature is a general primitive rather than a feature-specific escape hatch";
+step_5- "Prove the generalized primitive independently";
+step_6- "Author the behavior in QPS";
+step_7- "Prove parity against runtime evidence";
+step_8- "Delete redundant native semantic policy";
+step_9- "Repeat until the remaining boundary is irreducible";
+);
+
+invariants: (
+evidence- "Implementation and passing tests outrank aspiration";
+no_fake_progress- "Goals in this document do not constitute evidence that a capability exists";
+no_rewrite_for_appearance- "Do not rewrite a working native mechanism in QPS merely to increase the amount of QPS";
+general_before_specific- "Prefer general language or capability primitives over subsystem-specific escape hatches";
+mechanism_vs_authority- "A package or native component may continue performing mechanism after CE-OS assumes semantic authority over its use";
+preserve_boundaries- "Keep external information, observations, evaluation, decisions, work, and historical notes distinguishable";
+);
+
+provisioning: (
+goal- "Any mature CE-OS host should eventually be able to bootstrap another machine";
+
+seed_node- "The rooted Pixel begins as the first CE-OS provisioning authority and stores source, manifests, machine profiles, artifacts, package requirements, and reconstruction knowledge";
+
+bootstrap_rule- "Do not clone accumulated machine history when a causal reconstruction can be authored instead";
+
+machine_specification- "Mine working machines into reproducible authored descriptions of required hardware capabilities, packages, services, configuration, boot state, software relationships, and CE-OS authorities";
+
+fresh_install- "A clean Linux installation may provide the initial kernel, drivers, filesystem, networking, package manager, and boot substrate while CE-OS reconstructs its operating environment above it";
+
+enrollment- "After the base operating substrate boots, install QPS, load HostPlatform state, apply CE-OS authorities, install required capabilities, verify the result, and transition the machine into OperatorShell";
+
+portable_seed- "The provisioning role must not permanently depend on one Pixel; converted CE-OS machines should eventually be able to provision additional CE-OS hosts";
+
+reconstruction_goal- "A future machine should increasingly require capability discovery and authored reconstruction rather than manual configuration";
+);
+
+boot: (
+goal- "CE-OS should own machine policy from the earliest practical firmware handoff";
+
+firmware- "UEFI or platform firmware initializes hardware and remains beneath CE-OS unless evidence establishes a reason to quarry lower";
+
+handoff- "Prefer taking semantic ownership at the firmware-to-bootloader boundary rather than replacing firmware merely for novelty";
+
+boot_policy- "CE-OS should eventually own selection of normal boot, alternate system image, recovery, diagnostics, and provisioning paths";
+
+linux_bootstrap- "A conventional Linux bootloader, kernel, initramfs, and init system may remain mechanisms while CE-OS progressively owns their authored configuration and lifecycle";
+
+recovery- "Provisioning and recovery must remain possible independently of the primary OperatorShell environment";
+
+future_layout- "A/B roots, recovery partitions, immutable images, or other boot layouts should be introduced only when repeated device conversions provide evidence for the required persistence and rollback model";
+);
+
+machine_conversion: (
+pixel_pass- "Use the rooted Pixel to discover the first complete CE-OS reduction and provisioning procedure";
+
+nitro_pass- "Mine the working Nitro before reformatting it, extract its causal machine specification, install a clean Ubuntu LTS substrate, reconstruct CE-OS from authored state, and remove Pixel-specific assumptions";
+
+precision_pass- "Apply the generalized process to the Precision workstation and use its larger memory, dedicated GPU, and stronger firmware environment to optimize scaling, compute scheduling, recovery, and provisioning";
+
+repeatability- "Each conversion should reduce manual knowledge and increase authored reproducibility";
+
+fourth_machine_goal- "By the fourth machine, installation should feel like applying CE-OS to discovered hardware rather than porting CE-OS again";
+);
+
+host_platform: (
+goal- "Represent machine capabilities independently from the software requesting them";
+
+universal_state- "Separate universal CE-OS semantics from operating-substrate, architecture, vendor, accelerator, and device-specific state";
+
+discovery- "Mine hardware, kernel interfaces, modules, devices, services, storage, network, graphics, accelerators, firmware state, and available execution capabilities";
+
+binding- "Bind discovered mechanisms into stable CE-OS capabilities that QPS, Agency, Engineering, Workbench, and OperatorShell can consume";
+
+no_vendor_leak- "Higher CE-OS layers should request capabilities rather than unnecessarily depending directly on vendor-specific interfaces";
+capability_truth- "Platform capability is established from the complete usable surface rather than the presence of one artifact";
+capability_dimensions- "Header presence, library presence, symbol presence, declaration availability, compilation availability, linkability, runtime availability, and semantic usability are distinct facts";
+capability_rule- "HostPlatform must not collapse those facts into one HAVE_X assumption when that would misrepresent the capability available to QPS";
+semantic_boundary- "QPS requests the semantic capability it needs; HostPlatform and native lowering determine which host mechanism can faithfully satisfy it";
+);
+
+compute: (
+goal- "Treat heterogeneous compute as allocatable CE-OS capabilities";
+
+pixel- "Investigate CPU, shared-memory GPU, Tensor accelerators, and other exposed Pixel compute interfaces without assuming marketing names imply independently allocatable memory";
+
+nitro- "Use the Nitro to generalize CE-OS GPU and CUDA capability ownership";
+
+precision- "Use the Precision workstation to exercise larger dedicated GPU memory, higher concurrency, heavier agents, and Engineering workloads";
+
+abstraction- "Agency and Engineering should increasingly request compute capability rather than hardcoding a specific accelerator";
+
+distribution- "Long-term CE-OS should understand and distribute work according to available compute, memory, accelerator, latency, and workload requirements";
+);
+
+qpsbash: (
+goal- "Build QPSBash as a QPS-owned shell and command environment that preserves useful Bash and Unix interaction conventions while allowing CE-OS to control implementation, composition, evidence, and presentation";
+
+training_compatibility- "Preserve familiar Bash command names, arguments, pipes, redirects, process conventions, and interaction patterns where practical so existing human knowledge and model training remain useful";
+
+not_bash_replacement- "Bash remains a behavioral and implementation reference; QPSBash is not justified by making familiar shell behavior unfamiliar";
+
+source_quarry- "Acquire and study mature source implementations such as Bash, Coreutils, Git, grep, sed, ripgrep, terminal editors, and related userspace tools as behavioral references and source material for QPS capability discovery and Cipher";
+
+source_ownership- "Rebuilding external tools from controlled source gives CE-OS a modifiable implementation substrate while their behavior is progressively understood, reduced, and represented through QPS";
+
+context_efficiency- "Treat context consumption as an operating constraint for local agents: preserve useful evidence while removing repeated paths, unnecessary whitespace, redundant diagnostics, duplicated metadata, and other presentation characters that do not change meaning";
+
+compactness_rule- "Compact output must preserve the evidence required to reconstruct meaning; token reduction does not justify hiding causal information";
+
+local_agent_target- "Design QPSBash and CE-OS evidence surfaces to remain useful to constrained local models, including systems operating with approximately 12 GB-class GPU resources";
+
+native_direction- "Progressively move shell and userspace semantics into QPS while retaining only justified generic native capabilities beneath them";
+
+git_relationship- "Retain Git as proven repository machinery while allowing QPS-owned repository semantics such as Checklist, Save, History, repository memory, and semantic navigation to compose with it rather than replacing it merely for ownership";
+
+refactor_seed- "Treat authored QPS authorities created during the transitional system as semantic seeds for a future coordinated CE-OS refactor rather than isolated documentation tied permanently to the current implementation";
+
+refactor_goal- "Accumulate enough authored contracts, proven behavior, source provenance, and capability boundaries that CE-OS can later perform a broad refactor from heterogeneous implementation languages into QPS-owned structure and compiled native output";
+
+automation- "The future refactor may be performed by authored tooling, Cipher, agents, generated transformations, or dedicated migration software rather than requiring manual file-by-file rewriting";
+
+success- "A model already capable of operating a Bash-like environment can operate QPSBash with minimal relearning while receiving denser CE-OS-native evidence and increasingly executing QPS-owned implementations";
+);
+
+operatorshell_transition: (
+goal- "OperatorShell becomes the primary visible operating environment";
+
+current_substrate- "Ubuntu LTS, X, Godot, XFCE, systemd, Wine, package managers, and external tools may remain useful mechanisms during transition";
+
+replacement_rule- "Replace inherited user-facing semantics before unnecessarily replacing proven low-level mechanisms";
+
+session_goal- "Progress toward booting the machine into OperatorShell as the primary session instead of presenting a conventional Linux desktop first";
+
+integration- "Files, terminal execution, software launching, networking, compatibility tools, Agency, Engineering, Workbench, security, provisioning, and machine state should become coherent OperatorShell surfaces";
+);
+
+pandoras_box: (
+name- "Pandora'sBox";
+short_name- "PSB";
+
+goal- "Make Pandora'sBox the CE-OS security, integrity, and exposure evaluation subsystem";
+
+relationship- "Pandora'sBox should consume the same machine observations produced by HostPlatform and the mining system rather than building a disconnected duplicate scanner architecture";
+
+observe- "Collect neutral observations about boot state, kernel state, modules, processes, services, packages, files, mounts, permissions, users, capabilities, devices, sockets, network exposure, security policy, and configuration";
+
+evaluate- "Use authored QPS policy to classify observed state as expected, unexpected, changed, unverified, dangerous, blocked, or requiring review";
+
+respond- "Keep response policy separate from observation and evaluation so detecting unexpected state does not automatically authorize destructive mutation";
+
+baseline- "Support known-good machine baselines, provenance, hashes, signatures, expected capabilities, and reproducible comparison";
+
+provisioning- "Verify bootstrap artifacts, machine enrollment, reconstructed state, boot state, CE-OS authorities, and post-install integrity";
+
+operatorshell- "Expose Pandora'sBox as a first-class OperatorShell security workspace rather than an isolated utility";
+
+authority_boundary- "Security observations are evidence; authored CE-OS security policy decides what those observations mean";
+);
+
+security: (
+goal- "Increase CE-OS security as semantic ownership of the machine increases";
+
+principle_of_least_capability- "Expose only the machine capabilities required by each CE-OS subsystem or agent";
+
+provenance- "Preserve the origin of external observations, downloaded artifacts, model responses, package state, and generated configuration";
+
+bootstrap_trust- "Provisioning must evolve toward authenticated hosts, verified artifacts, reproducible manifests, and explicit trust boundaries";
+
+external_models- "External AI providers may supply information but must not silently gain CE-OS authority or machine capability";
+
+recovery- "Security architecture must preserve a trusted recovery path when primary CE-OS state is damaged or untrusted";
+
+auditability- "Important machine-changing actions should produce inspectable evidence suitable for Checklist and Pandora'sBox evaluation";
+);
+
+external_knowledge: (
+goal- "Permit highly specialized local agents to remain focused on CE-OS while retaining deliberate access to outside knowledge";
+
+provider_model- "Gemini or another external model may be exposed as an ExternalKnowledge capability";
+
+query_rule- "Ask external knowledge providers when required information cannot be resolved from authored CE-OS state, local evidence, local memory, or available subsystem authorities";
+
+normalization- "External responses should enter CE-OS as attributed information or evidence with provider and query provenance";
+
+authority- "External knowledge informs local reasoning; QPS authorities remain responsible for CE-OS meaning and decisions";
+);
+
+end_state: def"
+CE-OS should present one authored operating model through OperatorShell.
+
+QPS should describe as much of that operating model as can be expressed,
+composed, inspected, and proven structurally.
+
+Agency should be able to reason primarily inside that authored world.
+
+Native code should become a small collection of justified machine capabilities.
+
+Linux and external software may remain beneath CE-OS where they provide useful
+mechanisms, while CE-OS owns the semantics exposed to its operator and agents.
+
+The boundary that remains after repeated evidence-driven reduction is the
+CE-OS kernel.
+";

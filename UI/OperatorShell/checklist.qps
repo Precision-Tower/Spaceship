@@ -1,0 +1,90 @@
+OPERATOR_SHELL_WORK.
+
+purpose: def"
+Persistent working memory for unfinished OperatorShell implementation owned by
+UI/OperatorShell.
+";
+
+ownership: (
+surface- "UI/OperatorShell";
+supporting_checklist- "UI/OperatorShell/docs/CHECKLIST.md";
+mission_record- "UI/OperatorShell/MOBILE_IDE_CHECKLIST.md";
+);
+
+current_work: (
+tasks: (
+
+task_1: (
+identity- "operatorshell.android_runtime_observation";
+summary- "Resolve the Android launcher/runtime observation blocker and prove live Files-to-Editor behavior on the Pixel";
+state- "ready";
+
+current: (
+item_1- "CE-OS API service and APK build/install are independently proven";
+item_2- "The launcher activity remains topmost after the established clean close and launch path";
+item_3- "No OperatorShell control server becomes reachable in the blocked launch state";
+item_4- "Runtime UI proof of directory navigation and real Editor content remains unfinished";
+);
+
+steps: (
+step_1: (
+goal- "Identify the cause of the foreground launch and control-server failure";
+state- "ready";
+);
+step_2: (
+goal- "Restore deterministic OperatorShell foreground ownership and control-server reachability";
+state- "waiting";
+);
+step_3: (
+goal- "Capture live Pixel proof of directory navigation and real Editor content";
+state- "waiting";
+);
+);
+
+next- "Inspect the established Android launch and observation path only far enough to explain the foreground and control-server failure";
+
+done_when: (
+condition_1- "A clean OperatorShell launch becomes the observed foreground runtime";
+condition_2- "The OperatorShell control server is reachable through the established observation path";
+condition_3- "On-device evidence proves directory navigation and real file content in Editor";
+);
+);
+
+task_2: (
+identity- "operatorshell.filesystem_write_boundary";
+summary- "Define and prove bounded filesystem write semantics before enabling persistent Editor save";
+state- "waiting";
+
+current: (
+item_1- "Read-only filesystem list and read behavior is proven through the CE-OS API boundary";
+item_2- "Persistent Editor save remains intentionally disabled";
+item_3- "Required boundaries include authorized roots, canonicalization, traversal and symlink protection, stale-write handling, structured errors, and operation-scoped privilege";
+);
+
+steps: (
+step_1: (
+goal- "Define the shared logical filesystem write contract and authorized-root policy";
+state- "ready";
+);
+step_2: (
+goal- "Implement bounded writes with canonicalization, stale-write detection, and safe replacement";
+state- "waiting";
+);
+step_3: (
+goal- "Connect explicit Editor Save to the service boundary and add API-level integration proof";
+state- "waiting";
+);
+);
+
+next- "Begin after the runtime observation blocker is resolved or proven independent";
+
+done_when: (
+condition_1- "Writes cannot escape authorized roots through traversal or symlinks";
+condition_2- "Stale writes and failures return stable structured errors";
+condition_3- "Godot gains neither root nor arbitrary shell authority";
+condition_4- "Editor Save persists an authorized file through the CE-OS service boundary with integration-test proof";
+);
+);
+
+);
+);
