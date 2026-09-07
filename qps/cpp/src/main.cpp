@@ -1285,6 +1285,129 @@ int runSaveCommand(
                 "Task number must be a positive integer.");
         }
 
+        /*
+         * Duplicate semantic identity is a public Save precondition.
+         *
+         * Resolve the indexed Checklist through the authored Checklist
+         * authority rather than duplicating its filesystem/index policy in
+         * native code. Checklist_Path is the authored public path-resolution query;
+         * native code only consumes its returned path and checks the existing
+         * root History ledger before entering the mutation transaction.
+         */
+        const fs::path checklist_source =
+            workspace / authoredAuthority(
+                workspace / "_index.qps",
+                "qps.checklist_authority-");
+
+        qps::runtime::PathResolver checklist_paths(
+            workspace);
+
+        const auto checklist_module =
+            checklist_paths.containingModule(
+                checklist_source);
+
+        if (!checklist_module.has_value()) {
+            throw std::runtime_error(
+                "Checklist authority is not inside a connected QPS module.");
+        }
+
+        qps::runtime::DocumentLoader validation_loader;
+        qps::runtime::DocumentStore validation_documents(
+            validation_loader);
+        qps::runtime::ExecutionEngine validation_engine;
+        qps::runtime::ExecutionEnvironment validation_environment(
+            checklist_paths,
+            validation_documents,
+            validation_engine);
+
+        validation_environment.loadModule(
+            *checklist_module);
+
+        std::unordered_map<
+            std::string,
+            qps::runtime::RuntimeValue
+        > checklist_inputs;
+
+        checklist_inputs.emplace(
+            "root",
+            qps::runtime::RuntimeValue::string(
+                workspace.string()));
+
+        checklist_inputs.emplace(
+            "checklist_index",
+            qps::runtime::RuntimeValue::numeric(
+                static_cast<double>(
+                    checklist_index)));
+
+        const auto checklist_result =
+            validation_engine.instantiate(
+                "Checklist_Path",
+                checklist_inputs);
+
+        if (!checklist_result.result.has_value()) {
+            throw std::runtime_error(
+                "Checklist authority returned no selected path.");
+        }
+
+        const fs::path selected_checklist =
+            workspace /
+            checklist_result.result->asString(
+                "Checklist_Path result");
+
+        const auto checklist_program =
+            validation_loader.load(
+                selected_checklist);
+
+        if (!checklist_program) {
+            throw std::runtime_error(
+                "Selected Checklist produced no program.");
+        }
+
+        const std::string selected_task_name =
+            "task_" + std::to_string(task_number);
+
+        const std::string task_base =
+            "current_work.tasks." +
+            selected_task_name;
+
+        const qps::ast::AstNode* selected_task =
+            qps::ast::selectStructuralPath(
+                *checklist_program,
+                task_base);
+
+        if (!selected_task) {
+            throw std::runtime_error(
+                "Selected Checklist task was not found.");
+        }
+
+        const std::string task_identity =
+            qps::ast::queryScalar(
+                *checklist_program,
+                task_base + ".identity-");
+
+        if (task_identity.empty()) {
+            throw std::runtime_error(
+                "Selected Checklist task has no semantic identity.");
+        }
+
+        const auto history_program =
+            validation_loader.load(
+                workspace / "history.qps");
+
+        if (!history_program) {
+            throw std::runtime_error(
+                "History ledger produced no program.");
+        }
+
+        if (historyContainsIdentity(
+                *history_program,
+                task_identity)) {
+
+            throw std::runtime_error(
+                "Save rejected duplicate accepted identity: " +
+                task_identity);
+        }
+
         const fs::path save_source =
             workspace / authoredAuthority(
                 workspace / "_index.qps",

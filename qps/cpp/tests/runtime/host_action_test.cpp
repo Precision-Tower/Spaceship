@@ -5,6 +5,8 @@
 #include "tokens/h/lexer.hpp"
 
 #include <filesystem>
+#include <iterator>
+#include <chrono>
 #include <fstream>
 #include <functional>
 #include <iostream>
@@ -967,7 +969,124 @@ void unknownPrimitiveFails() {
 
 } // namespace
 
+
+void publishFilesRollsBackAfterFirstPublishedReplacement() {
+    const auto root =
+        std::filesystem::temp_directory_path() /
+        (
+            "qps_publish_rollback_" +
+            std::to_string(
+                std::chrono::steady_clock::now()
+                    .time_since_epoch()
+                    .count())
+        );
+
+    std::filesystem::create_directories(root);
+
+    const auto first =
+        root / "first.qps";
+
+    const auto second =
+        root / "second.qps";
+
+    {
+        std::ofstream out(
+            first,
+            std::ios::binary);
+
+        out << "FIRST_ORIGINAL\n";
+    }
+
+    {
+        std::ofstream out(
+            second,
+            std::ios::binary);
+
+        out << "SECOND_ORIGINAL\n";
+    }
+
+    const auto readBytes =
+        [](const std::filesystem::path& path) {
+            std::ifstream in(
+                path,
+                std::ios::binary);
+
+            return std::string(
+                std::istreambuf_iterator<char>(in),
+                std::istreambuf_iterator<char>());
+        };
+
+    const std::string first_before =
+        readBytes(first);
+
+    const std::string second_before =
+        readBytes(second);
+
+    std::vector<
+        qps::runtime::FileReplacement
+    > replacements = {
+        {first, "FIRST_NEW\n"},
+        {second, "SECOND_NEW\n"},
+    };
+
+    bool injected = false;
+    bool rejected = false;
+
+    try {
+        qps::runtime::publishFileReplacements(
+            replacements,
+            [&injected](std::size_t published_count) {
+                if (published_count == 1) {
+                    injected = true;
+
+                    throw std::runtime_error(
+                        "injected publication interruption");
+                }
+            });
+    }
+    catch (const std::runtime_error& e) {
+        rejected =
+            std::string(e.what()).find(
+                "injected publication interruption") !=
+            std::string::npos;
+    }
+
+    require(
+        injected,
+        "Publication interruption checkpoint was not reached.");
+
+    require(
+        rejected,
+        "Publication interruption was not surfaced.");
+
+    require(
+        readBytes(first) == first_before,
+        "Interrupted publication did not restore first authority.");
+
+    require(
+        readBytes(second) == second_before,
+        "Interrupted publication did not restore second authority.");
+
+    for (const auto& entry :
+         std::filesystem::directory_iterator(root)) {
+
+        const auto name =
+            entry.path().filename().string();
+
+        require(
+            name.find(".publish.") ==
+                std::string::npos &&
+            name.find(".backup.") ==
+                std::string::npos,
+            "Interrupted publication left transaction debris.");
+    }
+
+    std::filesystem::remove_all(root);
+}
+
 int main() {
+    publishFilesRollsBackAfterFirstPublishedReplacement();
+    std::cout << "PASS publish_files mid-transaction rollback\n";
     try {
         processRequiresProgram();
         std::cout

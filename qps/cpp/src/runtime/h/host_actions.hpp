@@ -7,7 +7,34 @@
 #include <string>
 #include <vector>
 
+#include <cstddef>
+#include <filesystem>
+#include <functional>
+
 namespace qps::runtime {
+
+struct FileReplacement {
+    std::filesystem::path path;
+    std::string text;
+};
+
+using PublishFilesCheckpoint =
+    std::function<void(std::size_t published_count)>;
+
+/*
+ * Generic transactional file publication.
+ *
+ * Every replacement is staged before authority is touched. Existing
+ * destinations are backed up, staged candidates are published, and any
+ * exception restores the original authority set.
+ *
+ * checkpoint is a native observation hook for deterministic transaction
+ * tests. The authored publish_files action does not expose fault injection.
+ */
+void publishFileReplacements(
+    const std::vector<FileReplacement>& replacements,
+    const PublishFilesCheckpoint& checkpoint = {});
+
 
 struct HostActionInvocation {
     std::string action_name;

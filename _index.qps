@@ -165,6 +165,10 @@ source_location- "Use path:start-end with numbered source lines as the canonical
 stage_feature_only- "Stage only files belonging to the feature being checkpointed";
 git_workflow- "Use Git continuously as the byte-level checkpoint substrate: inspect status before work, keep unrelated changes separated, stage only coherent proven work, and checkpoint completed units before starting another subsystem";
 git_hygiene- "Do not allow generated artifacts, temporary probes, backups, zero-byte shell fallout, caches, build products, or vendored source/build trees to accumulate as unexplained repository changes";
+save_public_contract- "qps save <checklist-index> <task-number> resolves the indexed Checklist through authored Checklist_Path, accepts only a complete documented task, rejects a semantic identity already present in root History, and enters authored Save publication only after public validation";
+save_failure_integrity- "Malformed, stale, incomplete, duplicate, or interrupted Save attempts preserve Checklist and History authority; generic multi-file publication restores prior authorities if publication is interrupted";
+save_atomicity- "Save constructs and parses complete History and Checklist candidates before generic transactional publication; successful acceptance appends normalized History and removes exactly the accepted task";
+single_root_model- "CE-OS owns one outermost indexed root; nested indexed structures are modules within that root rather than independent congruent CE-OS repositories, and the current ~/ce-os root is intended to move outward toward ~ rather than multiply";
 git_review_before_commit- "Before each commit run the smallest relevant tests, qps validation where applicable, git diff --check, targeted diff review, and targeted status review";
 git_clean_tree_goal- "Prefer ending each accepted work unit with a clean working tree; if unfinished work must remain, its ownership and continuation must be represented by the appropriate checklist.qps rather than left as unexplained Git state";
 );

@@ -1047,7 +1047,7 @@ state- "ready";
 task_9: (
 identity- "checklist.nominal_agent_workflow";
 summary- "Establish the CE-OS repository-memory workflow across _index.qps, checklist.qps, Save, and History so agents can work without conversational memory";
-state- "active";
+state- "complete";
 
 product- "CE-OS has a systematic repository-memory model where _index.qps owns durable current truth and usage, checklist.qps owns unfinished work and implementation memory, and history.qps owns accepted completed transitions; an agent can enter a subsystem, understand it, resume work, preserve discoveries in the correct authority, and explicitly Save completed tasks without human babysitting";
 
@@ -1075,8 +1075,8 @@ documentation: (
 required- true;
 authority- "_index.qps";
 goal- "Keep the root CE-OS usage and repository-memory authority synchronized with the Checklist, Save, and History workflow established by this task";
-state- "active";
-proof- "Root _index.qps already documents the repository-memory model and current Checklist/Save contract; any later workflow changes made by this task must update that authority before completion";
+state- "complete";
+proof- "Root _index.qps documents the repository-memory model plus the public Save validation, failure-integrity, and transactional publication contract established by this task";
 );
 
 current: (
@@ -1088,7 +1088,7 @@ item_5- "complete tasks remain visible while awaiting explicit Save";
 item_6- "named reusable execution migration is complete but remains visible because it has not yet been moved through the new Save lifecycle";
 item_7- "the concise Checklist index now displays authored task state for every visible task";
 item_8- "root _index.qps now permanently defines the repository-memory placement methodology and current Checklist/Save contract";
-item_9- "The authored Save transaction is proven end-to-end on disposable History and Checklist authorities; the public qps save N T command has not yet been cut over to it";
+item_9- "The public qps save N T lifecycle is proven end-to-end on disposable repository authorities: successful Save normalizes History, removes exactly the selected task, preserves unrelated work, and rejects stale, incomplete, malformed, and duplicate attempts without authority mutation";
 );
 
 steps: (
@@ -1150,19 +1150,19 @@ state- "complete";
 step_10: (
 goal- "Prove successful Save publishes normalized History and deletes the accepted task from current_work.tasks";
 product- "Checklist contains current/future work while History permanently owns accepted completed work";
-state- "active";
+state- "complete";
 );
 
 step_11: (
 goal- "Prove failed, malformed, incomplete, interrupted, and duplicate Save attempts preserve Checklist and History integrity";
 product- "Agents can use Save without a human guarding transaction correctness";
-state- "waiting";
+state- "complete";
 );
 
 step_12: (
 goal- "Finish permanent agent-facing documentation and prove the complete workflow from a fresh repository entry point";
 product- "Codex can enter CE-OS, read _index.qps, discover work, inspect task memory, maintain discoveries, document durable truth, complete work, Save it, and recover History without prior conversation";
-state- "waiting";
+state- "complete";
 );
 
 );
@@ -1198,6 +1198,7 @@ decision_7- "Save does not substitute for _index.qps maintenance";
 decision_8- "Checklist behavior remains authored in QPS above generic native substrate";
 decision_9- "CE-OS owns exactly one history.qps ledger at repository root; subdirectories never receive local History ledgers";
 decision_10- "History locality is semantic: Save records repository scope and acceptance timestamp, and qps history <path> queries the root ledger for entries associated with that repository structure";
+decision_11- "CE-OS has one outermost indexed root; nested indexed structures are modules within that root rather than congruent CE-OS repositories, and disposable workflow proofs must not redefine nested trash fixtures as independent roots";
 );
 
 proof: (
@@ -1215,9 +1216,13 @@ proof_11- "generic publish_files successfully replaces two independent files fro
 proof_12- "generic file_without_span returns the exact remaining file bytes after removing an inclusive authored line span and contains no Checklist or History policy";
 proof_13- "A disposable authored Save transaction accepted one complete task, generated a UTC timestamped scoped History entry, removed exactly that task, preserved unrelated work, reparsed both candidate documents, and published them successfully";
 proof_14- "The disposable Save proof used the completed task itself as the semantic source and contained no history_candidate surface";
+proof_15- "Public qps save N T resolves Checklist numbering through authored Checklist_Path, rejects an identity already present in root History before entering the mutation transaction, and leaves both authorities byte-identical on duplicate rejection";
+proof_16- "The public Save CLI regression proves successful acceptance plus stale indexed address, incomplete task, malformed address, and true duplicate semantic identity failures against disposable repository state";
+proof_17- "Generic publishFileReplacements is independently proven to restore every original authority and leave no .publish or .backup debris when an exception is injected after the first replacement has already been published";
+proof_18- "Single-root entry is proven without inventing a second CE-OS root: permanent root authority documents the workflow, authored Checklist_Path accepts explicit root semantics, and the existing disposable Save lifecycle proves discovery, exact indexed task selection, explicit Save, exact task removal, scoped History recovery, and failure integrity against isolated authorities";
 );
 
-next- "Cut the public qps save <checklist-index> <task-number> command over to authored Save task resolution and prove the CLI lifecycle on disposable repository state before accepting real task 2.task_1";
+next- "Use the nominal Checklist/Save/History workflow for subsequent CE-OS work; accepted complete tasks may now be explicitly saved when the Operator chooses";
 
 done_when: (
 condition_1- "A fresh agent can learn the repository-memory methodology from permanent repository authority without chat context";

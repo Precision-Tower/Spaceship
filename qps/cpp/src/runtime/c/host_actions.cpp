@@ -398,6 +398,227 @@ ProcessResult runProcess(
 
 } // namespace
 
+
+void publishFileReplacements(
+    const std::vector<FileReplacement>& replacements,
+    const PublishFilesCheckpoint& checkpoint) {
+
+    if (replacements.empty()) {
+        throw std::runtime_error(
+            "publish_files requires at least one replacement.");
+    }
+
+    struct Publication {
+        std::filesystem::path destination;
+        std::filesystem::path staged;
+        std::filesystem::path backup;
+        std::string text;
+        bool had_original = false;
+        bool backup_created = false;
+        bool published = false;
+    };
+
+    std::vector<Publication> publications;
+    publications.reserve(replacements.size());
+
+    const std::string nonce =
+        std::to_string(
+            std::chrono::steady_clock::now()
+                .time_since_epoch()
+                .count());
+
+    for (std::size_t i = 0;
+         i < replacements.size();
+         ++i) {
+
+        const auto& replacement =
+            replacements[i];
+
+        if (replacement.path.empty()) {
+            throw std::runtime_error(
+                "publish_files replacement path is empty.");
+        }
+
+        Publication publication;
+
+        publication.destination =
+            std::filesystem::absolute(
+                replacement.path)
+                .lexically_normal();
+
+        publication.text =
+            replacement.text;
+
+        for (const auto& existing : publications) {
+            if (existing.destination ==
+                publication.destination) {
+
+                throw std::runtime_error(
+                    "publish_files contains duplicate destination: " +
+                    publication.destination.generic_string());
+            }
+        }
+
+        const std::filesystem::path parent =
+            publication.destination.parent_path();
+
+        if (parent.empty() ||
+            !std::filesystem::exists(parent) ||
+            !std::filesystem::is_directory(parent)) {
+
+            throw std::runtime_error(
+                "publish_files destination parent does not exist: " +
+                publication.destination.generic_string());
+        }
+
+        publication.staged =
+            parent /
+            (
+                "." +
+                publication.destination.filename().string() +
+                ".publish." +
+                nonce +
+                "." +
+                std::to_string(i)
+            );
+
+        publication.backup =
+            parent /
+            (
+                "." +
+                publication.destination.filename().string() +
+                ".backup." +
+                nonce +
+                "." +
+                std::to_string(i)
+            );
+
+        publication.had_original =
+            std::filesystem::exists(
+                publication.destination);
+
+        publications.push_back(
+            std::move(publication));
+    }
+
+    try {
+        for (auto& publication : publications) {
+            std::ofstream output(
+                publication.staged,
+                std::ios::binary |
+                std::ios::trunc);
+
+            if (!output) {
+                throw std::runtime_error(
+                    "publish_files unable to create staged file: " +
+                    publication.staged.generic_string());
+            }
+
+            output.write(
+                publication.text.data(),
+                static_cast<std::streamsize>(
+                    publication.text.size()));
+
+            if (!output) {
+                throw std::runtime_error(
+                    "publish_files unable to write staged file: " +
+                    publication.staged.generic_string());
+            }
+        }
+
+        for (auto& publication : publications) {
+            if (!publication.had_original) {
+                continue;
+            }
+
+            std::filesystem::rename(
+                publication.destination,
+                publication.backup);
+
+            publication.backup_created = true;
+        }
+
+        std::size_t published_count = 0;
+
+        for (auto& publication : publications) {
+            std::filesystem::rename(
+                publication.staged,
+                publication.destination);
+
+            publication.staged.clear();
+            publication.published = true;
+            ++published_count;
+
+            if (checkpoint) {
+                checkpoint(published_count);
+            }
+        }
+    }
+    catch (...) {
+        std::error_code ec;
+
+        for (auto& publication : publications) {
+            if (publication.published &&
+                std::filesystem::exists(
+                    publication.destination)) {
+
+                std::filesystem::remove(
+                    publication.destination,
+                    ec);
+
+                ec.clear();
+            }
+        }
+
+        for (auto& publication : publications) {
+            if (publication.backup_created &&
+                std::filesystem::exists(
+                    publication.backup)) {
+
+                std::filesystem::rename(
+                    publication.backup,
+                    publication.destination,
+                    ec);
+
+                ec.clear();
+            }
+        }
+
+        for (auto& publication : publications) {
+            if (!publication.staged.empty() &&
+                std::filesystem::exists(
+                    publication.staged)) {
+
+                std::filesystem::remove(
+                    publication.staged,
+                    ec);
+
+                ec.clear();
+            }
+        }
+
+        throw;
+    }
+
+    {
+        std::error_code ec;
+
+        for (auto& publication : publications) {
+            if (publication.backup_created &&
+                std::filesystem::exists(
+                    publication.backup)) {
+
+                std::filesystem::remove(
+                    publication.backup,
+                    ec);
+
+                ec.clear();
+            }
+        }
+    }
+}
+
+
 HostActionResult HostActionDispatcher::execute(
     const HostActionInvocation& invocation) const {
 
@@ -958,40 +1179,21 @@ HostActionResult HostActionDispatcher::execute(
             invocation,
             {"replacements"});
 
-        const auto& replacements =
+        const auto& supplied =
             replacements_value.asDictionary(
                 "publish_files replacements");
 
-        if (replacements.empty()) {
+        if (supplied.empty()) {
             throw std::runtime_error(
                 "publish_files requires at least one replacement.");
         }
 
-        struct Publication {
-            std::filesystem::path destination;
-            std::filesystem::path staged;
-            std::filesystem::path backup;
-            std::string text;
-            bool had_original = false;
-            bool backup_created = false;
-            bool published = false;
-        };
+        std::vector<FileReplacement> replacements;
+        replacements.reserve(supplied.size());
 
-        std::vector<Publication> publications;
-        publications.reserve(replacements.size());
-
-        const std::string nonce =
-            std::to_string(
-                std::chrono::steady_clock::now()
-                    .time_since_epoch()
-                    .count());
-
-        for (std::size_t i = 0;
-             i < replacements.size();
-             ++i) {
-
+        for (const auto& replacement : supplied) {
             const auto& pair =
-                replacements[i].value.asDictionary(
+                replacement.value.asDictionary(
                     "publish_files replacement");
 
             if (pair.size() != 2) {
@@ -1000,185 +1202,20 @@ HostActionResult HostActionDispatcher::execute(
                     "exactly path and text values.");
             }
 
-            const std::string path =
+            FileReplacement item;
+            item.path =
                 pair[0].value.asString(
                     "publish_files replacement path");
 
-            const std::string text =
+            item.text =
                 pair[1].value.asString(
                     "publish_files replacement text");
 
-            if (path.empty()) {
-                throw std::runtime_error(
-                    "publish_files replacement path is empty.");
-            }
-
-            Publication publication;
-            publication.destination =
-                std::filesystem::absolute(std::filesystem::path(path))
-                    .lexically_normal();
-
-            publication.text = text;
-
-            for (const auto& existing : publications) {
-                if (existing.destination ==
-                    publication.destination) {
-
-                    throw std::runtime_error(
-                        "publish_files contains duplicate destination: " +
-                        publication.destination.generic_string());
-                }
-            }
-
-            const std::filesystem::path parent =
-                publication.destination.parent_path();
-
-            if (parent.empty() ||
-                !std::filesystem::exists(parent) ||
-                !std::filesystem::is_directory(parent)) {
-
-                throw std::runtime_error(
-                    "publish_files destination parent does not exist: " +
-                    publication.destination.generic_string());
-            }
-
-            publication.staged =
-                parent /
-                (
-                    "." +
-                    publication.destination.filename().string() +
-                    ".publish." +
-                    nonce +
-                    "." +
-                    std::to_string(i)
-                );
-
-            publication.backup =
-                parent /
-                (
-                    "." +
-                    publication.destination.filename().string() +
-                    ".backup." +
-                    nonce +
-                    "." +
-                    std::to_string(i)
-                );
-
-            publication.had_original =
-                std::filesystem::exists(publication.destination);
-
-            publications.push_back(
-                std::move(publication));
+            replacements.push_back(
+                std::move(item));
         }
 
-        try {
-            // Stage every complete replacement before touching authority.
-            for (auto& publication : publications) {
-                std::ofstream output(
-                    publication.staged,
-                    std::ios::binary |
-                    std::ios::trunc);
-
-                if (!output) {
-                    throw std::runtime_error(
-                        "publish_files unable to create staged file: " +
-                        publication.staged.generic_string());
-                }
-
-                output.write(
-                    publication.text.data(),
-                    static_cast<std::streamsize>(
-                        publication.text.size()));
-
-                if (!output) {
-                    throw std::runtime_error(
-                        "publish_files unable to write staged file: " +
-                        publication.staged.generic_string());
-                }
-            }
-
-            // Move every existing authority aside.
-            for (auto& publication : publications) {
-                if (!publication.had_original) {
-                    continue;
-                }
-
-                std::filesystem::rename(
-                    publication.destination,
-                    publication.backup);
-
-                publication.backup_created = true;
-            }
-
-            // Publish every staged replacement.
-            for (auto& publication : publications) {
-                std::filesystem::rename(
-                    publication.staged,
-                    publication.destination);
-
-                publication.staged.clear();
-                publication.published = true;
-            }
-        }
-        catch (...) {
-            std::error_code ec;
-
-            // Remove any newly published replacements.
-            for (auto& publication : publications) {
-                if (publication.published &&
-                    std::filesystem::exists(publication.destination)) {
-
-                    std::filesystem::remove(
-                        publication.destination,
-                        ec);
-                    ec.clear();
-                }
-            }
-
-            // Restore every original authority.
-            for (auto& publication : publications) {
-                if (publication.backup_created &&
-                    std::filesystem::exists(publication.backup)) {
-
-                    std::filesystem::rename(
-                        publication.backup,
-                        publication.destination,
-                        ec);
-                    ec.clear();
-                }
-            }
-
-            // Remove any unconsumed staged files.
-            for (auto& publication : publications) {
-                if (!publication.staged.empty() &&
-                    std::filesystem::exists(publication.staged)) {
-
-                    std::filesystem::remove(
-                        publication.staged,
-                        ec);
-                    ec.clear();
-                }
-            }
-
-            throw;
-        }
-
-        // Successful publication: backups are no longer needed.
-        {
-            std::error_code ec;
-
-            for (auto& publication : publications) {
-                if (publication.backup_created &&
-                    std::filesystem::exists(publication.backup)) {
-
-                    std::filesystem::remove(
-                        publication.backup,
-                        ec);
-                    ec.clear();
-                }
-            }
-        }
-
+        publishFileReplacements(replacements);
         return HostActionResult{};
     }
 
