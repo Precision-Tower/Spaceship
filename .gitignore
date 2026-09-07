@@ -94,3 +94,7 @@ Thumbs.db
 
 # Extracted Godot Android vendor template
 /UI/OperatorShell/android/template/
+
+# qps/bin locally imported or built native toolchain sources/artifacts
+/qps/bin/build/
+/qps/bin/src/

@@ -23,26 +23,109 @@ qps- "qps/_index.qps";
 qps: (
 language- "Quick Parse Standard";
 door- "qps/_index.qps";
+
 build- "qps build";
 build_authority- "qps/qps/build.qps";
+
 check- "qps path/file.qps --check";
 test- "qps test path/file-or-folder";
 query- "qps qry <selector> [path]";
 cipher- "qps cipher <source> [--report]";
+
+checklist- "qps checklist [checklist-index] [task-number]";
+history- "qps history [path]";
+save- "qps save <checklist-index> <task-number>";
+
+probe- "qps probe <file> <line> [radius] or qps probe <file.qps> <structural.path>";
+scope- "qps scope <file.qps> <structural.path>";
+scout- "qps scout <indexed-module-or-_index.qps> <authored-identity>";
+
+tool_output- "path:start-end followed by numbered source lines";
+tool_boundary- "probe, scope, and scout do not recursively wander the filesystem";
+
 cipher_authority- "qps/qps/cipher.qps";
+checklist_authority- "qps/qps/checklist.qps";
+save_authority- "qps/qps/save.qps";
+history_authority- "qps/qps/history.qps";
+history_ledger- "history.qps";
+library_authority- "qps/libs/_index.qps";
+
 reference_document_authority- "qps/qps/reference_document.qps";
 semantic_walk_authority- "qps/qps/semantic_walk.qps";
-implementation_proof_authority- "qps/qps/checklist.qps";
+
+authored_qps_state- "qps/qps/checklist.qps";
+native_runtime_kernel_state- "qps/checklist.qps";
+future_kernel_catalog- "qps/kernel/_index.qps";
+);
+
+workflow: (
+current_work- "Run qps checklist to regenerate the repository Checklist index; use qps checklist <checklist-index> or qps checklist <checklist-index> <task-number> to resolve the current indexed Checklist or exact authored task";
+local_history- "Run qps history <path> to see concise accepted history belonging to that repository section";
+library_navigation- "External library knowledge resolved by Cipher is navigated through qps/libs using the same indexed-directory model as CE-OS";
+accept_work- "Mark proven work complete, satisfy any required _index.qps documentation, then explicitly run qps save <checklist-index> <task-number> to accept that task into History";
+history_detail- "Default history is concise; follow the recorded source Checklist or relevant paths when deeper evidence is required";
+
+repository_memory: (
+index- "_index.qps is the durable current-truth and usage authority for its repository area";
+checklist- "checklist.qps is living working memory for unfinished and complete-but-unsaved work";
+history- "history.qps records accepted completed transitions; it does not replace current usage documentation";
+documentation- "Before nontrivial work becomes complete, explicitly decide whether it changes durable subsystem knowledge; when it does, update the closest appropriate _index.qps and prove that documentation as part of completion";
+current_discovery- "Work discovered as necessary for the current objective belongs in the current task";
+deferred_discovery- "Useful work that belongs later becomes a task in the checklist.qps associated with the repository area that owns its implementation";
+);
+startup- "Enter CE-OS through _index.qps, inspect qps checklist, then descend through the nearest subsystem _index.qps";
 );
 
 navigation: (
 directory_separator- "/";
 semantic_separator- ".";
-shape- "folder/folder/file.key.term.item";
+shape- "folder/folder/file.key.term.item-";
 leave_file- ".folder/folder/file.key";
 parent- "/folder/file.key";
 two_parents- "//folder/file.key";
-rule- "/ traverses filesystem scope; . traverses semantic structure inside or away from a file";
+rule- "/ traverses filesystem namespaces; . traverses semantic namespaces inside or away from a file";
+relative_origin- "Structural references are relative to the QPS file that contains the reference unless an explicitly different structural origin is selected";
+same_folder_file- "[>.file] selects file.qps from the current file's folder; . immediately after > means remain at the current filesystem depth and select a sibling file";
+parent_folder_file- "[>/file] selects file.qps from the parent folder of the current QPS file";
+ancestor_folder_file- "Each additional leading / after > moves one additional filesystem parent before selecting the extensionless file identity";
+relative_then_structural- "After the relative filesystem portion selects a QPS file, . continues structural navigation inside that file";
+relative_term_example- "[>/equations.EquationResult] selects the EquationResult Term from equations.qps in the parent folder";
+relative_item_example- "[>/constants.GRAVITY_EARTH_M_S2-] selects the GRAVITY_EARTH_M_S2 Item value from constants.qps in the parent folder";
+relative_same_folder_example- "[>.equations.EquationResult] selects EquationResult from equations.qps in the same folder";
+relative_identity- "Cipher and other producers should derive structural references from the relative relationship between source/destination files rather than preserve source-language package notation";
+file_identity- "The identity immediately following the final / addresses a QPS file without writing the .qps extension; the physical resolver supplies .qps";
+file_extension- "The .qps suffix belongs to physical storage and is omitted from QPS structural addresses";
+file_boundary- "After /, navigation resolves filesystem hierarchy through an extensionless QPS file identity; . continues structural navigation inside that file";
+structural_address- "folder/file.key.term.item- is one continuous navigation address: folder/file resolves file.qps, . traverses structural children, and final - explicitly selects an Item value";
+resolution- "Every structural address resolves to one physical QPS source file, one addressed structural node, and the source span owned by that node";
+file_resolution- "Resolving folder/file addresses file.qps and owns the full source span of that file";
+key_resolution- "Resolving folder/file.key addresses the Key inside file.qps and owns the source span of that Key paragraph";
+nested_resolution- "Each . segment after the file navigates to a structural child regardless of whether that child was authored as a Key or Term; final - explicitly requires the resolved target to be an Item";
+primitive_identity- "Authored declaration syntax remains key. term: item-, while navigation uses . between structural segments and - only when explicitly selecting an Item value";
+reference_boundary- "A structural reference encloses the complete structural address; the closing ] comes only after the final primitive suffix";
+reference_example- "[>alpha.dimensions.radius-]";
+reference_invalid- "[>alpha.dimensions.radius]- is invalid because ] closes the reference before the Item selector -";
+hierarchical_identity- "A nested name receives its identity from its complete containing address, allowing the same local name to exist beneath different Keys";
+span_coordinates- "A resolved source span has a start line and end line from which its line count can be derived";
+
+key_namespace- "A Key is a navigable namespace inside a QPS file: a file inside of a file";
+key_start- "identifier. begins a Key paragraph";
+key_content- "The content owned by a Key begins immediately on the next line with no blank line after identifier.";
+key_delimiter- "The first blank line encountered at the Key's own structural depth terminates the current Key paragraph and its namespace";
+key_nested_boundary- "Blank lines inside paired structures such as (...) and {...} belong to those nested structures and do not terminate the containing Key";
+key_closure- "A Key has no paired closing delimiter; paragraph separation at the Key's own structural depth closes the Key";
+key_example- "alpha.\nitem- \"inside alpha\";\n\nbeta.\nitem- \"inside beta\";";
+);
+
+
+qps_syntax: (
+primitive_identity- "Authored structural primitives are key. term: item-";
+item_value- "An Item may bind a literal, reference, execution result, or full QPS expression";
+item_expression_example- "energy- 0.5 * mass * velocity * velocity;";
+term_execution- "A Term may own an executable body as term: {...};";
+term_execution_example- "kinetic_energy: {[>mass-] [>velocity-] energy- 0.5 * mass * velocity * velocity; -return energy;};";
+calculation_compatibility- "%target: expression remains supported, but % is not required when the result is bound directly to an Item";
+reference_boundary- "Structural references enclose the complete primitive identity; [>alpha.dimensions.radius-] is valid while [>alpha.dimensions.radius]- is invalid";
 );
 
 access: (
@@ -71,6 +154,17 @@ bounded_search- "Start with the smallest relevant directory and widen only when 
 test_smallest_surface- "Test the smallest affected surface first";
 implementation_authority- "Current implementation and passing tests outrank stale documentation";
 proof_boundary- "External observations produce evidence; authored QPS proof policy decides what supplied evidence means";
-source_location- "Use path/file.qps:ln as the canonical failure coordinate";
+qps_continuation_authority- "Read qps/_index.qps first; authored QPS language/tooling continuation lives in qps/qps/checklist.qps, while native runtime and kernel continuation lives in qps/checklist.qps.";
+checklist_rule- "qps checklist regenerates an ephemeral repository Checklist index on every invocation; Checklist numbers are navigation shortcuts, authored task_N and semantic identities remain permanent while active, and complete tasks remain visible until explicit Save accepts and removes them";
+history_rule- "CE-OS owns one repository-root history.qps ledger; accepted entries record their repository scopes and Save timestamp, and qps history <path> queries that single ledger by structural association with the requested repository path; subdirectories do not own local history.qps ledgers";
+save_rule- "qps save explicitly accepts one complete indexed task, normalizes its accepted accomplishment into History, and removes that task from current Checklist work; Save does not invent missing completion proof or subsystem documentation";
+git_boundary- "Git remains the byte-level backing substrate; Checklist, Save, and History describe semantic work state and accepted accomplishments";
+continuation_scope- "Root _index.qps points to continuation authority but does not duplicate changing Checklist state.";
+goals_boundary- "goals.qps describes intended CE-OS direction; goals are not implementation evidence.";
+source_location- "Use path:start-end with numbered source lines as the canonical source-evidence form";
 stage_feature_only- "Stage only files belonging to the feature being checkpointed";
+git_workflow- "Use Git continuously as the byte-level checkpoint substrate: inspect status before work, keep unrelated changes separated, stage only coherent proven work, and checkpoint completed units before starting another subsystem";
+git_hygiene- "Do not allow generated artifacts, temporary probes, backups, zero-byte shell fallout, caches, build products, or vendored source/build trees to accumulate as unexplained repository changes";
+git_review_before_commit- "Before each commit run the smallest relevant tests, qps validation where applicable, git diff --check, targeted diff review, and targeted status review";
+git_clean_tree_goal- "Prefer ending each accepted work unit with a clean working tree; if unfinished work must remain, its ownership and continuation must be represented by the appropriate checklist.qps rather than left as unexplained Git state";
 );
