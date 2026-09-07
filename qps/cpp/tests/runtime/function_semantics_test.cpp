@@ -354,6 +354,68 @@ arm-/n;
     assertBinding(scope, "answer", 30.0);
 }
 
+void literalDefaultParameterExecutes() {
+    const auto scope = executeSource(R"qps(-func leverage(
+f-/n;
+arm- 3/n;
+){
+%T: f * arm
+-return T;
+}
+
+{
+%answer: leverage(10)
+}
+)qps");
+
+    assertBinding(scope, "answer", 30.0);
+}
+
+void suppliedArgumentOverridesDefault() {
+    const auto scope = executeSource(R"qps(-func leverage(
+f-/n;
+arm- 3/n;
+){
+%T: f * arm
+-return T;
+}
+
+{
+%answer: leverage(10, 4)
+}
+)qps");
+
+    assertBinding(scope, "answer", 40.0);
+}
+
+void laterDefaultCanReferenceEarlierParameter() {
+    const auto scope = executeSource(R"qps(-func scale(
+value-/n;
+factor- value/n;
+){
+%T: value * factor
+-return T;
+}
+
+{
+%answer: scale(4)
+}
+)qps");
+
+    assertBinding(scope, "answer", 16.0);
+}
+
+void requiredParameterAfterDefaultFailsClearly() {
+    expectRuntimeFailure(R"qps(-func broken(
+first- 3/n;
+second-/n;
+){
+-return second;
+}
+)qps",
+        "Required function parameter 'second' follows a defaulted parameter");
+}
+
 void tooFewArgumentsFailClearly() {
     expectRuntimeFailure(R"qps(-func leverage(
 f-/n;
@@ -422,6 +484,10 @@ int main() {
         {"function-local bindings do not leak into caller", functionLocalBindingsDoNotLeakIntoCaller},
         {"two invocations receive independent scopes", twoInvocationsReceiveIndependentScopes},
         {"caller identifiers can be arguments", callerIdentifiersCanBeArguments},
+        {"literal default parameter executes", literalDefaultParameterExecutes},
+        {"supplied argument overrides default", suppliedArgumentOverridesDefault},
+        {"later default can reference earlier parameter", laterDefaultCanReferenceEarlierParameter},
+        {"required parameter after default fails clearly", requiredParameterAfterDefaultFailsClearly},
         {"too few arguments fail clearly", tooFewArgumentsFailClearly},
         {"too many arguments fail clearly", tooManyArgumentsFailClearly},
         {"undefined function fails clearly", undefinedFunctionFailsClearly},

@@ -80,8 +80,24 @@ void CausalDefinitionNode::accept(visitors::AstVisitor& visitor) {
 }
 
 // CausalRelationshipNode
-CausalRelationshipNode::CausalRelationshipNode(std::unique_ptr<CausalSide> left, std::unique_ptr<CausalSide> right, int line, int column)
-    : AstNode(AstNodeType::CAUSAL_RELATIONSHIP, line, column), left_side_(std::move(left)), right_side_(std::move(right)) {}
+const AstNode* CausalRelationshipNode::CausalSide::inputDomain() const {
+    return domain_chain.empty()
+        ? nullptr
+        : domain_chain.front().get();
+}
+
+const AstNode* CausalRelationshipNode::CausalSide::outputDomain() const {
+    return domain_chain.empty()
+        ? nullptr
+        : domain_chain.back().get();
+}
+
+CausalRelationshipNode::CausalRelationshipNode(
+    std::vector<std::unique_ptr<CausalSide>> sides,
+    int line,
+    int column)
+    : AstNode(AstNodeType::CAUSAL_RELATIONSHIP, line, column),
+      sides_(std::move(sides)) {}
 
 void CausalRelationshipNode::accept(visitors::AstVisitor& visitor) {
     visitor.visit(this);

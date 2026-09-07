@@ -33,7 +33,7 @@ namespace ast {
 //
 // Examples:
 //   voltage- 30/n;   -> IdentifierNode target
-//   [>v]- 30/n;      -> SymbolReferenceNode target
+//   [>v-] 30/n;      -> SymbolReferenceNode target
 class ItemDeclarationNode : public AstNode {
 public:
     ItemDeclarationNode(
@@ -63,6 +63,12 @@ public:
     // Unit semantics are resolved downstream by Engineering.
     std::optional<std::string> unit_hint_;
 
+    // Final source line owned by this Item declaration.
+    int end_line_ = 0;
+
+    void setEndLine(int line) { end_line_ = line; }
+    int getEndLine() const { return end_line_; }
+
     AstNode* getTarget() const;
 
     void accept(visitors::AstVisitor& visitor) override;
@@ -82,6 +88,12 @@ public:
     // introduced by '@' inside an execution definition.
     bool geometry_qualified_ = false;
 
+    // Final source line owned by this Term declaration.
+    int end_line_ = 0;
+
+    void setEndLine(int line) { end_line_ = line; }
+    int getEndLine() const { return end_line_; }
+
     void accept(visitors::AstVisitor& visitor) override;
 };
 
@@ -91,6 +103,19 @@ public:
     KeyDeclarationNode(const std::string& identifier, int line, int column);
     std::string identifier_;
     std::vector<std::unique_ptr<AstNode>> content_; // Can contain other declarations, literals, etc.
+
+    // Source span owned by this Key paragraph.
+    // The paragraph delimiter itself is not part of the Key.
+    int end_line_ = 0;
+
+    int getEndLine() const {
+        return end_line_ > 0 ? end_line_ : getLine();
+    }
+
+    void setEndLine(int line) {
+        end_line_ = line;
+    }
+
     void accept(visitors::AstVisitor& visitor) override;
 };
 
@@ -130,19 +155,29 @@ public:
     void accept(visitors::AstVisitor& visitor) override;
 };
 
-// CausalRelationshipNode: Represents an 'EntityA: (InputA = OutputA) = EntityB: (InputB = OutputB);'
+// CausalRelationshipNode: Represents an ordered causal chain of component
+// domain transformations, such as:
+//
+//   Motor: (DC = ME) = Pump: (ME = FD) = Turbine: (FD = ME);
+//
+// The '=' inside a side separates authored energy/information domains, not
+// numeric equality. Adjacent sides retain component boundaries.
 class CausalRelationshipNode : public AstNode {
 public:
-    // Represents one side of the causal relationship (e.g., EntityA: (InputA = OutputA))
     struct CausalSide {
         std::unique_ptr<AstNode> entity;
-        std::unique_ptr<AstNode> input;
-        std::unique_ptr<AstNode> output;
+        std::vector<std::unique_ptr<AstNode>> domain_chain;
+
+        const AstNode* inputDomain() const;
+        const AstNode* outputDomain() const;
     };
 
-    CausalRelationshipNode(std::unique_ptr<CausalSide> left, std::unique_ptr<CausalSide> right, int line, int column);
-    std::unique_ptr<CausalSide> left_side_;
-    std::unique_ptr<CausalSide> right_side_;
+    CausalRelationshipNode(
+        std::vector<std::unique_ptr<CausalSide>> sides,
+        int line,
+        int column);
+
+    std::vector<std::unique_ptr<CausalSide>> sides_;
     void accept(visitors::AstVisitor& visitor) override;
 };
 

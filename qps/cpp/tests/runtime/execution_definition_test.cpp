@@ -25,6 +25,7 @@ namespace {
 
 std::filesystem::path g_structural_workspace;
 std::filesystem::path g_reference_planner;
+std::filesystem::path g_semantic_walker;
 
 [[noreturn]] void fail(const std::string& message) {
     throw std::runtime_error(message);
@@ -113,20 +114,20 @@ void assertCausalTransfer(
         transfer.relationship.source_entity == "DC_Motor",
         "Causal source entity mismatch.");
     require(
-        transfer.relationship.source_input_state == "electrical_state",
-        "Causal source input state mismatch.");
+        transfer.relationship.source_input_domain == "DC",
+        "Causal source input domain mismatch.");
     require(
-        transfer.relationship.source_output_state == "mechanical_state",
-        "Causal source output state mismatch.");
+        transfer.relationship.source_output_domain == "ME",
+        "Causal source output domain mismatch.");
     require(
         transfer.relationship.destination_entity == "Pump",
         "Causal destination entity mismatch.");
     require(
-        transfer.relationship.destination_input_state == "mechanical_state",
-        "Causal destination input state mismatch.");
+        transfer.relationship.destination_input_domain == "ME",
+        "Causal destination input domain mismatch.");
     require(
-        transfer.relationship.destination_output_state == "fluid_state",
-        "Causal destination output state mismatch.");
+        transfer.relationship.destination_output_domain == "FD",
+        "Causal destination output domain mismatch.");
 
     require(
         transfer.source_definition_id == "DC_Motor",
@@ -193,6 +194,82 @@ const qps::ast::ExecutionDefinitionNode& requireDefinition(
         "Expected ExecutionDefinitionNode.");
 
     return *definition;
+}
+
+const qps::ast::CausalDefinitionNode& requireCausalDefinition(
+    const qps::ast::ProgramNode& program,
+    std::size_t index = 0) {
+
+    require(
+        program.statements.size() > index,
+        "Expected causal definition statement.");
+
+    auto* definition =
+        dynamic_cast<qps::ast::CausalDefinitionNode*>(
+            program.statements[index].get());
+
+    require(
+        definition != nullptr,
+        "Expected CausalDefinitionNode.");
+
+    return *definition;
+}
+
+const qps::ast::CausalRelationshipNode& requireCausalRelationship(
+    const qps::ast::CausalDefinitionNode& definition,
+    std::size_t index = 0) {
+
+    require(
+        definition.relationships.size() > index,
+        "Expected causal relationship.");
+
+    auto* relationship =
+        dynamic_cast<qps::ast::CausalRelationshipNode*>(
+            definition.relationships[index].get());
+
+    require(
+        relationship != nullptr,
+        "Expected CausalRelationshipNode.");
+
+    return *relationship;
+}
+
+std::string requireIdentifierName(
+    const qps::ast::AstNode* node,
+    const std::string& context) {
+
+    auto* identifier =
+        dynamic_cast<const qps::ast::IdentifierNode*>(
+            node);
+
+    require(
+        identifier != nullptr,
+        "Expected identifier for " + context + ".");
+
+    return identifier->name_;
+}
+
+void assertDomainChain(
+    const qps::ast::CausalRelationshipNode::CausalSide& side,
+    const std::vector<std::string>& expected_domains) {
+
+    require(
+        side.domain_chain.size() == expected_domains.size(),
+        "Domain chain size mismatch.");
+
+    for (std::size_t i = 0; i < expected_domains.size(); ++i) {
+        require(
+            requireIdentifierName(
+                side.domain_chain[i].get(),
+                "domain " + std::to_string(i)) ==
+                expected_domains[i],
+            "Domain chain value mismatch at " + std::to_string(i) + ".");
+
+        require(
+            dynamic_cast<qps::ast::BinaryExpressionNode*>(
+                side.domain_chain[i].get()) == nullptr,
+            "Causal domains must not parse as numeric equality expressions.");
+    }
 }
 
 const qps::ast::ItemDeclarationNode& requireInput(
@@ -428,8 +505,8 @@ void structuralSemanticReferencesPreserveNavigation() {
 
 void namedReusableExecutionDefinitionParses() {
     auto program = parseSource(R"qps({Leverage_Equation:
-[>f]-
-[>arm]-
+[>f-]
+[>arm-]
 
 %[>T]: f * arm
 })qps");
@@ -583,7 +660,7 @@ void calculationAtStartOfAnonymousBlockRemainsCalculation() {
 
 void numericReusableExecutionDefinitionParses() {
     auto program = parseSource(R"qps({1:
-[>f]-
+[>f-]
 
 %[>T]: f * 2
 })qps");
@@ -597,8 +674,8 @@ void numericReusableExecutionDefinitionParses() {
 
 void namedCallInstantiatesDefinition() {
     const auto instances = executeProgram(R"qps({Leverage_Equation:
-[>f]-
-[>arm]-
+[>f-]
+[>arm-]
 
 %[>T]: f * arm
 }
@@ -615,8 +692,8 @@ arm- 3/n;
 
 void numericCallInstantiatesDefinition() {
     const auto instances = executeProgram(R"qps({1:
-[>f]-
-[>arm]-
+[>f-]
+[>arm-]
 
 %[>T]: f * arm
 }
@@ -633,8 +710,8 @@ arm- 7/n;
 
 void requiredInputSuppliedSuccessfully() {
     const auto instances = executeProgram(R"qps({Leverage_Equation:
-[>f]-
-[>arm]-
+[>f-]
+[>arm-]
 
 %[>T]: f * arm
 }
@@ -652,8 +729,8 @@ arm- 6/n;
 
 void missingRequiredInputFailsClearly() {
     expectRuntimeFailure(R"qps({Leverage_Equation:
-[>f]-
-[>arm]-
+[>f-]
+[>arm-]
 
 %[>T]: f * arm
 }
@@ -666,8 +743,8 @@ f- 8/n;
 
 void defaultInputUsedWhenNotOverridden() {
     const auto instances = executeProgram(R"qps({Leverage_Equation:
-[>f]- 10/n;
-[>arm]- 3/n;
+[>f-] 10/n;
+[>arm-] 3/n;
 
 %[>T]: f * arm
 }
@@ -684,8 +761,8 @@ void defaultInputUsedWhenNotOverridden() {
 
 void defaultInputCanBeOverriddenPerInstance() {
     const auto instances = executeProgram(R"qps({Leverage_Equation:
-[>f]- 10/n;
-[>arm]- 3/n;
+[>f-] 10/n;
+[>arm-] 3/n;
 
 %[>T]: f * arm
 }
@@ -703,7 +780,7 @@ arm- 5/n;
 
 void stringInputCanBeOverriddenPerInstance() {
     const auto instances = executeProgram(R"qps({Cipher_Path:
-[>source]- "default.py";
+[>source-] "default.py";
 
 captured: -process(
 program- "printf";
@@ -757,8 +834,8 @@ source- "Engineering/py/cipher/probe.py";
 
 void unknownOverrideNameFailsClearly() {
     expectRuntimeFailure(R"qps({Leverage_Equation:
-[>f]-
-[>arm]-
+[>f-]
+[>arm-]
 
 %[>T]: f * arm
 }
@@ -773,8 +850,8 @@ length- 2/n;
 
 void twoCallsWithDifferentInputsAreIndependent() {
     const auto instances = executeProgram(R"qps({Leverage_Equation:
-[>f]-
-[>arm]-
+[>f-]
+[>arm-]
 
 %[>T]: f * arm
 }
@@ -800,8 +877,8 @@ arm- 9/n;
 
 void callingDefinitionDoesNotMutateDefaults() {
     auto program = parseSource(R"qps({Leverage_Equation:
-[>f]- 10/n;
-[>arm]- 3/n;
+[>f-] 10/n;
+[>arm-] 3/n;
 
 %[>T]: f * arm
 }
@@ -829,8 +906,8 @@ arm- 5/n;
 
 void derivedSemanticOutputsExecuteInsideInstance() {
     const auto instances = executeProgram(R"qps({Leverage_Equation:
-[>f]-
-[>arm]-
+[>f-]
+[>arm-]
 
 %[>T]: f * arm
 }
@@ -848,11 +925,11 @@ arm- 4/n;
 
 void hevDcMotorRelationshipExecutesIntoInstanceScope() {
     const auto instances = executeProgram(R"qps({DC_Motor_Electromagnetic_State:
-[>voltage_vdc]-
-[>current_a]-
-[>electrical_resistance_ohm]-
-[>torque_constant]-
-[>back_emf_constant]-
+[>voltage_vdc-]
+[>current_a-]
+[>electrical_resistance_ohm-]
+[>torque_constant-]
+[>back_emf_constant-]
 
 %[>resistive_voltage_drop]: current_a * electrical_resistance_ohm
 %[>back_emf]: voltage_vdc - resistive_voltage_drop
@@ -907,11 +984,11 @@ back_emf_constant- 0.05/n;
 
 void hevMotorDerivedOutputsFeedPumpInputs() {
     const auto instances = executeProgram(R"qps({DC_Motor:
-[>voltage_vdc]-
-[>current_a]-
-[>electrical_resistance_ohm]-
-[>torque_constant]-
-[>back_emf_constant]-
+[>voltage_vdc-]
+[>current_a-]
+[>electrical_resistance_ohm-]
+[>torque_constant-]
+[>back_emf_constant-]
 
 %[>resistive_voltage_drop]: current_a * electrical_resistance_ohm
 %[>back_emf]: voltage_vdc - resistive_voltage_drop
@@ -920,17 +997,17 @@ void hevMotorDerivedOutputsFeedPumpInputs() {
 }
 
 {Pump_Mechanical_Input:
-[>shaft_torque]-
-[>angular_velocity]-
+[>shaft_torque-]
+[>angular_velocity-]
 
 %[>received_shaft_torque]: shaft_torque
 %[>received_angular_velocity]: angular_velocity
 }
 
 {!motor_to_pump:
-DC_Motor: (electrical_state = mechanical_state)
+DC_Motor: (DC = ME)
 =
-Pump: (mechanical_state = fluid_state);
+Pump: (ME = FD);
 }
 
 {>DC_Motor:
@@ -1012,11 +1089,11 @@ back_emf_constant- 0.05/n;
 
 void bareIdentifierOverridesDoNotReadPreviousExecutionInstances() {
     expectRuntimeFailure(R"qps({DC_Motor:
-[>voltage_vdc]-
-[>current_a]-
-[>electrical_resistance_ohm]-
-[>torque_constant]-
-[>back_emf_constant]-
+[>voltage_vdc-]
+[>current_a-]
+[>electrical_resistance_ohm-]
+[>torque_constant-]
+[>back_emf_constant-]
 
 %[>resistive_voltage_drop]: current_a * electrical_resistance_ohm
 %[>back_emf]: voltage_vdc - resistive_voltage_drop
@@ -1025,8 +1102,8 @@ void bareIdentifierOverridesDoNotReadPreviousExecutionInstances() {
 }
 
 {Pump_Mechanical_Input:
-[>shaft_torque]-
-[>angular_velocity]-
+[>shaft_torque-]
+[>angular_velocity-]
 
 %[>received_shaft_torque]: shaft_torque
 %[>received_angular_velocity]: angular_velocity
@@ -1050,9 +1127,9 @@ angular_velocity- angular_velocity;
 
 void executionDefinitionInspectionExposesStructuralInputs() {
     auto program = parseSource(R"qps({Leverage_Equation:
-[>f]-
-[>arm]-/n;
-[>ratio]- 3/n;
+[>f-]
+[>arm-]/n;
+[>ratio-] 3/n;
 
 %[>T]: f * arm
 })qps");
@@ -1110,8 +1187,8 @@ void executionDefinitionInspectionExposesStructuralInputs() {
 
 void registeredDefinitionInspectionPreservesOptionalSourceIdentity() {
     auto program = parseSource(R"qps({Leverage_Equation:
-[>f]-/n;
-[>arm]- 3/n;
+[>f-]/n;
+[>arm-] 3/n;
 
 %[>T]: f * arm
 })qps");
@@ -1158,8 +1235,8 @@ void registeredDefinitionInspectionPreservesOptionalSourceIdentity() {
 
 void executionInstancePreservesRegisteredSourceIdentity() {
     auto program = parseSource(R"qps({Leverage_Equation:
-[>f]-/n;
-[>arm]- 3/n;
+[>f-]/n;
+[>arm-] 3/n;
 
 %[>T]: f * arm
 })qps");
@@ -1171,9 +1248,7 @@ void executionInstancePreservesRegisteredSourceIdentity() {
         engine.registerDefinition(definition);
 
         const auto execution =
-            engine.instantiateNumeric(
-                "Leverage_Equation",
-                {{"f", 10.0}});
+            engine.instantiateNumeric("Leverage_Equation", {{"f", 10.0}});
 
         require(
             !execution.source.has_value(),
@@ -1187,9 +1262,7 @@ void executionInstancePreservesRegisteredSourceIdentity() {
             "designs/leverage.qps");
 
         const auto execution =
-            engine.instantiateNumeric(
-                "Leverage_Equation",
-                {{"f", 10.0}});
+            engine.instantiateNumeric("Leverage_Equation", {{"f", 10.0}});
 
         require(
             execution.source.has_value(),
@@ -1204,7 +1277,7 @@ void executionInstancePreservesRegisteredSourceIdentity() {
 
 void registeredDefinitionRejectsEmptySourceIdentity() {
     auto program = parseSource(R"qps({Leverage_Equation:
-[>f]-/n;
+[>f-]/n;
 
 %[>T]: f
 })qps");
@@ -1245,7 +1318,8 @@ v1: [v.cylinder];
     qps::runtime::SymbolResolver symbols(
         paths,
         documents,
-        g_reference_planner);
+        g_reference_planner,
+        g_semantic_walker);
 
     qps::runtime::ExecutionEngine engine(symbols);
 
@@ -1328,6 +1402,204 @@ v1: [v.cylinder];
         "Structural execution without SymbolResolver should fail explicitly.");
 }
 
+void causalSideParsesDomainTransformationNotNumericEquality() {
+    auto program = parseSource(R"qps({!pump_transform:
+Pump: (ME = FD)
+=
+Turbine: (FD = ME);
+})qps");
+
+    const auto& definition = requireCausalDefinition(*program);
+    require(
+        definition.identifier_ == "pump_transform",
+        "Causal definition identifier mismatch.");
+
+    const auto& relationship = requireCausalRelationship(definition);
+    require(
+        relationship.sides_.size() == 2,
+        "Expected two causal component sides.");
+
+    require(
+        requireIdentifierName(
+            relationship.sides_[0]->entity.get(),
+            "first causal entity") == "Pump",
+        "First causal entity mismatch.");
+    assertDomainChain(*relationship.sides_[0], {"ME", "FD"});
+
+    require(
+        requireIdentifierName(
+            relationship.sides_[1]->entity.get(),
+            "second causal entity") == "Turbine",
+        "Second causal entity mismatch.");
+    assertDomainChain(*relationship.sides_[1], {"FD", "ME"});
+}
+
+void causalSideParsesMultiStageTransformationChain() {
+    auto program = parseSource(R"qps({!water_pump_transform:
+Water_Pump: (DC = ME = FD)
+=
+Hydro_Turbine: (FD = ME);
+})qps");
+
+    const auto& relationship =
+        requireCausalRelationship(
+            requireCausalDefinition(*program));
+
+    require(
+        relationship.sides_.size() == 2,
+        "Expected two sides for multi-stage component witness.");
+
+    assertDomainChain(*relationship.sides_[0], {"DC", "ME", "FD"});
+    assertDomainChain(*relationship.sides_[1], {"FD", "ME"});
+}
+
+void causalRelationshipChainPreservesComponentBoundaries() {
+    auto program = parseSource(R"qps({!domain_chain:
+Motor: (DC = ME)
+=
+Pump: (ME = FD)
+=
+Turbine: (FD = ME);
+})qps");
+
+    const auto& relationship =
+        requireCausalRelationship(
+            requireCausalDefinition(*program));
+
+    require(
+        relationship.sides_.size() == 3,
+        "Expected three causal component sides.");
+
+    require(
+        requireIdentifierName(
+            relationship.sides_[0]->entity.get(),
+            "first chain entity") == "Motor",
+        "First chain entity mismatch.");
+    require(
+        requireIdentifierName(
+            relationship.sides_[1]->entity.get(),
+            "second chain entity") == "Pump",
+        "Second chain entity mismatch.");
+    require(
+        requireIdentifierName(
+            relationship.sides_[2]->entity.get(),
+            "third chain entity") == "Turbine",
+        "Third chain entity mismatch.");
+
+    assertDomainChain(*relationship.sides_[0], {"DC", "ME"});
+    assertDomainChain(*relationship.sides_[1], {"ME", "FD"});
+    assertDomainChain(*relationship.sides_[2], {"FD", "ME"});
+}
+
+void causalRuntimeUsesAdjacentEdgesFromComponentChain() {
+    const auto instances = executeProgram(R"qps({Motor:
+[>seed-]
+
+%[>shaft_torque]: seed
+}
+
+{Pump:
+[>shaft_torque-]
+
+%[>outlet_pressure]: shaft_torque * 2
+}
+
+{Turbine:
+[>outlet_pressure-]
+
+%[>wheel_torque]: outlet_pressure * 3
+}
+
+{!domain_chain:
+Motor: (DC = ME)
+=
+Pump: (ME = FD)
+=
+Turbine: (FD = ME);
+}
+
+{>Motor:
+seed- 4/n;
+}
+
+{>Pump:
+}
+
+{>Turbine:
+})qps");
+
+    require(
+        instances.size() == 3,
+        "Expected three execution instances for causal chain.");
+
+    assertBinding(
+        instances[1].scope,
+        "shaft_torque",
+        4.0,
+        qps::runtime::BindingOrigin::SUPPLIED,
+        "shaft_torque");
+
+    assertBinding(
+        instances[2].scope,
+        "outlet_pressure",
+        8.0,
+        qps::runtime::BindingOrigin::SUPPLIED,
+        "outlet_pressure");
+
+    require(
+        instances[1].causal_transfers.size() == 1,
+        "Pump should receive one causal transfer.");
+    require(
+        instances[2].causal_transfers.size() == 1,
+        "Turbine should receive one causal transfer.");
+
+    const auto& first_transfer = instances[1].causal_transfers[0];
+    require(
+        first_transfer.relationship.boundary_index == 0,
+        "Motor to pump boundary index mismatch.");
+    require(
+        first_transfer.relationship.source_output_domain == "ME" &&
+        first_transfer.relationship.destination_input_domain == "ME",
+        "Motor to pump boundary domains mismatch.");
+
+    const auto& second_transfer = instances[2].causal_transfers[0];
+    require(
+        second_transfer.relationship.boundary_index == 1,
+        "Pump to turbine boundary index mismatch.");
+    require(
+        second_transfer.relationship.source_output_domain == "FD" &&
+        second_transfer.relationship.destination_input_domain == "FD",
+        "Pump to turbine boundary domains mismatch.");
+}
+
+void causalRuntimeRejectsIncompatibleDomainBoundary() {
+    expectRuntimeFailure(R"qps({Motor:
+[>seed-]
+
+%[>shaft_torque]: seed
+}
+
+{Pump:
+[>shaft_torque-]
+
+%[>received_shaft_torque]: shaft_torque
+}
+
+{!bad_boundary:
+Motor: (DC = ME)
+=
+Pump: (FD = TE);
+}
+
+{>Motor:
+seed- 3/n;
+}
+
+{>Pump:
+})qps",
+        "Causal domain mismatch");
+}
+
 
 void executionCallResultComposesAsRuntimeValue() {
     const auto instances = executeProgram(R"qps(
@@ -1339,7 +1611,7 @@ void executionCallResultComposesAsRuntimeValue() {
 }
 
 {Consume:
-[>input]-
+[>input-]
 
 -return input;
 }
@@ -1398,7 +1670,7 @@ input- produced;
 void qpsPathKindPolicyExecutesAboveNativeFilesystemFact() {
     const auto instances = executeProgram(R"qps(
 {Path_Kind_Policy:
-[>path]-
+[>path-]
 
 kind: -path_kind(
 path- path;
@@ -1486,7 +1758,7 @@ void qpsDerivesModuleIdentityFromFilesystemFacts() {
     try {
         const auto instances = executeProgram(R"qps(
 {Path_Module_Policy:
-[>path]-
+[>path-]
 
 index_path- path + "/_index.qps";
 
@@ -1582,11 +1854,11 @@ struct TestCase {
 } // namespace
 
 int main(int argc, char** argv) {
-    if (argc != 3) {
+    if (argc != 4) {
         std::cerr
             << "Usage: "
             << argv[0]
-            << " <workspace-root> <reference-planner>\n";
+            << " <workspace-root> <reference-planner> <semantic-walker>\n";
         return 2;
     }
 
@@ -1595,6 +1867,9 @@ int main(int argc, char** argv) {
 
     g_reference_planner =
         std::filesystem::path(argv[2]);
+
+    g_semantic_walker =
+        std::filesystem::path(argv[3]);
 
     const std::vector<TestCase> tests = {
         {"execution call result composes as RuntimeValue", executionCallResultComposesAsRuntimeValue},
@@ -1618,7 +1893,12 @@ int main(int argc, char** argv) {
         {"calling a definition does not mutate defaults", callingDefinitionDoesNotMutateDefaults},
         {"derived semantic outputs execute inside instance", derivedSemanticOutputsExecuteInsideInstance},
         {"HEV DC motor relationship executes into instance scope", hevDcMotorRelationshipExecutesIntoInstanceScope},
+        {"causal side parses domain transformation not numeric equality", causalSideParsesDomainTransformationNotNumericEquality},
+        {"causal side parses multi-stage transformation chain", causalSideParsesMultiStageTransformationChain},
+        {"causal relationship chain preserves component boundaries", causalRelationshipChainPreservesComponentBoundaries},
         {"HEV motor derived outputs feed pump inputs", hevMotorDerivedOutputsFeedPumpInputs},
+        {"causal runtime uses adjacent edges from component chain", causalRuntimeUsesAdjacentEdgesFromComponentChain},
+        {"causal runtime rejects incompatible domain boundary", causalRuntimeRejectsIncompatibleDomainBoundary},
         {"bare identifier overrides do not read previous execution instances", bareIdentifierOverridesDoNotReadPreviousExecutionInstances},
         {"execution definition inspection exposes structural inputs", executionDefinitionInspectionExposesStructuralInputs},
         {"registered definition inspection preserves optional source identity", registeredDefinitionInspectionPreservesOptionalSourceIdentity},

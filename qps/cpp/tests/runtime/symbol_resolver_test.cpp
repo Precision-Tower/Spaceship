@@ -11,11 +11,11 @@
 #include <string>
 
 int main(int argc, char** argv) {
-    if (argc != 3) {
+    if (argc != 4) {
         std::cerr
             << "Usage: "
             << argv[0]
-            << " <workspace-root> <reference-planner>\n";
+            << " <workspace-root> <reference-planner> <semantic-walker>\n";
         return 2;
     }
 
@@ -27,7 +27,8 @@ int main(int argc, char** argv) {
         qps::runtime::SymbolResolver symbols(
             paths,
             documents,
-            argv[2]);
+            argv[2],
+            argv[3]);
 
         const std::filesystem::path witness_document =
             "defs/semantic_walk/shape.qps";

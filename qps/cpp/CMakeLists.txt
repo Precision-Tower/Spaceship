@@ -96,6 +96,11 @@ add_qps_test(
 )
 
 add_qps_test(
+    qps_source_span_test
+    tests/runtime/source_span_test.cpp
+)
+
+add_qps_test(
     qps_execution_test
     tests/runtime/execution_test.cpp
 )
@@ -135,6 +140,16 @@ add_qps_test(
     tests/runtime/host_action_test.cpp
 )
 
+add_qps_test(
+    qps_connected_execution_environment_test
+    tests/runtime/connected_execution_environment_test.cpp
+)
+
+add_qps_test(
+    qps_engineering_safety_factor_test
+    tests/runtime/engineering_safety_factor_test.cpp
+)
+
 
 add_test(
     NAME qps_structural_selection_test
@@ -162,6 +177,7 @@ add_test(
     COMMAND qps_execution_definition_test
         "${CMAKE_CURRENT_SOURCE_DIR}/../../Engineering/qps"
         "${CMAKE_CURRENT_SOURCE_DIR}/../qps/reference_document.qps"
+        "${CMAKE_CURRENT_SOURCE_DIR}/../qps/semantic_walk.qps"
 )
 
 add_test(
@@ -174,6 +190,17 @@ add_test(
     COMMAND qps_host_action_test
 )
 
+add_test(
+    NAME qps_connected_execution_environment_test
+    COMMAND qps_connected_execution_environment_test
+)
+
+
+add_test(
+    NAME qps_engineering_safety_factor_test
+    COMMAND qps_engineering_safety_factor_test
+        "${CMAKE_CURRENT_SOURCE_DIR}/../../Engineering/qps/experiments/safety_factor_floor.qps"
+)
 
 add_test(
     NAME qps_grammar_regression_test
@@ -196,11 +223,6 @@ add_test(
     COMMAND qps "${CMAKE_CURRENT_SOURCE_DIR}/tests/golden/03_nested_semantics.qps"
 )
 
-add_test(
-    NAME qps_parser_golden_QPS_quicksheet
-    COMMAND qps
-        ${CMAKE_CURRENT_SOURCE_DIR}/../qps/docs/QPS.qps
-)
 
 
 add_qps_test(
@@ -211,6 +233,11 @@ add_qps_test(
 add_qps_test(
     qps_checklist_policy_test
     tests/runtime/checklist_policy_test.cpp
+)
+
+add_qps_test(
+    qps_checklist_save_transition_test
+    tests/runtime/checklist_save_transition_test.cpp
 )
 
 add_test(
@@ -226,6 +253,11 @@ add_test(
 )
 
 add_test(
+    NAME qps_checklist_save_transition_test
+    COMMAND qps_checklist_save_transition_test
+)
+
+add_test(
     NAME qps_reference_document_plan_test
     COMMAND qps_reference_document_plan_test
         "${CMAKE_CURRENT_SOURCE_DIR}/../qps/reference_document.qps"
@@ -236,12 +268,18 @@ add_test(
     COMMAND qps_symbol_resolver_test
         "${CMAKE_CURRENT_SOURCE_DIR}/../../Engineering/qps"
         "${CMAKE_CURRENT_SOURCE_DIR}/../qps/reference_document.qps"
+        "${CMAKE_CURRENT_SOURCE_DIR}/../qps/semantic_walk.qps"
 )
 
 
 add_test(
     NAME qps_path_resolver_index_surface
     COMMAND qps_path_resolver_test
+)
+
+add_test(
+    NAME qps_source_span_contract
+    COMMAND qps_source_span_test
 )
 
 # To build (from your build directory, after saving this change):
@@ -293,6 +331,22 @@ add_test(
 )
 
 add_test(
+    NAME qps_scope_cli
+    COMMAND
+        ${Python3_EXECUTABLE}
+        "${CMAKE_CURRENT_SOURCE_DIR}/tests/runtime/scope_cli_test.py"
+        "$<TARGET_FILE:qps>"
+)
+
+add_test(
+    NAME qps_scout_cli
+    COMMAND
+        ${Python3_EXECUTABLE}
+        "${CMAKE_CURRENT_SOURCE_DIR}/tests/runtime/scout_cli_test.py"
+        "$<TARGET_FILE:qps>"
+)
+
+add_test(
     NAME qps_dir_cli
     COMMAND
         ${Python3_EXECUTABLE}
@@ -305,6 +359,30 @@ add_test(
     COMMAND
         python3
         ${CMAKE_CURRENT_SOURCE_DIR}/tests/runtime/query_cli_test.py
+        $<TARGET_FILE:qps>
+)
+
+add_test(
+    NAME qps_save_cli
+    COMMAND
+        python3
+        ${CMAKE_CURRENT_SOURCE_DIR}/tests/runtime/save_cli_test.py
+        $<TARGET_FILE:qps>
+)
+
+add_test(
+    NAME qps_history_cli
+    COMMAND
+        python3
+        ${CMAKE_CURRENT_SOURCE_DIR}/tests/runtime/history_cli_test.py
+        $<TARGET_FILE:qps>
+)
+
+add_test(
+    NAME qps_checklist_cli
+    COMMAND
+        python3
+        ${CMAKE_CURRENT_SOURCE_DIR}/tests/runtime/checklist_cli_test.py
         $<TARGET_FILE:qps>
 )
 
@@ -322,4 +400,46 @@ add_test(
         python3
         ${CMAKE_CURRENT_SOURCE_DIR}/tests/runtime/source_execution_cli_test.py
         $<TARGET_FILE:qps>
+)
+
+add_executable(
+    qps_runtime_sequence_test
+    tests/runtime/runtime_sequence_test.cpp
+)
+
+target_link_libraries(
+    qps_runtime_sequence_test
+    PRIVATE
+    qps_core
+)
+
+add_test(
+    NAME qps_runtime_sequence_test
+    COMMAND qps_runtime_sequence_test
+)
+
+
+add_qps_test(
+    qps_cipher_association_test
+    tests/runtime/cipher_association_test.cpp
+)
+
+add_test(
+    NAME qps_cipher_association_test
+    COMMAND qps_cipher_association_test
+        ${CMAKE_CURRENT_SOURCE_DIR}/../qps/cipher.qps
+)
+
+
+add_qps_test(
+    qps_cipher_source_facts_test
+    tests/runtime/cipher_source_facts_test.cpp
+)
+
+add_test(
+    NAME qps_cipher_source_facts_test
+    COMMAND qps_cipher_source_facts_test
+        ${CMAKE_CURRENT_SOURCE_DIR}/../qps/cipher.qps
+        ${CMAKE_CURRENT_SOURCE_DIR}/../..
+        ${CMAKE_CURRENT_SOURCE_DIR}/../../Engineering/py/Physics/Domains/motion.py
 )

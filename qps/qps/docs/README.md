@@ -52,6 +52,24 @@ The QPS command-line interface supports:
     qps <document.qps>
     qps <document.qps> --check
     qps <document.qps> --get <path>
+    qps qry <selector> [path]
+    qps probe <file> <line> [radius]
+    qps probe <file.qps> <structural.path>
+    qps scope <file.qps> <structural.path>
+    qps scout <indexed-module-or-_index.qps> <authored-identity>
+
+`probe`, `scope`, and `scout` are the proven source-navigation tool trio.
+
+`probe` inspects an exact known target: either a physical source line/radius in an arbitrary file or a structural path in a QPS document.
+
+`scope` inspects an exact QPS structural target plus its immediate authored structural members. It does not recurse through descendants, and an `Item` is a valid leaf.
+
+`scout` discovers an exact authored identity inside one indexed QPS module. The module is identified by `_index.qps`; only immediate `qpsFiles` are searched, `_index.qps` itself is excluded, child modules are not descended, and the filesystem is not recursively traversed. Admitted parsed documents are inspected recursively by authored AST identity, not textual grep. Current recognized identities are `Key`, `Term`, `Item`, and named `ExecutionDefinition`.
+
+All three source-navigation commands share this evidence form:
+
+    path:start-end
+    ln: source
 
 ## Validation
 
@@ -60,13 +78,17 @@ Canonical Pixel build and test baseline:
     cmake --build ~/ce-os/qps/cpp/build-pixel -j1
     ctest --test-dir ~/ce-os/qps/cpp/build-pixel --output-on-failure
 
-The established checkpoint is 14/14 QPS tests passing.
+The focused source-navigation/query checkpoint is `qps_structural_selection_test`, `qps_source_span_contract`, `qps_probe_cli`, `qps_scope_cli`, `qps_scout_cli`, and `qps_query_cli` passing.
 
 The active Engineering corpus is itself a conformance surface and must remain parseable as the language evolves.
 
 ## Documentation Lifecycle
 
-`docs/CHECKLIST.md` is the active implementation ledger.
+`qps/qps/checklist.qps` is the active authored QPS language/tooling implementation and work-control surface.
+
+`qps/checklist.qps` owns native runtime, host-boundary, and future kernel continuation.
+
+`docs/CHECKLIST.md` is supporting Markdown history and does not outrank current implementation, passing tests, or authored QPS authority.
 
 As checklist work is completed and proven, durable language architecture and behavior are distilled into this README.
 
@@ -106,6 +128,8 @@ Specialized block families remain semantically distinct:
 
 The general execution language may orchestrate or consume specialized block behavior, but the specialized languages are not aliases for plain `{}`.
 
+Causal `{! ... }` definitions preserve authored Engineering topology. A side such as `Pump: (ME = FD)` means a component-domain transformation from `ME` to `FD`, not scalar equality. A relationship such as `Motor: (DC = ME) = Pump: (ME = FD)` preserves the `ME` output/input boundary between the two components. Runtime propagation validates that boundary before using the current provisional same-name semantic binding transfer.
+
 QPS execution syntax should preserve normal structural ownership where practical:
 
     key.
@@ -115,5 +139,5 @@ Function, test, control-flow, binding, assertion, and related execution syntax a
 
 Detailed execution-language design belongs in `docs/EXECUTION_DESIGN.md`.
 
-The active implementation ledger belongs in `docs/CHECKLIST.md`.
+The active authored implementation ledger belongs in `qps/qps/checklist.qps`; native runtime and kernel continuation belongs in `qps/checklist.qps`.
 

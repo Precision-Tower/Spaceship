@@ -129,6 +129,16 @@ public:
     const std::vector<SymbolReferenceSegment>&
     getSegments() const;
 
+    // Local name of the final structural segment.
+    //
+    // Authored identity may include primitive selection:
+    //   getSymbol()           -> "key.term.radius-"
+    //   getFinalSegmentName() -> "radius"
+    //
+    // This does not discard authored identity; it exposes the
+    // punctuation-free structural name already preserved in segments_.
+    const std::string& getFinalSegmentName() const;
+
     // True only when the reference explicitly ends in '-':
     //
     //   [>key.dimensions.body.radius-]

@@ -2,6 +2,7 @@
 #include "../../src/ast/structural_selection.hpp"
 #include "../../src/parser/h/_index.hpp"
 #include "../../src/runtime/h/interpreter.hpp"
+#include "../../src/runtime/h/execution_engine.hpp"
 #include "../../src/runtime/h/symbol_table.hpp"
 #include "../../src/tokens/h/char_stream.hpp"
 #include "../../src/tokens/h/lexer.hpp"
@@ -14,6 +15,7 @@
 #include <stdexcept>
 #include <string>
 #include <utility>
+#include <unordered_map>
 #include <vector>
 
 namespace {
@@ -214,7 +216,7 @@ runtime::StructuralHandle nativeWalk(
 }
 
 runtime::StructuralHandle authoredWalk(
-    const ast::ExecutionBlockNode& walker,
+    const ast::TermDeclarationNode& walker,
     const Fixture& f,
     runtime::RuntimeValue segment_value,
     std::size_t structural_start,
@@ -224,58 +226,48 @@ runtime::StructuralHandle authoredWalk(
     start.document_owner = f.owner;
     start.target_node = f.root;
 
-    runtime::ExecutionScope scope;
+    runtime::ExecutionEngine engine;
+    engine.registerDefinition(walker);
 
-    scope.bind(
+    std::unordered_map<
+        std::string,
+        runtime::RuntimeValue
+    > overrides;
+
+    overrides.emplace(
         "current_structure",
         runtime::RuntimeValue::structure(
-            std::move(start)),
-        std::nullopt,
-        runtime::BindingOrigin::SUPPLIED);
+            std::move(start)));
 
-    scope.bind(
+    overrides.emplace(
         "segments",
-        std::move(segment_value),
-        std::nullopt,
-        runtime::BindingOrigin::SUPPLIED);
+        std::move(segment_value));
 
-    scope.bind(
+    overrides.emplace(
         "structural_start",
         runtime::RuntimeValue::numeric(
             static_cast<double>(
-                structural_start)),
-        std::nullopt,
-        runtime::BindingOrigin::SUPPLIED);
+                structural_start)));
 
-    scope.bind(
+    overrides.emplace(
         "selects_item_value",
         runtime::RuntimeValue::numeric(
-            selects_item_value ? 1.0 : 0.0),
-        std::nullopt,
-        runtime::BindingOrigin::SUPPLIED);
+            selects_item_value ? 1.0 : 0.0));
 
-    runtime::InterpreterOptions options;
-    options.allow_return = true;
-    options.symbol_resolver = nullptr;
-
-    runtime::Interpreter interpreter(
-        scope,
-        runtime::FunctionTable{},
-        options);
-
-    const auto result =
-        interpreter.executeForResult(
-            walker);
+    const auto instance =
+        engine.instantiate(
+            "Semantic_Walk",
+            overrides);
 
     require(
-        result.has_value(),
+        instance.result.has_value(),
         "Authored semantic walker returned no value.");
 
     require(
-        result->isStructure(),
+        instance.result->isStructure(),
         "Authored semantic walker did not return STRUCTURE.");
 
-    return result->asStructure(
+    return instance.result->asStructure(
         "authored semantic walk");
 }
 
@@ -301,7 +293,7 @@ std::cout
 }
 
 void parity(
-    const ast::ExecutionBlockNode& walker,
+    const ast::TermDeclarationNode& walker,
     const Fixture& f,
     const std::vector<std::string>& names,
     std::size_t structural_start,
@@ -418,17 +410,42 @@ int main(
             "Authored semantic walker must contain "
             "exactly one top-level statement.");
 
-        const auto* walker =
+        const auto* walker_term =
             dynamic_cast<
-                const ast::ExecutionBlockNode*>(
+                const ast::TermDeclarationNode*>(
                     walker_program
                         ->statements.front()
                         .get());
 
         require(
-            walker != nullptr,
+            walker_term != nullptr,
             "Authored semantic walker top-level "
-            "statement must be an execution block.");
+            "statement must be a Term declaration.");
+
+        require(
+            walker_term->identifier_ ==
+                "Semantic_Walk",
+            "Authored semantic walker Term must be "
+            "'Semantic_Walk'.");
+
+        std::size_t walker_bodies = 0;
+
+        for (const auto& child : walker_term->content_) {
+            if (dynamic_cast<
+                    const ast::ExecutionBlockNode*>(
+                        child.get())) {
+
+                ++walker_bodies;
+            }
+        }
+
+        require(
+            walker_bodies == 1,
+            "Authored Semantic_Walk Term "
+            "must own exactly one execution body.");
+
+        const ast::TermDeclarationNode* walker =
+            walker_term;
 
         {
             const auto f = fixture();
@@ -522,6 +539,33 @@ int main(
                         true);
                 },
                 "MISSING_ITEM");
+        }
+
+        {
+            // "nested" exists, but it is a Term. Explicit Item selection
+            // must reject it rather than accepting structural identity.
+            const auto f = fixture();
+
+            requireBothReject(
+                [&]() {
+                    (void)nativeWalk(
+                        f,
+                        {"child", "nested"},
+                        0,
+                        true);
+                },
+                [&]() {
+                    (void)authoredWalk(
+                        *walker,
+                        f,
+                        segments({
+                            "child",
+                            "nested"
+                        }),
+                        0,
+                        true);
+                },
+                "TERM_IS_NOT_ITEM");
         }
 
         {

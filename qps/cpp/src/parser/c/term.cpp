@@ -60,8 +60,59 @@ Parser::parseTermDeclaration() {
         }
 
         if (peek_type() == tokens::TokenType::OPEN_BRACE) {
+            // A brace directly owned by a Term is that Term's
+            // executable body:
+            //
+            //   kinetic_energy: {
+            //   [>mass-]
+            //   -return mass;
+            //   };
+            //
+            // The Term owns identity. The braces own executable
+            // contents; they do not introduce a second identity.
+            const int body_line = current_token_.line;
+            const int body_column = current_token_.column;
+
+            match(tokens::TokenType::OPEN_BRACE);
+
+            auto body =
+                ast::createExecutionBlockNode(
+                    body_line,
+                    body_column);
+
+            while (peek_type() != tokens::TokenType::CLOSE_BRACE &&
+                   peek_type() != tokens::TokenType::END_OF_FILE) {
+
+                while (peek_type() ==
+                       tokens::TokenType::PARAGRAPH_BREAK) {
+
+                    match(tokens::TokenType::PARAGRAPH_BREAK);
+                }
+
+                if (peek_type() == tokens::TokenType::CLOSE_BRACE ||
+                    peek_type() == tokens::TokenType::END_OF_FILE) {
+                    break;
+                }
+
+                auto statement =
+                    parseExecutionDefinitionStatement();
+
+                if (!statement) {
+                    error(
+                        "Failed to parse statement within "
+                        "Term execution body: " +
+                        current_token_.toString());
+                }
+
+                body->statements.push_back(
+                    std::move(statement));
+            }
+
+            match(tokens::TokenType::CLOSE_BRACE);
+
             term_node->content_.push_back(
-                parseBracedExecutionConstruct());
+                std::move(body));
+
             continue;
         }
 
@@ -127,7 +178,9 @@ Parser::parseTermDeclaration() {
             current_token_.toString());
     }
 
+    const int end_line = current_token_.line;
     match(tokens::TokenType::SEMICOLON);
+    term_node->setEndLine(end_line);
 
     return term_node;
 }

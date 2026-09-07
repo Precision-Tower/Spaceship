@@ -36,6 +36,8 @@ struct GeometryParameterValue {
 };
 
 struct RuntimeDictionaryEntry;
+class RuntimeValue;
+using RuntimeSequence = std::shared_ptr<std::vector<RuntimeValue>>;
 
 struct GeometryHandle {
     std::size_t id = 0;
@@ -56,6 +58,7 @@ public:
         NUMERIC,
         STRING,
         DICTIONARY,
+        SEQUENCE,
         GEOMETRY,
         STRUCTURE
     };
@@ -66,6 +69,8 @@ public:
     static RuntimeValue string(std::string value);
     static RuntimeValue dictionary(
         std::vector<RuntimeDictionaryEntry> entries);
+    static RuntimeValue sequence(
+        std::vector<RuntimeValue> values);
     static RuntimeValue geometry(GeometryHandle handle);
     static RuntimeValue structure(StructuralHandle structure);
 
@@ -74,6 +79,7 @@ public:
     bool isNumeric() const;
     bool isString() const;
     bool isDictionary() const;
+    bool isSequence() const;
     bool isGeometry() const;
     bool isStructure() const;
 
@@ -84,6 +90,9 @@ public:
         const std::string& context = "") const;
 
     const std::vector<RuntimeDictionaryEntry>& asDictionary(
+        const std::string& context = "") const;
+
+    const std::vector<RuntimeValue>& asSequence(
         const std::string& context = "") const;
 
     const GeometryHandle& asGeometry(
@@ -104,6 +113,7 @@ private:
             double,
             std::string,
             std::vector<RuntimeDictionaryEntry>,
+            RuntimeSequence,
             GeometryHandle,
             StructuralHandle> value);
 
@@ -111,6 +121,7 @@ private:
         double,
         std::string,
         std::vector<RuntimeDictionaryEntry>,
+        RuntimeSequence,
         GeometryHandle,
         StructuralHandle> value_;
 };

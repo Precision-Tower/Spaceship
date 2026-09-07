@@ -95,6 +95,75 @@ value- "still structural";
             "non-executable QPS source no longer preserves AST behavior",
         )
 
+
+    with tempfile.TemporaryDirectory() as tmp:
+        root = pathlib.Path(tmp)
+
+        (root / "_index.qps").write_text(
+            "Root.\n",
+            encoding="utf-8",
+        )
+
+        module = root / "module"
+        module.mkdir()
+
+        (module / "_index.qps").write_text(
+            "Module.\n",
+            encoding="utf-8",
+        )
+
+        (module / "evidence.qps").write_text(
+            """{Evidence:
+-return "QPS_CONNECTED_SOURCE_EXECUTION_OK";
+}
+""",
+            encoding="utf-8",
+        )
+
+        (module / "run.qps").write_text(
+            """{Run:
+%value: {>Evidence:
+}
+
+-process(
+program- "printf";
+arg_0- value;
+);
+
+-return value;
+}
+
+{>Run:
+}
+""",
+            encoding="utf-8",
+        )
+
+        connected = subprocess.run(
+            [str(qps), str(module / "run.qps")],
+            cwd=root,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            check=False,
+        )
+
+        require(
+            connected.returncode == 0,
+            "connected executable QPS source failed:\n"
+            + connected.stdout
+            + connected.stderr,
+        )
+
+        require(
+            "Unknown execution definition 'Evidence'"
+            not in (
+                connected.stdout +
+                connected.stderr
+            ),
+            "connected sibling definition was not visible",
+        )
+
     print("QPS source execution CLI: PASS")
 
 

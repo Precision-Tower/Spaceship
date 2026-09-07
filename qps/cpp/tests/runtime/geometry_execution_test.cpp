@@ -395,11 +395,11 @@ void geometryDomainParsing() {
 
 void whitespaceIsNonSemantic() {
     auto compact = parseSource(
-        R"qps({@pu1:[>radius]-3/n;[>width]-1/n;body:-cylinder;-return body;})qps");
+        R"qps({@pu1:[>radius-]3/n;[>width-]1/n;body:-cylinder;-return body;})qps");
 
     auto expanded = parseSource(R"qps({@pu1:
-[>radius]- 3/n;
-[>width]- 1/n;
+[>radius-] 3/n;
+[>width-] 1/n;
 
 body: -cylinder;
 
@@ -415,8 +415,8 @@ body: -cylinder;
 void semicolonRemainsStatementDelimiter() {
     const auto instance = instantiateGeometry(
         R"qps({@pu1:
-[>radius]- 3/n;
-[>width]- 1/n;
+[>radius-] 3/n;
+[>width-] 1/n;
 body: -cylinder;
 -return body;
 })qps");
@@ -425,8 +425,8 @@ body: -cylinder;
 
     expectParseFailure(
         R"qps({@pu1:
-[>radius]- 3/n;
-[>width]- 1/n;
+[>radius-] 3/n;
+[>width-] 1/n;
 body: -cylinder
 -return body;
 })qps",
@@ -435,8 +435,8 @@ body: -cylinder
 
 void namedFeatureStageParses() {
     auto program = parseSource(R"qps({@pu1:
-[>radius]- 3/n;
-[>width]- 1/n;
+[>radius-] 3/n;
+[>width-] 1/n;
 body: -cylinder;
 })qps");
 
@@ -449,8 +449,8 @@ body: -cylinder;
 
 void sourceFeatureStageParses() {
     auto program = parseSource(R"qps({@pu1:
-[>radius]- 3/n;
-[>width]- 1/n;
+[>radius-] 3/n;
+[>width-] 1/n;
 body: -cylinder;
 bored_body: body -bore(
 radius- 0.5/n;
@@ -469,8 +469,8 @@ radius- 0.5/n;
 void contextParameterResolution() {
     const auto instance = instantiateGeometry(
         R"qps({@pu1:
-[>radius]-
-[>width]-
+[>radius-]
+[>width-]
 body: -cylinder;
 -return body;
 })qps",
@@ -485,8 +485,8 @@ body: -cylinder;
 void explicitItemOverrideWins() {
     const auto instance = instantiateGeometry(
         R"qps({@pu1:
-[>radius]-
-[>width]-
+[>radius-]
+[>width-]
 body: -cylinder(
 radius- 4/n;
 );
@@ -504,7 +504,7 @@ void missingRequiredParameterFailsClearly() {
         [&]() {
             (void)instantiateGeometry(
                 R"qps({@pu1:
-[>radius]-
+[>radius-]
 body: -cylinder;
 })qps",
                 {{"radius", 3.0}});
@@ -517,8 +517,8 @@ void unknownActionFailsAtRuntime() {
         [&]() {
             (void)instantiateGeometry(
                 R"qps({@pu1:
-[>radius]- 3/n;
-[>width]- 1/n;
+[>radius-] 3/n;
+[>width-] 1/n;
 body: -dragon_cannon;
 })qps");
         },
@@ -527,8 +527,8 @@ body: -dragon_cannon;
 
 void geometryPrimitiveIsNotAHostPrimitive() {
     auto program = parseSource(R"qps({@pu1:
-[>radius]- 3/n;
-[>width]- 1/n;
+[>radius-] 3/n;
+[>width-] 1/n;
 body: -cylinder;
 })qps");
 
@@ -548,8 +548,8 @@ body: -cylinder;
 void geometryResultTypeIsOpaqueGeometry() {
     const auto instance = instantiateGeometry(
         R"qps({@pu1:
-[>radius]- 3/n;
-[>width]- 1/n;
+[>radius-] 3/n;
+[>width-] 1/n;
 body: -cylinder;
 -return body;
 })qps");
@@ -567,8 +567,8 @@ body: -cylinder;
 void featureStageStoredInScope() {
     const auto instance = instantiateGeometry(
         R"qps({@pu1:
-[>radius]- 3/n;
-[>width]- 1/n;
+[>radius-] 3/n;
+[>width-] 1/n;
 body: -cylinder;
 })qps");
 
@@ -581,8 +581,8 @@ body: -cylinder;
 void sourceChainingPreservesFeatureHistory() {
     const auto instance = instantiateGeometry(
         R"qps({@pu1:
-[>radius]- 3/n;
-[>width]- 1/n;
+[>radius-] 3/n;
+[>width-] 1/n;
 body: -cylinder;
 bored_body: body -bore(
 radius- 0.5/n;
@@ -607,8 +607,8 @@ radius- 0.5/n;
 void geometryReturnYieldsReturnedStage() {
     const auto instance = instantiateGeometry(
         R"qps({@pu1:
-[>radius]- 3/n;
-[>width]- 1/n;
+[>radius-] 3/n;
+[>width-] 1/n;
 body: -cylinder;
 bored_body: body -bore(
 radius- 0.5/n;
@@ -655,8 +655,8 @@ void numericDoesNotBecomeGeometrySource() {
         [&]() {
             (void)instantiateGeometry(
                 R"qps({@pu1:
-[>radius]- 3/n;
-[>width]- 1/n;
+[>radius-] 3/n;
+[>width-] 1/n;
 bored_body: radius -bore(
 radius- 0.5/n;
 );
@@ -670,8 +670,8 @@ void duplicateActionOverrideRejected() {
         [&]() {
             (void)instantiateGeometry(
                 R"qps({@pu1:
-[>radius]- 3/n;
-[>width]- 1/n;
+[>radius-] 3/n;
+[>width-] 1/n;
 body: -cylinder(
 radius- 4/n;
 radius- 5/n;
@@ -686,8 +686,8 @@ void unknownActionParameterRejected() {
         [&]() {
             (void)instantiateGeometry(
                 R"qps({@pu1:
-[>radius]- 3/n;
-[>width]- 1/n;
+[>radius-] 3/n;
+[>width-] 1/n;
 body: -cylinder(
 cheese- 9/n;
 );
@@ -701,7 +701,7 @@ void boreRequiresSourceButSucceedsWithSource() {
         [&]() {
             (void)instantiateGeometry(
                 R"qps({@pu1:
-[>radius]- 3/n;
+[>radius-] 3/n;
 hole: -bore(
 radius- 0.5/n;
 );
@@ -711,8 +711,8 @@ radius- 0.5/n;
 
     const auto instance = instantiateGeometry(
         R"qps({@pu1:
-[>radius]- 3/n;
-[>width]- 1/n;
+[>radius-] 3/n;
+[>width-] 1/n;
 body: -cylinder;
 bored_body: body -bore(
 radius- 0.5/n;
@@ -765,8 +765,8 @@ body: -cylinder;
 
 void numericExecutionRegression() {
     const auto instances = executeProgram(R"qps({Leverage_Equation:
-[>f]-
-[>arm]- 2/n;
+[>f-]
+[>arm-] 2/n;
 
 %[>T]: f * arm
 }
@@ -821,8 +821,8 @@ arm-/n;
 
 void semanticInputsAreCollectedAndDefaulted() {
     auto program = parseSource(R"qps({@pu1:
-[>radius]- 3/n;
-[>width]- 1/n;
+[>radius-] 3/n;
+[>width-] 1/n;
 body: -cylinder;
 -return body;
 })qps");
@@ -854,8 +854,8 @@ void inputSideReferenceRemainsInvalidStructuralSyntax() {
 
 void independentGeometryInstances() {
     auto program = parseSource(R"qps({@pu1:
-[>radius]-
-[>width]-
+[>radius-]
+[>width-]
 body: -cylinder;
 bored_body: body -bore(
 radius- 0.5/n;

@@ -86,6 +86,19 @@ int main() {
             resolver.isModule("child"),
             "Child directory with _index.qps must be a module.");
 
+        writeFile(
+            fixture_root / "child" / "entry.qps",
+            "Entry.\n");
+
+        const auto child_module =
+            resolver.containingModule(
+                fixture_root / "child" / "entry.qps");
+
+        require(
+            child_module.has_value() &&
+            *child_module == std::filesystem::path("child"),
+            "containingModule did not identify connected child module.");
+
         const auto child_index =
             resolver.resolveFile(
                 "child/_index.qps");
@@ -194,6 +207,19 @@ int main() {
                     std::filesystem::path("zeta.qps")
                 },
             "qpsFiles(.) must expose sorted .qps documents excluding _index.qps.");
+
+        writeFile(
+            fixture_root / "outside.qps",
+            "Outside.\n");
+
+        const auto root_module =
+            resolver.containingModule(
+                fixture_root / "outside.qps");
+
+        require(
+            root_module.has_value() &&
+            *root_module == std::filesystem::path("."),
+            "containingModule did not identify workspace root module.");
 
         require(
             resolver.indexFile("child/nested") ==

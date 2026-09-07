@@ -3,6 +3,8 @@
 #include "../h/_index.hpp"
 #include "../../ast/ast_utils.hpp"
 
+#include <vector>
+
 namespace qps {
 namespace parser {
 
@@ -25,18 +27,19 @@ Parser::parseCausalSide() {
     match(tokens::TokenType::COLON);
     match(tokens::TokenType::OPEN_PAREN);
 
-    auto input = parsePrimaryExpression();
+    std::vector<std::unique_ptr<ast::AstNode>> domain_chain;
+    domain_chain.push_back(parsePrimaryExpression());
 
-    match(tokens::TokenType::EQUALS);
-
-    auto output = parsePrimaryExpression();
+    while (peek_type() == tokens::TokenType::EQUALS) {
+        match(tokens::TokenType::EQUALS);
+        domain_chain.push_back(parsePrimaryExpression());
+    }
 
     match(tokens::TokenType::CLOSE_PAREN);
 
     return ast::createCausalSide(
         std::move(entity),
-        std::move(input),
-        std::move(output));
+        std::move(domain_chain));
 }
 
 std::unique_ptr<ast::CausalRelationshipNode>
@@ -44,17 +47,26 @@ Parser::parseCausalRelationship() {
     const int line = current_token_.line;
     const int column = current_token_.column;
 
-    auto left = parseCausalSide();
+    std::vector<
+        std::unique_ptr<ast::CausalRelationshipNode::CausalSide>
+    > sides;
 
-    match(tokens::TokenType::EQUALS);
+    sides.push_back(parseCausalSide());
 
-    auto right = parseCausalSide();
+    while (peek_type() == tokens::TokenType::EQUALS) {
+        match(tokens::TokenType::EQUALS);
+        sides.push_back(parseCausalSide());
+    }
+
+    if (sides.size() < 2) {
+        error(
+            "Causal relationship requires at least two component sides.");
+    }
 
     match(tokens::TokenType::SEMICOLON);
 
     return ast::createCausalRelationshipNode(
-        std::move(left),
-        std::move(right),
+        std::move(sides),
         line,
         column);
 }

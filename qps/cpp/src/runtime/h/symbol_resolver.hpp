@@ -39,6 +39,7 @@ struct ReferenceDocumentPlan {
 // runtime values. The planner owns document-selection policy; native
 // code retains filesystem access, parsing, and runtime execution.
 ReferenceDocumentPlan planReferenceDocumentAuthored(
+    DocumentStore& documents,
     const ast::SymbolReferenceNode& reference,
     const StructuralReferenceContext& context,
     const std::filesystem::path& planner_file);
@@ -61,7 +62,8 @@ public:
     SymbolResolver(
         PathResolver& paths,
         DocumentStore& documents,
-        std::filesystem::path reference_planner);
+        std::filesystem::path reference_planner,
+        std::filesystem::path semantic_walker);
 
     // Resolve an explicit structural QPS reference from document context.
     //
@@ -96,6 +98,7 @@ private:
     PathResolver& paths_;
     DocumentStore& documents_;
     std::filesystem::path reference_planner_;
+    std::filesystem::path semantic_walker_;
 };
 
 } // namespace runtime

@@ -112,12 +112,10 @@ std::unique_ptr<CausalDefinitionNode> createCausalDefinitionNode(
 
 std::unique_ptr<CausalRelationshipNode::CausalSide> createCausalSide(
     std::unique_ptr<AstNode> entity,
-    std::unique_ptr<AstNode> input,
-    std::unique_ptr<AstNode> output);
+    std::vector<std::unique_ptr<AstNode>> domain_chain);
 
 std::unique_ptr<CausalRelationshipNode> createCausalRelationshipNode(
-    std::unique_ptr<CausalRelationshipNode::CausalSide> left,
-    std::unique_ptr<CausalRelationshipNode::CausalSide> right,
+    std::vector<std::unique_ptr<CausalRelationshipNode::CausalSide>> sides,
     int line, int column);
 
 std::unique_ptr<ClassDeclarationNode> createClassDeclarationNode(

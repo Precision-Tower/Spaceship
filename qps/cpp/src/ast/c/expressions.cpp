@@ -111,6 +111,11 @@ SymbolReferenceNode::getSegments() const {
     return segments_;
 }
 
+const std::string&
+SymbolReferenceNode::getFinalSegmentName() const {
+    return segments_.back().name;
+}
+
 bool SymbolReferenceNode::selectsItemValue() const {
     return selects_item_value_;
 }

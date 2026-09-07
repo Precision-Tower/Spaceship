@@ -1,0 +1,24 @@
+DIF.
+
+definition: def"
+A reversible structural difference between two identified states.
+
+DIF is not Git diff.
+
+Git diff observes textual or byte-level repository change.
+DIF is intended to operate through QPS parsing, structural identity,
+and semantic navigation.
+
+The intended invariant is:
+
+current == A
+    permits transition to B
+
+current == B
+    permits transition to A
+
+current matches neither
+    refuses mutation
+
+The exact representation and execution mechanism remain under quarry.
+";

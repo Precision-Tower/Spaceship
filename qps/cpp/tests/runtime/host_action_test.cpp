@@ -542,6 +542,47 @@ void qpsCheckRejectsInvalidSource() {
         "qps_check unexpectedly accepted invalid QPS.");
 }
 
+void qpsParseReturnsOwnedStructure() {
+    qps::runtime::HostActionDispatcher host;
+
+    qps::runtime::HostActionInvocation invocation;
+    invocation.action_name = "qps_parse";
+
+    invocation.parameters.emplace(
+        "source",
+        qps::runtime::RuntimeValue::string(
+            "alpha.\n"
+            "item- 1;\n"));
+
+    const auto result =
+        host.execute(invocation);
+
+    require(
+        result.value.has_value(),
+        "qps_parse returned no runtime value.");
+
+    require(
+        result.value->isStructure(),
+        "qps_parse did not return STRUCTURE.");
+
+    const auto& structure =
+        result.value->asStructure(
+            "qps_parse result");
+
+    require(
+        structure.document_owner != nullptr,
+        "qps_parse structure owns no document.");
+
+    require(
+        structure.target_node != nullptr,
+        "qps_parse structure has no target node.");
+
+    require(
+        structure.target_node ==
+            structure.document_owner.get(),
+        "qps_parse target is not parsed root.");
+}
+
 void pathKindReturnsFilesystemFact() {
     namespace fs = std::filesystem;
 
@@ -955,6 +996,10 @@ int main() {
         qpsCheckRejectsInvalidSource();
         std::cout
             << "PASS qps_check rejects invalid source\n";
+
+        qpsParseReturnsOwnedStructure();
+        std::cout
+            << "PASS qps_parse returns owned structure\n";
 
         pathKindReturnsFilesystemFact();
         std::cout

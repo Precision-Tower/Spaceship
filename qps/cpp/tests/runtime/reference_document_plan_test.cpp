@@ -1,7 +1,10 @@
 #include "ast/ast_node.hpp"
 #include "parser/h/_index.hpp"
 #include "runtime/h/interpreter.hpp"
+#include "runtime/h/execution_engine.hpp"
 #include "runtime/h/symbol_resolver.hpp"
+#include "runtime/h/document_loader.hpp"
+#include "runtime/h/document_store.hpp"
 #include "runtime/h/symbol_table.hpp"
 #include "tokens/h/char_stream.hpp"
 #include "tokens/h/lexer.hpp"
@@ -15,6 +18,7 @@
 #include <stdexcept>
 #include <string>
 #include <utility>
+#include <unordered_map>
 #include <vector>
 
 namespace {
@@ -176,61 +180,52 @@ dictionaryEntry(
 
 runtime::ReferenceDocumentPlan
 executeAuthoredPlanner(
-    const ast::ExecutionBlockNode& planner,
+    const ast::TermDeclarationNode& planner,
     const ast::SymbolReferenceNode& reference,
     const fs::path& current_document) {
 
-    runtime::ExecutionScope scope;
+    runtime::ExecutionEngine engine;
+    engine.registerDefinition(planner);
 
-    scope.bind(
+    std::unordered_map<
+        std::string,
+        runtime::RuntimeValue
+    > overrides;
+
+    overrides.emplace(
         "current_document",
         runtime::RuntimeValue::string(
-            current_document.generic_string()),
-        std::nullopt,
-        runtime::BindingOrigin::SUPPLIED);
+            current_document.generic_string()));
 
-    scope.bind(
+    overrides.emplace(
         "origin",
         runtime::RuntimeValue::string(
-            originName(reference.getOrigin())),
-        std::nullopt,
-        runtime::BindingOrigin::SUPPLIED);
+            originName(reference.getOrigin())));
 
-    scope.bind(
+    overrides.emplace(
         "parent_depth",
         runtime::RuntimeValue::numeric(
-            reference.getParentDepth()),
-        std::nullopt,
-        runtime::BindingOrigin::SUPPLIED);
+            reference.getParentDepth()));
 
-    scope.bind(
+    overrides.emplace(
         "segments",
-        runtimeSegments(reference),
-        std::nullopt,
-        runtime::BindingOrigin::SUPPLIED);
+        runtimeSegments(reference));
 
-    runtime::InterpreterOptions options;
-    options.allow_return = true;
-    options.symbol_resolver = nullptr;
-
-    runtime::Interpreter interpreter(
-        scope,
-        runtime::FunctionTable{},
-        options);
-
-    const auto result =
-        interpreter.executeForResult(planner);
+    const auto instance =
+        engine.instantiate(
+            "Reference_Document",
+            overrides);
 
     require(
-        result.has_value(),
+        instance.result.has_value(),
         "Authored planner returned no value.");
 
     require(
-        result->isDictionary(),
+        instance.result->isDictionary(),
         "Authored planner did not return a Dictionary.");
 
     const auto& dictionary =
-        result->asDictionary(
+        instance.result->asDictionary(
             "authored reference plan");
 
     const auto& document =
@@ -298,7 +293,7 @@ void requirePlan(
 }
 
 void requireAuthoredPlan(
-    const ast::ExecutionBlockNode& planner,
+    const ast::TermDeclarationNode& planner,
     const ast::SymbolReferenceNode& reference,
     const fs::path& current_document,
     const fs::path& expected_document,
@@ -326,7 +321,7 @@ void requireAuthoredPlan(
 }
 
 void requireWorkspaceEscape(
-    const ast::ExecutionBlockNode& planner) {
+    const ast::TermDeclarationNode& planner) {
 
     using ast::SymbolReferenceOrigin;
     using ast::SymbolReferenceSeparator;
@@ -382,6 +377,9 @@ int main(
                 "<reference_document.qps>");
         }
 
+        runtime::DocumentLoader loader;
+        runtime::DocumentStore documents(loader);
+
         auto program =
             parseSource(
                 readFile(argv[1]));
@@ -391,15 +389,40 @@ int main(
             "Authored planner must contain exactly one "
             "top-level statement.");
 
-        const auto* planner =
+        const auto* planner_term =
             dynamic_cast<
-                const ast::ExecutionBlockNode*>(
+                const ast::TermDeclarationNode*>(
                     program->statements.front().get());
 
         require(
-            planner != nullptr,
+            planner_term != nullptr,
             "Authored planner top-level statement "
-            "must be an execution block.");
+            "must be a Term declaration.");
+
+        require(
+            planner_term->identifier_ ==
+                "Reference_Document",
+            "Authored planner Term must be "
+            "'Reference_Document'.");
+
+        std::size_t planner_bodies = 0;
+
+        for (const auto& child : planner_term->content_) {
+            if (dynamic_cast<
+                    const ast::ExecutionBlockNode*>(
+                        child.get())) {
+
+                ++planner_bodies;
+            }
+        }
+
+        require(
+            planner_bodies == 1,
+            "Authored Reference_Document Term "
+            "must own exactly one execution body.");
+
+        const ast::TermDeclarationNode* planner =
+            planner_term;
 
         using ast::SymbolReferenceOrigin;
         using ast::SymbolReferenceSeparator;
@@ -606,6 +629,7 @@ int main(
 
                     try {
                         (void)runtime::planReferenceDocumentAuthored(
+                    documents,
                             ref,
                             {current_document},
                             argv[1]);
@@ -663,6 +687,7 @@ int main(
 
             const auto authored =
                 runtime::planReferenceDocumentAuthored(
+                    documents,
                     ref,
                     {current_document},
                     argv[1]);

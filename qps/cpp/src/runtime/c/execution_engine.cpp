@@ -21,19 +21,13 @@ struct InputSpec {
 };
 
 std::vector<InputSpec> collectInputSpecs(
-    const ast::ExecutionDefinitionNode& definition) {
-
-    if (!definition.body_) {
-        throw std::runtime_error(
-            "Execution definition '" +
-            definition.identifier_ +
-            "' has no body.");
-    }
+    const std::string& identifier,
+    const ast::ExecutionBlockNode& body) {
 
     std::vector<InputSpec> inputs;
     std::unordered_set<std::string> seen;
 
-    for (const auto& statement : definition.body_->statements) {
+    for (const auto& statement : body.statements) {
         if (auto* item =
                 dynamic_cast<const ast::ItemDeclarationNode*>(
                     statement.get())) {
@@ -48,14 +42,15 @@ std::vector<InputSpec> collectInputSpecs(
                 continue;
             }
 
-            const std::string& name = semantic->getSymbol();
+            const std::string& name =
+                semantic->getFinalSegmentName();
 
             if (!seen.insert(name).second) {
                 throw std::runtime_error(
                     "Duplicate execution definition input '" +
                     name +
                     "' in definition '" +
-                    definition.identifier_ +
+                    identifier +
                     "'.");
             }
 
@@ -143,49 +138,73 @@ std::string causalName(
         " must be an identifier or semantic reference.");
 }
 
-CausalRelationshipInfo inspectCausalRelationship(
+std::vector<CausalRelationshipInfo> inspectCausalRelationship(
     const std::string& causal_definition_id,
     const ast::CausalRelationshipNode& relationship) {
 
-    if (!relationship.left_side_ ||
-        !relationship.right_side_) {
-
+    if (relationship.sides_.size() < 2) {
         throw std::runtime_error(
             "Causal definition '" +
             causal_definition_id +
-            "' contains an incomplete relationship.");
+            "' contains a relationship with fewer than two sides.");
     }
 
-    CausalRelationshipInfo info;
-    info.causal_definition_id = causal_definition_id;
+    std::vector<CausalRelationshipInfo> relationships;
 
-    info.source_entity =
-        causalName(
-            relationship.left_side_->entity.get(),
-            "source entity");
-    info.source_input_state =
-        causalName(
-            relationship.left_side_->input.get(),
-            "source input state");
-    info.source_output_state =
-        causalName(
-            relationship.left_side_->output.get(),
-            "source output state");
+    for (std::size_t i = 0; i + 1 < relationship.sides_.size(); ++i) {
+        const auto& source = relationship.sides_[i];
+        const auto& destination = relationship.sides_[i + 1];
 
-    info.destination_entity =
-        causalName(
-            relationship.right_side_->entity.get(),
-            "destination entity");
-    info.destination_input_state =
-        causalName(
-            relationship.right_side_->input.get(),
-            "destination input state");
-    info.destination_output_state =
-        causalName(
-            relationship.right_side_->output.get(),
-            "destination output state");
+        if (!source || !destination) {
+            throw std::runtime_error(
+                "Causal definition '" +
+                causal_definition_id +
+                "' contains an incomplete relationship side.");
+        }
 
-    return info;
+        if (source->domain_chain.empty() ||
+            destination->domain_chain.empty()) {
+
+            throw std::runtime_error(
+                "Causal definition '" +
+                causal_definition_id +
+                "' contains a component with no domain chain.");
+        }
+
+        CausalRelationshipInfo info;
+        info.causal_definition_id = causal_definition_id;
+        info.boundary_index = i;
+
+        info.source_entity =
+            causalName(
+                source->entity.get(),
+                "source entity");
+        info.source_input_domain =
+            causalName(
+                source->inputDomain(),
+                "source input domain");
+        info.source_output_domain =
+            causalName(
+                source->outputDomain(),
+                "source output domain");
+
+        info.destination_entity =
+            causalName(
+                destination->entity.get(),
+                "destination entity");
+        info.destination_input_domain =
+            causalName(
+                destination->inputDomain(),
+                "destination input domain");
+        info.destination_output_domain =
+            causalName(
+                destination->outputDomain(),
+                "destination output domain");
+
+        relationships.push_back(std::move(info));
+    }
+
+    return relationships;
 }
 
 bool definitionMatchesCausalEntity(
@@ -205,8 +224,29 @@ bool definitionMatchesCausalEntity(
 bool canTransferAcross(
     const CausalRelationshipInfo& relationship) {
 
-    return relationship.source_output_state ==
-           relationship.destination_input_state;
+    return relationship.source_output_domain ==
+           relationship.destination_input_domain;
+}
+
+void validateCausalBoundary(
+    const CausalRelationshipInfo& relationship) {
+
+    if (canTransferAcross(relationship)) {
+        return;
+    }
+
+    throw std::runtime_error(
+        "Causal domain mismatch in definition '" +
+        relationship.causal_definition_id +
+        "' between " +
+        relationship.source_entity +
+        " output domain '" +
+        relationship.source_output_domain +
+        "' and " +
+        relationship.destination_entity +
+        " input domain '" +
+        relationship.destination_input_domain +
+        "'.");
 }
 
 std::unordered_set<std::string> explicitOverrideNames(
@@ -234,7 +274,10 @@ void ExecutionEngine::registerDefinition(
     }
 
     RegisteredDefinition registered;
-    registered.definition = &definition;
+    registered.identifier = definition.identifier_;
+    registered.identifier_is_numeric = definition.identifier_is_numeric_;
+    registered.domain = definition.domain_;
+    registered.body = definition.body_.get();
     registered.source = std::nullopt;
 
     definitions_.emplace(
@@ -262,11 +305,130 @@ void ExecutionEngine::registerDefinition(
     source.source_document = std::move(source_document);
 
     RegisteredDefinition registered;
-    registered.definition = &definition;
+    registered.identifier = definition.identifier_;
+    registered.identifier_is_numeric = definition.identifier_is_numeric_;
+    registered.domain = definition.domain_;
+    registered.body = definition.body_.get();
     registered.source = std::move(source);
 
     definitions_.emplace(
         definition.identifier_,
+        std::move(registered));
+}
+
+void ExecutionEngine::registerDefinition(
+    const ast::TermDeclarationNode& term) {
+
+    const ast::ExecutionBlockNode* body = nullptr;
+
+    for (const auto& child : term.content_) {
+        const auto* candidate =
+            dynamic_cast<const ast::ExecutionBlockNode*>(
+                child.get());
+
+        if (!candidate) {
+            continue;
+        }
+
+        if (body != nullptr) {
+            throw std::runtime_error(
+                "Reusable execution Term '" +
+                term.identifier_ +
+                "' owns more than one execution body.");
+        }
+
+        body = candidate;
+    }
+
+    if (body == nullptr) {
+        throw std::runtime_error(
+            "Reusable execution Term '" +
+            term.identifier_ +
+            "' has no execution body.");
+    }
+
+    if (definitions_.find(term.identifier_) !=
+        definitions_.end()) {
+
+        throw std::runtime_error(
+            "Duplicate execution definition '" +
+            term.identifier_ +
+            "'.");
+    }
+
+    RegisteredDefinition registered;
+    registered.identifier = term.identifier_;
+    registered.identifier_is_numeric = false;
+    registered.domain =
+        ast::ExecutionDomain::GENERIC;
+    registered.body = body;
+    registered.source = std::nullopt;
+
+    definitions_.emplace(
+        term.identifier_,
+        std::move(registered));
+}
+
+void ExecutionEngine::registerDefinition(
+    const ast::TermDeclarationNode& term,
+    std::string source_document) {
+
+    const ast::ExecutionBlockNode* body = nullptr;
+
+    for (const auto& child : term.content_) {
+        const auto* candidate =
+            dynamic_cast<const ast::ExecutionBlockNode*>(
+                child.get());
+
+        if (!candidate) {
+            continue;
+        }
+
+        if (body != nullptr) {
+            throw std::runtime_error(
+                "Reusable execution Term '" +
+                term.identifier_ +
+                "' owns more than one execution body.");
+        }
+
+        body = candidate;
+    }
+
+    if (body == nullptr) {
+        throw std::runtime_error(
+            "Reusable execution Term '" +
+            term.identifier_ +
+            "' has no execution body.");
+    }
+
+    if (definitions_.find(term.identifier_) !=
+        definitions_.end()) {
+
+        throw std::runtime_error(
+            "Duplicate execution definition '" +
+            term.identifier_ +
+            "'.");
+    }
+
+    if (source_document.empty()) {
+        throw std::runtime_error(
+            "Execution definition source document cannot be empty.");
+    }
+
+    ExecutionDefinitionSourceInfo source;
+    source.source_document =
+        std::move(source_document);
+
+    RegisteredDefinition registered;
+    registered.identifier = term.identifier_;
+    registered.identifier_is_numeric = false;
+    registered.domain =
+        ast::ExecutionDomain::GENERIC;
+    registered.body = body;
+    registered.source = std::move(source);
+
+    definitions_.emplace(
+        term.identifier_,
         std::move(registered));
 }
 
@@ -277,7 +439,8 @@ ExecutionDefinitionInfo ExecutionEngine::inspectDefinition(
     info.identifier = definition.identifier_;
     info.identifier_is_numeric = definition.identifier_is_numeric_;
 
-    for (const auto& input : collectInputSpecs(definition)) {
+    for (const auto& input :
+         collectInputSpecs(definition.identifier_, *definition.body_)) {
         info.inputs.push_back(input.info);
     }
 
@@ -296,15 +459,27 @@ ExecutionDefinitionInfo ExecutionEngine::inspectRegisteredDefinition(
             "'.");
     }
 
-    if (found->second.definition == nullptr) {
+    if (found->second.body == nullptr) {
         throw std::runtime_error(
             "Registered execution definition '" +
             definition_id +
-            "' has no definition node.");
+            "' has no executable body.");
     }
 
-    ExecutionDefinitionInfo info =
-        inspectDefinition(*found->second.definition);
+    ExecutionDefinitionInfo info;
+    info.identifier =
+        found->second.identifier;
+    info.identifier_is_numeric =
+        found->second.identifier_is_numeric;
+
+    for (const auto& input :
+         collectInputSpecs(
+             found->second.identifier,
+             *found->second.body)) {
+
+        info.inputs.push_back(
+            input.info);
+    }
 
     info.source = found->second.source;
 
@@ -347,8 +522,9 @@ ExecutionInstance ExecutionEngine::instantiate(
             "'.");
     }
 
-    const auto& definition = *found->second.definition;
-    const auto inputs = collectInputSpecs(definition);
+    const auto& definition = found->second;
+    const auto inputs =
+        collectInputSpecs(definition.identifier, *definition.body);
     const auto input_index = indexInputs(inputs);
 
     std::unordered_map<std::string, RuntimeValue> overrides;
@@ -361,7 +537,7 @@ ExecutionInstance ExecutionEngine::instantiate(
                 "Unknown instance override '" +
                 name +
                 "' for execution definition '" +
-                definition.identifier_ +
+                definition.identifier +
                 "'.");
         }
 
@@ -377,7 +553,7 @@ ExecutionInstance ExecutionEngine::instantiate(
                 "Duplicate instance override '" +
                 name +
                 "' for execution definition '" +
-                definition.identifier_ +
+                definition.identifier +
                 "'.");
         }
 
@@ -437,8 +613,9 @@ ExecutionInstance ExecutionEngine::instantiate(
             "'.");
     }
 
-    const auto& definition = *found->second.definition;
-    const auto inputs = collectInputSpecs(definition);
+    const auto& definition = found->second;
+    const auto inputs =
+        collectInputSpecs(definition.identifier, *definition.body);
     const auto input_index = indexInputs(inputs);
 
     for (const auto& override_entry : overrides) {
@@ -447,7 +624,7 @@ ExecutionInstance ExecutionEngine::instantiate(
                 "Unknown instance override '" +
                 override_entry.first +
                 "' for execution definition '" +
-                definition.identifier_ +
+                definition.identifier +
                 "'.");
         }
     }
@@ -458,7 +635,7 @@ ExecutionInstance ExecutionEngine::instantiate(
                 "Unknown causal input '" +
                 causal_entry.first +
                 "' for execution definition '" +
-                definition.identifier_ +
+                definition.identifier +
                 "'.");
         }
     }
@@ -473,15 +650,15 @@ ExecutionInstance ExecutionEngine::instantiate(
                 "Missing required execution input '" +
                 input.info.name +
                 "' for execution definition '" +
-                definition.identifier_ +
+                definition.identifier +
                 "'.");
         }
     }
 
     ExecutionInstance instance;
-    instance.definition_id = definition.identifier_;
+    instance.definition_id = definition.identifier;
     instance.identifier_is_numeric =
-        definition.identifier_is_numeric_;
+        definition.identifier_is_numeric;
     instance.source = found->second.source;
 
     for (const auto& input : inputs) {
@@ -516,7 +693,7 @@ ExecutionInstance ExecutionEngine::instantiate(
             CausalTransferTrace trace =
                 causal_input->second.trace;
             trace.destination_definition_id =
-                definition.identifier_;
+                definition.identifier;
             trace.destination_origin =
                 BindingOrigin::SUPPLIED;
 
@@ -533,7 +710,7 @@ ExecutionInstance ExecutionEngine::instantiate(
     // Preserve legacy whole-definition GEOMETRY behavior when no
     // external backend was supplied.
     if (geometry_dispatcher == nullptr &&
-        definition.domain_ ==
+        definition.domain ==
             ast::ExecutionDomain::GEOMETRY) {
 
         geometry_dispatcher =
@@ -542,9 +719,9 @@ ExecutionInstance ExecutionEngine::instantiate(
 
     InterpreterOptions options;
     options.domain =
-        definition.domain_;
+        definition.domain;
     options.active_target =
-        definition.identifier_;
+        definition.identifier;
     options.allow_return = true;
     options.geometry_dispatcher =
         geometry_dispatcher;
@@ -583,16 +760,14 @@ ExecutionInstance ExecutionEngine::instantiate(
 
     instance.result =
         interpreter.executeForResult(
-            *definition.body_,
+            *definition.body,
             true);
 
     return instance;
 }
 
-std::vector<ExecutionInstance> ExecutionEngine::execute(
+void ExecutionEngine::registerDefinitions(
     const ast::ProgramNode& program) {
-
-    std::vector<CausalRelationshipInfo> causal_relationships;
 
     for (const auto& statement : program.statements) {
         if (auto* definition =
@@ -603,6 +778,39 @@ std::vector<ExecutionInstance> ExecutionEngine::execute(
             continue;
         }
 
+        const auto* term =
+            dynamic_cast<const ast::TermDeclarationNode*>(
+                statement.get());
+
+        if (!term) {
+            continue;
+        }
+
+        std::size_t execution_bodies = 0;
+
+        for (const auto& child : term->content_) {
+            if (dynamic_cast<const ast::ExecutionBlockNode*>(
+                    child.get())) {
+
+                ++execution_bodies;
+            }
+        }
+
+        if (execution_bodies == 0) {
+            continue;
+        }
+
+        registerDefinition(*term);
+    }
+}
+
+std::vector<ExecutionInstance>
+ExecutionEngine::executeCalls(
+    const ast::ProgramNode& program) const {
+
+    std::vector<CausalRelationshipInfo> causal_relationships;
+
+    for (const auto& statement : program.statements) {
         if (auto* causal_definition =
                 dynamic_cast<const ast::CausalDefinitionNode*>(
                     statement.get())) {
@@ -621,10 +829,19 @@ std::vector<ExecutionInstance> ExecutionEngine::execute(
                         "' contains an unsupported relationship node.");
                 }
 
-                causal_relationships.push_back(
+                auto inspected_relationships =
                     inspectCausalRelationship(
                         causal_definition->identifier_,
-                        *relationship));
+                        *relationship);
+
+                for (const auto& inspected : inspected_relationships) {
+                    validateCausalBoundary(inspected);
+                }
+
+                causal_relationships.insert(
+                    causal_relationships.end(),
+                    inspected_relationships.begin(),
+                    inspected_relationships.end());
             }
         }
     }
@@ -645,7 +862,8 @@ std::vector<ExecutionInstance> ExecutionEngine::execute(
             if (definition != definitions_.end()) {
                 const auto inputs =
                     collectInputSpecs(
-                        *definition->second.definition);
+                        definition->second.identifier,
+                        *definition->second.body);
 
                 const auto explicit_overrides =
                     explicitOverrideNames(*call);
@@ -785,12 +1003,40 @@ std::vector<ExecutionInstance> ExecutionEngine::execute(
             continue;
         }
 
+        if (const auto* term =
+                dynamic_cast<const ast::TermDeclarationNode*>(
+                    statement.get())) {
+
+            bool owns_execution_body = false;
+
+            for (const auto& child : term->content_) {
+                if (dynamic_cast<const ast::ExecutionBlockNode*>(
+                        child.get())) {
+
+                    owns_execution_body = true;
+                    break;
+                }
+            }
+
+            if (owns_execution_body) {
+                continue;
+            }
+        }
+
         throw std::runtime_error(
             "ExecutionEngine supports execution definitions, "
             "causal definitions, and calls only.");
     }
 
     return instances;
+}
+
+std::vector<ExecutionInstance>
+ExecutionEngine::execute(
+    const ast::ProgramNode& program) {
+
+    registerDefinitions(program);
+    return executeCalls(program);
 }
 
 std::size_t ExecutionEngine::registeredDefinitionCount() const {

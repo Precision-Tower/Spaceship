@@ -1,8 +1,8 @@
 {Checklist_Evidence:
-[>focused_fact]- 0;
-[>full_fact]- 0;
-[>engineering_fact]- 0;
-[>diff_fact]- 0;
+[>focused_fact-] 0;
+[>full_fact-] 0;
+[>engineering_fact-] 0;
+[>diff_fact-] 0;
 
 focused: -process(
 program- "ctest";
@@ -14,7 +14,7 @@ arg_4- "--output-on-failure";
 );
 
 -if focused_exit_code == 0 {
-[>focused_fact]- 1;
+[>focused_fact-] 1;
 }
 
 full: -process(
@@ -25,7 +25,7 @@ arg_2- "--output-on-failure";
 );
 
 -if full_exit_code == 0 {
-[>full_fact]- 1;
+[>full_fact-] 1;
 }
 
 engineering: -process(
@@ -35,7 +35,7 @@ arg_1- "Engineering/qps";
 );
 
 -if engineering_exit_code == 0 {
-[>engineering_fact]- 1;
+[>engineering_fact-] 1;
 }
 
 diff_check: -process(
@@ -45,7 +45,7 @@ arg_1- "--check";
 );
 
 -if diff_check_exit_code == 0 {
-[>diff_fact]- 1;
+[>diff_fact-] 1;
 }
 
 %focused_evidence: [

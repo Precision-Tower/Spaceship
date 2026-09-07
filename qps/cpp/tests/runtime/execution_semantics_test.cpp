@@ -191,8 +191,8 @@ void expectExecutionFailure(
 
 void semanticSuppliedAndDerivedBindings() {
     const auto scope = executeSource(R"qps({
-[>v]- 30/n;
-[>er]- 10/n;
+[>v-] 30/n;
+[>er-] 10/n;
 
 %[>a]: v / er
 %[>ew]: a * v
@@ -207,8 +207,8 @@ void semanticSuppliedAndDerivedBindings() {
 
 void localDerivedBindingsAndChainsUseEarlierBindings() {
     const auto scope = executeSource(R"qps({
-[>v]- 30/n;
-[>er]- 10/n;
+[>v-] 30/n;
+[>er-] 10/n;
 
 %[>a]: v / er
 %b: a * 2
@@ -223,8 +223,8 @@ void localDerivedBindingsAndChainsUseEarlierBindings() {
 
 void arithmeticOperatorsEvaluate() {
     const auto scope = executeSource(R"qps({
-[>left]- 18/n;
-[>right]- 6/n;
+[>left-] 18/n;
+[>right-] 6/n;
 
 %add: left + right
 %subtract: left - right
@@ -242,8 +242,8 @@ void arithmeticOperatorsEvaluate() {
 
 void parenthesizedArithmeticEvaluates() {
     const auto scope = executeSource(R"qps({
-[>left]- 18/n;
-[>right]- 6/n;
+[>left-] 18/n;
+[>right-] 6/n;
 
 %grouped: (left + right) * (right - 2)
 })qps");
@@ -262,7 +262,7 @@ void undefinedLocalIdentifierFailsClearly() {
 void divisionByZeroFailsClearly() {
     expectExecutionFailure(
         R"qps({
-[>x]- 4/n;
+[>x-] 4/n;
 
 %bad: x / 0
 })qps",
@@ -283,7 +283,7 @@ void rebindingExistingLocalTargetOverwritesInPlace() {
 
 void rebindingSemanticTargetOverwritesOriginAndValue() {
     const auto scope = executeSource(R"qps({
-[>v]- 30/n;
+[>v-] 30/n;
 
 %[>v]: v + 1
 })qps");
@@ -295,7 +295,7 @@ void rebindingSemanticTargetOverwritesOriginAndValue() {
 
 void semanticRebindingPreservesSemanticIdentityAndCurrentLocal() {
     const auto scope = executeSource(R"qps({
-[>v]- 30/n;
+[>v-] 30/n;
 %a: v / 2
 %[>v]: a * 3
 })qps");
@@ -308,7 +308,7 @@ void semanticRebindingPreservesSemanticIdentityAndCurrentLocal() {
 
 void overwrittenSemanticBindingDoesNotExposePriorCausalHistory() {
     const auto scope = executeSource(R"qps({
-[>v]- 30/n;
+[>v-] 30/n;
 %a: v / 2
 %[>v]: a * 3
 })qps");
@@ -326,7 +326,7 @@ void overwrittenSemanticBindingDoesNotExposePriorCausalHistory() {
 
 void repeatedSemanticRebindingUsesCurrentValueDeterministically() {
     const std::string source = R"qps({
-[>v]- 30/n;
+[>v-] 30/n;
 %[>v]: v + 10
 %[>v]: v * 2
 })qps";
@@ -356,7 +356,7 @@ void repeatedLocalRebindingUsesCurrentValueDeterministically() {
 
 void semanticAndLocalRebindingShareOverwriteBehaviorButKeepDifferentMetadata() {
     const auto scope = executeSource(R"qps({
-[>v]- 5/n;
+[>v-] 5/n;
 %a: 5
 %[>v]: v + 1
 %a: a + 1
@@ -370,8 +370,8 @@ void semanticAndLocalRebindingShareOverwriteBehaviorButKeepDifferentMetadata() {
 
 void stringItemsBecomeRuntimeValues() {
     const auto scope = executeSource(R"qps({
-[>program]- "cmake";
-[>cwd]- "qps/cpp";
+[>program-] "cmake";
+[>cwd-] "qps/cpp";
 })qps");
 
     const auto& program =
@@ -420,7 +420,7 @@ void stringItemsBecomeRuntimeValues() {
 
 void namedHostActionBindsProcessResult() {
     const auto scope = executeSource(R"qps({
-[>fixture]- 0/n;
+[>fixture-] 0/n;
 
 probe: -process(
 program- "python3";
@@ -475,15 +475,15 @@ arg_1- "import sys;sys.stdout.write('OUT');sys.stderr.write('ERR');sys.exit(7)";
 
 void itemValuesComposeStringsAndNumbers() {
     const auto scope = executeSource(R"qps({
-[>path]- "qps";
-[>index]- path + "/_index.qps";
+[>path-] "qps";
+[>index-] path + "/_index.qps";
 
-[>prefix]- "root/";
-[>nested]- prefix + path + "/_index.qps";
+[>prefix-] "root/";
+[>nested-] prefix + path + "/_index.qps";
 
-[>left]- 2/n;
-[>right]- 3/n;
-[>sum]- left + right;
+[>left-] 2/n;
+[>right-] 3/n;
+[>sum-] left + right;
 })qps");
 
     const auto& index =
@@ -574,15 +574,15 @@ void qpsDerivesConnectedModuleAncestryFromFilesystemFacts() {
 
             const std::string source =
                 "{\n"
-                "[>root]- \"" + root + "\";\n"
-                "[>path]- \"" + path + "\";\n"
+                "[>root-] \"" + root + "\";\n"
+                "[>path-] \"" + path + "\";\n"
                 "\n"
-                "[>current]- path;\n"
-                "[>active]- 1;\n"
-                "[>connected]- 1;\n"
+                "[>current-] path;\n"
+                "[>active-] 1;\n"
+                "[>connected-] 1;\n"
                 "\n"
                 "-while active == 1 {\n"
-                "[>index_path]- current + \"/_index.qps\";\n"
+                "[>index_path-] current + \"/_index.qps\";\n"
                 "\n"
                 "directory_kind: -path_kind(\n"
                 "path- current;\n"
@@ -594,27 +594,27 @@ void qpsDerivesConnectedModuleAncestryFromFilesystemFacts() {
                 "\n"
                 "-if directory_kind == \"directory\" {\n"
                 "-if index_kind == \"file\" {\n"
-                "[>active]- active;\n"
+                "[>active-] active;\n"
                 "}\n"
                 "-else {\n"
-                "[>connected]- 0;\n"
-                "[>active]- 0;\n"
+                "[>connected-] 0;\n"
+                "[>active-] 0;\n"
                 "}\n"
                 "}\n"
                 "-else {\n"
-                "[>connected]- 0;\n"
-                "[>active]- 0;\n"
+                "[>connected-] 0;\n"
+                "[>active-] 0;\n"
                 "}\n"
                 "\n"
                 "-if active == 1 {\n"
                 "-if current == root {\n"
-                "[>active]- 0;\n"
+                "[>active-] 0;\n"
                 "}\n"
                 "-else {\n"
                 "parent: -path_parent(\n"
                 "path- current;\n"
                 ");\n"
-                "[>current]- parent;\n"
+                "[>current-] parent;\n"
                 "}\n"
                 "}\n"
                 "}\n"
@@ -674,10 +674,10 @@ struct TestCase {
 void whileRebindsLocalItemUntilConditionIsFalse() {
     const std::string source = R"qps(
 {
-[>count]- 0;
+[>count-] 0;
 
 -while count < 3 {
-[>count]- count + 1;
+[>count-] count + 1;
 }
 }
 )qps";
@@ -751,13 +751,13 @@ void calculationBindsDictionaryRuntimeValue() {
 void ifSelectsNumericLessThanBranch() {
     const std::string source = R"qps(
 {
-[>count]- 2;
+[>count-] 2;
 
 -if count < 3 {
-[>selected]- "if";
+[>selected-] "if";
 }
 -else {
-[>selected]- "else";
+[>selected-] "else";
 }
 }
 )qps";
@@ -779,13 +779,13 @@ void ifSelectsNumericLessThanBranch() {
 void ifSelectsStringEqualityBranch() {
     const std::string source = R"qps(
 {
-[>kind]- "directory";
+[>kind-] "directory";
 
 -if kind == "directory" {
-[>selected]- "if";
+[>selected-] "if";
 }
 -else {
-[>selected]- "else";
+[>selected-] "else";
 }
 }
 )qps";
@@ -806,13 +806,13 @@ void ifSelectsStringEqualityBranch() {
 void ifSelectsElseBranch() {
     const std::string source = R"qps(
 {
-[>kind]- "file";
+[>kind-] "file";
 
 -if kind == "directory" {
-[>selected]- "if";
+[>selected-] "if";
 }
 -else {
-[>selected]- "else";
+[>selected-] "else";
 }
 }
 )qps";

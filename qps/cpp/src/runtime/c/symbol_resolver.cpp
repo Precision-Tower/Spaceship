@@ -1,17 +1,12 @@
 #include "../h/symbol_resolver.hpp"
 
 #include "../h/document_store.hpp"
-#include "../h/interpreter.hpp"
+#include "../h/execution_engine.hpp"
 #include "../h/path_resolver.hpp"
 
 #include "../../ast/ast_node.hpp"
 #include "../../ast/structural_selection.hpp"
-#include "../../parser/h/_index.hpp"
-#include "../../tokens/h/char_stream.hpp"
-#include "../../tokens/h/lexer.hpp"
 
-#include <fstream>
-#include <iterator>
 #include <optional>
 #include <stdexcept>
 #include <utility>
@@ -24,15 +19,19 @@ namespace fs = std::filesystem;
 SymbolResolver::SymbolResolver(
     PathResolver& paths,
     DocumentStore& documents,
-    fs::path reference_planner)
+    fs::path reference_planner,
+    fs::path semantic_walker)
     : paths_(paths),
       documents_(documents),
       reference_planner_(
-          std::move(reference_planner)) {}
+          std::move(reference_planner)),
+      semantic_walker_(
+          std::move(semantic_walker)) {}
 
 namespace {
 
 StructuralHandle walkSemanticStructureAuthored(
+    DocumentStore& documents,
     std::shared_ptr<ast::ProgramNode> document_owner,
     ast::AstNode* current,
     const ast::SymbolReferenceNode& reference,
@@ -73,12 +72,12 @@ StructuralHandle SymbolResolver::resolveFrom(
     // Segment zero is the local runtime binding name.
     // Navigation begins directly at the bound AST node.
     return walkSemanticStructureAuthored(
+        documents_,
         root.document_owner,
         root.target_node,
         reference,
         1,
-        reference_planner_.parent_path() /
-            "semantic_walk.qps");
+        semantic_walker_);
 
 }
 
@@ -179,6 +178,7 @@ const RuntimeValue& referencePlanEntry(
 
 
 StructuralHandle walkSemanticStructureAuthored(
+    DocumentStore& documents,
     std::shared_ptr<ast::ProgramNode> document_owner,
     ast::AstNode* current,
     const ast::SymbolReferenceNode& reference,
@@ -190,88 +190,47 @@ StructuralHandle walkSemanticStructureAuthored(
             "Structural semantic walk requires an owned AST root.");
     }
 
-    std::ifstream input(walker_file);
-
-    if (!input) {
-        throw std::runtime_error(
-            "Could not open authored semantic walker: " +
-            walker_file.string());
-    }
-
-    const std::string source{
-        std::istreambuf_iterator<char>(input),
-        std::istreambuf_iterator<char>()};
-
-    tokens::CharStream char_stream(source);
-    tokens::Lexer lexer(char_stream);
-    parser::Parser parser(lexer);
-
     auto program =
-        parser.parseProgram();
+        documents.get(walker_file);
 
-    if (program->statements.size() != 1) {
-        throw std::runtime_error(
-            "Authored semantic walker must contain exactly one "
-            "top-level statement.");
-    }
-
-    const auto* walker =
-        dynamic_cast<const ast::ExecutionBlockNode*>(
-            program->statements.front().get());
-
-    if (!walker) {
-        throw std::runtime_error(
-            "Authored semantic walker top-level statement "
-            "must be an execution block.");
-    }
+    ExecutionEngine engine;
+    engine.registerDefinitions(*program);
 
     StructuralHandle start_handle;
     start_handle.document_owner = document_owner;
     start_handle.target_node = current;
 
-    ExecutionScope scope;
+    std::unordered_map<std::string, RuntimeValue> overrides;
 
-    scope.bind(
+    overrides.emplace(
         "current_structure",
         RuntimeValue::structure(
-            std::move(start_handle)),
-        std::nullopt,
-        BindingOrigin::SUPPLIED);
+            std::move(start_handle)));
 
-    scope.bind(
+    overrides.emplace(
         "segments",
-        referenceSegmentsValue(reference),
-        std::nullopt,
-        BindingOrigin::SUPPLIED);
+        referenceSegmentsValue(reference));
 
-    scope.bind(
+    overrides.emplace(
         "structural_start",
         RuntimeValue::numeric(
             static_cast<double>(
-                structural_start)),
-        std::nullopt,
-        BindingOrigin::SUPPLIED);
+                structural_start)));
 
-    scope.bind(
+    overrides.emplace(
         "selects_item_value",
         RuntimeValue::numeric(
             reference.selectsItemValue()
                 ? 1.0
-                : 0.0),
-        std::nullopt,
-        BindingOrigin::SUPPLIED);
+                : 0.0));
 
-    InterpreterOptions options;
-    options.allow_return = true;
-    options.symbol_resolver = nullptr;
+    const ExecutionInstance instance =
+        engine.instantiate(
+            "Semantic_Walk",
+            overrides);
 
-    Interpreter interpreter(
-        scope,
-        FunctionTable{},
-        options);
-
-    const auto value =
-        interpreter.executeForResult(*walker);
+    const auto& value =
+        instance.result;
 
     if (!value.has_value() ||
         !value->isStructure()) {
@@ -298,6 +257,7 @@ StructuralHandle walkSemanticStructureAuthored(
 
 
 ReferenceDocumentPlan planReferenceDocumentAuthored(
+    DocumentStore& documents,
     const ast::SymbolReferenceNode& reference,
     const StructuralReferenceContext& context,
     const fs::path& planner_file) {
@@ -320,82 +280,41 @@ ReferenceDocumentPlan planReferenceDocumentAuthored(
     const fs::path current_document =
         context.current_document.lexically_normal();
 
-    std::ifstream input(planner_file);
-
-    if (!input) {
-        throw std::runtime_error(
-            "Could not open authored reference planner: " +
-            planner_file.string());
-    }
-
-    const std::string source{
-        std::istreambuf_iterator<char>(input),
-        std::istreambuf_iterator<char>()};
-
-    tokens::CharStream char_stream(source);
-    tokens::Lexer lexer(char_stream);
-    parser::Parser parser(lexer);
-
     auto program =
-        parser.parseProgram();
+        documents.get(planner_file);
 
-    if (program->statements.size() != 1) {
-        throw std::runtime_error(
-            "Authored reference planner must contain exactly one "
-            "top-level statement.");
-    }
+    ExecutionEngine engine;
+    engine.registerDefinitions(*program);
 
-    const auto* planner =
-        dynamic_cast<const ast::ExecutionBlockNode*>(
-            program->statements.front().get());
+    std::unordered_map<std::string, RuntimeValue> overrides;
 
-    if (!planner) {
-        throw std::runtime_error(
-            "Authored reference planner top-level statement "
-            "must be an execution block.");
-    }
-
-    ExecutionScope scope;
-
-    scope.bind(
+    overrides.emplace(
         "current_document",
         RuntimeValue::string(
-            current_document.generic_string()),
-        std::nullopt,
-        BindingOrigin::SUPPLIED);
+            current_document.generic_string()));
 
-    scope.bind(
+    overrides.emplace(
         "origin",
         RuntimeValue::string(
             referenceOriginName(
-                reference.getOrigin())),
-        std::nullopt,
-        BindingOrigin::SUPPLIED);
+                reference.getOrigin())));
 
-    scope.bind(
+    overrides.emplace(
         "parent_depth",
         RuntimeValue::numeric(
-            reference.getParentDepth()),
-        std::nullopt,
-        BindingOrigin::SUPPLIED);
+            reference.getParentDepth()));
 
-    scope.bind(
+    overrides.emplace(
         "segments",
-        referenceSegmentsValue(reference),
-        std::nullopt,
-        BindingOrigin::SUPPLIED);
+        referenceSegmentsValue(reference));
 
-    InterpreterOptions options;
-    options.allow_return = true;
-    options.symbol_resolver = nullptr;
+    const ExecutionInstance instance =
+        engine.instantiate(
+            "Reference_Document",
+            overrides);
 
-    Interpreter interpreter(
-        scope,
-        FunctionTable{},
-        options);
-
-    const auto result =
-        interpreter.executeForResult(*planner);
+    const auto& result =
+        instance.result;
 
     if (!result.has_value() ||
         !result->isDictionary()) {
@@ -447,6 +366,7 @@ StructuralHandle SymbolResolver::resolve(
 
     const ReferenceDocumentPlan plan =
         planReferenceDocumentAuthored(
+            documents_,
             reference,
             context,
             reference_planner_);
@@ -533,12 +453,12 @@ StructuralHandle SymbolResolver::resolve(
     //   [>shape.shape.dimensions.cylinder]
     //   [>shape.shape.dimensions.cylinder.radius-]
     return walkSemanticStructureAuthored(
+        documents_,
         document_ast,
         current,
         reference,
         semantic_start + 1,
-        reference_planner_.parent_path() /
-            "semantic_walk.qps");
+        semantic_walker_);
 }
 
 

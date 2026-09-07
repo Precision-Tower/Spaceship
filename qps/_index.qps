@@ -7,18 +7,22 @@ Canonical semantic doorway into the Quick Parse Standard subsystem.
 surface: (
 qps- "qps/qps";
 cpp- "qps/cpp";
+libs- "qps/libs";
 docs- "qps/qps/docs";
 );
 
 doors: (
 language- "qps/qps";
 native- "qps/cpp";
+libraries- "qps/libs/_index.qps";
 documentation- "qps/qps/docs";
 );
 
 documents: (
 quicksheet- "qps/qps/docs/QPS.qps";
-checklist- "qps/qps/docs/CHECKLIST.md";
+checklist- "qps/qps/checklist.qps";
+native_checklist- "qps/checklist.qps";
+docs_checklist- "qps/qps/docs/CHECKLIST.md";
 readme- "qps/qps/docs/README.md";
 execution_handoff- "qps/qps/docs/EXECUTION_HANDOFF.qps";
 );
@@ -31,15 +35,35 @@ cipher_authority- "qps/qps/cipher.qps";
 test_all- "ctest --test-dir qps/cpp/build-pixel --output-on-failure";
 test_qps_surface- "qps test path/file-or-folder";
 check_qps_file- "qps path/file.qps --check";
-query_qps- "qps path/file.qps --get path.to.value";
+scalar_get- "qps path/file.qps --get path.to.value";
+query_qps- "qps qry <selector> [path]";
+probe_qps- "qps probe <file> <line> [radius] or qps probe <file.qps> <structural.path>";
+scope_qps- "qps scope <file.qps> <structural.path>";
+scout_qps- "qps scout <indexed-module-or-_index.qps> <authored-identity>";
+);
+
+source_navigation: (
+status- "probe, scope, and scout are proven";
+output- "path:start-end followed by numbered source lines";
+boundary- "source-navigation tools do not recursively wander the filesystem";
 );
 
 rules: (
 local_context_first- "read this index when entering qps";
 language_reference- "read qps/qps/docs/QPS.qps for canonical language syntax";
-work_status- "read qps/qps/docs/CHECKLIST.md for current implementation status";
+work_status- "read qps/qps/checklist.qps for authored QPS language/tooling state and qps/checklist.qps for native runtime or kernel continuation";
+docs_checklist_role- "qps/qps/docs/CHECKLIST.md is supporting Markdown history, not the current continuation authority";
 qps_authority- "QPS-authored orchestration and semantic authority live under qps/qps";
-native_boundary- "qps/cpp is the native substrate and current kernel-discovery quarry";
-kernel_discovery- "probe native code to discover the irreducible kernel; do not assume its implementation language";
+native_boundary- "qps/cpp is the native runtime substrate; unfinished native and kernel work is tracked in qps/checklist.qps";
+kernel_discovery- "read qps/checklist.qps for the bounded Pixel driver and userspace-ABI discovery plan";
 do_not_duplicate- "grammar and runtime details belong to their owning files, not this index";
+);
+
+development_state: (
+native_checklist- "qps/checklist.qps";
+language_checklist- "qps/qps/checklist.qps";
+dif_authority- "qps/qps/dif.qps";
+save_authority- "qps/qps/save.qps";
+history_authority- "qps/qps/history.qps";
+library_authority- "qps/libs/_index.qps";
 );

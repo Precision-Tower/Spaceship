@@ -182,13 +182,19 @@ Parser::parseExecutionDefinitionStatement() {
     // grammar. Execution definitions retain only their definition-specific
     // input and domain-qualified parsing below.
     if (peek_type() == tokens::TokenType::KW_IF ||
-        peek_type() == tokens::TokenType::KW_RETURN) {
+        peek_type() == tokens::TokenType::KW_WHILE ||
+        peek_type() == tokens::TokenType::KW_FOR ||
+        peek_type() == tokens::TokenType::KW_LOOP ||
+        peek_type() == tokens::TokenType::KW_RETURN ||
+        peek_type() == tokens::TokenType::KW_PRINT ||
+        peek_type() == tokens::TokenType::KW_ASSERT ||
+        peek_type() == tokens::TokenType::KW_TRY ||
+        peek_type() == tokens::TokenType::KW_RAISE ||
+        peek_type() == tokens::TokenType::KW_BREAK ||
+        peek_type() == tokens::TokenType::KW_CONTINUE ||
+        peek_type() == tokens::TokenType::KW_PASS) {
 
         return parseStatement();
-    }
-
-    if (peek_type() == tokens::TokenType::KW_ASSERT) {
-        return parseAssertStatement();
     }
 
     if (peek_type() == tokens::TokenType::OPEN_BRACKET &&
@@ -278,7 +284,11 @@ Parser::parseExecutionDefinitionInput() {
 
     auto target = parseSymbolReference();
 
-    match(tokens::TokenType::OP_SUBTRACT);
+    if (!target->selectsItemValue()) {
+        error(
+            "Execution-definition Item input must include '-' "
+            "inside the structural reference, for example [>x-].");
+    }
 
     auto item_node =
         ast::createItemDeclarationNode(
@@ -288,16 +298,16 @@ Parser::parseExecutionDefinitionInput() {
 
     // Execution-definition inputs follow Item semantics:
     //
-    //   [>x]-
+    //   [>x-]
     //       required, untyped
     //
-    //   [>x]-/n;
+    //   [>x-]/n;
     //       required, explicitly numeric
     //
-    //   [>x]- 3;
+    //   [>x-] 3;
     //       defaulted, no explicit type hint
     //
-    //   [>x]- 3/n;
+    //   [>x-] 3/n;
     //       defaulted, explicitly numeric
     //
     // A definition boundary may terminate an untyped empty input

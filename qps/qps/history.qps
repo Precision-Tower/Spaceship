@@ -1,0 +1,41 @@
+HISTORY.
+
+definition: def"
+Query accepted CE-OS transitions by repository structure.
+
+CE-OS owns exactly one semantic History ledger at repository root:
+history.qps.
+
+History is not current-system documentation. The applicable _index.qps
+describes current truth and usage. History records accepted completed
+transitions and their provenance.
+
+The ledger may grow arbitrarily large because normal access is structural
+query rather than linear human inspection.
+";
+
+storage: (
+ledger- "history.qps";
+location- "repository root only";
+local_ledgers- false;
+model- "accepted semantic transition entries";
+);
+
+entry_association: (
+timestamp- "Save records the machine acceptance timestamp";
+scope- "Each accepted entry records one or more repository paths associated with the work";
+source_checklist- "Each accepted entry records the Checklist from which the completed task was accepted";
+);
+
+query: (
+command- "qps history <path>";
+source- "Parse the single repository-root history.qps ledger";
+selection- "Return accepted entries whose authored scope associates them with the requested repository path";
+scale- "Ledger length does not change the query model; structural association determines relevance";
+);
+
+authority: (
+current_truth- "_index.qps";
+unfinished_work- "checklist.qps";
+accepted_transitions- "history.qps";
+);

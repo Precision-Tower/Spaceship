@@ -188,16 +188,19 @@ std::unique_ptr<CausalDefinitionNode> createCausalDefinitionNode(
 }
 
 std::unique_ptr<CausalRelationshipNode::CausalSide> createCausalSide(
-    std::unique_ptr<AstNode> entity, std::unique_ptr<AstNode> input, std::unique_ptr<AstNode> output) {
-    return std::make_unique<CausalRelationshipNode::CausalSide>(
-        CausalRelationshipNode::CausalSide{std::move(entity), std::move(input), std::move(output)});
+    std::unique_ptr<AstNode> entity,
+    std::vector<std::unique_ptr<AstNode>> domain_chain) {
+
+    auto side = std::make_unique<CausalRelationshipNode::CausalSide>();
+    side->entity = std::move(entity);
+    side->domain_chain = std::move(domain_chain);
+    return side;
 }
 
 std::unique_ptr<CausalRelationshipNode> createCausalRelationshipNode(
-    std::unique_ptr<CausalRelationshipNode::CausalSide> left,
-    std::unique_ptr<CausalRelationshipNode::CausalSide> right,
+    std::vector<std::unique_ptr<CausalRelationshipNode::CausalSide>> sides,
     int line, int column) {
-    return std::make_unique<CausalRelationshipNode>(std::move(left), std::move(right), line, column);
+    return std::make_unique<CausalRelationshipNode>(std::move(sides), line, column);
 }
 
 std::unique_ptr<ClassDeclarationNode> createClassDeclarationNode(const std::string& name, int line, int column) {
@@ -384,18 +387,15 @@ void printAst(const AstNode* node, int indent_level) {
             printAst(stmt.get(), indent_level + 2);
         }
     } else if (auto causal_node = dynamic_cast<const CausalRelationshipNode*>(node)) {
-        std::cout << indent << "    Left Side:\n";
-        printAst(causal_node->left_side_->entity.get(), indent_level + 3);
-        std::cout << indent << "      Input:\n";
-        printAst(causal_node->left_side_->input.get(), indent_level + 3);
-        std::cout << indent << "      Output:\n";
-        printAst(causal_node->left_side_->output.get(), indent_level + 3);
-        std::cout << indent << "    Right Side:\n";
-        printAst(causal_node->right_side_->entity.get(), indent_level + 3);
-        std::cout << indent << "      Input:\n";
-        printAst(causal_node->right_side_->input.get(), indent_level + 3);
-        std::cout << indent << "      Output:\n";
-        printAst(causal_node->right_side_->output.get(), indent_level + 3);
+        std::cout << indent << "    Sides:\n";
+        for (const auto& side : causal_node->sides_) {
+            std::cout << indent << "      Entity:\n";
+            printAst(side->entity.get(), indent_level + 4);
+            std::cout << indent << "      Domain Chain:\n";
+            for (const auto& domain : side->domain_chain) {
+                printAst(domain.get(), indent_level + 4);
+            }
+        }
     } else if (auto class_node = dynamic_cast<const ClassDeclarationNode*>(node)) {
         std::cout << indent << "  Name: " << class_node->name_ << "\n";
         std::cout << indent << "  Members:\n";

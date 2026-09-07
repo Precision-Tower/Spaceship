@@ -1,6 +1,6 @@
 {Cipher_Run:
-[>source]-
-[>root]-
+[>source-]
+[>root-]
 
 cipher: -process(
 program- "python3";
@@ -9,12 +9,6 @@ arg_1- "Engineering.py.cipher.cipher";
 arg_2- source;
 arg_3- "--converge";
 cwd- root;
-);
-
--assert cipher_exit_code == 0;
-
--qps_check(
-source- cipher_stdout;
 );
 
 -write(
@@ -26,11 +20,14 @@ value- cipher_stdout;
 stream- "stderr";
 value- cipher_stderr;
 );
+
+-assert cipher_exit_code == 0;
 }
 
+
 {Cipher_Report:
-[>source]-
-[>root]-
+[>source-]
+[>root-]
 
 cipher: -process(
 program- "python3";
@@ -42,10 +39,33 @@ arg_4- "--report";
 cwd- root;
 );
 
--assert cipher_exit_code == 0;
+-write(
+stream- "stdout";
+value- cipher_stdout;
+);
 
--qps_check(
-source- cipher_stdout;
+-write(
+stream- "stderr";
+value- cipher_stderr;
+);
+
+-assert cipher_exit_code == 0;
+}
+
+
+{Cipher_Run_To:
+[>source-]
+[>destination-]
+[>root-]
+
+cipher: -process(
+program- "python3";
+arg_0- "-m";
+arg_1- "Engineering.py.cipher.cipher";
+arg_2- source;
+arg_3- destination;
+arg_4- "--converge";
+cwd- root;
 );
 
 -write(
@@ -57,4 +77,305 @@ value- cipher_stdout;
 stream- "stderr";
 value- cipher_stderr;
 );
+
+-assert cipher_exit_code == 0;
+}
+
+
+{Cipher_Report_To:
+[>source-]
+[>destination-]
+[>root-]
+
+cipher: -process(
+program- "python3";
+arg_0- "-m";
+arg_1- "Engineering.py.cipher.cipher";
+arg_2- source;
+arg_3- destination;
+arg_4- "--converge";
+arg_5- "--report";
+cwd- root;
+);
+
+-write(
+stream- "stdout";
+value- cipher_stdout;
+);
+
+-write(
+stream- "stderr";
+value- cipher_stderr;
+);
+
+-assert cipher_exit_code == 0;
+}
+
+
+{Cipher_Closure:
+[>source-]
+[>root-]
+
+cipher: -process(
+program- "python3";
+arg_0- "-m";
+arg_1- "Engineering.py.cipher.cipher";
+arg_2- source;
+arg_3- "--closure";
+cwd- root;
+);
+
+-write(
+stream- "stdout";
+value- cipher_stdout;
+);
+
+-write(
+stream- "stderr";
+value- cipher_stderr;
+);
+
+-assert cipher_exit_code == 0;
+}
+
+
+{Cipher_Test:
+[>source-]
+[>root-]
+
+cipher: -process(
+program- "python3";
+arg_0- "-m";
+arg_1- "Engineering.py.cipher.cipher";
+arg_2- "test";
+arg_3- source;
+arg_4- "--converge";
+cwd- root;
+);
+
+-write(
+stream- "stdout";
+value- cipher_stdout;
+);
+
+-write(
+stream- "stderr";
+value- cipher_stderr;
+);
+
+-return cipher_exit_code;
+}
+
+
+{Cipher_Test_To:
+[>source-]
+[>destination-]
+[>root-]
+
+cipher: -process(
+program- "python3";
+arg_0- "-m";
+arg_1- "Engineering.py.cipher.cipher";
+arg_2- "test";
+arg_3- source;
+arg_4- destination;
+arg_5- "--converge";
+cwd- root;
+);
+
+-write(
+stream- "stdout";
+value- cipher_stdout;
+);
+
+-write(
+stream- "stderr";
+value- cipher_stderr;
+);
+
+-return cipher_exit_code;
+}
+
+
+{Cipher_Primitive:
+[>source_kind-]
+
+-if source_kind == "definition" {
+-return "term";
+}
+
+-if source_kind == "function" {
+-return "term";
+}
+
+-if source_kind == "item" {
+-return "item";
+}
+
+-return "unsupported";
+}
+
+
+{Cipher_Association:
+[>local_name-]
+[>target_address-]
+[>source_kind-]
+
+%primitive: {>Cipher_Primitive:
+source_kind- source_kind;
+}
+
+-if primitive == "term" {
+-return local_name + ": [>" + target_address + "];";
+}
+
+-if primitive == "item" {
+-return local_name + "- [>" + target_address + "-];";
+}
+
+-return "";
+}
+
+
+
+{Cipher_Source_Facts:
+[>source-]
+[>root-]
+
+adapter: -process(
+program- "python3";
+arg_0- "-m";
+arg_1- "Engineering.py.cipher.source_adapter";
+arg_2- source;
+cwd- root;
+);
+
+-write(
+stream- "stderr";
+value- adapter_stderr;
+);
+
+-assert adapter_exit_code == 0;
+
+facts: -qps_parse(
+source- adapter_stdout;
+);
+
+-return facts;
+}
+
+
+{Cipher_First_Import_Fact:
+[>facts-]
+
+nodes: -structure_child(
+structure- facts;
+name- "nodes";
+);
+
+first: -structure_child(
+structure- nodes;
+name- "node_1";
+);
+
+kind_item: -structure_item(
+structure- first;
+name- "kind";
+);
+
+kind: -structure_value(
+structure- kind_item;
+);
+
+dependencies: -structure_child(
+structure- first;
+name- "dependencies";
+);
+
+dependency: -structure_child(
+structure- dependencies;
+name- "dependency_1";
+);
+
+module_item: -structure_item(
+structure- dependency;
+name- "module";
+);
+
+module: -structure_value(
+structure- module_item;
+);
+
+symbol_item: -structure_item(
+structure- dependency;
+name- "symbol";
+);
+
+symbol: -structure_value(
+structure- symbol_item;
+);
+
+-return [
+1: kind,
+2: module,
+3: symbol
+];;
+}
+
+
+{Cipher_Second_Import_Fact:
+[>facts-]
+
+nodes: -structure_child(
+structure- facts;
+name- "nodes";
+);
+
+second: -structure_child(
+structure- nodes;
+name- "node_2";
+);
+
+kind_item: -structure_item(
+structure- second;
+name- "kind";
+);
+
+kind: -structure_value(
+structure- kind_item;
+);
+
+dependencies: -structure_child(
+structure- second;
+name- "dependencies";
+);
+
+dependency: -structure_child(
+structure- dependencies;
+name- "dependency_1";
+);
+
+module_item: -structure_item(
+structure- dependency;
+name- "module";
+);
+
+module: -structure_value(
+structure- module_item;
+);
+
+symbol_item: -structure_item(
+structure- dependency;
+name- "symbol";
+);
+
+symbol: -structure_value(
+structure- symbol_item;
+);
+
+-return [
+1: kind,
+2: module,
+3: symbol
+];;
 }

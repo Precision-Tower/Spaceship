@@ -28,6 +28,39 @@ const fs::path& PathResolver::workspaceRoot() const {
     return root_;
 }
 
+std::optional<fs::path> PathResolver::containingModule(
+    const fs::path& source) const {
+
+    const fs::path absolute =
+        fs::weakly_canonical(source);
+
+    const fs::path module =
+        absolute.parent_path();
+
+    const fs::path relative =
+        module.lexically_relative(root_);
+
+    if (relative.empty() && module != root_) {
+        return std::nullopt;
+    }
+
+    if (relative.is_absolute()) {
+        return std::nullopt;
+    }
+
+    for (const auto& part : relative) {
+        if (part == "..") {
+            return std::nullopt;
+        }
+    }
+
+    if (!isModule(relative)) {
+        return std::nullopt;
+    }
+
+    return relative;
+}
+
 void PathResolver::validateRelativePath(const fs::path& path) {
     if (path.is_absolute()) {
         throw std::runtime_error(

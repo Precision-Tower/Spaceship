@@ -31,6 +31,7 @@ std::unique_ptr<ast::ItemDeclarationNode> Parser::parseItemDeclaration() {
     match(tokens::TokenType::OP_SUBTRACT);
 
     std::unique_ptr<ast::AstNode> value_node;
+    int end_line = line;
 
     // An Item may be declared without a supplied value:
     //
@@ -52,72 +53,16 @@ std::unique_ptr<ast::ItemDeclarationNode> Parser::parseItemDeclaration() {
         peek_type() == tokens::TokenType::TYPE_NULL;
 
     if (!empty_item) {
-        if (peek_type() == tokens::TokenType::STRING_LITERAL ||
-            peek_type() == tokens::TokenType::NUMERIC_LITERAL ||
-            peek_type() == tokens::TokenType::BOOLEAN_LITERAL ||
-            peek_type() == tokens::TokenType::NULL_LITERAL) {
-
-            value_node = parseLiteral();
-
-        } else if (peek_type() == tokens::TokenType::IDENTIFIER) {
-
-            value_node = parsePathReference();
-
-        } else if (peek_type() == tokens::TokenType::OPEN_BRACKET &&
-                   peek_next_type() == tokens::TokenType::REFERENCE_OPERATOR) {
-
-            value_node = parseSymbolReference();
-
-        } else if (peek_type() == tokens::TokenType::DICT_OUTPUT_REF) {
-
-            // Legacy dictionary-output reference support.
-            std::string dict_ref_lexeme =
-                match_and_get_lexeme(
-                    tokens::TokenType::DICT_OUTPUT_REF);
-
-            double id =
-                match_and_get_literal<double>(
-                    tokens::TokenType::NUMERIC_LITERAL);
-
-            std::string full_path =
-                dict_ref_lexeme +
-                std::to_string(static_cast<int>(id));
-
-            value_node =
-                ast::createPathReferenceNode(
-                    full_path,
-                    line,
-                    column);
-
-        } else {
-
-            error(
-                "Expected a literal, reference, type hint, or ';' after Item target. Found: " +
-                current_token_.toString());
-        }
-    }
-
-    // Item values may compose through '+' without surrendering '/' to the
-    // mathematical parser. '/' remains available for Item unit suffixes such
-    // as 30/n;.
-    while (value_node &&
-           peek_type() == tokens::TokenType::OP_ADD) {
-
-        const int op_line = current_token_.line;
-        const int op_column = current_token_.column;
-
-        match(tokens::TokenType::OP_ADD);
-
-        auto right =
-            parsePrimaryExpression();
-
-        value_node =
-            ast::createBinaryExpressionNode(
-                std::move(value_node),
-                ast::BinaryExpressionNode::Operator::ADD,
-                std::move(right),
-                op_line,
-                op_column);
+        // Item values use the shared QPS expression grammar.
+        //
+        // Examples:
+        //   energy- 0.5 * mass * velocity * velocity;
+        //   total- base + offset;
+        //   ratio- left / right;
+        //
+        // Item suffix parsing remains below and continues to own
+        // authored type/unit metadata.
+        value_node = parseExpression();
     }
 
     // Typed suffixes remain optional. They may annotate either a populated
@@ -134,6 +79,7 @@ std::unique_ptr<ast::ItemDeclarationNode> Parser::parseItemDeclaration() {
             match_and_get_lexeme(
                 tokens::TokenType::IDENTIFIER);
 
+        end_line = current_token_.line;
         match(tokens::TokenType::SEMICOLON);
 
     } else if (peek_type() == tokens::TokenType::TYPE_PATH ||
@@ -143,10 +89,12 @@ std::unique_ptr<ast::ItemDeclarationNode> Parser::parseItemDeclaration() {
         peek_type() == tokens::TokenType::TYPE_NULL) {
 
         type_hint = peek_type();
+        end_line = current_token_.line;
         advance();
 
     } else {
 
+        end_line = current_token_.line;
         match(tokens::TokenType::SEMICOLON);
     }
 
@@ -165,13 +113,15 @@ std::unique_ptr<ast::ItemDeclarationNode> Parser::parseItemDeclaration() {
     item_node->unit_hint_ =
         unit_hint;
 
+    item_node->setEndLine(end_line);
+
     return item_node;
 }
 
 
 // Semantic Item binding:
 //
-//   [>v]- 30/n;
+//   [>v-] 30/n;
 //
 // This binds a supplied value to a canonical semantic identity.
 std::unique_ptr<ast::ItemDeclarationNode>
@@ -183,9 +133,14 @@ Parser::parseSemanticItemDeclaration() {
     auto target =
         parseSymbolReference();
 
-    match(tokens::TokenType::OP_SUBTRACT);
+    if (!target->selectsItemValue()) {
+        error(
+            "Semantic Item target must include '-' "
+            "inside the structural reference.");
+    }
 
     std::unique_ptr<ast::AstNode> value_node;
+    int end_line = line;
 
     if (peek_type() == tokens::TokenType::STRING_LITERAL ||
         peek_type() == tokens::TokenType::NUMERIC_LITERAL ||
@@ -244,6 +199,7 @@ Parser::parseSemanticItemDeclaration() {
             match_and_get_lexeme(
                 tokens::TokenType::IDENTIFIER);
 
+        end_line = current_token_.line;
         match(tokens::TokenType::SEMICOLON);
 
     } else if (
@@ -253,10 +209,12 @@ Parser::parseSemanticItemDeclaration() {
         peek_type() == tokens::TokenType::TYPE_BOOLEAN ||
         peek_type() == tokens::TokenType::TYPE_NULL) {
 
+        end_line = current_token_.line;
         advance();
 
     } else {
 
+        end_line = current_token_.line;
         match(tokens::TokenType::SEMICOLON);
     }
 
@@ -271,6 +229,8 @@ Parser::parseSemanticItemDeclaration() {
 
     item_node->unit_hint_ =
         unit_hint;
+
+    item_node->setEndLine(end_line);
 
     return item_node;
 }

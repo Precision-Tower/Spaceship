@@ -1,0 +1,319 @@
+SAVE.
+
+definition: def"
+Accept one completed Checklist task into the single repository-root History
+ledger and remove that accepted task from current work.
+
+The completed task is the semantic source of the accepted accomplishment.
+Save does not require or maintain a duplicate history_candidate surface.
+
+Save supplies the machine acceptance timestamp, validates candidate QPS
+documents before publication, and publishes History plus the owning
+Checklist through generic transactional file replacement.
+";
+
+command- "qps save <checklist-index> <task-number>";
+
+source: (
+task- "The exact structurally selected task_N from the indexed owning checklist.qps";
+ledger- "The single repository-root history.qps";
+);
+
+required: (
+task_state- "complete";
+identity- "required";
+summary- "required";
+meaning- "required";
+scope- "required structural surface";
+proof- "required structural surface";
+relevant- "required structural surface";
+remaining- "required structural surface";
+documentation- "Required documentation disposition must already be satisfied";
+);
+
+transition: (
+history- "Append one normalized accepted entry to repository-root history.qps";
+timestamp- "Save supplies the UTC machine acceptance timestamp";
+scope- "Preserve authored repository associations from the completed task";
+checklist- "Delete the exact accepted task from current_work.tasks";
+unrelated_work- "Preserve every unrelated Checklist task unchanged";
+);
+
+transaction: (
+candidate_first- "Construct complete History and Checklist candidate texts before publication";
+parse_first- "Both candidates must parse as QPS before publication";
+publish- "Publish both candidates together through generic publish_files";
+failure- "If publication fails, authoritative files remain or are restored to their prior states";
+);
+
+rules: (
+single_history- "CE-OS owns one repository-root history.qps ledger; Save never creates directory-local History ledgers";
+task_authority- "The completed task itself is the canonical semantic input to Save";
+no_inference- "Save does not infer missing accomplishment meaning, scope, proof, relevant paths, remaining work, or documentation state";
+no_saved_task- "Accepted tasks are removed rather than retained in current_work with state saved";
+duplicate_identity- "An already accepted semantic identity must not produce another History entry";
+source_backlink- "Every accepted History entry records its source Checklist";
+);
+
+{Save_Accept:
+[>root-]
+[>checklist_index-]
+[>task_name-]
+
+%checklist_path: {>Checklist_Path:
+root- root;
+checklist_index- checklist_index;
+}
+
+%history_path: root + "/history.qps"
+
+compact_time: -time_utc_compact(
+);
+
+%history_key: "h_" + compact_time
+
+%accepted_timestamp: {>Save_Task_Transaction:
+checklist_path- checklist_path;
+history_path- history_path;
+task_name- task_name;
+history_key- history_key;
+}
+
+-write(
+stream- "stdout";
+value- "SAVE=PASS\n";
+);
+
+-return accepted_timestamp;
+}
+
+
+{Save_Task_Transaction:
+[>checklist_path-]
+[>history_path-]
+[>task_name-]
+[>history_key-]
+
+checklist_document: -qps_load(
+path- checklist_path;
+);
+
+current_work: -structure_child(
+structure- checklist_document;
+name- "current_work";
+);
+
+tasks: -structure_child(
+structure- current_work;
+name- "tasks";
+);
+
+task: -structure_child(
+structure- tasks;
+name- task_name;
+);
+
+state_item: -structure_item(
+structure- task;
+name- "state";
+);
+
+state: -structure_value(
+structure- state_item;
+);
+
+-assert state == "complete";
+
+identity_item: -structure_item(
+structure- task;
+name- "identity";
+);
+
+summary_item: -structure_item(
+structure- task;
+name- "summary";
+);
+
+meaning_item: -structure_item(
+structure- task;
+name- "meaning";
+);
+
+identity: -structure_value(
+structure- identity_item;
+);
+
+summary: -structure_value(
+structure- summary_item;
+);
+
+meaning: -structure_value(
+structure- meaning_item;
+);
+
+scope: -structure_child(
+structure- task;
+name- "scope";
+);
+
+proof: -structure_child(
+structure- task;
+name- "proof";
+);
+
+relevant: -structure_child(
+structure- task;
+name- "relevant";
+);
+
+remaining: -structure_child(
+structure- task;
+name- "remaining";
+);
+
+documentation: -structure_child(
+structure- task;
+name- "documentation";
+);
+
+documentation_state_item: -structure_item(
+structure- documentation;
+name- "state";
+);
+
+documentation_state: -structure_value(
+structure- documentation_state_item;
+);
+
+-assert documentation_state == "complete";
+
+task_start: -structure_start(
+structure- task;
+);
+
+task_end: -structure_end(
+structure- task;
+);
+
+scope_start: -structure_start(
+structure- scope;
+);
+
+scope_end: -structure_end(
+structure- scope;
+);
+
+proof_start: -structure_start(
+structure- proof;
+);
+
+proof_end: -structure_end(
+structure- proof;
+);
+
+relevant_start: -structure_start(
+structure- relevant;
+);
+
+relevant_end: -structure_end(
+structure- relevant;
+);
+
+remaining_start: -structure_start(
+structure- remaining;
+);
+
+remaining_end: -structure_end(
+structure- remaining;
+);
+
+scope_source: -file_span(
+path- checklist_path;
+start- scope_start;
+end- scope_end;
+);
+
+proof_source: -file_span(
+path- checklist_path;
+start- proof_start;
+end- proof_end;
+);
+
+relevant_source: -file_span(
+path- checklist_path;
+start- relevant_start;
+end- relevant_end;
+);
+
+remaining_source: -file_span(
+path- checklist_path;
+start- remaining_start;
+end- remaining_end;
+);
+
+timestamp: -time_utc(
+);
+
+history_document: -qps_load(
+path- history_path;
+);
+
+history_entries: -structure_child(
+structure- history_document;
+name- "entries";
+);
+
+history_insert_line: -structure_end(
+structure- history_entries;
+);
+
+%history_entry: history_key + ": (\n"
+    + "timestamp- \"" + timestamp + "\";\n"
+    + "identity- \"" + identity + "\";\n"
+    + "summary- \"" + summary + "\";\n"
+    + "meaning- \"" + meaning + "\";\n\n"
+    + scope_source + "\n"
+    + proof_source + "\n"
+    + relevant_source + "\n"
+    + remaining_source + "\n"
+    + "source_checklist- \"" + checklist_path + "\";\n"
+    + "backing_state- \"\";\n"
+    + ");\n\n"
+
+history_candidate: -file_insert_before_line(
+path- history_path;
+line- history_insert_line;
+text- history_entry;
+);
+
+checklist_candidate: -file_without_span(
+path- checklist_path;
+start- task_start;
+end- task_end;
+);
+
+history_candidate_program: -qps_parse(
+source- history_candidate;
+);
+
+checklist_candidate_program: -qps_parse(
+source- checklist_candidate;
+);
+
+replacements- [
+1: [
+1: history_path,
+2: history_candidate
+];
+2: [
+1: checklist_path,
+2: checklist_candidate
+];
+];;
+
+-publish_files(
+replacements- replacements;
+);
+
+-return timestamp;
+}

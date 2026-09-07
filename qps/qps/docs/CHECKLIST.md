@@ -4,6 +4,10 @@ Implementation and validation ledger for Quick Parse Standard.
 
 A checked item means the behavior has been demonstrated by implementation, tests, corpus evidence, or runtime validation. It does not mean merely intended.
 
+Current authored QPS language/tooling continuation lives in `qps/qps/checklist.qps`.
+Native runtime, host-boundary, and future kernel continuation lives in `qps/checklist.qps`.
+This Markdown checklist is supporting documentation; current implementation, passing tests, and authored QPS authority outrank stale entries here.
+
 ## Mission
 
 Build QPS into the compact, deterministic structural language used by CE-OS Engineering and simulation systems while keeping the language executable, testable, portable, and grounded in real corpus usage.
@@ -16,6 +20,10 @@ Build QPS into the compact, deterministic structural language used by CE-OS Engi
 - [x] QPS CLI supports document parsing.
 - [x] QPS CLI supports `--check`.
 - [x] QPS CLI supports `--get <path>`.
+- [x] QPS CLI supports `qps qry <selector> [path]`.
+- [x] QPS CLI supports `qps probe <file> <line> [radius]` and `qps probe <file.qps> <structural.path>`.
+- [x] QPS CLI supports `qps scope <file.qps> <structural.path>`.
+- [x] QPS CLI supports `qps scout <indexed-module-or-_index.qps> <authored-identity>`.
 - [x] Active Engineering corpus is part of the conformance target.
 - [x] Recursive active Engineering corpus conformance test established.
 - [x] Archive is excluded from active corpus conformance.
@@ -59,6 +67,21 @@ Build QPS into the compact, deterministic structural language used by CE-OS Engi
 - [x] Duplicate/ambiguous surface aliases are rejected.
 - [x] Real duplicate alias collision in `Engineering/qps/defs/MC/_index.qps` was exposed and corrected.
 - [x] Full QPS validation baseline reaches 14/14 tests.
+
+### Source Navigation and Evidence
+
+- [x] `probe` inspects exact known targets, including physical source line/radius targets for arbitrary files and structural-path targets for QPS documents.
+- [x] `scope` inspects an exact QPS structural target plus immediate authored structural members only.
+- [x] `scope` does not recurse through descendants.
+- [x] `scope` treats `Item` as a valid leaf.
+- [x] `scout` discovers an authored identity inside one indexed QPS module identified by `_index.qps`.
+- [x] `scout` searches immediate `qpsFiles` only, excludes `_index.qps`, does not descend into child modules, and does not recursively traverse the filesystem.
+- [x] `scout` recursively inspects admitted parsed-document authored structure.
+- [x] `scout` uses exact AST identity matching rather than textual grep.
+- [x] `scout` recognizes `Key`, `Term`, `Item`, and named `ExecutionDefinition` identities.
+- [x] Parser-incompatible sibling documents do not erase valid `scout` evidence from readable sibling documents.
+- [x] `probe`, `scope`, and `scout` share `path:start-end` plus numbered source-line evidence output.
+- [x] Focused source-navigation/query tests pass: `qps_structural_selection_test`, `qps_source_span_contract`, `qps_probe_cli`, `qps_scope_cli`, `qps_scout_cli`, and `qps_query_cli`.
 
 ## Current Corpus Census
 
@@ -331,10 +354,15 @@ Execution behavior must be implemented and proven.
 
 ### `!` Causal
 
-- [ ] Define canonical causal semantics from CE-OS requirements.
-- [ ] Avoid inheriting obsolete syntax solely from historical documentation.
-- [ ] Establish causal AST/runtime representation.
-- [ ] Add executable specification and conformance tests.
+- [x] Define canonical causal semantics from recovered Engineering design evidence.
+- [x] Preserve `Component: (A = B)` as domain transformation, not numeric equality.
+- [x] Preserve multi-stage component chains such as `Water_Pump: (DC = ME = FD)`.
+- [x] Preserve multi-component causal chains without losing component boundaries.
+- [x] Establish causal AST/runtime representation.
+- [x] Add executable specification and conformance tests.
+- [ ] Replace provisional same-name scalar transfer with explicit domain-interface binding contracts.
+- [ ] Replace provisional entity-prefix execution matching with explicit component-to-execution contracts.
+- [ ] Define branching graph execution beyond ordered authored chains.
 
 ## Validation Contract
 

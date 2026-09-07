@@ -1,0 +1,40 @@
+QPS_LANGUAGE.
+
+purpose: def"
+Canonical authored Quick Parse Standard language surface.
+
+This directory contains QPS-authored authorities that may compose with
+one another through the connected QPS module environment.
+";
+
+surface: (
+build- "build.qps";
+cipher- "cipher.qps";
+checklist- "checklist.qps";
+checklist_evidence- "checklist_evidence.qps";
+checklist_run- "checklist_run.qps";
+reference_document- "reference_document.qps";
+semantic_walk- "semantic_walk.qps";
+dif- "dif.qps";
+save- "save.qps";
+history- "history.qps";
+);
+
+tooling: (
+query- "qps qry <selector> [path]";
+probe- "qps probe <file> <line> [radius] or qps probe <file.qps> <structural.path>";
+scope- "qps scope <file.qps> <structural.path>";
+scout- "qps scout <indexed-module-or-_index.qps> <authored-identity>";
+source_output- "path:start-end followed by numbered source lines";
+trio_status- "PROVEN";
+);
+
+rules: (
+module_boundary- "This _index.qps establishes qps/qps as a connected QPS module";
+execution_visibility- "Immediate authored QPS documents in this module may contribute reusable execution definitions to a selected entry document";
+entry_execution- "Loading the module makes definitions available; only the selected entry document supplies top-level execution calls";
+no_import_syntax- "Connected authored execution does not require import or include syntax";
+checklist_authority- "checklist.qps owns authored QPS language and tooling state";
+native_handoff- "qps/checklist.qps owns native runtime, host, and future kernel continuation";
+native_boundary- "Filesystem reads, parsing, document lifetime, path connectivity, and runtime execution remain native mechanisms until further reduction is proven";
+);

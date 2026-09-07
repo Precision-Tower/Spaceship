@@ -14,6 +14,7 @@ RuntimeValue::RuntimeValue(
         double,
         std::string,
         std::vector<RuntimeDictionaryEntry>,
+        RuntimeSequence,
         GeometryHandle,
         StructuralHandle> value)
     : value_(std::move(value)) {}
@@ -34,6 +35,14 @@ RuntimeValue RuntimeValue::dictionary(
     std::vector<RuntimeDictionaryEntry> entries) {
 
     return RuntimeValue(std::move(entries));
+}
+
+RuntimeValue RuntimeValue::sequence(
+    std::vector<RuntimeValue> values) {
+
+    return RuntimeValue(
+        std::make_shared<std::vector<RuntimeValue>>(
+            std::move(values)));
 }
 
 RuntimeValue RuntimeValue::geometry(
@@ -61,6 +70,10 @@ RuntimeValue::Kind RuntimeValue::kind() const {
         return Kind::DICTIONARY;
     }
 
+    if (isSequence()) {
+        return Kind::SEQUENCE;
+    }
+
     if (isGeometry()) {
         return Kind::GEOMETRY;
     }
@@ -79,6 +92,11 @@ bool RuntimeValue::isString() const {
 bool RuntimeValue::isDictionary() const {
     return std::holds_alternative<
         std::vector<RuntimeDictionaryEntry>>(value_);
+}
+
+bool RuntimeValue::isSequence() const {
+    return std::holds_alternative<
+        RuntimeSequence>(value_);
 }
 
 bool RuntimeValue::isGeometry() const {
@@ -151,6 +169,31 @@ RuntimeValue::asDictionary(
     throw std::runtime_error(
         prefix +
         " expected dictionary value but found " +
+        std::string(runtimeValueKindName(kind())) +
+        ".");
+}
+
+const std::vector<RuntimeValue>&
+RuntimeValue::asSequence(
+    const std::string& context) const {
+
+    if (const auto* sequence =
+            std::get_if<RuntimeSequence>(
+                &value_)) {
+
+        if (*sequence) {
+            return **sequence;
+        }
+    }
+
+    const std::string prefix =
+        context.empty()
+            ? "Runtime value"
+            : context;
+
+    throw std::runtime_error(
+        prefix +
+        " expected sequence value but found " +
         std::string(runtimeValueKindName(kind())) +
         ".");
 }
@@ -291,6 +334,9 @@ const char* runtimeValueKindName(
 
         case RuntimeValue::Kind::DICTIONARY:
             return "dictionary";
+
+        case RuntimeValue::Kind::SEQUENCE:
+            return "sequence";
 
         case RuntimeValue::Kind::GEOMETRY:
             return "geometry";

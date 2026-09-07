@@ -2,6 +2,7 @@
 #define QPS_RUNTIME_H_EXECUTION_ENGINE_HPP
 
 #include "symbol_table.hpp"
+#include "../../ast/h/statements.hpp"
 
 #include <cstddef>
 #include <optional>
@@ -14,8 +15,11 @@ namespace tokens {
 enum class TokenType;
 }
 namespace ast {
+class CausalRelationshipNode;
+class ExecutionBlockNode;
 class ExecutionCallNode;
 class ExecutionDefinitionNode;
+class TermDeclarationNode;
 class ProgramNode;
 }
 namespace runtime {
@@ -46,14 +50,15 @@ struct ExecutionDefinitionInfo {
 
 struct CausalRelationshipInfo {
     std::string causal_definition_id;
+    std::size_t boundary_index = 0;
 
     std::string source_entity;
-    std::string source_input_state;
-    std::string source_output_state;
+    std::string source_input_domain;
+    std::string source_output_domain;
 
     std::string destination_entity;
-    std::string destination_input_state;
-    std::string destination_output_state;
+    std::string destination_input_domain;
+    std::string destination_output_domain;
 };
 
 struct CausalTransferTrace {
@@ -114,6 +119,13 @@ public:
         const ast::ExecutionDefinitionNode& definition,
         std::string source_document);
 
+    void registerDefinition(
+        const ast::TermDeclarationNode& term);
+
+    void registerDefinition(
+        const ast::TermDeclarationNode& term,
+        std::string source_document);
+
     ExecutionDefinitionInfo inspectDefinition(
         const ast::ExecutionDefinitionNode& definition) const;
 
@@ -139,6 +151,17 @@ public:
         const std::string& definition_id,
         const std::unordered_map<std::string, double>& overrides) const;
 
+    // Register top-level execution definitions without invoking
+    // authored calls.
+    void registerDefinitions(
+        const ast::ProgramNode& program);
+
+    // Execute top-level calls using definitions already registered.
+    // Causal definitions are interpreted from this entry program.
+    std::vector<ExecutionInstance> executeCalls(
+        const ast::ProgramNode& program) const;
+
+    // Compatibility composition for a self-contained program.
     std::vector<ExecutionInstance> execute(
         const ast::ProgramNode& program);
 
@@ -146,7 +169,10 @@ public:
 
 private:
     struct RegisteredDefinition {
-        const ast::ExecutionDefinitionNode* definition = nullptr;
+        std::string identifier;
+        bool identifier_is_numeric = false;
+        ast::ExecutionDomain domain = ast::ExecutionDomain::GENERIC;
+        const ast::ExecutionBlockNode* body = nullptr;
         std::optional<ExecutionDefinitionSourceInfo> source;
     };
 

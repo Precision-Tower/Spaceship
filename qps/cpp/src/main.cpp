@@ -10,12 +10,16 @@
 #include <algorithm>
 #include <cctype>
 #include <filesystem>
+#include <optional>
 #include <fstream>
 #include <cstdio>
 #include <array>
+#include <chrono>
+#include <ctime>
+#include <iomanip>
 
-#include "tokens/h/lexer.hpp"
-#include "parser/h/_index.hpp"
+#include "ast/structural_selection.hpp"
+#include "ast/scalar_query.hpp"
 #include "ast/ast_node.hpp"
 #include "runtime/h/test_suite.hpp"
 #include "runtime/h/path_resolver.hpp"
@@ -23,6 +27,10 @@
 #include "runtime/h/document_store.hpp"
 #include "runtime/h/symbol_resolver.hpp"
 #include "runtime/h/execution_engine.hpp"
+#include "runtime/h/execution_environment.hpp"
+#include "runtime/h/resolution_environment.hpp"
+#include "runtime/h/source_span.hpp"
+#include "runtime/h/checklist_save_transition.hpp"
 #include "visitors/ast_interface.hpp"
 #include "visitors/h/print.hpp"
 #include "utils.hpp"
@@ -45,199 +53,42 @@ bool programHasExecutionCall(
     return false;
 }
 
-std::vector<std::string> splitPath(const std::string& path) {
-    std::vector<std::string> segments;
-    std::string current;
-
-    for (char c : path) {
-        if (c == '.') {
-            if (current.empty()) {
-                throw std::runtime_error(
-                    "QPS query path contains an empty segment.");
-            }
-            segments.push_back(current);
-            current.clear();
-        } else {
-            current.push_back(c);
-        }
-    }
-
-    if (current.empty()) {
-        throw std::runtime_error(
-            "QPS query path contains an empty final segment.");
-    }
-
-    segments.push_back(current);
-    return segments;
-}
-
 std::unique_ptr<qps::ast::ProgramNode> parseFileQuiet(
     const std::string& filepath) {
 
-    const std::string source_code =
-        qps::utils::readFileContents(filepath);
-
-    qps::tokens::CharStream char_stream(source_code);
-    qps::tokens::Lexer lexer(char_stream);
-    qps::parser::Parser parser(lexer);
-    return parser.parseProgram();
+    qps::runtime::DocumentLoader loader;
+    return loader.load(filepath);
 }
 
-std::string scalarValue(
-    const qps::ast::AstNode& node) {
+fs::path authoredAuthority(
+    const fs::path& index_file,
+    const std::string& selector) {
 
-    if (const auto* value =
-            dynamic_cast<const qps::ast::StringLiteralNode*>(&node)) {
-        return value->value_;
-    }
+    qps::runtime::DocumentLoader loader;
 
-    if (const auto* value =
-            dynamic_cast<const qps::ast::NumericLiteralNode*>(&node)) {
-        std::ostringstream out;
-        out << value->value_;
-        return out.str();
-    }
+    std::unique_ptr<qps::ast::ProgramNode> program =
+        loader.load(index_file);
 
-    if (const auto* value =
-            dynamic_cast<const qps::ast::BooleanLiteralNode*>(&node)) {
-        return value->value_ ? "true" : "false";
-    }
-
-    if (dynamic_cast<const qps::ast::NullLiteralNode*>(&node)) {
-        return "null";
-    }
-
-    throw std::runtime_error(
-        "QPS query target is not a scalar value.");
-}
-
-const qps::ast::AstNode* findNamedChild(
-    const std::vector<std::unique_ptr<qps::ast::AstNode>>& children,
-    const std::string& name) {
-
-    for (const auto& child : children) {
-        if (const auto* key =
-                dynamic_cast<const qps::ast::KeyDeclarationNode*>(
-                    child.get())) {
-
-            if (key->identifier_ == name) {
-                return key;
-            }
-        }
-
-        if (const auto* term =
-                dynamic_cast<const qps::ast::TermDeclarationNode*>(
-                    child.get())) {
-
-            if (term->identifier_ == name) {
-                return term;
-            }
-        }
-
-        if (const auto* item =
-                dynamic_cast<const qps::ast::ItemDeclarationNode*>(
-                    child.get())) {
-
-            const auto* identifier =
-                dynamic_cast<const qps::ast::IdentifierNode*>(
-                    item->getTarget());
-
-            if (identifier && identifier->name_ == name) {
-                return item;
-            }
-        }
-
-        // Containers are structural grouping syntax, so descend
-        // transparently when resolving a query path.
-        if (const auto* container =
-                dynamic_cast<const qps::ast::ContainerNode*>(
-                    child.get())) {
-
-            if (const auto* nested =
-                    findNamedChild(container->elements, name)) {
-                return nested;
-            }
-        }
-    }
-
-    return nullptr;
-}
-
-std::string queryProgram(
-    const qps::ast::ProgramNode& program,
-    const std::string& query_path) {
-
-    const auto segments = splitPath(query_path);
-
-    const qps::ast::AstNode* current =
-        findNamedChild(
-            program.statements,
-            segments.front());
-
-    if (!current) {
+    if (!program) {
         throw std::runtime_error(
-            "QPS query path not found: " + query_path);
+            "QPS authority index produced no program: " +
+            index_file.generic_string());
     }
 
-    for (std::size_t i = 1; i < segments.size(); ++i) {
-        const auto& segment = segments[i];
+    const std::string authored =
+        qps::ast::queryScalar(
+            *program,
+            selector);
 
-        if (const auto* key =
-                dynamic_cast<const qps::ast::KeyDeclarationNode*>(
-                    current)) {
-
-            current =
-                findNamedChild(
-                    key->content_,
-                    segment);
-        }
-        else if (const auto* term =
-                     dynamic_cast<const qps::ast::TermDeclarationNode*>(
-                         current)) {
-
-            current =
-                findNamedChild(
-                    term->content_,
-                    segment);
-        }
-        else if (const auto* container =
-                     dynamic_cast<const qps::ast::ContainerNode*>(
-                         current)) {
-
-            current =
-                findNamedChild(
-                    container->elements,
-                    segment);
-        }
-        else {
-            throw std::runtime_error(
-                "QPS query cannot descend through path segment '" +
-                segments[i - 1] + "'.");
-        }
-
-        if (!current) {
-            throw std::runtime_error(
-                "QPS query path not found: " + query_path);
-        }
+    if (authored.empty()) {
+        throw std::runtime_error(
+            "QPS authority is empty: " +
+            selector);
     }
 
-    if (const auto* item =
-            dynamic_cast<const qps::ast::ItemDeclarationNode*>(
-                current)) {
-
-        if (!item->value_node_) {
-            throw std::runtime_error(
-                "QPS query target Item has no value: " +
-                query_path);
-        }
-
-        return scalarValue(*item->value_node_);
-    }
-
-    throw std::runtime_error(
-        "QPS query target is structural, not a scalar Item: " +
-        query_path);
+    return fs::path(authored);
 }
+
 
 std::string displayPath(const fs::path& path) {
     return path.generic_string();
@@ -770,16 +621,16 @@ void queryWalkProgram(
 
 
 
-fs::path findCeOsRoot(fs::path start) {
-    start = fs::absolute(start);
+std::optional<fs::path> findOutermostIndexedRoot(
+    fs::path start) {
+
+    start = fs::absolute(start).lexically_normal();
+
+    std::optional<fs::path> outermost_indexed_ancestor;
 
     while (true) {
-        if (
-            fs::exists(start / "_index.qps") &&
-            fs::exists(
-                start /
-                "Engineering/py/cipher/cipher.py")) {
-            return start;
+        if (fs::is_regular_file(start / "_index.qps")) {
+            outermost_indexed_ancestor = start;
         }
 
         const fs::path parent = start.parent_path();
@@ -791,30 +642,170 @@ fs::path findCeOsRoot(fs::path start) {
         start = parent;
     }
 
+    return outermost_indexed_ancestor;
+}
+
+fs::path findCeOsRoot(fs::path start) {
+    const auto root =
+        findOutermostIndexedRoot(std::move(start));
+
+    if (root.has_value()) {
+        return *root;
+    }
+
     throw std::runtime_error(
-        "Unable to locate CE-OS root for Cipher backend.");
+        "Unable to locate indexed CE-OS repository root.");
 }
 
 int runCipherCommand(int argc, char* argv[]) {
-    if (argc != 3 && argc != 4) {
+    const auto usage = [&]() {
         std::cerr
             << "Usage: "
             << argv[0]
-            << " cipher <source> [--report]"
+            << " cipher <source> [destination] [--report]\n"
+            << "       "
+            << argv[0]
+            << " cipher test <source> [destination]"
             << std::endl;
+    };
+
+    const bool preflight =
+        argc >= 3 &&
+        std::string(argv[2]) == "test";
+
+    if (preflight) {
+        if (argc != 4 && argc != 5) {
+            usage();
+            return 1;
+        }
+
+        try {
+            const fs::path root =
+                findCeOsRoot(fs::current_path());
+
+            const fs::path source =
+                fs::absolute(
+                    fs::path(argv[3]));
+
+            std::optional<fs::path>
+                preflight_destination;
+
+            if (argc == 5) {
+                preflight_destination =
+                    fs::absolute(
+                        fs::path(argv[4]));
+            }
+
+            const fs::path cipher_source =
+                root / authoredAuthority(
+                    root / "_index.qps",
+                    "qps.cipher_authority-");
+
+            std::unique_ptr<qps::ast::ProgramNode>
+                program =
+                    parseFileQuiet(
+                        cipher_source.string());
+
+            if (!program) {
+                throw std::runtime_error(
+                    "QPS Cipher source produced no program.");
+            }
+
+            qps::runtime::ExecutionEngine engine;
+            (void)engine.execute(*program);
+
+            std::unordered_map<
+                std::string,
+                qps::runtime::RuntimeValue
+            > inputs;
+
+            inputs.emplace(
+                "source",
+                qps::runtime::RuntimeValue::string(
+                    source.string()));
+
+            inputs.emplace(
+                "root",
+                qps::runtime::RuntimeValue::string(
+                    root.string()));
+
+            const std::string definition =
+                preflight_destination.has_value()
+                    ? "Cipher_Test_To"
+                    : "Cipher_Test";
+
+            if (preflight_destination.has_value()) {
+                inputs.emplace(
+                    "destination",
+                    qps::runtime::RuntimeValue::string(
+                        preflight_destination->string()));
+            }
+
+            const auto result =
+                engine.instantiate(
+                    definition,
+                    inputs);
+
+            if (
+                result.result.has_value() &&
+                result.result->isNumeric()) {
+
+                return static_cast<int>(
+                    result.result->asNumber(
+                        "Cipher test exit code"));
+            }
+
+            return 0;
+        }
+        catch (const std::exception& e) {
+            std::cerr
+                << "Error: "
+                << e.what()
+                << std::endl;
+            return 1;
+        }
+    }
+
+    if (argc < 3 || argc > 5) {
+        usage();
         return 1;
     }
 
-    if (
-        argc == 4 &&
-        std::string(argv[3]) != "--report") {
+    bool report = false;
+    bool closure = false;
+    std::optional<fs::path> destination;
 
-        std::cerr
-            << "Usage: "
-            << argv[0]
-            << " cipher <source> [--report]"
-            << std::endl;
-        return 1;
+    for (int i = 3; i < argc; ++i) {
+        const std::string argument(argv[i]);
+
+        if (argument == "--report") {
+            if (report || closure) {
+                usage();
+                return 1;
+            }
+
+            report = true;
+            continue;
+        }
+
+        if (argument == "--closure") {
+            if (closure || report || destination.has_value()) {
+                usage();
+                return 1;
+            }
+
+            closure = true;
+            continue;
+        }
+
+        if (destination.has_value()) {
+            usage();
+            return 1;
+        }
+
+        destination =
+            fs::absolute(
+                fs::path(argument));
     }
 
     try {
@@ -826,7 +817,9 @@ int runCipherCommand(int argc, char* argv[]) {
                 fs::path(argv[2]));
 
         const fs::path cipher_source =
-            root / "qps/qps/cipher.qps";
+            root / authoredAuthority(
+                root / "_index.qps",
+                "qps.cipher_authority-");
 
         std::unique_ptr<qps::ast::ProgramNode>
             program =
@@ -858,10 +851,30 @@ int runCipherCommand(int argc, char* argv[]) {
             qps::runtime::RuntimeValue::string(
                 root.string()));
 
-        const std::string definition =
-            argc == 4
-                ? "Cipher_Report"
-                : "Cipher_Run";
+        if (destination.has_value()) {
+            inputs.emplace(
+                "destination",
+                qps::runtime::RuntimeValue::string(
+                    destination->string()));
+        }
+
+        std::string definition;
+
+        if (closure) {
+            definition = "Cipher_Closure";
+        }
+        else if (destination.has_value() && report) {
+            definition = "Cipher_Report_To";
+        }
+        else if (destination.has_value()) {
+            definition = "Cipher_Run_To";
+        }
+        else if (report) {
+            definition = "Cipher_Report";
+        }
+        else {
+            definition = "Cipher_Run";
+        }
 
         (void)engine.instantiate(
             definition,
@@ -877,8 +890,6 @@ int runCipherCommand(int argc, char* argv[]) {
         return 1;
     }
 }
-
-
 
 int runBuildCommand(
     int argc,
@@ -899,8 +910,9 @@ int runBuildCommand(
                 fs::current_path());
 
         const fs::path build_source =
-            root /
-            "qps/qps/build.qps";
+            root / authoredAuthority(
+                root / "_index.qps",
+                "qps.build_authority");
 
         std::unique_ptr<
             qps::ast::ProgramNode>
@@ -987,6 +999,937 @@ void printDirectoryTree(
 }
 
 
+
+
+
+std::string qpsQuoted(
+    const std::string& value) {
+
+    std::string result;
+    result.reserve(value.size() + 2);
+    result.push_back('"');
+
+    for (const char c : value) {
+        switch (c) {
+            case '\\':
+                result += "\\\\";
+                break;
+
+            case '"':
+                result += "\\\"";
+                break;
+
+            case '\n':
+                result += "\\n";
+                break;
+
+            case '\r':
+                result += "\\r";
+                break;
+
+            case '\t':
+                result += "\\t";
+                break;
+
+            default:
+                result.push_back(c);
+                break;
+        }
+    }
+
+    result.push_back('"');
+    return result;
+}
+
+
+std::vector<std::pair<std::string, std::string>>
+collectScalarSurface(
+    const qps::ast::ProgramNode& program,
+    const std::string& base) {
+
+    const qps::ast::AstNode* surface =
+        qps::ast::selectStructuralPath(
+            program,
+            base);
+
+    if (!surface) {
+        throw std::runtime_error(
+            "Required QPS structural surface not found: " +
+            base);
+    }
+
+    std::vector<std::pair<std::string, std::string>>
+        result;
+
+    for (const auto* member :
+         qps::ast::structuralScope(*surface)) {
+
+        const auto* item =
+            dynamic_cast<
+                const qps::ast::ItemDeclarationNode*>(
+                    member);
+
+        if (!item) {
+            throw std::runtime_error(
+                "Save surface '" +
+                base +
+                "' must contain scalar Items only.");
+        }
+
+        const auto* target =
+            dynamic_cast<
+                const qps::ast::IdentifierNode*>(
+                    item->getTarget());
+
+        if (!target) {
+            throw std::runtime_error(
+                "Save surface '" +
+                base +
+                "' contains a non-identifier Item.");
+        }
+
+        result.emplace_back(
+            target->name_,
+            qps::ast::queryScalar(
+                program,
+                base + "." + target->name_ + "-"));
+    }
+
+    return result;
+}
+
+
+std::string utcSaveTimestamp() {
+
+    const auto now =
+        std::chrono::system_clock::now();
+
+    const std::time_t raw =
+        std::chrono::system_clock::to_time_t(now);
+
+    std::tm utc{};
+
+#if defined(_WIN32)
+    gmtime_s(&utc, &raw);
+#else
+    gmtime_r(&raw, &utc);
+#endif
+
+    std::ostringstream out;
+    out << std::put_time(
+        &utc,
+        "%Y-%m-%dT%H:%M:%SZ");
+
+    return out.str();
+}
+
+
+std::string historyStructuralKey() {
+
+    const auto now =
+        std::chrono::system_clock::now();
+
+    const auto milliseconds =
+        std::chrono::duration_cast<
+            std::chrono::milliseconds>(
+                now.time_since_epoch())
+            .count() % 1000;
+
+    const std::time_t raw =
+        std::chrono::system_clock::to_time_t(now);
+
+    std::tm utc{};
+
+#if defined(_WIN32)
+    gmtime_s(&utc, &raw);
+#else
+    gmtime_r(&raw, &utc);
+#endif
+
+    std::ostringstream out;
+
+    out
+        << "h_"
+        << std::put_time(
+               &utc,
+               "%Y%m%d_%H%M%S")
+        << "_"
+        << std::setw(3)
+        << std::setfill('0')
+        << milliseconds;
+
+    return out.str();
+}
+
+
+std::string renderHistorySurface(
+    const std::string& name,
+    const std::vector<
+        std::pair<std::string, std::string>>& items) {
+
+    std::ostringstream out;
+
+    out
+        << name
+        << ": (\n";
+
+    for (const auto& item : items) {
+        out
+            << item.first
+            << "- "
+            << qpsQuoted(item.second)
+            << ";\n";
+    }
+
+    out << ");\n";
+
+    return out.str();
+}
+
+
+bool historyContainsIdentity(
+    const qps::ast::ProgramNode& history,
+    const std::string& identity) {
+
+    const qps::ast::AstNode* entries =
+        qps::ast::selectStructuralPath(
+            history,
+            "entries");
+
+    if (!entries) {
+        throw std::runtime_error(
+            "History ledger has no entries surface.");
+    }
+
+    for (const auto* member :
+         qps::ast::structuralScope(*entries)) {
+
+        const auto* entry =
+            dynamic_cast<
+                const qps::ast::TermDeclarationNode*>(
+                    member);
+
+        if (!entry) {
+            continue;
+        }
+
+        const std::string base =
+            "entries." +
+            entry->identifier_;
+
+        const std::string existing =
+            qps::ast::queryScalar(
+                history,
+                base + ".identity-");
+
+        if (existing == identity) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+
+int runSaveCommand(
+    int argc,
+    char* argv[]) {
+
+    if (argc != 4) {
+        std::cerr
+            << "Usage: "
+            << argv[0]
+            << " save <checklist-index> <task-number>"
+            << std::endl;
+        return 1;
+    }
+
+    try {
+        const fs::path workspace =
+            findCeOsRoot(
+                fs::current_path());
+
+        std::size_t checklist_consumed = 0;
+        const std::string checklist_text(
+            argv[2]);
+
+        const unsigned long checklist_index =
+            std::stoul(
+                checklist_text,
+                &checklist_consumed);
+
+        if (
+            checklist_consumed !=
+                checklist_text.size() ||
+            checklist_index == 0) {
+
+            throw std::runtime_error(
+                "Checklist index must be a positive integer.");
+        }
+
+        std::size_t task_consumed = 0;
+        const std::string task_text(
+            argv[3]);
+
+        const unsigned long task_number =
+            std::stoul(
+                task_text,
+                &task_consumed);
+
+        if (
+            task_consumed !=
+                task_text.size() ||
+            task_number == 0) {
+
+            throw std::runtime_error(
+                "Task number must be a positive integer.");
+        }
+
+        const fs::path save_source =
+            workspace / authoredAuthority(
+                workspace / "_index.qps",
+                "qps.save_authority-");
+
+        qps::runtime::PathResolver paths(
+            workspace);
+
+        const auto module =
+            paths.containingModule(
+                save_source);
+
+        if (!module.has_value()) {
+            throw std::runtime_error(
+                "Save authority is not inside a connected QPS module.");
+        }
+
+        qps::runtime::DocumentLoader loader;
+        qps::runtime::DocumentStore documents(
+            loader);
+
+        qps::runtime::ExecutionEngine engine;
+
+        qps::runtime::ExecutionEnvironment environment(
+            paths,
+            documents,
+            engine);
+
+        environment.loadModule(
+            *module);
+
+        std::unordered_map<
+            std::string,
+            qps::runtime::RuntimeValue
+        > inputs;
+
+        inputs.emplace(
+            "root",
+            qps::runtime::RuntimeValue::string(
+                workspace.string()));
+
+        inputs.emplace(
+            "checklist_index",
+            qps::runtime::RuntimeValue::numeric(
+                static_cast<double>(
+                    checklist_index)));
+
+        inputs.emplace(
+            "task_name",
+            qps::runtime::RuntimeValue::string(
+                "task_" +
+                std::to_string(
+                    task_number)));
+
+        (void)engine.instantiate(
+            "Save_Accept",
+            inputs);
+
+        return 0;
+    }
+    catch (const std::exception& e) {
+        std::cerr
+            << "Error: "
+            << e.what()
+            << std::endl;
+        return 1;
+    }
+}
+
+
+bool historyScopeMatches(
+    const std::string& requested,
+    const std::string& scope) {
+
+    if (requested.empty()) {
+        return true;
+    }
+
+    if (scope == requested) {
+        return true;
+    }
+
+    if (scope.size() <= requested.size()) {
+        return false;
+    }
+
+    if (scope.compare(
+            0,
+            requested.size(),
+            requested) != 0) {
+
+        return false;
+    }
+
+    return scope[requested.size()] == '/';
+}
+
+
+int runHistoryCommand(
+    int argc,
+    char* argv[]) {
+
+    if (argc < 2 || argc > 3) {
+        std::cerr
+            << "Usage: "
+            << argv[0]
+            << " history [path]"
+            << std::endl;
+        return 1;
+    }
+
+    try {
+        const fs::path workspace =
+            findCeOsRoot(
+                fs::current_path());
+
+        const fs::path history_path =
+            workspace / "history.qps";
+
+        qps::runtime::DocumentLoader loader;
+
+        const auto history =
+            loader.load(
+                history_path);
+
+        if (!history) {
+            throw std::runtime_error(
+                "History ledger produced no program.");
+        }
+
+        const qps::ast::AstNode* entries =
+            qps::ast::selectStructuralPath(
+                *history,
+                "entries");
+
+        if (!entries) {
+            throw std::runtime_error(
+                "History ledger has no entries surface.");
+        }
+
+        std::string requested;
+
+        if (argc == 3) {
+            requested =
+                fs::path(argv[2])
+                    .lexically_normal()
+                    .generic_string();
+
+            while (
+                requested.size() > 1 &&
+                requested.back() == '/') {
+
+                requested.pop_back();
+            }
+
+            if (requested == ".") {
+                requested.clear();
+            }
+        }
+
+        for (const auto* member :
+             qps::ast::structuralScope(*entries)) {
+
+            const auto* entry =
+                dynamic_cast<
+                    const qps::ast::TermDeclarationNode*>(
+                    member);
+
+            if (!entry) {
+                continue;
+            }
+
+            const std::string base =
+                "entries." +
+                entry->identifier_;
+
+            bool associated =
+                requested.empty();
+
+            const qps::ast::AstNode* scope =
+                qps::ast::selectStructuralPath(
+                    *history,
+                    base + ".scope");
+
+            if (!associated && scope) {
+                for (const auto* scope_member :
+                     qps::ast::structuralScope(*scope)) {
+
+                    const auto* item =
+                        dynamic_cast<
+                            const qps::ast::ItemDeclarationNode*>(
+                            scope_member);
+
+                    if (!item) {
+                        continue;
+                    }
+
+                    const auto* target =
+                        dynamic_cast<
+                            const qps::ast::IdentifierNode*>(
+                            item->getTarget());
+
+                    if (!target) {
+                        continue;
+                    }
+
+                    const std::string scope_path =
+                        qps::ast::queryScalar(
+                            *history,
+                            base +
+                                ".scope." +
+                                target->name_ +
+                                "-");
+
+                    if (historyScopeMatches(
+                            requested,
+                            scope_path)) {
+
+                        associated = true;
+                        break;
+                    }
+                }
+            }
+
+            if (!associated) {
+                continue;
+            }
+
+            const std::string timestamp =
+                qps::ast::queryScalar(
+                    *history,
+                    base + ".timestamp-");
+
+            const std::string identity =
+                qps::ast::queryScalar(
+                    *history,
+                    base + ".identity-");
+
+            const std::string summary =
+                qps::ast::queryScalar(
+                    *history,
+                    base + ".summary-");
+
+            std::cout
+                << timestamp
+                << "  "
+                << identity
+                << "  "
+                << summary
+                << "\n";
+        }
+
+        return 0;
+    }
+    catch (const std::exception& e) {
+        std::cerr
+            << "Error: "
+            << e.what()
+            << std::endl;
+        return 1;
+    }
+}
+
+
+int runChecklistCommand(
+    int argc,
+    char* argv[]) {
+
+    if (argc < 2 || argc > 4) {
+        std::cerr
+            << "Usage: "
+            << argv[0]
+            << " checklist [checklist-index] [task-number]"
+            << std::endl;
+        return 1;
+    }
+
+    try {
+        const fs::path workspace =
+            findCeOsRoot(
+                fs::current_path());
+
+        const fs::path checklist_source =
+            workspace / authoredAuthority(
+                workspace / "_index.qps",
+                "qps.checklist_authority-");
+
+        qps::runtime::PathResolver paths(
+            workspace);
+
+        const auto module =
+            paths.containingModule(
+                checklist_source);
+
+        if (!module.has_value()) {
+            throw std::runtime_error(
+                "Checklist authority is not inside a connected QPS module.");
+        }
+
+        qps::runtime::DocumentLoader loader;
+        qps::runtime::DocumentStore documents(
+            loader);
+
+        qps::runtime::ExecutionEngine engine;
+
+        qps::runtime::ExecutionEnvironment environment(
+            paths,
+            documents,
+            engine);
+
+        environment.loadModule(
+            *module);
+
+        std::unordered_map<
+            std::string,
+            qps::runtime::RuntimeValue
+        > inputs;
+
+        inputs.emplace(
+            "root",
+            qps::runtime::RuntimeValue::string(
+                workspace.string()));
+
+        std::string definition =
+            "Checklist_List";
+
+        if (argc >= 3) {
+            std::size_t consumed = 0;
+
+            const std::string checklist_text(
+                argv[2]);
+
+            const unsigned long checklist_index =
+                std::stoul(
+                    checklist_text,
+                    &consumed);
+
+            if (consumed != checklist_text.size() ||
+                checklist_index == 0) {
+
+                throw std::runtime_error(
+                    "Checklist index must be a positive integer.");
+            }
+
+            inputs.emplace(
+                "checklist_index",
+                qps::runtime::RuntimeValue::numeric(
+                    static_cast<double>(
+                        checklist_index)));
+
+            definition =
+                "Checklist_Show";
+        }
+
+        if (argc == 4) {
+            std::size_t consumed = 0;
+
+            const std::string task_text(
+                argv[3]);
+
+            const unsigned long task_number =
+                std::stoul(
+                    task_text,
+                    &consumed);
+
+            if (consumed != task_text.size() ||
+                task_number == 0) {
+
+                throw std::runtime_error(
+                    "Task number must be a positive integer.");
+            }
+
+            inputs.emplace(
+                "task_name",
+                qps::runtime::RuntimeValue::string(
+                    "task_" +
+                    std::to_string(
+                        task_number)));
+
+            definition =
+                "Checklist_Show_Task";
+        }
+
+        (void)engine.instantiate(
+            definition,
+            inputs);
+
+        return 0;
+    }
+    catch (const std::exception& e) {
+        std::cerr
+            << "Error: "
+            << e.what()
+            << std::endl;
+        return 1;
+    }
+}
+
+
+int runScoutCommand(
+    int argc,
+    char* argv[]) {
+
+    if (argc != 4) {
+        std::cerr
+            << "Usage: "
+            << argv[0]
+            << " scout <indexed-module> <structural-name>"
+            << std::endl;
+        return 1;
+    }
+
+    try {
+        const fs::path requested =
+            fs::absolute(fs::path(argv[2]));
+
+        fs::path module;
+
+        if (fs::is_regular_file(requested) &&
+            requested.filename() == "_index.qps") {
+
+            module = requested.parent_path();
+        }
+        else if (fs::is_directory(requested)) {
+            module = requested;
+        }
+        else {
+            throw std::runtime_error(
+                "Scout target must be a QPS module directory "
+                "or its _index.qps.");
+        }
+
+        if (!fs::is_regular_file(module / "_index.qps")) {
+            throw std::runtime_error(
+                "Scout requires an indexed QPS module: " +
+                module.string());
+        }
+
+        /*
+         * The selected module is the scout boundary.
+         *
+         * PathResolver sees it as its workspace root, so qpsFiles(".")
+         * can enumerate only immediate authored documents. Scout does
+         * not descend child modules or recursively search the filesystem.
+         */
+        qps::runtime::PathResolver paths(module);
+        qps::runtime::DocumentLoader loader;
+        qps::runtime::DocumentStore documents(loader);
+
+        std::vector<qps::runtime::SourceSpan> spans;
+        std::size_t unreadable_documents = 0;
+
+        for (const auto& relative : paths.qpsFiles(".")) {
+            const fs::path absolute =
+                paths.resolveFile(relative);
+
+            try {
+                const auto document =
+                    documents.get(absolute);
+
+                const auto matches =
+                    qps::ast::scoutStructuralName(
+                        *document,
+                        argv[3]);
+
+                for (const auto* selected : matches) {
+                    const std::size_t line =
+                        static_cast<std::size_t>(
+                            lineOrOne(
+                                selected->getLine()));
+
+                    spans.push_back(
+                        {absolute, line, line});
+                }
+            }
+            catch (const std::exception&) {
+                /*
+                 * Scout is document-bounded reconnaissance.
+                 *
+                 * One document that the current parser cannot consume must
+                 * not erase valid evidence from other immediate documents.
+                 *
+                 * We intentionally keep stdout evidence-only. If no match
+                 * exists anywhere, unreadable document count is surfaced in
+                 * the terminal error so a negative result is not overstated.
+                 */
+                ++unreadable_documents;
+            }
+        }
+
+        if (spans.empty()) {
+            std::string message =
+                "QPS scout found no authored identity '" +
+                std::string(argv[3]) +
+                "' in the immediate indexed module.";
+
+            if (unreadable_documents > 0) {
+                message +=
+                    " Unreadable documents: " +
+                    std::to_string(unreadable_documents) +
+                    ".";
+            }
+
+            throw std::runtime_error(message);
+        }
+
+        std::cout
+            << qps::runtime::renderSourceSpans(
+                module,
+                spans);
+
+        return 0;
+    }
+    catch (const std::exception& e) {
+        std::cerr
+            << "Error: "
+            << e.what()
+            << std::endl;
+        return 1;
+    }
+}
+
+
+std::size_t ownedStructuralEndLine(
+    const qps::ast::AstNode& node) {
+
+    if (const auto* key =
+            dynamic_cast<
+                const qps::ast::KeyDeclarationNode*>(
+                    &node)) {
+
+        return static_cast<std::size_t>(
+            lineOrOne(
+                key->getEndLine()));
+    }
+
+    if (const auto* term =
+            dynamic_cast<
+                const qps::ast::TermDeclarationNode*>(
+                    &node)) {
+
+        return static_cast<std::size_t>(
+            lineOrOne(
+                term->getEndLine()));
+    }
+
+    if (const auto* item =
+            dynamic_cast<
+                const qps::ast::ItemDeclarationNode*>(
+                    &node)) {
+
+        return static_cast<std::size_t>(
+            lineOrOne(
+                item->getEndLine()));
+    }
+
+    return static_cast<std::size_t>(
+        lineOrOne(
+            node.getLine()));
+}
+
+
+int runScopeCommand(
+    int argc,
+    char* argv[]) {
+
+    if (argc != 4) {
+        std::cerr
+            << "Usage: "
+            << argv[0]
+            << " scope <file.qps> <structural.path>"
+            << std::endl;
+        return 1;
+    }
+
+    try {
+        const fs::path target =
+            fs::absolute(fs::path(argv[2]));
+
+        if (!fs::exists(target) ||
+            !fs::is_regular_file(target)) {
+
+            throw std::runtime_error(
+                "Scope target is not a file: " +
+                target.string());
+        }
+
+        if (target.extension() != ".qps") {
+            throw std::runtime_error(
+                "Scope requires a .qps document.");
+        }
+
+        qps::runtime::DocumentLoader loader;
+        const auto document = loader.load(target);
+
+        const qps::ast::AstNode* selected =
+            qps::ast::selectStructuralPath(
+                *document,
+                argv[3]);
+
+        if (!selected) {
+            throw std::runtime_error(
+                "QPS scope path not found: " +
+                std::string(argv[3]));
+        }
+
+        std::vector<qps::runtime::SourceSpan> spans;
+
+        const auto add =
+            [&](const qps::ast::AstNode& node) {
+                const std::size_t first =
+                    static_cast<std::size_t>(
+                        lineOrOne(node.getLine()));
+
+                const std::size_t last =
+                    ownedStructuralEndLine(node);
+
+                spans.push_back(
+                    {target, first, last});
+            };
+
+        add(*selected);
+
+        for (const auto* member :
+             qps::ast::structuralScope(*selected)) {
+            add(*member);
+        }
+
+        std::cout
+            << qps::runtime::renderSourceSpans(
+                fs::current_path(),
+                spans);
+
+        return 0;
+    }
+    catch (const std::exception& e) {
+        std::cerr
+            << "Error: "
+            << e.what()
+            << std::endl;
+        return 1;
+    }
+}
+
+
 int runProbeCommand(
     int argc,
     char* argv[]) {
@@ -1015,6 +1958,55 @@ int runProbeCommand(
             throw std::runtime_error(
                 "Probe target is not a file: " +
                 target.string());
+        }
+
+        const std::string probe_target = argv[3];
+
+        const bool qps_semantic_probe =
+            target.extension() == ".qps" &&
+            probe_target.find_first_not_of("0123456789") !=
+                std::string::npos;
+
+        if (qps_semantic_probe) {
+            if (argc != 4) {
+                throw std::runtime_error(
+                    "Semantic QPS probe does not accept a radius.");
+            }
+
+            qps::runtime::DocumentLoader loader;
+            const auto document =
+                loader.load(target);
+
+            const qps::ast::AstNode* selected =
+                qps::ast::selectStructuralPath(
+                    *document,
+                    probe_target);
+
+            if (!selected) {
+                throw std::runtime_error(
+                    "QPS probe path not found: " +
+                    probe_target);
+            }
+
+            const std::size_t first =
+                static_cast<std::size_t>(
+                    lineOrOne(
+                        selected->getLine()));
+
+            const std::size_t last =
+                ownedStructuralEndLine(
+                    *selected);
+
+            const std::vector<qps::runtime::SourceSpan> spans{
+                {target, first, last}
+            };
+
+            std::cout
+                << qps::runtime::renderSourceSpans(
+                    fs::current_path(),
+                    spans);
+
+            return 0;
         }
 
         const auto parse_non_negative =
@@ -1065,14 +2057,14 @@ int runProbeCommand(
                 target.string());
         }
 
-        std::vector<std::string> lines;
+        std::size_t line_count = 0;
         std::string line;
 
         while (std::getline(input, line)) {
-            lines.push_back(line);
+            ++line_count;
         }
 
-        if (center > lines.size()) {
+        if (center > line_count) {
             throw std::runtime_error(
                 "Probe line exceeds file length.");
         }
@@ -1084,28 +2076,17 @@ int runProbeCommand(
 
         const std::size_t last =
             std::min(
-                lines.size(),
+                line_count,
                 center + radius);
 
+        const std::vector<qps::runtime::SourceSpan> spans{
+            {target, first, last}
+        };
+
         std::cout
-            << target.string()
-            << ":"
-            << first
-            << "-"
-            << last
-            << "\n";
-
-        for (
-            std::size_t number = first;
-            number <= last;
-            ++number) {
-
-            std::cout
-                << number
-                << ": "
-                << lines[number - 1]
-                << "\n";
-        }
+            << qps::runtime::renderSourceSpans(
+                fs::current_path(),
+                spans);
 
         return 0;
     }
@@ -1277,18 +2258,24 @@ bool runTestFile(
         std::unique_ptr<qps::ast::ProgramNode> ast_root =
             parseFileQuiet(file.string());
 
-        qps::runtime::PathResolver paths(fs::current_path());
-        qps::runtime::DocumentLoader loader;
-        qps::runtime::DocumentStore documents(loader);
-        qps::runtime::SymbolResolver symbols(
-            paths,
-            documents,
-            findCeOsRoot(fs::current_path()) /
-                "qps/qps/reference_document.qps");
+        const fs::path root =
+            findCeOsRoot(fs::current_path());
+
+        qps::runtime::ResolutionEnvironment resolution(
+            fs::current_path(),
+            root / authoredAuthority(
+                root / "_index.qps",
+                "qps.reference_document_authority"),
+            root / authoredAuthority(
+                root / "_index.qps",
+                "qps.semantic_walk_authority"));
 
         qps::runtime::TestSuiteRunner runner;
         qps::runtime::TestSuiteSummary summary =
-            runner.run(*ast_root, &symbols, file);
+            runner.run(
+                *ast_root,
+                &resolution.symbols(),
+                file);
 
         if (summary.total() == 0) {
             tested_any = true;
@@ -1361,18 +2348,24 @@ int runTestCommand(int argc, char* argv[]) {
                     std::unique_ptr<qps::ast::ProgramNode> ast_root =
                         parseFileQuiet(file.string());
 
-                    qps::runtime::PathResolver paths(fs::current_path());
-                    qps::runtime::DocumentLoader loader;
-                    qps::runtime::DocumentStore documents(loader);
-                    qps::runtime::SymbolResolver symbols(
-                        paths,
-                        documents,
-                        findCeOsRoot(fs::current_path()) /
-                            "qps/qps/reference_document.qps");
+                    const fs::path root =
+                        findCeOsRoot(fs::current_path());
+
+                    qps::runtime::ResolutionEnvironment resolution(
+                        fs::current_path(),
+                        root / authoredAuthority(
+                            root / "_index.qps",
+                            "qps.reference_document_authority"),
+                        root / authoredAuthority(
+                            root / "_index.qps",
+                            "qps.semantic_walk_authority"));
 
                     qps::runtime::TestSuiteRunner runner;
                     qps::runtime::TestSuiteSummary summary =
-                        runner.run(*ast_root, &symbols, file);
+                        runner.run(
+                            *ast_root,
+                            &resolution.symbols(),
+                            file);
 
                     tested_any = true;
 
@@ -1476,8 +2469,28 @@ int main(int argc, char* argv[]) {
         return runProbeCommand(argc, argv);
     }
 
+    if (argc >= 2 && std::string(argv[1]) == "scope") {
+        return runScopeCommand(argc, argv);
+    }
+
+    if (argc >= 2 && std::string(argv[1]) == "scout") {
+        return runScoutCommand(argc, argv);
+    }
+
     if (argc >= 2 && std::string(argv[1]) == "cipher") {
         return runCipherCommand(argc, argv);
+    }
+
+    if (argc >= 2 && std::string(argv[1]) == "checklist") {
+        return runChecklistCommand(argc, argv);
+    }
+
+    if (argc >= 2 && std::string(argv[1]) == "history") {
+        return runHistoryCommand(argc, argv);
+    }
+
+    if (argc >= 2 && std::string(argv[1]) == "save") {
+        return runSaveCommand(argc, argv);
     }
 
     if (argc < 2) {
@@ -1515,35 +2528,23 @@ int main(int argc, char* argv[]) {
     const std::string filepath = argv[1];
 
     try {
-        const std::string source_code =
-            qps::utils::readFileContents(filepath);
-
         if (!query_mode && !check_mode) {
             qps::utils::logMessage(
-                "Successfully read file: " + filepath);
+                "Loading QPS document: " + filepath);
         }
 
-        qps::tokens::CharStream char_stream(source_code);
-        qps::tokens::Lexer lexer(char_stream);
-
-        if (!query_mode && !check_mode) {
-            qps::utils::logMessage(
-                "Lexical analysis started.");
-        }
-
-        qps::parser::Parser parser(lexer);
-
-        if (!query_mode && !check_mode) {
-            qps::utils::logMessage(
-                "Syntactic analysis (parsing) started.");
-        }
-
+        qps::runtime::DocumentLoader loader;
         std::unique_ptr<qps::ast::ProgramNode> ast_root =
-            parser.parseProgram();
+            loader.load(filepath);
+
+        if (!query_mode && !check_mode) {
+            qps::utils::logMessage(
+                "Parsing complete. AST generated.");
+        }
 
         if (query_mode) {
             std::cout
-                << queryProgram(
+                << qps::ast::queryScalar(
                        *ast_root,
                        argv[3])
                 << std::endl;
@@ -1559,7 +2560,39 @@ int main(int argc, char* argv[]) {
 
         if (programHasExecutionCall(*ast_root)) {
             qps::runtime::ExecutionEngine engine;
-            (void)engine.execute(*ast_root);
+
+            const fs::path source =
+                fs::absolute(filepath).lexically_normal();
+
+            const auto indexed_root =
+                findOutermostIndexedRoot(
+                    source.parent_path());
+
+            if (indexed_root.has_value()) {
+                qps::runtime::PathResolver paths(
+                    *indexed_root);
+
+                const auto module =
+                    paths.containingModule(source);
+
+                if (module.has_value()) {
+                    qps::runtime::DocumentLoader loader;
+                    qps::runtime::DocumentStore documents(loader);
+
+                    qps::runtime::ExecutionEnvironment environment(
+                        paths,
+                        documents,
+                        engine);
+
+                    environment.loadModule(*module);
+                    (void)engine.executeCalls(*ast_root);
+                } else {
+                    (void)engine.execute(*ast_root);
+                }
+            } else {
+                (void)engine.execute(*ast_root);
+            }
+
             return 0;
         }
 

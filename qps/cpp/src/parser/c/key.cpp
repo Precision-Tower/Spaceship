@@ -75,6 +75,31 @@ std::unique_ptr<ast::KeyDeclarationNode> Parser::parseKeyDeclaration() {
             }
         }
     }
+    // KEY_SOURCE_SPAN_FINALIZATION
+    //
+    // PARAGRAPH_BREAK is emitted from the source position immediately
+    // following the final owned token, before blank-line whitespace is
+    // discarded. Its line therefore identifies the final source line
+    // owned by this Key paragraph.
+    if (peek_type() == tokens::TokenType::PARAGRAPH_BREAK) {
+        key_node->setEndLine(current_token_.line);
+    }
+
+    // EOF has no structural delimiter. If EOF is positioned at column 1
+    // after one trailing newline, the previous physical line is the final
+    // line owned by the Key. Otherwise EOF remains on the final owned line.
+    if (peek_type() == tokens::TokenType::END_OF_FILE) {
+        int end_line = current_token_.line;
+
+        if (current_token_.column == 1 &&
+            end_line > line) {
+
+            --end_line;
+        }
+
+        key_node->setEndLine(end_line);
+    }
+
     // A Key is a paragraph of information.
     //
     // Child declarations own their own ';' terminators.
@@ -88,6 +113,7 @@ std::unique_ptr<ast::KeyDeclarationNode> Parser::parseKeyDeclaration() {
 
     // Keep explicit ';' available for nested/explicitly terminated Keys.
     if (peek_type() == tokens::TokenType::SEMICOLON) {
+        key_node->setEndLine(current_token_.line);
         match(tokens::TokenType::SEMICOLON);
         return key_node;
     }

@@ -161,19 +161,21 @@ void PrintVisitor::visit(ast::CausalDefinitionNode* node) {
 void PrintVisitor::visit(ast::CausalRelationshipNode* node) {
     std::cout << getIndent() << "CAUSAL_RELATIONSHIP (L" << node->getLine() << ", C" << node->getColumn() << ")\n";
     indent_level_++;
-    std::cout << getIndent() << "Left Side:\n";
-    indent_level_++;
-    std::cout << getIndent() << "Entity:\n"; node->left_side_->entity->accept(*this);
-    std::cout << getIndent() << "Input:\n"; node->left_side_->input->accept(*this);
-    std::cout << getIndent() << "Output:\n"; node->left_side_->output->accept(*this);
-    indent_level_--;
 
-    std::cout << getIndent() << "Right Side:\n";
-    indent_level_++;
-    std::cout << getIndent() << "Entity:\n"; node->right_side_->entity->accept(*this);
-    std::cout << getIndent() << "Input:\n"; node->right_side_->input->accept(*this);
-    std::cout << getIndent() << "Output:\n"; node->right_side_->output->accept(*this);
-    indent_level_--;
+    for (const auto& side : node->sides_) {
+        std::cout << getIndent() << "Side:\n";
+        indent_level_++;
+        std::cout << getIndent() << "Entity:\n";
+        side->entity->accept(*this);
+        std::cout << getIndent() << "Domain Chain:\n";
+        indent_level_++;
+        for (const auto& domain : side->domain_chain) {
+            domain->accept(*this);
+        }
+        indent_level_--;
+        indent_level_--;
+    }
+
     indent_level_--;
 }
 

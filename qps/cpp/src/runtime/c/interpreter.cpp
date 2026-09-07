@@ -99,15 +99,6 @@ collectParameterSpecs(
                 "' parameter targets must be local identifiers.");
         }
 
-        if (item->value_node_) {
-            throw std::runtime_error(
-                "Function parameter defaults are not implemented for '" +
-                target->name_ +
-                "' in function '" +
-                function.name_ +
-                "'.");
-        }
-
         if (!seen.insert(
                 target->name_).second) {
 
@@ -124,6 +115,27 @@ collectParameterSpecs(
         spec.item = item;
 
         specs.push_back(spec);
+    }
+
+    bool saw_default = false;
+
+    for (const auto& spec : specs) {
+        const bool has_default =
+            spec.item->value_node_ != nullptr;
+
+        if (has_default) {
+            saw_default = true;
+            continue;
+        }
+
+        if (saw_default) {
+            throw std::runtime_error(
+                "Required function parameter '" +
+                spec.name +
+                "' follows a defaulted parameter in function '" +
+                function.name_ +
+                "'.");
+        }
     }
 
     return specs;
@@ -872,6 +884,53 @@ HostActionResult Interpreter::executeHostAction(
         }
     }
 
+    if (invocation.action_name == "structure_value") {
+        if (invocation.parameters.size() != 1 ||
+            invocation.parameters.find("structure") ==
+                invocation.parameters.end()) {
+
+            throw std::runtime_error(
+                "structure_value requires exactly "
+                "the 'structure' parameter.");
+        }
+
+        const StructuralHandle& handle =
+            invocation.parameters
+                .at("structure")
+                .asStructure(
+                    "structure_value structure");
+
+        if (!handle.document_owner ||
+            handle.target_node == nullptr) {
+
+            throw std::runtime_error(
+                "structure_value requires a complete "
+                "structural handle.");
+        }
+
+        auto* item =
+            dynamic_cast<
+                ast::ItemDeclarationNode*>(
+                    handle.target_node);
+
+        if (!item) {
+            throw std::runtime_error(
+                "structure_value requires an Item structure.");
+        }
+
+        if (!item->value_node_) {
+            throw std::runtime_error(
+                "structure_value Item has no value.");
+        }
+
+        HostActionResult result;
+        result.value =
+            evaluateValue(
+                *item->value_node_);
+
+        return result;
+    }
+
     HostActionDispatcher host;
     return host.execute(invocation);
 }
@@ -1416,15 +1475,22 @@ double Interpreter::invokeFunction(
     const auto parameters =
         collectParameterSpecs(function);
 
+    std::size_t required_count = 0;
+
+    for (const auto& parameter : parameters) {
+        if (!parameter.item->value_node_) {
+            ++required_count;
+        }
+    }
+
     if (call.arguments_.size() <
-        parameters.size()) {
+        required_count) {
 
         throw std::runtime_error(
             "Too few arguments for function '" +
             call.name_ +
-            "': expected " +
-            std::to_string(
-                parameters.size()) +
+            "': expected at least " +
+            std::to_string(required_count) +
             ", got " +
             std::to_string(
                 call.arguments_.size()) +
@@ -1461,12 +1527,49 @@ double Interpreter::invokeFunction(
     ExecutionScope function_scope;
 
     for (std::size_t i = 0;
-         i < parameters.size();
+         i < argument_values.size();
          ++i) {
 
         function_scope.bind(
             parameters[i].name,
             argument_values[i],
+            std::nullopt,
+            BindingOrigin::SUPPLIED);
+    }
+
+    for (std::size_t i = argument_values.size();
+         i < parameters.size();
+         ++i) {
+
+        const auto* default_node =
+            parameters[i].item->value_node_.get();
+
+        if (!default_node) {
+            throw std::runtime_error(
+                "Missing required function parameter '" +
+                parameters[i].name +
+                "' in function '" +
+                call.name_ +
+                "'.");
+        }
+
+        Interpreter default_interpreter(
+            function_scope,
+            functions_,
+            active_functions_,
+            call.name_);
+
+        const double default_value =
+            default_interpreter
+                .evaluateValue(*default_node)
+                .asNumber(
+                    "Default value for function parameter '" +
+                    parameters[i].name +
+                    "'");
+
+        function_scope.bind(
+            parameters[i].name,
+            default_value,
             std::nullopt,
             BindingOrigin::SUPPLIED);
     }
@@ -1636,7 +1739,7 @@ void Interpreter::bindTarget(
                     &target)) {
 
         const std::string& symbol =
-            semantic->getSymbol();
+            semantic->getFinalSegmentName();
 
         scope_.bind(
             symbol,

@@ -136,15 +136,21 @@ public:
 
     void visit(qps::ast::CausalRelationshipNode* n) override {
         ++profile.causal_relationships;
-        if (n->left_side_) {
-            if (n->left_side_->entity) n->left_side_->entity->accept(*this);
-            if (n->left_side_->input) n->left_side_->input->accept(*this);
-            if (n->left_side_->output) n->left_side_->output->accept(*this);
-        }
-        if (n->right_side_) {
-            if (n->right_side_->entity) n->right_side_->entity->accept(*this);
-            if (n->right_side_->input) n->right_side_->input->accept(*this);
-            if (n->right_side_->output) n->right_side_->output->accept(*this);
+
+        for (const auto& side : n->sides_) {
+            if (!side) {
+                continue;
+            }
+
+            if (side->entity) {
+                side->entity->accept(*this);
+            }
+
+            for (const auto& domain : side->domain_chain) {
+                if (domain) {
+                    domain->accept(*this);
+                }
+            }
         }
     }
 

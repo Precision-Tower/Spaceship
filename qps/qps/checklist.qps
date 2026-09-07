@@ -1,7 +1,7 @@
 {Checklist:
-[>evidence]-
+[>evidence-]
 
-[>runtime_dictionary]- 0;
+[>runtime_dictionary-] 0;
 
 runtime_dictionary_evidence: -dictionary_at(
 value- evidence;
@@ -578,31 +578,31 @@ index- 1;
 
 -if runtime_dictionary_id == "ctest.runtime_dictionary" {
 -if runtime_dictionary_fact == 1 {
-[>runtime_dictionary]- 1;
+[>runtime_dictionary-] 1;
 }
 }
 
-[>reference_document]- 0;
+[>reference_document-] 0;
 
 -if reference_test_id == "ctest.reference_document_plan" {
 -if reference_test_fact == 1 {
 -if reference_parity_id == "authored.reference_document_parity" {
 -if reference_parity_fact == 1 {
-[>reference_document]- 1;
+[>reference_document-] 1;
 }
 }
 }
 }
 
-[>structural_handle_minimal]- 0;
+[>structural_handle_minimal-] 0;
 
 -if structural_handle_id == "invariant.structural_handle_owner_node_only" {
 -if structural_handle_fact == 1 {
-[>structural_handle_minimal]- 1;
+[>structural_handle_minimal-] 1;
 }
 }
 
-[>semantic_walk]- 0;
+[>semantic_walk-] 0;
 
 -if semantic_walk_test_id == "ctest.semantic_walk" {
 -if semantic_walk_test_fact == 1 {
@@ -610,7 +610,7 @@ index- 1;
 -if semantic_walk_parity_fact == 1 {
 -if semantic_walk_cutover_id == "production.semantic_walk.cutover" {
 -if semantic_walk_cutover_fact == 1 {
-[>semantic_walk]- 1;
+[>semantic_walk-] 1;
 }
 }
 }
@@ -618,7 +618,7 @@ index- 1;
 }
 }
 
-[>native_policy_minimal]- 0;
+[>native_policy_minimal-] 0;
 
 -if structural_handle_minimal == 1 {
 -if compatibility_absence_id == "absence.structural_handle.compatibility_metadata" {
@@ -627,7 +627,7 @@ index- 1;
 -if native_reference_absence_fact == 1 {
 -if native_walk_absence_id == "absence.native.semantic_walk" {
 -if native_walk_absence_fact == 1 {
-[>native_policy_minimal]- 1;
+[>native_policy_minimal-] 1;
 }
 }
 }
@@ -636,19 +636,19 @@ index- 1;
 }
 }
 
-[>overall]- 0;
+[>overall-] 0;
 
 -if runtime_dictionary == 1 {
 -if reference_document == 1 {
 -if semantic_walk == 1 {
 -if native_policy_minimal == 1 {
-[>overall]- 1;
+[>overall-] 1;
 }
 }
 }
 }
 
-[>language_conformance]- 0;
+[>language_conformance-] 0;
 
 -if grammar_id == "ctest.grammar_regression" {
 -if grammar_fact == 1 {
@@ -658,7 +658,7 @@ index- 1;
 -if corpus_ast_fact == 1 {
 -if active_corpus_id == "ctest.active_corpus_conformance" {
 -if active_corpus_fact == 1 {
-[>language_conformance]- 1;
+[>language_conformance-] 1;
 }
 }
 }
@@ -668,7 +668,7 @@ index- 1;
 }
 }
 
-[>runtime_execution]- 0;
+[>runtime_execution-] 0;
 
 -if runtime_dictionary == 1 {
 -if runtime_semantics_id == "ctest.runtime_semantics" {
@@ -677,7 +677,7 @@ index- 1;
 -if function_semantics_fact == 1 {
 -if execution_definition_id == "ctest.execution_definition" {
 -if execution_definition_fact == 1 {
-[>runtime_execution]- 1;
+[>runtime_execution-] 1;
 }
 }
 }
@@ -686,41 +686,41 @@ index- 1;
 }
 }
 
-[>reference_resolution]- 0;
+[>reference_resolution-] 0;
 
 -if reference_document == 1 {
 -if symbol_resolver_id == "ctest.symbol_resolver" {
 -if symbol_resolver_fact == 1 {
 -if path_resolver_id == "ctest.path_resolver_index_surface" {
 -if path_resolver_fact == 1 {
-[>reference_resolution]- 1;
+[>reference_resolution-] 1;
 }
 }
 }
 }
 }
 
-[>structural_runtime]- 0;
+[>structural_runtime-] 0;
 
 -if structural_selection_id == "ctest.structural_selection" {
 -if structural_selection_fact == 1 {
 -if semantic_walk == 1 {
 -if structural_handle_minimal == 1 {
-[>structural_runtime]- 1;
+[>structural_runtime-] 1;
 }
 }
 }
 }
 
-[>host_boundary]- 0;
+[>host_boundary-] 0;
 
 -if host_action_id == "ctest.host_action" {
 -if host_action_fact == 1 {
-[>host_boundary]- 1;
+[>host_boundary-] 1;
 }
 }
 
-[>cli_contract]- 0;
+[>cli_contract-] 0;
 
 -if cli_test_id == "ctest.cli.test" {
 -if cli_test_fact == 1 {
@@ -734,7 +734,7 @@ index- 1;
 -if cli_cipher_fact == 1 {
 -if cli_source_execution_id == "ctest.cli.source_execution" {
 -if cli_source_execution_fact == 1 {
-[>cli_contract]- 1;
+[>cli_contract-] 1;
 }
 }
 }
@@ -748,29 +748,29 @@ index- 1;
 }
 }
 
-[>engineering_surface]- 0;
+[>engineering_surface-] 0;
 
 -if engineering_id == "qps_test.engineering" {
 -if engineering_fact == 1 {
 -if execution_definition_id == "ctest.execution_definition" {
 -if execution_definition_fact == 1 {
-[>engineering_surface]- 1;
+[>engineering_surface-] 1;
 }
 }
 }
 }
 
-[>kernel_reduction]- 0;
+[>kernel_reduction-] 0;
 
 -if native_policy_minimal == 1 {
 -if authored_authorities_id == "invariant.authored_authorities_present" {
 -if authored_authorities_fact == 1 {
-[>kernel_reduction]- 1;
+[>kernel_reduction-] 1;
 }
 }
 }
 
-[>implementation_required]- 0;
+[>implementation_required-] 0;
 
 -if language_conformance == 1 {
 -if runtime_execution == 1 {
@@ -780,7 +780,7 @@ index- 1;
 -if cli_contract == 1 {
 -if engineering_surface == 1 {
 -if kernel_reduction == 1 {
-[>implementation_required]- 1;
+[>implementation_required-] 1;
 }
 }
 }
@@ -790,7 +790,7 @@ index- 1;
 }
 }
 
-[>transaction_ready]- 0;
+[>transaction_ready-] 0;
 
 -if transaction_clean_before_id == "transaction.git.clean_before" {
 -if transaction_clean_before_fact == 1 {
@@ -806,7 +806,7 @@ index- 1;
 -if transaction_engineering_fact == 1 {
 -if transaction_staged_set_id == "transaction.git.staged_set_exact" {
 -if transaction_staged_set_fact == 1 {
-[>transaction_ready]- 1;
+[>transaction_ready-] 1;
 }
 }
 }
@@ -822,14 +822,14 @@ index- 1;
 }
 }
 
-[>transaction_committed]- 0;
+[>transaction_committed-] 0;
 
 -if transaction_ready == 1 {
 -if transaction_commit_identity_id == "transaction.git.commit_identity_recorded" {
 -if transaction_commit_identity_fact == 1 {
 -if transaction_clean_after_id == "transaction.git.clean_after" {
 -if transaction_clean_after_fact == 1 {
-[>transaction_committed]- 1;
+[>transaction_committed-] 1;
 }
 }
 }
@@ -871,3 +871,1432 @@ Paths and line coordinates remain useful source coordinates.
 The exact representation and execution semantics remain to be discovered
 through implementation.
 ";
+
+current_work: (
+
+history_candidate: (
+
+ready- false;
+state- "saved";
+history_identity- "cipher.boolean_truth";
+history_timestamp- "2026-09-06T09:53:02Z";
+
+identity- "cipher.boolean_truth";
+
+summary- "Cipher test now proves exact conversion truth without publishing destination output";
+
+meaning- "qps cipher test now returns ready only after Cipher has generated the exact candidate bytes owned by the ConversionPlan, verified semantic support, validated those exact bytes as QPS, and confirmed the conversion can proceed without writing destination output; normal publication commits the candidate bytes owned by that proven plan rather than translating them again";
+
+scope: (
+path_1- "Engineering/py/cipher";
+path_2- "qps/qps";
+path_3- "qps/cpp";
+);
+
+proof: (
+candidate_identity- "PASS";
+candidate_qps_validation- "PASS";
+boolean_truth- "PASS";
+transaction_candidate- "PASS";
+test_no_write- "PASS";
+publication_commit_only- "PASS";
+cli_true- "PASS";
+cli_publish- "PASS";
+published_qps_validation- "PASS";
+source_provenance- "PASS";
+diff_check- "PASS";
+);
+
+relevant: (
+path_1- "Engineering/py/cipher/plan.py";
+path_2- "Engineering/py/cipher/publish.py";
+path_3- "Engineering/py/cipher/cipher.py";
+path_4- "Engineering/py/cipher/emit/provenance_qps.py";
+path_5- "Engineering/py/cipher/emit/qps_emitter.py";
+path_6- "Engineering/py/cipher/emit/convergence_qps.py";
+path_7- "Engineering/py/cipher/tests/test_boolean_truth.py";
+path_8- "Engineering/py/cipher/tests/test_transaction_candidate.py";
+path_9- "Engineering/py/cipher/tests/test_emitted_provenance.py";
+path_10- "Engineering/py/cipher/tests/test_convergence_provenance.py";
+path_11- "qps/qps/cipher.qps";
+path_12- "qps/cpp/src/main.cpp";
+);
+
+remaining: (
+item_1- "Expand the set of source constructs and external-library semantics that can satisfy the strict Cipher true condition";
+item_2- "Directory conversion still needs the same complete dependency and library closure semantics as single-file Python planning";
+item_3- "Structured keyword-constructor returns, keyword arguments, dataclass lowering, and value-object lowering remain incomplete";
+);
+
+tasks: (
+task_1- "cipher.boolean_truth";
+);
+
+);
+
+tasks: (
+
+task_1: (
+identity- "history.root_ledger";
+summary- "Establish the root CE-OS semantic history ledger";
+state- "saved";
+);
+
+task_2: (
+identity- "history.local_query";
+summary- "Implement concise qps history <path> scoped by repository location";
+state- "saved";
+);
+
+task_3: (
+identity- "checklist.terminal_view";
+summary- "Implement qps checklist to list unfinished tasks by Checklist directory";
+state- "saved";
+);
+
+task_4: (
+identity- "save.history_publish";
+summary- "Implement qps save <checklist.qps> to publish history-ready work automatically";
+state- "saved";
+);
+
+task_5: (
+identity- "cipher.preflight";
+summary- "Prove qps cipher test semantic preflight with complete blocker reporting and no destination writes";
+state- "saved";
+);
+
+task_6: (
+identity- "cipher.atomic_publish";
+summary- "Make normal qps cipher use the proven ConversionPlan and publish only a complete validated conversion";
+state- "saved";
+);
+
+task_7: (
+identity- "cipher.boolean_truth";
+summary- "Make qps cipher test prove exact candidate conversion truth and make publication commit those exact proven bytes";
+state- "saved";
+);
+
+task_8: (
+identity- "cipher.foreign_and_structured_semantics";
+summary- "Finish Cipher by closing structured Python semantics, foreign-library boundaries, dependency closure, and exact-candidate conversion truth for real Engineering sources";
+checkpoint: (
+pipeline- "prepare -> inspect exact lowered document -> emit only when supported -> validate exact candidate -> publish exact candidate";
+semantic_lowering- "Source-neutral semantic lowering is promoted into the shared candidate-generation path";
+support_before_emit- "Unsupported semantics stop before emission and own no candidate bytes";
+candidate_identity- "Publication commits the exact candidate bytes validated by the proven ConversionPlan";
+boolean_truth- "qps cipher test returns true only when exact candidate generation, semantic support, QPS validation, and no-write truth all succeed";
+runtime_sequence- "RuntimeValue SEQUENCE exists as a distinct runtime value and supports nested heterogeneous values";
+key_namespace- "Key is a file-inside-file namespace whose paragraph boundary is the first blank line at the Key's own structural depth";
+navigation_syntax- "Authored declarations use key. term: item-, while structural navigation uses dot traversal and final - only as an explicit Item/value expectation";
+reference_syntax- "[>key.term.item-] is the canonical explicit Item reference; the - is inside the reference and requires the final target to resolve as an Item";
+source_spans- "Key, Term, and Item own truthful source start/end lines; scope and probe render the exact physical span owned by the selected structural address";
+structural_resolution- "Structural navigation resolves hierarchical identity independently from source ownership; nested source remains part of its containing structural span";
+item_assertion- "Authored Semantic_Walk reserves the final segment for structure_item when selects_item_value is true and rejects an existing Term when Item identity was explicitly required";
+execution_dispatch- "Execution definitions delegate ordinary control-flow statements to the common statement grammar; -while now parses and executes inside named execution definitions";
+semantic_walk- "Semantic_Walk parses as a named ExecutionDefinition, executes successfully, and matches native structural selection including TERM_IS_NOT_ITEM rejection";
+root_authority- "_index.qps is the current QPS navigation authority; obsolete qps/qps/docs/QPS.qps and its stale golden test were removed";
+navigation_stack- "structural selection, grammar regression, semantic walk, probe CLI, and scope CLI are green together";
+language_diversion- "The structural-language diversion now also proves canonical [>item-] reference boundaries, Term-owned executable bodies as term: {...};, and full-expression Item values without requiring % calculation syntax";
+item_expression- "Ordinary Items may bind full QPS expressions through the shared expression grammar; arithmetic no longer requires % when the intended result is an Item";
+term_execution_body- "A Term may own an executable body as term: {...}; the Term carries semantic identity and the braces carry executable contents";
+calculation_compatibility- "%target: expression remains supported compatibility syntax while Item-bound expressions are the simpler canonical form when the result is a value";
+root_qps_reference- "Root _index.qps now records the concise QPS utilization rules for primitive identity, complete [>item-] references, Item expressions, Term execution bodies, and % compatibility";
+checklist_workflow- "qps checklist is now authored in qps/qps/checklist.qps above generic native module, document, sequence, structural-introspection, and write primitives; each invocation regenerates ephemeral Checklist numbering, renders DONE Checklists, exposes visible tasks, and resolves exact Checklist/task addresses";
+execution_registry- "ExecutionEngine registration now stores neutral execution identity, body, domain, and source facts rather than retaining ExecutionDefinitionNode as the runtime registry identity; the build and unaffected execution stack are green";
+);
+
+finish: (
+phase_1- "Re-establish the current Cipher false witness on real Engineering input and capture every remaining blocker without destination writes";
+phase_2- "Complete structured Python lowering: keyword arguments, keyword constructor calls, dataclass/value-object construction, structured returns, and nested structured values";
+phase_3- "Map lowered structured values onto QPS runtime semantics using Dictionary and SEQUENCE only where their semantics are actually distinct";
+phase_4- "Resolve foreign-library boundaries by distinguishing convertible source semantics from explicit foreign runtime dependencies";
+phase_5- "Close single-file dependency semantics so every imported local dependency needed by the candidate is represented in the ConversionPlan";
+phase_6- "Extend the same dependency and foreign-library closure truth to directory conversion";
+phase_7- "Run the real Engineering witness until qps cipher test changes from false to true for semantic reasons only";
+phase_8- "Prove normal qps cipher publishes the exact candidate bytes owned by that true plan and performs no translation, validation, or recompilation during publication";
+phase_9- "Run focused Cipher regressions, real CLI test/publish, published-QPS validation, navigation/runtime regressions, and diff check";
+phase_10- "When all finish conditions are true, transition cipher.foreign_and_structured_semantics to complete and save it exactly once into History";
+);
+
+phase_1_evidence: (
+state- "complete";
+witness_1- "qps cipher test Engineering/py/Physics/Domains/motion.py => ready=false with structured keyword-constructor return, keyword call arguments, mapping expressions, and list expressions reported before emission";
+witness_2- "qps cipher test Engineering/py/Physics/equations.py => ready=false with definition/object semantics, keyword call arguments, and mapping expressions reported before emission";
+proof_1- "python3 Engineering/py/cipher/tests/test_support.py => CIPHER_SUPPORT=PASS";
+proof_2- "python3 Engineering/py/cipher/tests/test_support_before_emit.py => CIPHER_SUPPORT_BEFORE_EMIT=PASS";
+proof_3- "python3 Engineering/py/cipher/tests/test_plan.py => CIPHER_PLAN=PASS";
+proof_4- "python3 Engineering/py/cipher/tests/test_boolean_truth.py => CIPHER_BOOLEAN_TRUTH=PASS";
+changed- "Engineering/py/cipher/support.py now rejects known unemitted expression kinds during support inspection so unsupported structured values own no candidate bytes";
+next- "Prove QPS sequence and record/mapping representation before removing the mapping/list blockers or allowing structured constructor candidates to publish";
+);
+
+remaining: (
+item_1- "Finish reusable execution migration so canonical term: {...}; replaces redundant {Name: ...} identity where appropriate and ExecutionEngine can instantiate Term-owned execution bodies";
+item_2- "Choose and prove authored QPS sequence syntax above the already-proven RuntimeValue SEQUENCE representation";
+item_3- "Lower Cipher list_expression into the canonical QPS sequence representation";
+item_4- "Define generic mapping and record semantics without abusing numeric-key Dictionary or source-language-specific object rules";
+item_5- "Lower named arguments and generic constructor or value-object semantics through the source-neutral Cipher pipeline using canonical Term and Item semantics";
+item_6- "Return to real Python specimens such as EquationResult and require strict Cipher true only when the complete semantic closure is convertible";
+);
+
+state- "ready";
+);
+
+task_9: (
+identity- "checklist.nominal_agent_workflow";
+summary- "Establish the CE-OS repository-memory workflow across _index.qps, checklist.qps, Save, and History so agents can work without conversational memory";
+state- "active";
+
+product- "CE-OS has a systematic repository-memory model where _index.qps owns durable current truth and usage, checklist.qps owns unfinished work and implementation memory, and history.qps owns accepted completed transitions; an agent can enter a subsystem, understand it, resume work, preserve discoveries in the correct authority, and explicitly Save completed tasks without human babysitting";
+
+memory_model: (
+index- "_index.qps describes what the containing repository area currently is, how its QPS surfaces are used, its durable capabilities, interfaces, rules, and operational truth";
+checklist- "checklist.qps describes unfinished work: goals, implementation steps, blockers, discoveries, decisions, proof in progress, and deferred work";
+history- "history.qps records accepted completed transitions and their provenance; it is not the authority for how the current system is used";
+);
+
+placement_rules: (
+durable_truth- "If completing work establishes information needed to understand or use the resulting subsystem, update the closest appropriate _index.qps before the task becomes complete";
+current_work- "If a discovery is required to finish the current objective, add it to the current task as working memory";
+deferred_work- "If a discovery should be implemented later, create a task in the checklist.qps belonging to the repository area that owns the future implementation";
+accepted_work- "After explicit Save accepts a complete task, History preserves the accepted transition and the task is deleted from current_work.tasks";
+);
+
+documentation_rule: (
+decision- "Every nontrivial task must explicitly decide whether completion changes durable subsystem knowledge";
+required- "When durable knowledge changes, the task identifies the _index.qps authority that must be updated and proves that update before completion";
+not_required- "When implementation preserves already-documented behavior, the task may explicitly record that no _index.qps change is required and why";
+save_boundary- "Save does not invent or repair subsystem documentation; documentation obligations must already be satisfied before the task reaches complete";
+);
+
+documentation: (
+required- true;
+authority- "_index.qps";
+goal- "Keep the root CE-OS usage and repository-memory authority synchronized with the Checklist, Save, and History workflow established by this task";
+state- "active";
+proof- "Root _index.qps already documents the repository-memory model and current Checklist/Save contract; any later workflow changes made by this task must update that authority before completion";
+);
+
+current: (
+item_1- "qps checklist discovers connected checklist.qps files and regenerates ephemeral Checklist numbering";
+item_2- "repository-root checklist.qps is the canonical Checklist workflow/example and naturally appears as Checklist 1";
+item_3- "qps checklist <checklist-index> <task-number> resolves the exact authored task structurally";
+item_4- "exact task inspection renders the complete authored source span, making the task a schema-independent persistent memory object";
+item_5- "complete tasks remain visible while awaiting explicit Save";
+item_6- "named reusable execution migration is complete but remains visible because it has not yet been moved through the new Save lifecycle";
+item_7- "the concise Checklist index now displays authored task state for every visible task";
+item_8- "root _index.qps now permanently defines the repository-memory placement methodology and current Checklist/Save contract";
+item_9- "The authored Save transaction is proven end-to-end on disposable History and Checklist authorities; the public qps save N T command has not yet been cut over to it";
+);
+
+steps: (
+
+step_1: (
+goal- "Provide a concise repository-wide qps checklist index with ephemeral Checklist/task addresses";
+product- "A user or agent can discover current work without knowing repository paths";
+state- "complete";
+);
+
+step_2: (
+goal- "Make qps checklist <checklist-index> <task-number> render the complete authored task source span";
+product- "A selected task is persistent implementation memory and can evolve without changing Checklist rendering code";
+state- "complete";
+);
+
+step_3: (
+goal- "Create repository-root checklist.qps as the canonical Checklist workflow and example";
+product- "An unfamiliar agent has an authored starting point for learning the work-management interface";
+state- "complete";
+);
+
+step_4: (
+goal- "Show authored task state explicitly in concise qps checklist output";
+product- "The repository work index visibly distinguishes ready, active, waiting, blocked, and complete work";
+state- "complete";
+);
+
+step_5: (
+goal- "Promote the repository-memory methodology into the appropriate _index.qps authority surfaces";
+product- "Agents have durable instructions for deciding whether knowledge belongs in _index.qps, checklist.qps, or history.qps rather than depending on this task or chat";
+state- "complete";
+);
+
+step_6: (
+goal- "Make documentation disposition an explicit completion concern for nontrivial tasks";
+product- "A task cannot quietly establish new user-facing or architectural truth while leaving the applicable _index.qps stale";
+state- "complete";
+);
+
+step_7: (
+goal- "Prove complete work remains visible and identifiable until explicit Save";
+product- "Finished but unaccepted work cannot silently disappear or be confused with accepted History";
+state- "complete";
+);
+
+step_8: (
+goal- "Define and prove qps save <checklist-index> <task-number> against a disposable authored Checklist task";
+product- "Save explicitly selects one complete task, validates it, and either accepts the whole transition or changes nothing";
+state- "complete";
+);
+
+step_9: (
+goal- "Make the completed task itself the authoritative semantic input to Save";
+product- "Agents do not maintain a duplicate history_candidate representation of the same accomplishment";
+state- "complete";
+);
+
+step_10: (
+goal- "Prove successful Save publishes normalized History and deletes the accepted task from current_work.tasks";
+product- "Checklist contains current/future work while History permanently owns accepted completed work";
+state- "active";
+);
+
+step_11: (
+goal- "Prove failed, malformed, incomplete, interrupted, and duplicate Save attempts preserve Checklist and History integrity";
+product- "Agents can use Save without a human guarding transaction correctness";
+state- "waiting";
+);
+
+step_12: (
+goal- "Finish permanent agent-facing documentation and prove the complete workflow from a fresh repository entry point";
+product- "Codex can enter CE-OS, read _index.qps, discover work, inspect task memory, maintain discoveries, document durable truth, complete work, Save it, and recover History without prior conversation";
+state- "waiting";
+);
+
+);
+
+future_application: (
+item_1- "After this infrastructure is nominal, an agent can inventory a repository area such as UI/ and improve its _index.qps current-truth documentation while creating appropriately located checklist.qps tasks for unfinished or future work";
+item_2- "Repository-wide task creation is future content work performed using this methodology, not part of implementing the Checklist mechanism itself";
+);
+
+findings: (
+finding_1- "Checklist is most useful as a living authored work document rather than a rigid CLI-owned task schema";
+finding_2- "_index.qps and checklist.qps are complementary: the index explains the current system while the Checklist explains work that has not yet become current truth";
+finding_3- "Permanent knowledge should not remain trapped in completed Checklist tasks because accepted tasks are deleted after Save";
+finding_4- "History records that a transition was accepted, but the applicable _index.qps remains the authority for how the resulting system currently works";
+finding_5- "Exact task rendering must remain schema-blind so agents can add useful working-memory structures without extending the CLI";
+finding_6- "Generic file_read is now proven byte-exact through authored QPS execution; ordinary qps execution also emits QPS_LOG diagnostics on stdout, so authored-output witnesses must isolate payload from runtime diagnostics";
+finding_7- "Generic publish_files now proves arbitrary two-file publication from authored QPS without Checklist, History, task-state, or Save-specific native policy";
+finding_8- "Nested Dictionary values were already supported by QPS; Dictionary-valued Items require the Dictionary terminator plus the owning Item terminator, producing the canonical ]; ; boundary as ];;";
+finding_9- "QPS structural source ownership is line-based rather than byte-offset based, so generic file_without_span uses the same authored line coordinate model as structure_start, structure_end, and file_span";
+finding_10- "Generic file_without_span is proven exact and gives authored QPS a schema-independent way to construct a source document with one structurally selected line span removed";
+finding_11- "CE-OS History is one repository-root parseable semantic ledger; repository locality belongs to each accepted entry through authored scope, and qps history <path> is the normal access surface regardless of ledger size";
+finding_12- "The disposable authored Save transaction proved that a completed task can directly supply identity, summary, meaning, scope, proof, relevant paths, remaining work, and documentation state without a duplicate history_candidate object";
+);
+
+decisions: (
+decision_1- "Repository-root checklist.qps remains the permanent Checklist workflow/example and first discovered Checklist";
+decision_2- "qps checklist is concise navigation while qps checklist N T exposes the entire selected task";
+decision_3- "Current-task discoveries stay with the current task when required for completion; deferred discoveries become tasks where their implementation belongs";
+decision_4- "A complete task remains visible until an explicit Save command accepts it";
+decision_5- "Successful Save deletes the accepted task rather than retaining a saved task in current_work.tasks";
+decision_6- "The completed task is the semantic source for History normalization; Save should not require duplicate manually maintained history content";
+decision_7- "Save does not substitute for _index.qps maintenance";
+decision_8- "Checklist behavior remains authored in QPS above generic native substrate";
+decision_9- "CE-OS owns exactly one history.qps ledger at repository root; subdirectories never receive local History ledgers";
+decision_10- "History locality is semantic: Save records repository scope and acceptance timestamp, and qps history <path> queries the root ledger for entries associated with that repository structure";
+);
+
+proof: (
+proof_1- "qps checklist discovers the root, native-runtime, and authored-language Checklists with fresh numbering";
+proof_2- "qps checklist 3 9 resolves task_9 and renders its complete physical source span";
+proof_3- "repository-root checklist.qps parses and naturally appears as Checklist 1";
+proof_4- "complete native.named_policy_migration remains visible pending explicit Save";
+proof_5- "the exact-task renderer accepts arbitrary additional authored task structure without schema-specific changes";
+proof_6- "qps checklist now renders complete, waiting, ready, and active states directly in the concise global index";
+proof_7- "root _index.qps parses with the permanent repository-memory model and no longer contains the stale hidden-complete or history_candidate Save rules";
+proof_8- "repository-root checklist.qps provides the canonical documentation disposition example, and task_9 carries its own explicit required _index.qps documentation obligation";
+proof_9- "native.named_policy_migration is authored state complete, remains visible in the global Checklist index, and remains fully inspectable through qps checklist 2 1 without any Save mutation";
+proof_10- "generic file_read returns exact file bytes to authored QPS; the earlier mismatch was runtime log output surrounding the authored payload rather than file_read corruption";
+proof_11- "generic publish_files successfully replaces two independent files from one authored QPS call and leaves no staged or backup artifacts after successful publication";
+proof_12- "generic file_without_span returns the exact remaining file bytes after removing an inclusive authored line span and contains no Checklist or History policy";
+proof_13- "A disposable authored Save transaction accepted one complete task, generated a UTC timestamped scoped History entry, removed exactly that task, preserved unrelated work, reparsed both candidate documents, and published them successfully";
+proof_14- "The disposable Save proof used the completed task itself as the semantic source and contained no history_candidate surface";
+);
+
+next- "Cut the public qps save <checklist-index> <task-number> command over to authored Save task resolution and prove the CLI lifecycle on disposable repository state before accepting real task 2.task_1";
+
+done_when: (
+condition_1- "A fresh agent can learn the repository-memory methodology from permanent repository authority without chat context";
+condition_2- "qps checklist exposes every current or complete-unsaved task with explicit state";
+condition_3- "qps checklist N T exposes enough complete task memory to resume nontrivial work";
+condition_4- "Tasks explicitly resolve any required _index.qps documentation before becoming complete";
+condition_5- "Required current discoveries remain in the active task and deferred discoveries become tasks in their owning implementation area";
+condition_6- "Complete work remains visible until explicit Save";
+condition_7- "qps save N T accepts only a valid complete task and makes no mutation on validation failure";
+condition_8- "Successful Save publishes normalized semantic History and deletes the accepted source task";
+condition_9- "Failed and duplicate Save cases preserve Checklist and History integrity";
+condition_10- "Saved accomplishments remain recoverable through qps history while current usage truth remains in the applicable _index.qps";
+);
+);
+);
+
+);
+
+goal- "Find the irreducible QPS and CE-OS kernel by continuing to move semantic authority inward into authored QPS";
+
+repository- "~/ce-os";
+
+workspace- "One repository and one active workspace";
+
+current_state- "The reference-planner and Engineering experiment worktrees have been promoted into ~/ce-os and removed";
+
+checklist_state- "Checklist is a reusable authored execution definition and a multi-surface QPS document";
+
+execution_state- "Canonical reusable execution is migrating from redundant {Name: ...} identity toward Term-owned execution bodies authored as name: {...};";
+
+evidence_state- "Checklist_Evidence gathers live observations and authored QPS can assemble evidence and execute Checklist without native evidence-splicing logic";
+
+engineering_state- "The independent Engineering safety-factor specimen is preserved in the main repository and proves authored numeric threshold evaluation without requiring a new generic requirement framework";
+
+build_state- "QPS builds with RuntimeValue SEQUENCE, canonical [>item-] references, full-expression Item values, Term-owned execution-body parsing, truthful structural spans, and the existing runtime/math regressions green";
+
+active- "Finish Cipher foreign and structured semantics until real Engineering conversion satisfies exact boolean truth";
+
+next- "Finish canonical reusable Term execution so name: {...}; can be registered and instantiated, then resume Cipher lowering against the real Engineering witness";
+
+latest_probe- "Canonical kinetic_energy: {...}; parses with [>mass-], [>velocity-], full-expression Item arithmetic, and -return; Item unit suffix, grammar regression, and runtime math tests remain green";
+
+git_checkpoint_state- "Active QPS implementation is checkpointed in Git while intentionally unfinished; the current native suite is 29/36 green with seven red witnesses: Engineering safety-factor syntax, symbol-resolver numeric Item extraction, corpus conformance from three legacy reference forms, test-suite reference_document authority lookup, query CLI legacy [>input]- fixture syntax, and the save CLI fixture still exercising the retired file-path contract instead of qps save <checklist-index> <task-number>";
+
+latest_failure- "Current remaining language seam: the neutral ExecutionEngine registry is proven, but canonical TermDeclarationNode containing an ExecutionBlockNode is not yet registered as a reusable execution; historical Reference_Document parent_depth remains a separate red witness on the old authored execution-definition path";
+
+latest_relevant_files- "_index.qps, qps/qps/cipher.qps, qps/qps/checklist.qps, qps/cpp/src/parser/c/item.cpp, qps/cpp/src/parser/c/term.cpp, qps/cpp/src/parser/c/execution.cpp, qps/cpp/src/ast/h/expressions.hpp, qps/cpp/src/runtime/c/execution_engine.cpp, qps/cpp/src/runtime/c/interpreter.cpp, Engineering/py/cipher";
+
+latest_proven- "QPS now proves canonical complete Item references, full-expression Item values, Term-owned executable body parsing as term: {...};, a neutral reusable-execution runtime registry, and an authored qps checklist workflow whose ephemeral global index and exact task lookup are implemented in QPS rather than native policy";
+
+latest_next_experiment- "Register a TermDeclarationNode containing one ExecutionBlockNode into the already-neutral reusable execution registry, prove canonical kinetic_energy: {...}; instantiation without weakening historical compatibility, then return directly to Cipher lowering";
+
+quarry_1- "dif: reversible difference between two identified states";
+
+quarry_2- "real Checklist observations for repository, build, staged intent, transaction state, and machine state";
+
+quarry_3- "persistent resumable work state that an agent can parse without prior conversation context";
+
+quarry_4- "Moved to qps/checklist.qps: native runtime and kernel boundary";
+
+quarry_5- "general multi-source execution-definition resolution for authored QPS authorities";
+
+continuation_rule- "A development session should be resumable from authored repository state without requiring prior chat history";
+
+agent_rule- "Agents may leave notes, hypotheses, failures, and next experiments in authored project state, but notes never satisfy proof requirements";
+
+evidence_rule- "Reality produces observations; authored QPS decides what supplied observations mean";
+
+dif_rule- "A dif represents a reversible structural difference between two identified states and should traverse QPS identity rather than inherit Git byte-diff semantics";
+
+git_rule- "Keep Git operationally for now as the proven substrate for status, commit, and byte-level diff";
+
+save_rule- "Future CE-OS save may replace the human-facing role of git commit while remaining backed by Git until a native replacement is proven";
+
+history_rule- "CE-OS History is the single repository-root semantic ledger of accepted transitions; qps history <path> queries that ledger by recorded repository scope while _index.qps remains current-truth authority";
+
+separation_rule- "Git diff observes byte-level repository change; QPS dif is a parser-aware reversible transition across identified structure";
+
+cipher_goal- "Convert complete source dependency closures into validated QPS without publishing partial conversion state";
+
+cipher_authority- "qps/qps/cipher.qps";
+
+cipher_frontend_state- "PROVEN: Python local dependency recursion, foreign dependency classification, merged local IR, reference-valued parameter defaults, executable QPS emission for the first Engineering numeric function slice, QPS validation, and QPS runtime execution";
+
+cipher_source_families- "Current loaders recognize Python, C++, C/C++ headers, JSON, YAML, and YML; recognition is not equivalent to complete semantic convertibility";
+
+cipher_preflight_command- "qps cipher test <input> [output]";
+
+cipher_preflight_rule- "Preflight must traverse the same complete source and dependency graph as conversion, attempt the same translation path, validate all candidate QPS, report every blocker, and write no destination output";
+
+cipher_atomic_rule- "A real Cipher conversion must complete discovery, dependency classification, translation, and validation before publishing destination output";
+
+cipher_failure_rule- "If any required source, dependency, construct, generated QPS document, or destination condition blocks the requested conversion, publish none of that conversion transaction";
+
+cipher_complete_graph_rule- "Cipher must determine the complete required conversion set before publication rather than discovering dependencies incrementally while writing";
+
+cipher_local_dependency_rule- "Dependencies resolving inside the CE-OS workspace are local source dependencies and are recursively absorbed into the compilation closure";
+
+cipher_foreign_dependency_rule- "Dependencies that do not resolve inside the CE-OS workspace remain foreign provenance; future external-library representation belongs at the qps/libs boundary and may use a dedicated ^ surface once that grammar is proven";
+
+cipher_alias_rule- "Source aliases survive dependency resolution as local symbol bindings even when local import statements disappear from consolidated QPS";
+
+cipher_consolidation_rule- "Local source path topology is compilation-time provenance; a consolidated QPS artifact may remove local import traversal after identities and references are resolved";
+
+cipher_publish_rule- "Directory conversion stages the complete candidate output separately, validates the staged set, then publishes only the complete validated set";
+
+cipher_library_root- "qps/libs";
+
+cipher_library_index_rule- "Every Cipher-created directory beneath qps/libs must contain _index.qps before publication";
+
+cipher_library_namespace_rule- "External source namespace topology is preserved beneath qps/libs rather than flattened";
+
+cipher_library_python_rule- "Python imports map beneath qps/libs/Python using their canonical package/module path";
+
+cipher_library_symbol_rule- "Cipher demand-populates only required canonical symbols and their required dependency closure";
+
+cipher_library_dedup_rule- "If a canonical library symbol is already indexed, later conversions reuse it rather than create another copy";
+
+cipher_library_alias_rule- "Source aliases remain local bindings and never create duplicate library identities";
+
+cipher_library_transaction_rule- "Library additions, parent-index changes, and consuming QPS outputs must validate and publish as one Cipher transaction";
+
+cipher_library_resolution_states- "local, library-resolved, library-missing, unresolved";
+
+cipher_library_next- "Implement indexed library lookup before teaching Cipher to populate missing foreign symbols";
+
+cipher_next- "PAUSED: resume Cipher preflight and atomic publication after Checklist, Save, and History semantics are established";
+
+history_goal- "Make accepted CE-OS accomplishments immediately discoverable by repository location without requiring Git-log interpretation or prior conversation context";
+
+history_ledger- "~/ce-os/history.qps";
+
+history_authority_rule- "The root history.qps is the single authoritative CE-OS semantic history ledger; directory-local history is a filtered view rather than duplicated history files";
+
+history_storage_rule- "History records accepted semantic accomplishments, capabilities, important discoveries, remaining limitations, proof references, and source Checklist identity rather than reproducing byte-level commit history";
+
+history_entry_rule- "One history entry represents one meaningful accepted task or capability transition, not every edit, command, probe, or intermediate failure";
+
+history_identity_rule- "Each history entry has a stable semantic identity in addition to its timestamp";
+
+history_timestamp_rule- "Each accepted entry records an explicit machine-readable timestamp while its structural QPS key may use a grammar-safe timestamp-derived identity";
+
+history_scope_rule- "Each history entry records one or more repository scopes describing where the accepted accomplishment belongs";
+
+history_multiscope_rule- "A history entry may belong to multiple repository scopes when one accepted task crosses subsystem boundaries";
+
+history_query_command- "qps history <path>";
+
+history_query_rule- "qps history <path> returns concise accepted history whose recorded scope belongs to that requested repository section";
+
+history_locality_rule- "A scoped history query must not dump unrelated parent, sibling, or repository-wide history";
+
+history_root_rule- "qps history with no path returns the root CE-OS history view";
+
+history_concise_rule- "Default history output contains timestamp, semantic identity, and concise summary only";
+
+history_detail_rule- "Detailed meaning, proof, relevant files, remaining limitations, source Checklist, and backing state are loaded only when explicitly requested";
+
+history_full_command- "qps history <path> --full";
+
+history_identity_command- "qps history --id <history_identity>";
+
+history_evidence_rule- "Default history queries do not recursively load Checklist evidence or implementation files; detailed investigation follows the recorded source Checklist or relevant paths";
+
+history_scope_derivation_rule- "qps save derives history scope from the accepted Checklist's predetermined relevant and ownership fields rather than requiring manual history authoring";
+
+history_structure_rule- "Repository directory topology remains the primary navigation model; history uses that same topology as an index into one root semantic ledger";
+
+save_command- "qps save <checklist.qps>";
+
+save_source_rule- "The completed Checklist is the authoritative source from which Save constructs a normalized history entry";
+
+save_history_ready_rule- "Save proceeds only when the Checklist contains an explicit authored state declaring that it is ready for history";
+
+save_no_guess_rule- "qps save never infers completion from prose, working-tree appearance, or agent judgment when the authored readiness state is absent";
+
+save_required_fields_rule- "A history-ready Checklist supplies predetermined fields sufficient to derive identity, summary, meaning, proof state, relevant scope, remaining limitations, and source Checklist reference";
+
+save_normalization_rule- "Save transforms the Checklist's predetermined accepted fields into the canonical history entry schema automatically";
+
+save_backlink_rule- "Every generated history entry records the source Checklist path so concise history may be expanded into its complete proof trail";
+
+save_duplicate_rule- "The same accepted Checklist state must not produce duplicate history entries";
+
+save_atomic_rule- "History publication is atomic: either the complete normalized entry is accepted into history.qps or history remains unchanged";
+
+save_git_rule- "Git remains an optional backing identity and byte-level substrate; semantic history is authoritative for what CE-OS accomplished";
+
+save_completion_rule- "After successful history publication, the Checklist records the resulting history identity and saved state so subsequent work may advance without rewriting the historical record";
+
+history_schema_v1- "timestamp, identity, scope, summary, meaning, proof, relevant, remaining, source_checklist, backing_state";
+
+history_benefit- "An agent entering any CE-OS subsystem can first request concise local history, learn what that subsystem already accomplished, and load deeper evidence only when needed";
+
+history_next- "Keep the root history.qps ledger structurally queryable by repository scope while authored Save becomes the only operation that appends accepted task transitions";
+
+checklist_cli_goal- "Provide a concise freshly resolved terminal index of CE-OS Checklist work across the connected QPS module web";
+
+checklist_cli_command- "qps checklist";
+
+checklist_cli_checklist_command- "qps checklist <checklist-index>";
+
+checklist_cli_task_command- "qps checklist <checklist-index> <task-number>";
+
+checklist_cli_discovery_rule- "Every invocation discovers reachable checklist.qps files through the connected QPS module web and regenerates the ephemeral Checklist index from current repository structure";
+
+checklist_cli_index_rule- "Checklist numbers are ephemeral navigation shortcuts created by the current invocation; they are not authored or persisted identity";
+
+checklist_cli_identity_rule- "Permanent Checklist identity remains its repository path and authored semantic contents; permanent task identity remains its authored task_N identity and semantic identity";
+
+checklist_cli_numbering_rule- "Every discovered checklist.qps consumes one Checklist index number in deterministic discovery order, including a Checklist with no canonical current_work.tasks surface";
+
+checklist_cli_default_rule- "qps checklist prints the freshly generated global Checklist index and only terminal-visible unfinished tasks for each discovered Checklist";
+
+checklist_cli_done_rule- "A discovered Checklist with zero terminal-visible unfinished tasks is rendered as DONE while retaining its ephemeral Checklist number";
+
+checklist_cli_selection_rule- "qps checklist <checklist-index> reruns discovery and resolves that number against the newly generated current index rather than consulting persisted numbering";
+
+checklist_cli_task_selection_rule- "qps checklist <checklist-index> <task-number> reruns discovery, resolves the current Checklist number, and selects the authored task_N matching the requested task number";
+
+checklist_cli_output_rule- "Task output includes ephemeral Checklist and authored task identity, exact structural line count, source path, semantic identity, and concise summary; exact task selection also includes start-end source coordinates";
+
+checklist_cli_noise_rule- "Default Checklist output does not print proof evidence, completed work, historical entries, implementation detail, or unrelated Checklist structure";
+
+checklist_task_surface_rule- "Each Checklist should expose a small canonical current_work task surface that terminal tooling can inspect without understanding the Checklist's full custom proof logic";
+
+checklist_task_state_active- "active";
+
+checklist_task_state_waiting- "waiting";
+
+checklist_task_state_blocked- "blocked";
+
+checklist_task_state_ready- "ready";
+
+checklist_task_state_complete- "complete";
+
+checklist_task_state_saved- "saved";
+
+checklist_task_default_visible_states- "active, waiting, blocked, ready, complete";
+
+checklist_task_hidden_states- "saved";
+
+checklist_task_identity_rule- "Each task has an authored task_N structural identity and a stable semantic identity distinct from its human-readable summary";
+
+checklist_task_summary_rule- "Each active task has a concise terminal-facing summary suitable for qps checklist output";
+
+checklist_task_state_rule- "Task state is explicit authored data; qps checklist does not infer task completeness from Git state, file changes, prose, or agent judgment";
+
+checklist_save_transition_rule- "A completed history-ready task may become saved only after qps save successfully publishes its normalized history entry";
+
+checklist_history_transition_rule- "Complete work remains visible as unsaved work; only successful qps save transitions accepted work to saved, after which it disappears from qps checklist and remains discoverable through qps history";
+
+checklist_git_distinction- "Git status answers which files changed; qps checklist answers what CE-OS is currently trying to accomplish";
+
+checklist_agent_entry_rule- "An agent entering CE-OS should run qps checklist first to obtain the freshly resolved repository-wide semantic work index";
+
+checklist_current_task_example- "current_work task entries use task_N: ( identity- ...; summary- ...; state- ...; )";
+
+checklist_next- "Checklist discovery, ephemeral numbering, DONE rendering, visible-task rendering, Checklist selection, and exact authored task selection are implemented in qps/qps/checklist.qps; native code provides only generic substrate and thin CLI dispatch";
+
+git_quarry: (
+state- "Scoped enough to separate Git mechanism from CE-OS semantics";
+
+working_tree- "Physical current repository state";
+
+index- "Git stores a selected candidate tree between HEAD and working state; do not copy the index format into QPS unless later evidence requires it";
+
+tree_identity- "A Git tree gives exact content identity for a complete saved filesystem state";
+
+commit_identity- "A Git commit identifies a tree and connects it to a parent with metadata";
+
+diff_observation- "Git diff is retained as byte-level change evidence";
+
+save_direction- "CE-OS save should mean identifying and accepting a proven state; git commit remains the backing mechanism for now";
+
+history_direction- "CE-OS history should expose saved-state identity and current divergence; git status and log remain backing mechanisms for now";
+
+dif_direction- "QPS dif is independent of Git diff and should represent a reversible parser-aware structural difference between identified states";
+
+staging_direction- "Do not reproduce Git staging mechanically; first determine whether Checklist plus dif already represent intended candidate state";
+
+connected_execution_environment- "Proven: existing PathResolver, DocumentStore, and ExecutionEngine primitives are sufficient to execute definitions composed across multiple connected QPS documents while preserving source identity";
+
+connected_execution_implication- "No import/include syntax or new execution-language primitive is required for multi-document execution";
+
+connected_execution_remaining- "Resolved: general ExecutionEnvironment assembly loads immediate documents from an already-selected connected QPS module and registers reusable definitions with source identity";
+
+connected_source_cli- "Proven: direct source execution can load sibling authored definitions through connected module topology while executing only the selected entry Program";
+
+qps_language_module- "qps/qps/_index.qps establishes the authored QPS language surface as a connected module; checklist_run.qps can compose Checklist_Evidence and Checklist without import/include syntax";
+
+kernel_implication- "Multi-document authored execution requires no new QPS language primitive; native responsibility is reduced to module/path mechanism, document loading and lifetime, parsing, and runtime execution";
+
+next- "Probe, scope, and scout are proven; native execution-environment and kernel continuation remains tracked in qps/checklist.qps";
+);
+
+QPS_TOOL_TRIO.
+
+status- "PROVEN";
+
+probe: (
+purpose- "Inspect an exact known physical or authored location";
+physical- "Arbitrary files may be inspected by source line and radius";
+qps- "QPS documents may be selected through exact structural paths";
+output- "Shared SourceSpan renderer";
+);
+
+scope: (
+purpose- "Inspect the immediate authored structural neighborhood of an exact QPS structural path";
+selection- "Existing structural path selection";
+members- "Immediate authored members only";
+item_behavior- "Items are valid structural leaves with no child scope";
+filesystem_recursion- "NO";
+output- "Shared SourceSpan renderer";
+);
+
+scout: (
+purpose- "Discover exact authored identities within one indexed QPS module";
+module_boundary- "_index.qps";
+documents- "Immediate qpsFiles only; _index.qps itself excluded";
+child_module_descent- "NO";
+filesystem_recursion- "NO";
+document_ast_recursion- "YES";
+matching- "Exact AST-authored identity, not textual grep";
+identity_surface- "Key, Term, Item, and named ExecutionDefinition";
+broken_document_behavior- "Parser-incompatible sibling documents are isolated so valid evidence from readable documents remains available";
+output- "Shared SourceSpan renderer";
+);
+
+source_output: (
+header- "path:start-end";
+body- "ln: source";
+deduplication- "Physical source ranges normalize and merge";
+semantic_path_stacking- "NO";
+);
+
+continuation- "Use scout to discover, scope to inspect neighborhood, and probe to inspect exact evidence";
+
+
+{Checklist_Render:
+[>path-]
+[>checklist_index-]
+
+document: -qps_load(
+path- path;
+);
+
+current_work: -structure_child(
+structure- document;
+name- "current_work";
+);
+
+tasks: -structure_child(
+structure- current_work;
+name- "tasks";
+);
+
+task_list: -structure_children(
+structure- tasks;
+);
+
+task_count: -sequence_size(
+value- task_list;
+);
+
+[>task_index-] 0;
+
+-while task_index < task_count {
+task: -sequence_at(
+value- task_list;
+index- task_index;
+);
+
+task_name: -structure_name(
+structure- task;
+);
+
+identity_item: -structure_item(
+structure- task;
+name- "identity";
+);
+
+identity: -structure_value(
+structure- identity_item;
+);
+
+summary_item: -structure_item(
+structure- task;
+name- "summary";
+);
+
+summary: -structure_value(
+structure- summary_item;
+);
+
+state_item: -structure_item(
+structure- task;
+name- "state";
+);
+
+state: -structure_value(
+structure- state_item;
+);
+
+%visible: 0
+
+-if state == "active" {
+[>visible-] 1;
+}
+
+-if state == "waiting" {
+[>visible-] 1;
+}
+
+-if state == "blocked" {
+[>visible-] 1;
+}
+
+-if state == "ready" {
+[>visible-] 1;
+}
+
+-if state == "complete" {
+[>visible-] 1;
+}
+
+-if visible == 1 {
+start_line: -structure_start(
+structure- task;
+);
+
+end_line: -structure_end(
+structure- task;
+);
+
+%line_count: end_line - start_line + 1
+
+-write(
+stream- "stdout";
+value- checklist_index;
+);
+
+-write(
+stream- "stdout";
+value- ".";
+);
+
+-write(
+stream- "stdout";
+value- task_name;
+);
+
+-write(
+stream- "stdout";
+value- "   ";
+);
+
+-write(
+stream- "stdout";
+value- state;
+);
+
+-write(
+stream- "stdout";
+value- "   ";
+);
+
+-write(
+stream- "stdout";
+value- line_count;
+);
+
+-write(
+stream- "stdout";
+value- " ln   ";
+);
+
+-write(
+stream- "stdout";
+value- path;
+);
+
+-write(
+stream- "stdout";
+value- "\n    ";
+);
+
+-write(
+stream- "stdout";
+value- identity;
+);
+
+-write(
+stream- "stdout";
+value- "\n    ";
+);
+
+-write(
+stream- "stdout";
+value- summary;
+);
+
+-write(
+stream- "stdout";
+value- "\n";
+);
+}
+
+[>task_index-] task_index + 1;
+}
+
+-return 0;
+}
+
+
+{Checklist_Index:
+[>root-]
+[>module-]
+[>checklist_index-]
+[>target_checklist-] 0;
+[>target_task-] "";
+
+files: -module_files(
+root- root;
+module- module;
+);
+
+file_count: -sequence_size(
+value- files;
+);
+
+[>file_index-] 0;
+
+-if module == "" {
+[>expected_checklist-] "checklist.qps";
+}
+-else {
+[>expected_checklist-] module + "/checklist.qps";
+}
+
+-while file_index < file_count {
+file: -sequence_at(
+value- files;
+index- file_index;
+);
+
+-if file == expected_checklist {
+%has_visible: {>Checklist_Has_Visible_Tasks:
+path- file;
+}
+
+%selected: 0
+
+-if target_checklist == 0 {
+[>selected-] 1;
+}
+
+-if target_checklist == checklist_index {
+[>selected-] 1;
+}
+
+-if selected == 1 {
+-if has_visible == 1 {
+-if target_task == "" {
+%render_result: {>Checklist_Render:
+path- file;
+checklist_index- checklist_index;
+}
+}
+-else {
+%render_result: {>Checklist_Render_Selected:
+path- file;
+checklist_index- checklist_index;
+task_name- target_task;
+}
+}
+}
+-else {
+-write(
+stream- "stdout";
+value- checklist_index;
+);
+
+-write(
+stream- "stdout";
+value- "   DONE   ";
+);
+
+-write(
+stream- "stdout";
+value- file;
+);
+
+-write(
+stream- "stdout";
+value- "\n";
+);
+}
+}
+
+[>checklist_index-] checklist_index + 1;
+}
+
+[>file_index-] file_index + 1;
+}
+
+children: -module_children(
+root- root;
+module- module;
+);
+
+child_count: -sequence_size(
+value- children;
+);
+
+[>child_index-] 0;
+
+-while child_index < child_count {
+child: -sequence_at(
+value- children;
+index- child_index;
+);
+
+%next_index: {>Checklist_Index:
+root- root;
+module- child;
+checklist_index- checklist_index;
+target_checklist- target_checklist;
+target_task- target_task;
+}
+
+[>checklist_index-] next_index;
+[>child_index-] child_index + 1;
+}
+
+-return checklist_index;
+}
+
+
+{Checklist_Resolve_Path:
+[>root-]
+[>module-]
+[>checklist_index-]
+[>target_checklist-]
+
+[>found_path-] "";
+
+files: -module_files(
+root- root;
+module- module;
+);
+
+file_count: -sequence_size(
+value- files;
+);
+
+[>file_index-] 0;
+
+-if module == "" {
+[>expected_checklist-] "checklist.qps";
+}
+-else {
+[>expected_checklist-] module + "/checklist.qps";
+}
+
+-while file_index < file_count {
+file: -sequence_at(
+value- files;
+index- file_index;
+);
+
+-if file == expected_checklist {
+-if checklist_index == target_checklist {
+[>found_path-] file;
+}
+
+[>checklist_index-] checklist_index + 1;
+}
+
+[>file_index-] file_index + 1;
+}
+
+-if found_path == "" {
+children: -module_children(
+root- root;
+module- module;
+);
+
+child_count: -sequence_size(
+value- children;
+);
+
+[>child_index-] 0;
+
+-while child_index < child_count {
+child: -sequence_at(
+value- children;
+index- child_index;
+);
+
+%child_result: {>Checklist_Resolve_Path:
+root- root;
+module- child;
+checklist_index- checklist_index;
+target_checklist- target_checklist;
+}
+
+child_path: -dictionary_at(
+value- child_result;
+index- 0;
+);
+
+child_next_index: -dictionary_at(
+value- child_result;
+index- 1;
+);
+
+[>checklist_index-] child_next_index;
+
+-if child_path == "" {
+[>found_path-] found_path;
+}
+-else {
+[>found_path-] child_path;
+}
+
+[>child_index-] child_index + 1;
+}
+}
+
+-return [
+1: found_path,
+2: checklist_index
+];;
+}
+
+
+{Checklist_Path:
+[>root-]
+[>checklist_index-]
+
+%result: {>Checklist_Resolve_Path:
+root- root;
+module- "";
+checklist_index- 1;
+target_checklist- checklist_index;
+}
+
+path: -dictionary_at(
+value- result;
+index- 0;
+);
+
+-if path == "" {
+-assert 0 == 1;
+}
+
+-return path;
+}
+
+
+{Checklist_List:
+[>root-]
+
+%next_index: {>Checklist_Index:
+root- root;
+module- "";
+checklist_index- 1;
+target_checklist- 0;
+target_task- "";
+}
+
+-return next_index;
+}
+
+
+{Checklist_Has_Tasks:
+[>path-]
+
+document: -qps_load(
+path- path;
+);
+
+root_children: -structure_children(
+structure- document;
+);
+
+root_count: -sequence_size(
+value- root_children;
+);
+
+[>root_index-] 0;
+[>has_tasks-] 0;
+
+-while root_index < root_count {
+root_child: -sequence_at(
+value- root_children;
+index- root_index;
+);
+
+root_name: -structure_name(
+structure- root_child;
+);
+
+-if root_name == "current_work" {
+work_children: -structure_children(
+structure- root_child;
+);
+
+work_count: -sequence_size(
+value- work_children;
+);
+
+[>work_index-] 0;
+
+-while work_index < work_count {
+work_child: -sequence_at(
+value- work_children;
+index- work_index;
+);
+
+work_name: -structure_name(
+structure- work_child;
+);
+
+-if work_name == "tasks" {
+[>has_tasks-] 1;
+}
+
+[>work_index-] work_index + 1;
+}
+}
+
+[>root_index-] root_index + 1;
+}
+
+-return has_tasks;
+}
+
+
+{Checklist_Render_Selected:
+[>path-]
+[>checklist_index-]
+[>task_name-]
+
+document: -qps_load(
+path- path;
+);
+
+current_work: -structure_child(
+structure- document;
+name- "current_work";
+);
+
+tasks: -structure_child(
+structure- current_work;
+name- "tasks";
+);
+
+task: -structure_child(
+structure- tasks;
+name- task_name;
+);
+
+start_line: -structure_start(
+structure- task;
+);
+
+end_line: -structure_end(
+structure- task;
+);
+
+source: -file_span(
+path- path;
+start- start_line;
+end- end_line;
+);
+
+-write(
+stream- "stdout";
+value- checklist_index;
+);
+
+-write(
+stream- "stdout";
+value- ".";
+);
+
+-write(
+stream- "stdout";
+value- task_name;
+);
+
+-write(
+stream- "stdout";
+value- "   ";
+);
+
+-write(
+stream- "stdout";
+value- path;
+);
+
+-write(
+stream- "stdout";
+value- ":";
+);
+
+-write(
+stream- "stdout";
+value- start_line;
+);
+
+-write(
+stream- "stdout";
+value- "-";
+);
+
+-write(
+stream- "stdout";
+value- end_line;
+);
+
+-write(
+stream- "stdout";
+value- "\n\n";
+);
+
+-write(
+stream- "stdout";
+value- source;
+);
+
+-write(
+stream- "stdout";
+value- "\n";
+);
+
+-return 0;
+}
+
+{Checklist_Show:
+[>root-]
+[>checklist_index-]
+
+%next_index: {>Checklist_Index:
+root- root;
+module- "";
+checklist_index- 1;
+target_checklist- checklist_index;
+target_task- "";
+}
+
+-return next_index;
+}
+
+
+{Checklist_Show_Task:
+[>root-]
+[>checklist_index-]
+[>task_name-]
+
+%next_index: {>Checklist_Index:
+root- root;
+module- "";
+checklist_index- 1;
+target_checklist- checklist_index;
+target_task- task_name;
+}
+
+-return next_index;
+}
+
+
+{Checklist_Has_Visible_Tasks:
+[>path-]
+
+document: -qps_load(
+path- path;
+);
+
+root_children: -structure_children(
+structure- document;
+);
+
+root_count: -sequence_size(
+value- root_children;
+);
+
+[>root_index-] 0;
+[>has_visible-] 0;
+
+-while root_index < root_count {
+root_child: -sequence_at(
+value- root_children;
+index- root_index;
+);
+
+root_name: -structure_name(
+structure- root_child;
+);
+
+-if root_name == "current_work" {
+work_children: -structure_children(
+structure- root_child;
+);
+
+work_count: -sequence_size(
+value- work_children;
+);
+
+[>work_index-] 0;
+
+-while work_index < work_count {
+work_child: -sequence_at(
+value- work_children;
+index- work_index;
+);
+
+work_name: -structure_name(
+structure- work_child;
+);
+
+-if work_name == "tasks" {
+task_list: -structure_children(
+structure- work_child;
+);
+
+task_count: -sequence_size(
+value- task_list;
+);
+
+[>task_index-] 0;
+
+-while task_index < task_count {
+task: -sequence_at(
+value- task_list;
+index- task_index;
+);
+
+state_item: -structure_item(
+structure- task;
+name- "state";
+);
+
+state: -structure_value(
+structure- state_item;
+);
+
+-if state == "active" {
+[>has_visible-] 1;
+}
+
+-if state == "waiting" {
+[>has_visible-] 1;
+}
+
+-if state == "blocked" {
+[>has_visible-] 1;
+}
+
+-if state == "ready" {
+[>has_visible-] 1;
+}
+
+-if state == "complete" {
+[>has_visible-] 1;
+}
+
+[>task_index-] task_index + 1;
+}
+}
+
+[>work_index-] work_index + 1;
+}
+}
+
+[>root_index-] root_index + 1;
+}
+
+-return has_visible;
+}

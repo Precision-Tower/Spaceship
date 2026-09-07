@@ -1414,21 +1414,32 @@ int main(
             parseSource(
                 readFile(argv[1]));
 
-        require(
-            program->statements.size() == 1,
-            "Authored checklist policy must contain exactly one Checklist definition.");
+        const ast::ExecutionDefinitionNode*
+            definition = nullptr;
 
-        const auto* definition =
-            dynamic_cast<const ast::ExecutionDefinitionNode*>(
-                program->statements.front().get());
+        for (const auto& statement :
+             program->statements) {
+
+            const auto* candidate =
+                dynamic_cast<
+                    const ast::ExecutionDefinitionNode*>(
+                        statement.get());
+
+            if (candidate != nullptr &&
+                candidate->identifier_ ==
+                    "Checklist") {
+
+                require(
+                    definition == nullptr,
+                    "Authored checklist policy contains multiple Checklist definitions.");
+
+                definition = candidate;
+            }
+        }
 
         require(
             definition != nullptr,
-            "Authored checklist policy must be an execution definition.");
-
-        require(
-            definition->identifier_ == "Checklist",
-            "Authored checklist execution definition must be named Checklist.");
+            "Authored checklist policy does not contain Checklist definition.");
 
         require(
             definition->body_ != nullptr,

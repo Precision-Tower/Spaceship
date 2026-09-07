@@ -247,6 +247,38 @@ r. Resistance: def"example";
     requireDefinitionText(requireKeyTerm(requireProgramKey(*program, 1, "r"), 0, "Resistance"), "example");
 }
 
+
+void keySourceSpanTracksOwnedParagraph() {
+    auto program = parseSource(R"qps(alpha.
+item- 1;
+
+beta.
+item- 2;
+)qps");
+
+    const auto& alpha =
+        requireProgramKey(*program, 0, "alpha");
+
+    const auto& beta =
+        requireProgramKey(*program, 1, "beta");
+
+    require(
+        alpha.getLine() == 1,
+        "Expected alpha Key to begin on line 1.");
+
+    require(
+        alpha.getEndLine() == 2,
+        "Expected alpha Key to own lines 1-2 only.");
+
+    require(
+        beta.getLine() == 4,
+        "Expected beta Key to begin on line 4.");
+
+    require(
+        beta.getEndLine() == 5,
+        "Expected EOF-closed beta Key to own lines 4-5.");
+}
+
 void eofClosesFinalKey() {
     auto program = parseSource(R"qps(p. Potential: def"example";)qps");
 
@@ -391,6 +423,43 @@ explicit_null- null;
     requireNullValue(explicit_null, "explicit_null");
     requireTypeHint(explicit_null, std::nullopt, "explicit_null");
 }
+
+void structuralTermAndItemSourceSpansAreOwned() {
+    auto program = parseSource(R"qps(alpha.
+dimensions: (
+radius- 5/in;
+width-/n;
+);
+)qps");
+
+    const auto& key =
+        requireProgramKey(*program, 0, "alpha");
+
+    const auto& dimensions =
+        requireKeyTerm(key, 0, "dimensions");
+
+    require(
+        dimensions.getEndLine() == 5,
+        "Term source span should end on its owned ';'.");
+
+    const auto& container =
+        requireOnlyTermContainer(dimensions);
+
+    const auto& radius =
+        requireContainerItem(container, 0, "radius");
+
+    require(
+        radius.getEndLine() == 3,
+        "Unit Item source span should end on its owned ';'.");
+
+    const auto& width =
+        requireContainerItem(container, 1, "width");
+
+    require(
+        width.getEndLine() == 4,
+        "Typed Item source span should end on its final owned type token.");
+}
+
 
 void pulleySchemaAstHierarchyParses() {
     auto program = parseSource(R"qps(pu. Pulley: def"A pulley.";
@@ -581,8 +650,11 @@ struct TestCase {
 } // namespace
 
 int main() {
+    structuralTermAndItemSourceSpansAreOwned();
+
     const std::vector<TestCase> tests = {
         {"paragraph Keys parse as peers", paragraphKeysParseAsPeerKeys},
+        {"Key source span tracks owned paragraph", keySourceSpanTracksOwnedParagraph},
         {"EOF closes final Key", eofClosesFinalKey},
         {"legacy Key-closing backslash is rejected", legacyKeyClosingBackslashRejected},
         {"single-member container needs no delimiter", singleMemberContainerDoesNotNeedDelimiter},
