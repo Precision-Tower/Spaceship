@@ -98,3 +98,11 @@ Thumbs.db
 # qps/bin locally imported or built native toolchain sources/artifacts
 /qps/bin/build/
 /qps/bin/src/
+
+# CE-OS repository-local disposal boundary
+/trash/tmp/*
+!/trash/tmp/.gitkeep
+/trash/retired/*
+!/trash/retired/.gitkeep
+/trash/recovered/*
+!/trash/recovered/.gitkeep

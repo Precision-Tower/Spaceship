@@ -1,0 +1,49 @@
+TRASH.
+
+definition: def"
+Repository-local disposal boundary for CE-OS.
+
+Nothing below trash is authoritative source.
+
+All CE-OS-owned transient files, temporary test trees, generated scratch,
+patch staging, probe output, intermediate edits, and other disposable
+working material belong under trash/tmp rather than host-global temporary
+storage or incidental repository paths.
+
+Files deliberately removed from active authority but intentionally retained
+for a bounded period belong under trash/retired.
+
+Unclassified or suspicious material discovered during cleanup belongs under
+trash/recovered until ownership is established.
+
+The repository root is an authority surface and must remain immaculate.
+Incidental artifacts are forbidden at repository root.
+";
+
+paths: (
+temporary- "trash/tmp";
+retired- "trash/retired";
+recovered- "trash/recovered";
+);
+
+authority: (
+root- false;
+tmp- false;
+retired- false;
+recovered- false;
+);
+
+rules: (
+self_contained- "CE-OS-owned disposable filesystem activity remains inside ~/ce-os";
+root_immaculacy- "The ~/ce-os root may contain only intentional top-level architecture and authority surfaces";
+root_creation- "Creation of a new repository-root file or directory requires explicit architectural purpose";
+scratch- "Tools, agents, tests, scripts, and development workflows must not use repository root as scratch space";
+temporary- "CE-OS temporary files and directories use ~/ce-os/trash/tmp";
+host_tmp- "CE-OS-authored code must not rely on host-global /tmp or default host temporary directories";
+retired- "Intentionally displaced material may be retained under trash/retired";
+recovered- "Unowned cleanup discoveries are quarantined under trash/recovered";
+tmp_cleanup- "trash/tmp may be cleared without preservation review";
+other_cleanup- "trash/retired and trash/recovered require classification before permanent deletion";
+generated_builds- "Tool-managed temporary content already contained inside an approved ignored build tree may remain inside that build tree";
+git- "Track trash policy surfaces while ignoring disposable payloads";
+);

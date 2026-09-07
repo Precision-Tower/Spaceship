@@ -165,6 +165,14 @@ source_location- "Use path:start-end with numbered source lines as the canonical
 stage_feature_only- "Stage only files belonging to the feature being checkpointed";
 git_workflow- "Use Git continuously as the byte-level checkpoint substrate: inspect status before work, keep unrelated changes separated, stage only coherent proven work, and checkpoint completed units before starting another subsystem";
 git_hygiene- "Do not allow generated artifacts, temporary probes, backups, zero-byte shell fallout, caches, build products, or vendored source/build trees to accumulate as unexplained repository changes";
+root_immaculacy- "The ~/ce-os repository root is an authority surface and must remain immaculate; only intentional top-level architecture and authority entries may exist there";
+trash_authority- "trash/_index.qps defines the repository-local disposal boundary";
+trash_tmp- "All CE-OS-owned transient files, test sandboxes, patch staging, temporary scripts, probes, intermediate edits, and other disposable work use ~/ce-os/trash/tmp instead of host-global /tmp, default host temporary directories, or incidental repository locations";
+trash_retired- "Intentionally displaced but temporarily retained material belongs under ~/ce-os/trash/retired";
+trash_recovered- "Unclassified cleanup discoveries belong under ~/ce-os/trash/recovered until ownership is established";
+trash_non_authority- "Nothing below ~/ce-os/trash is authoritative source";
+trash_tmp_cleanup- "Contents of ~/ce-os/trash/tmp are disposable and may be cleared freely";
+root_creation_policy- "Tools and agents may not create incidental files or directories at ~/ce-os root; a new root entry requires explicit architectural purpose";
 save_public_contract- "qps save <checklist-index> <task-number> resolves the indexed Checklist through authored Checklist_Path, accepts only a complete documented task, rejects a semantic identity already present in root History, and enters authored Save publication only after public validation";
 save_failure_integrity- "Malformed, stale, incomplete, duplicate, or interrupted Save attempts preserve Checklist and History authority; generic multi-file publication restores prior authorities if publication is interrupted";
 save_atomicity- "Save constructs and parses complete History and Checklist candidates before generic transactional publication; successful acceptance appends normalized History and removes exactly the accepted task";
