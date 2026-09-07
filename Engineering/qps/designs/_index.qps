@@ -1,1 +1,7 @@
 HEV- HEV.HEV/p; # Hydraulic Electric System
+
+ICE- ICE.ICE/p; # Internal Combustion Engine
+
+DWT- DWT.DWT/p; # Driven Wind Turbine
+
+EDS- EDS.EDS/p; # Eco Distillation System

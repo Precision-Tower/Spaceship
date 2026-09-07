@@ -81,7 +81,7 @@ calculation- "working";
 geometry- "working_active_development";
 native_cad- "working";
 model_domain- "unimplemented";
-causal_domain- "unimplemented";
+causal_domain- "working_domain_topology";
 
 frontier.
 current- "Engineering geometry through Workbench and Godot";
@@ -199,7 +199,7 @@ generic- "working";
 calculation_percent- "working";
 geometry_at- "working_active_development";
 model_dollar- "lexed_not_implemented";
-causal_bang- "not_canonically_implemented";
+causal_bang- "working_domain_topology";
 
 python.
 path- "Engineering/py";
@@ -243,7 +243,7 @@ native_geometry- "working_observed";
 native_mesh- "working_observed";
 godot_geometry_capture- "next_integration_edge";
 model_domain- "unimplemented";
-causal_domain- "unimplemented";
+causal_domain- "working_domain_topology";
 
 lineage.
 restructure: def"Engineering was restructured by implementation language into cpp, py, and qps.";
@@ -254,7 +254,7 @@ preservation: def"Engineering.yaml may preserve useful project history, validati
 unresolved.
 godot_capture- "complete the interrupted generated-geometry visualization and capture path";
 model_dollar- "define and implement canonical $ execution semantics";
-causal_bang- "define and implement canonical ! execution semantics";
+causal_bang- "replace provisional scalar binding transfer with explicit domain-interface contracts";
 python_cpp_boundary- "reconstruct which Python Engineering surfaces remain active versus compatibility or legacy";
 workbench_geometry_contract- "document the current native geometry to Workbench Godot visualization boundary";
 yaml_retirement- "replace Engineering.yaml only after Engineering.qps is accepted as its measured successor";

@@ -22,9 +22,9 @@ HEV_Motor_Pump_Coupling_Probe.
 }
 
 {!motor_to_pump:
-DC_Motor: (electrical_state = mechanical_state)
+DC_Motor: (DC = ME)
 =
-Pump: (mechanical_state = fluid_state);
+Pump: (ME = FD);
 }
 
 {>DC_Motor:

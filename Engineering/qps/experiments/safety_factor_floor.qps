@@ -1,0 +1,16 @@
+{
+[>minimum_safety_factor]- 2.5/n;
+[>acceptable]- 1;
+[>shortfall]- 0;
+
+-if measured_safety_factor < minimum_safety_factor {
+[>acceptable]- 0;
+%missing_margin: minimum_safety_factor - measured_safety_factor
+[>shortfall]- missing_margin;
+}
+
+-return [
+1: acceptable,
+2: shortfall
+];;
+}

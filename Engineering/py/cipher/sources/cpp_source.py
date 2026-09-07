@@ -3,7 +3,7 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
-from ..ir.document import CipherDocument
+from ..ir.document import CipherDocument, SourceArtifact
 from ..ir.nodes import CipherNode, SourceRef, TranslationState
 
 
@@ -439,4 +439,12 @@ def load_cpp(path: str | Path) -> CipherDocument:
 
         cursor = closing + 1
 
-    return CipherDocument(children=children)
+    return CipherDocument(
+        children=children,
+        sources=[
+            SourceArtifact.from_path(
+                p,
+                "C++",
+            )
+        ],
+    )

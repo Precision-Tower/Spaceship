@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-from ..ir.document import CipherDocument
+from ..ir.document import CipherDocument, SourceArtifact
 from ..ir.nodes import CipherNode, SourceRef
 
 
@@ -49,9 +49,21 @@ def load_json(path: str | Path) -> CipherDocument:
             children=[
                 _node_from_value(value, key, source)
                 for key, value in data.items()
-            ]
+            ],
+            sources=[
+                SourceArtifact.from_path(
+                    p,
+                    "JSON",
+                )
+            ],
         )
 
     return CipherDocument(
-        children=[_node_from_value(data, None, source)]
+        children=[_node_from_value(data, None, source)],
+        sources=[
+            SourceArtifact.from_path(
+                p,
+                "JSON",
+            )
+        ],
     )

@@ -1,0 +1,108 @@
+DWT. Driven_Wind_Turbine: def"
+A Driven Wind Turbine is a motion-captured energy system. It uses vehicle
+acceleration and forward motion to create airflow potential at an exposed
+propeller, then resolves that potential through turbine rotation, pulley
+motion, and alternator electrical generation.
+";
+
+identity: (
+system- "DWT"/a;
+full_name- "Driven Wind Turbine"/a;
+historical_source- "C:/Users/Freed/1/Dashboard/QPS_recovery/Engineering/qps/design/designs/DWT.qps"/a;
+recovery_status- "normalized_active_qps"/a;
+);
+
+model_rules: (
+domain_transformations_are_not_numeric_equality- true/b;
+vehicle_motion_is_authored_as_causal_potential- true/b;
+unknown_values_remain_unknown- true/b;
+);
+
+historical_summary: (
+prototype- "exposed 12-inch propeller with 6-inch blades"/a;
+mounting- "extends from the side of a moving vehicle"/a;
+function- "captures air displaced by vehicle acceleration and motion"/a;
+load- "auxiliary systems"/a;
+intent- "collaborate_with_motion"/a;
+);
+
+domain_chain: (
+stage_1- "ME"/a;
+stage_2- "FD"/a;
+stage_3- "ME"/a;
+stage_4- "ME"/a;
+stage_5- "AC"/a;
+);
+
+component_domain_transformations: (
+Vehicle_Acceleration: (
+domain- "ME"/a;
+parameter_motion- "mph"/a;
+potential- "vehicle_mass_and_change_in_velocity"/a;
+);
+Airflow_Potential: (
+domain- "FD"/a;
+potential- "pressure"/a;
+displacement- "airflow_rate"/a;
+resistance- "aerodynamic_drag"/a;
+);
+Wind_Turbine: (
+input_domain- "FD"/a;
+output_domain- "ME"/a;
+type-/a;
+blade_length-/a;
+blade_width-/a;
+contact_area-/a;
+output_motion- "rpm"/a;
+);
+Pulley_System: (
+domain- "ME"/a;
+type- "belt_or_chain"/a;
+pulley_radius-/a;
+belt_width-/a;
+output_motion- "rpm"/a;
+);
+Alternator: (
+input_domain- "ME"/a;
+output_domain- "AC"/a;
+poles-/a;
+output_voltage- "vac"/a;
+output_frequency- "hz"/a;
+);
+Electrical_Distribution: (
+input_domain- "AC"/a;
+output_domain- "various_D"/a;
+load- "auxiliary_system_displacement"/a;
+);
+);
+
+causal_equations: (
+vehicle_to_airflow- "P_vehicle_acceleration (ME:m;a) - R_aerodynamic_drag (FD:mf,vc) = D_air_flow_potential (FD:p)"/a;
+airflow_to_turbine- "P_air_flow_at_turbine (FD:p) - R_propeller_air_resistance (ME:fr) = D_turbine_angular_velocity (ME:omega)"/a;
+turbine_to_pulley- "P_turbine_angular_velocity (ME:omega) - R_pulley_linkage_friction (ME:fr,br) = D_alternator_angular_velocity (ME:omega)"/a;
+pulley_to_alternator- "P_alternator_angular_velocity (ME:omega) - R_alternator_magnetic_reluctance (Fx:R_m) = D_electrical_potential_AC (Ec:vac,hz)"/a;
+alternator_to_load- "P_electrical_potential_AC (Ec:vac,hz) - R_wiring_and_auxiliary_load (Ec:fr,various_r) = D_auxiliary_function (various_D)"/a;
+);
+
+boundary_notes: (
+vehicle_acceleration_to_airflow- "preserved authored ME output to FD input environmental boundary"/a;
+electrical_distribution_domain- "historical source writes Ec and various D; normalized file preserves AC generation plus unresolved distribution"/a;
+);
+
+{!dwt_motion_to_generation:
+Vehicle_Acceleration: (ME)
+=
+Airflow_Potential: (FD)
+=
+Wind_Turbine: (FD = ME)
+=
+Pulley_System: (ME)
+=
+Alternator: (ME = AC);
+}
+
+{!dwt_auxiliary_distribution:
+Alternator: (ME = AC)
+=
+Electrical_Distribution: (AC = various_D);
+}

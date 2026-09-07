@@ -48,6 +48,16 @@ backend- /n;
 provenance- /n;
 );
 
+Translation_Contract: (
+purpose- "Cipher changes representation without changing meaning";
+preserve- "Control flow, values, identities, side effects, errors, dependencies, and externally observable behavior are preserved across conversion";
+restriction- "Cipher does not rename, merge, delete, redesign, deduplicate, optimize, or otherwise reinterpret source semantics unless equivalence is mechanically proven";
+unresolved- "A construct that cannot yet be faithfully represented remains explicitly unresolved rather than being approximated or silently changed";
+proof- "Converted QPS must prove behavioral parity against the source implementation before it is accepted as a faithful conversion";
+refactor_boundary- "Semantic restructuring, deduplication, architectural simplification, and AI-driven redesign occur after faithful conversion and parity proof, not as Cipher translation";
+pipeline- "source -> faithful QPS -> parity proof -> refactored QPS -> proof -> native lowering";
+);
+
 Development_Lifecycle: (
 Python: (
 role- "rapid development and external ecosystem integration";

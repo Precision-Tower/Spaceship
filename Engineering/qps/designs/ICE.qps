@@ -1,0 +1,341 @@
+ICE. Internal_Combustion_Engine: def"
+Internal Combustion is the process of turning explosions into motion.
+
+Recovered from the historical QPS Engineering design source without
+normalizing the author's domain taxonomy into conventional physics notation.
+";
+
+identity: (
+system- "ICE"/a;
+full_name- "Internal Combustion Engine"/a;
+historical_source- "C:/Users/Freed/1/Dashboard/QPS_recovery/Engineering/qps/design/designs/ICE.qps"/a;
+recovery_status- "normalized_active_qps"/a;
+);
+
+model_rules: (
+domain_transformations_are_not_numeric_equality- true/b;
+branches_are_causal_graph_edges- true/b;
+authored_mismatches_are_preserved- true/b;
+unknown_values_remain_unknown- true/b;
+);
+
+types: (
+piston: def"
+A common type of ICE that burns gasoline to produce mechanical power.
+";
+rotor: def"
+A type of ICE that uses a rotary design to convert fuel into mechanical energy.
+";
+diesel: def"
+An ICE that uses diesel fuel, known for its efficiency and torque characteristics.
+";
+);
+
+historical_processes: (
+starter_process- "Battery: (Ec: DC), Electric_Motor: (DC = ME), Flywheel: (ME)"/a;
+combustion_process- "Combustion: (FD), Piston: (FD = ME), Crankshaft: (ME = ME), Flywheel: (ME), Transmission: (ME), Differential: (ME), Tires: (ME)"/a;
+cam_shaft_process- "Combustion: (FD), Piston: (FD = ME), Crankshaft: (ME), Internal_Pulley: (ME), Cam_Shaft_Pulley: (ME), Cam_Shaft: (ME)"/a;
+water_pump_process- "Combustion: (FD), Piston: (FD = ME), Crankshaft: (ME), Internal_Pulley: (ME), Water_Pump: (ME = FD), Radiator: (ME = TE)"/a;
+battery_charger- "Combustion: (FD), Piston: (FD = ME), Crankshaft: (ME), Master_Pulley: (ME), Alternator: (ME = AC), Battery: (DC)"/a;
+spark_plugs- "Combustion: (FD), Piston: (FD = ME), Crankshaft: (ME), Master_Pulley: (ME), Alternator: (ME = AC), PWM: (DC), Coil_Pack: (DC), Spark_Plug: (DC)"/a;
+condenser_process- "Combustion: (FD), Piston: (FD = ME), Crankshaft: (ME), Master_Pulley: (ME), Compressor: (ME = FD), Condenser: (ME = TE)"/a;
+power_steering_process- "Combustion: (FD), Piston: (FD = ME), Crankshaft: (ME), Master_Pulley: (ME), Power_Steering_Pump: (ME = FD), Steering_Rack: (ME)"/a;
+);
+
+component_domain_transformations: (
+Battery: (
+domain- "DC"/a;
+semantic_family- "Ec"/a;
+potential_storage- "capacitance"/a;
+potential- "vdc"/a;
+);
+Electric_Motor: (
+input_domain- "DC"/a;
+output_domain- "ME"/a;
+type- "brushed_motor"/a;
+stator_details-/a;
+rotor_details-/a;
+output_state- "Angular_Momentum"/a;
+output_motion- "mv"/a;
+output_speed- "rpm"/a;
+);
+Fuel: (
+type- "gasoline"/a;
+output_light_domain- "EMW"/a;
+output_heat_domain- "TE"/a;
+output_expansion_domain- "FD"/a;
+pressure_displacement- "gradient"/a;
+expansion_rate- "volume"/a;
+);
+Combustion: (
+domain- "FD"/a;
+);
+Piston: (
+input_domain- "FD"/a;
+output_domain- "ME"/a;
+type-/a;
+area-/a;
+stroke_length-/a;
+output_motion- "oscillations"/a;
+);
+Crankshaft: (
+input_domain- "ME"/a;
+output_domain- "ME"/a;
+type-/a;
+length-/a;
+radius-/a;
+output_motion- "mv"/a;
+output_speed- "rpm"/a;
+);
+Torque_Converter: (
+domain- "ME"/a;
+type-/a;
+output_motion- "mv"/a;
+output_speed- "rpm"/a;
+);
+Transmission: (
+domain- "ME"/a;
+type-/a;
+dimensions-/a;
+output_motion- "mv"/a;
+output_speed- "rpm"/a;
+);
+Differential: (
+domain- "ME"/a;
+type-/a;
+dimensions-/a;
+output_motion- "mv"/a;
+output_speed- "rpm"/a;
+);
+Tires: (
+domain- "ME"/a;
+type-/a;
+dimensions-/a;
+output_motion- "mv"/a;
+output_speed- "rpm"/a;
+vehicle_speed- "mph"/a;
+);
+Internal_Pulley: (
+domain- "ME"/a;
+type-/a;
+width-/a;
+radius-/a;
+pulley_depth-/a;
+output_motion- "mv"/a;
+output_speed- "rpm"/a;
+);
+Master_Pulley: (
+domain- "ME"/a;
+type-/a;
+dimensions-/a;
+output_motion- "mv"/a;
+output_speed- "rpm"/a;
+);
+Cam_Shaft_Pulley: (
+domain- "ME"/a;
+quantity- 2;
+type-/a;
+width-/a;
+radius-/a;
+pulley_depth-/a;
+output_motion- "mv"/a;
+output_speed- "rpm"/a;
+);
+Cam_Shaft: (
+domain- "ME"/a;
+quantity- 2;
+type-/a;
+dimensions-/a;
+output_motion- "mv"/a;
+output_speed- "rpm"/a;
+);
+Water_Pump: (
+input_domain- "ME"/a;
+output_domain- "FD"/a;
+type-/a;
+dimensions-/a;
+output_pressure- "psi"/a;
+output_flow- "gpm"/a;
+);
+Radiator: (
+input_domain- "ME"/a;
+output_domain- "TE"/a;
+type-/a;
+dimensions-/a;
+output- "rate_of_dissipation"/a;
+);
+Alternator: (
+input_domain- "ME"/a;
+output_domain- "AC"/a;
+type-/a;
+dimensions-/a;
+poles-/a;
+output_voltage- "vac"/a;
+output_frequency- "hz"/a;
+);
+PWM: (
+domain- "DC"/a;
+output- "pulse_width"/a;
+);
+Coil_Pack: (
+domain- "DC"/a;
+semantic_family- "Transformer"/a;
+primary_coil-/a;
+secondary_coil-/a;
+output_voltage- "vdc"/a;
+);
+Spark_Plug: (
+domain- "DC"/a;
+design_type-/a;
+gap-/a;
+);
+Compressor: (
+input_domain- "ME"/a;
+output_domain- "FD"/a;
+type-/a;
+dimensions-/a;
+output_pressure- "psi"/a;
+output_flow- "gpm"/a;
+);
+Condenser: (
+input_domain- "ME"/a;
+output_domain- "TE"/a;
+type-/a;
+dimensions-/a;
+output- "rate_of_heat_exchange"/a;
+);
+Power_Steering_Pump: (
+input_domain- "ME"/a;
+output_domain- "FD"/a;
+type-/a;
+dimensions-/a;
+output_pressure- "psi"/a;
+output_flow- "gpm"/a;
+);
+Steering_Rack: (
+domain- "ME"/a;
+type-/a;
+dimensions-/a;
+output_unknown- "??"/a;
+);
+);
+
+branch_boundary_notes: (
+water_pump_to_radiator- "preserved authored boundary FD output to ME input"/a;
+alternator_to_battery- "preserved authored boundary AC output to DC component"/a;
+alternator_to_pwm- "preserved authored boundary AC output to DC component"/a;
+compressor_to_condenser- "preserved authored boundary FD output to ME input"/a;
+power_steering_pump_to_steering_rack- "preserved authored boundary FD output to ME component"/a;
+);
+
+{!ice_starter_process:
+Battery: (DC)
+=
+Electric_Motor: (DC = ME)
+=
+Flywheel: (ME);
+}
+
+{!ice_combustion_process:
+Combustion: (FD)
+=
+Piston: (FD = ME)
+=
+Crankshaft: (ME = ME)
+=
+Flywheel: (ME)
+=
+Transmission: (ME)
+=
+Differential: (ME)
+=
+Tires: (ME);
+}
+
+{!ice_cam_shaft_process:
+Combustion: (FD)
+=
+Piston: (FD = ME)
+=
+Crankshaft: (ME)
+=
+Internal_Pulley: (ME)
+=
+Cam_Shaft_Pulley: (ME)
+=
+Cam_Shaft: (ME);
+}
+
+{!ice_water_pump_process:
+Combustion: (FD)
+=
+Piston: (FD = ME)
+=
+Crankshaft: (ME)
+=
+Internal_Pulley: (ME)
+=
+Water_Pump: (ME = FD)
+=
+Radiator: (ME = TE);
+}
+
+{!ice_battery_charger:
+Combustion: (FD)
+=
+Piston: (FD = ME)
+=
+Crankshaft: (ME)
+=
+Master_Pulley: (ME)
+=
+Alternator: (ME = AC)
+=
+Battery: (DC);
+}
+
+{!ice_spark_plugs:
+Combustion: (FD)
+=
+Piston: (FD = ME)
+=
+Crankshaft: (ME)
+=
+Master_Pulley: (ME)
+=
+Alternator: (ME = AC)
+=
+PWM: (DC)
+=
+Coil_Pack: (DC)
+=
+Spark_Plug: (DC);
+}
+
+{!ice_condenser_process:
+Combustion: (FD)
+=
+Piston: (FD = ME)
+=
+Crankshaft: (ME)
+=
+Master_Pulley: (ME)
+=
+Compressor: (ME = FD)
+=
+Condenser: (ME = TE);
+}
+
+{!ice_power_steering_process:
+Combustion: (FD)
+=
+Piston: (FD = ME)
+=
+Crankshaft: (ME)
+=
+Master_Pulley: (ME)
+=
+Power_Steering_Pump: (ME = FD)
+=
+Steering_Rack: (ME);
+}

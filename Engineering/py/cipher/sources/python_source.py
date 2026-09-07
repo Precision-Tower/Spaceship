@@ -4,7 +4,7 @@ import ast
 from pathlib import Path
 from typing import Any
 
-from ..ir.document import CipherDocument
+from ..ir.document import CipherDocument, SourceArtifact
 from ..ir.nodes import (
     CipherNode,
     DependencyRef,
@@ -326,18 +326,30 @@ def _function(
         default = None
         state = TranslationState.MAPPED
 
+        parameter_children = []
+
         if index >= default_offset:
             default_node = node.args.defaults[index - default_offset]
             default, default_state = _literal(default_node)
 
             if default_state == TranslationState.UNRESOLVED:
-                state = TranslationState.UNRESOLVED
+                parameter_children.append(
+                    CipherNode(
+                        kind="default",
+                        children=[
+                            expression_node(path, default_node)
+                        ],
+                        source=_source(path, default_node),
+                        state=TranslationState.MAPPED,
+                    )
+                )
 
         children.append(
             CipherNode(
                 kind="parameter",
                 name=arg.arg,
                 value=default,
+                children=parameter_children,
                 source=_source(path, arg),
                 state=state,
             )
@@ -585,4 +597,12 @@ def load_python(path: str | Path) -> CipherDocument:
                         )
                     )
 
-    return CipherDocument(children=children)
+    return CipherDocument(
+        children=children,
+        sources=[
+            SourceArtifact.from_path(
+                p,
+                "Python",
+            )
+        ],
+    )

@@ -1,0 +1,128 @@
+EDS. Eco_Distillation_System: def"
+Eco Distillation System recovered from the historical QPS Engineering design
+source. The design contains related causal processes around hydrogen
+combustion, turbine generation, condensation, steam energy, and water
+distillation.
+";
+
+identity: (
+system- "EDS"/a;
+full_name- "Eco Distillation System"/a;
+historical_source- "C:/Users/Freed/1/Dashboard/QPS_recovery/Engineering/qps/design/designs/EDS.qps"/a;
+recovery_status- "normalized_active_qps"/a;
+);
+
+model_rules: (
+domain_transformations_are_not_numeric_equality- true/b;
+branches_are_causal_processes- true/b;
+authored_mismatches_are_preserved- true/b;
+unknown_values_remain_unknown- true/b;
+);
+
+historical_processes: (
+heat_source- "Hydrogen_Combustion: (TE = FD), Turbine_Engine: (FD = ME), Alternator: (ME = AC)"/a;
+hydrogen_condensation- "Hydrogen_Combustion: (TE = FD), Water_Condensation: (TE = FD)"/a;
+steam_energy- "Hydrogen_Combustion: (TE = HE), Steam_Energy: (HE = FD), Steam_Turbine: (FD = ME), Alternator: (ME = AC)"/a;
+water_distillation- "Hydrogen_Combustion: (TE = HE), Steam_Energy: (HE = FD), Water_Condensation: (TE = FD)"/a;
+);
+
+component_domain_transformations: (
+Hydrogen_Combustion: (
+fuel_reservoir_details-/a;
+hydrogen_concentration-/a;
+oxygen_concentration-/a;
+light_output_domain- "EMW"/a;
+heat_output_domain- "TE"/a;
+expansion_output_domain- "FD"/a;
+steam_heat_output_domain- "HE"/a;
+pressure_displacement- "gradient"/a;
+expansion_rate- "volume"/a;
+);
+Turbine_Engine: (
+input_domain- "FD"/a;
+output_domain- "ME"/a;
+design_type-/a;
+dimensions-/a;
+output_motion- "mv"/a;
+output_speed- "rpm"/a;
+);
+Alternator: (
+input_domain- "ME"/a;
+output_domain- "AC"/a;
+type-/a;
+dimensions-/a;
+poles-/a;
+output_voltage- "vac"/a;
+output_frequency- "hz"/a;
+);
+Water_Condensation: (
+input_domain- "TE"/a;
+output_domain- "FD"/a;
+material_type-/a;
+thermal_reactivity-/a;
+output- "rate_of_condensation"/a;
+);
+Steam_Energy: (
+input_domain- "HE"/a;
+output_domain- "FD"/a;
+type-/a;
+reservoir_details-/a;
+rate_of_expansion-/a;
+output_motion- "mv"/a;
+output_pressure- "psi"/a;
+output_flow- "gpm"/a;
+);
+Steam_Turbine: (
+input_domain- "FD"/a;
+output_domain- "ME"/a;
+design_type-/a;
+dimensions-/a;
+output_motion- "mv"/a;
+output_speed- "rpm"/a;
+);
+Water_Distillation: (
+input_domain- "TE"/a;
+output_domain- "FD"/a;
+material_type-/a;
+thermal_reactivity-/a;
+reservoir_details-/a;
+output- "rate_of_distillation"/a;
+);
+);
+
+branch_boundary_notes: (
+hydrogen_combustion_to_water_condensation- "historical equation points Water_Condensation at heat branch 1.2; high-level process also writes Hydrogen_Combustion: (TE = FD)"/a;
+steam_energy_to_water_distillation- "preserved authored FD output to TE input boundary"/a;
+);
+
+{!eds_heat_source:
+Hydrogen_Combustion: (TE = FD)
+=
+Turbine_Engine: (FD = ME)
+=
+Alternator: (ME = AC);
+}
+
+{!eds_hydrogen_condensation:
+Hydrogen_Combustion: (TE = FD)
+=
+Water_Condensation: (TE = FD);
+}
+
+{!eds_steam_energy:
+Hydrogen_Combustion: (TE = HE)
+=
+Steam_Energy: (HE = FD)
+=
+Steam_Turbine: (FD = ME)
+=
+Alternator: (ME = AC);
+}
+
+{!eds_water_distillation:
+Hydrogen_Combustion: (TE = HE)
+=
+Steam_Energy: (HE = FD)
+=
+Water_Distillation: (TE = FD);
+}
