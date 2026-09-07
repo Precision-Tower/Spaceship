@@ -24,6 +24,45 @@ docs- "Android architecture and validation documentation";
 layout- "Android layout and environment configuration";
 );
 
+host_authority: (
+platform- "Android remains the hardware-facing host platform while CE-OS layers bounded services, automation, engineering, and operator control above it";
+rooted_host- "The development Pixel is intentionally rooted and bootloader-unlocked, so CE-OS must treat root authority and boot-chain trust as explicit security boundaries";
+android_integrity- "Preserve SELinux enforcement, Android file and metadata encryption, read-only verified system partitions, and authenticated ADB unless an explicit replacement is designed and proven";
+privilege_separation- "Normal Termux, Android-shell, and root-capable privileged operations remain distinct authority levels";
+privileged_broker- "Root-capable CE-OS operations belong behind the bounded Android/Privileged broker rather than being distributed across ordinary application or shell code";
+runtime_services- "Persistent CE-OS Android services belong to the Termux service surface and should remain observable, restartable, and independently verifiable";
+hardware_access- "Kernel-visible hardware interfaces are observed capability surfaces; their semantic ownership belongs in qps/kernel or the responsible subsystem rather than being duplicated in this index";
+extreme_battery_saver- "Google Flipendo is an Android host authority capable of suspending applications and controlling hotspot/tethering behavior; CE-OS must account for that authority explicitly rather than treating app suspension or hotspot loss as unrelated subsystem faults";
+);
+
+security_model: (
+default_posture- "Observed device state is not automatically desired policy; inventory first, then explicitly choose reinforcement behavior";
+root_rule- "Root availability does not imply unrestricted root use";
+network_rule- "Network security must be verified from listener state, kernel policy, and external reachability rather than trusting firewall configuration alone";
+tethering_rule- "Android tethering owns forwarding and NAT behavior until CE-OS explicitly replaces that responsibility with proven equivalent behavior";
+ssh_rule- "SSH is a CE-OS management boundary and should use explicit authentication and reachability policy rather than implicit defaults";
+usb_rule- "USB gadget handoff must preserve a proven rollback path to Android ownership";
+thermal_rule- "CE-OS may schedule and shed workload around thermal state but must not bypass Pixel thermal protections";
+lifecycle_rule- "Android package suspension, idle, standby, and background policy are host lifecycle controls that must be understood before CE-OS overrides them";
+privacy_rule- "Location, sensors, microphone, camera, notification access, DNS, VPN, and telemetry policy require explicit Operator intent before CE-OS changes them";
+hotspot_continuity- "Hotspot continuity is a hard CE-OS control-plane invariant and must not be intentionally sacrificed as a power, thermal, lifecycle, or workload-management actuator";
+power_saver_authority- "Android Battery Saver and Extreme Battery Saver can change application lifecycle and network-sharing behavior; CE-OS must distinguish those host policy transitions from CE-OS Guardian decisions";
+);
+
+observed_host_baseline: (
+device- "Pixel 6 oriole running Android 16 SDK 36";
+security_patch- "2026-04-05 at the time of the recorded host inventory";
+boot- "AVB and verity were observed enforcing while verified-boot state remained orange because the bootloader is unlocked";
+selinux- "Enforcing";
+storage- "Encrypted file-based userdata with metadata encryption";
+root- "Magisk root is active on the development host";
+adb- "USB ADB is enabled with authentication; wireless ADB was observed disabled";
+ceos_services- "ce-os-api, ce-os-live-sync, ce-os-guardian, and ce-os-privileged-broker were observed healthy during the inventory";
+authority- "Detailed current observations, anomalies, and unresolved policy decisions live in Android/checklist.qps rather than this durable index";
+extreme_saver- "The development Pixel uses Google Flipendo for Extreme Battery Saver; aggressive savings mode was observed and Flipendo exposes both application-suspension and hotspot-control authority";
+usb_thermal_gap- "The USB power thermal sensor usb_pwr_therm2 can enter its own warning state while Android aggregate thermal status remains nominal, so aggregate thermal status alone is not sufficient evidence for CE-OS sustained-compute safety";
+);
+
 documents: (
 readme- "Android/docs/README.md";
 checklist- "Android/docs/CHECKLIST.md";
@@ -33,7 +72,15 @@ rules: (
 local_context_first- "read this index when entering Android";
 descend_only_as_needed- "inspect only the child surface required by the task";
 privilege_boundary- "privileged Android operations remain distinct from normal Termux and application operations";
+observed_vs_desired- "do not confuse a live-device observation with intended CE-OS policy";
+preserve_android_guards- "do not disable Android integrity, authentication, lifecycle, or thermal protections merely to make development easier";
+hardware_semantics- "represent durable hardware capability contracts in the responsible semantic subsystem rather than copying device inventory into Android/_index.qps";
+security_changes- "security, privacy, network, root, and lifecycle reinforcement requires explicit authored policy plus verification";
 do_not_duplicate- "child implementation details remain owned by their local surface";
+preserve_hotspot- "never intentionally disable, cycle, or sacrifice hotspot connectivity for CE-OS power saving, thermal shedding, workload control, or remote diagnostics";
+separate_android_power_policy- "treat Android Battery Saver and Flipendo lifecycle/network actions as host policy authority distinct from CE-OS Guardian compute admission";
+observe_usb_thermal_independently- "sustained-compute policy must observe USB power thermal state independently where available rather than relying only on Android aggregate thermal severity";
+transient_fault_evidence- "timestamps, reproduction logs, temporary overrides, and experiment-specific values belong in Android/checklist.qps rather than this durable index";
 );
 
 operations: (

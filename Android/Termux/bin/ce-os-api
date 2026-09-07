@@ -7,6 +7,7 @@ import hmac
 import socket
 import subprocess
 import sys
+from urllib.parse import parse_qs, urlparse
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
@@ -39,6 +40,183 @@ def current_state():
     return state
 
 
+
+def _run_read_only(command: list[str], timeout: float = 2.0) -> tuple[int, str]:
+    """Run a bounded observation command. Never mutates host state."""
+    try:
+        proc = subprocess.run(
+            command,
+            cwd=str(ROOT),
+            capture_output=True,
+            text=True,
+            check=False,
+            timeout=timeout,
+        )
+    except (OSError, subprocess.TimeoutExpired):
+        return 127, ""
+    return proc.returncode, proc.stdout.strip()
+
+
+def _run_root_read_only(script: str, timeout: float = 3.0) -> tuple[int, str]:
+    return _run_read_only(["su", "-c", script], timeout)
+
+
+def _service_state(name: str) -> str:
+    service = HOME / "../usr/var/service" / name
+    code, out = _run_read_only(["sv", "status", str(service)])
+    if code == 0 and out.startswith("run:"):
+        return "ok"
+    if out.startswith(("down:", "finish:")):
+        return "degraded"
+    if out:
+        return "unknown"
+    return "unknown"
+
+
+def _package_suspended(package: str) -> str:
+    code, out = _run_root_read_only(
+        f'dumpsys package {package} 2>/dev/null | grep -m1 "User 0:"'
+    )
+    if code != 0 or not out:
+        return "unknown"
+    if "suspended=true" in out:
+        return "true"
+    if "suspended=false" in out:
+        return "false"
+    return "unknown"
+
+
+def classify_host_snapshot(observed: dict) -> dict:
+    """Normalize read-only host evidence and derive warnings deterministically."""
+    services = dict(observed.get("services") or {})
+    network = dict(observed.get("network") or {})
+    security = dict(observed.get("security") or {})
+    lifecycle = dict(observed.get("lifecycle") or {})
+    storage = dict(observed.get("storage") or {})
+
+    warnings = []
+
+    for name, value in sorted(services.items()):
+        if value != "ok":
+            warnings.append(f"service_{name}_{value}")
+
+    hotspot = network.get("hotspot_interface", "unknown")
+    ssh_listener = network.get("ssh_listener", "unknown")
+    ssh_rule = network.get("ssh_firewall_rule", "unknown")
+
+    if hotspot not in {"up", "present"}:
+        warnings.append(f"hotspot_{hotspot}")
+    if ssh_listener != "listening":
+        warnings.append(f"ssh_{ssh_listener}")
+    if ssh_rule != "present":
+        warnings.append(f"ssh_firewall_{ssh_rule}")
+
+    selinux = security.get("selinux", "unknown")
+    if selinux != "enforcing":
+        warnings.append(f"selinux_{selinux}")
+
+    if security.get("verified_boot") == "orange":
+        warnings.append("verified_boot_orange")
+
+    if security.get("bootloader") == "unlocked":
+        warnings.append("bootloader_unlocked")
+
+    if lifecycle.get("termux_suspended") == "true":
+        warnings.append("termux_suspended")
+
+    if lifecycle.get("magisk_suspended") == "true":
+        warnings.append("magisk_manager_suspended")
+
+    usage = storage.get("data_percent")
+    try:
+        if usage is not None and int(usage) >= 90:
+            warnings.append("storage_pressure")
+    except (TypeError, ValueError):
+        pass
+
+    if any(value == "unknown" for value in services.values()):
+        warnings.append("evidence_incomplete")
+
+    if warnings:
+        if any(
+            item.startswith(("service_", "hotspot_", "ssh_", "selinux_", "termux_"))
+            for item in warnings
+        ):
+            overall = "degraded"
+        else:
+            overall = "attention"
+    else:
+        overall = "healthy"
+
+    return {
+        "overall": overall,
+        "services": services,
+        "network": network,
+        "security": security,
+        "lifecycle": lifecycle,
+        "storage": storage,
+        "warnings": warnings,
+        "read_only": True,
+    }
+
+
+def host_snapshot() -> dict:
+    """Collect bounded host observations for the operator panel only."""
+    services = {
+        "api": _service_state("ce-os-api"),
+        "live_sync": _service_state("ce-os-live-sync"),
+        "guardian": _service_state("ce-os-guardian"),
+        "privileged_broker": _service_state("ce-os-privileged-broker"),
+    }
+
+    _, hotspot = _run_root_read_only(
+        'if ip link show ap_br_wlan2 >/dev/null 2>&1; then echo up; else echo absent; fi'
+    )
+    _, ssh_listener = _run_root_read_only(
+        'if ss -lntH 2>/dev/null | grep -Eq ":(8022)[[:space:]]"; then echo listening; else echo absent; fi'
+    )
+    _, ssh_rule = _run_root_read_only(
+        'if iptables -S INPUT 2>/dev/null | grep -q -- "--dport 8022"; then echo present; else echo absent; fi'
+    )
+
+    _, selinux = _run_root_read_only('getenforce 2>/dev/null || echo unknown')
+    _, root_uid = _run_root_read_only('id -u')
+    _, verified_boot = _run_read_only(["getprop", "ro.boot.verifiedbootstate"])
+    _, bootloader = _run_read_only(["getprop", "ro.boot.vbmeta.device_state"])
+
+    _, data_percent_raw = _run_read_only(
+        ["sh", "-c", "df -P /data 2>/dev/null | awk 'NR==2 {gsub(/%/,\"\",$5); print $5}'"]
+    )
+
+    observed = {
+        "services": services,
+        "network": {
+            "hotspot_interface": hotspot or "unknown",
+            "ssh_listener": ssh_listener or "unknown",
+            "ssh_firewall_rule": ssh_rule or "unknown",
+            "control_plane": {
+                "ssh": "preserved",
+                "hotspot": "preserved",
+            },
+        },
+        "security": {
+            "selinux": (selinux or "unknown").lower(),
+            "root_available": root_uid == "0",
+            "verified_boot": verified_boot or "unknown",
+            "bootloader": bootloader or "unknown",
+        },
+        "lifecycle": {
+            "termux_suspended": _package_suspended("com.termux"),
+            "magisk_suspended": _package_suspended("com.topjohnwu.magisk"),
+        },
+        "storage": {
+            "data_percent": data_percent_raw or "unknown",
+        },
+    }
+
+    return classify_host_snapshot(observed)
+
+
 def state_payload():
     state = current_state()
 
@@ -55,6 +233,8 @@ def state_payload():
         "guardian_reasons": state.guardian_reasons,
         "control_plane": state.control_plane,
     }
+
+    payload["host"] = host_snapshot()
 
     if LIVE.exists():
         live = {}
@@ -78,6 +258,86 @@ def set_mode(mode: str):
 
     return state_payload()
 
+
+def resolve_authorized_path(raw_path: str | None) -> Path:
+    root = ROOT.resolve()
+    if raw_path is None or raw_path.strip() == "":
+        return root
+
+    candidate = raw_path.strip()
+    if candidate in {"/", "."}:
+        return root
+
+    if candidate.startswith("~"):
+        candidate = candidate[1:].lstrip("/")
+
+    if candidate.startswith("/"):
+        target = (root / candidate.lstrip("/")).resolve(strict=False)
+    else:
+        target = (root / candidate).resolve(strict=False)
+
+    try:
+        target.relative_to(root)
+    except ValueError as exc:
+        raise ValueError("path outside authorized root") from exc
+
+    return target
+
+
+def _repo_relative_path(path: Path) -> str:
+    relative = path.relative_to(ROOT.resolve())
+    return "/" + relative.as_posix() if relative.as_posix() != "." else "/"
+
+
+def list_repo_entries(repo_relative_path: str | None = None) -> dict:
+    target = resolve_authorized_path(repo_relative_path)
+
+    if not target.exists():
+        return {"ok": False, "error": "not_found", "path": _repo_relative_path(target)}
+    if not target.is_dir():
+        return {"ok": False, "error": "not_directory", "path": _repo_relative_path(target)}
+
+    entries = []
+    for child in target.iterdir():
+        entries.append({
+            "name": child.name,
+            "path": _repo_relative_path(child),
+            "type": "directory" if child.is_dir() else "file",
+        })
+
+    entries.sort(key=lambda entry: (0 if entry["type"] == "directory" else 1, entry["name"].lower()))
+
+    return {
+        "ok": True,
+        "path": _repo_relative_path(target),
+        "entries": entries,
+    }
+
+
+def read_repo_file(repo_relative_path: str | None) -> dict:
+    target = resolve_authorized_path(repo_relative_path)
+
+    if not target.exists():
+        return {"ok": False, "error": "not_found", "path": _repo_relative_path(target)}
+    if not target.is_file():
+        return {"ok": False, "error": "not_regular_file", "path": _repo_relative_path(target)}
+
+    try:
+        content = target.read_text(encoding='utf-8')
+    except UnicodeDecodeError:
+        return {
+            "ok": False,
+            "error": "binary_not_supported",
+            "path": _repo_relative_path(target),
+            "size": target.stat().st_size,
+        }
+
+    return {
+        "ok": True,
+        "path": _repo_relative_path(target),
+        "content": content,
+        "size": len(content.encode('utf-8')),
+    }
 
 
 def bootstrap_policy() -> tuple[bool, dict]:
@@ -218,6 +478,22 @@ class Handler(BaseHTTPRequestHandler):
                     "status": "ok",
                 },
             )
+            return
+
+        if self.path.startswith("/v1/fs/"):
+            parsed = urlparse(self.path)
+            query = parse_qs(parsed.query)
+            requested_path = query.get("path", [""])[0]
+            try:
+                if parsed.path == "/v1/fs/list":
+                    payload = list_repo_entries(requested_path)
+                elif parsed.path == "/v1/fs/read":
+                    payload = read_repo_file(requested_path)
+                else:
+                    payload = {"ok": False, "error": "not_found"}
+                self.send_json(200 if payload.get("ok") else 400, payload)
+            except ValueError as exc:
+                self.send_json(400, {"ok": False, "error": "path_outside_authorized_root", "detail": str(exc)})
             return
 
         self.send_json(404, {"error": "not found"})

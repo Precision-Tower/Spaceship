@@ -76,56 +76,48 @@ fun MainScreen(
 
             ui.status?.let { status ->
                 Text(
-                    "MODE",
+                    "HOST",
                     style = MaterialTheme.typography.titleMedium
                 )
 
                 StatusRow(
-                    "Requested",
-                    status.requestedMode.uppercase()
+                    "Overall",
+                    status.host.overall.uppercase()
                 )
 
                 StatusRow(
-                    "Effective",
-                    status.effectiveMode.uppercase()
+                    "Mode",
+                    "${status.requestedMode.uppercase()} -> ${status.effectiveMode.uppercase()}"
+                )
+
+                StatusRow(
+                    "Compute",
+                    if (status.allowCompute) "ALLOWED" else "BLOCKED"
                 )
 
                 Text(
-                    "USB",
+                    "NETWORK",
                     style = MaterialTheme.typography.titleMedium
                 )
 
                 StatusRow(
-                    "Requested",
-                    status.requestedUsbMode.uppercase()
+                    "Hotspot",
+                    status.host.network.hotspotInterface.uppercase()
                 )
 
                 StatusRow(
-                    "Hardware",
-                    when (status.usbMode) {
-                        "bootstrap" -> "CE-OS BOOTSTRAP"
-                        "none" -> "ANDROID"
-                        else -> status.usbMode.uppercase()
-                    }
+                    "SSH",
+                    status.host.network.sshListener.uppercase()
                 )
 
                 StatusRow(
-                    "Guardian",
-                    if (
-                        status.requestedMode == status.effectiveMode
-                    ) {
-                        "PERMITTED"
-                    } else {
-                        "DENIED"
-                    }
+                    "SSH Firewall",
+                    status.host.network.sshFirewallRule.uppercase()
                 )
 
-                StatusRow(
-                    "Platform",
-                    when (status.platformState) {
-                        "ok" -> "LOCKED"
-                        else -> status.platformState.uppercase()
-                    }
+                Text(
+                    "COMPUTE / THERMAL",
+                    style = MaterialTheme.typography.titleMedium
                 )
 
                 StatusRow(
@@ -135,28 +127,12 @@ fun MainScreen(
 
                 StatusRow(
                     "Battery",
-                    if (status.battery == "unknown")
-                        "UNKNOWN"
-                    else
-                        "${status.battery}%"
+                    if (status.battery == "unknown") "UNKNOWN" else "${status.battery}%"
                 )
 
                 StatusRow(
                     "Battery Temp",
-                    if (status.batteryTempC == "unknown")
-                        "UNKNOWN"
-                    else
-                        "${status.batteryTempC} C"
-                )
-
-                StatusRow(
-                    "Requested Mode",
-                    status.requestedMode.uppercase()
-                )
-
-                StatusRow(
-                    "Effective Mode",
-                    status.effectiveMode.uppercase()
+                    if (status.batteryTempC == "unknown") "UNKNOWN" else "${status.batteryTempC} C"
                 )
 
                 StatusRow(
@@ -164,13 +140,85 @@ fun MainScreen(
                     status.thermalState.uppercase()
                 )
 
-                StatusRow(
-                    "Compute",
-                    if (status.allowCompute)
-                        "ALLOWED"
-                    else
-                        "BLOCKED"
+                Text(
+                    "SECURITY",
+                    style = MaterialTheme.typography.titleMedium
                 )
+
+                StatusRow(
+                    "SELinux",
+                    status.host.security.selinux.uppercase()
+                )
+
+                StatusRow(
+                    "Root",
+                    if (status.host.security.rootAvailable) "AVAILABLE" else "UNAVAILABLE"
+                )
+
+                StatusRow(
+                    "Verified Boot",
+                    status.host.security.verifiedBoot.uppercase()
+                )
+
+                StatusRow(
+                    "Bootloader",
+                    status.host.security.bootloader.uppercase()
+                )
+
+                Text(
+                    "SERVICES",
+                    style = MaterialTheme.typography.titleMedium
+                )
+
+                StatusRow("API", status.host.services.api.uppercase())
+                StatusRow("Live Sync", status.host.services.liveSync.uppercase())
+                StatusRow("Guardian", status.host.services.guardian.uppercase())
+                StatusRow("Privileged Broker", status.host.services.privilegedBroker.uppercase())
+
+                Text(
+                    "USB / LIFECYCLE",
+                    style = MaterialTheme.typography.titleMedium
+                )
+
+                StatusRow(
+                    "USB",
+                    when (status.usbMode) {
+                        "bootstrap" -> "CE-OS BOOTSTRAP"
+                        "none" -> "ANDROID"
+                        else -> status.usbMode.uppercase()
+                    }
+                )
+
+                StatusRow(
+                    "Termux Suspended",
+                    status.host.lifecycle.termuxSuspended.uppercase()
+                )
+
+                StatusRow(
+                    "Magisk Suspended",
+                    status.host.lifecycle.magiskSuspended.uppercase()
+                )
+
+                StatusRow(
+                    "Data Used",
+                    if (status.host.storage.dataPercent == "unknown")
+                        "UNKNOWN"
+                    else
+                        "${status.host.storage.dataPercent}%"
+                )
+
+                if (status.host.warnings.isNotEmpty()) {
+                    Text(
+                        "ATTENTION",
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                    status.host.warnings.forEach { warning ->
+                        Text(
+                            warning.replace("_", " ").uppercase(),
+                            style = MaterialTheme.typography.bodySmall
+                        )
+                    }
+                }
 
                 if (status.reasons.isNotEmpty()) {
                     Text(

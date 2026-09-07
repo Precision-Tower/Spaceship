@@ -1,0 +1,432 @@
+ANDROID_WORK.
+
+purpose: def"
+Persistent working memory for unfinished Android-side CE-OS implementation owned
+by Android.
+";
+
+ownership: (
+surface- "Android";
+termux- "Android/Termux";
+supporting_checklist- "Android/docs/CHECKLIST.md";
+operatorshell_ui_work- "UI/OperatorShell/checklist.qps";
+);
+
+current_work: (
+tasks: (
+
+task_1: (
+identity- "android.termux_filesystem_read_api";
+summary- "Prove and integrate the bounded read-only CE-OS filesystem API exposed from Termux";
+state- "active";
+
+current: (
+item_1- "Android/Termux/bin/ce-os-api contains unstaged filesystem list and read endpoints";
+item_2- "The implementation resolves requested paths beneath the configured CE-OS root and rejects traversal or symlink escape";
+item_3- "Directory listing returns structured typed entries with deterministic directories-first case-insensitive sorting";
+item_4- "File reads return UTF-8 content and structured errors for missing paths, wrong kinds, and binary data";
+item_5- "Android/Termux/tests/test_ce_os_api_filesystem.py contains five focused filesystem behavior tests";
+item_6- "A direct Python harness executed all five tests on the Pixel with RESULT pass=5 fail=0";
+item_7- "pytest is not installed in the current Termux Python environment, so proof used the existing test functions directly without adding dependencies";
+);
+
+steps: (
+step_1: (
+goal- "Keep the read-only filesystem boundary limited to authorized-root list and read operations";
+state- "complete";
+);
+step_2: (
+goal- "Preserve focused regression coverage for sorting, normalization, traversal and symlink rejection, structured errors, and binary rejection";
+state- "complete";
+);
+step_3: (
+goal- "Add API-level HTTP integration proof for the /v1/fs/list and /v1/fs/read routes without expanding into write authority";
+state- "ready";
+);
+);
+
+next- "Exercise the live HTTP handler boundary for /v1/fs/list and /v1/fs/read and record current endpoint-level proof";
+
+done_when: (
+condition_1- "Focused filesystem helper tests remain passing";
+condition_2- "Live or isolated HTTP-level tests prove /v1/fs/list and /v1/fs/read response behavior";
+condition_3- "Traversal and symlink escape remain rejected at the HTTP boundary";
+condition_4- "No write, arbitrary shell, or root authority is added by this task";
+);
+);
+
+
+task_2: (
+identity- "android.host_security_hardware_inventory";
+summary- "Inventory the rooted Pixel Android host, hardware, privacy, network, power, and CE-OS privilege surfaces before selecting reinforcement policy";
+state- "complete";
+
+product- "A repository-resident observed-state baseline sufficient to decide how CE-OS should reinforce the Pixel without silently changing Android behavior";
+
+scope: (
+device- "Pixel 6 oriole";
+android- "Android 16 SDK 36 build CP1A.260405.005";
+security_patch- "2026-04-05";
+principle- "Record observed reality first; do not convert observations into reinforcement policy without Operator judgment";
+mutation_rule- "This inventory task made no intentional Android security, privacy, power, package, networking, or kernel policy changes";
+);
+
+platform: (
+build_fingerprint- "google/oriole/oriole:16/CP1A.260405.005/15001963:user/release-keys";
+cpu- "8 ARM64 processors with AES, SHA1, SHA2, CRC32, atomics, ASIMD, and related ARM features";
+memory- "7787932 kB physical RAM observed with approximately 3.1 GB available during inventory";
+swap- "3145724 kB swap observed with substantial active use during the development workload";
+filesystem- "/data is F2FS with inline encryption, metadata encryption, nosuid, and nodev";
+encryption- "Android reports encrypted file-based storage";
+verified_boot- "AVB and verity remain enforcing, but verified boot state is orange because the bootloader is unlocked";
+bootloader- "ro.boot.vbmeta.device_state=unlocked and ro.boot.flash.locked=0";
+selinux- "Enforcing";
+root- "Magisk 30.7 root is active; root shell runs in u:r:magisk:s0; Zygisk setting was observed disabled";
+);
+
+kernel_security_observations: (
+kptr_restrict- "2";
+dmesg_restrict- "0";
+perf_event_paranoid- "-1";
+unprivileged_bpf_disabled- "0";
+protected_hardlinks- "0";
+protected_symlinks- "0";
+ipv4_forwarding- "1";
+ipv6_forwarding- "1";
+assessment_rule- "Values in this section are observations, not declarations that they should remain configured this way";
+);
+
+hardware_interfaces: (
+gpio- "Numerous /dev/gpiochip devices are present and root-owned";
+i2c- "Multiple root-owned /dev/i2c-* buses are present";
+binder- "binder, hwbinder, and vndbinder are exposed through binderfs";
+video- "V4L and media video devices are present, including video6 through video12 and v4l-touch0";
+audio- "ALSA /dev/snd and Pixel audio co-processor interfaces are present";
+secure_element- "st33spi and st54spi secure-element devices are present under the secure_element account";
+input- "input event devices and uinput exist";
+usb- "dwc3 and configfs USB gadget infrastructure are present";
+accelerators- "Platform driver inventory includes Edge TPU, Mali GPU, Exynos and Tensor subsystems, Google AoC, GSA and GSC, camera, modem, thermal, power, and UFS surfaces";
+thermal- "31 thermal zones and 23 cooling-device entries were observed";
+power_supply- "battery, USB, wireless, charger, PPS, and related power-supply classes are present";
+network_interfaces- "wlan0, wlan1, wlan3, hotspot bridge ap_br_wlan2, rmnet0 through rmnet29 cellular interfaces, aware_nmi0, and tunnel interfaces are present";
+);
+
+android_integrity: (
+system_partitions- "system, system_ext, product, vendor, and vendor_dlkm are mounted read-only";
+avb_fstab- "fstab declares AVB protection for system, vendor, boot, and related verified partitions";
+magisk_mounts- "Magisk overlays are visible on system_ext/bin while underlying Android partitions remain read-only";
+user_data_crypto- "fstab declares file and metadata encryption for userdata";
+user_ca_added- "0 user-added CA certificates observed";
+user_ca_removed- "0 user-removed CA certificates observed";
+device_owner- "No device owner was observed";
+profile_owner- "No profile owner was observed";
+);
+
+adb_usb: (
+adb_enabled- "1";
+wireless_adb- "0";
+adb_secure- "1";
+tcp_adb_port- "unset";
+usb_config- "adb";
+usb_gadget_hal- "running";
+android_gadget- "g1 is bound to UDC 11110000.dwc3";
+ceos_gadget- "CE-OS g2 exists as an authored privileged capability but was not observed bound during the final inventory";
+privileged_design- "CE-OS USB handoff uses a separate g2 gadget, read-only mass-storage intent, preflight checks, rollback state, detached watchdog, and Android g1 recovery";
+);
+
+ceos_privilege_boundary: (
+android_shell- "ce-os-android-shell deliberately executes framework operations as Android shell uid 2000 with shell SELinux context rather than unrestricted root";
+privileged_broker- "ce-os-privileged-broker exposes a bounded allowlist including health, platform verification, and USB bootstrap operations";
+reserved_operations- "installer and snapshot operations exist as reserved names rather than enabled authority";
+privileged_audit- "broker writes structured privileged operation audit records";
+usb_recovery- "CE-OS owns explicit Android USB recovery logic and verifies Android gadget HAL plus g1 UDC restoration";
+services- "ce-os-api, ce-os-live-sync, ce-os-guardian, and ce-os-privileged-broker were all observed healthy";
+api_binding- "ce-os-api listens on loopback 127.0.0.1:8765";
+);
+
+network_exposure: (
+ssh- "Termux sshd listens on TCP 8022 on IPv4 and IPv6 wildcard addresses";
+ssh_keys- "Two authorized SSH keys were observed and both are ssh-ed25519";
+sshd_config- "The local sshd configuration currently relies primarily on included or default OpenSSH policy; explicit hardening directives were not proven by this inventory";
+dns- "dnsmasq listeners are associated with loopback and the active hotspot interface";
+hotspot- "ap_br_wlan2 is the tethered Wi-Fi bridge";
+cellular_upstream- "rmnet3 was observed as the active tethering upstream during the hotspot investigation";
+firewall_default_input- "iptables INPUT policy is ACCEPT";
+firewall_default_forward- "iptables FORWARD policy is ACCEPT";
+firewall_default_output- "iptables OUTPUT policy is ACCEPT";
+ssh_filter- "An INPUT rule drops TCP destination port 8022 when traffic does not arrive through ap_br_wlan2";
+tether_forwarding- "Android-owned tetherctrl_FORWARD and NAT chains remain active and MASQUERADE the rmnet3 upstream";
+forwarding_requirement- "IPv4 and IPv6 forwarding are active while the phone performs tethering and router duties";
+private_dns- "No explicit Private DNS mode or provider was configured";
+always_on_vpn- "No always-on VPN or lockdown VPN was configured";
+);
+
+tethering_anomaly: (
+symptom- "Hotspot remains enabled while client internet can fail after screen wake or unlock";
+client- "Observed affected tether client address 10.87.246.25";
+repeated_error- "Android Tethering BpfCoordinator repeatedly fails to update TCP conntrack entries with ENOENT";
+persistence- "The BpfCoordinator ENOENT warnings continue repeatedly over time while the hotspot is active";
+known_good- "Android continues to maintain tetherctrl forwarding and NAT structures and the cellular upstream while these errors occur";
+decision- "Do not assume the firewall is the cause; preserve this as a networking and kernel datapath investigation requiring controlled before-and-after proof";
+);
+
+power_thermal: (
+termux_idle_exemption- "com.termux and com.termux.boot are present in the device-idle whitelist";
+termux_wakelock- "Termux WAKE_LOCK app-op was observed allowed and active";
+termux_foreground- "START_FOREGROUND app-op was observed allowed and active";
+guardian- "guardian-watch-root samples battery and thermal state every 60 seconds and classifies SURVIVAL, MOBILE, POWERED, or THERMAL_SHED";
+guardian_compute_rule- "Current guardian policy permits compute only while externally powered and thermal status is less than or equal to 1";
+thermal_signal- "pixel-thermal repeatedly reports VIRTUAL-USB-THROTTLING transitions during sustained CE-OS development";
+observed_usb_thermals- "USB power thermistors were observed moving through roughly mid-30 C to mid-40 C values during the audit";
+unknown_indicator- "The previously observed battery plus-sign UI state was not conclusively identified by this inventory and remains a symptom to reproduce before changing power policy";
+);
+
+package_state: (
+disabled_packages- "User-disabled package inventory includes com.android.devicelockcontroller, several carrier and vendor packages, wallpaper packages, and user applications";
+termux_suspended- "dumpsys package reported com.termux User 0 suspended=true while CE-OS Termux services and SSH remained running";
+magisk_manager_suspended- "dumpsys package reported com.topjohnwu.magisk User 0 suspended=true";
+interpretation- "The apparent suspended state is a high-priority Android lifecycle anomaly because it may explain the Operator observation that apps appear turned off; cause was not established";
+termux_permissions- "Termux has boot-complete, foreground-service, battery-optimization exemption request, internet, network-state, wake-lock, notification, and broad media and storage permissions";
+);
+
+privacy_observations: (
+location- "Location mode is enabled at value 3";
+accessibility- "No enabled accessibility service was observed";
+notification_listeners- "Notification access is enabled for Google Dreamliner, Android Auto, Android System Intelligence, Nexus Launcher, and ODAD services";
+input_methods- "Gboard and Google speech TTS and voice input are enabled input methods";
+microphone_camera_controls- "System UI exposes microphone and camera privacy quick-setting toggles";
+google_sensor_activity- "Google Play services was observed using motion and pressure sensors for location and validation-related components";
+camera_history- "Camera service history showed recent client use including Messenger, WhatsApp, and Google Camera; no conclusion about privacy violation is implied";
+vpn- "No always-on VPN or VPN lockdown policy is configured";
+private_dns- "No explicit Private DNS provider is configured";
+);
+
+security_risk_register: (
+risk_1- "Unlocked bootloader weakens the verified-boot trust boundary even though AVB and verity currently report enforcing";
+risk_2- "Root authority through Magisk materially expands consequences of a compromised privileged process";
+risk_3- "Kernel introspection controls are permissive for a hardened production host: dmesg_restrict=0, perf_event_paranoid=-1, unprivileged_bpf_disabled=0, protected_hardlinks=0, protected_symlinks=0";
+risk_4- "sshd listens on wildcard addresses; firewall reachability currently depends on mutable kernel rules and should be verified externally";
+risk_5- "Firewall base INPUT and FORWARD policies are ACCEPT, so CE-OS security currently depends on Android chain composition plus the custom 8022 rule rather than a simple global default-deny model";
+risk_6- "No Private DNS, always-on VPN, or VPN lockdown is configured; whether CE-OS should own any of these is an Operator privacy-policy decision";
+risk_7- "Termux and Magisk Manager report suspended=true and require root-cause analysis before Android lifecycle policy is changed";
+risk_8- "Persistent BPF and conntrack tethering ENOENT errors indicate a real datapath inconsistency that can disrupt hotspot clients";
+risk_9- "Sustained build and runtime workload repeatedly activates USB thermal throttling and requires explicit CE-OS workload and thermal policy";
+risk_10- "ADB is enabled over USB; wireless ADB is disabled and adb_secure remains enabled";
+);
+
+preserve: (
+item_1- "SELinux Enforcing";
+item_2- "Android file-based and metadata encryption";
+item_3- "read-only verified Android system and vendor partition layout";
+item_4- "ADB authentication when ADB remains required";
+item_5- "bounded CE-OS privileged broker and Android-shell separation";
+item_6- "USB handoff rollback and recovery path";
+item_7- "Termux idle exemption and CE-OS foreground and wakelock capability needed for persistent services";
+item_8- "Android tethering-owned forwarding and NAT semantics until a replacement is explicitly designed and proven";
+item_9- "thermal protection rather than bypassing Pixel thermal controls";
+);
+
+unresolved: (
+item_1- "Reproduce and explain why com.termux and other applications report suspended=true and why apps appear disabled to the Operator";
+item_2- "Identify the battery plus-sign state from framework and UI evidence rather than guessing";
+item_3- "Prove the exact source and persistence mechanism of the custom TCP 8022 firewall rule";
+item_4- "Externally scan the Pixel from an independent network client and compare observable ports with listener and firewall state";
+item_5- "Decide whether SSH should be limited to hotspot clients, one trusted client, another interface, or a cryptographically authenticated overlay";
+item_6- "Decide explicit sshd authentication and forwarding policy rather than relying on defaults";
+item_7- "Determine whether kernel hardening sysctls can be strengthened without breaking Android, tethering, debugging, Cipher, or future qps/kernel work";
+item_8- "Determine desired privacy policy for Google sensor and location services, notification listeners, microphone, camera, DNS, VPN, and telemetry";
+item_9- "Resolve the tethering BPF and conntrack ENOENT fault with before and after kernel networking evidence";
+item_10- "Define sustained-compute thermal, charging, CPU, memory, swap, and workload-shedding policy for CE-OS";
+item_11- "Decide the acceptable trust model for an unlocked bootloader and whether future CE-OS boot integrity will use a custom signed or verified chain";
+item_12- "Inventory Magisk modules, root grants, boot scripts, and persistent root mutations before changing the root trust boundary";
+item_13- "Map hardware nodes and drivers into qps/kernel only after observed capability contracts are separated from reinforcement policy";
+);
+
+proof: (
+witness_1- "Live getprop, mount, fstab, SELinux, Magisk, sysctl, /dev, /sys, and platform-driver observations were collected directly from the rooted Pixel";
+witness_2- "Live socket and iptables inspection proved sshd on 8022, loopback CE-OS API on 8765, Android hotspot DNS and DHCP surfaces, and active tethering forwarding and NAT chains";
+witness_3- "An earlier inventory snapshot reported com.termux and Magisk Manager suspended=true; a later read-only lifecycle investigation found both suspended=false, found no currently suspended packages, and found no device-policy suspension authority, so package suspension is not a current proven cause";
+witness_4- "Live service inspection proved the four core CE-OS Android services healthy";
+witness_5- "Live log inspection repeatedly reproduced Tethering BpfCoordinator conntrack ENOENT errors";
+witness_6- "Live thermal logs proved recurring VIRTUAL-USB-THROTTLING transitions during CE-OS workload";
+);
+
+documentation: (
+required- false;
+authority- "Android/_index.qps";
+reason- "This task records observed host state and unresolved policy questions; durable Android authority should change only after the Operator selects reinforcement policy";
+state- "complete";
+);
+
+next- "Review this baseline with the Operator and choose the intended CE-OS Android protection, privacy, network, lifecycle, root, and thermal policies before making reinforcement changes";
+
+done_when: (
+condition_1- "Android build, boot, root, SELinux, encryption, verified-boot, and privilege boundaries are recorded";
+condition_2- "Network listeners, SSH, ADB, firewall, forwarding, DNS and VPN, and tethering state are recorded";
+condition_3- "Power, thermal, application lifecycle, storage, privacy, sensors, and major hardware interfaces are recorded";
+condition_4- "Observed anomalies and security decisions are separated from authorized changes";
+condition_5- "No reinforcement setting is changed merely because the inventory identified it as a risk";
+);
+);
+
+
+task_3: (
+identity- "android.host_control_plane";
+summary- "Coordinate Android, CE-OS services, Guardian, privilege, network, security, power, USB, and lifecycle observations into one operator-facing host state without collapsing authority boundaries";
+state- "complete";
+
+product- "A unified CE-OS Android access panel backed by one normalized read-only host snapshot, with existing privileged mutations remaining behind their current bounded controls";
+
+current: (
+fact_1- "The installed os.ce.node application already provides the CE-OS Android control panel and Quick Settings tile";
+fact_2- "MainScreen currently reads the loopback CE-OS API and presents mode, USB, Guardian, platform, power, battery, thermal, compute, bootstrap, verification, and refresh controls";
+fact_3- "The current panel duplicates Requested Mode and Effective Mode rows and does not yet summarize CE-OS service, network, SSH, root, SELinux, boot-trust, lifecycle, or warning state";
+fact_4- "The loopback API is bound to 127.0.0.1:8765 while sshd listens on 8022; all four core CE-OS Android services were healthy in the latest read-only observation";
+fact_5- "The latest read-only host observation found hotspot interface ap_br_wlan2 present, the explicit 8022 INPUT rule present, SELinux Enforcing, Magisk root available, verified boot orange, and bootloader unlocked";
+fact_6- "Current canonical state already models requested and effective mode, platform, USB, compute permission, power, thermal, Guardian reasons, and preserved SSH and hotspot control-plane intent";
+fact_7- "Android remains authoritative for tethering, lifecycle, SELinux, and hardware services; the privileged broker remains the bounded root actuator";
+fact_8- "The earlier package suspended=true observation is not current: later read-only proof found Termux and Magisk suspended=false, no suspended packages, and no device-policy suspension authority";
+fact_9- "A screenshot capture path is proven through /system/bin/screencap and can be transferred read-only for visual inspection; no runtime mutation is required to observe the panel";
+);
+
+decisions: (
+decision_1- "Unify observation and presentation before unifying behavior";
+decision_2- "Use one normalized host snapshot as the panel data contract while preserving multiple underlying authorities";
+decision_3- "The first control-plane increment is observational only for newly integrated host signals; it must not add automatic remediation or self-healing";
+decision_4- "Existing NODE, CONSERVE, BOOTSTRAP, RETURN TO ANDROID, and platform verification mutations keep their existing policy and privilege boundaries";
+decision_5- "Network continuity is a hard invariant: panel work must not rewrite firewall, routes, tethering, BPF, radio, forwarding, DNS, VPN, or related kernel settings";
+decision_6- "Security state must report observed facts separately from desired policy so unlocked boot, root availability, SELinux, and listener state are not mislabeled as remediation instructions";
+decision_7- "The access panel is the Operator truth view; subsystem implementation details remain owned by their existing Android, Termux, Privileged, Guardian, and kernel surfaces";
+);
+
+steps: (
+item_1- "COMPLETE: normalized read-only host snapshot schema covers CE-OS services, network and hotspot continuity, SSH, Android lifecycle, root and SELinux, boot trust, storage pressure, and active warnings while existing canonical status continues to carry power, thermal, mode, compute, and USB";
+item_2- "COMPLETE IN SOURCE: ce-os-api adds bounded read-only host observation to /v1/status without changing POST mutation semantics; the live API process remains the original running instance and has not been restarted";
+item_3- "COMPLETE IN SOURCE: Android CeOsStatus parses HostSnapshot services, network, security, lifecycle, storage, warnings, and read-only state with safe defaults";
+item_4- "COMPLETE IN SOURCE: MainScreen is reorganized into HOST, NETWORK, COMPUTE / THERMAL, SECURITY, SERVICES, USB / LIFECYCLE, and ATTENTION groups";
+item_5- "COMPLETE IN SOURCE: duplicate Requested Mode and Effective Mode rows are replaced by one requested-to-effective Mode row while NODE and CONSERVE controls remain";
+item_6- "PARTIAL: deterministic host classification exposes service, hotspot, SSH, SELinux, lifecycle, boot-trust, storage-pressure, and incomplete-evidence warnings; API staleness, tethering datapath health, and SELinux denial history remain future observational signals";
+item_7- "COMPLETE IN SOURCE: privileged BOOTSTRAP controls remain distinct from observational status and retain the existing lease and RETURN TO ANDROID recovery behavior";
+item_8- "PARTIAL: five deterministic host-classification tests pass for healthy, boot-attention, network or service degradation, lifecycle suspension, and storage pressure; additional Android parser and UI-state tests remain desirable";
+item_9- "COMPLETE: compileDebugKotlin and testDebugUnitTest passed, the API was transactionally restarted into the new read-only host contract, the CE-OS APK was replaced, internet continuity witnesses remained intact before and after each runtime step, and a post-install screenshot was captured";
+item_10- "COMPLETE: Operator authorized the runtime update after source/build proof and internet-continuity safeguards; only ce-os-api and the os.ce.node application were updated";
+);
+
+proof: (
+witness_1- "Read-only source inspection proved MainActivity, CeOsTileService, MainScreen, MainScreenViewModel, CeOsApi, and the loopback ce-os-api are the current panel path";
+witness_2- "Live /v1/status returned node mode, platform ok, POWERED, NOMINAL, compute allowed, USB none, and control_plane values preserving SSH and hotspot";
+witness_3- "Live service status returned OK for ce-os-api, ce-os-live-sync, ce-os-guardian, and ce-os-privileged-broker";
+witness_4- "Live socket inspection showed sshd on 0.0.0.0:8022 and [::]:8022 and ce-os-api on 127.0.0.1:8765";
+witness_5- "Live read-only security observation showed SELinux Enforcing, root uid 0 available through the privileged observation path, verified boot orange, and bootloader unlocked";
+witness_6- "No runtime, network, package, power-policy, or kernel-setting mutation was performed while establishing this task";
+witness_7- "A fresh assembleDebug artifact was installed and explicit multi-viewport render verification proved HOST, NETWORK, COMPUTE / THERMAL, SECURITY, SERVICES, and USB / LIFECYCLE sections with legacy duplicate Requested Mode and Effective Mode rows absent";
+witness_8- "Read-only live host data and the rendered panel agree on service, network, security, lifecycle, storage, power, thermal, and boot-trust state";
+witness_9- "Hotspot, SSH listener, SSH firewall rule, and tether NAT remained intact before and after API activation, APK replacement, launch, scrolling, screenshot capture, and render verification";
+);
+
+next- "Host control-plane integration is active and verified; continue future Android reinforcement work from this unified operator truth view while preserving internet continuity as a hard invariant";
+
+done_when: (
+condition_1- "One panel presents a coherent normalized host state rather than unrelated subsystem fragments";
+condition_2- "Underlying Android, Guardian, Termux, privileged, network, and kernel authority boundaries remain explicit and unchanged";
+condition_3- "Newly integrated host observation is read-only and cannot mutate connectivity or protection state";
+condition_4- "Healthy, degraded, contradictory, stale, and unavailable evidence are represented explicitly";
+condition_5- "The Android application builds and relevant tests pass without installing or replacing the running application";
+condition_6- "Repository QPS validation and git diff hygiene pass";
+condition_7- "Rendered UI is inspected before Operator approval is requested for installation";
+);
+);
+
+
+task_4: (
+identity- "android.power_network_charge_fault";
+summary- "Identify the exact Android or CE-OS state transition that causes charging and internet continuity to fail under interactive workload such as Facebook camera or video activation";
+state- "active";
+
+product- "A before/during/after evidence chain proving which power, USB, thermal, network, tethering, or lifecycle state changes when the fault reproduces";
+
+constraints: (
+constraint_1- "Internet continuity is a hard safety invariant";
+constraint_2- "Charging availability is a hard safety invariant";
+constraint_3- "Investigation remains read-only until a causal state transition is identified";
+constraint_4- "Do not change USB handoff, charging policy, thermal policy, firewall, routes, tethering, BPF, radio, DNS, VPN, kernel networking, package state, or Android power policy during diagnosis";
+constraint_5- "Do not restart netd, tethering, SystemUI, radio, Wi-Fi, cellular, Guardian, privileged broker, Termux, or the phone merely to clear the symptom";
+);
+
+current: (
+fact_1- "Operator reports the phone can remain online while idle but Facebook camera or video activation can immediately kill usable internet";
+fact_2- "Operator reports charging can also stop functioning until the phone is rebooted";
+fact_3- "A plus-sign status indicator appears beside the battery during the abnormal behavior and its exact Android meaning is not yet proven";
+fact_4- "Earlier evidence showed recurring VIRTUAL-USB-THROTTLING events under CE-OS workload";
+fact_5- "Earlier evidence showed Tethering BpfCoordinator conntrack ENOENT errors while hotspot bridge and NAT state remained present";
+fact_6- "The prior unified host-panel work preserved hotspot, SSH listener, SSH firewall rule, and tether NAT across API and APK updates, so those updates did not reproduce the fault";
+fact_7- "Operator observed that changing charger blocks immediately coincided with previously unavailable apps becoming usable again, making charger and USB-power conditions a primary causal candidate rather than assuming CE-OS networking changes are solely responsible";
+fact_8- "Hotspot diagnosis remains constrained because hotspot is the sole remote control channel; no future experiment may intentionally disable or cycle hotspot unless an independent local rollback is already armed";
+);
+
+steps: (
+step_1- "Record a read-only baseline of battery, charging, power saver, USB gadget ownership, thermal state, Guardian, network, tethering, camera, SystemUI, and relevant logs";
+step_2- "Capture the same evidence continuously across a controlled reproduction triggered by Facebook camera or video activation";
+step_3- "Correlate the first observed charging or network failure timestamp with Android, kernel, thermal, USB, tethering, and CE-OS state transitions";
+step_4- "Identify the owner of the transition before proposing any fix";
+step_5- "Only after causality is proven, design a narrowly reversible correction that cannot strand the Operator without internet or charging";
+);
+
+next- "Operator-triggered reproduction remains required: run the read-only ce-os-hotspot-trace while reproducing the original Facebook camera/video condition, then verify hotspot, rmnet3, SSH, package suspension, power-saver, Extreme Battery Saver, and USB thermal state remain coherent";
+
+done_when: (
+condition_1- "The failure is reproduced with timestamps";
+condition_2- "The first changing state associated with the failure is identified";
+condition_3- "Charging and network symptoms are either proven to share one cause or separated into distinct causes";
+condition_4- "The plus-sign battery indicator is mapped to an observed Android power or charging state rather than guessed";
+condition_5- "No diagnostic action itself changes network, charging, USB, thermal, radio, or kernel policy";
+);
+);
+
+
+task_5: (
+identity- "android.hotspot_forwarding_continuity";
+summary- "Keep Android hotspot client forwarding alive under interactive workload without disrupting the phone cellular data path";
+state- "active";
+
+scope: (
+phone_network- "The phone itself retains internet when the failure occurs";
+affected_surface- "Only hotspot client forwarding loses usable internet";
+thermal_context- "Operator is actively keeping the phone chilled, reducing USB thermal interference during hotspot diagnosis";
+);
+
+constraints: (
+constraint_1- "Do not reset or restart cellular, Wi-Fi, radio, netd, tethering, or the phone during diagnosis";
+constraint_2- "Do not rewrite firewall, routes, forwarding, NAT, BPF, conntrack, DNS, or hotspot state until the failing datapath component is proven";
+constraint_3- "Any eventual correction must preserve the phone internet path and minimize or eliminate hotspot interruption";
+);
+
+current: (
+fact_1- "Observed failure is narrower than previously believed: handset internet remains available while hotspot clients lose internet";
+fact_2- "ap_br_wlan2, SSH, the explicit 8022 INPUT rule, and tetherctrl NAT have repeatedly remained present during healthy observations";
+fact_3- "Earlier Android logs repeatedly reported Tethering BpfCoordinator conntrack update failures with ENOENT";
+fact_4- "This task treats Android tethering forwarding, BPF offload, conntrack, NAT, and upstream association as the primary investigation surface";
+fact_5- "Healthy-state evidence proved Android hardware tether offload disabled while BPF tether offload remained enabled and repeatedly attempted updates for already-missing conntrack entries";
+fact_6- "The bounded hotspot-continuity experiment sets only DeviceConfig tethering.override_tether_enable_bpf_offload=false, preserving cellular, hotspot, forwarding, NAT, firewall, routes, compute guardrails, and Android thermal policy";
+);
+
+steps: (
+step_1- "Record the complete healthy tethering datapath including bridge, upstream, forwarding, NAT, conntrack, BPF/offload state, clients, and counters";
+step_2- "Compare the same datapath immediately after the hotspot-only failure reproduces";
+step_3- "Identify whether client failure begins in BPF/offload, conntrack, netfilter forwarding, NAT, DNS, DHCP, or upstream association";
+step_4- "Implement the smallest reversible correction at the proven failed layer without cycling the cellular data path";
+step_5- "Reproduce the original trigger repeatedly and prove hotspot client continuity";
+);
+
+next- "Verify whether the bounded BPF-offload override is active in the live tethering configuration and then reproduce the original Facebook camera or interactive trigger while proving hotspot client continuity";
+
+done_when: (
+condition_1- "The failing forwarding layer is identified by before-and-after evidence";
+condition_2- "A narrowly scoped correction is implemented without resetting phone cellular connectivity";
+condition_3- "Hotspot survives the original interactive workload trigger repeatedly";
+condition_4- "Phone internet and SSH remain continuously available through verification";
+);
+);
+
+);
+);

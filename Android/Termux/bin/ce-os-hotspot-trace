@@ -1,0 +1,31 @@
+#!/data/data/com.termux/files/usr/bin/bash
+set -u
+
+ROOT="/data/data/com.termux/files/home/ce-os"
+OUT="$ROOT/logs/hotspot-repro-$(date +%Y%m%d-%H%M%S).log"
+END=$(( $(date +%s) + 300 ))
+
+printf 'trace_start=%s\n' "$(date '+%Y-%m-%d %H:%M:%S')" > "$OUT"
+printf 'flipendo_hotspot_override=' >> "$OUT"
+su -c 'device_config get flipendo lever_hotspot_enabled_launch' >> "$OUT" 2>&1
+
+while [ "$(date +%s)" -lt "$END" ]; do
+    TS="$(date '+%Y-%m-%d %H:%M:%S')"
+
+    HOTSPOT="$(su -c 'ip link show ap_br_wlan2 >/dev/null 2>&1 && echo up || echo absent')"
+    UPSTREAM="$(su -c 'dumpsys tethering 2>/dev/null' | sed -n 's/.*Current upstream interface(s): \[\([^]]*\)\].*/\1/p' | tail -1)"
+    TETHER_ERROR="$(su -c 'dumpsys tethering 2>/dev/null' | sed -n 's/.*Type: TETHERING_WIFI, Value: \(TETHER_ERROR_[A-Z_]*\).*/\1/p' | tail -1)"
+    SAVER="$(su -c 'dumpsys power 2>/dev/null' | sed -n 's/.*Battery Saver is currently: //p' | head -1)"
+    EXTREME="$(su -c 'grep -o '"'"'name="extreme_save_state" value="[^"]*"'"'"' /data/user_de/0/com.google.android.flipendo/shared_prefs/saver_states_preferences.xml 2>/dev/null' | sed -n 's/.*value="\([^"]*\)".*/\1/p')"
+    SUSPENDED="$(su -c 'dumpsys package packages 2>/dev/null' | grep -c 'User 0:.*suspended=true' || true)"
+    USBTHERM="$(su -c 'dumpsys thermalservice 2>/dev/null' | sed -n 's/.*mName=usb_pwr_therm2, mStatus=\([0-9][0-9]*\).*/\1/p' | tail -1)"
+    THERMAL="$(su -c 'dumpsys thermalservice 2>/dev/null' | sed -n 's/^Thermal Status: //p' | head -1)"
+
+    printf '%s hotspot=%s upstream=%s tether_error=%s saver=%s extreme=%s suspended=%s thermal=%s usb_therm_status=%s\n' \
+      "$TS" "$HOTSPOT" "$UPSTREAM" "$TETHER_ERROR" "$SAVER" "$EXTREME" "$SUSPENDED" "$THERMAL" "$USBTHERM" >> "$OUT"
+
+    sleep 2
+done
+
+printf 'trace_end=%s\n' "$(date '+%Y-%m-%d %H:%M:%S')" >> "$OUT"
+printf '%s\n' "$OUT"
