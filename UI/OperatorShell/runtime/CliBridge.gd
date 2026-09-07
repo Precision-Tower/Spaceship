@@ -1,6 +1,8 @@
 extends RefCounted
 class_name OperatorShellCliBridge
 
+const CEOS_API_BASE := "http://127.0.0.1:8765"
+
 static func ui_root() -> String:
 	return ProjectSettings.globalize_path("res://").trim_suffix("/").trim_suffix("\\")
 
@@ -47,6 +49,12 @@ static func debug_paths() -> String:
 
 static func with_root(root: String) -> Array[String]:
 	return ["--root", root]
+
+static func fs_list_url(path: String = "/") -> String:
+	return CEOS_API_BASE + "/v1/fs/list?path=" + path.uri_encode()
+
+static func fs_read_url(path: String) -> String:
+	return CEOS_API_BASE + "/v1/fs/read?path=" + path.uri_encode()
 
 static func runtime_state() -> Dictionary:
 	return run_cli("runtime-state", with_root(dashboard_root()))

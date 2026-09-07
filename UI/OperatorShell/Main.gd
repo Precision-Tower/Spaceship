@@ -70,6 +70,9 @@ var mobile_editor_file_path := "scratch://welcome.gd"
 var mobile_editor_dirty := false
 var mobile_editor_loading := false
 var operator_control_server
+var mobile_fs_request: HTTPRequest
+var mobile_fs_request_kind := ""
+var mobile_fs_request_parent: TreeItem
 
 const MOBILE_WELCOME_TEXT := "# CE-OS mobile editor\n\n# Milestone 1 buffer.\n# This text surface is editable on Android and uses the system keyboard.\n\nfunc next_step() -> String:\n\treturn \"wire fs.read/fs.write through CE-OS service\"\n"
 const MOBILE_CHECKLIST_TEXT := "# Mobile IDE Checklist\n\n- Files: placeholder browser for Milestone 1\n- Editor: native editable Godot TextEdit\n- Terminal: existing runtime terminal surface\n- Controls: CE-OS state and command controls\n\nFilesystem authority remains behind the future CE-OS bridge.\n"
@@ -213,6 +216,9 @@ func _test_state_update() -> void:
 func _ready() -> void:
 	print("[OperatorShell] ready")
 	mobile_mode = OS.get_name() == "Android"
+	mobile_fs_request = HTTPRequest.new()
+	add_child(mobile_fs_request)
+	mobile_fs_request.request_completed.connect(_on_mobile_fs_request_completed)
 	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 	var screen_size := DisplayServer.screen_get_size()
 	DisplayServer.window_set_size(screen_size)
@@ -516,6 +522,8 @@ func _build_mobile_files_surface() -> Control:
 	_populate_mobile_files_tree()
 	return shell
 
+# Files -> Editor read-only contract: CE-OS API list/read only; no direct Android root traversal.
+
 
 func _populate_mobile_files_tree() -> void:
 	if mobile_files_tree == null:
@@ -525,20 +533,88 @@ func _populate_mobile_files_tree() -> void:
 	var root := mobile_files_tree.create_item()
 	root.set_text(0, "CE-OS/")
 	root.set_collapsed(false)
-	root.set_metadata(0, {"is_dir": true, "path": "ce-os"})
+	root.set_metadata(0, {"is_dir": true, "path": "/", "loaded": false})
+	_request_mobile_fs_list("/", root)
 
-	var ui := _mobile_file_item(root, "UI/", "ce-os/UI", true)
-	var shell := _mobile_file_item(ui, "OperatorShell/", "ce-os/UI/OperatorShell", true)
-	_mobile_file_item(shell, "Main.gd", "ce-os/UI/OperatorShell/Main.gd", false, MOBILE_WELCOME_TEXT)
-	_mobile_file_item(shell, "MOBILE_IDE_CHECKLIST.md", "ce-os/UI/OperatorShell/MOBILE_IDE_CHECKLIST.md", false, MOBILE_CHECKLIST_TEXT)
-	_mobile_file_item(shell, "_index.qps", "ce-os/UI/OperatorShell/_index.qps", false, MOBILE_QPS_TEXT)
 
-	var android := _mobile_file_item(root, "Android/", "ce-os/Android", true)
-	_mobile_file_item(android, "Termux/", "ce-os/Android/Termux", true)
-	_mobile_file_item(android, "Privileged/", "ce-os/Android/Privileged", true)
+func _request_mobile_fs_list(path: String, parent: TreeItem) -> void:
+	if mobile_fs_request == null:
+		return
+	mobile_fs_request_kind = "list"
+	mobile_fs_request_parent = parent
+	var error := mobile_fs_request.request(CliBridge.fs_list_url(path))
+	if error != OK:
+		_log("filesystem list request failed: " + error_string(error))
 
-	var state := _mobile_file_item(root, "state/", "ce-os/state", true)
-	_mobile_file_item(state, "ui-observation/", "ce-os/state/ui-observation", true)
+
+func _request_mobile_fs_read(path: String) -> void:
+	if mobile_fs_request == null:
+		return
+	mobile_fs_request_kind = "read"
+	mobile_fs_request_parent = null
+	mobile_editor_loading = true
+	var error := mobile_fs_request.request(CliBridge.fs_read_url(path))
+	if error != OK:
+		mobile_editor_loading = false
+		_set_mobile_editor_error("Filesystem unavailable")
+		_log("filesystem read request failed: " + error_string(error))
+
+
+func _on_mobile_fs_request_completed(
+	result: int,
+	response_code: int,
+	_headers: PackedStringArray,
+	body: PackedByteArray
+) -> void:
+	var payload = JSON.parse_string(body.get_string_from_utf8())
+	var request_kind := mobile_fs_request_kind
+	var parent := mobile_fs_request_parent
+	mobile_fs_request_kind = ""
+	mobile_fs_request_parent = null
+
+	if typeof(payload) != TYPE_DICTIONARY:
+		if request_kind == "read":
+			mobile_editor_loading = false
+			_set_mobile_editor_error("Invalid filesystem response")
+		return
+
+	if request_kind == "list":
+		if result != HTTPRequest.RESULT_SUCCESS or response_code < 200 or response_code >= 300 or not bool(payload.get("ok", false)):
+			_log("filesystem list failed: " + str(payload.get("error", "request failed")))
+			return
+		if parent == null:
+			return
+		for entry in payload.get("entries", []):
+			if str(entry.get("name", "")) == ".git":
+				continue
+			var is_dir := str(entry.get("type", "")) == "directory"
+			_mobile_file_item(parent, str(entry.get("name", "")) + ("/" if is_dir else ""), str(entry.get("path", "/")), is_dir)
+		var metadata = parent.get_metadata(0)
+		metadata["loaded"] = true
+		parent.set_metadata(0, metadata)
+		return
+
+	mobile_editor_loading = false
+	if result != HTTPRequest.RESULT_SUCCESS or response_code < 200 or response_code >= 300 or not bool(payload.get("ok", false)):
+		_set_mobile_editor_error(str(payload.get("error", "Unable to read file")))
+		return
+	if str(payload.get("path", "")) != mobile_editor_file_path:
+		return
+	if not payload.has("content"):
+		_set_mobile_editor_error("Unsupported binary file")
+		return
+	if mobile_editor:
+		mobile_editor.text = str(payload.get("content", ""))
+	_set_mobile_editor_dirty(false)
+
+
+func _set_mobile_editor_error(message: String) -> void:
+	if mobile_editor:
+		mobile_editor.text = ""
+	if mobile_editor_status_label:
+		mobile_editor_status_label.text = message
+	if mobile_editor_save_button:
+		mobile_editor_save_button.disabled = true
 
 
 func _mobile_file_item(
@@ -571,12 +647,15 @@ func _on_mobile_file_selected() -> void:
 		return
 	var file_data: Dictionary = meta
 	if bool(file_data.get("is_dir", false)):
-		selected.set_collapsed(not selected.is_collapsed())
+		if not bool(file_data.get("loaded", false)):
+			_request_mobile_fs_list(str(file_data.get("path", "/")), selected)
+		selected.set_collapsed(false)
 		return
-	_open_mobile_placeholder_file(
-		str(file_data.get("path", "scratch://untitled")),
-		str(file_data.get("content", ""))
-	)
+	mobile_editor_file_path = str(file_data.get("path", "/untitled"))
+	if mobile_editor_path_label:
+		mobile_editor_path_label.text = mobile_editor_file_path
+	_set_mobile_surface(MobileSurface.EDITOR)
+	_request_mobile_fs_read(mobile_editor_file_path)
 
 
 func _build_mobile_editor_surface() -> Control:
@@ -590,9 +669,9 @@ func _build_mobile_editor_surface() -> Control:
 	toolbar.add_child(title_box)
 
 	mobile_editor_save_button = Button.new()
-	mobile_editor_save_button.text = "Save"
+	mobile_editor_save_button.text = "Read-only"
 	_button(mobile_editor_save_button, true)
-	mobile_editor_save_button.pressed.connect(_save_mobile_editor_buffer)
+	mobile_editor_save_button.disabled = true
 	toolbar.add_child(mobile_editor_save_button)
 	shell.add_child(toolbar)
 
