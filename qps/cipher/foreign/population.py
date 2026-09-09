@@ -325,3 +325,111 @@ def plan_python_library_symbol(
     plan.writes = list(normalized.values())
 
     return plan
+
+
+def plan_python_library_capability(
+    dependency: DependencyRef,
+    workspace_root: Path,
+    capability_members: tuple[str, ...],
+    capability_qps: str,
+) -> LibraryPopulationPlan:
+    if not capability_members:
+        raise ValueError("capability materialization requires an exact member identity")
+
+    # The resolver owns the module/member split. Materialization receives that
+    # exact split and must not reinterpret dotted member paths as modules.
+    symbol = ".".join(capability_members)
+    exact_dependency = DependencyRef(
+        package=dependency.package,
+        module=dependency.module,
+        symbol=symbol,
+        alias=dependency.alias,
+        version=dependency.version,
+        semantic_identity=dependency.semantic_identity,
+        source=dependency.source,
+    )
+    return plan_python_library_symbol(
+        exact_dependency,
+        workspace_root,
+        capability_qps,
+    )
+
+
+def merge_library_population_plans(
+    plans: list[LibraryPopulationPlan],
+) -> LibraryPopulationPlan:
+    if not plans:
+        raise ValueError("at least one library population plan is required")
+
+    merged = LibraryPopulationPlan(dependency=plans[0].dependency)
+    final_writes: dict[Path, PlannedLibraryWrite] = {}
+
+    for plan in plans:
+        merged.reused.extend(plan.reused)
+        for write in plan.writes:
+            path = write.path.resolve()
+            previous = final_writes.get(path)
+            if previous is None:
+                final_writes[path] = write
+                continue
+
+            if previous.content == write.content:
+                continue
+
+            # Multiple independently planned capabilities can update the same
+            # generated index. Merge only the immediate-child surface; never
+            # choose one candidate over another.
+            if (
+                previous.kind.startswith("index-")
+                and write.kind.startswith("index-")
+            ):
+                left = _parse_surface_text(previous.content)
+                right = _parse_surface_text(write.content)
+                combined = dict(left)
+                for key, value in right.items():
+                    existing = combined.get(key)
+                    if existing is not None and existing != value:
+                        raise RuntimeError(
+                            f"conflicting indexed identity {key}: "
+                            f"{existing} != {value}"
+                        )
+                    combined[key] = value
+                kind = (
+                    "index-create"
+                    if previous.kind == "index-create"
+                    or write.kind == "index-create"
+                    else "index-update"
+                )
+                final_writes[path] = PlannedLibraryWrite(
+                    path=previous.path,
+                    content=_render_index(previous.path, combined),
+                    kind=kind,
+                )
+                continue
+
+            raise RuntimeError(
+                f"conflicting capability materialization target: {path}"
+            )
+
+    merged.writes = list(final_writes.values())
+    merged.reused = list(dict.fromkeys(merged.reused))
+    return merged
+
+
+def _parse_surface_text(content: str) -> dict[str, str]:
+    import re
+
+    match = re.search(
+        r"(?ms)^surface:\s*\(\s*(.*?)^\);\s*$",
+        content,
+    )
+    if match is None:
+        return {}
+
+    surface: dict[str, str] = {}
+    for key, value in re.findall(
+        r'(?m)^\s*([A-Za-z0-9_.]+)-\s*"([^"]+)";\s*$',
+        match.group(1),
+    ):
+        surface[key] = value
+    return surface

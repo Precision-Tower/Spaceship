@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import os
 import tempfile
+from tempfile import TemporaryDirectory
 from pathlib import Path
 
 from qps.cipher.ir.nodes import (
@@ -141,5 +142,86 @@ identity- "construct.cylinder";
     )
 
 
+def test_capability_materialization_does_not_promote_member_path_to_module():
+    from qps.cipher.foreign.population import plan_python_library_capability
+    from qps.cipher.ir.nodes import DependencyRef
+
+    with TemporaryDirectory() as raw:
+        root = Path(raw)
+        python = root / "libs/Python"
+        python.mkdir(parents=True)
+        (python / "_index.qps").write_text(
+            "Python.\n\nsurface: (\n);\n",
+            encoding="utf-8",
+        )
+        dependency = DependencyRef(
+            package="pkg",
+            module="pkg.mod",
+            symbol=None,
+        )
+        plan = plan_python_library_capability(
+            dependency,
+            root,
+            ("ClassName", "method"),
+            'identity- "pkg.mod.ClassName.method";\n',
+        )
+        paths = [write.path.relative_to(root).as_posix() for write in plan.writes]
+        assert not any("/ClassName/_index.qps" in path for path in paths)
+        assert any(
+            path.endswith("/ClassName.method.qps")
+            for path in paths
+        )
+
+
+def test_multiple_capabilities_publish_as_one_atomic_transaction():
+    from qps.cipher.foreign.population import (
+        merge_library_population_plans,
+        plan_python_library_capability,
+    )
+    from qps.cipher.ir.nodes import DependencyRef
+
+    with TemporaryDirectory() as raw:
+        root = Path(raw)
+        python = root / "libs/Python"
+        python.mkdir(parents=True)
+        original = 'Python.\n\nsurface: (\n);\n'
+        (python / "_index.qps").write_text(original)
+
+        dependency = DependencyRef(
+            package="pkg",
+            module="pkg.mod",
+            symbol=None,
+        )
+        first = plan_python_library_capability(
+            dependency, root, ("first",),
+            'first.\nidentity- "pkg.mod.first";\n',
+        )
+        second = plan_python_library_capability(
+            dependency, root, ("second",),
+            'second.\nidentity- "pkg.mod.second";\n',
+        )
+        merged = merge_library_population_plans([first, second])
+
+        try:
+            publish_library_plan(merged, fail_after=3)
+        except RuntimeError as exc:
+            assert "injected library publication failure" in str(exc)
+        else:
+            raise AssertionError("transaction injection did not fire")
+
+        assert (python / "_index.qps").read_text() == original
+        assert not (python / "pkg").exists()
+
+        publish_library_plan(merged)
+        module = python / "pkg/mod"
+        assert (module / "first.qps").exists()
+        assert (module / "second.qps").exists()
+        surface = (module / "_index.qps").read_text()
+        assert 'first- "first.qps";' in surface
+        assert 'second- "second.qps";' in surface
+
 if __name__ == "__main__":
     main()
+    test_capability_materialization_does_not_promote_member_path_to_module()
+    test_multiple_capabilities_publish_as_one_atomic_transaction()
+    print("CIPHER_CAPABILITY_LIBRARY_PUBLISH=PASS")

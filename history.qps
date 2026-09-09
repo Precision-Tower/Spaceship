@@ -366,4 +366,54 @@ source_checklist- "qps/qps/checklist.qps";
 backing_state- "";
 );
 
+h_20260909_023305_528: (
+timestamp- "2026-09-09T02:33:05Z";
+identity- "cipher.foreign_capability_closure";
+summary- "Make Cipher derive the minimum required external capability graph from import bindings and actual usage, saturate it breadth-first, collapse it deepest-first, reuse proven closure evidence, and materialize only required translated capability surfaces beneath the owning libs boundary";
+meaning- "Cipher treats imports as namespace and provenance bindings while actual authored usage defines canonical required capabilities; it saturates that capability graph breadth-first before translation, collapses proven dependencies deepest-first, reuses only exact valid closure evidence, and publishes only the minimum validated required QPS capability surface";
+
+scope: (
+path_1- "qps/cipher";
+path_2- "qps/qps/checklist.qps";
+);
+proof: (
+binding_vs_usage- "PASS";
+canonical_identity- "PASS";
+breadth_first_saturation- "PASS";
+tier_observability- "PASS";
+deepest_first_collapse- "PASS";
+causal_blockers- "PASS";
+catalog_reuse- "PASS";
+catalog_invalidation- "PASS";
+minimal_materialization- "PASS";
+exact_candidate_validation- "PASS";
+transaction_rollback- "PASS";
+real_stdlib_string_digits- "PASS";
+real_external_sniffio_version- "PASS";
+durable_source_provenance- "PASS";
+native_binary_resolution- "PASS";
+native_definition_field_len- "PASS";
+cipher_regressions- "PASS";
+qps_validation- "PASS";
+diff_check- "PASS";
+);
+relevant: (
+item_1- "qps/cipher/_index.qps";
+item_2- "qps/cipher/foreign/capability_graph.py";
+item_3- "qps/cipher/foreign/capability_discovery.py";
+item_4- "qps/cipher/foreign/capability_catalog.py";
+item_5- "qps/cipher/foreign/capability_translation.py";
+item_6- "qps/cipher/foreign/population.py";
+item_7- "qps/cipher/foreign/python_source_resolver.py";
+item_8- "qps/cipher/tests";
+);
+remaining: (
+item_1- "Python mapping_expression remains independently blocked until exact authored QPS mapping syntax is proven";
+item_2- "Dynamic dependency discovery remains conservative and does not guess";
+item_3- "Native capability closure expands only where exact callable/native evidence exists";
+);
+source_checklist- "qps/qps/checklist.qps";
+backing_state- "";
+);
+
 );

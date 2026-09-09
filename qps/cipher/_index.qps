@@ -65,6 +65,24 @@ foreign_locality- "External dependencies are materialized beneath libs in the sa
 foreign_topology- "External package and module topology is preserved beneath that local libs directory";
 );
 
+foreign_capability_closure: (
+binding_rule- "Python import statements bind local names to external provenance and namespace identity; import syntax alone does not require translation of an entire package or module";
+usage_rule- "Actual authored use determines the minimum required external semantic capabilities; equivalent import forms canonicalize to the same exact capability identity";
+exact_object_rule- "An exact object bound by from module import object remains that exact capability when passed, stored, or otherwise used bare; it is not widened into a module namespace";
+dynamic_rule- "Bare module namespace escape and dynamically selected members are never silently narrowed; Cipher requires bounded evidence or reports a blocker";
+tier_zero- "Tier 0 is authored source behavior and is not itself a CapabilityIdentity graph node";
+tier_roots- "Directly required canonical capabilities are Tier 1 graph roots";
+discovery- "Cipher expands capability requirements breadth-first, globally deduplicates identities, records tier evidence and maximum capability depth, and completes graph saturation before translation begins";
+collapse- "After the frontier is empty, Cipher collapses deepest dependencies first; proven leaves propagate readiness upward while terminal blockers propagate causal failure only through their dependents";
+catalog- "Persistent catalog entries reuse exact capability and complete closure proof evidence rather than package assumptions";
+catalog_invalidation- "Proof identity includes source content, provenance/distribution environment, Python/platform identity, and Cipher/QPS semantic fingerprints so changed evidence invalidates reuse";
+catalog_publication_order- "New capability and closure proofs are persisted only after the complete required candidate set validates and publishes successfully; failed publication cannot create reusable proof evidence";
+native_boundary- "Built-in, frozen, and native-extension discovery is not ABI proof; native capability success requires exact indexed library and native symbol evidence";
+materialization- "Only translated capabilities in the proven required closure are planned beneath the owning local libs boundary; publication validates exact candidate bytes and remains transactional";
+provenance- "Capability extraction is translation machinery only; published QPS provenance records the original Python source rather than a transient extraction file";
+observability- "Capability discovery exposes per-tier encountered, new, deduplicated, and catalog-hit counts together with graph depth, total unique capabilities, boundaries, blockers, and collapse dispositions";
+);
+
 conversion_contract: (
 question- "For each source construct ask: what is the QPS syntax and topology equivalent of this source syntax and topology?";
 no_renaming- "Do not rename source variables, functions, classes, modules, fields, or aliases as a translation strategy";
@@ -91,7 +109,7 @@ rules: (
 qps_authority- "QPS authored syntax and topology are the destination authority; Cipher may not invent QPS language surfaces";
 implementation_boundary- "Parser IR, runtime values, and host containers are implementation machinery rather than authored structural identities";
 tests- "Regression tests must prove identity preservation, syntax equivalence, topology preservation, support truth, exact-candidate validation, and atomic publication";
-current_task- "qps/qps/checklist.qps task cipher.foreign_and_structured_semantics remains active until the real Engineering witness has complete direct QPS syntax coverage";
+current_task- "qps/qps/checklist.qps is the living authority for active Cipher continuation; foreign capability closure now uses binding-to-usage canonicalization, breadth-first saturation, deepest-first proof collapse, exact proof-catalog reuse, and minimal transactional materialization";
 );
 
 
