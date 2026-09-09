@@ -913,11 +913,9 @@ path_2- "Engineering/py/cipher/publish.py";
 path_3- "Engineering/py/cipher/cipher.py";
 path_4- "Engineering/py/cipher/emit/provenance_qps.py";
 path_5- "Engineering/py/cipher/emit/qps_emitter.py";
-path_6- "Engineering/py/cipher/emit/convergence_qps.py";
 path_7- "Engineering/py/cipher/tests/test_boolean_truth.py";
 path_8- "Engineering/py/cipher/tests/test_transaction_candidate.py";
 path_9- "Engineering/py/cipher/tests/test_emitted_provenance.py";
-path_10- "Engineering/py/cipher/tests/test_convergence_provenance.py";
 path_11- "qps/qps/cipher.qps";
 path_12- "qps/cpp/src/main.cpp";
 );
@@ -978,71 +976,6 @@ summary- "Make qps cipher test prove exact candidate conversion truth and make p
 state- "saved";
 );
 
-task_8: (
-identity- "cipher.foreign_and_structured_semantics";
-summary- "Finish Cipher by closing structured Python semantics, foreign-library boundaries, dependency closure, and exact-candidate conversion truth for real Engineering sources";
-checkpoint: (
-pipeline- "prepare -> inspect exact lowered document -> emit only when supported -> validate exact candidate -> publish exact candidate";
-semantic_lowering- "Source-neutral semantic lowering is promoted into the shared candidate-generation path";
-support_before_emit- "Unsupported semantics stop before emission and own no candidate bytes";
-candidate_identity- "Publication commits the exact candidate bytes validated by the proven ConversionPlan";
-boolean_truth- "qps cipher test returns true only when exact candidate generation, semantic support, QPS validation, and no-write truth all succeed";
-runtime_sequence- "RuntimeValue SEQUENCE exists as a distinct runtime value and supports nested heterogeneous values";
-key_namespace- "Key is a file-inside-file namespace whose paragraph boundary is the first blank line at the Key's own structural depth";
-navigation_syntax- "Authored declarations use key. term: item-, while structural navigation uses dot traversal and final - only as an explicit Item/value expectation";
-reference_syntax- "[>key.term.item-] is the canonical explicit Item reference; the - is inside the reference and requires the final target to resolve as an Item";
-source_spans- "Key, Term, and Item own truthful source start/end lines; scope and probe render the exact physical span owned by the selected structural address";
-structural_resolution- "Structural navigation resolves hierarchical identity independently from source ownership; nested source remains part of its containing structural span";
-item_assertion- "Authored Semantic_Walk reserves the final segment for structure_item when selects_item_value is true and rejects an existing Term when Item identity was explicitly required";
-execution_dispatch- "Execution definitions delegate ordinary control-flow statements to the common statement grammar; -while now parses and executes inside named execution definitions";
-semantic_walk- "Semantic_Walk parses as a named ExecutionDefinition, executes successfully, and matches native structural selection including TERM_IS_NOT_ITEM rejection";
-root_authority- "_index.qps is the current QPS navigation authority; obsolete qps/qps/docs/QPS.qps and its stale golden test were removed";
-navigation_stack- "structural selection, grammar regression, semantic walk, probe CLI, and scope CLI are green together";
-language_diversion- "The structural-language diversion now also proves canonical [>item-] reference boundaries, Term-owned executable bodies as term: {...};, and full-expression Item values without requiring % calculation syntax";
-item_expression- "Ordinary Items may bind full QPS expressions through the shared expression grammar; arithmetic no longer requires % when the intended result is an Item";
-term_execution_body- "A Term may own an executable body as term: {...}; the Term carries semantic identity and the braces carry executable contents";
-calculation_compatibility- "%target: expression remains supported compatibility syntax while Item-bound expressions are the simpler canonical form when the result is a value";
-root_qps_reference- "Root _index.qps now records the concise QPS utilization rules for primitive identity, complete [>item-] references, Item expressions, Term execution bodies, and % compatibility";
-checklist_workflow- "qps checklist is now authored in qps/qps/checklist.qps above generic native module, document, sequence, structural-introspection, and write primitives; each invocation regenerates ephemeral Checklist numbering, renders DONE Checklists, exposes visible tasks, and resolves exact Checklist/task addresses";
-execution_registry- "ExecutionEngine registration now stores neutral execution identity, body, domain, and source facts rather than retaining ExecutionDefinitionNode as the runtime registry identity; the build and unaffected execution stack are green";
-);
-
-finish: (
-phase_1- "Re-establish the current Cipher false witness on real Engineering input and capture every remaining blocker without destination writes";
-phase_2- "Complete structured Python lowering: keyword arguments, keyword constructor calls, dataclass/value-object construction, structured returns, and nested structured values";
-phase_3- "Map lowered structured values onto QPS runtime semantics using Dictionary and SEQUENCE only where their semantics are actually distinct";
-phase_4- "Resolve foreign-library boundaries by distinguishing convertible source semantics from explicit foreign runtime dependencies";
-phase_5- "Close single-file dependency semantics so every imported local dependency needed by the candidate is represented in the ConversionPlan";
-phase_6- "Extend the same dependency and foreign-library closure truth to directory conversion";
-phase_7- "Run the real Engineering witness until qps cipher test changes from false to true for semantic reasons only";
-phase_8- "Prove normal qps cipher publishes the exact candidate bytes owned by that true plan and performs no translation, validation, or recompilation during publication";
-phase_9- "Run focused Cipher regressions, real CLI test/publish, published-QPS validation, navigation/runtime regressions, and diff check";
-phase_10- "When all finish conditions are true, transition cipher.foreign_and_structured_semantics to complete and save it exactly once into History";
-);
-
-phase_1_evidence: (
-state- "complete";
-witness_1- "qps cipher test Engineering/py/Physics/Domains/motion.py => ready=false with structured keyword-constructor return, keyword call arguments, mapping expressions, and list expressions reported before emission";
-witness_2- "qps cipher test Engineering/py/Physics/equations.py => ready=false with definition/object semantics, keyword call arguments, and mapping expressions reported before emission";
-proof_1- "python3 Engineering/py/cipher/tests/test_support.py => CIPHER_SUPPORT=PASS";
-proof_2- "python3 Engineering/py/cipher/tests/test_support_before_emit.py => CIPHER_SUPPORT_BEFORE_EMIT=PASS";
-proof_3- "python3 Engineering/py/cipher/tests/test_plan.py => CIPHER_PLAN=PASS";
-proof_4- "python3 Engineering/py/cipher/tests/test_boolean_truth.py => CIPHER_BOOLEAN_TRUTH=PASS";
-changed- "Engineering/py/cipher/support.py now rejects known unemitted expression kinds during support inspection so unsupported structured values own no candidate bytes";
-next- "Prove QPS sequence and record/mapping representation before removing the mapping/list blockers or allowing structured constructor candidates to publish";
-);
-
-remaining: (
-item_1- "Finish reusable execution migration so canonical term: {...}; replaces redundant {Name: ...} identity where appropriate and ExecutionEngine can instantiate Term-owned execution bodies";
-item_2- "Choose and prove authored QPS sequence syntax above the already-proven RuntimeValue SEQUENCE representation";
-item_3- "Lower Cipher list_expression into the canonical QPS sequence representation";
-item_4- "Define generic mapping and record semantics without abusing numeric-key Dictionary or source-language-specific object rules";
-item_5- "Lower named arguments and generic constructor or value-object semantics through the source-neutral Cipher pipeline using canonical Term and Item semantics";
-item_6- "Return to real Python specimens such as EquationResult and require strict Cipher true only when the complete semantic closure is convertible";
-);
-
-state- "ready";
-);
 
 task_9: (
 identity- "checklist.nominal_agent_workflow";
@@ -1301,7 +1234,7 @@ history_rule- "CE-OS History is the single repository-root semantic ledger of ac
 
 separation_rule- "Git diff observes byte-level repository change; QPS dif is a parser-aware reversible transition across identified structure";
 
-cipher_goal- "Convert complete source dependency closures into validated QPS without publishing partial conversion state";
+cipher_goal- "Translate complete source dependency closures into topology-equivalent validated QPS without changing source identities or publishing partial conversion state";
 
 cipher_authority- "qps/qps/cipher.qps";
 
@@ -1321,21 +1254,21 @@ cipher_complete_graph_rule- "Cipher must determine the complete required convers
 
 cipher_local_dependency_rule- "Dependencies resolving inside the CE-OS workspace are local source dependencies and are recursively absorbed into the compilation closure";
 
-cipher_foreign_dependency_rule- "Dependencies that do not resolve inside the CE-OS workspace remain foreign provenance; future external-library representation belongs at the qps/libs boundary and may use a dedicated ^ surface once that grammar is proven";
+cipher_foreign_dependency_rule- "Dependencies that do not resolve inside the local source workspace are external dependencies and belong beneath libs in the translated directory or module context that owns that dependency boundary";
 
-cipher_alias_rule- "Source aliases survive dependency resolution as local symbol bindings even when local import statements disappear from consolidated QPS";
+cipher_alias_rule- "Source aliases survive translation unchanged as bindings to the corresponding translated local or external dependency identity";
 
-cipher_consolidation_rule- "Local source path topology is compilation-time provenance; a consolidated QPS artifact may remove local import traversal after identities and references are resolved";
+cipher_topology_rule- "Local source path topology survives conversion; each local source module projects to its corresponding QPS module and Cipher does not flatten the dependency tree into a consolidated artifact";
 
 cipher_publish_rule- "Directory conversion stages the complete candidate output separately, validates the staged set, then publishes only the complete validated set";
 
-cipher_library_root- "qps/libs";
+cipher_library_root- "libs beneath the translated directory or module context that owns the external dependency boundary";
 
-cipher_library_index_rule- "Every Cipher-created directory beneath qps/libs must contain _index.qps before publication";
+cipher_library_index_rule- "Every Cipher-created package directory beneath a translated context's libs tree uses _index.qps as QPS package and navigation authority";
 
-cipher_library_namespace_rule- "External source namespace topology is preserved beneath qps/libs rather than flattened";
+cipher_library_namespace_rule- "External source package and module topology is preserved beneath the owning translated context's libs directory rather than flattened";
 
-cipher_library_python_rule- "Python imports map beneath qps/libs/Python using their canonical package/module path";
+cipher_library_python_rule- "External Python imports preserve canonical package/module topology beneath the owning translated context's libs directory; they are not centralized merely because the source language is Python";
 
 cipher_library_symbol_rule- "Cipher demand-populates only required canonical symbols and their required dependency closure";
 

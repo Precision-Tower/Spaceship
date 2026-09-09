@@ -26,6 +26,7 @@ namespace ast {
     class SymbolReferenceNode;
     class IdentifierNode;
     class BinaryExpressionNode;
+    class UnaryExpressionNode;
     class FunctionCallNode;
     class CalculationNode;
     class ExecutionBlockNode;
@@ -85,6 +86,7 @@ public:
     virtual void visit(ast::SymbolReferenceNode* node) = 0;
     virtual void visit(ast::IdentifierNode* node) = 0;
     virtual void visit(ast::BinaryExpressionNode* node) = 0;
+    virtual void visit(ast::UnaryExpressionNode* node) = 0;
     virtual void visit(ast::FunctionCallNode* node) = 0;
     virtual void visit(ast::CalculationNode* node) = 0;
     virtual void visit(ast::ExecutionBlockNode* node) = 0;

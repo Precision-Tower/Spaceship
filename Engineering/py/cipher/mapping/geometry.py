@@ -3,8 +3,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 import re
 
-from ..ir.document import CipherDocument
-from ..ir.nodes import CipherNode
+from qps.cipher.ir.document import CipherDocument
+from qps.cipher.ir.nodes import CipherNode
 from .dependencies import resolve_symbols
 
 

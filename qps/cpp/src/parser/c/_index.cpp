@@ -329,10 +329,15 @@ std::unique_ptr<ast::AstNode> Parser::parseStatement() {
         auto action = parseExecutionActionInvocation(nullptr);
         match(tokens::TokenType::SEMICOLON);
         return action;
-    } else if (peek_type() == tokens::TokenType::IDENTIFIER && peek_next_type() == tokens::TokenType::OPEN_PAREN) {
-        // Function call, e.g., 'myFunc(arg1, arg2);'
-        // TODO: Implement parseFunctionCall();
-        error("Function call parsing not implemented yet: " + current_token_.toString());
+    } else if (
+        peek_type() == tokens::TokenType::IDENTIFIER &&
+        peek_next_type() == tokens::TokenType::OPEN_PAREN
+    ) {
+        // A function call is already a RuntimeValue expression node.
+        // As a statement its returned value is intentionally discarded.
+        auto call = parseFunctionCall();
+        match(tokens::TokenType::SEMICOLON);
+        return call;
     }
 
     // If we reach here, it means the current token does not start a recognized statement.

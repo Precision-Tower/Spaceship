@@ -379,6 +379,30 @@ Parser::parseExecutionTermStatement() {
         match(tokens::TokenType::PARAGRAPH_BREAK);
     }
 
+    // Native structural Term in executable scope:
+    //
+    //   inputs: (
+    //   mass_kg- mass_kg;
+    //   gravity_m_s2- gravity_m_s2;
+    //   );
+    //
+    // This is ordinary QPS Term/Container structure, not an execution
+    // action and not a separate mapping runtime representation.
+    if (peek_type() == tokens::TokenType::OPEN_PAREN) {
+        auto term_node =
+            ast::createTermDeclarationNode(
+                identifier,
+                line,
+                column);
+
+        term_node->content_.push_back(
+            parseContainer());
+
+        match(tokens::TokenType::SEMICOLON);
+
+        return term_node;
+    }
+
     // Shared structural execution binding:
     //
     //   master: [>pus.pu_master.dimensions];

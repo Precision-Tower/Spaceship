@@ -156,6 +156,9 @@ public:
     void registerDefinitions(
         const ast::ProgramNode& program);
 
+    void registerDefinitions(
+        std::shared_ptr<ast::ProgramNode> program);
+
     // Execute top-level calls using definitions already registered.
     // Causal definitions are interpreted from this entry program.
     std::vector<ExecutionInstance> executeCalls(
@@ -174,6 +177,7 @@ private:
         ast::ExecutionDomain domain = ast::ExecutionDomain::GENERIC;
         const ast::ExecutionBlockNode* body = nullptr;
         std::optional<ExecutionDefinitionSourceInfo> source;
+        std::shared_ptr<ast::ProgramNode> program_owner;
     };
 
     struct CausalInput {

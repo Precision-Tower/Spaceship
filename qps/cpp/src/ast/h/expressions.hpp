@@ -172,8 +172,10 @@ public:
 
     std::string name_;
     std::vector<std::unique_ptr<AstNode>> arguments_;
+    std::vector<std::string> argument_names_;
 
     void addArgument(std::unique_ptr<AstNode> argument);
+    void addNamedArgument(std::string name, std::unique_ptr<AstNode> argument);
 
     void accept(visitors::AstVisitor& visitor) override;
 };
@@ -181,7 +183,7 @@ public:
 // BinaryExpressionNode: Represents mathematical operations like A + B, C * D
 class BinaryExpressionNode : public AstNode {
 public:
-    enum class Operator { ADD, SUBTRACT, MULTIPLY, DIVIDE, EQUAL, LESS };
+    enum class Operator { ADD, SUBTRACT, MULTIPLY, DIVIDE, EQUAL, LESS, AND, OR };
 
     BinaryExpressionNode(std::unique_ptr<AstNode> left, Operator op, std::unique_ptr<AstNode> right, int line, int column);
     AstNode* getLeft() const;
@@ -192,6 +194,26 @@ private:
     std::unique_ptr<AstNode> left_;
     Operator op_;
     std::unique_ptr<AstNode> right_;
+    void accept(visitors::AstVisitor& visitor) override;
+};
+
+// UnaryExpressionNode: Represents prefix expression operations like -not value.
+class UnaryExpressionNode : public AstNode {
+public:
+    enum class Operator { NOT };
+
+    UnaryExpressionNode(
+        Operator op,
+        std::unique_ptr<AstNode> operand,
+        int line,
+        int column);
+
+    AstNode* getOperand() const;
+    Operator getOperator() const;
+
+private:
+    Operator op_;
+    std::unique_ptr<AstNode> operand_;
     void accept(visitors::AstVisitor& visitor) override;
 };
 

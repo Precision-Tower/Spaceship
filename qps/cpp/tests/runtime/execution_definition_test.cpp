@@ -3,6 +3,7 @@
 #include "runtime/h/document_loader.hpp"
 #include "runtime/h/document_store.hpp"
 #include "runtime/h/execution_engine.hpp"
+#include "runtime/h/interpreter.hpp"
 #include "runtime/h/path_resolver.hpp"
 #include "runtime/h/symbol_resolver.hpp"
 #include "runtime/h/symbol_table.hpp"
@@ -1402,6 +1403,66 @@ v1: [v.cylinder];
         "Structural execution without SymbolResolver should fail explicitly.");
 }
 
+
+void structuralReferenceFlowsThroughFunctionCall() {
+    auto program = parseSource(R"qps(-func identity(
+value-;
+){
+-return value;
+}
+
+{
+%result: identity(
+value- [>shape.dimensions]
+)
+}
+)qps");
+
+    qps::runtime::PathResolver paths(
+        g_structural_workspace);
+
+    qps::runtime::DocumentLoader loader;
+    qps::runtime::DocumentStore documents(loader);
+
+    qps::runtime::SymbolResolver symbols(
+        paths,
+        documents,
+        g_reference_planner,
+        g_semantic_walker);
+
+    qps::runtime::ExecutionScope scope;
+
+    qps::runtime::InterpreterOptions options;
+    options.symbol_resolver = &symbols;
+    options.current_document =
+        "defs/semantic_walk/shape.qps";
+
+    qps::runtime::Interpreter interpreter(
+        scope,
+        {},
+        options);
+
+    interpreter.executeProgram(*program);
+
+    const auto& result =
+        requireBinding(scope, "result");
+
+    require(
+        result.value.kind() ==
+            qps::runtime::RuntimeValue::Kind::STRUCTURE,
+        "Function should preserve structural reference RuntimeValue.");
+
+    const auto& structure =
+        result.value.asStructure(
+            "function structural result");
+
+    require(
+        dynamic_cast<
+            qps::ast::TermDeclarationNode*>(
+                structure.target_node) != nullptr,
+        "Function structural result should retain Term AST node.");
+}
+
 void causalSideParsesDomainTransformationNotNumericEquality() {
     auto program = parseSource(R"qps({!pump_transform:
 Pump: (ME = FD)
@@ -1905,6 +1966,7 @@ int main(int argc, char** argv) {
         {"execution instance preserves registered source identity", executionInstancePreservesRegisteredSourceIdentity},
         {"registered definition rejects empty source identity", registeredDefinitionRejectsEmptySourceIdentity},
         {"external structural binding resolves into execution scope", externalStructuralBindingResolvesIntoExecutionScope},
+        {"structural reference flows through function call", structuralReferenceFlowsThroughFunctionCall},
     };
 
     int failures = 0;

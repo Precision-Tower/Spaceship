@@ -56,7 +56,17 @@ std::unique_ptr<ast::FunctionCallNode> Parser::parseFunctionCall() {
 
     if (peek_type() != tokens::TokenType::CLOSE_PAREN) {
         while (true) {
-            call->addArgument(parseExpression());
+            if (peek_type() == tokens::TokenType::IDENTIFIER &&
+                peek_next_type() == tokens::TokenType::OP_SUBTRACT) {
+                const std::string argument_name =
+                    match_and_get_lexeme(tokens::TokenType::IDENTIFIER);
+                match(tokens::TokenType::OP_SUBTRACT);
+                call->addNamedArgument(
+                    argument_name,
+                    parseExpression());
+            } else {
+                call->addArgument(parseExpression());
+            }
 
             if (peek_type() == tokens::TokenType::COMMA) {
                 match(tokens::TokenType::COMMA);

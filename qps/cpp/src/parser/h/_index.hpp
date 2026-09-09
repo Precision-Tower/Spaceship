@@ -115,6 +115,9 @@ private:
         std::unique_ptr<ast::AstNode> source);
     std::unique_ptr<ast::ContainerNode> parseExecutionActionParameters();
     std::unique_ptr<ast::AstNode> parseExpression();
+    std::unique_ptr<ast::AstNode> parseOrExpression();
+    std::unique_ptr<ast::AstNode> parseAndExpression();
+    std::unique_ptr<ast::AstNode> parseNotExpression();
     std::unique_ptr<ast::AstNode> parseComparisonExpression();
     std::unique_ptr<ast::AstNode> parsePrimaryExpression();
     std::unique_ptr<ast::AstNode> parseMultiplicativeExpression();

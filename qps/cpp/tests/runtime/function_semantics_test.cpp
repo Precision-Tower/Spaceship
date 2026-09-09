@@ -464,6 +464,254 @@ void undefinedReturnIdentifierFailsClearly() {
 )qps", "Undefined return identifier 'missing'");
 }
 
+
+void runtimeValueParameterTransportPreservesString() {
+    const auto scope = executeSource(R"qps(-func identity(
+value-;
+){
+-return value;
+}
+
+{
+%result: identity(
+value- "preserved"
+)
+}
+)qps");
+
+    const auto& result =
+        requireBinding(scope, "result");
+
+    require(
+        result.value.isString(),
+        "Generic function parameter transport should preserve STRING.");
+
+    require(
+        result.value.asString("result") == "preserved",
+        "Function parameter STRING value changed.");
+}
+
+
+void structureRuntimeValueCanBindFunctionParameter() {
+    qps::runtime::ExecutionScope scope;
+
+    qps::runtime::StructuralHandle structure;
+    structure.target_node = nullptr;
+
+    scope.bind(
+        "mapping",
+        qps::runtime::RuntimeValue::structure(
+            structure),
+        std::nullopt,
+        qps::runtime::BindingOrigin::LOCAL);
+
+    auto program = parseSource(R"qps(-func identity(
+value-;
+){
+-return value;
+}
+
+{
+%result: identity(
+value- mapping
+)
+}
+)qps");
+
+    qps::runtime::Interpreter interpreter(
+        scope);
+
+    interpreter.executeProgram(
+        *program);
+
+    const auto& result =
+        requireBinding(
+            scope,
+            "result");
+
+    require(
+        result.value.isStructure(),
+        "Function parameter/result should preserve STRUCTURE RuntimeValue.");
+}
+
+
+void returnedNativeTermItemsRetainRuntimeValues() {
+    auto parsed = parseSource(R"qps(-func make_inputs(
+mass_kg-;
+gravity_m_s2-;
+){
+inputs: (
+mass_kg- mass_kg;
+gravity_m_s2- gravity_m_s2;
+);
+
+-return inputs;
+}
+
+{
+%result: make_inputs(
+mass_kg- 2,
+gravity_m_s2- 9.81
+)
+}
+)qps");
+
+    std::shared_ptr<qps::ast::ProgramNode> program(
+        std::move(parsed));
+
+    qps::runtime::ExecutionScope scope;
+
+    qps::runtime::InterpreterOptions options;
+    options.program_owner = program;
+
+    qps::runtime::Interpreter interpreter(
+        scope,
+        {},
+        options);
+
+    interpreter.executeProgram(*program);
+
+    const auto& result =
+        requireBinding(scope, "result");
+
+    require(
+        result.value.isStructure(),
+        "Returned native Term must remain STRUCTURE.");
+
+    const auto& structure =
+        result.value.asStructure(
+            "returned native Term");
+
+    auto* term =
+        dynamic_cast<
+            qps::ast::TermDeclarationNode*>(
+                structure.target_node);
+
+    require(
+        term != nullptr,
+        "Returned native Term lost authored Term identity.");
+
+    require(
+        structure.captured_scope != nullptr,
+        "Returned native Term lost runtime scope.");
+
+    // Authored syntax remains untouched.
+    require(
+        term->content_.size() == 1,
+        "Returned native Term should own one Container.");
+
+    auto* container =
+        dynamic_cast<
+            qps::ast::ContainerNode*>(
+                term->content_.front().get());
+
+    require(
+        container != nullptr &&
+        container->elements.size() == 2,
+        "Returned native Term lost authored Items.");
+
+    auto* mass =
+        dynamic_cast<
+            qps::ast::ItemDeclarationNode*>(
+                container->elements[0].get());
+
+    auto* gravity =
+        dynamic_cast<
+            qps::ast::ItemDeclarationNode*>(
+                container->elements[1].get());
+
+    require(
+        mass != nullptr &&
+        gravity != nullptr,
+        "Returned native Term children must remain Items.");
+
+    require(
+        dynamic_cast<
+            qps::ast::IdentifierNode*>(
+                mass->value_node_.get()) != nullptr,
+        "Authored mass_kg Item expression was mutated.");
+
+    require(
+        dynamic_cast<
+            qps::ast::IdentifierNode*>(
+                gravity->value_node_.get()) != nullptr,
+        "Authored gravity_m_s2 Item expression was mutated.");
+
+    // Runtime instantiation is retained separately.
+    require(
+        structure.captured_scope
+            ->get("mass_kg")
+            .value
+            .asNumber("mass_kg") == 2.0,
+        "Returned native Term lost mass_kg runtime value.");
+
+    require(
+        structure.captured_scope
+            ->get("gravity_m_s2")
+            .value
+            .asNumber("gravity_m_s2") == 9.81,
+        "Returned native Term lost gravity_m_s2 runtime value.");
+}
+
+
+void localNativeTermCanFlowOutOfFunction() {
+    auto parsed = parseSource(R"qps(-func make_inputs(
+mass_kg-;
+gravity_m_s2-;
+){
+inputs: (
+mass_kg- mass_kg;
+gravity_m_s2- gravity_m_s2;
+);
+
+-return inputs;
+}
+
+{
+%result: make_inputs(
+mass_kg- 2,
+gravity_m_s2- 9.81
+)
+}
+)qps");
+
+    std::shared_ptr<qps::ast::ProgramNode> program(
+        std::move(parsed));
+
+    qps::runtime::ExecutionScope scope;
+
+    qps::runtime::InterpreterOptions options;
+    options.program_owner = program;
+
+    qps::runtime::Interpreter interpreter(
+        scope,
+        {},
+        options);
+
+    interpreter.executeProgram(*program);
+
+    const auto& result =
+        requireBinding(scope, "result");
+
+    require(
+        result.value.isStructure(),
+        "Local native Term should return as STRUCTURE.");
+
+    const auto& structure =
+        result.value.asStructure(
+            "local native Term result");
+
+    require(
+        structure.document_owner == program,
+        "Local native Term lost Program ownership.");
+
+    require(
+        dynamic_cast<
+            qps::ast::TermDeclarationNode*>(
+                structure.target_node) != nullptr,
+        "Local native Term result lost Term identity.");
+}
+
 struct TestCase {
     const char* name;
     std::function<void()> run;
@@ -471,8 +719,60 @@ struct TestCase {
 
 } // namespace
 
+void coreStringValueConversion() {
+    const auto scope = executeSource(R"qps(
+-func string_text(
+){
+-return string("alpha");
+}
+
+-func string_number(
+){
+-return string(2);
+}
+
+{
+%text_result: string_text()
+%number_result: string_number()
+}
+)qps");
+
+    const auto& text =
+        requireBinding(
+            scope,
+            "text_result");
+
+    const auto& number =
+        requireBinding(
+            scope,
+            "number_result");
+
+    require(
+        text.value.isString(),
+        "string(STRING) result must be STRING.");
+
+    require(
+        text.value.asString(
+            "string text result") == "alpha",
+        "string(STRING) must preserve the string.");
+
+    require(
+        number.value.isString(),
+        "string(NUMERIC) result must be STRING.");
+
+    require(
+        number.value.asString(
+            "string numeric result") == "2",
+        "string(NUMERIC) must produce numeric text.");
+}
+
+
 int main() {
     const std::vector<TestCase> tests = {
+        {"returned native Term Items retain runtime values", returnedNativeTermItemsRetainRuntimeValues},
+        {"local native Term flows out of function", localNativeTermCanFlowOutOfFunction},
+        {"STRUCTURE RuntimeValue parameter transport", structureRuntimeValueCanBindFunctionParameter},
+        {"RuntimeValue parameter transport preserves string", runtimeValueParameterTransportPreservesString},
         {"function declaration parses", functionDeclarationParses},
         {"typed required parameters are retained", typedRequiredParametersAreRetained},
         {"zero-argument function parses", zeroArgumentFunctionParses},
@@ -492,6 +792,7 @@ int main() {
         {"too many arguments fail clearly", tooManyArgumentsFailClearly},
         {"undefined function fails clearly", undefinedFunctionFailsClearly},
         {"undefined return identifier fails clearly", undefinedReturnIdentifierFailsClearly},
+        {"core string(value) conversion", coreStringValueConversion},
     };
 
     int failures = 0;

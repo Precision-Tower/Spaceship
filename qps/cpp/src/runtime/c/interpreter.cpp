@@ -385,6 +385,42 @@ void Interpreter::executeStatement(
             return;
         }
 
+        // Ordinary authored Term/Container structure is a native
+        // runtime structural value. The handle retains the exact Program
+        // that owns this Term so returned structure cannot dangle.
+        if (term->content_.size() == 1 &&
+            dynamic_cast<
+                const ast::ContainerNode*>(
+                    term->content_.front().get())) {
+
+            if (!options_.program_owner) {
+                throw std::runtime_error(
+                    "Local structural Term '" +
+                    term->identifier_ +
+                    "' requires an owned Program.");
+            }
+
+            StructuralHandle handle;
+            handle.document_owner =
+                options_.program_owner;
+            handle.target_node =
+                const_cast<
+                    ast::TermDeclarationNode*>(
+                        term);
+            handle.captured_scope =
+                std::make_shared<ExecutionScope>(
+                    scope_);
+
+            scope_.bind(
+                term->identifier_,
+                RuntimeValue::structure(
+                    std::move(handle)),
+                std::nullopt,
+                BindingOrigin::LOCAL);
+
+            return;
+        }
+
         // Statement-level '@' qualification is the authority for
         // geometry inside a shared execution definition.
         //
@@ -494,6 +530,16 @@ void Interpreter::executeStatement(
         throw ReturnSignal(
             evaluateReturn(
                 *return_statement));
+    }
+
+    if (auto* function_call =
+            dynamic_cast<
+                const ast::FunctionCallNode*>(
+                    &statement)) {
+
+        (void)evaluateValue(
+            *function_call);
+        return;
     }
 
     throw std::runtime_error(
@@ -1137,6 +1183,174 @@ RuntimeValue Interpreter::evaluateValue(
 
     if (auto* call =
             dynamic_cast<
+                const ast::FunctionCallNode*>(
+                    &node)) {
+
+        if (call->name_ == "string") {
+            if (call->arguments_.size() != 1 ||
+                !call->arguments_[0]) {
+                throw std::runtime_error(
+                    "string(...) requires exactly one value.");
+            }
+
+            const RuntimeValue value =
+                evaluateValue(
+                    *call->arguments_[0]);
+
+            if (value.isString()) {
+                return value;
+            }
+
+            if (value.isNumeric()) {
+                std::ostringstream out;
+                out << value.asNumber(
+                    "string(...) numeric value");
+
+                return RuntimeValue::string(
+                    out.str());
+            }
+
+            throw std::runtime_error(
+                "string(...) currently supports STRING or NUMERIC "
+                "RuntimeValue values.");
+        }
+
+        if (call->name_ == "append") {
+            if (call->arguments_.size() != 2 ||
+                !call->arguments_[0] ||
+                !call->arguments_[1]) {
+                throw std::runtime_error(
+                    "append(sequence, value) requires exactly two values.");
+            }
+
+            RuntimeValue sequence =
+                evaluateValue(
+                    *call->arguments_[0]);
+
+            RuntimeValue value =
+                evaluateValue(
+                    *call->arguments_[1]);
+
+            sequence
+                .asMutableSequence(
+                    "append(...) sequence")
+                .push_back(
+                    std::move(value));
+
+            return RuntimeValue::null();
+        }
+
+        if (call->name_ == "contains") {
+            if (call->arguments_.size() != 2 ||
+                !call->arguments_[0] ||
+                !call->arguments_[1]) {
+                throw std::runtime_error(
+                    "contains(value, container) requires exactly two values.");
+            }
+
+            const RuntimeValue value =
+                evaluateValue(
+                    *call->arguments_[0]);
+
+            const RuntimeValue container =
+                evaluateValue(
+                    *call->arguments_[1]);
+
+            return RuntimeValue::boolean(
+                runtimeContains(
+                    value,
+                    container));
+        }
+
+        if (call->name_ == "record") {
+            if ((call->arguments_.size() % 2) != 0) {
+                throw std::runtime_error(
+                    "record(...) requires field-name/value pairs.");
+            }
+
+            std::vector<RuntimeRecordEntry> entries;
+            entries.reserve(
+                call->arguments_.size() / 2);
+
+            for (std::size_t i = 0;
+                 i < call->arguments_.size();
+                 i += 2) {
+
+                const auto& name_argument =
+                    call->arguments_[i];
+                const auto& value_argument =
+                    call->arguments_[i + 1];
+
+                if (!name_argument ||
+                    !value_argument) {
+                    throw std::runtime_error(
+                        "record(...) argument is missing.");
+                }
+
+                RuntimeValue name_value =
+                    evaluateValue(
+                        *name_argument);
+
+                if (!name_value.isString()) {
+                    throw std::runtime_error(
+                        "record(...) field names must evaluate to STRING.");
+                }
+
+                const std::string& name =
+                    name_value.asString(
+                        "record(...) field name");
+
+                for (const auto& entry :
+                     entries) {
+                    if (entry.name == name) {
+                        throw std::runtime_error(
+                            "record(...) duplicate field name: " +
+                            name);
+                    }
+                }
+
+                RuntimeRecordEntry entry;
+                entry.name = name;
+                entry.value =
+                    evaluateValue(
+                        *value_argument);
+
+                entries.push_back(
+                    std::move(entry));
+            }
+
+            return RuntimeValue::record(
+                std::move(entries));
+        }
+
+        if (call->name_ == "sequence") {
+            std::vector<RuntimeValue> values;
+            values.reserve(
+                call->arguments_.size());
+
+            for (const auto& argument :
+                 call->arguments_) {
+
+                if (!argument) {
+                    throw std::runtime_error(
+                        "sequence(...) argument is missing.");
+                }
+
+                values.push_back(
+                    evaluateValue(
+                        *argument));
+            }
+
+            return RuntimeValue::sequence(
+                std::move(values));
+        }
+
+        return invokeFunction(
+            *call);
+    }
+
+    if (auto* call =
+            dynamic_cast<
                 const ast::ExecutionCallNode*>(
                     &node)) {
 
@@ -1150,6 +1364,22 @@ RuntimeValue Interpreter::evaluateValue(
             *call);
     }
 
+    if (auto* boolean =
+            dynamic_cast<
+                const ast::BooleanLiteralNode*>(
+                    &node)) {
+
+        return RuntimeValue::boolean(
+            boolean->value_);
+    }
+
+    if (dynamic_cast<
+            const ast::NullLiteralNode*>(
+                &node)) {
+
+        return RuntimeValue::null();
+    }
+
     if (auto* identifier =
             dynamic_cast<
                 const ast::IdentifierNode*>(
@@ -1160,10 +1390,61 @@ RuntimeValue Interpreter::evaluateValue(
             .value;
     }
 
+    if (auto* unary =
+            dynamic_cast<
+                const ast::UnaryExpressionNode*>(
+                    &node)) {
+
+        return RuntimeValue::boolean(
+            !runtimeTruth(
+                evaluateValue(
+                    *unary->getOperand())));
+    }
+
     if (auto* binary =
             dynamic_cast<
                 const ast::BinaryExpressionNode*>(
                     &node)) {
+
+        if (binary->getOperator() ==
+                ast::BinaryExpressionNode::Operator::AND ||
+            binary->getOperator() ==
+                ast::BinaryExpressionNode::Operator::OR) {
+
+            const RuntimeValue left =
+                evaluateValue(
+                    *binary->getLeft());
+
+            const bool left_truth =
+                runtimeTruth(left);
+
+            if (binary->getOperator() ==
+                ast::BinaryExpressionNode::Operator::AND) {
+
+                if (!left_truth) {
+                    return left;
+                }
+
+                return evaluateValue(
+                    *binary->getRight());
+            }
+
+            if (left_truth) {
+                return left;
+            }
+
+            return evaluateValue(
+                *binary->getRight());
+        }
+
+        if (binary->getOperator() ==
+            ast::BinaryExpressionNode::Operator::EQUAL ||
+            binary->getOperator() ==
+            ast::BinaryExpressionNode::Operator::LESS) {
+
+            return RuntimeValue::boolean(
+                evaluateTruth(node));
+        }
 
         if (binary->getOperator() ==
             ast::BinaryExpressionNode::Operator::ADD) {
@@ -1195,6 +1476,85 @@ RuntimeValue Interpreter::evaluateValue(
             throw std::runtime_error(
                 "Runtime addition requires matching NUMERIC or STRING values.");
         }
+    }
+
+    if (auto* reference =
+            dynamic_cast<
+                const ast::SymbolReferenceNode*>(
+                    &node)) {
+
+        // Item-selected references remain scalar/value evaluation.
+        if (reference->selectsItemValue()) {
+            return RuntimeValue::numeric(
+                evaluate(node));
+        }
+
+        if (options_.symbol_resolver == nullptr) {
+            throw std::runtime_error(
+                "Structural semantic reference '" +
+                reference->getSymbol() +
+                "' requires a SymbolResolver.");
+        }
+
+        StructuralHandle resolved;
+
+        if (reference->getOrigin() ==
+            ast::SymbolReferenceOrigin::LOCAL_BINDING) {
+
+            const auto& segments =
+                reference->getSegments();
+
+            if (segments.empty()) {
+                throw std::runtime_error(
+                    "Local structural reference '" +
+                    reference->getSymbol() +
+                    "' has no root binding.");
+            }
+
+            const std::string& root_name =
+                segments.front().name;
+
+            if (!scope_.contains(root_name)) {
+                throw std::runtime_error(
+                    "Unknown local structural binding '" +
+                    root_name +
+                    "' while evaluating structural reference '" +
+                    reference->getSymbol() +
+                    "'.");
+            }
+
+            const StructuralHandle& root =
+                scope_
+                    .get(root_name)
+                    .value
+                    .asStructure(
+                        "Local structural binding '" +
+                        root_name +
+                        "'");
+
+            resolved =
+                options_.symbol_resolver->resolveFrom(
+                    root,
+                    *reference);
+        }
+        else {
+            if (options_.current_document.empty()) {
+                throw std::runtime_error(
+                    "Structural semantic reference '" +
+                    reference->getSymbol() +
+                    "' requires current document context.");
+            }
+
+            resolved =
+                options_.symbol_resolver->resolve(
+                    *reference,
+                    StructuralReferenceContext{
+                        options_.current_document
+                    });
+        }
+
+        return RuntimeValue::structure(
+            std::move(resolved));
     }
 
     if (auto* path =
@@ -1246,7 +1606,12 @@ double Interpreter::evaluate(
                 const ast::FunctionCallNode*>(
                     &node)) {
 
-        return invokeFunction(*call);
+        return invokeFunction(
+            *call)
+            .asNumber(
+                "Function '" +
+                call->name_ +
+                "' result");
     }
 
     if (auto* binary =
@@ -1301,6 +1666,18 @@ double Interpreter::evaluate(
 
                 throw std::runtime_error(
                     "Less-than comparison is boolean and cannot be evaluated as numeric.");
+
+            case ast::BinaryExpressionNode::
+                Operator::AND:
+
+                throw std::runtime_error(
+                    "Logical AND is a RuntimeValue expression and cannot be evaluated as numeric.");
+
+            case ast::BinaryExpressionNode::
+                Operator::OR:
+
+                throw std::runtime_error(
+                    "Logical OR is a RuntimeValue expression and cannot be evaluated as numeric.");
         }
     }
 
@@ -1444,7 +1821,7 @@ RuntimeValue Interpreter::evaluateReturn(
         *statement.expression_);
 }
 
-double Interpreter::invokeFunction(
+RuntimeValue Interpreter::invokeFunction(
     const ast::FunctionCallNode& call) const {
 
     auto found =
@@ -1512,34 +1889,123 @@ double Interpreter::invokeFunction(
             ".");
     }
 
-    std::vector<double> argument_values;
+    if (call.argument_names_.size() !=
+        call.arguments_.size()) {
 
-    argument_values.reserve(
-        call.arguments_.size());
+        throw std::runtime_error(
+            "Internal function-call argument identity mismatch for function '" +
+            call.name_ +
+            "'.");
+    }
 
-    for (const auto& argument :
-         call.arguments_) {
+    std::vector<RuntimeValue> bound_values(
+        parameters.size());
 
-        argument_values.push_back(
-            evaluate(*argument));
+    std::vector<bool> supplied(
+        parameters.size(),
+        false);
+
+    std::size_t next_positional = 0;
+
+    for (std::size_t argument_index = 0;
+         argument_index < call.arguments_.size();
+         ++argument_index) {
+
+        const auto& argument =
+            call.arguments_[argument_index];
+
+        if (!argument) {
+            throw std::runtime_error(
+                "Missing function-call argument expression for function '" +
+                call.name_ +
+                "'.");
+        }
+
+        const std::string& argument_name =
+            call.argument_names_[argument_index];
+
+        std::size_t parameter_index =
+            parameters.size();
+
+        if (!argument_name.empty()) {
+
+            for (std::size_t i = 0;
+                 i < parameters.size();
+                 ++i) {
+
+                if (parameters[i].name ==
+                    argument_name) {
+
+                    parameter_index = i;
+                    break;
+                }
+            }
+
+            if (parameter_index ==
+                parameters.size()) {
+
+                throw std::runtime_error(
+                    "Unknown named argument '" +
+                    argument_name +
+                    "' for function '" +
+                    call.name_ +
+                    "'.");
+            }
+        }
+        else {
+            while (next_positional <
+                       parameters.size() &&
+                   supplied[next_positional]) {
+
+                ++next_positional;
+            }
+
+            if (next_positional >=
+                parameters.size()) {
+
+                throw std::runtime_error(
+                    "Too many positional arguments for function '" +
+                    call.name_ +
+                    "'.");
+            }
+
+            parameter_index =
+                next_positional;
+
+            ++next_positional;
+        }
+
+        if (supplied[parameter_index]) {
+            throw std::runtime_error(
+                "Function parameter '" +
+                parameters[parameter_index].name +
+                "' is assigned more than once in call to function '" +
+                call.name_ +
+                "'.");
+        }
+
+        bound_values[parameter_index] =
+            evaluateValue(*argument);
+
+        supplied[parameter_index] =
+            true;
     }
 
     ExecutionScope function_scope;
 
     for (std::size_t i = 0;
-         i < argument_values.size();
-         ++i) {
-
-        function_scope.bind(
-            parameters[i].name,
-            argument_values[i],
-            std::nullopt,
-            BindingOrigin::SUPPLIED);
-    }
-
-    for (std::size_t i = argument_values.size();
          i < parameters.size();
          ++i) {
+
+        if (supplied[i]) {
+            function_scope.bind(
+                parameters[i].name,
+                bound_values[i],
+                std::nullopt,
+                BindingOrigin::SUPPLIED);
+
+            continue;
+        }
 
         const auto* default_node =
             parameters[i].item->value_node_.get();
@@ -1553,19 +2019,19 @@ double Interpreter::invokeFunction(
                 "'.");
         }
 
+        InterpreterOptions child_options =
+            options_;
+
+        child_options.allow_return = true;
+
         Interpreter default_interpreter(
             function_scope,
             functions_,
-            active_functions_,
-            call.name_);
+            child_options);
 
-        const double default_value =
+        RuntimeValue default_value =
             default_interpreter
-                .evaluateValue(*default_node)
-                .asNumber(
-                    "Default value for function parameter '" +
-                    parameters[i].name +
-                    "'");
+                .evaluateValue(*default_node);
 
         function_scope.bind(
             parameters[i].name,
@@ -1580,11 +2046,21 @@ double Interpreter::invokeFunction(
     active_functions.push_back(
         call.name_);
 
+    InterpreterOptions child_options =
+        options_;
+
+    child_options.allow_return = true;
+
     Interpreter interpreter(
         function_scope,
         functions_,
-        std::move(active_functions),
-        call.name_);
+        child_options);
+
+    interpreter.active_functions_ =
+        std::move(active_functions);
+
+    interpreter.current_function_ =
+        call.name_;
 
     try {
         interpreter.execute(
@@ -1592,10 +2068,7 @@ double Interpreter::invokeFunction(
 
     } catch (const ReturnSignal& returned) {
 
-        return returned.value.asNumber(
-            "Function '" +
-            call.name_ +
-            "' return value");
+        return returned.value;
     }
 
     throw std::runtime_error(
@@ -1604,16 +2077,139 @@ double Interpreter::invokeFunction(
         "' completed without return.");
 }
 
+bool Interpreter::runtimeTruth(
+    const RuntimeValue& value) const {
+
+    switch (value.kind()) {
+        case RuntimeValue::Kind::BOOLEAN:
+            return value.asBoolean();
+        case RuntimeValue::Kind::NULL_VALUE:
+            return false;
+        case RuntimeValue::Kind::NUMERIC:
+            return value.asNumber() != 0.0;
+        case RuntimeValue::Kind::STRING:
+            return !value.asString().empty();
+        case RuntimeValue::Kind::DICTIONARY:
+            return !value.asDictionary().empty();
+        case RuntimeValue::Kind::SEQUENCE:
+            return !value.asSequence().empty();
+        case RuntimeValue::Kind::RECORD:
+            return true;
+        case RuntimeValue::Kind::GEOMETRY:
+        case RuntimeValue::Kind::STRUCTURE:
+            return true;
+    }
+
+    return false;
+}
+
+bool Interpreter::runtimeValueEqual(
+    const RuntimeValue& left,
+    const RuntimeValue& right) const {
+
+    if (left.kind() != right.kind()) {
+        return false;
+    }
+
+    if (left.isNull()) {
+        return true;
+    }
+
+    if (left.isBoolean()) {
+        return left.asBoolean(
+            "equality left") ==
+            right.asBoolean(
+                "equality right");
+    }
+
+    if (left.isNumeric()) {
+        return std::fabs(
+            left.asNumber(
+                "equality left") -
+            right.asNumber(
+                "equality right")) <=
+            0.000000001;
+    }
+
+    if (left.isString()) {
+        return left.asString(
+            "equality left") ==
+            right.asString(
+                "equality right");
+    }
+
+    if (left.isSequence()) {
+        const auto& left_values =
+            left.asSequence(
+                "equality left sequence");
+        const auto& right_values =
+            right.asSequence(
+                "equality right sequence");
+
+        if (left_values.size() !=
+            right_values.size()) {
+            return false;
+        }
+
+        for (std::size_t i = 0;
+             i < left_values.size();
+             ++i) {
+
+            if (!runtimeValueEqual(
+                    left_values[i],
+                    right_values[i])) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    throw std::runtime_error(
+        "Equality is not defined for this runtime value kind.");
+}
+
+bool Interpreter::runtimeContains(
+    const RuntimeValue& value,
+    const RuntimeValue& container) const {
+
+    if (container.isSequence()) {
+        for (const RuntimeValue& candidate :
+             container.asSequence(
+                 "contains sequence")) {
+
+            if (runtimeValueEqual(
+                    value,
+                    candidate)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    if (container.isString()) {
+        if (!value.isString()) {
+            throw std::runtime_error(
+                "STRING containment requires a STRING value.");
+        }
+
+        return container
+            .asString(
+                "contains string container")
+            .find(
+                value.asString(
+                    "contains string value")) !=
+            std::string::npos;
+    }
+
+    throw std::runtime_error(
+        "contains(value, container) currently requires "
+        "a QPS SEQUENCE or STRING container.");
+}
+
 bool Interpreter::evaluateTruth(
     const ast::AstNode& node) const {
-
-    if (auto* boolean =
-            dynamic_cast<
-                const ast::BooleanLiteralNode*>(
-                    &node)) {
-
-        return boolean->value_;
-    }
 
     if (auto* binary =
             dynamic_cast<
@@ -1625,12 +2221,10 @@ bool Interpreter::evaluateTruth(
 
             const RuntimeValue left =
                 evaluateValue(*binary->getLeft());
-
             const RuntimeValue right =
                 evaluateValue(*binary->getRight());
 
-            if (left.kind() != RuntimeValue::Kind::NUMERIC ||
-                right.kind() != RuntimeValue::Kind::NUMERIC) {
+            if (!left.isNumeric() || !right.isNumeric()) {
                 throw std::runtime_error(
                     "Less-than comparison requires NUMERIC operands.");
             }
@@ -1644,37 +2238,17 @@ bool Interpreter::evaluateTruth(
 
             const RuntimeValue left =
                 evaluateValue(*binary->getLeft());
-
             const RuntimeValue right =
                 evaluateValue(*binary->getRight());
 
-            if (left.kind() != right.kind()) {
-                return false;
-            }
-
-            if (left.kind() ==
-                RuntimeValue::Kind::NUMERIC) {
-
-                return std::fabs(
-                    left.asNumber("equality left") -
-                    right.asNumber("equality right")) <=
-                    0.000000001;
-            }
-
-            if (left.kind() ==
-                RuntimeValue::Kind::STRING) {
-
-                return left.asString("equality left") ==
-                    right.asString("equality right");
-            }
-
-            throw std::runtime_error(
-                "Equality is not defined for this runtime value kind.");
+            return runtimeValueEqual(
+                left,
+                right);
         }
     }
 
-    throw std::runtime_error(
-        "Condition must be a boolean literal or supported equality expression.");
+    return runtimeTruth(
+        evaluateValue(node));
 }
 
 std::string Interpreter::evaluateMessage(

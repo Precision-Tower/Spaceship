@@ -100,6 +100,64 @@ std::unique_ptr<ast::CalculationNode> Parser::parseCalculation() {
 // Parses a mathematical expression without owning execution-block syntax.
 // Expression precedence is handled by the additive/multiplicative layers below.
 std::unique_ptr<ast::AstNode> Parser::parseExpression() {
+    return parseOrExpression();
+}
+
+std::unique_ptr<ast::AstNode> Parser::parseOrExpression() {
+    auto left = parseAndExpression();
+
+    while (peek_type() == tokens::TokenType::OP_OR) {
+        const int op_line = current_token_.line;
+        const int op_column = current_token_.column;
+        advance();
+
+        auto right = parseAndExpression();
+
+        left = ast::createBinaryExpressionNode(
+            std::move(left),
+            ast::BinaryExpressionNode::Operator::OR,
+            std::move(right),
+            op_line,
+            op_column);
+    }
+
+    return left;
+}
+
+std::unique_ptr<ast::AstNode> Parser::parseAndExpression() {
+    auto left = parseNotExpression();
+
+    while (peek_type() == tokens::TokenType::OP_AND) {
+        const int op_line = current_token_.line;
+        const int op_column = current_token_.column;
+        advance();
+
+        auto right = parseNotExpression();
+
+        left = ast::createBinaryExpressionNode(
+            std::move(left),
+            ast::BinaryExpressionNode::Operator::AND,
+            std::move(right),
+            op_line,
+            op_column);
+    }
+
+    return left;
+}
+
+std::unique_ptr<ast::AstNode> Parser::parseNotExpression() {
+    if (peek_type() == tokens::TokenType::OP_NOT) {
+        const int op_line = current_token_.line;
+        const int op_column = current_token_.column;
+        advance();
+
+        return ast::createUnaryExpressionNode(
+            ast::UnaryExpressionNode::Operator::NOT,
+            parseNotExpression(),
+            op_line,
+            op_column);
+    }
+
     return parseComparisonExpression();
 }
 

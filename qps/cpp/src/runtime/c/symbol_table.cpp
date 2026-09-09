@@ -12,9 +12,12 @@ RuntimeValue::RuntimeValue()
 RuntimeValue::RuntimeValue(
     std::variant<
         double,
+        bool,
+        std::monostate,
         std::string,
         std::vector<RuntimeDictionaryEntry>,
         RuntimeSequence,
+        RuntimeRecord,
         GeometryHandle,
         StructuralHandle> value)
     : value_(std::move(value)) {}
@@ -23,6 +26,16 @@ RuntimeValue RuntimeValue::numeric(
     double value) {
 
     return RuntimeValue(value);
+}
+
+RuntimeValue RuntimeValue::boolean(
+    bool value) {
+
+    return RuntimeValue(value);
+}
+
+RuntimeValue RuntimeValue::null() {
+    return RuntimeValue(std::monostate{});
 }
 
 RuntimeValue RuntimeValue::string(
@@ -45,6 +58,14 @@ RuntimeValue RuntimeValue::sequence(
             std::move(values)));
 }
 
+RuntimeValue RuntimeValue::record(
+    std::vector<RuntimeRecordEntry> entries) {
+
+    return RuntimeValue(
+        std::make_shared<std::vector<RuntimeRecordEntry>>(
+            std::move(entries)));
+}
+
 RuntimeValue RuntimeValue::geometry(
     GeometryHandle handle) {
 
@@ -62,6 +83,14 @@ RuntimeValue::Kind RuntimeValue::kind() const {
         return Kind::NUMERIC;
     }
 
+    if (isBoolean()) {
+        return Kind::BOOLEAN;
+    }
+
+    if (isNull()) {
+        return Kind::NULL_VALUE;
+    }
+
     if (isString()) {
         return Kind::STRING;
     }
@@ -74,6 +103,10 @@ RuntimeValue::Kind RuntimeValue::kind() const {
         return Kind::SEQUENCE;
     }
 
+    if (isRecord()) {
+        return Kind::RECORD;
+    }
+
     if (isGeometry()) {
         return Kind::GEOMETRY;
     }
@@ -83,6 +116,14 @@ RuntimeValue::Kind RuntimeValue::kind() const {
 
 bool RuntimeValue::isNumeric() const {
     return std::holds_alternative<double>(value_);
+}
+
+bool RuntimeValue::isBoolean() const {
+    return std::holds_alternative<bool>(value_);
+}
+
+bool RuntimeValue::isNull() const {
+    return std::holds_alternative<std::monostate>(value_);
 }
 
 bool RuntimeValue::isString() const {
@@ -97,6 +138,11 @@ bool RuntimeValue::isDictionary() const {
 bool RuntimeValue::isSequence() const {
     return std::holds_alternative<
         RuntimeSequence>(value_);
+}
+
+bool RuntimeValue::isRecord() const {
+    return std::holds_alternative<
+        RuntimeRecord>(value_);
 }
 
 bool RuntimeValue::isGeometry() const {
@@ -124,6 +170,27 @@ double RuntimeValue::asNumber(
     throw std::runtime_error(
         prefix +
         " expected numeric value but found " +
+        std::string(runtimeValueKindName(kind())) +
+        ".");
+}
+
+bool RuntimeValue::asBoolean(
+    const std::string& context) const {
+
+    if (const auto* boolean =
+            std::get_if<bool>(&value_)) {
+
+        return *boolean;
+    }
+
+    const std::string prefix =
+        context.empty()
+            ? "Runtime value"
+            : context;
+
+    throw std::runtime_error(
+        prefix +
+        " expected boolean value but found " +
         std::string(runtimeValueKindName(kind())) +
         ".");
 }
@@ -194,6 +261,56 @@ RuntimeValue::asSequence(
     throw std::runtime_error(
         prefix +
         " expected sequence value but found " +
+        std::string(runtimeValueKindName(kind())) +
+        ".");
+}
+
+std::vector<RuntimeValue>&
+RuntimeValue::asMutableSequence(
+    const std::string& context) {
+
+    if (auto* sequence =
+            std::get_if<RuntimeSequence>(
+                &value_)) {
+
+        if (*sequence) {
+            return **sequence;
+        }
+    }
+
+    const std::string prefix =
+        context.empty()
+            ? "Runtime value"
+            : context;
+
+    throw std::runtime_error(
+        prefix +
+        " expected sequence value but found " +
+        std::string(runtimeValueKindName(kind())) +
+        ".");
+}
+
+const std::vector<RuntimeRecordEntry>&
+RuntimeValue::asRecord(
+    const std::string& context) const {
+
+    if (const auto* record =
+            std::get_if<RuntimeRecord>(
+                &value_)) {
+
+        if (*record) {
+            return **record;
+        }
+    }
+
+    const std::string prefix =
+        context.empty()
+            ? "Runtime value"
+            : context;
+
+    throw std::runtime_error(
+        prefix +
+        " expected record value but found " +
         std::string(runtimeValueKindName(kind())) +
         ".");
 }
@@ -337,6 +454,9 @@ const char* runtimeValueKindName(
 
         case RuntimeValue::Kind::SEQUENCE:
             return "sequence";
+
+        case RuntimeValue::Kind::RECORD:
+            return "record";
 
         case RuntimeValue::Kind::GEOMETRY:
             return "geometry";

@@ -225,6 +225,29 @@ Token Lexer::getNextToken() {
             {"-pass", TokenType::KW_PASS},
         };
 
+        if (candidate == "-and" ||
+            candidate == "-or" ||
+            candidate == "-not") {
+
+            for (std::size_t i = 0; i < candidate.size(); ++i) {
+                stream_.advance();
+            }
+
+            TokenType type = TokenType::OP_NOT;
+
+            if (candidate == "-and") {
+                type = TokenType::OP_AND;
+            } else if (candidate == "-or") {
+                type = TokenType::OP_OR;
+            }
+
+            return Token(
+                type,
+                candidate,
+                current_line_,
+                current_column_);
+        }
+
         auto it = executable_keywords.find(candidate);
         if (it != executable_keywords.end()) {
             for (std::size_t i = 0; i < candidate.size(); ++i) {

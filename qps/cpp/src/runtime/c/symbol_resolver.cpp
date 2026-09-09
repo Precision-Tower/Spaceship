@@ -194,7 +194,7 @@ StructuralHandle walkSemanticStructureAuthored(
         documents.get(walker_file);
 
     ExecutionEngine engine;
-    engine.registerDefinitions(*program);
+    engine.registerDefinitions(program);
 
     StructuralHandle start_handle;
     start_handle.document_owner = document_owner;
@@ -284,7 +284,7 @@ ReferenceDocumentPlan planReferenceDocumentAuthored(
         documents.get(planner_file);
 
     ExecutionEngine engine;
-    engine.registerDefinitions(*program);
+    engine.registerDefinitions(program);
 
     std::unordered_map<std::string, RuntimeValue> overrides;
 

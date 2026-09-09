@@ -310,4 +310,60 @@ source_checklist- "Agency/checklist.qps";
 backing_state- "";
 );
 
+h_20260909_003304_933: (
+timestamp- "2026-09-09T00:33:04Z";
+identity- "cipher.foreign_and_structured_semantics";
+summary- "Finish Cipher as a syntax- and topology-preserving source-to-QPS converter, closing exact Python syntax equivalents, dependency topology, local external-library placement, and exact-candidate truth for real Engineering sources";
+meaning- "Cipher now preserves supported source syntax identity and local dependency topology through exact QPS candidates, recursively closes local Python dependencies for single-file and directory conversion, preserves named arguments and sequence semantics through proven authored QPS syntax, keeps unsupported mapping semantics blocked, and publishes only the exact validated ConversionPlan candidate set";
+
+scope: (
+path_1- "qps/cipher";
+path_2- "qps/qps";
+path_3- "qps/cpp";
+path_4- "_index.qps";
+path_5- "qps/_index.qps";
+path_6- "Engineering/py/Physics";
+);
+proof: (
+cipher_tests- "PASS 46 of 46 with repository root on PYTHONPATH";
+motion_witness- "PASS units=3 foreign=0 blockers=0 ready=true";
+equations_witness- "PASS units=1 foreign=0 blockers=0 ready=true";
+local_dependency_closure- "PASS";
+directory_dependency_closure- "PASS";
+exact_candidate_validation- "PASS";
+atomic_publication- "PASS";
+sequence_expression- "PASS";
+runtime_sequence- "PASS";
+runtime_semantics- "PASS";
+semantic_walk- "PASS";
+probe_cli- "PASS";
+scope_cli- "PASS";
+qps_check- "PASS";
+diff_check- "PASS";
+);
+relevant: (
+path_1- "qps/cipher/_index.qps";
+path_2- "qps/cipher/plan.py";
+path_3- "qps/cipher/publish.py";
+path_4- "qps/cipher/support.py";
+path_5- "qps/cipher/emit/qps_emitter.py";
+path_6- "qps/cipher/graph/dependency_closure.py";
+path_7- "qps/cipher/foreign";
+path_8- "qps/cipher/sources";
+path_9- "qps/cipher/tests";
+path_10- "qps/qps/cipher.qps";
+path_11- "qps/qps/_index.qps";
+path_12- "qps/cpp";
+);
+remaining: (
+item_1- "Extend Cipher foreign closure from truthful classification/indexed native boundaries to complete stdlib and external pure-Python package materialization beneath owning translated module libs directories";
+item_2- "Prove the first real external pip package through recursive Python/native dependency closure without pretending native binary implementation is authored QPS";
+item_3- "Python mapping_expression remains blocked until an exact authored QPS syntax equivalent is proven";
+item_4- "Whole Engineering/py/Physics directory conversion remains outside this completed witness boundary where unsupported syntax, foreign dependencies, typing, or malformed structural input still report blockers";
+item_5- "Reusable execution migration may continue independently where canonical term executable bodies replace redundant execution identity";
+);
+source_checklist- "qps/qps/checklist.qps";
+backing_state- "";
+);
+
 );

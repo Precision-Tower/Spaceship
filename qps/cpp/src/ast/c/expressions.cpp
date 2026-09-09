@@ -138,6 +138,14 @@ FunctionCallNode::FunctionCallNode(const std::string& name, int line, int column
 
 void FunctionCallNode::addArgument(std::unique_ptr<AstNode> argument) {
     arguments_.push_back(std::move(argument));
+    argument_names_.push_back("");
+}
+
+void FunctionCallNode::addNamedArgument(
+    std::string name,
+    std::unique_ptr<AstNode> argument) {
+    arguments_.push_back(std::move(argument));
+    argument_names_.push_back(std::move(name));
 }
 
 void FunctionCallNode::accept(visitors::AstVisitor& visitor) {
@@ -153,6 +161,28 @@ AstNode* BinaryExpressionNode::getRight() const { return right_.get(); }
 BinaryExpressionNode::Operator BinaryExpressionNode::getOperator() const { return op_; }
 
 void BinaryExpressionNode::accept(visitors::AstVisitor& visitor) {
+    visitor.visit(this);
+}
+
+// UnaryExpressionNode
+UnaryExpressionNode::UnaryExpressionNode(
+    Operator op,
+    std::unique_ptr<AstNode> operand,
+    int line,
+    int column)
+    : AstNode(AstNodeType::UNARY_EXPRESSION, line, column),
+      op_(op),
+      operand_(std::move(operand)) {}
+
+AstNode* UnaryExpressionNode::getOperand() const {
+    return operand_.get();
+}
+
+UnaryExpressionNode::Operator UnaryExpressionNode::getOperator() const {
+    return op_;
+}
+
+void UnaryExpressionNode::accept(visitors::AstVisitor& visitor) {
     visitor.visit(this);
 }
 

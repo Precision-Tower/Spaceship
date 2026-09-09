@@ -368,6 +368,49 @@ void semanticAndLocalRebindingShareOverwriteBehaviorButKeepDifferentMetadata() {
     assertNoBindingWithValue(scope, 5.0, "prior semantic and local values");
 }
 
+void unaryNotUsesRuntimeTruthiness() {
+    const auto scope = executeSource(R"qps({
+%zero: -not 0
+%one: -not 1
+%empty: -not ""
+%text: -not "x"
+%nothing: -not null
+%yes: -not true
+%no: -not false
+%comparison: -not (1 < 2)
+%equal_true: -not (true == false)
+%equal_null: -not (null == null)
+})qps");
+
+    const auto assertBoolean =
+        [&scope](
+            const std::string& name,
+            bool expected) {
+
+            const auto& binding =
+                requireBinding(scope, name);
+
+            require(
+                binding.value.isBoolean(),
+                name + " should bind BOOLEAN.");
+
+            require(
+                binding.value.asBoolean(name) == expected,
+                name + " boolean value mismatch.");
+        };
+
+    assertBoolean("zero", true);
+    assertBoolean("one", false);
+    assertBoolean("empty", true);
+    assertBoolean("text", false);
+    assertBoolean("nothing", true);
+    assertBoolean("yes", false);
+    assertBoolean("no", true);
+    assertBoolean("comparison", false);
+    assertBoolean("equal_true", true);
+    assertBoolean("equal_null", false);
+}
+
 void stringItemsBecomeRuntimeValues() {
     const auto scope = executeSource(R"qps({
 [>program-] "cmake";
@@ -776,6 +819,48 @@ void ifSelectsNumericLessThanBranch() {
 }
 
 
+void containsUsesQpsValueSemantics() {
+    const std::string source = R"qps(
+{
+%sequence_hit: contains("beta", sequence("alpha", "beta"))
+%sequence_miss: contains("gamma", sequence("alpha", "beta"))
+%number_hit: contains(2, sequence(1, 2, 3))
+%nested_hit: contains(sequence(2, 3), sequence(sequence(1), sequence(2, 3)))
+%string_hit: contains("::", "alpha::beta")
+%string_miss: contains("zz", "alpha::beta")
+}
+)qps";
+
+    const qps::runtime::ExecutionScope scope =
+        executeSource(source);
+
+    const auto expectBoolean =
+        [&scope](
+            const std::string& name,
+            bool expected) {
+
+            const auto& value =
+                requireBinding(
+                    scope,
+                    name).value;
+
+            require(
+                value.isBoolean(),
+                name + " should be BOOLEAN.");
+
+            require(
+                value.asBoolean(name) == expected,
+                name + " has unexpected truth value.");
+        };
+
+    expectBoolean("sequence_hit", true);
+    expectBoolean("sequence_miss", false);
+    expectBoolean("number_hit", true);
+    expectBoolean("nested_hit", true);
+    expectBoolean("string_hit", true);
+    expectBoolean("string_miss", false);
+}
+
 void ifSelectsStringEqualityBranch() {
     const std::string source = R"qps(
 {
@@ -836,9 +921,11 @@ int main() {
         {"while rebinds local Item until condition is false", whileRebindsLocalItemUntilConditionIsFalse},
         {"calculation binds Dictionary runtime value", calculationBindsDictionaryRuntimeValue},
         {"if selects numeric less-than branch", ifSelectsNumericLessThanBranch},
+        {"contains uses QPS value semantics", containsUsesQpsValueSemantics},
         {"if selects string equality branch", ifSelectsStringEqualityBranch},
         {"if selects else branch", ifSelectsElseBranch},
         {"semantic supplied and derived bindings", semanticSuppliedAndDerivedBindings},
+        {"unary -not uses RuntimeValue truthiness", unaryNotUsesRuntimeTruthiness},
         {"string Items become runtime values", stringItemsBecomeRuntimeValues},
         {"Item values compose strings and numbers", itemValuesComposeStringsAndNumbers},
         {"named host action binds process result", namedHostActionBindsProcessResult},

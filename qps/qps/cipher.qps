@@ -5,9 +5,8 @@
 cipher: -process(
 program- "python3";
 arg_0- "-m";
-arg_1- "Engineering.py.cipher.cipher";
+arg_1- "qps.cipher.cipher";
 arg_2- source;
-arg_3- "--converge";
 cwd- root;
 );
 
@@ -32,9 +31,8 @@ value- cipher_stderr;
 cipher: -process(
 program- "python3";
 arg_0- "-m";
-arg_1- "Engineering.py.cipher.cipher";
+arg_1- "qps.cipher.cipher";
 arg_2- source;
-arg_3- "--converge";
 arg_4- "--report";
 cwd- root;
 );
@@ -61,10 +59,9 @@ value- cipher_stderr;
 cipher: -process(
 program- "python3";
 arg_0- "-m";
-arg_1- "Engineering.py.cipher.cipher";
+arg_1- "qps.cipher.cipher";
 arg_2- source;
 arg_3- destination;
-arg_4- "--converge";
 cwd- root;
 );
 
@@ -90,10 +87,9 @@ value- cipher_stderr;
 cipher: -process(
 program- "python3";
 arg_0- "-m";
-arg_1- "Engineering.py.cipher.cipher";
+arg_1- "qps.cipher.cipher";
 arg_2- source;
 arg_3- destination;
-arg_4- "--converge";
 arg_5- "--report";
 cwd- root;
 );
@@ -119,7 +115,7 @@ value- cipher_stderr;
 cipher: -process(
 program- "python3";
 arg_0- "-m";
-arg_1- "Engineering.py.cipher.cipher";
+arg_1- "qps.cipher.cipher";
 arg_2- source;
 arg_3- "--closure";
 cwd- root;
@@ -146,10 +142,9 @@ value- cipher_stderr;
 cipher: -process(
 program- "python3";
 arg_0- "-m";
-arg_1- "Engineering.py.cipher.cipher";
+arg_1- "qps.cipher.cipher";
 arg_2- "test";
 arg_3- source;
-arg_4- "--converge";
 cwd- root;
 );
 
@@ -175,11 +170,10 @@ value- cipher_stderr;
 cipher: -process(
 program- "python3";
 arg_0- "-m";
-arg_1- "Engineering.py.cipher.cipher";
+arg_1- "qps.cipher.cipher";
 arg_2- "test";
 arg_3- source;
 arg_4- destination;
-arg_5- "--converge";
 cwd- root;
 );
 
@@ -245,7 +239,7 @@ source_kind- source_kind;
 adapter: -process(
 program- "python3";
 arg_0- "-m";
-arg_1- "Engineering.py.cipher.source_adapter";
+arg_1- "qps.cipher.source_adapter";
 arg_2- source;
 cwd- root;
 );

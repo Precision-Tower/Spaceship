@@ -71,6 +71,12 @@ std::unique_ptr<BinaryExpressionNode> createBinaryExpressionNode(
     std::unique_ptr<AstNode> right,
     int line, int column);
 
+std::unique_ptr<UnaryExpressionNode> createUnaryExpressionNode(
+    UnaryExpressionNode::Operator op,
+    std::unique_ptr<AstNode> operand,
+    int line,
+    int column);
+
 std::unique_ptr<CalculationNode> createCalculationNode(
     std::unique_ptr<AstNode> target,
     std::unique_ptr<AstNode> expression,

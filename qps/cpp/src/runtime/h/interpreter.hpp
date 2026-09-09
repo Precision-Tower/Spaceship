@@ -98,6 +98,11 @@ struct InterpreterOptions {
 
     std::string current_document;
 
+    // Optional owner for the parsed Program currently being executed.
+    // Local authored structural Terms use this owner when they become
+    // RuntimeValue::STRUCTURE so returned values cannot dangle.
+    std::shared_ptr<ast::ProgramNode> program_owner;
+
     // Optional bridge for evaluating reusable execution calls
     // as ordinary RuntimeValue expressions.
     std::function<
@@ -208,11 +213,22 @@ private:
         const ast::ReturnStatementNode&
             statement) const;
 
-    double invokeFunction(
+    RuntimeValue invokeFunction(
         const ast::FunctionCallNode& call) const;
 
     bool evaluateTruth(
         const ast::AstNode& node) const;
+
+    bool runtimeTruth(
+        const RuntimeValue& value) const;
+
+    bool runtimeValueEqual(
+        const RuntimeValue& left,
+        const RuntimeValue& right) const;
+
+    bool runtimeContains(
+        const RuntimeValue& value,
+        const RuntimeValue& container) const;
 
     std::string evaluateMessage(
         const ast::AstNode* node) const;

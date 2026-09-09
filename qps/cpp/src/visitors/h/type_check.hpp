@@ -48,6 +48,7 @@ public:
     void visit(ast::SymbolReferenceNode* node) override;
     void visit(ast::IdentifierNode* node) override;
     void visit(ast::BinaryExpressionNode* node) override;
+    void visit(ast::UnaryExpressionNode* node) override;
     void visit(ast::FunctionCallNode* node) override;
     void visit(ast::CalculationNode* node) override;
     void visit(ast::ExecutionBlockNode* node) override;

@@ -264,6 +264,20 @@ void PrintVisitor::visit(ast::IdentifierNode* node) {
     indent_level_--;
 }
 
+void PrintVisitor::visit(ast::UnaryExpressionNode* node) {
+    std::cout << getIndent()
+              << "UNARY_EXPRESSION (L"
+              << node->getLine()
+              << ", C"
+              << node->getColumn()
+              << ")\n";
+    indent_level_++;
+    std::cout << getIndent() << "Operator: NOT\n";
+    std::cout << getIndent() << "Operand:\n";
+    node->getOperand()->accept(*this);
+    indent_level_--;
+}
+
 void PrintVisitor::visit(ast::BinaryExpressionNode* node) {
     std::cout << getIndent() << "BINARY_EXPRESSION (L" << node->getLine() << ", C" << node->getColumn() << ")\n";
     indent_level_++;
@@ -275,6 +289,8 @@ void PrintVisitor::visit(ast::BinaryExpressionNode* node) {
         case ast::BinaryExpressionNode::Operator::DIVIDE: std::cout << "DIVIDE\n"; break;
         case ast::BinaryExpressionNode::Operator::EQUAL: std::cout << "EQUAL\n"; break;
         case ast::BinaryExpressionNode::Operator::LESS: std::cout << "LESS\n"; break;
+        case ast::BinaryExpressionNode::Operator::AND: std::cout << "AND\n"; break;
+        case ast::BinaryExpressionNode::Operator::OR: std::cout << "OR\n"; break;
     }
     std::cout << getIndent() << "Left Operand:\n";
     node->getLeft()->accept(*this);

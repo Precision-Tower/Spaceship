@@ -727,6 +727,8 @@ ExecutionInstance ExecutionEngine::instantiate(
         geometry_dispatcher;
     options.symbol_resolver =
         symbol_resolver_;
+    options.program_owner =
+        definition.program_owner;
 
     options.execution_call =
         [this, &instance](
@@ -803,6 +805,67 @@ void ExecutionEngine::registerDefinitions(
         registerDefinition(*term);
     }
 }
+
+
+void ExecutionEngine::registerDefinitions(
+    std::shared_ptr<ast::ProgramNode> program) {
+
+    if (!program) {
+        throw std::runtime_error(
+            "Execution definition registration requires an owned Program.");
+    }
+
+    registerDefinitions(*program);
+
+    for (const auto& statement : program->statements) {
+        std::string identifier;
+
+        if (const auto* definition =
+                dynamic_cast<
+                    const ast::ExecutionDefinitionNode*>(
+                        statement.get())) {
+
+            identifier = definition->identifier_;
+        }
+        else if (const auto* term =
+                     dynamic_cast<
+                         const ast::TermDeclarationNode*>(
+                             statement.get())) {
+
+            bool owns_execution_body = false;
+
+            for (const auto& child : term->content_) {
+                if (dynamic_cast<
+                        const ast::ExecutionBlockNode*>(
+                            child.get())) {
+
+                    owns_execution_body = true;
+                    break;
+                }
+            }
+
+            if (owns_execution_body) {
+                identifier = term->identifier_;
+            }
+        }
+
+        if (identifier.empty()) {
+            continue;
+        }
+
+        auto found = definitions_.find(identifier);
+
+        if (found == definitions_.end()) {
+            throw std::runtime_error(
+                "Owned Program registration lost execution definition '" +
+                identifier +
+                "'.");
+        }
+
+        found->second.program_owner = program;
+    }
+}
+
 
 std::vector<ExecutionInstance>
 ExecutionEngine::executeCalls(

@@ -179,6 +179,10 @@ public:
         if (n->getRight()) n->getRight()->accept(*this);
     }
 
+    void visit(qps::ast::UnaryExpressionNode* n) override {
+        if (n->getOperand()) n->getOperand()->accept(*this);
+    }
+
     void visit(qps::ast::FunctionCallNode* n) override {
         ++profile.function_calls;
         for (const auto& x : n->arguments_) x->accept(*this);

@@ -20,6 +20,8 @@ class ProgramNode;
 
 namespace runtime {
 
+class ExecutionScope;
+
 struct StructuralHandle {
     // Runtime structural identity is document_owner + target_node.
     // Keeps the parsed document alive for target lifetime.
@@ -27,6 +29,11 @@ struct StructuralHandle {
 
     // Non-owning structural view into document_owner.
     ast::AstNode* target_node = nullptr;
+
+    // Runtime bindings captured when an executable local Term becomes
+    // STRUCTURE. Authored Item expressions remain authored AST; this
+    // scope preserves the values those expressions referenced.
+    std::shared_ptr<ExecutionScope> captured_scope;
 };
 
 struct GeometryParameterValue {
@@ -36,8 +43,10 @@ struct GeometryParameterValue {
 };
 
 struct RuntimeDictionaryEntry;
+struct RuntimeRecordEntry;
 class RuntimeValue;
 using RuntimeSequence = std::shared_ptr<std::vector<RuntimeValue>>;
+using RuntimeRecord = std::shared_ptr<std::vector<RuntimeRecordEntry>>;
 
 struct GeometryHandle {
     std::size_t id = 0;
@@ -56,9 +65,12 @@ class RuntimeValue {
 public:
     enum class Kind {
         NUMERIC,
+        BOOLEAN,
+        NULL_VALUE,
         STRING,
         DICTIONARY,
         SEQUENCE,
+        RECORD,
         GEOMETRY,
         STRUCTURE
     };
@@ -66,24 +78,34 @@ public:
     RuntimeValue();
 
     static RuntimeValue numeric(double value);
+    static RuntimeValue boolean(bool value);
+    static RuntimeValue null();
     static RuntimeValue string(std::string value);
     static RuntimeValue dictionary(
         std::vector<RuntimeDictionaryEntry> entries);
     static RuntimeValue sequence(
         std::vector<RuntimeValue> values);
+    static RuntimeValue record(
+        std::vector<RuntimeRecordEntry> entries);
     static RuntimeValue geometry(GeometryHandle handle);
     static RuntimeValue structure(StructuralHandle structure);
 
     Kind kind() const;
 
     bool isNumeric() const;
+    bool isBoolean() const;
+    bool isNull() const;
     bool isString() const;
     bool isDictionary() const;
     bool isSequence() const;
+    bool isRecord() const;
     bool isGeometry() const;
     bool isStructure() const;
 
     double asNumber(
+        const std::string& context = "") const;
+
+    bool asBoolean(
         const std::string& context = "") const;
 
     const std::string& asString(
@@ -93,6 +115,12 @@ public:
         const std::string& context = "") const;
 
     const std::vector<RuntimeValue>& asSequence(
+        const std::string& context = "") const;
+
+    std::vector<RuntimeValue>& asMutableSequence(
+        const std::string& context = "");
+
+    const std::vector<RuntimeRecordEntry>& asRecord(
         const std::string& context = "") const;
 
     const GeometryHandle& asGeometry(
@@ -111,23 +139,34 @@ private:
     explicit RuntimeValue(
         std::variant<
             double,
+            bool,
+            std::monostate,
             std::string,
             std::vector<RuntimeDictionaryEntry>,
             RuntimeSequence,
+            RuntimeRecord,
             GeometryHandle,
             StructuralHandle> value);
 
     std::variant<
         double,
+        bool,
+        std::monostate,
         std::string,
         std::vector<RuntimeDictionaryEntry>,
         RuntimeSequence,
+        RuntimeRecord,
         GeometryHandle,
         StructuralHandle> value_;
 };
 
 struct RuntimeDictionaryEntry {
     int id = 0;
+    RuntimeValue value;
+};
+
+struct RuntimeRecordEntry {
+    std::string name;
     RuntimeValue value;
 };
 

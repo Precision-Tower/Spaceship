@@ -33,6 +33,7 @@ namespace ast {
     class SymbolReferenceNode;
     class IdentifierNode;
     class BinaryExpressionNode;
+    class UnaryExpressionNode;
     class CalculationNode;
     class ExecutionBlockNode;
     class ExecutionDefinitionNode;

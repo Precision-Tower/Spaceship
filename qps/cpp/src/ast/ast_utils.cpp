@@ -106,6 +106,19 @@ std::unique_ptr<BinaryExpressionNode> createBinaryExpressionNode(
     return std::make_unique<BinaryExpressionNode>(std::move(left), op, std::move(right), line, column);
 }
 
+std::unique_ptr<UnaryExpressionNode> createUnaryExpressionNode(
+    UnaryExpressionNode::Operator op,
+    std::unique_ptr<AstNode> operand,
+    int line,
+    int column) {
+
+    return std::make_unique<UnaryExpressionNode>(
+        op,
+        std::move(operand),
+        line,
+        column);
+}
+
 std::unique_ptr<CalculationNode> createCalculationNode(
     std::unique_ptr<AstNode> target,
     std::unique_ptr<AstNode> expression,

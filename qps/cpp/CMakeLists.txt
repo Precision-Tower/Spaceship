@@ -427,6 +427,39 @@ add_test(
 )
 
 
+
+add_executable(
+    qps_sequence_expression_test
+    tests/runtime/sequence_expression_test.cpp
+)
+
+target_link_libraries(
+    qps_sequence_expression_test
+    PRIVATE
+    qps_core
+)
+
+add_test(
+    NAME qps_sequence_expression_test
+    COMMAND qps_sequence_expression_test
+)
+
+add_executable(
+    qps_record_expression_test
+    tests/runtime/record_expression_test.cpp
+)
+target_link_libraries(
+    qps_record_expression_test
+    PRIVATE
+    qps_core
+)
+add_test(
+    NAME qps_record_expression_test
+    COMMAND qps_record_expression_test
+)
+
+
+
 add_qps_test(
     qps_cipher_association_test
     tests/runtime/cipher_association_test.cpp
@@ -450,4 +483,21 @@ add_test(
         ${CMAKE_CURRENT_SOURCE_DIR}/../qps/cipher.qps
         ${CMAKE_CURRENT_SOURCE_DIR}/../..
         ${CMAKE_CURRENT_SOURCE_DIR}/../../Engineering/py/Physics/Domains/motion.py
+)
+
+
+add_executable(
+    qps_named_argument_test
+    tests/runtime/named_argument_test.cpp
+)
+
+target_link_libraries(
+    qps_named_argument_test
+    PRIVATE
+    qps_core
+)
+
+add_test(
+    NAME qps_named_argument_test
+    COMMAND qps_named_argument_test
 )
