@@ -1,0 +1,116 @@
+#!/data/data/com.termux/files/usr/bin/python3
+from __future__ import annotations
+
+import json
+import os
+import shutil
+import struct
+import subprocess
+import sys
+from datetime import datetime
+from pathlib import Path
+
+
+def fail(message: str, code: int = 1) -> int:
+    print("SCREENSHOT=FAIL", file=sys.stderr)
+    print(f"error={message}", file=sys.stderr)
+    return code
+
+
+def png_dimensions(path: Path) -> tuple[int, int]:
+    with path.open("rb") as handle:
+        header = handle.read(24)
+    if len(header) < 24 or header[:8] != b"\x89PNG\r\n\x1a\n" or header[12:16] != b"IHDR":
+        raise ValueError("capture is not a valid PNG")
+    width, height = struct.unpack(">II", header[16:24])
+    if width <= 0 or height <= 0:
+        raise ValueError("capture has invalid dimensions")
+    return width, height
+
+
+def main(argv: list[str]) -> int:
+    if len(argv) != 0:
+        return fail("usage: qps screenshot", 2)
+
+    root = Path(os.environ.get("CEOS_ROOT", Path(__file__).resolve().parents[2])).resolve()
+    trash = root / "trash" / "tmp"
+    control = Path(os.environ.get(
+        "QPS_SCREENSHOT_CONTROL",
+        root / "Android" / "Privileged" / "bin" / "ce-os-android-shell",
+    ))
+    upload_url = os.environ.get(
+        "QPS_SCREENSHOT_UPLOAD_URL",
+        "https://tmpfiles.org/api/v1/upload",
+    )
+    curl = os.environ.get("QPS_SCREENSHOT_CURL", "curl")
+
+    trash.mkdir(parents=True, exist_ok=True)
+    stamp = datetime.now().strftime("%Y%m%d-%H%M%S-%f")
+    shot = trash / f"qps-screenshot-{stamp}.png"
+
+    try:
+        capture = subprocess.run(
+            [str(control), "operator.screenshot", str(shot)],
+            cwd=root,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+        )
+        if capture.returncode != 0:
+            detail = capture.stderr.strip() or capture.stdout.strip() or f"exit {capture.returncode}"
+            return fail(f"capture failed: {detail}")
+
+        if not shot.is_file() or shot.stat().st_size <= 0:
+            return fail("capture did not produce a non-empty PNG")
+
+        try:
+            width, height = png_dimensions(shot)
+        except ValueError as exc:
+            return fail(str(exc))
+
+        upload = subprocess.run(
+            [
+                curl,
+                "--fail",
+                "--silent",
+                "--show-error",
+                "-F",
+                f"file=@{shot}",
+                upload_url,
+            ],
+            cwd=root,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+        )
+        if upload.returncode != 0:
+            detail = upload.stderr.strip() or f"exit {upload.returncode}"
+            return fail(f"publication failed: {detail}")
+
+        try:
+            payload = json.loads(upload.stdout)
+            if payload.get("status") != "success":
+                raise ValueError("upload service did not report success")
+            url = payload["data"]["url"]
+            if not isinstance(url, str) or not url.startswith("https://"):
+                raise ValueError("upload service returned no HTTPS URL")
+            url = url.replace("https://tmpfiles.org/", "https://tmpfiles.org/dl/", 1)
+        except (json.JSONDecodeError, KeyError, TypeError, ValueError) as exc:
+            return fail(f"publication response invalid: {exc}")
+
+        print("SCREENSHOT=PASS")
+        print(f"path={shot.relative_to(root).as_posix()}")
+        print(f"url={url}")
+        print(f"width={width}")
+        print(f"height={height}")
+        print("exposure=temporary-public-https")
+        return 0
+    finally:
+        try:
+            shot.unlink(missing_ok=True)
+        except OSError:
+            pass
+
+
+if __name__ == "__main__":
+    raise SystemExit(main(sys.argv[1:]))

@@ -300,7 +300,10 @@ layout/composition strategy.
 
 Pixel screenshots may be temporarily published for visual inspection using:
 
-    UI/OperatorShell/android/tools/operator-share
+    qps screenshot
+
+`UI/OperatorShell/android/tools/operator-share` remains a compatibility wrapper
+for older callers.
 
 The helper publishes only:
 

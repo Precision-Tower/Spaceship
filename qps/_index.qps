@@ -40,6 +40,7 @@ query_qps- "qps qry <selector> [path]";
 probe_qps- "qps probe <file> <line> [radius] or qps probe <file.qps> <structural.path>";
 scope_qps- "qps scope <file.qps> <structural.path>";
 scout_qps- "qps scout <indexed-module-or-_index.qps> <authored-identity>";
+screenshot_qps- "qps screenshot captures the current Pixel display, temporarily publishes only that PNG, prints its direct HTTPS URL, and removes the repository-local transient capture";
 );
 
 source_navigation: (

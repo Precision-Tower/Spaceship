@@ -22,9 +22,12 @@ The latest temporary URL is written to:
 
     ~/ce-os/state/ui-observation/latest.url
 
-Publish with:
+Publish/capture with:
 
-    UI/OperatorShell/android/tools/operator-share
+    qps screenshot
+
+`operator-share` remains only as a compatibility surface for legacy callers
+that explicitly provide an already-existing screenshot.
 
 Only the screenshot image is uploaded.
 

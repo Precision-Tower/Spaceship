@@ -25,6 +25,20 @@ cv- "Change the value of one structurally resolved QPS Item";
 inline- "Execute transient QPS from the terminal through the canonical [< code] surface";
 qps_file- "Validate, find references to, and safely relocate QPS files through qps check, qps refs, and qps move";
 geminigo- "qps GeminiGo check, thing, work, wake, sleep, and status --json expose bounded GeminiGo operator controls through qps/bin/qps-geminigo";
+screenshot- "qps screenshot captures the current Pixel display and temporarily publishes only that PNG for multimodal inspection";
+);
+
+screenshot: (
+command- "qps screenshot";
+implementation- "qps/bin/qps-screenshot owns capture/publication orchestration; qps native CLI is only a thin dispatcher";
+capture_boundary- "Android/Privileged/bin/ce-os-android-shell operator.screenshot remains the irreducible privileged Android screencap mechanism";
+storage- "The capture is created only under repository-local trash/tmp and removed after success or failure";
+publication- "The existing tmpfiles.org API transport is reused and converted to its directly retrievable /dl/ HTTPS URL";
+output- "Success prints SCREENSHOT=PASS, repository-relative transient path, url, PNG dimensions, and exposure=temporary-public-https";
+failure- "Capture, PNG validation, upload, or publication-response failure prints SCREENSHOT=FAIL and returns nonzero";
+security- "qps screenshot is an explicit external exposure boundary: the current screen may contain secrets or private state, and invoking the command authorizes temporary publication of that screenshot image only";
+authority- "The QPS command does not publish logs, source, filesystem contents, tokens, UI hierarchy, or other CE-OS state";
+proof- "qps/bin/tests/screenshot_test.py proves direct and qps-dispatched success, valid nonzero PNG dimensions, direct HTTPS URL parsing, repository-local transient storage cleanup, failed uploader behavior, and invalid capture rejection";
 );
 
 terminal_model: (

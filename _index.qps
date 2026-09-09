@@ -39,6 +39,11 @@ save- "qps save <checklist-index> <task-number>";
 probe- "qps probe <file> <line> [radius] or qps probe <file.qps> <structural.path>";
 scope- "qps scope <file.qps> <structural.path>";
 scout- "qps scout <indexed-module-or-_index.qps> <authored-identity>";
+screenshot- "qps screenshot";
+screenshot_result- "SCREENSHOT=PASS with path, direct temporary HTTPS url, PNG width/height, and exposure=temporary-public-https";
+screenshot_storage- "Capture exists only transiently under trash/tmp and is removed after success or failure";
+screenshot_security- "Invoking qps screenshot explicitly authorizes temporary external publication of the current screen image only; screens may contain secrets or private state";
+screenshot_authority- "qps/bin/_index.qps";
 
 tool_output- "path:start-end followed by numbered source lines";
 tool_boundary- "probe, scope, and scout do not recursively wander the filesystem";

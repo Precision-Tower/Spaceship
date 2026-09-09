@@ -155,8 +155,10 @@ case "$OP" in
         case "$DEST" in
             "$ROOT/state/ui-observation/"*)
                 ;;
+            "$ROOT/trash/tmp/qps-screenshot-"*.png)
+                ;;
             *)
-                echo "ERROR: screenshot destination outside observation state:"
+                echo "ERROR: screenshot destination outside permitted screenshot state:"
                 echo "  $DEST"
                 exit 25
                 ;;

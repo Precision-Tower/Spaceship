@@ -2298,6 +2298,89 @@ int runGeminiGoCommand(
 }
 
 
+
+int runScreenshotCommand(
+    int argc,
+    char* argv[]) {
+
+#if defined(_WIN32)
+    (void)argc;
+    (void)argv;
+    std::cerr
+        << "Error: qps screenshot requires the CE-OS Pixel/Android runtime."
+        << std::endl;
+    return 1;
+#else
+    try {
+        const fs::path root =
+            findCeOsRoot(
+                fs::current_path());
+
+        const fs::path tool =
+            root / "qps" / "bin" / "qps-screenshot";
+
+        if (!fs::is_regular_file(tool)) {
+            throw std::runtime_error(
+                "QPS screenshot tool not found: " +
+                tool.generic_string());
+        }
+
+        std::vector<std::string> storage;
+        storage.emplace_back(tool.string());
+
+        for (int i = 2; i < argc; ++i) {
+            storage.emplace_back(argv[i]);
+        }
+
+        std::vector<char*> arguments;
+        arguments.reserve(storage.size() + 1);
+        for (auto& argument : storage) {
+            arguments.push_back(argument.data());
+        }
+        arguments.push_back(nullptr);
+
+        const pid_t child = fork();
+        if (child < 0) {
+            throw std::runtime_error(
+                "Unable to fork QPS screenshot tool.");
+        }
+
+        if (child == 0) {
+            if (chdir(root.c_str()) != 0) {
+                _exit(126);
+            }
+            execv(
+                tool.c_str(),
+                arguments.data());
+            _exit(127);
+        }
+
+        int status = 0;
+        if (waitpid(child, &status, 0) < 0) {
+            throw std::runtime_error(
+                "Unable to wait for QPS screenshot tool.");
+        }
+
+        if (WIFEXITED(status)) {
+            return WEXITSTATUS(status);
+        }
+
+        if (WIFSIGNALED(status)) {
+            return 128 + WTERMSIG(status);
+        }
+
+        return 1;
+    }
+    catch (const std::exception& e) {
+        std::cerr
+            << "Error: "
+            << e.what()
+            << std::endl;
+        return 1;
+    }
+#endif
+}
+
 bool isFileOperationCommand(const std::string& command) {
     return command == "check" ||
            command == "refs" ||
@@ -2791,6 +2874,10 @@ int main(int argc, char* argv[]) {
         return runGeminiGoCommand(argc, argv);
     }
 
+
+    if (argc >= 2 && std::string(argv[1]) == "screenshot") {
+        return runScreenshotCommand(argc, argv);
+    }
 
     if (argc >= 2 && isFileOperationCommand(argv[1])) {
         return runFileOperationCommand(argc, argv);
