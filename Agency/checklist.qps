@@ -6,7 +6,7 @@ tasks: (
 task_1: (
 identity- "agency.model_plan_audit";
 summary- "Prove the bounded local model-plan capability in the Agency audit";
-state- "ready";
+state- "blocked";
 
 product- "Agency has current Pixel evidence for the local model-plan command path, including valid and invalid scope behavior, model-server failure behavior, healthy generation, required plan sections, declared-scope inspection, source preservation, model invocation evidence, and active pinboard publication";
 
@@ -16,6 +16,10 @@ item_2- "Agency/audit/output/agency_state.md reports PASS 15, FAIL 0, and UNTEST
 item_3- "Agency/audit/output/agency_state.md lists local.model_plan.01 through local.model_plan.09 as UNTESTED";
 item_4- "The listed untested checks cover bounded engineering scopes, invalid scope rejection, stopped model-server failure, healthy nonempty plan generation, required plan sections, declared-scope inspection, source preservation, model invocation evidence, and active model-plan pinboard state";
 item_5- "Agency/Core/runtime/model_service.py and Agency/Core/work/planning own model invocation, planning context, and proposal generation surfaces inspected during grounding";
+item_6- "The Agency audit entrypoint is now portable on the Pixel: repository root, Python runner, and CLI registry resolve from the current checkout rather than stale /home/spaztic paths";
+item_7- "A fresh Pixel audit completed successfully with 14 PASS, 0 FAIL, 1 BLOCKED_TIMEOUT, and local.model_plan.01 through local.model_plan.09 still UNTESTED";
+item_8- "The current Pixel checkout contains neither the configured local/Qwen3-4B-Q4_K_M.gguf model nor an executable llama-server, so healthy local-model generation cannot be truthfully tested yet";
+item_9- "Task remains blocked until the Pixel receives a compatible local GGUF and llama-server runtime or an authored runtime profile points to an existing equivalent";
 );
 
 steps: (
@@ -80,7 +84,7 @@ condition_6- "Agency audit output no longer presents the model-plan capability a
 task_2: (
 identity- "agency.cli_entrypoint_authority";
 summary- "Align Agency documented terminal entrypoints with the implemented CLI spine";
-state- "ready";
+state- "complete";
 
 product- "Agency terminal operations named in Agency/_index.qps resolve to executable, tested commands in the current checkout, and future agents can run the documented help and validation commands exactly as written";
 
@@ -90,6 +94,9 @@ item_2- "Read-only discovery found no run.py under the repository root at maxdep
 item_3- "Agency/Core/interfaces/cli/dashboard_cli.py implements the current argparse command spine";
 item_4- "Agency/Core/interfaces/cli/registry/commands.yaml registers command authority for scan-repo, git-status, propose-diff, gemini-analyze, gemini-list-models, apply-code, refs, tree, and related commands";
 item_5- "Agency/unittest.py remains the documented validation command in Agency/_index.qps";
+item_6- "A thin root run.py compatibility router now restores the documented Agency command surface while delegating semantics to current Agency/Core owners";
+item_7- "Documented help commands agent, Editor, task, work-packet, and mission execute successfully from the repository root";
+item_8- "Targeted architecture, mission routing, WorkPacket routing, Agent factory routing, and Mission factory compatibility tests pass against the restored entrypoint";
 );
 
 steps: (
@@ -203,6 +210,88 @@ condition_5- "Review and explicit approval remain separate from proposal generat
 condition_6- "Agency audit evidence distinguishes model-backed proposal success from deterministic placeholder behavior";
 );
 );
+
+
+task_4: (
+identity- "agency.geminigo_daily_agency";
+summary- "Release GeminiGo primary and reserve workers onto bounded Agency improvement";
+state- "ready";
+
+product- "GeminiGo wakes daily, selects authored actionable work only inside Agency, advances it through existing Agency authority, evaluates the local Agency model when available, records reconstructable evidence, performs one final audit after completed work, and sleeps without consuming reserve capacity unless the primary provider hits quota or availability failure";
+
+current: (
+item_1- "Agency/GeminiGo exists with bootstrap, provider, credentials, continuity state, supervisor, daemon, worker, and tests";
+item_2- "The Android Termux ce-os-geminigo service is installed and has been observed running as a zero-API scheduler";
+item_3- "Agency/checklist.qps already owns bounded Agency work and remains the work-selection authority";
+item_4- "GeminiGo now selects authored eligible Agency work, creates a bounded read-only Core WorkPacket, dispatches it through Editor authority, and supplies Core evidence to the Gemini worker";
+item_5- "Primary and reserve credentials are separate provider capacity slots; tests prove reserve starts a fresh Interaction with a compact CE-OS checkpoint only for quota or provider availability failure";
+);
+
+steps: (
+
+step_1: (
+goal- "Make GeminiGo select the next ready or resumable authored task from Agency/checklist.qps without recursively auditing or mutating outside Agency";
+product- "Daily work begins from Agency authority rather than a free-running model prompt";
+state- "complete";
+);
+
+step_2: (
+goal- "Dispatch the selected bounded Agency assignment through GeminiGo while preserving Core Mission, WorkPacket, mutation, verification, and acceptance authority";
+product- "Thing 1 can reason continuously about Agency work but cannot bypass CE-OS work-control gates";
+state- "complete";
+);
+
+step_3: (
+goal- "Treat the reserve credential as Thing 2 and activate it only after primary quota exhaustion or meaningful provider availability failure, carrying forward a compact CE-OS checkpoint into a fresh Interaction";
+product- "Thing 2 continues unfinished Agency work without duplicating the primary audit or consuming capacity merely because it exists";
+state- "complete";
+);
+
+step_4: (
+goal- "Add anti-loop state and compact Agency-scoped repository fingerprints so unchanged clean state, repeated actions, repeated unresolved decisions, and absent eligible work terminate API activity";
+product- "GeminiGo cannot burn daily requests by talking to itself or reacting to unrelated Cipher worktree churn";
+state- "complete";
+);
+
+step_5: (
+goal- "Add a bounded local-model conversation evaluation capability under Agency so GeminiGo can ask the resident model realistic CE-OS questions and preserve prompts, responses, latency, capability use, failures, and evaluator findings as training evidence";
+product- "Gemini can directly observe what the local model understands and identify whether failures belong to model behavior, context, memory, routing, capability descriptions, or runtime";
+state- "complete";
+);
+
+step_6: (
+goal- "After assigned Agency work is complete, perform exactly one fresh Agency audit against the resulting repository fingerprint and stop CLEAN when no new actionable work is found";
+product- "Daily Agency improvement converges to sleep instead of generating endless self-assigned work";
+state- "complete";
+);
+
+);
+
+rules: (
+rule_1- "Scope is Agency unless an authored Agency task explicitly names a required dependency outside Agency";
+rule_2- "Do not touch active Cipher work while this task is assigned";
+rule_3- "Do not stage, commit, merge, save, reset, or clean";
+rule_4- "Gemini output is evidence and proposed reasoning, never repository truth or mutation authority";
+rule_5- "Primary returning CLEAN, COMPLETE, BLOCKED, or STALLED never activates reserve";
+rule_6- "Reserve activates only for quota exhaustion or meaningful provider availability failure";
+rule_7- "Local-model conversations are evaluation and training evidence; they do not silently establish architectural truth";
+rule_8- "Future Cipher conversion of Agency is a separate operator-triggered phase after Cipher is ready";
+);
+
+next- "Sleep until the next Pacific quota day or new eligible Agency work";
+
+done_when: (
+condition_1- "A daily wake selects authored Agency work and dispatches a bounded Gemini worker without operator prompting";
+condition_2- "Thing 1 advances eligible Agency work through existing Core authority and persists compact reconstructable continuity";
+condition_3- "Thing 2 is proven to continue only after simulated or observed primary quota/provider-capacity failure";
+condition_4- "Unrelated repository churn does not wake or redirect GeminiGo";
+condition_5- "Repeated/no-progress behavior deterministically stops API consumption";
+condition_6- "GeminiGo can converse with and evaluate the selected local Agency model through a bounded evidence-producing harness";
+condition_7- "A clean final Agency audit causes GeminiGo to sleep until the next Pacific quota day or new eligible Agency work";
+);
+);
+
+
 
 );
 );

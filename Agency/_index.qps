@@ -8,6 +8,7 @@ Agency transforms authorized intent into bounded, reconstructable work.
 surface: (
 Agents- "Agency/Agents";
 Core- "Agency/Core/_index.qps";
+GeminiGo- "Agency/GeminiGo/_index.qps";
 Datasets- "Agency/Datasets";
 Documentation- "Agency/Documentation";
 Archive- "Agency/Archive";

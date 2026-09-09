@@ -260,4 +260,54 @@ item_3- "Structured keyword-constructor returns, keyword arguments, dataclass lo
 source_checklist- "qps/qps/checklist.qps";
 backing_state- "";
 );
+h_20260909_002542_432: (
+timestamp- "2026-09-09T00:25:42Z";
+identity- "agency.geminigo_operator_status";
+summary- "Expose secret-free GeminiGo Thing 1 and Thing 2 provider health and bounded operator controls through qps";
+meaning- "CE-OS now exposes GeminiGo as an evidence-backed operator surface: Thing 1 primary and Thing 2 reserve health, service and worker state, current authored assignment and WorkPacket, machine-readable status, and bounded wake/sleep controls are visible through qps without exposing credentials or changing Agency Core work, mutation, verification, or acceptance authority";
+
+scope: (
+path_1- "Agency/GeminiGo";
+path_2- "Agency/_index.qps";
+path_3- "Agency/checklist.qps";
+path_4- "qps/bin";
+path_5- "qps/cpp/src/main.cpp";
+path_6- "qps/cpp/CMakeLists.txt";
+path_7- ".gitignore";
+);
+proof: (
+geminigo_tests- "PASS 18";
+qps_geminigo_cli- "PASS";
+ctest_qps_geminigo_cli- "PASS";
+qps_check_agency_index- "PASS";
+qps_check_geminigo_index- "PASS";
+qps_check_agency_checklist- "PASS";
+qps_check_bin_index- "PASS";
+live_primary_provider- "AVAILABLE";
+live_reserve_provider- "UNKNOWN_UNATTEMPTED";
+secret_exclusion- "PASS";
+diff_check- "PASS";
+);
+relevant: (
+path_1- "Agency/GeminiGo/status.py";
+path_2- "Agency/GeminiGo/provider.py";
+path_3- "Agency/GeminiGo/supervisor.py";
+path_4- "Agency/GeminiGo/worker.py";
+path_5- "Agency/GeminiGo/_index.qps";
+path_6- "Agency/GeminiGo/tests/test_geminigo.py";
+path_7- "qps/bin/qps-geminigo";
+path_8- "qps/bin/_index.qps";
+path_9- "qps/cpp/src/main.cpp";
+path_10- "qps/cpp/tests/runtime/geminigo_cli_test.py";
+path_11- ".gitignore";
+);
+remaining: (
+item_1- "Thing 2 remains UNKNOWN until a real or bounded simulated primary quota/provider-capacity failure produces reserve provider_attempt evidence";
+item_2- "OperatorShell and Workbench may later project qps GeminiGo status --json without redefining provider-health semantics";
+item_3- "The separate agency.geminigo_daily_agency task remains live authority for daily scheduling and Agency improvement behavior";
+);
+source_checklist- "Agency/checklist.qps";
+backing_state- "";
+);
+
 );

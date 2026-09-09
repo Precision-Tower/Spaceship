@@ -2222,6 +2222,174 @@ int runProbeCommand(
     }
 }
 
+
+int runGeminiGoCommand(
+    int argc,
+    char* argv[]) {
+
+#if defined(_WIN32)
+    (void)argc;
+    (void)argv;
+    std::cerr
+        << "Error: GeminiGo operator controls require POSIX exec support."
+        << std::endl;
+    return 1;
+#else
+    try {
+        const fs::path root =
+            findCeOsRoot(
+                fs::current_path());
+
+        const fs::path tool =
+            root / "qps" / "bin" / "qps-geminigo";
+
+        if (!fs::is_regular_file(tool)) {
+            throw std::runtime_error(
+                "GeminiGo operator tool not found: " +
+                tool.generic_string());
+        }
+
+        std::vector<std::string> storage;
+        storage.reserve(static_cast<std::size_t>(argc));
+        storage.push_back(tool.string());
+
+        for (int i = 2; i < argc; ++i) {
+            storage.emplace_back(argv[i]);
+        }
+
+        std::vector<char*> child_argv;
+        child_argv.reserve(storage.size() + 1);
+        for (auto& value : storage) {
+            child_argv.push_back(value.data());
+        }
+        child_argv.push_back(nullptr);
+
+        const pid_t child = fork();
+        if (child < 0) {
+            throw std::runtime_error(
+                "Unable to fork GeminiGo operator tool.");
+        }
+
+        if (child == 0) {
+            if (chdir(root.c_str()) != 0) {
+                _exit(126);
+            }
+            execv(
+                tool.c_str(),
+                child_argv.data());
+            _exit(127);
+        }
+
+        int status = 0;
+        if (waitpid(child, &status, 0) < 0) {
+            throw std::runtime_error(
+                "Unable to wait for GeminiGo operator tool.");
+        }
+
+        if (WIFEXITED(status)) {
+            return WEXITSTATUS(status);
+        }
+        return 1;
+    } catch (const std::exception& e) {
+        std::cerr << "Error: " << e.what() << std::endl;
+        return 1;
+    }
+#endif
+}
+
+
+bool isFileOperationCommand(const std::string& command) {
+    return command == "check" ||
+           command == "refs" ||
+           command == "move";
+}
+
+int runFileOperationCommand(
+    int argc,
+    char* argv[]) {
+
+#if defined(_WIN32)
+    (void)argc;
+    (void)argv;
+    std::cerr
+        << "Error: qps file operations require POSIX exec support."
+        << std::endl;
+    return 1;
+#else
+    try {
+        const fs::path root =
+            findCeOsRoot(
+                fs::current_path());
+
+        const fs::path tool =
+            root / "qps" / "bin" / "qps-file";
+
+        if (!fs::is_regular_file(tool)) {
+            throw std::runtime_error(
+                "QPS file operation tool not found: " +
+                tool.generic_string());
+        }
+
+        std::vector<std::string> storage;
+        storage.emplace_back(tool.string());
+
+        for (int i = 1; i < argc; ++i) {
+            storage.emplace_back(argv[i]);
+        }
+
+        std::vector<char*> arguments;
+        arguments.reserve(storage.size() + 1);
+
+        for (auto& argument : storage) {
+            arguments.push_back(argument.data());
+        }
+
+        arguments.push_back(nullptr);
+
+        const pid_t child = fork();
+        if (child < 0) {
+            throw std::runtime_error(
+                "Unable to fork qps file operation tool.");
+        }
+
+        if (child == 0) {
+            execv(
+                tool.c_str(),
+                arguments.data());
+            _exit(127);
+        }
+
+        int status = 0;
+        if (waitpid(child, &status, 0) < 0) {
+            throw std::runtime_error(
+                "Unable to wait for qps file operation tool.");
+        }
+
+        if (WIFEXITED(status)) {
+            return WEXITSTATUS(status);
+        }
+
+        if (WIFSIGNALED(status)) {
+            const int signal = WTERMSIG(status);
+            std::cerr
+                << "Error: qps file operation terminated by signal "
+                << signal
+                << std::endl;
+            return 128 + signal;
+        }
+
+        return 1;
+    }
+    catch (const std::exception& e) {
+        std::cerr
+            << "Error: "
+            << e.what()
+            << std::endl;
+        return 1;
+    }
+#endif
+}
+
 int runDirectoryCommand(
     int argc,
     char* argv[]) {
@@ -2614,6 +2782,18 @@ int main(int argc, char* argv[]) {
 
     if (argc >= 2 && std::string(argv[1]) == "save") {
         return runSaveCommand(argc, argv);
+    }
+
+    if (
+        argc >= 2 &&
+        (std::string(argv[1]) == "GeminiGo" ||
+         std::string(argv[1]) == "geminigo")) {
+        return runGeminiGoCommand(argc, argv);
+    }
+
+
+    if (argc >= 2 && isFileOperationCommand(argv[1])) {
+        return runFileOperationCommand(argc, argv);
     }
 
     if (argc < 2) {

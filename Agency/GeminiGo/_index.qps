@@ -1,0 +1,71 @@
+GeminiGo.
+
+purpose: def"
+GeminiGo is the CE-OS online Gemini worker adapter.
+It supplies Gemini reasoning with reconstructable working context while Agency Core retains work, repository mutation, verification, and acceptance authority.
+";
+
+surface: (
+bootstrap- "Agency/GeminiGo/bootstrap.py";
+provider- "Agency/GeminiGo/provider.py";
+credentials- "Agency/GeminiGo/credentials.py";
+credential_config- "Agency/GeminiGo/config/credentials.json";
+state- "Agency/GeminiGo/state.py";
+status- "Agency/GeminiGo/status.py";
+supervisor- "Agency/GeminiGo/supervisor.py";
+daemon- "Agency/GeminiGo/daemon.py";
+worker- "Agency/GeminiGo/worker.py";
+dispatch- "Agency/GeminiGo/dispatch.py";
+local_eval- "Agency/GeminiGo/local_eval.py";
+tests- "Agency/GeminiGo/tests";
+);
+
+authority: (
+Core- "Agency/Core remains authoritative for Mission, WorkPacket, EditorTask, PatchAuthorization, repository mutation, verification, and acceptance";
+provider- "Gemini output is model draft evidence and never repository truth";
+state- "GeminiGo persists provider-session continuity only and references existing Core work identities rather than duplicating Mission or WorkPacket state";
+mutation- "GeminiGo does not directly mutate CE-OS source";
+bootstrap- "Each worker turn reconstructs its prompt from the bootstrap contract, persisted continuity, current operator request, and supplied bounded evidence";
+);
+
+workflow: (
+start- "bootstrap -> load continuity -> construct bounded prompt -> Gemini provider";
+continue- "provider response -> append continuity event -> next invocation reconstructs working context";
+action- "Any proposed repository action must enter existing Agency Core work authority";
+completion- "GeminiGo may report a candidate completion claim; Core evidence and verification decide completion";
+);
+
+operator_status: (
+check- "qps GeminiGo check reports service, authored assignment, worker state, current WorkPacket, and separate Thing 1 primary and Thing 2 reserve provider health";
+thing- "qps GeminiGo thing 1 and qps GeminiGo thing 2 expose one credential slot through secret-free provider evidence";
+work- "qps GeminiGo work reports current authored assignment and worker continuity without granting mutation authority";
+json- "qps GeminiGo status --json exposes the same operator truth as machine-readable evidence";
+wake- "qps GeminiGo wake performs one bounded scheduler cycle after clearing only GeminiGo anti-loop stop continuity";
+sleep- "qps GeminiGo sleep suppresses provider activity while leaving the persistent service installed";
+provider_evidence- "Every instrumented provider attempt records credential slot, outcome, failure class, interaction identity, and retry evidence without recording credential material";
+unknown- "A configured slot with no instrumented provider attempt remains UNKNOWN rather than inferring health from credential presence";
+reserve- "Thing 2 remains unused until Thing 1 produces quota or meaningful provider-availability failure";
+);
+
+rules: (
+bounded_context- "Do not ingest the repository recursively; supply the narrowest evidence required by the assigned work";
+no_duplicate_mission_runtime- "Do not implement a second Mission or WorkPacket engine";
+no_direct_mutation- "Provider responses do not directly write repository source";
+no_acceptance- "GeminiGo cannot stage commit merge save or establish acceptance";
+persistent_memory- "CE-OS persists compact recovery state while the active Gemini Interaction owns disposable conversational continuity";
+portable_credentials- "GeminiGo credentials may travel with CE-OS in Agency/GeminiGo/config/credentials.json; credentials are never emitted into status, journal, prompts, or provider evidence";
+idle_api- "The persistent Android Termux service is a zero-API scheduler; model requests occur only when bounded worker work is dispatched";
+);
+
+kernel_lane: (
+authorization- "Operator explicitly assigned GeminiGo to continue qps kernel.driver_discovery while Gear works Cipher";
+task- "kernel.driver_discovery";
+scope- "qps/checklist.qps, qps/_index.qps, and qps/kernel only";
+exclude- "qps/cipher and parser/runtime language semantics";
+priority_1- "resource state first through a read-only battery, power, and thermal service contract";
+priority_2- "Mali/GPU after resource-state evidence";
+priority_3- "EdgeTPU after Mali/GPU evidence";
+progression- "identify -> map interface/ABI -> observe -> safe control -> benchmark -> optimize -> QPS capability";
+discovery_boundary- "GeminiGo remains read-only draft reasoning: no direct repository mutation, hardware mutation, allocation, rendering, inference, streaming, blind ioctl, or speculative Binder transaction";
+authority_boundary- "Agency Core still owns WorkPacket, EditorTask, repository mutation, verification, and acceptance";
+);

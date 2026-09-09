@@ -48,6 +48,10 @@ local.properties
 *.pem
 *.token
 
+# GeminiGo local provider credentials / scratch
+Agency/GeminiGo/config/credentials.json
+Agency/GeminiGo/tests/*.tmp
+
 # Models / large runtime assets
 *.gguf
 *.ggml

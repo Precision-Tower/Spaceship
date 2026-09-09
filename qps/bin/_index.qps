@@ -22,6 +22,9 @@ probe- "Inspect exact physical or structural QPS evidence";
 scope- "Inspect structural ownership and neighborhood";
 scout- "Discover authored identities across the permitted current-source corpus";
 cv- "Change the value of one structurally resolved QPS Item";
+inline- "Execute transient QPS from the terminal through the canonical [< code] surface";
+qps_file- "Validate, find references to, and safely relocate QPS files through qps check, qps refs, and qps move";
+geminigo- "qps GeminiGo check, thing, work, wake, sleep, and status --json expose bounded GeminiGo operator controls through qps/bin/qps-geminigo";
 );
 
 terminal_model: (
