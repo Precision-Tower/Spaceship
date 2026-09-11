@@ -240,10 +240,10 @@ func _ready() -> void:
 	).new(self)
 	add_child(operator_control_server)
 
-        # Chrome bridge: syncs an external X11 Chrome window to the workspace
-        chrome_bridge = ChromeBridge.new(self)
-        add_child(chrome_bridge)
-        chrome_bridge.setup(workspace_control)
+	# Chrome bridge: syncs an external X11 Chrome window to the workspace
+	chrome_bridge = ChromeBridge.new(self)
+	add_child(chrome_bridge)
+	chrome_bridge.setup(workspace_control)
 
 
 	audit_controller = OperatorAuditController.new()
