@@ -72,9 +72,6 @@ var mobile_editor_dirty := false
 var mobile_editor_loading := false
 var operator_control_server
 var chrome_bridge
-var surface_canvas
-var left_split: HSplitContainer
-var center_right_split: HSplitContainer
 var mobile_fs_request: HTTPRequest
 var mobile_fs_request_kind := ""
 var mobile_fs_request_parent: TreeItem
@@ -173,16 +170,14 @@ func _toggle_terminal_dock() -> void:
 	terminal_collapsed = !terminal_collapsed
 
 	if bottom_shell:
-		bottom_shell.custom_minimum_size = Vector2(0, 60)
-
-	if main_v_split:
-		var total_h: int = int(main_v_split.size.y)
-		var bottom_h: int = 42 if terminal_collapsed else int(config.bottom_height_expanded)
-		main_v_split.split_offset = total_h - bottom_h
-
-	if terminal_toggle_button:
-		terminal_toggle_button.text = "?" if terminal_collapsed else "?"
-
+		if terminal_collapsed:
+			bottom_shell.custom_minimum_size = Vector2(0, 42)
+			if terminal_toggle_button:
+				terminal_toggle_button.text = "▲"
+		else:
+			bottom_shell.custom_minimum_size = Vector2(0, config.bottom_height_expanded)
+			if terminal_toggle_button:
+				terminal_toggle_button.text = "▼"
 
 func _cycle_terminal_density() -> void:
 	var current := config.terminal_density
@@ -248,7 +243,7 @@ func _ready() -> void:
 	# Chrome bridge: syncs an external X11 Chrome window to the workspace
 	chrome_bridge = ChromeBridge.new(self)
 	add_child(chrome_bridge)
-	chrome_bridge.setup(surface_canvas if surface_canvas else workspace_control)
+	chrome_bridge.setup(workspace_control)
 
 
 	audit_controller = OperatorAuditController.new()
@@ -359,17 +354,21 @@ func _build() -> void:
 	desktop_root.add_theme_constant_override("separation", 0)
 	add_child(desktop_root)
 
-	left_split = HSplitContainer.new()
+	var left_split := HSplitContainer.new()
 	left_split.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	left_split.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	left_split.drag_area_margin_begin = 8
+	left_split.drag_area_margin_end = 8
 	desktop_root.add_child(left_split)
 
 	left_dock_shell = _build_left_dock_shell()
 	left_split.add_child(left_dock_shell)
 
-	center_right_split = HSplitContainer.new()
+	var center_right_split := HSplitContainer.new()
 	center_right_split.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	center_right_split.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	center_right_split.drag_area_margin_begin = 8
+	center_right_split.drag_area_margin_end = 8
 	left_split.add_child(center_right_split)
 
 	center_vbox = VBoxContainer.new()
@@ -384,6 +383,8 @@ func _build() -> void:
 	main_v_split = VSplitContainer.new()
 	main_v_split.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	main_v_split.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	main_v_split.drag_area_margin_begin = 8
+	main_v_split.drag_area_margin_end = 8
 	center_vbox.add_child(main_v_split)
 
 	var workspace_host := HBoxContainer.new()
@@ -397,6 +398,10 @@ func _build() -> void:
 
 	right_dock_shell = _build_right_dock_shell()
 	center_right_split.add_child(right_dock_shell)
+
+	left_split.split_offset = 320
+	center_right_split.split_offset = 1920 - 340 - 320 - 16
+	main_v_split.split_offset = 800
 
 
 func _mobile_nav_button(label: String, surface: int) -> Button:
@@ -908,10 +913,10 @@ func _toggle_left_dock() -> void:
 		left_reveal_button.visible = not left_dock_open
 
 	if left_dock_shell:
-		left_dock_shell.custom_minimum_size = Vector2(80, 0)
-
-	if left_split:
-		left_split.split_offset = 320 if left_dock_open else 0
+		left_dock_shell.custom_minimum_size = Vector2(
+			320 if left_dock_open else 28,
+			0
+		)
 
 
 func _toggle_right_dock() -> void:
@@ -924,12 +929,10 @@ func _toggle_right_dock() -> void:
 		right_reveal_button.visible = not right_dock_open
 
 	if right_dock_shell:
-		right_dock_shell.custom_minimum_size = Vector2(80, 0)
-
-	if center_right_split:
-		var total_w: int = int(center_right_split.size.x)
-		var right_w: int = 340 if right_dock_open else 0
-		center_right_split.split_offset = total_w - right_w
+		right_dock_shell.custom_minimum_size = Vector2(
+			320 if right_dock_open else 28,
+			0
+		)
 
 
 func _top_bar() -> Control:
@@ -1091,9 +1094,6 @@ func _workspace() -> Control:
 	workspace_tabs = workspace_surface.workspace_tabs
 	return workspace_control
 
-func _open_workbench(observed := true) -> void:
-	workspace_surface.open_workbench("Workbench")
-
 func _new_chat(observed := true) -> void:
 	workspace_surface.new_chat(observed)
 
@@ -1148,7 +1148,6 @@ func _seed() -> void:
 	_apply_config()
 	_set_status_value("current_root", CliBridge.core_root())
 	_set_status_value("dashboard_boot", "rendered")
-	_open_workbench(false)
 	_new_chat(false)
 	_open_screen("Home", false)
 	_log("Phase 4.5 loaded. Operator-triggered state refresh only.")

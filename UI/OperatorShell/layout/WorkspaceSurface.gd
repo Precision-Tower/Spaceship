@@ -91,6 +91,14 @@ func open_screen(name: String, observed := true) -> void:
 	card.add_child(text)
 	add_or_focus_tab(name, box)
 
+func open_workbench(name: String = "Workbench") -> void:
+	host.active_surface = name
+	host._render_current_status()
+	var surface: Control = load("res://runtime/SurfaceCanvas.gd").new()
+	surface.name = name
+	add_or_focus_tab(name, surface)
+	host.surface_canvas = surface
+
 func add_or_focus_tab(name: String, node: Control) -> void:
 	for i in workspace_tabs.get_tab_count():
 		if workspace_tabs.get_tab_title(i) == name:
