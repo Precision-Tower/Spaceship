@@ -354,43 +354,31 @@ func _build() -> void:
 	desktop_root.add_theme_constant_override("separation", 0)
 	add_child(desktop_root)
 
-	# Split 1: left rail <-> everything else
-	var outer_h_split := HSplitContainer.new()
-	outer_h_split.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	outer_h_split.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	outer_h_split.split_offset = 320
-	outer_h_split.drag_area_margin_begin = 6
-	outer_h_split.drag_area_margin_end = 6
-	desktop_root.add_child(outer_h_split)
+	var left_split := HSplitContainer.new()
+	left_split.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	left_split.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	desktop_root.add_child(left_split)
 
 	left_dock_shell = _build_left_dock_shell()
-	outer_h_split.add_child(left_dock_shell)
+	left_split.add_child(left_dock_shell)
 
-	# Split 2: center <-> right rail
-	var inner_h_split := HSplitContainer.new()
-	inner_h_split.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	inner_h_split.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	inner_h_split.split_offset = 1260
-	inner_h_split.drag_area_margin_begin = 6
-	inner_h_split.drag_area_margin_end = 6
-	outer_h_split.add_child(inner_h_split)
+	var center_right_split := HSplitContainer.new()
+	center_right_split.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	center_right_split.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	left_split.add_child(center_right_split)
 
 	center_vbox = VBoxContainer.new()
 	center_vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	center_vbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	center_vbox.add_theme_constant_override("separation", 8)
-	inner_h_split.add_child(center_vbox)
+	center_right_split.add_child(center_vbox)
 
 	center_vbox.add_child(_top_bar())
 	center_vbox.add_child(_runtime_state_bar())
 
-	# Split 3: workspace <-> bottom dock
 	main_v_split = VSplitContainer.new()
 	main_v_split.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	main_v_split.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	main_v_split.split_offset = 800
-	main_v_split.drag_area_margin_begin = 6
-	main_v_split.drag_area_margin_end = 6
 	center_vbox.add_child(main_v_split)
 
 	var workspace_host := HBoxContainer.new()
@@ -403,7 +391,9 @@ func _build() -> void:
 	main_v_split.add_child(_bottom())
 
 	right_dock_shell = _build_right_dock_shell()
-	inner_h_split.add_child(right_dock_shell)
+	center_right_split.add_child(right_dock_shell)
+
+
 func _mobile_nav_button(label: String, surface: int) -> Button:
 	var button := Button.new()
 	button.text = label
