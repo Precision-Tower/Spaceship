@@ -14,6 +14,7 @@ const LeftPanel = preload("res://layout/LeftPanel.gd")
 const TopBars = preload("res://layout/TopBars.gd")
 const DashboardConfig = preload("res://resources/DashboardConfig.gd")
 const QPSConfig = preload("res://runtime/QPSConfig.gd")
+const ChromeBridge = preload("res://runtime/ChromeBridge.gd")
 
 signal request_assist_wake
 
@@ -70,6 +71,7 @@ var mobile_editor_file_path := "scratch://welcome.gd"
 var mobile_editor_dirty := false
 var mobile_editor_loading := false
 var operator_control_server
+var chrome_bridge
 var mobile_fs_request: HTTPRequest
 var mobile_fs_request_kind := ""
 var mobile_fs_request_parent: TreeItem
@@ -237,6 +239,12 @@ func _ready() -> void:
 		"res://runtime/OperatorControlServer.gd"
 	).new(self)
 	add_child(operator_control_server)
+
+        # Chrome bridge: syncs an external X11 Chrome window to the workspace
+        chrome_bridge = ChromeBridge.new(self)
+        add_child(chrome_bridge)
+        chrome_bridge.setup(workspace_control)
+
 
 	audit_controller = OperatorAuditController.new()
 	add_child(audit_controller)
