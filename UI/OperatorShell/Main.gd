@@ -977,25 +977,54 @@ func _build_right_dock_shell() -> VBoxContainer:
 
 
 func _toggle_left_dock() -> void:
-	print("[Toggle] left called, left_split=", left_split)
+	print("[Toggle] left, open=", left_dock_open, " split=", left_split)
 	if left_split == null:
 		return
-	if left_split.split_offset > 30:
+	left_dock_open = not left_dock_open
+	if left_dock_shell:
+		left_dock_shell.visible = left_dock_open
+	if left_split:
+		left_split.split_offset = 320 if left_dock_open else 0
+	call_deferred("_dump_panel_state")
+
+func _on_left_drag_ended() -> void:
+	if left_split == null or left_dock_shell == null:
+		return
+	var offset: int = left_split.split_offset
+	if offset < 60 and left_dock_open:
+		left_dock_open = false
+		left_dock_shell.visible = false
 		left_split.split_offset = 0
-	else:
-		left_split.split_offset = 320
+	elif offset >= 60 and not left_dock_open:
+		left_dock_open = true
+		left_dock_shell.visible = true
 
 
 func _toggle_right_dock() -> void:
-	print("[Toggle] right called, center_right_split=", center_right_split)
+	print("[Toggle] right, open=", right_dock_open, " split=", center_right_split)
 	if center_right_split == null:
 		return
+	right_dock_open = not right_dock_open
+	if right_dock_shell:
+		right_dock_shell.visible = right_dock_open
+	if center_right_split:
+		var total_w: int = int(center_right_split.size.x)
+		center_right_split.split_offset = (total_w - 340) if right_dock_open else total_w
+	call_deferred("_dump_panel_state")
+
+func _on_right_drag_ended() -> void:
+	if center_right_split == null or right_dock_shell == null:
+		return
 	var total_w: int = int(center_right_split.size.x)
-	var panel_w: int = total_w - center_right_split.split_offset
-	if panel_w > 30:
+	var offset: int = center_right_split.split_offset
+	var panel_w: int = total_w - offset
+	if panel_w < 60 and right_dock_open:
+		right_dock_open = false
+		right_dock_shell.visible = false
 		center_right_split.split_offset = total_w
-	else:
-		center_right_split.split_offset = total_w - 340
+	elif panel_w >= 60 and not right_dock_open:
+		right_dock_open = true
+		right_dock_shell.visible = true
 
 
 func _top_bar() -> Control:
@@ -1154,6 +1183,8 @@ func _right_control_rail() -> Control:
 func _workspace() -> Control:
 	workspace_surface = WorkspaceSurface.new(self)
 	workspace_control = workspace_surface.build()
+	workspace_control.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	workspace_control.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	workspace_tabs = workspace_surface.workspace_tabs
 	return workspace_control
 

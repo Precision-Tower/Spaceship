@@ -11,10 +11,12 @@ func _init(owner) -> void:
 
 func build() -> Control:
 	var shell := PanelContainer.new()
-	shell.size_flags_vertical = Control.SIZE_FILL
+	shell.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	shell.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	shell.custom_minimum_size = Vector2(0, 0)
 	host._panel(shell, Palette.PLUM_PANEL, Palette.GOLD_DARK, 1, 18)
 	workspace_tabs = TabContainer.new()
+	workspace_tabs.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	workspace_tabs.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	shell.add_child(workspace_tabs)
 	return shell
@@ -94,9 +96,14 @@ func open_screen(name: String, observed := true) -> void:
 func open_workbench(name: String = "Workbench") -> void:
 	host.active_surface = name
 	host._render_current_status()
+	var box := VBoxContainer.new()
+	box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	box.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	var surface: Control = load("res://runtime/SurfaceCanvas.gd").new()
-	surface.name = name
-	add_or_focus_tab(name, surface)
+	surface.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	surface.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	box.add_child(surface)
+	add_or_focus_tab(name, box)
 	host.surface_canvas = surface
 
 func add_or_focus_tab(name: String, node: Control) -> void:
