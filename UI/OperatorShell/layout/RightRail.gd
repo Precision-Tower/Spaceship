@@ -24,7 +24,7 @@ func _init(owner) -> void:
 
 func build() -> Control:
 	var shell := PanelContainer.new()
-	shell.custom_minimum_size = Vector2(80, 0)
+	shell.custom_minimum_size = Vector2(0, 0)
 	host._panel(shell, Palette.PLUM_DEEP, Palette.GOLD_DARK, 1, 16)
 
 	var box := VBoxContainer.new()

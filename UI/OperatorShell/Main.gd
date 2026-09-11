@@ -73,6 +73,8 @@ var mobile_editor_loading := false
 var operator_control_server
 var chrome_bridge
 var surface_canvas
+var left_scroll_strip: Control
+var right_scroll_strip: Control
 var left_split: HSplitContainer
 var center_right_split: HSplitContainer
 var mobile_fs_request: HTTPRequest
@@ -359,12 +361,16 @@ func _build() -> void:
 	desktop_root.add_theme_constant_override("separation", 0)
 	add_child(desktop_root)
 
+	left_scroll_strip = _build_left_scroll_strip()
+	desktop_root.add_child(left_scroll_strip)
+
 	left_split = HSplitContainer.new()
 	left_split.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	left_split.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	desktop_root.add_child(left_split)
 
 	left_dock_shell = _build_left_dock_shell()
+	left_dock_shell.custom_minimum_size = Vector2(0, 0)
 	left_split.add_child(left_dock_shell)
 
 	center_right_split = HSplitContainer.new()
@@ -392,11 +398,61 @@ func _build() -> void:
 	workspace_host.add_theme_constant_override("separation", 0)
 	workspace_host.add_child(_workspace())
 	main_v_split.add_child(workspace_host)
-
 	main_v_split.add_child(_bottom())
 
 	right_dock_shell = _build_right_dock_shell()
+	right_dock_shell.custom_minimum_size = Vector2(0, 0)
 	center_right_split.add_child(right_dock_shell)
+
+	right_scroll_strip = _build_right_scroll_strip()
+	desktop_root.add_child(right_scroll_strip)
+
+	call_deferred("_apply_initial_splits")
+
+func _apply_initial_splits() -> void:
+	if left_split:
+		left_split.split_offset = 320
+	if center_right_split:
+		var w: int = int(center_right_split.size.x)
+		center_right_split.split_offset = w - 340
+
+func _build_left_scroll_strip() -> Control:
+	var rail := PanelContainer.new()
+	rail.custom_minimum_size = Vector2(28, 0)
+	_panel(rail, Palette.PLUM_DEEP, Palette.GOLD_DARK, 1, 4)
+	var box := VBoxContainer.new()
+	box.add_theme_constant_override("separation", 4)
+	rail.add_child(box)
+	var btn := Button.new()
+	btn.text = ">>"
+	btn.custom_minimum_size = Vector2(20, 44)
+	btn.tooltip_text = "Roll left panel"
+	_button(btn, false)
+	btn.pressed.connect(_toggle_left_dock)
+	box.add_child(btn)
+	var spacer := Control.new()
+	spacer.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	box.add_child(spacer)
+	return rail
+
+func _build_right_scroll_strip() -> Control:
+	var rail := PanelContainer.new()
+	rail.custom_minimum_size = Vector2(28, 0)
+	_panel(rail, Palette.PLUM_DEEP, Palette.GOLD_DARK, 1, 4)
+	var box := VBoxContainer.new()
+	box.add_theme_constant_override("separation", 4)
+	rail.add_child(box)
+	var btn := Button.new()
+	btn.text = "<<"
+	btn.custom_minimum_size = Vector2(20, 44)
+	btn.tooltip_text = "Roll right panel"
+	_button(btn, false)
+	btn.pressed.connect(_toggle_right_dock)
+	box.add_child(btn)
+	var spacer := Control.new()
+	spacer.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	box.add_child(spacer)
+	return rail
 
 
 func _mobile_nav_button(label: String, surface: int) -> Button:
@@ -899,37 +955,23 @@ func _build_right_dock_shell() -> VBoxContainer:
 
 
 func _toggle_left_dock() -> void:
-	left_dock_open = not left_dock_open
-
-	if left_panel_control:
-		left_panel_control.visible = left_dock_open
-
-	if left_reveal_button:
-		left_reveal_button.visible = not left_dock_open
-
-	if left_dock_shell:
-		left_dock_shell.custom_minimum_size = Vector2(80, 0)
-
-	if left_split:
-		left_split.split_offset = 320 if left_dock_open else 0
+	if left_split == null:
+		return
+	if left_split.split_offset > 30:
+		left_split.split_offset = 0
+	else:
+		left_split.split_offset = 320
 
 
 func _toggle_right_dock() -> void:
-	right_dock_open = not right_dock_open
-
-	if right_rail_control:
-		right_rail_control.visible = right_dock_open
-
-	if right_reveal_button:
-		right_reveal_button.visible = not right_dock_open
-
-	if right_dock_shell:
-		right_dock_shell.custom_minimum_size = Vector2(80, 0)
-
-	if center_right_split:
-		var total_w: int = int(center_right_split.size.x)
-		var right_w: int = 340 if right_dock_open else 0
-		center_right_split.split_offset = total_w - right_w
+	if center_right_split == null:
+		return
+	var total_w: int = int(center_right_split.size.x)
+	var panel_w: int = total_w - center_right_split.split_offset
+	if panel_w > 30:
+		center_right_split.split_offset = total_w
+	else:
+		center_right_split.split_offset = total_w - 340
 
 
 func _top_bar() -> Control:
@@ -1148,9 +1190,9 @@ func _seed() -> void:
 	_apply_config()
 	_set_status_value("current_root", CliBridge.core_root())
 	_set_status_value("dashboard_boot", "rendered")
-	_open_workbench(false)
 	_new_chat(false)
 	_open_screen("Home", false)
+	_open_workbench(false)
 	_log("Phase 4.5 loaded. Operator-triggered state refresh only.")
 	_terminal("Path debug\n" + CliBridge.debug_paths())
 	_render_mission()
