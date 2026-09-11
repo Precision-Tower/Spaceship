@@ -1,9 +1,6 @@
 PACKAGE.
-
 identity- "package";
-
 role- "CE-OS portable provisioning, installation, verification, recovery, and machine-enrollment authority";
-
 root_model: (
 single_root- "The package transports and reconstructs the one CE-OS system; it does not create a congruent CE-OS repository or competing authority root";
 current_root- "~/ce-os";
@@ -55,6 +52,19 @@ safety- "Do not repartition, reflash, wipe, disable, reboot, or otherwise risk t
 implementation_gate- "Any operation that changes USB gadget behavior, block exposure, boot media, Android runtime, networking, partitions, or filesystems requires a separately verified rollback-safe plan before execution";
 );
 
+
+pixel_kernel_usb_authority: (
+source- "qps/kernel/_index.qps observed Pixel kernel and userspace ABI discovery authority";
+host- "Pixel 6 oriole on gs101, aarch64 Android, observed kernel Linux 6.1.145-android14-11-gfa1d6308d1fe-ab14691759";
+userspace_surfaces- "Observed USB surfaces include FunctionFS adb/mtp/ptp/ctrl/aoa mounts, gadget serial ttyGS0-ttyGS2, sysfs classes udc and usb_role, configfs filesystem support, and Android usb service";
+kernel_evidence- "Observed USB-related kernel modules include aoc_usb_driver, xhci_exynos, dwc3_exynos_usb, phy_exynos_usbdrd_super, usb_f_dm, usb_f_dm1, usb_f_etr_miu, usb_psy, usbserial, and usbnet";
+privilege_boundary- "Normal Termux cannot inventory protected /dev and /sys USB control surfaces; privileged bounded access is required for hidden ABI discovery and gadget control evidence";
+qps_boundary- "QPS owns operation names, policy, safety, permissions, and proof expectations; privileged or native adapters perform only the irreducible host action and return evidence";
+control_status- "Kernel authority currently establishes USB metadata and observable interfaces, not a general USB mutation contract; FunctionFS and gadget serial are concrete interfaces but control requires an operation-level contract and privilege policy";
+mutation_policy- "USB gadget mutation is explicitly high risk and remains read-only by default until the exact mutation, preconditions, rollback, permissions, and success evidence are authored";
+package_implication- "Package phone-carrier work must treat ConfigFS/UDC gadget manipulation as a privileged adapter below QPS policy, preserve Android recovery/control requirements, and prove host-visible behavior rather than infer success from a driver or interface name alone";
+);
+
 machine_profiles: (
 authority- "package/config/machines";
 selection- "PT_MACHINE_PROFILE";
@@ -65,19 +75,72 @@ legacy_policy- "package/config/hardware.env remains a compatibility fallback whi
 rule- "Host-specific acceptance policy belongs to a machine profile; portable package behavior must not hard-code one target machine";
 );
 
-existing_package: (
-origin- "The existing package surface is a Precision Tower deployment package and is preserved as implementation evidence rather than overwritten";
-current_capability- "It verifies host and hardware prerequisites, installs operator wrappers and a managed environment file, tests package contracts, and safely uninstalls artifacts it owns";
-known_gap- "It does not yet install OS packages, configure firewall rules, enable services, select a persistent Agency daemon, provision Ubuntu, or carry a complete CE-OS recovery payload";
-generalization_rule- "Generalize the existing package incrementally so Precision-specific policy becomes a machine profile rather than silently deleting proven behavior";
-);
-
 authorities: (
 checklist- "package/checklist.qps";
 legacy_config- "package/config/package.yaml";
 installer- "package/install.sh";
 verification- "package/verify.sh";
+reconstruction- "package/reconstruct.sh";
+uninstaller- "package/uninstall.sh";
 tests- "package/tests";
+seed_tools- "package/tools";
+bootstrap- "package/bootstrap";
+ubuntu_substrate- "package/ubuntu";
+shared_libs- "package/lib";
+operator_commands- "package/commands";
+os_packages- "package/packages";
+);
+
+seed_management: (
+audit- "package/tools/audit_payload.py walks the repository and classifies each file into required, reconstructable, optional, excluded, or machine_local";
+build- "package/tools/build_seed.py creates a proof seed beneath trash/tmp with exact Git identity, SHA256SUMS, and deferred large-file tracking";
+verify- "package/tools/verify_seed.py validates seed metadata, file checksums, and integrity before reconstruction";
+enroll- "package/tools/enroll_host.py records reconstructed host identity, machine profile, and service activation boundary";
+);
+
+bootstrap: (
+qps_components- "package/bootstrap/qps-components.qps records pinned source revisions for coreutils, diffutils, findutils, gawk, grep, patch, ripgrep, and sed";
+qps_bootstrap- "package/bootstrap/qps-bootstrap.sh verifies vendored source revisions and builds QPS from qps/cpp via CMake into repository-local scratch";
+);
+
+ubuntu_substrate: (
+authority- "package/ubuntu/_index.qps";
+autoinstall- "package/ubuntu/autoinstall contains meta-data and user-data.template for unattended Ubuntu LTS provisioning";
+boundary- "Package contains autoinstall inputs only; no boot media writer is activated";
+installer_profiles- "The intended boot menu separates stock Ubuntu installation from future LTS Basic, CE-OS Installer, and Install CE-OS Package profiles; until each profile has authored and verified behavior, menu labels are design surfaces rather than accepted installers";
+);
+
+carrier_state: (
+candidate_iso- "~/ubuntu-26.04.1-live-server-amd64.iso";
+candidate_iso_sha256- "cc8a95cde20f6ced61a322420de00f10cc3c90ced545daa46cb9c1a117f1d927";
+candidate_installer_image- "~/ceos-ubuntu-installer.img";
+candidate_installer_sha256- "7a750813f992aa2303edef536ea5e253ccce3276ad3c6f7db612859ea180baf0";
+canonical_carrier- "usb/bootstrap/ce-os-bootstrap.img";
+acceptance_state- "candidate carrier physically discovered by the target laptop through the Pixel g2 read-only mass-storage gadget on 2026-09-10; USB carrier discoverability is proven, while UEFI/GRUB and installer behavior remain separate acceptance layers";
+control_plane_incident- "The first live UDC handoff interrupted the active Operator transport; another handoff requires a verified independent operator/recovery channel that does not depend on the USB gadget being changed";
+);
+
+shared_libraries: (
+common- "package/lib/common.sh provides pt_initialize, pt_print_line, pt_status_line, and layout resolution";
+hardware- "package/lib/hardware.sh provides hardware detection and policy evaluation";
+);
+
+operator_commands: (
+wrappers- "package/commands contains browser, dashboard, desktop, doctor, help, logs, restart, shutdown, status, and update";
+installation- "install.sh creates symlinks to these wrappers in the managed bin directory";
+);
+
+os_packages: (
+base- "package/packages/base.txt lists essential Ubuntu packages";
+desktop- "package/packages/desktop.txt lists desktop environment packages";
+diagnostics- "package/packages/diagnostics.txt lists diagnostic and debugging tools";
+wine- "package/packages/wine.txt lists Wine compatibility layer packages";
+);
+
+test_coverage: (
+total- "12 test scripts covering boot, services, remote access, hardware readiness, machine profiles, Ubuntu substrate, reconstruction, QPS bootstrap, operator commands, installation, machine enrollment, and Ubuntu substrate";
+disposable_state- "All tests use repository-local trash/tmp/package-tests for temporary state";
+regression- "package/tests/run_all.sh executes the complete suite and reports failures";
 );
 
 acceptance: (
@@ -90,14 +153,39 @@ recovery- "The resulting host can validate CE-OS identity and operate without de
 backup- "The final Pixel preservation artifact records exact Git identity, package manifest, checksums, and recovery procedure";
 );
 
-machine_enrollment:
-(
-  authority- "package/tools/enroll_host.py";
-  purpose- "record reconstructed host identity, CE-OS authorities, machine profile, launch surfaces, and service activation boundary";
-  state- "candidate while source worktree is dirty; enrolled only from a clean accepted source identity";
-  service_boundary- "enrollment records service intent but does not enable or start host services";
-  operator_shell- "UI/OperatorShell/project.godot";
-  workbench- "UI/Workbench/project.godot";
-  agency- "Agency/_index.qps";
-  engineering- "Engineering/_index.qps";
+machine_enrollment: (
+authority- "package/tools/enroll_host.py";
+purpose- "record reconstructed host identity, CE-OS authorities, machine profile, launch surfaces, and service activation boundary";
+state- "candidate while source worktree is dirty; enrolled only from a clean accepted source identity";
+service_boundary- "enrollment records service intent but does not enable or start host services";
+operator_shell- "UI/OperatorShell/project.godot";
+workbench- "UI/Workbench/project.godot";
+agency- "Agency/_index.qps";
+engineering- "Engineering/_index.qps";
+);
+
+portable_boot_surface: (
+state- "active architecture with physically proven lower boot layers";
+proof_date- "2026-09-10";
+carrier_chain- "Pixel 6 -> privileged g2 ConfigFS read-only mass-storage gadget -> DWC3 UDC -> target laptop USB discovery -> UEFI -> rEFInd";
+carrier_discovery- "PASS: operator physically discovered the Pixel-presented read-only carrier on the target laptop";
+uefi_execution- "PASS: target laptop firmware executed EFI/BOOT/BOOTX64.EFI from the Pixel-presented carrier and displayed rEFInd";
+launcher_mode- "rEFInd manual entries are the accepted boot-surface mechanism; scanfor manual avoids the firmware/device directory-scanning failure observed with automatic scanning";
+launcher_display- "PASS: operator physically observed the rEFInd main menu with Clonezilla Live, About rEFInd, System Reboot, and Shutdown";
+clonezilla_payload- "Clonezilla Live 3.1.2-9 amd64 payload is carried locally and physically visible as a manual rEFInd launcher entry; Clonezilla boot/runtime behavior is not yet claimed proven";
+ubuntu_launcher- "A combined carrier image has been authored with Ubuntu Live Installer as the first manual rEFInd entry above Clonezilla and presented through the proven g2 path; Ubuntu installer boot/runtime behavior is not yet claimed proven";
+combined_carrier- "~/ceos-refind-ubuntu-clonezilla-3750m.img, 3932160000 bytes, authored as FAT32 with rEFInd, Ubuntu 26.04.1 live-server ISO plus extracted kernel/initrd, and Clonezilla live payload";
+usb_policy- "Normal package-carrier presentation remains read-only with lun.0 ro=1 and removable=1; Android USB recovery and bounded handoff lease remain mandatory";
+host_visibility_rule- "Physical operator observation is authoritative for host-visible USB and firmware behavior; an immediate UDC state sample is not a substitute for target-host enumeration evidence";
+layer_boundary- "Proven lower layers are carrier discovery, UEFI execution, and rEFInd manual launcher display. Ubuntu boot, Ubuntu installation, Clonezilla runtime, unattended CE-OS provisioning, reconstruction, enrollment, and final recovery remain independent acceptance layers";
+next_boot_surface- "Promote CE-OS to the first top-level rEFInd option, place Ubuntu installation beneath the CE-OS boot surface, retain Clonezilla as an independent recovery tool, and carry the first full CE-OS package without claiming installation success before physical proof";
+);
+
+ce_os_install_package_direction: (
+state- "authored direction, not yet end-to-end proven";
+product_boundary- "Do not reinvent Ubuntu installation machinery; CE-OS owns a deterministic package and provisioning contract around the Ubuntu LTS substrate";
+operator_goal- "The normal CE-OS package path must not require walking through the interactive Ubuntu installer";
+preconfiguration- "Predetermine and author Ubuntu substrate identity, target/storage policy with explicit destructive safety guards, hostname and administrator identity, SSH policy, networking dependencies including wpasupplicant, CE-OS payload location, dependency installation, source and state reconstruction, services, OperatorShell, Agency, verification, enrollment, and reboot behavior";
+boot_medium_role- "The Pixel-presented boot medium is intended to become the portable package authority carrying the launcher, Ubuntu substrate inputs, CE-OS payload, provenance, checksums, reconstruction logic, and recovery tooling needed for one installable package";
+acceptance_policy- "Keep each layer independently testable and physically prove it before promoting it to complete; current state is lined up for end-to-end success but is not yet a completed unattended CE-OS installation";
 );

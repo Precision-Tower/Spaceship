@@ -63,7 +63,7 @@ check_installed_surface() {
         dest="$PRECISION_BIN_DIR/$command_name"; src="$PACKAGE_COMMANDS/$command_name"
         if [[ -L "$dest" ]]; then target="$(readlink "$dest")"; [[ "$target" == "$src" ]] && pt_status_line "PASS" "installed $command_name" "$dest -> $target" || pt_status_line "WARNING" "installed $command_name" "$dest points to $target, not package wrapper"; elif [[ -e "$dest" ]]; then pt_status_line "WARNING" "installed $command_name" "$dest exists and is not a package symlink"; else pt_status_line "WARNING" "installed $command_name" "$dest is not installed"; fi
     done < <(pt_operator_commands)
-    if [[ -f "$PRECISION_ENV_FILE" ]] && grep -q '^# Managed by Dashboard Precision Tower package$' "$PRECISION_ENV_FILE"; then pt_status_line "PASS" "machine env" "$PRECISION_ENV_FILE"; elif [[ -e "$PRECISION_ENV_FILE" ]]; then pt_status_line "WARNING" "machine env" "$PRECISION_ENV_FILE exists but is not package-managed"; else pt_status_line "WARNING" "machine env" "$PRECISION_ENV_FILE is not installed"; fi
+    if [[ -f "$PRECISION_ENV_FILE" ]] && grep -q '^# Managed by Dashboard CE-OS package$' "$PRECISION_ENV_FILE"; then pt_status_line "PASS" "machine env" "$PRECISION_ENV_FILE"; elif [[ -e "$PRECISION_ENV_FILE" ]]; then pt_status_line "WARNING" "machine env" "$PRECISION_ENV_FILE exists but is not package-managed"; else pt_status_line "WARNING" "machine env" "$PRECISION_ENV_FILE is not installed"; fi
 }
 print_unresolved() {
     pt_print_line; pt_print_line "Unresolved deployment inputs"
@@ -78,7 +78,7 @@ print_unresolved() {
     pt_status_line "UNRESOLVED" "durant_acceptance_test" "Requires real target hardware and external remote device."
 }
 main() {
-    pt_print_line "Precision Tower Node package verification"
+    pt_print_line "CE-OS Node package verification"
     pt_require_dashboard_root && pt_status_line "PASS" "repository root" "$REPO_ROOT" || FATALS=$((FATALS + 1))
     [[ -f "$PACKAGE_CONFIG" ]] && pt_status_line "PASS" "package config" "$PACKAGE_CONFIG" || fatal_line "MISSING" "package config" "$PACKAGE_CONFIG"
     [[ -f "$REPO_ROOT/Docs/PrecisionTowerNode.md" ]] && pt_status_line "PASS" "contract doc" "$REPO_ROOT/Docs/PrecisionTowerNode.md" || pt_status_line "WARNING" "contract doc" "Docs/PrecisionTowerNode.md is not present in this checkout"

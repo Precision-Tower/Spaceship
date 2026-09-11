@@ -1,4 +1,4 @@
-# Precision Tower operator command surface
+# CE-OS operator command surface
 # Authority: deployment policy only. Wrappers live in package/commands.
 # These commands wrap existing repository behavior; they must not duplicate runtime ownership.
 

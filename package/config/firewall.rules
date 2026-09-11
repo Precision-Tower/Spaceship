@@ -1,4 +1,4 @@
-# Precision Tower Node firewall policy template.
+# CE-OS Node firewall policy template.
 # This file is deployment policy only. It is not executed by package/verify.sh or package/install.sh.
 
 policy.default_incoming=deny

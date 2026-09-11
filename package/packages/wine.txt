@@ -1,4 +1,4 @@
-# Precision Tower Wine packages and unresolved application facts.
+# CE-OS Wine packages and unresolved application facts.
 
 wine
 

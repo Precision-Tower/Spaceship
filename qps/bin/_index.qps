@@ -28,6 +28,7 @@ geminigo- "qps GeminiGo check, thing, work, wake, sleep, and status --json expos
 screenshot- "qps screenshot captures the current Pixel display and temporarily publishes only that PNG for multimodal inspection";
 );
 
+terminal_model: (
 screenshot: (
 command- "qps screenshot";
 implementation- "qps/bin/qps-screenshot owns capture/publication orchestration; qps native CLI is only a thin dispatcher";
@@ -41,11 +42,35 @@ authority- "The QPS command does not publish logs, source, filesystem contents, 
 proof- "qps/bin/tests/screenshot_test.py proves direct and qps-dispatched success, valid nonzero PNG dimensions, direct HTTPS URL parsing, repository-local transient storage cleanup, failed uploader behavior, and invalid capture rejection";
 );
 
-terminal_model: (
 working_directory- "Commands inherit the terminal current working directory and preserve relative repository context";
 qps_paths- "Structural QPS addresses are preferred over textual search-and-replace for mutation";
 candidate_first- "Mutating commands construct and validate candidate QPS before publication";
 atomicity- "A mutation publishes only after the resulting QPS parses successfully";
+);
+
+qps_inline: (
+name- "QPS Inline";
+surface- "[< code]";
+open- "[<";
+close- "]";
+canonical- "[< code] is the only canonical inline QPS terminal syntax; there is no >] or [<>] variant";
+implementation- "qps/bin/inline owns source-boundary extraction and transient execution; qps/bin/inline_lib.py contains the reusable implementation";
+terminal_bridge- "qps/bin/terminal.bash integrates QPS Inline with interactive Bash/readline without introducing a second OperatorShell command editor";
+operator_startup- "Agency/Core/runtime/terminal/pty_service.py starts interactive Bash with qps/bin/terminal.bash as its rcfile";
+single_and_multiline- "Single-line and multiline source use the same extraction and execution path; Shift+Enter only inserts editing newlines before ordinary Enter submits the completed surface";
+source_boundary- "The first unmatched closing ] outside strings, nested square containers, parentheses, and braces closes QPS Inline";
+quotes- "A ] inside a double-quoted QPS string does not close the inline surface; backslash escapes preserve string scanning";
+nested_containers- "Nested QPS square containers are counted so their ] tokens remain source rather than terminating the outer inline surface";
+working_directory- "Transient source is created in and executed from the terminal current working directory so relative QPS and process paths inherit operator context";
+transience- "The temporary .qps source is removed after success, parse failure, or runtime failure";
+stdout- "QPS stdout remains terminal stdout";
+stderr- "QPS parser/runtime stderr remains terminal stderr; bridge-owned boundary errors emit QPS_INLINE=FAIL to stderr";
+status- "QPS execution status is returned by qps/bin/inline and propagated through the terminal bridge";
+raw_terminal- "Ordinary Bash/readline commands remain ordinary terminal input; interactive PTY applications retain raw terminal ownership";
+proof- "Focused tests prove one-line extraction, multiline extraction, quoted ], nested square containers, execution braces, malformed boundaries, terminal cwd inheritance, transient cleanup, parse failure status, runtime failure status, stdout/stderr propagation, and repeated stable execution";
+pty_proof- "Real PtySessionManager witnesses prove ordinary Enter, canonical QPS Inline interception before Bash parsing, Shift+Enter multiline composition, post-inline Bash commands, and readline history";
+repository_operation- "A disposable QPS document was mutated through QPS Inline by executing qps/bin/cv from transient QPS while preserving the disposable working directory";
+future_authority- "Bash/readline is the current terminal integration mechanism; the stable CE-OS semantics are the authored [< code] boundary, inherited cwd, transparent streams/status, and shared Enter/Shift+Enter interaction";
 );
 
 change_value: (
@@ -59,6 +84,23 @@ candidate_validation- "cv writes a complete candidate QPS document beside the so
 publication- "After validation succeeds, cv atomically replaces the source file with the candidate document; failed validation removes the candidate and leaves the source unchanged";
 evidence- "Successful mutation prints CV=PASS, the resolved file, structural target, and source span";
 proof- "String, numeric, boolean, reference, expression-valued Item replacement, relative cwd resolution, selected-Item-only replacement, and invalid-value rollback are proven by qps/bin/tests/cv_test.py";
+);
+
+
+qps_file_operations: (
+implementation- "qps/bin/qps_file_ops.py owns the operation logic; qps/bin/qps-file is the direct executable; qps check, qps refs, and qps move are thin CLI dispatches into that tool";
+check- "qps check <file.qps> validates one file through the canonical qps <file.qps> --check parser/runtime surface and reports CHECK=PASS or CHECK=FAIL";
+refs- "qps refs <path> finds exact repository references to the normalized repo-relative path across tracked and untracked non-ignored text files, plus exact string-literal file references in _index.qps that resolve to that path";
+refs_absent- "qps refs --absent <path> succeeds only when no exact references remain and otherwise prints stale-reference evidence";
+move- "qps move <old.qps> <new.qps> relocates one QPS file, repoints exact old-path references to the new repo-relative path, verifies stale old-path references are absent, validates affected QPS files, runs git diff --check, and reports changed files";
+tracked_state- "qps move detects whether the source path is tracked or untracked but uses a filesystem rename in both cases so the command never stages changes and never assumes git mv is valid";
+safety_failures- "Missing sources, existing destinations, missing destination parents, destination paths already tracked by Git, non-.qps move endpoints, paths outside the worktree, and ambiguous repository authority fail before mutation";
+reference_exactness- "Path repointing uses token boundaries around the exact old repo-relative path and exact whole string-literal values in _index.qps, preserving similarly named strings such as suffixes, descendants, prefixed text, and prose that is not an exact path value";
+validation_boundary- "Candidate QPS text is parsed before publication where references will change, then affected .qps files are checked again after mutation";
+index_boundary- "The Git index state is compared before and after qps move; any staging side effect is a command failure";
+worktree_boundary- "Unrelated worktree changes are not reset, cleaned, staged, or discarded";
+proof- "qps/bin/tests/qps_file_ops_test.py proves check pass/fail, qps dispatch, tracked relocation, untracked relocation, missing-source failure, existing-destination failure, exact repointing, stale-reference absence checks, _index.qps relative file references, similarly named string preservation, affected-QPS validation, git diff --check, unchanged Git index state, and unrelated dirty-file survival";
+real_witness- "The former nested language authority was moved to qps/language.qps by qps move; the command used filesystem rename for the untracked source, repointed exact references, updated qps/qps/_index.qps to ../language.qps, validated affected QPS files, left the Git index unchanged, and left no stale exact old-path references";
 );
 
 evidence_rendering: (
@@ -75,150 +117,162 @@ agent_context- "Canonical terminal evidence is optimized for humans and constrai
 
 search_model: (
 semantic_tools- "probe, scope, and scout are QPS-aware operator interfaces";
-mechanism_tools- "rg, grep, sed, parser traversal, or future search mechanisms may implement those interfaces";
-history_boundary- "The root history.qps ledger should not contaminate ordinary current-source discovery; History is queried explicitly through qps history";
+discovery_authority- "The selected indexed module and its authored document-role policy define the permitted current-source corpus before any matching mechanism runs";
+current_source- "scout performs broad structural discovery only across immediate QPS documents eligible as current authored source";
+excluded_roles- "Ledger, generated, archive, and non-authority documents are excluded from ordinary broad discovery unless their owning authority explicitly promotes them as current-source evidence";
+explicit_evidence- "probe and scope operate on explicitly addressed documents, so exclusion from broad scout discovery never makes ledger or historical evidence inaccessible";
+mechanism_tools- "rg, grep, sed, parser traversal, or future search mechanisms may implement these interfaces without changing their operator-facing corpus or evidence semantics";
+history_boundary- "The root history.qps ledger is a ledger document and does not contaminate ordinary current-source scout discovery; History is queried explicitly through qps history while probe and scope may inspect history.qps directly";
 );
 
 owned_toolchain: (
 location- "qps/bin/native";
+selection- "CE-OS semantic/runtime callers explicitly select qps/bin/native command paths when they require the owned substrate; the surrounding Android or Ubuntu PATH remains host-owned";
+replacement_policy- "Tracked native engines are replaced only from pinned source builds after baseline parity is proven; CE-OS presentation behavior remains separable from native matching or transformation semantics";
 
 rg: (
 command- "qps/bin/native/rg";
 engine- "qps/bin/native/rg.bin";
-source- "/data/data/com.termux/files/usr/bin/rg";
-version- "ripgrep 15.2.0";
-implementation- "Python compact evidence renderer above an owned byte-for-byte ripgrep engine copy";
-matching- "Preserve ripgrep matching semantics";
+source- "qps/bin/src/ripgrep";
+revision- "3fce3b5";
+version- "ripgrep 15.2.0 (rev 3fce3b5bb0)";
+implementation- "Python compact evidence renderer above the CE-OS source-built ripgrep engine";
+matching- "Preserve ripgrep matching semantics; normalized result-set equivalence is the parity boundary because traversal order is not stable";
 rendering- "Group evidence by file and contiguous line range so the path is emitted once per block";
-proof- "Host ripgrep matching parity, matched-line preservation, path deduplication, output compaction, and isolated proof corpus are proven";
+proof- "Source-built ripgrep matches the host reference result set on the isolated corpus while compact rendering preserves matched physical lines and removes repeated path prefixes";
 );
 
 grep: (
 command- "qps/bin/native/grep";
 engine- "qps/bin/native/grep.bin";
-source- "/data/data/com.termux/files/usr/bin/grep";
-version- "grep (GNU grep) 3.12";
-implementation- "Python compact evidence renderer above an owned byte-for-byte grep engine copy";
-matching- "Preserve host grep matching semantics";
+source- "qps/bin/src/grep";
+revision- "e187ca5";
+version- "grep (GNU grep) 3.12.41-e187";
+implementation- "Python compact evidence renderer above the CE-OS source-built GNU grep engine";
+matching- "Preserve GNU grep matching semantics";
 rendering- "Group evidence by file and contiguous line range so the path is emitted once per block";
+proof- "Source-built grep matches the host reference normalized result set on the isolated corpus while compact rendering preserves result evidence";
 );
-);
-
-
-remaining_tools: (
-coreutils_model- "cat, head, tail, sort, uniq, cut, and tr are argv[0]-selected entrypoints into one owned coreutils.bin multicall implementation";
 
 sed: (
+command- "qps/bin/native/sed";
 engine- "qps/bin/native/sed.bin";
-source- "/data/data/com.termux/files/usr/bin/sed";
+source- "qps/bin/src/sed";
+revision- "0c1fe22";
+version- "GNU sed 4.9.40-0c1f-dirty";
 role- "data";
-version- "/data/data/com.termux/files/usr/bin/sed (GNU sed) 4.9";
-policy- "Preserve native behavior initially; change presentation only when a proven CE-OS requirement exists";
+build- "Configured --without-selinux because Android exposes SELinux headers and a library without every GNU userspace symbol required by this source revision";
+policy- "Preserve native transformation behavior until a proven CE-OS semantic requirement exists";
 );
 
 find: (
+command- "qps/bin/native/find";
 engine- "qps/bin/native/find.bin";
-source- "/data/data/com.termux/files/usr/bin/find";
+source- "qps/bin/src/findutils";
+revision- "db41ebaf";
+version- "GNU findutils 4.11.0.29-db41e-modified";
 role- "evidence";
-version- "find (GNU findutils) 4.10.0";
-policy- "Preserve native behavior initially; change presentation only when a proven CE-OS requirement exists";
+policy- "Preserve native filesystem-selection behavior until a proven CE-OS semantic requirement exists";
+);
+
+xargs: (
+command- "qps/bin/native/xargs";
+engine- "qps/bin/native/xargs.bin";
+source- "qps/bin/src/findutils";
+revision- "db41ebaf";
+version- "GNU findutils 4.11.0.29-db41e-modified";
+role- "composition";
+policy- "Preserve native argument-composition behavior until a proven CE-OS semantic requirement exists";
+);
+
+coreutils: (
+source- "qps/bin/src/coreutils";
+revision- "bff0e5412";
+version- "GNU coreutils 9.11.270-bff0e";
+implementation- "The promoted cat, head, tail, sort, uniq, cut, and tr commands are independently source-built executables; the source build was not configured as a single-binary multicall build";
+legacy_artifact- "qps/bin/native/coreutils.bin remains a tracked legacy artifact but is not the engine for the promoted individual command files";
+policy- "Preserve each command's native stream, collection, and transformation behavior";
 );
 
 cat: (
 command- "qps/bin/native/cat";
-engine- "qps/bin/native/coreutils.bin";
-source- "/data/data/com.termux/files/usr/bin/coreutils";
+engine- "qps/bin/native/cat";
 role- "data";
-version- "coreutils (GNU coreutils) 9.7";
-policy- "Preserve native behavior initially; change presentation only when a proven CE-OS requirement exists";
 );
 
 head: (
 command- "qps/bin/native/head";
-engine- "qps/bin/native/coreutils.bin";
-source- "/data/data/com.termux/files/usr/bin/coreutils";
+engine- "qps/bin/native/head";
 role- "data";
-version- "coreutils (GNU coreutils) 9.7";
-policy- "Preserve native behavior initially; change presentation only when a proven CE-OS requirement exists";
 );
 
 tail: (
 command- "qps/bin/native/tail";
-engine- "qps/bin/native/coreutils.bin";
-source- "/data/data/com.termux/files/usr/bin/coreutils";
+engine- "qps/bin/native/tail";
 role- "data";
-version- "coreutils (GNU coreutils) 9.7";
-policy- "Preserve native behavior initially; change presentation only when a proven CE-OS requirement exists";
 );
 
 sort: (
 command- "qps/bin/native/sort";
-engine- "qps/bin/native/coreutils.bin";
-source- "/data/data/com.termux/files/usr/bin/coreutils";
+engine- "qps/bin/native/sort";
 role- "data";
-version- "coreutils (GNU coreutils) 9.7";
-policy- "Preserve native behavior initially; change presentation only when a proven CE-OS requirement exists";
 );
 
 uniq: (
 command- "qps/bin/native/uniq";
-engine- "qps/bin/native/coreutils.bin";
-source- "/data/data/com.termux/files/usr/bin/coreutils";
+engine- "qps/bin/native/uniq";
 role- "data";
-version- "coreutils (GNU coreutils) 9.7";
-policy- "Preserve native behavior initially; change presentation only when a proven CE-OS requirement exists";
 );
 
 cut: (
 command- "qps/bin/native/cut";
-engine- "qps/bin/native/coreutils.bin";
-source- "/data/data/com.termux/files/usr/bin/coreutils";
+engine- "qps/bin/native/cut";
 role- "data";
-version- "coreutils (GNU coreutils) 9.7";
-policy- "Preserve native behavior initially; change presentation only when a proven CE-OS requirement exists";
 );
 
 tr: (
 command- "qps/bin/native/tr";
-engine- "qps/bin/native/coreutils.bin";
-source- "/data/data/com.termux/files/usr/bin/coreutils";
+engine- "qps/bin/native/tr";
 role- "data";
-version- "coreutils (GNU coreutils) 9.7";
-policy- "Preserve native behavior initially; change presentation only when a proven CE-OS requirement exists";
-);
-
-xargs: (
-engine- "qps/bin/native/xargs.bin";
-source- "/data/data/com.termux/files/usr/bin/xargs";
-role- "composition";
-version- "xargs (GNU findutils) 4.10.0";
-policy- "Preserve native behavior initially; change presentation only when a proven CE-OS requirement exists";
 );
 
 awk: (
+command- "qps/bin/native/awk";
 engine- "qps/bin/native/awk.bin";
-source- "/data/data/com.termux/files/usr/bin/gawk";
+source- "qps/bin/src/gawk";
+revision- "6c7fd0eb2";
+version- "GNU Awk 5.4.60, API 5.0, PMA Avon 8-g1";
 role- "data";
-version- "GNU Awk 5.3.1, API 4.0, (GNU MPFR 4.2.1, GNU MP 6.3.0)";
-policy- "Preserve native behavior initially; change presentation only when a proven CE-OS requirement exists";
+build- "Generated autotools metadata was regenerated with the current Pixel Autoconf/Automake/Libtool toolchain after inherited aclocal version metadata proved stale";
+policy- "Preserve native awk language behavior until a proven CE-OS semantic requirement exists";
 );
 
 diff: (
+command- "qps/bin/native/diff";
 engine- "qps/bin/native/diff.bin";
-source- "/data/data/com.termux/files/usr/bin/diff";
+source- "qps/bin/src/diffutils";
+revision- "ba490bf";
+version- "GNU diffutils 3.12.35-ba49";
 role- "evidence";
-version- "diff (GNU diffutils) 3.12";
-policy- "Preserve native behavior initially; change presentation only when a proven CE-OS requirement exists";
+policy- "Preserve native comparison behavior until a proven CE-OS semantic requirement exists";
 );
 
 patch: (
+command- "qps/bin/native/patch";
 engine- "qps/bin/native/patch.bin";
-source- "/data/data/com.termux/files/usr/bin/patch";
+source- "qps/bin/src/patch";
+revision- "a2b1922";
+version- "GNU patch 2.8.11-a2b1";
 role- "mutation";
-version- "GNU patch 2.8";
-policy- "Preserve native behavior initially; change presentation only when a proven CE-OS requirement exists";
+build- "Configured --disable-xattr on Android/Termux because the default xattr copy path returned failure after successful hunk application; disabling unsupported/problematic xattr publication restores host-reference patch parity without changing patch semantics";
+policy- "Preserve native patch semantics; platform build adaptation is permitted only when parity evidence proves it removes host-capability mismatch rather than introducing CE-OS mutation semantics";
 );
 
+parity: (
+baseline- "Source-built rg, grep, sed, awk, find, xargs, cat, head, tail, sort, uniq, cut, tr, diff, and the Android-adapted patch all pass the isolated host-reference parity witnesses";
+search- "Owned rg and grep additionally prove result equivalence while compact evidence rendering removes unnecessary repeated path prefixes";
+host_boundary- "Promotion modifies only qps/bin/native tracked artifacts; host command paths remain unchanged";
+);
 );
 
 continuation- "Run qps checklist and inspect this directory Checklist for unfinished qps/bin work";

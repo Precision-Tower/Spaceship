@@ -4,7 +4,7 @@ SCRIPT_DIR="$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/../lib/common.sh"
 source "$SCRIPT_DIR/../lib/hardware.sh"
 pt_initialize
-pt_print_line "Precision Tower operator status"
+pt_print_line "CE-OS operator status"
 pt_require_dashboard_root || exit 1
 pt_status_line "PASS" "repository root" "$REPO_ROOT"
 pt_print_line

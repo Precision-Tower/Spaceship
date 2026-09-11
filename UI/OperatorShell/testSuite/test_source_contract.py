@@ -69,6 +69,65 @@ for source_root in [OPS, WORKBENCH]:
 
 
 # ---------------------------------------------------------------------
+# Terminal Enter / Shift+Enter raw PTY contract
+# ---------------------------------------------------------------------
+
+terminal_surface = read(OPS / "widgets" / "TerminalSurface.gd")
+
+terminal_sequence_contract = """KEY_ENTER, KEY_KP_ENTER:
+			# Readline accepts LF as submit. For Shift+Enter, send the
+			# terminal Insert-key sequence first; in the current Bash/readline
+			# stack that enters quoted-insert, so the following LF becomes a
+			# literal newline in the editing buffer instead of accept-line.
+			# Interactive PTY applications still receive raw terminal bytes.
+			if event.shift_pressed:
+				return String.chr(27) + "[2~\\n"
+			return "\\n"
+"""
+
+if terminal_sequence_contract not in terminal_surface:
+    fail(
+        "TerminalSurface must map Shift+Enter to ESC [ 2 ~ + LF "
+        "while plain Enter remains LF"
+    )
+
+if "TerminalClient.write_input(sid, sequence)" not in terminal_surface:
+    fail(
+        "TerminalSurface must continue forwarding translated key bytes "
+        "directly through TerminalClient.write_input"
+    )
+
+# ---------------------------------------------------------------------
+# QPS Inline terminal bridge startup contract
+# ---------------------------------------------------------------------
+
+pty_service = read(ROOT / "Agency" / "Core" / "runtime" / "terminal" / "pty_service.py")
+terminal_bash = read(ROOT / "qps" / "bin" / "terminal.bash")
+
+required_inline_startup = [
+    'qps_terminal_rc = self.repo_root / "qps" / "bin" / "terminal.bash"',
+    '"--rcfile"',
+    'str(qps_terminal_rc)',
+]
+
+for fragment in required_inline_startup:
+    if fragment not in pty_service:
+        fail(f"PTY service missing QPS Inline startup contract: {fragment}")
+
+required_terminal_bridge = [
+    "_ceos_qps_inline_enter()",
+    '[[ "$READLINE_LINE" != \'[<\'* ]]',
+    '"$HOME/ce-os/qps/bin/inline" "$source"',
+    'bind -x \'"\\C-x\\C-q":_ceos_qps_inline_enter\'',
+    'bind \'"\\C-m":"\\C-x\\C-q\\C-j"\'',
+]
+
+for fragment in required_terminal_bridge:
+    if fragment not in terminal_bash:
+        fail(f"qps/bin/terminal.bash missing bridge contract: {fragment}")
+
+
+# ---------------------------------------------------------------------
 # No accidental editor/patch backup files
 # ---------------------------------------------------------------------
 

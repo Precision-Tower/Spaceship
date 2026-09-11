@@ -5,7 +5,7 @@ source "$SCRIPT_DIR/../lib/common.sh"
 pt_initialize
 CHECK_ONLY=false
 [[ "${1:-}" == "--check" ]] && CHECK_ONLY=true
-pt_print_line "Precision Tower desktop launcher"
+pt_print_line "CE-OS desktop launcher"
 pt_require_dashboard_root || exit 1
 XFCE="$(pt_xfce_command || true)"
 if [[ -z "$XFCE" ]]; then

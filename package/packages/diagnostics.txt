@@ -1,4 +1,4 @@
-# Precision Tower diagnostics packages.
+# CE-OS diagnostics packages.
 
 ripgrep
 fd-find

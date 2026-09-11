@@ -36,7 +36,7 @@ def action_fingerprint(task: dict[str, Any]) -> str:
 
 def packet_id_for(task: dict[str, Any]) -> str:
     identity = str(task.get("identity") or "").strip()
-    digest = hashlib.sha256(identity.encode("utf-8")).hexdigest()[:12]
+    digest = action_fingerprint(task)[:12]
     token = "".join(ch if ch.isalnum() or ch in "._-" else "-" for ch in identity)
     return f"geminigo-{token[:48]}-{digest}"
 

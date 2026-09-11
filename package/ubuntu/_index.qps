@@ -11,11 +11,14 @@ ce_os- "portable seed verification, source reconstruction, owned toolchain build
 
 release: (
 channel- "stable Ubuntu LTS";
-exact_release- "UNRESOLVED";
-exact_image_filename- "UNRESOLVED";
-exact_image_sha256- "UNRESOLVED";
-source_origin- "UNRESOLVED";
-acceptance- "Exact installer image is accepted only after release identity, origin, architecture, and SHA-256 are explicitly recorded and verified";
+candidate_release- "Ubuntu Server 26.04.1 LTS amd64";
+candidate_image_filename- "ubuntu-26.04.1-live-server-amd64.iso";
+candidate_image_path- "~/ubuntu-26.04.1-live-server-amd64.iso";
+candidate_image_size- "2927861760";
+candidate_image_sha256- "cc8a95cde20f6ced61a322420de00f10cc3c90ced545daa46cb9c1a117f1d927";
+source_origin- "UNVERIFIED";
+acceptance_state- "candidate recovered locally; not yet accepted";
+acceptance- "Exact installer image becomes accepted only after its upstream origin and published checksum are independently verified in addition to local release identity, architecture, size, and SHA-256";
 );
 
 architecture: (
@@ -63,4 +66,106 @@ source_rebuild: (
 ubuntu_full_rebuild- false;
 rule- "CE-OS does not assume responsibility for rebuilding the complete Ubuntu distribution";
 owned_components- "CE-OS-owned and intentionally patched components may be built from pinned source with provenance";
+);
+
+boot_menu_profiles: (
+stock- "Try or Install Ubuntu Server: preserve the upstream Ubuntu installer path";
+lts_basic- "Future CE-OS-defined minimal Ubuntu profile intended to provide only the reviewed substrate and operator connectivity prerequisites";
+ce_os_installer- "Future profile intended to extend LTS Basic with a trial OperatorShell desktop installation path";
+full_ce_os- "Future profile intended to invoke complete CE-OS package reconstruction only after the preceding layers are independently proven";
+state- "menu structure demonstrated in repository-local scratch; profile behavior not yet implemented or accepted";
+);
+
+physical_carrier: (
+candidate_boot_image- "~/ceos-ubuntu-boot.img";
+candidate_boot_image_sha256- "7b8c39c69661d71634ebc54507300b2dcf8c10de3d63b88cd9f06839fe8f3d44";
+candidate_installer_image- "~/ceos-ubuntu-installer.img";
+candidate_installer_image_sha256- "7a750813f992aa2303edef536ea5e253ccce3276ad3c6f7db612859ea180baf0";
+canonical_path- "usb/bootstrap/ce-os-bootstrap.img";
+discoverability- "UNPROVEN";
+last_live_result- "UDC handoff interrupted the active Operator transport; Android g1 ownership later observed restored";
+retry_gate- "Verify an independent operator/recovery channel before another USB gadget ownership handoff";
+);
+
+full_package_install: (
+state- "authored deterministic installation contract; not yet physically accepted";
+launcher_path- "rEFInd top-level CE-OS entry -> CE-OS boot surface -> Ubuntu substrate installation for the full CE-OS package";
+interaction_policy- "Normal full-package installation must not require the Operator to walk through Ubuntu installer questions; accepted decisions are rendered into autoinstall input before activation";
+substrate- "Use the accepted Ubuntu Server 26.04.1 LTS amd64 live installer as substrate after independent upstream-origin and published-checksum verification";
+installation_engine- "Use Ubuntu Subiquity autoinstall, cloud-init, and curtin rather than replacing Ubuntu installation machinery";
+payload- "Carry or locate a verified CE-OS portable seed on the installation medium and verify it before reconstruction";
+reconstruction- "After Ubuntu substrate installation, invoke package/reconstruct.sh against the verified seed and reconstruct exactly one CE-OS root";
+package_apply- "After reconstruction, execute CE-OS-owned package installation, owned-component bootstrap, configuration, service policy, verification, and machine enrollment from reconstructed authority";
+success- "Installation is complete only after substrate installation, seed verification, CE-OS reconstruction, package verification, required service readiness, operator connectivity, and machine enrollment all pass";
+);
+
+deterministic_inputs: (
+locale- "en_US.UTF-8";
+keyboard- "us";
+architecture- "x86_64";
+hostname- "must be rendered before activation from an accepted machine profile or explicit package installation profile";
+administrator- "username, password hash, and SSH public key must be rendered before activation; private credentials are never tracked in repository authority";
+ssh- "openssh-server installed by the Ubuntu installer; key-based administrator access enabled; password SSH disabled by default";
+network- "Install NetworkManager-compatible Ubuntu networking prerequisites plus wpasupplicant so supported Wi-Fi is not left without its userspace supplicant";
+connectivity- "Post-install CE-OS verification must distinguish local network readiness, SSH readiness, and optional overlay-network enrollment rather than treating internet access as proof of all three";
+storage- "A concrete target disk and reviewed layout must be resolved before unattended activation; no wildcard or first-disk destructive policy is accepted";
+timezone- "must be rendered explicitly before activation rather than inherited accidentally from installer environment";
+release_identity- "installer filename, byte size, architecture, local SHA-256, upstream origin, and published upstream checksum must all agree before the substrate is promoted from candidate to accepted";
+seed_identity- "portable seed verification and exact Git/source identity are mandatory before CE-OS reconstruction";
+);
+
+storage_activation_gate: (
+default- "non-destructive until a concrete installation target has been identified and accepted";
+required_evidence- "target device path, stable hardware identity where available, capacity, existing partition/filesystem summary, and proposed resulting layout";
+forbidden- "Do not select a target by enumeration order alone and do not authorize installation against the Pixel carrier or another removable provisioning/recovery medium";
+rendering- "Only an accepted target-specific storage configuration may replace the autoinstall storage placeholder";
+);
+
+network_bootstrap: (
+required_packages- "openssh-server, network-manager, wpasupplicant, iproute2, iputils-ping, ca-certificates, curl";
+wifi_regression- "The prior clean Ubuntu host loaded the RTL8821CE kernel driver but failed Wi-Fi because wpa_supplicant was absent; full-package substrate policy therefore explicitly carries wpasupplicant";
+pixel_hotspot_goal- "A clean CE-OS host should be capable of joining the Operator-approved Pixel hotspot after installation when the corresponding machine-local Wi-Fi credentials are injected";
+secret_boundary- "Wi-Fi PSKs, Tailscale authentication keys, password hashes, and private SSH material remain machine-local injected secrets and are not embedded in tracked package authority";
+offline_boundary- "The installer must not claim offline completeness until every required package and CE-OS payload dependency is present on the boot medium or another explicitly accepted local source";
+);
+
+ce_os_install_sequence: (
+step_1- "Firmware discovers the Pixel-presented read-only carrier and executes rEFInd";
+step_2- "Operator selects the top-level CE-OS boot surface";
+step_3- "CE-OS launches the predetermined Ubuntu autoinstall profile";
+step_4- "Installer validates accepted target-specific storage policy before destructive mutation";
+step_5- "Ubuntu installs the reviewed substrate and required connectivity packages";
+step_6- "Installer locates and cryptographically verifies the portable CE-OS seed";
+step_7- "Verified seed reconstructs the single CE-OS root";
+step_8- "CE-OS bootstraps owned QPS/native components and applies package configuration";
+step_9- "CE-OS applies authored service policy and establishes required local/SSH connectivity";
+step_10- "CE-OS verifies Agency, Engineering, OperatorShell, Workbench, package identity, source identity, and host profile";
+step_11- "Machine enrollment records the accepted host and service boundary";
+step_12- "System reboots into the installed Ubuntu LTS substrate with CE-OS ready for Operator verification";
+);
+
+acceptance_layers: (
+layer_1- "Pixel read-only USB carrier discovery: PASS";
+layer_2- "UEFI execution of rEFInd from Pixel carrier: PASS";
+layer_3- "rEFInd manual launcher display: PASS";
+layer_4- "CE-OS top-level rEFInd folder and nested Ubuntu launcher: NOT YET PHYSICALLY PROVEN";
+layer_5- "Ubuntu kernel/initrd/casper boot from combined carrier: NOT YET PHYSICALLY PROVEN";
+layer_6- "Predetermined Ubuntu autoinstall input consumption: NOT YET PHYSICALLY PROVEN";
+layer_7- "Target-specific unattended Ubuntu installation: NOT YET PHYSICALLY PROVEN";
+layer_8- "Portable seed verification and CE-OS reconstruction during installation: NOT YET PHYSICALLY PROVEN";
+layer_9- "Post-install networking and SSH readiness: NOT YET PHYSICALLY PROVEN";
+layer_10- "Full CE-OS package verification and enrollment: NOT YET PHYSICALLY PROVEN";
+);
+
+install_surfaces: (
+ce_os_install- "Ubuntu autoinstall plus verified carried-seed reconstruction; full CE-OS package proof";
+network_install- "Ubuntu autoinstall plus deterministic network and SSH substrate only; CE-OS is transferred later over the network";
+ubuntu_live_installer- "Interactive diagnostic/fallback Ubuntu entry";
+clonezilla_live- "Independent recovery/imaging entry";
+);
+
+network_install_iteration: (
+priority- "Use Network Install for repeated physical autoinstall/network experiments";
+success- "Installed Ubuntu boots, predetermined network becomes usable, address is observable, and SSH accepts the configured administrator key";
+non_goal- "CE-OS reconstruction is not required for Network Install acceptance";
 );

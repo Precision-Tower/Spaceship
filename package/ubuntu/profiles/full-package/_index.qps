@@ -1,0 +1,53 @@
+FULL_PACKAGE_PROFILE.
+
+identity- "package.ubuntu.full_package_profile_v1";
+
+role- "First deterministic CE-OS full-package Ubuntu autoinstall profile";
+
+portable_defaults: (
+release- "Ubuntu Server 26.04.1 LTS amd64 candidate; activation remains blocked until upstream origin and published checksum are verified";
+architecture- "x86_64";
+locale- "en_US.UTF-8";
+keyboard- "us";
+ssh_server- true;
+ssh_password_login- false;
+root_login- false;
+network_packages- "network-manager, wpasupplicant, openssh-server, iproute2, iputils-ping, ca-certificates, curl";
+build_packages- "git, build-essential, cmake, ninja-build, python3, python3-venv";
+ce_os_root- "~/ce-os after reconstruction into the installed administrator home";
+seed_policy- "verify cryptographic seed integrity before reconstruction";
+install_mode- "Ubuntu Subiquity autoinstall using rendered NoCloud data";
+);
+
+activation_inputs: (
+hostname- "required non-secret machine identity; unresolved until Operator or accepted machine profile supplies it";
+admin_user- "required non-secret administrator account name; unresolved until Operator or accepted machine profile supplies it";
+timezone- "required deterministic timezone; unresolved until Operator or accepted machine profile supplies it";
+admin_password_hash- "required machine-local secret input unless identity policy is deliberately changed; never tracked";
+admin_ssh_public_key- "required machine-local public credential input; never guessed";
+target_storage- "required destructive activation input; must identify and describe the concrete accepted target and must not be the Pixel carrier";
+wifi_credentials- "optional machine-local secret input when automatic Pixel-hotspot join is desired";
+tailscale_auth- "optional machine-local enrollment secret; absence must not block local networking or SSH readiness";
+);
+
+activation_gate: (
+rule- "Unattended destructive installation is forbidden while any required activation input or Ubuntu image provenance check remains unresolved";
+render- "Activation inputs are rendered into disposable/generated NoCloud material; secrets do not become tracked repository authority";
+storage- "No first-disk, largest-disk, wildcard, or enumeration-order selection";
+proof- "Rendered profile must be syntax-checked and inspected before it is allowed onto an active destructive install path";
+);
+
+package_state: (
+current_proof_seed- "trash/tmp/package-seed-proof verifies successfully but records Git commit 20e1512d8228be4a79215791d8137111c2f726eb with 67 dirty entries and therefore is proof material, not final preservation authority";
+final_seed- "must be rebuilt from the accepted source identity after package implementation is coherent";
+);
+
+carrier_seed_contract: (
+seed_location- "/cdrom/ce-os/seed";
+install_stage- "/cdrom/ce-os/install/ce-os-reconstruct";
+target_root- "/target/home/<accepted-admin-user>/ce-os";
+verification- "The carried reconstruction stage verifies seed integrity before applying reconstruction";
+failure_policy- "Missing seed, missing reconstruction stage, failed seed verification, failed reconstruction, or missing reconstruction state aborts Ubuntu late-commands";
+completion_marker- "/var/lib/ce-os/substrate-state is written only after verified reconstruction succeeds";
+boot_media_assembly- "Future carrier assembly must place the seed and reconstruction stage at these exact paths before CE-OS Full Package may be physically accepted";
+);

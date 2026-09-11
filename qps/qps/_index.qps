@@ -1,13 +1,14 @@
 QPS_LANGUAGE.
 
 purpose: def"
-Canonical authored Quick Parse Standard language surface.
+Canonical authored Quick Parse Standard implementation and workflow authority surface.
 
 This directory contains QPS-authored authorities that may compose with
 one another through the connected QPS module environment.
 ";
 
 surface: (
+language- "../language.qps";
 build- "build.qps";
 cipher- "cipher.qps";
 checklist- "checklist.qps";
@@ -30,6 +31,7 @@ trio_status- "PROVEN";
 );
 
 rules: (
+language_reference- "The directory-wide model-facing QPS programming-language reference lives at qps/language.qps and is reachable here as ../language.qps";
 module_boundary- "This _index.qps establishes qps/qps as a connected QPS module";
 execution_visibility- "Immediate authored QPS documents in this module may contribute reusable execution definitions to a selected entry document";
 entry_execution- "Loading the module makes definitions available; only the selected entry document supplies top-level execution calls";

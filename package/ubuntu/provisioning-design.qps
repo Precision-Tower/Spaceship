@@ -1,0 +1,8 @@
+PROVISIONING_DESIGN.
+identity- "package.ubuntu.provisioning_design";
+goal- "Rollback-safe phone-as-carrier using fastboot boot";
+safety- "fastboot boot only, no flash, no partition writes";
+architecture- "kernel from boot_b, initramfs with busybox and gadget scripts";
+usb_modes- "mass storage and RNDIS";
+rollback- "reboot returns to Android";
+test- "dry-run with fastboot boot before target provisioning";

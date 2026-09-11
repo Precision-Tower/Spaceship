@@ -116,6 +116,18 @@ dense- 10;
 applied_by- "layout/BottomDock.gd and widgets/TerminalSurface.gd";
 qps_source- "terminal.density";
 
+terminal_input.
+surface- "UI/OperatorShell/widgets/TerminalSurface.gd";
+transport- "_on_terminal_gui_input translates physical key events to terminal bytes and forwards them directly through TerminalServiceClient.write_input";
+plain_enter- "Enter and keypad Enter emit LF and preserve the active terminal application's normal submit behavior";
+shift_enter- "Shift+Enter emits ESC [ 2 ~ followed by LF; current Bash/readline interprets that sequence as quoted insertion of a literal newline instead of accept-line";
+raw_pty- "OperatorShell does not own a duplicate editable command buffer; interactive child applications continue receiving raw PTY bytes";
+proof- "PTY witnesses prove Shift+Enter literal newline insertion, ordinary Enter submission, history, arrows, backspace, delete, tab completion, Ctrl+C, paste-equivalent input, exact raw child bytes, and interactive Python heredoc composition";
+semantic_boundary- "Enter submits; Shift+Enter inserts a newline; interactive applications retain terminal ownership. Bash/readline is current mechanism evidence rather than permanent CE-OS authority";
+qps_inline_relationship- "QPS Inline inherits this general multiline terminal behavior; Shift+Enter is terminal editing behavior rather than QPS grammar";
+future_authority- "The stable interaction contract is intended to move into QPS/C++ terminal ownership as the CE-OS runtime matures";
+
+
 workspace.
 surface- "UI/OperatorShell/layout/WorkspaceSurface.gd";
 kind- "tabbed surface host";

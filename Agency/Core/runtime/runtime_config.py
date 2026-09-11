@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import os
+import platform
+import sys
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -73,18 +75,44 @@ def _load_yaml(path: Path) -> dict[str, Any]:
     return data if isinstance(data, dict) else {}
 
 
+def _host_platform() -> str:
+    if sys.platform.startswith("linux") and (
+        os.environ.get("ANDROID_ROOT")
+        or os.environ.get("ANDROID_DATA")
+        or "com.termux" in str(Path(sys.executable))
+    ):
+        return "android"
+    raw = platform.system().lower()
+    if raw.startswith("win"):
+        return "windows"
+    if raw.startswith("linux"):
+        return "ubuntu"
+    if raw in {"darwin", "mac", "macos"}:
+        return "macos"
+    return raw
+
+
 def active_profile(path: Path | None = None) -> tuple[dict[str, Any], str, Path]:
     for candidate in profile_paths(path):
         root = _load_yaml(candidate).get("RuntimeProfiles") or {}
         if not isinstance(root, dict):
             continue
-        active_name = str(root.get("active_profile") or "").strip()
         profiles = root.get("profiles") or {}
-        if not active_name or not isinstance(profiles, dict):
+        if not isinstance(profiles, dict):
             continue
-        profile = profiles.get(active_name) or {}
-        if isinstance(profile, dict):
-            return profile, active_name, candidate
+
+        host = _host_platform()
+        host_profiles = root.get("host_profiles") or {}
+        selected_name = ""
+        if isinstance(host_profiles, dict):
+            selected_name = str(host_profiles.get(host) or "").strip()
+
+        if not selected_name:
+            selected_name = str(root.get("active_profile") or "").strip()
+
+        profile = profiles.get(selected_name) or {}
+        if selected_name and isinstance(profile, dict):
+            return profile, selected_name, candidate
     return {}, "", profile_paths(path)[0]
 
 
@@ -117,6 +145,7 @@ def fallback_model_candidates() -> list[Path]:
     return [
         WORKSPACE_ROOT / "Spaceship" / "local" / MODEL_FILENAME,
         DASHBOARD_ROOT / "local" / MODEL_FILENAME,
+        DASHBOARD_ROOT / "Agency" / "weights" / MODEL_FILENAME,
     ]
 
 

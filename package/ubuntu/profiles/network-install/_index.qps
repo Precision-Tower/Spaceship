@@ -1,0 +1,49 @@
+identity: (
+name- package_ubuntu_network_install_profile_v1;
+);
+
+
+purpose: (
+summary- "Fast repeatable Ubuntu LTS autoinstall whose acceptance target is a network-ready machine, not CE-OS reconstruction";
+separation- "CE-OS source and portable seed transfer occur later over the network";
+);
+
+install_contract: (
+interactive_walkthrough- false;
+ubuntu_install- true;
+ce_os_seed_required- false;
+ce_os_reconstruction- false;
+ssh_server- true;
+root_ssh- false;
+ssh_password_auth- false;
+);
+
+required_packages: (
+openssh_server- "openssh-server";
+network_manager- "network-manager";
+wpasupplicant- "wpasupplicant";
+iproute2- "iproute2";
+iputils_ping- "iputils-ping";
+ca_certificates- "ca-certificates";
+curl- "curl";
+);
+
+network_acceptance: (
+boot_installed_ubuntu- true;
+network_stack_present- true;
+wifi_supplicant_present- true;
+ssh_service_enabled- true;
+post_boot_goal- "Machine joins the predetermined network, obtains an address, and accepts administrator SSH authentication";
+);
+
+safety_gate: (
+storage- "Unattended activation still requires an explicitly reviewed target-storage configuration; never first-disk, largest-disk, wildcard, or Pixel carrier selection";
+identity- "Hostname, administrator account, password hash, and SSH public key must be resolved before activation";
+wifi- "If Wi-Fi is the post-install network, SSID and PSK must be supplied as machine-local activation inputs";
+ubuntu_image- "Accepted Ubuntu image origin/checksum must be proven before destructive activation";
+);
+
+iteration_policy: (
+goal- "This profile is intentionally small so installation and network behavior can be tested repeatedly";
+ce_os_transfer- "After network acceptance, CE-OS may be copied or reconstructed over SSH independently";
+);

@@ -3,7 +3,7 @@ set -Eeuo pipefail
 SCRIPT_DIR="$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/../lib/common.sh"
 pt_initialize
-pt_print_line "Precision Tower shutdown"
+pt_print_line "CE-OS shutdown"
 pt_require_dashboard_root || exit 1
 if [[ "${1:-}" == "--check" ]]; then
     pt_have_command systemctl && pt_status_line "PASS" "systemctl" "available for future controlled shutdown" || pt_status_line "MISSING" "systemctl" "systemctl not found"
@@ -11,7 +11,7 @@ if [[ "${1:-}" == "--check" ]]; then
     exit 0
 fi
 if [[ "${1:-}" != "--confirm-poweroff" ]]; then
-    pt_status_line "WARNING" "shutdown refused" "This will power off the Precision Tower. Re-run as: shutdown --confirm-poweroff"
+    pt_status_line "WARNING" "shutdown refused" "This will power off the CE-OS. Re-run as: shutdown --confirm-poweroff"
     exit 2
 fi
 pt_have_command systemctl || { pt_status_line "MISSING" "systemctl" "cannot power off without systemctl"; exit 1; }

@@ -1,0 +1,87 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+MODE="dry-run"
+SEED=""
+TARGET=""
+
+usage() {
+    echo "usage: ce-os-reconstruct [--dry-run|--apply] --seed <portable-seed> --target <ce-os-root>"
+}
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --dry-run) MODE="dry-run"; shift ;;
+        --apply) MODE="apply"; shift ;;
+        --seed) SEED="${2:-}"; shift 2 ;;
+        --target) TARGET="${2:-}"; shift 2 ;;
+        -h|--help) usage; exit 0 ;;
+        *) usage >&2; exit 2 ;;
+    esac
+done
+
+[[ -n "$SEED" ]] || { echo "ERROR: missing --seed" >&2; exit 2; }
+[[ -n "$TARGET" ]] || { echo "ERROR: missing --target" >&2; exit 2; }
+
+SEED="$(cd -P "$SEED" 2>/dev/null && pwd)" || {
+    echo "ERROR: seed not found: $SEED" >&2
+    exit 2
+}
+
+[[ -f "$SEED/metadata/identity.json" ]] || {
+    echo "ERROR: seed identity missing" >&2
+    exit 1
+}
+[[ -f "$SEED/metadata/copied.json" ]] || {
+    echo "ERROR: copied manifest missing" >&2
+    exit 1
+}
+[[ -f "$SEED/metadata/deferred.json" ]] || {
+    echo "ERROR: deferred manifest missing" >&2
+    exit 1
+}
+[[ -f "$SEED/metadata/SHA256SUMS" || -f "$SEED/SHA256SUMS" ]] || {
+    echo "ERROR: SHA256SUMS missing" >&2
+    exit 1
+}
+
+# The reconstruction implementation travels inside the verified seed payload.
+RECON="$SEED/payload/package/reconstruct.sh"
+VERIFY="$SEED/payload/package/tools/verify_seed.py"
+
+[[ -f "$VERIFY" ]] || {
+    echo "ERROR: carried seed verifier missing: $VERIFY" >&2
+    exit 1
+}
+[[ -f "$RECON" ]] || {
+    echo "ERROR: carried reconstruction entrypoint missing: $RECON" >&2
+    exit 1
+}
+
+echo "SEED=$SEED"
+echo "TARGET=$TARGET"
+echo "MODE=$MODE"
+
+python3 "$VERIFY" --seed "$SEED"
+echo "CARRIED_SEED_VERIFY=PASS"
+
+if [[ "$MODE" == "dry-run" ]]; then
+    bash "$RECON" --dry-run --seed "$SEED" --target "$TARGET"
+    echo "CARRIED_RECONSTRUCTION_DRY_RUN=PASS"
+    exit 0
+fi
+
+[[ ! -e "$TARGET" || -z "$(find "$TARGET" -mindepth 1 -maxdepth 1 -print -quit 2>/dev/null)" ]] || {
+    echo "ERROR: reconstruction target is not empty: $TARGET" >&2
+    exit 1
+}
+
+bash "$RECON" --apply --seed "$SEED" --target "$TARGET"
+
+[[ -f "$TARGET/.ce-os-reconstruction/state" ]] || {
+    echo "ERROR: reconstruction state missing" >&2
+    exit 1
+}
+grep -q '^status=reconstructed_from_verified_seed$' "$TARGET/.ce-os-reconstruction/state"
+
+echo "CARRIED_RECONSTRUCTION_APPLY=PASS"

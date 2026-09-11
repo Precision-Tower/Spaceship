@@ -4,7 +4,7 @@ SCRIPT_DIR="$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/../lib/common.sh"
 pt_initialize
 fail() { pt_status_line "MISSING" "$1" "$2"; exit 1; }
-pt_print_line "Precision Tower remote-access contract test"
+pt_print_line "CE-OS remote-access contract test"
 output="$($PACKAGE_VERIFY 2>&1)" || fail "verify" "verify.sh exited nonzero"
 printf '%s\n' "$output" | grep -qi "tailscale" || fail "tailscale verification" "verify output lacks tailscale status"
 printf '%s\n' "$output" | grep -qi "ssh" || fail "ssh verification" "verify output lacks ssh status"

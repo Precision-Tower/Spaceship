@@ -1,10 +1,7 @@
 #cloud-config
 #
 # CE-OS Ubuntu LTS autoinstall TEMPLATE.
-# This file is intentionally incomplete until target-machine identity,
-# credentials, accepted Ubuntu image, and storage device are supplied.
-#
-# It MUST NOT be used unattended without resolving every __CEOS_* value.
+# Resolve every __CEOS_* value before unattended use.
 
 autoinstall:
   version: 1
@@ -24,7 +21,6 @@ autoinstall:
     authorized-keys:
       - __CEOS_ADMIN_SSH_PUBLIC_KEY__
 
-  # Deliberately unresolved. CE-OS does not commit a destructive disk target.
   storage:
     config:
       - __CEOS_REVIEWED_STORAGE_CONFIGURATION__
@@ -42,6 +38,57 @@ autoinstall:
   late-commands:
     - curtin in-target --target=/target -- mkdir -p /var/lib/ce-os
     - curtin in-target --target=/target -- sh -c 'printf "%s\n" "CE-OS substrate installed; portable seed reconstruction pending" > /var/lib/ce-os/substrate-state'
+    - curtin in-target --target=/target -- systemctl enable ce-os-tailscale-enroll.service
 
   user-data:
     disable_root: true
+
+    write_files:
+      - path: /etc/ce-os/tailscale.env
+        owner: root:root
+        permissions: '0600'
+        content: |
+          TS_AUTHKEY='__CEOS_TAILSCALE_AUTH_KEY__'
+          TS_HOSTNAME='__CEOS_HOSTNAME__'
+
+      - path: /usr/local/sbin/ce-os-tailscale-enroll
+        owner: root:root
+        permissions: '0755'
+        content: |
+          #!/bin/bash
+          set -euo pipefail
+
+          source /etc/ce-os/tailscale.env
+
+          if ! command -v tailscale >/dev/null 2>&1; then
+              curl -fsSL https://tailscale.com/install.sh | sh
+          fi
+
+          systemctl enable --now tailscaled
+
+          tailscale up \
+              --auth-key="$TS_AUTHKEY" \
+              --hostname="$TS_HOSTNAME" \
+              --ssh
+
+          mkdir -p /var/lib/ce-os
+          touch /var/lib/ce-os/tailscale-enrolled
+          rm -f /etc/ce-os/tailscale.env
+
+      - path: /etc/systemd/system/ce-os-tailscale-enroll.service
+        owner: root:root
+        permissions: '0644'
+        content: |
+          [Unit]
+          Description=CE-OS Tailscale Enrollment
+          Wants=network-online.target
+          After=network-online.target
+          ConditionPathExists=!/var/lib/ce-os/tailscale-enrolled
+
+          [Service]
+          Type=oneshot
+          ExecStart=/usr/local/sbin/ce-os-tailscale-enroll
+          RemainAfterExit=yes
+
+          [Install]
+          WantedBy=multi-user.target

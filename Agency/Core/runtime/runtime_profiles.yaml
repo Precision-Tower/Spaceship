@@ -1,5 +1,9 @@
 RuntimeProfiles:
   active_profile: local_gpu
+  host_profiles:
+    windows: local_cpu
+    ubuntu: local_gpu
+    android: pixel_android
   profiles:
     local_cpu:
       runtime_endpoint: local
@@ -88,3 +92,26 @@ RuntimeProfiles:
         gpu_layers: 99
       paths:
         qwen3_4b_q4_k_m: local/Qwen3-4B-Q4_K_M.gguf
+    pixel_android:
+      runtime_endpoint: local
+      platform: android
+      role: mobile_inference_runtime
+      model_execution:
+        preferred_backend: llama_server
+        cuda: false
+        current_runtime: llama_cpp
+        current_model: Agency/weights/Qwen3-4B-Q4_K_M.gguf
+        endpoint: http://127.0.0.1:8081
+        recommended_context_tokens: 2048
+        memory_only_max_tokens: 64
+        reasoning_max_tokens: 512
+        patch_recommendation_max_tokens: 512
+      model_server:
+        server_path: ~/.ce-os/bin/llama-server
+        model_path_key: qwen3_4b_q4_k_m
+        host: 127.0.0.1
+        port: 8081
+        context_tokens: 2048
+        gpu_layers: 0
+      paths:
+        qwen3_4b_q4_k_m: Agency/weights/Qwen3-4B-Q4_K_M.gguf

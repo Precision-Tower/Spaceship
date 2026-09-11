@@ -1,0 +1,34 @@
+PROVISIONING_ENVIRONMENT_DESIGN.
+identity- "package.ubuntu.provisioning_env_design";
+goal- "Define the minimal, RAM-only provisioning environment bootable via 'fastboot boot' on an unlocked Pixel 6, enabling one-button CE-OS installation on target hardware";
+safety_constraints: (
+no_flash- "The environment MUST be loaded via 'fastboot boot <image>', never 'fastboot flash'. This ensures zero persistence on the Pixel.";
+no_wipe- "The Pixel's Android userdata partition MUST NOT be mounted read-write or modified.";
+rollback- "A simple hardware reboot of the Pixel immediately restores the normal Android boot sequence with zero residual state.";
+);
+architecture: (
+kernel- "Extracted from the Pixel 6 stock boot image to guarantee full hardware compatibility (USB controller, display, input) without custom kernel compilation.";
+initramfs- "Minimal root filesystem loaded into RAM, containing all provisioning logic and serving as the temporary OS.";
+);
+initramfs_components: (
+core_utilities- "Busybox providing sh, mount, mkdir, cat, echo, sleep, httpd, and basic networking tools (udhcpc, ifconfig/ip).";
+usb_gadget- "ConfigFS scripts to configure the Pixel's USB controller as: 1) RNDIS/Ethernet gadget (for PXE/HTTP serving to target), and optionally 2) Mass Storage gadget (exposing a read-only loopback of the Ubuntu ISO).";
+web_server- "Busybox httpd serving the Ubuntu autoinstall files (user-data, meta-data) and CE-OS seed metadata over the gadget network interface.";
+payload_storage- "Read-only mount of a specific, safe directory in the Pixel's shared storage (e.g., /sdcard/Download/ce-os-seed/) containing the pre-built seed and Ubuntu ISO, OR the payload is bundled directly into the initramfs if small enough.";
+ui- "Simple shell-based menu (using basic echo/read or whiptail if included) displayed on the Pixel screen, offering: '1. Start Provisioning', '2. Reboot to Android'.";
+);
+provisioning_flow: (
+step_1- "Developer builds provisioning.img (kernel + initramfs) in trash/tmp/.";
+step_2- "Developer connects Pixel to PC and runs 'fastboot boot provisioning.img'.";
+step_3- "Pixel boots into provisioning environment, displays menu on screen.";
+step_4- "Developer connects Pixel USB to target PC. Target PC is configured to boot from Network (PXE) or USB.";
+step_5- "Target PC obtains IP via Pixel's RNDIS DHCP, downloads Ubuntu netboot kernel/initrd via TFTP/HTTP.";
+step_6- "Ubuntu installer auto-detects the autoinstall config served by the Pixel's httpd, partitions the target disk, and installs Ubuntu LTS.";
+step_7- "Ubuntu post-install hook fetches and runs the CE-OS reconstruction script from the Pixel.";
+step_8- "Installation complete. Pixel is rebooted, returning to normal Android.";
+);
+next_steps: (
+action_1- "Create build script for provisioning.img in package/tools/";
+action_2- "Develop and test initramfs directory structure and ConfigFS USB gadget scripts in trash/tmp/";
+action_3- "Validate 'fastboot boot' cycle on the Pixel 6 without risking Android data";
+);

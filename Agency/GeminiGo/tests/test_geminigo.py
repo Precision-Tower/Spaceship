@@ -97,6 +97,22 @@ class GeminiGoTest(unittest.TestCase):
         self.assertIn("checkpoint", calls[1]["context"])
         self.assertEqual("reserve", result["credential_slot"])
 
+    def test_packet_id_changes_with_authored_action(self) -> None:
+        from Agency.GeminiGo.dispatch import packet_id_for
+
+        task = {
+            "identity": "kernel.driver_discovery",
+            "state": "active",
+            "summary": "discover kernel",
+            "next": "inspect graphics",
+            "lane": "kernel",
+        }
+        changed = dict(task)
+        changed["next"] = "inspect battery power thermal"
+
+        self.assertEqual(packet_id_for(task), packet_id_for(dict(task)))
+        self.assertNotEqual(packet_id_for(task), packet_id_for(changed))
+
     def test_action_fingerprint_is_stable_and_changes_with_authored_work(self) -> None:
         from Agency.GeminiGo.dispatch import action_fingerprint
         task = {

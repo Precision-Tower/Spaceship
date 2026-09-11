@@ -4,7 +4,7 @@ SCRIPT_DIR="$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/../lib/common.sh"
 pt_initialize
 fail() { pt_status_line "MISSING" "$1" "$2"; exit 1; }
-pt_print_line "Precision Tower controlled installation test"
+pt_print_line "CE-OS controlled installation test"
 tmp="$(mktemp -d "$PT_TEST_TMP_ROOT/tmp.XXXXXXXXXX")"
 trap 'rm -rf "$tmp"' EXIT
 bin_dir="$tmp/bin"
@@ -60,7 +60,7 @@ PATH="$mock_bin:$PATH" PT_HARDWARE_POLICY_FILE="$policy" PRECISION_BIN_DIR="$bin
 while IFS= read -r command_name; do dest="$bin_dir/$command_name"; src="$PACKAGE_COMMANDS/$command_name"; [[ -L "$dest" ]] || fail "installed wrapper" "$dest is not a symlink"; [[ "$(readlink "$dest")" == "$src" ]] || fail "installed wrapper" "$dest does not point to $src"; done < <(pt_operator_commands)
 pt_status_line "PASS" "wrapper install" "all operator wrappers installed as symlinks"
 [[ -f "$env_dir/default.env" ]] || fail "env install" "$env_dir/default.env missing"
-grep -q '^# Managed by Dashboard Precision Tower package$' "$env_dir/default.env" || fail "env marker" "managed marker missing"
+grep -q '^# Managed by Dashboard CE-OS package$' "$env_dir/default.env" || fail "env marker" "managed marker missing"
 grep -q "^DASHBOARD_ROOT=$REPO_ROOT$" "$env_dir/default.env" || fail "env root" "DASHBOARD_ROOT not derived"
 grep -q '^AGENCY_COMMAND=UNRESOLVED$' "$env_dir/default.env" || fail "env agency command" "AGENCY_COMMAND should remain unresolved"
 grep -q '^AGENCY_RUNTIME_STATUS=unresolved_no_persistent_repository_daemon$' "$env_dir/default.env" || fail "env agency runtime" "agency runtime status missing"

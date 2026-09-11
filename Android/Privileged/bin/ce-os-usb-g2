@@ -13,7 +13,7 @@ CONFIGFS = Path("/config/usb_gadget")
 G1 = CONFIGFS / "g1"
 G2 = CONFIGFS / "ceos"
 
-IMAGE = ROOT / "usb/bootstrap/ce-os-bootstrap.img"
+IMAGE = Path("/data/data/com.termux/files/home/ubuntu-26.04.1-live-server-amd64.iso")
 
 VENDOR = "0x1d6b"
 PRODUCT = "0x0104"

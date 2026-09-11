@@ -1,5 +1,5 @@
 [Unit]
-Description=Precision Tower Agency status console on %I
+Description=CE-OS Agency status console on %I
 Documentation=file:Docs/PrecisionTowerNode.md
 After=network-online.target
 

@@ -7,13 +7,17 @@ Canonical semantic doorway into the Quick Parse Standard subsystem.
 surface: (
 qps- "qps/qps";
 cpp- "qps/cpp";
+cipher- "qps/cipher";
 libs- "qps/libs";
+kernel- "qps/kernel/_index.qps";
 docs- "qps/qps/docs";
 );
 
 doors: (
-language- "qps/qps";
+language- "language.qps";
 native- "qps/cpp";
+kernel- "qps/kernel/_index.qps";
+cipher- "qps/cipher/_index.qps";
 libraries- "qps/libs/_index.qps";
 documentation- "qps/qps/docs";
 );
@@ -22,6 +26,7 @@ documents: (
 quicksheet- "qps/qps/docs/QPS.qps";
 checklist- "qps/qps/checklist.qps";
 native_checklist- "qps/checklist.qps";
+kernel_catalog- "qps/kernel/_index.qps";
 docs_checklist- "qps/qps/docs/CHECKLIST.md";
 readme- "qps/qps/docs/README.md";
 execution_handoff- "qps/qps/docs/EXECUTION_HANDOFF.qps";
@@ -34,13 +39,15 @@ cipher- "qps cipher <source> [--report]";
 cipher_authority- "qps/qps/cipher.qps";
 test_all- "ctest --test-dir qps/cpp/build-pixel --output-on-failure";
 test_qps_surface- "qps test path/file-or-folder";
-check_qps_file- "qps path/file.qps --check";
+check_qps_file- "qps check <file.qps> or qps path/file.qps --check";
 scalar_get- "qps path/file.qps --get path.to.value";
 query_qps- "qps qry <selector> [path]";
 probe_qps- "qps probe <file> <line> [radius] or qps probe <file.qps> <structural.path>";
 scope_qps- "qps scope <file.qps> <structural.path>";
 scout_qps- "qps scout <indexed-module-or-_index.qps> <authored-identity>";
 screenshot_qps- "qps screenshot captures the current Pixel display, temporarily publishes only that PNG, prints its direct HTTPS URL, and removes the repository-local transient capture";
+refs_qps- "qps refs [--absent] <path>";
+move_qps_file- "qps move <old.qps> <new.qps>";
 );
 
 source_navigation: (
@@ -51,17 +58,18 @@ boundary- "source-navigation tools do not recursively wander the filesystem";
 
 rules: (
 local_context_first- "read this index when entering qps";
-language_reference- "read qps/qps/docs/QPS.qps for canonical language syntax";
+language_reference- "read qps/language.qps for the canonical model-facing programming-language reference";
 work_status- "read qps/qps/checklist.qps for authored QPS language/tooling state and qps/checklist.qps for native runtime or kernel continuation";
 docs_checklist_role- "qps/qps/docs/CHECKLIST.md is supporting Markdown history, not the current continuation authority";
 qps_authority- "QPS-authored orchestration and semantic authority live under qps/qps";
 native_boundary- "qps/cpp is the native runtime substrate; unfinished native and kernel work is tracked in qps/checklist.qps";
-kernel_discovery- "read qps/checklist.qps for the bounded Pixel driver and userspace-ABI discovery plan";
+kernel_discovery- "read qps/kernel/_index.qps for observed Pixel kernel and hardware-control surfaces, and qps/checklist.qps for active discovery state";
 do_not_duplicate- "grammar and runtime details belong to their owning files, not this index";
 );
 
 development_state: (
 native_checklist- "qps/checklist.qps";
+kernel_authority- "qps/kernel/_index.qps";
 language_checklist- "qps/qps/checklist.qps";
 dif_authority- "qps/qps/dif.qps";
 save_authority- "qps/qps/save.qps";

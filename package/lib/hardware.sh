@@ -222,7 +222,7 @@ pt_hardware_acceptance_report() {
     fi
 
     if (( failures == 0 )); then
-        PT_HARDWARE_LAST_REASON="host satisfies Precision Tower hardware policy"
+        PT_HARDWARE_LAST_REASON="host satisfies CE-OS hardware policy"
         pt_status_line "PASS" "precision tower acceptance" "$PT_HARDWARE_LAST_REASON"
         return 0
     fi

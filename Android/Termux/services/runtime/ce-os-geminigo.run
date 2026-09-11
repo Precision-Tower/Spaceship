@@ -1,0 +1,3 @@
+#!/data/data/com.termux/files/usr/bin/sh
+cd "$HOME/ce-os"
+exec python3 -m Agency.GeminiGo.daemon

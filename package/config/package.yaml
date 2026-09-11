@@ -162,4 +162,4 @@ unresolved_inputs:
     reason: Firmware setting cannot be proven from the repository.
   durable_remote_acceptance_test:
     status: unresolved
-    reason: The Durant acceptance test requires the real Precision Tower and an external remote device.
+    reason: The Durant acceptance test requires the real CE-OS and an external remote device.

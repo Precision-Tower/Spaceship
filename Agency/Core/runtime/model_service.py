@@ -10,7 +10,11 @@ from typing import Any
 import urllib.error
 import urllib.request
 
-from typer import prompt
+try:
+    from typer import prompt
+except ImportError:
+    def prompt(text: str, *args: object, **kwargs: object) -> str:
+        return input(f"{text}: ")
 
 try:
     import yaml

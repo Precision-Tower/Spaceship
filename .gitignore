@@ -110,3 +110,19 @@ Thumbs.db
 !/trash/retired/.gitkeep
 /trash/recovered/*
 !/trash/recovered/.gitkeep
+
+# CE-OS disposal / trash boundary
+/trash/*
+!/trash/.gitkeep
+
+# Agency Agent operational work & inspection artifacts
+/Agency/Agents/*/work/
+/Agency/audit/output/history/
+/Agency/audit/evidence/
+
+# Backup & temporary leftovers
+*.bak*
+
+# Local kernel binaries & build output
+/qps/kernel/*
+!/qps/kernel/.gitkeep

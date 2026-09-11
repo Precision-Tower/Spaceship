@@ -11,7 +11,7 @@ case "${1:-}" in
     "") ;;
     *) pt_status_line "WARNING" "usage" "update [--check|--plan|--apply]"; exit 2 ;;
 esac
-pt_print_line "Precision Tower update workflow"
+pt_print_line "CE-OS update workflow"
 pt_require_dashboard_root || exit 1
 if pt_have_command git; then
     branch="$(cd "$REPO_ROOT" && git branch --show-current 2>/dev/null || true)"

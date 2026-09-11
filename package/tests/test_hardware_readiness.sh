@@ -5,7 +5,7 @@ source "$SCRIPT_DIR/../lib/common.sh"
 source "$SCRIPT_DIR/../lib/hardware.sh"
 pt_initialize
 fail() { pt_status_line "MISSING" "$1" "$2"; exit 1; }
-pt_print_line "Precision Tower hardware readiness test"
+pt_print_line "CE-OS hardware readiness test"
 
 tmp="$(mktemp -d "$PT_TEST_TMP_ROOT/tmp.XXXXXXXXXX")"
 trap 'rm -rf "$tmp"' EXIT

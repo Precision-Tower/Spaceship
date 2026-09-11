@@ -3,7 +3,7 @@
 # Do not install this file as a systemd unit until AGENCY_COMMAND is backed by a real daemon-style repository entry point.
 
 [Unit]
-Description=UNRESOLVED Agency runtime for Precision Tower Node
+Description=UNRESOLVED Agency runtime for CE-OS Node
 Documentation=file:Docs/PrecisionTowerNode.md
 Wants=network-online.target tailscaled.service
 After=network-online.target tailscaled.service

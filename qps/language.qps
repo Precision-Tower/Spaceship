@@ -1,0 +1,170 @@
+QPS_LANGUAGE.
+
+purpose: def"
+Canonical model-facing Quick Parse Standard programming-language reference.
+
+Read this authority when entering CE-OS to understand how authored QPS is
+structured, addressed, evaluated, and executed. Implementation and passing
+regression behavior outrank stale comments or historical syntax.
+";
+
+identity: (
+repository_namespace- "CE-OS exposes one repository-wide structural namespace rather than a second local identity system";
+canonical_address- "folder/file.key.term.item-";
+file_context- "folder/file identifies the authored QPS document or module context";
+key_step- "A dot after the file walks into Key identity";
+term_step- "A following dot walks into Term identity";
+item_step- "A following name selects Item identity";
+item_assertion- "A final - in structural navigation explicitly requires the final target to be an Item/value";
+reference- "[>folder/file.key.term.item-] dereferences an existing structural address";
+local_reference- "[>item-] or [>key.term.item-] resolves structurally from the connected authored context";
+single_identity_rule- "Container or runtime-value syntax must not invent a competing numeric or local object identity namespace";
+);
+
+structure: (
+key- "key. begins a Key namespace";
+key_boundary- "A Key paragraph ends at the first blank line at the Key's own structural depth";
+term- "term: value; gives a Term semantic identity and an owned value or structure";
+item- "item- value; binds an Item identity to a value";
+container- "name: ( ... ); groups authored child structure without replacing repository structural identity";
+dictionary_compatibility- "Bracket dictionary forms exist in current implementation and authored compatibility surfaces, but numeric dictionary identity is not the canonical repository identity model";
+dictionary_nested_boundary- "A Dictionary-valued Item requires both the Dictionary terminator and owning Item terminator";
+);
+
+values: (
+primitive_number- "Numeric literals are runtime values";
+primitive_string- "Quoted strings are runtime values";
+primitive_boolean- "Boolean values are runtime values where accepted by the current expression/runtime path";
+primitive_null- "Null exists in the runtime value model where accepted by the current expression/runtime path";
+item_expression- "An ordinary Item may bind a full expression through the shared expression grammar";
+arithmetic- "Arithmetic expressions may be bound directly to Items";
+comparison- "Comparison expressions are executable expression values in supported statement and Item contexts";
+identifier- "Identifiers resolve through the current authored/runtime binding environment";
+reference_value- "A structural [>...] reference resolves an authored structural value";
+calculation_compatibility- "%target: expression remains compatibility syntax; direct Item-bound expressions are canonical when the intended product is a value";
+function_call- "Expression parsing contains FunctionCallNode support for identifier(arg1, arg2, ...), but a function name is not automatically a core QPS constructor";
+);
+
+sequence: (
+runtime_status- "RuntimeValue SEQUENCE is a proven distinct runtime value";
+contents- "Runtime SEQUENCE supports nested heterogeneous RuntimeValues";
+inspection- "-sequence_size(value- sequence;) and -sequence_at(value- sequence; index- n;) consume sequence values through current execution syntax";
+authored_constructor- "sequence(value_a, value_b, ...) is the canonical authored QPS SEQUENCE value constructor; sequence() constructs an empty sequence";
+constructor_status- "sequence(...) is a core value expression evaluated directly into RuntimeValue SEQUENCE rather than a host action or Dictionary surrogate";
+cipher_rule- "Cipher must not lower source arrays or lists through Dictionary merely because authored SEQUENCE construction is not yet defined";
+);
+
+references: (
+structural_input- "[>...] is structural dereference into the QPS namespace";
+item_expectation- "Place the final - inside the reference when the final structural target must be an Item";
+inline_input- "[< code] is the QPS Inline terminal/source-input surface";
+inline_boundary- "[< ...] is not repository structural insertion and is not the historical library check-in operation";
+direction_rule- "[< ...] feeds authored source toward QPS; [>...] resolves authored structure from the QPS namespace";
+);
+
+execution: (
+block- "{ ... } is executable QPS syntax, not generic value grouping";
+legacy_definition- "{Name: ...} is the historical reusable execution-definition form and remains present during migration";
+term_owned_body- "name: {...}; is the canonical direction for giving a Term semantic identity whose value is an executable body";
+term_owned_status- "Term-owned execution bodies parse, but reusable runtime registration and instantiation are still being completed";
+fresh_call- "{>Name: ...} invokes a reusable execution using the execution grammar where that definition form is supported";
+arguments- "Execution bodies may own input bindings and invocation overrides according to the current execution parser";
+host_action- "-action(...) invokes an execution/native host-action surface";
+return- "-return expression; returns a value from executable QPS";
+assertion- "-assert expression; provides executable assertion behavior";
+if- "-if condition { ... } provides conditional control flow";
+while- "-while condition { ... } provides looping control flow";
+scope- "Execution evaluation uses runtime bindings while structural references continue to resolve authored identity";
+top_level- "Connected authored module documents may contribute reusable definitions, while the selected entry document owns top-level execution calls";
+);
+
+braces: (
+meaning- "Curly braces delimit executable contents";
+not_structure- "Braces do not create ordinary Key, Term, Item, Container, Dictionary, or repository-path identity";
+definition_context- "In historical {Name: ...} syntax the opening brace begins a reusable execution definition";
+term_context- "In name: {...}; syntax the Term owns semantic identity and the braces own executable contents";
+control_context- "Control-flow statements use braces for the statements conditionally or repeatedly executed";
+call_context- "Historical {>Name: ...} syntax represents execution instantiation/call rather than structural [>...] dereference";
+);
+
+calls: (
+expression_call- "identifier(...) has an AST/parser expression surface";
+host_call- "-identifier(...) is the established authored action-call surface used by current QPS programs";
+named_arguments- "Current action calls commonly author arguments as name- expression; inside parentheses";
+core_constructor_rule- "Do not classify an identifier(...) spelling as a core value constructor until parser plus evaluator behavior proves the produced RuntimeValue semantics";
+);
+
+runtime: (
+value_model- "Runtime values are distinct from authored structural identity";
+sequence- "SEQUENCE is a proven runtime kind";
+dictionary- "Dictionary behavior remains available where genuinely dictionary-shaped runtime semantics are required";
+structure_values- "Native structural introspection may return runtime representations of authored Key, Term, Item, and document structure";
+boundary- "Filesystem, parsing, document lifetime, path connectivity, host integration, and irreducible machine capability remain native until semantic reduction into authored QPS is proven";
+);
+
+modules: (
+connected_environment- "An indexed QPS directory establishes a connected authored module environment";
+visibility- "Immediate authored QPS documents in a connected module may contribute reusable execution definitions";
+imports- "Connected authored execution does not require a separate import/include syntax";
+entry- "Only the selected entry document supplies top-level execution calls";
+);
+
+punctuation: (
+dot- "In structural identity, . traverses file, Key, Term, and child identity";
+hyphen_suffix- "In declarations, name- introduces Item identity; in structural references, a final - asserts Item/value selection";
+colon- "Colon binds a named Term, argument, execution-definition component, or other grammar-owned named value according to context";
+semicolon- "Semicolon terminates authored bindings and structures where required by their grammar";
+parentheses- "Parentheses delimit Containers, call arguments, and grammar-specific grouped expression contexts";
+brackets_out- "[>...] performs structural dereference";
+brackets_in- "[< code] belongs to the QPS Inline source-input surface";
+braces_exec- "{...} delimits executable QPS";
+percent- "% is retained calculation/binding compatibility syntax and is not required for ordinary Item expressions";
+minus_prefix- "A leading - on execution statements/actions identifies executable operation syntax rather than structural Item declaration";
+);
+
+whitespace: (
+key_paragraphs- "Blank-line paragraph boundaries are semantic for Key ownership";
+nested_structure- "Nested authored structure remains within the containing structural source span";
+ordinary_spacing- "Do not infer additional whitespace semantics unless the lexer/parser and regressions prove them";
+source_spans- "Key, Term, and Item own truthful physical source-line spans used by probe and scope";
+);
+
+canonical_vs_compatibility: (
+canonical_identity- "folder/file.key.term.item- and [>...item-] are the current structural identity/reference model";
+canonical_value- "Direct Item-bound expressions are preferred when the product is a value";
+canonical_execution_direction- "Term-owned name: {...}; is the migration direction for reusable execution identity";
+compat_calculation- "%target: expression remains supported";
+compat_execution- "{Name: ...} and {>Name: ...} remain historical/current compatibility surfaces while reusable Term-owned execution migration completes";
+legacy_dictionary_identity- "Historical numeric Dictionary input/output references are implementation residue and are not canonical structural identity";
+legacy_library_brackets- "Historical descriptions of [<] as library check-in and [>] as library check-out are retired";
+);
+
+not_yet_canonical: (
+sequence_literal- "No separate bracket sequence literal is defined; canonical authored sequence construction is sequence(...)";
+
+record_value: (
+runtime_kind- "RuntimeValue RECORD is a distinct anonymous keyed-value runtime value";
+syntax- "record(field_name_string, value, ...) is the canonical authored QPS record value constructor";
+empty- "record() constructs an empty RECORD";
+field_identity- "Record field names are value-level strings and are not repository structural identities";
+pairing- "Arguments are alternating field-name STRING and value expressions";
+duplicates- "Duplicate field names are rejected";
+nesting- "Record values may contain heterogeneous nested record(...) and sequence(...) values";
+dictionary_boundary- "RECORD is distinct from legacy numeric-ID Dictionary semantics";
+structure_boundary- "RECORD is distinct from RuntimeValue STRUCTURE, which remains a handle into authored repository structure";
+identity_boundary- "record(...) creates no folder/file.key.term.item- namespace and no alternate structural identity";
+);
+
+record_mapping- "Generic source-language record/mapping lowering has not yet been assigned a canonical authored representation";
+term_execution_runtime- "Term-owned executable bodies parse but are not yet fully registered/instantiated through the reusable execution runtime";
+cipher_structured_values- "Cipher list, mapping, named-argument, constructor, dataclass, and generic value-object lowering remains active work";
+rule- "Unimplemented syntax must remain explicit rather than being silently inferred from runtime capability or stale comments";
+);
+
+authority: (
+current_reference- "qps/language.qps";
+language_work- "qps/qps/checklist.qps";
+native_implementation- "qps/cpp";
+runtime_truth- "Current implementation plus green regression behavior";
+stale_docs- "Historical docs and comments are evidence only when they agree with current implementation and current authored authority";
+);

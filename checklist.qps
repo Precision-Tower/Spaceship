@@ -89,49 +89,210 @@ tasks: (
 
 task_1: (
 identity- "root.repository_authority_artifacts";
-summary- "Validate and reconcile the new root CE-OS authority documents and remove accidental zero-byte root artifacts";
-state- "active";
+summary- "Validate and reconcile the new root CE-OS authority documents and classify previously observed unexplained root artifacts without destructive assumptions";
+state- "complete";
 
 current: (
 item_1- "_index.qps now documents Checklist, Save, History, structural navigation, QPS syntax, continuation authority, and goals.qps as directional rather than implementation evidence";
 item_2- "goals.qps defines intended CE-OS architecture, conversion, kernel discovery, HostPlatform, provisioning, compute, and QPS-owned userspace direction";
 item_3- "docs/CAUSAL_ENGINEERING_PRINCIPLE.md records the whitebox causal Engineering principle and HEV modeling intent";
 item_4- "history.qps is the repository-root semantic history ledger and already contains accepted QPS and Cipher accomplishments";
-item_5- "Eight untracked zero-byte root files exist: 0, =, IdentifierNode, SymbolReferenceNode, TYPE_NUMERIC, none, v-], and void";
-item_6- "The zero-byte names resemble leaked command or parser tokens rather than authored CE-OS repository documents";
+item_5- "Eight untracked zero-byte root files were previously observed at the repository root: 0, =, IdentifierNode, SymbolReferenceNode, TYPE_NUMERIC, none, v-], and void; they are not present in the current root inventory";
+item_6- "The observed names resemble command or parser tokens, but appearance alone does not establish origin, ownership, or disposability";
 );
 
 documentation: (
 required- true;
 authority- "_index.qps";
 goal- "Keep root durable authority consistent with goals.qps, Checklist/Save/History lifecycle, and current QPS navigation semantics";
-state- "active";
+state- "complete";
 );
 
 steps: (
 step_1: (
 goal- "Validate root QPS authority documents with the current QPS checker";
-state- "ready";
+state- "complete";
 );
 step_2: (
-goal- "Determine whether the eight zero-byte root files are accidental artifacts and remove them only if repository evidence confirms they have no authored ownership";
-state- "ready";
+goal- "Determine the provenance and ownership of the eight historically observed zero-byte root files; preserve unknown entries and permit deletion only with positive evidence of disposability or explicit authority";
+state- "complete";
+resolution- "Bounded investigation is complete under the Operator-accepted evidence limit; unresolved lifecycle facts remain explicitly unproven";
 );
 step_3: (
 goal- "Verify root documentation and checklist index after reconciliation";
-state- "waiting";
+state- "complete";
 );
 );
 
-next- "Check root authority documents and search bounded repository references for the eight zero-byte root filenames before changing them";
+findings: (
+observation- "Commit ea8632e68c57883c495a0558eb287958ecf039a8, dated 2026-09-07 16:14:54 -05:00, records all eight filenames as untracked zero-byte entries; the commit records an observation, not their creation or creator";
+current_inventory- "Read-only exact-path inspection at HEAD 20e1512d8228be4a79215791d8137111c2f726eb found all eight absent, including dangling-symlink checks";
+git_evidence- "git log --all on the eight literal root paths returned no tracked path history; this cannot establish the lifecycle of untracked files";
+recovery_evidence- "Bounded inventories of trash/recovered and trash/retired found no exact filename matches among 29 and 1 entries respectively";
+historical_inventory- "trash/tmp/root-entry-baseline.txt lists 23 root entries without the eight names and has mtime 2026-09-07 17:03:58 -05:00; its producer is unverified, so this is a retained inventory witness rather than proof of a deletion time";
+cleanup_evidence- "trash/tmp/post-cleanup-strays.txt is empty with mtime 2026-09-07 17:28:10 -05:00; without its producing command, emptiness proves neither what was checked nor what was removed";
+token_evidence- "qps/cpp/src/ast/ast_node.hpp:33-34 declares SymbolReferenceNode and IdentifierNode; qps/cpp/src/tokens/h/token.hpp:20 declares TYPE_NUMERIC. Source-token ownership does not establish ownership of same-named root files";
+search_boundary- "Root authority and historical notes, selected recovered text, immediate trash/tmp text, and a bounded pattern search of logs/privileged-audit.log supplied no creator or removal command; these searches do not prove absence of references elsewhere";
+unresolved- "The creator, creation workflow, filesystem ownership at creation, runtime purpose, and disappearance mechanism remain unproven for all eight entries";
+);
+
+proof: (
+root_validation- "qps check passed for _index.qps, goals.qps, checklist.qps, and history.qps before reconciliation";
+checklist_navigation- "qps checklist and qps checklist 1 1 successfully resolved the assigned authored task";
+preservation- "This investigation deleted, moved, or recreated none of the eight entries and did not alter unknown artifacts";
+);
+
+decisions: (
+operator_evidence_limit- "Operator explicitly accepted the documented evidence limit: the missing attributable witness prevents reconstruction of the untracked lifecycle; creator, creation workflow, ownership-at-creation, runtime purpose, and disappearance mechanism remain unproven";
+preservation_boundary- "Deletion authority is NOT GRANTED; unknown artifacts remain preserve-first. Acceptance of the evidence limit grants no disposal authority";
+completion_boundary- "Completion accepts the bounded investigation and validated documentation, not a proven artifact lifecycle; task scope is unchanged";
+acceptance_boundary- "Do not run qps Save, stage, or commit in this assignment";
+);
+
+next- "Complete under the Operator-accepted evidence limit; retain the unresolved findings and preserve-first policy. Save and Git acceptance remain outside this assignment";
 
 done_when: (
 condition_1- "_index.qps, goals.qps, checklist.qps, and history.qps pass applicable QPS validation";
 condition_2- "Root authority documents have explicit non-conflicting roles";
-condition_3- "Accidental zero-byte root artifacts are removed only after bounded evidence establishes no authored ownership";
+condition_3- "No unknown repository entry is deleted because it is empty, malformed-looking, untracked, generated-looking, or unreferenced; deletion requires positive disposability evidence or explicit authority";
 condition_4- "qps checklist regenerates successfully after reconciliation";
 );
 );
 
+);
+);
+
+task_2: (
+identity- "package.reconcile_with_repository";
+summary- "Reconcile package/ against current repository state and ensure all connections are established";
+state- "complete";
+meaning- "The package/ directory has evolved significantly but may not be fully integrated with the root CE-OS authority model and other surfaces";
+steps: (
+step_1: (
+goal- "Add package/ to root surface in _index.qps";
+state- "complete";
+);
+step_2: (
+goal- "Verify package/_index.qps accurately reflects current package/ structure";
+state- "complete";
+);
+step_3: (
+goal- "Check if Agency, Engineering, Android, UI reference package appropriately";
+state- "complete";
+);
+step_4: (
+goal- "Update package/checklist.qps step_13 to complete";
+state- "waiting";
+);
+step_5: (
+goal- "Final verification that package is fully integrated";
+state- "complete";
+);
+);
+);
+
+task_3: (
+identity- "package.pixel_recovery_bootloader";
+summary- "Design and implement Pixel-hosted recovery environment that boots into CE-OS installation interface";
+state- "active";
+meaning- "Transform the Pixel 6 into a bootloader device that can boot into a recovery environment, recognize target hardware, find Ubuntu LTS, and provide one-button CE-OS installation";
+constraints: (
+item_1- "Pixel's Android development environment must remain functional throughout development";
+item_2- "Any boot process modification requires a verified rollback-safe plan before execution";
+item_3- "Must not wipe or corrupt the Pixel's existing Android installation or Termux environment";
+item_4- "Recovery environment must be testable without risking the primary development setup";
+item_5- "Must preserve the ability to develop and test on the Pixel itself";
+);
+steps: (
+step_1: (
+goal- "Reconnaissance: Document Pixel 6 boot architecture, boot modes, and recovery mechanisms";
+state- "complete";
+);
+step_2: (
+goal- "Feasibility analysis: Determine if custom recovery can coexist with Android development environment";
+state- "complete";
+);
+step_3: (
+goal- "Safety design: Create rollback-safe plan for any Pixel boot modifications";
+state- "waiting";
+);
+step_4: (
+goal- "Architecture design: Define recovery environment boot flow and installation interface";
+state- "waiting";
+);
+step_5: (
+goal- "Proof of concept: Test recovery boot mechanism in disposable environment";
+state- "waiting";
+);
+);
+);
+
+task_3: (
+identity- "package.pixel_recovery_bootloader";
+summary- "Design and implement Pixel-hosted recovery environment that boots into CE-OS installation interface";
+state- "active";
+meaning- "Transform the Pixel 6 into a bootloader device that can boot into a recovery environment, recognize target hardware, find Ubuntu LTS, and provide one-button CE-OS installation";
+constraints: (
+item_1- "Pixel's Android development environment must remain functional throughout development";
+item_2- "Any boot process modification requires a verified rollback-safe plan before execution";
+item_3- "Must not wipe or corrupt the Pixel's existing Android installation or Termux environment";
+item_4- "Recovery environment must be testable without risking the primary development setup";
+item_5- "Must preserve the ability to develop and test on the Pixel itself";
+);
+steps: (
+step_1: (
+goal- "Reconnaissance: Document Pixel 6 boot architecture, boot modes, and recovery mechanisms";
+state- "complete";
+);
+step_2: (
+goal- "Feasibility analysis: Determine if custom recovery can coexist with Android development environment";
+state- "complete";
+);
+step_3: (
+goal- "Safety design: Create rollback-safe plan for any Pixel boot modifications";
+state- "waiting";
+);
+step_4: (
+goal- "Architecture design: Define recovery environment boot flow and installation interface";
+state- "waiting";
+);
+step_5: (
+goal- "Proof of concept: Test recovery boot mechanism in disposable environment";
+state- "waiting";
+);
+);
+);
+
+task_4: (
+identity- "package.pixel_provisioning_environment_design";
+summary- "Design the custom provisioning environment that runs on the unlocked Pixel 6 to install CE-OS on target hardware";
+state- "active";
+meaning- "Leverage the unlocked Pixel 6 bootloader to safely boot a custom provisioning environment that presents the Ubuntu LTS autoinstall payload and CE-OS seed to a target machine";
+findings: (
+bootloader_state- "UNLOCKED (ro.boot.flash.locked=0, verifiedbootstate=orange)";
+safety_status- "PASS: 'fastboot boot' allows RAM-only execution without flashing or wiping, satisfying all safety constraints";
+);
+architecture_options: (
+option_1_usb_mass_storage- "Pixel acts as a USB boot drive. Target boots from Pixel. Requires USB gadget mass storage configuration in custom environment.";
+option_2_pxe_network_boot- "Pixel acts as a local network boot server (DHCP/TFTP/HTTP). Target boots via PXE over USB Ethernet gadget. More reliable than USB mass storage booting from Android.";
+recommended- "option_2_pxe_network_boot (with option_1 as fallback)";
+);
+steps: (
+step_1: (
+goal- "Design the minimal Linux initramfs or custom recovery image structure";
+state- "complete";
+);
+step_2: (
+goal- "Define the USB gadget configuration (RNDIS/Ethernet + optional Mass Storage)";
+state- "complete";
+);
+step_3: (
+goal- "Create the provisioning UI/CLI (simple menu to trigger target installation)";
+state- "waiting";
+);
+step_4: (
+goal- "Build and test 'fastboot boot' provisioning image in trash/tmp/";
+state- "waiting";
+);
 );
 );

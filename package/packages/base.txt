@@ -1,4 +1,4 @@
-# Precision Tower base packages.
+# CE-OS base packages.
 # Do not install from this file until a future install phase supplies machine inputs.
 
 python3

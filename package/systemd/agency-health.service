@@ -1,5 +1,5 @@
 [Unit]
-Description=Precision Tower Agency health monitor
+Description=CE-OS Agency health monitor
 Documentation=file:Docs/PrecisionTowerNode.md
 Wants=network-online.target
 After=network-online.target

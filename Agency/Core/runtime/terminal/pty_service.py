@@ -104,8 +104,21 @@ class PtySessionManager:
             pythonpath_parts.insert(0, str(self.repo_root))
         env["PYTHONPATH"] = os.pathsep.join(pythonpath_parts)
 
+        qps_terminal_rc = self.repo_root / "qps" / "bin" / "terminal.bash"
+
+        if not qps_terminal_rc.is_file():
+            raise ValueError(
+                f"missing QPS terminal bridge: {qps_terminal_rc}"
+            )
+
         process = subprocess.Popen(
-            ["/bin/bash", "--noprofile", "--norc", "-i"],
+            [
+                "/bin/bash",
+                "--noprofile",
+                "--rcfile",
+                str(qps_terminal_rc),
+                "-i",
+            ],
             stdin=slave_fd,
             stdout=slave_fd,
             stderr=slave_fd,

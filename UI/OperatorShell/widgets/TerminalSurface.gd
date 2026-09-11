@@ -511,6 +511,13 @@ func _event_to_sequence(event: InputEventKey) -> String:
 				return ""
 	match event.keycode:
 		KEY_ENTER, KEY_KP_ENTER:
+			# Readline accepts LF as submit. For Shift+Enter, send the
+			# terminal Insert-key sequence first; in the current Bash/readline
+			# stack that enters quoted-insert, so the following LF becomes a
+			# literal newline in the editing buffer instead of accept-line.
+			# Interactive PTY applications still receive raw terminal bytes.
+			if event.shift_pressed:
+				return String.chr(27) + "[2~\n"
 			return "\n"
 		KEY_BACKSPACE:
 			return String.chr(127)

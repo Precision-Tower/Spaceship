@@ -4,7 +4,7 @@ SCRIPT_DIR="$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/../lib/common.sh"
 pt_initialize
 fail() { pt_status_line "MISSING" "$1" "$2"; exit 1; }
-pt_print_line "Precision Tower operator command test"
+pt_print_line "CE-OS operator command test"
 while IFS= read -r script; do bash -n "$script" || fail "bash syntax" "$script"; pt_status_line "PASS" "bash syntax" "$script"; done < <(find "$PACKAGE_ROOT" -type f \( -name '*.sh' -o -path "$PACKAGE_ROOT/commands/*" \) | sort)
 while IFS= read -r command_name; do path="$PACKAGE_COMMANDS/$command_name"; [[ -x "$path" ]] || fail "$command_name wrapper" "$path is not executable"; grep -q "^$command_name$" "$PACKAGE_MANIFESTS/commands.txt" || fail "$command_name manifest" "command missing from manifest"; pt_status_line "PASS" "$command_name wrapper" "$path"; done < <(pt_operator_commands)
 safe_invocations=("$PACKAGE_COMMANDS/help" "$PACKAGE_COMMANDS/status" "$PACKAGE_COMMANDS/doctor" "$PACKAGE_COMMANDS/logs" "$PACKAGE_COMMANDS/browser --check" "$PACKAGE_COMMANDS/desktop --check" "$PACKAGE_COMMANDS/dashboard --check" "$PACKAGE_COMMANDS/update --check" "$PACKAGE_COMMANDS/restart --check" "$PACKAGE_COMMANDS/shutdown --check")

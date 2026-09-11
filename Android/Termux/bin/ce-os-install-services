@@ -36,12 +36,17 @@ install_service \
     ce-os-privileged-broker \
     "$TEMPLATES/ce-os-privileged-broker.run"
 
+install_service \
+    ce-os-geminigo \
+    "$TEMPLATES/ce-os-geminigo.run"
+
 echo "CE-OS services installed:"
 for service in \
     ce-os-api \
     ce-os-live-sync \
     ce-os-guardian \
-    ce-os-privileged-broker
+    ce-os-privileged-broker \
+    ce-os-geminigo
 do
     echo "  $service"
 done

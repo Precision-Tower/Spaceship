@@ -1,4 +1,4 @@
-# Precision Tower desktop and browser packages.
+# CE-OS desktop and browser packages.
 # The desktop must remain on-demand and must not own Agency runtime.
 
 xfce4

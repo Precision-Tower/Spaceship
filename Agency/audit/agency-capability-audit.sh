@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-REPO_ROOT="${1:-$HOME/Core/Dashboard}"
-PYTHON_RUNNER=("/home/spaztic/miniconda3/envs/weebo_env/bin/python")
+REPO_ROOT="${1:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
+PYTHON_RUNNER=("${PYTHON:-python3}")
 AUDIT_ROOT="$REPO_ROOT/Agency/audit"
 OUTPUT_ROOT="$AUDIT_ROOT/output"
 HISTORY_ROOT="$OUTPUT_ROOT/history"
 EVIDENCE_ROOT="$AUDIT_ROOT/evidence"
-REGISTRY_PATH="$REPO_ROOT/Agency/Core/cli/registry/commands.yaml"
+REGISTRY_PATH="$REPO_ROOT/Agency/Core/interfaces/cli/registry/commands.yaml"
 OBSERVATIONS_PATH="$AUDIT_ROOT/observations.json"
 
 STAMP="$(date +%Y-%m-%d_%H-%M-%S)"

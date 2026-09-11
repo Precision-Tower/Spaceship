@@ -12,7 +12,7 @@ tasks: (
 
 task_1: (
 identity- "package.portable_ce_os_bootstrap";
-summary- "Generalize the existing Precision Tower deployment package into a portable CE-OS seed and one-flow Ubuntu LTS reconstruction path, then prove recovery without risking the Pixel control plane";
+summary- "Generalize the existing CE-OS deployment package into a portable CE-OS seed and one-flow Ubuntu LTS reconstruction path, then prove recovery without risking the Pixel control plane";
 state- "active";
 
 meaning- "CE-OS can leave the Pixel as a preserved provisioning seed, reconstruct itself on a clean Ubuntu LTS laptop, and continue development there without losing authored state or depending on undocumented machine history";
@@ -27,7 +27,7 @@ path_5- "qps";
 
 constraints: (
 item_1- "Preserve the one-root CE-OS topology; do not create a sibling or congruent CE-OS repository";
-item_2- "Preserve the existing package implementation and generalize it incrementally rather than replacing proven Precision Tower behavior";
+item_2- "Preserve the existing package implementation and generalize it incrementally rather than replacing proven CE-OS behavior";
 item_3- "Do not delete the Pixel checkout or treat a package copy as authority before recovery proof";
 item_4- "Do not mutate Android runtime, hotspot, cellular, tethering, SSH, netd, USB gadget mode, partitions, boot state, or filesystems without a separately proven rollback-safe plan";
 item_5- "Use repository-local trash/tmp for disposable CE-OS test state";
@@ -47,7 +47,7 @@ goal- "Establish package/_index.qps and package/checklist.qps as package workflo
 state- "complete";
 );
 step_3: (
-goal- "Convert Precision Tower assumptions into explicit machine-profile policy while retaining its existing tests and behavior";
+goal- "Convert CE-OS assumptions into explicit machine-profile policy while retaining its existing tests and behavior";
 state- "complete";
 );
 step_4: (
@@ -92,15 +92,15 @@ state- "complete";
 );
 step_13: (
 goal- "Prove package tests, seed build and verify, reconstruction dry-run, failure integrity, exact Git identity, and single-root behavior on disposable state";
-state- "waiting";
+state- "complete";
 );
 step_14: (
 goal- "Inspect existing Android USB bootstrap implementation and design the rollback-safe phone-as-carrier or boot-device mechanism without activating it";
-state- "waiting";
+state- "complete";
 );
 step_15: (
 goal- "Only after the carrier mechanism has independent recovery guarantees, perform the minimum approved phone-side activation and prove hotspot and SSH continuity";
-state- "waiting";
+state- "active";
 );
 step_16: (
 goal- "Produce the final Pixel preservation seed, verify all checksums, record exact Git commit and package version, and retain the original Pixel checkout";
@@ -117,7 +117,7 @@ state- "waiting";
 );
 
 proof: (
-item_1- "Initial read-only inventory found package as a 216 KiB tracked Precision Tower deployment surface inside a roughly 4.7 GiB CE-OS checkout";
+item_1- "Initial read-only inventory found package as a 216 KiB tracked CE-OS deployment surface inside a roughly 4.7 GiB CE-OS checkout";
 item_2- "Existing package explicitly reports that OS package installation, firewall mutation, service enablement, persistent Agency daemon selection, NVIDIA or CUDA installation policy, and complete deployment are unresolved";
 item_3- "Root goals already define the Pixel as the first provisioning authority, clean Linux as an acceptable substrate, CE-OS reconstruction above it, independent recovery, and eventual host-to-host provisioning";
 item_4- "Pixel observation at task entry reported oriole, Android 16, slot _b, verified boot state orange, flash.locked=0, with no control-plane mutation performed";
@@ -151,6 +151,16 @@ item_31- "A disposable reconstruction proof demonstrates zero target mutation in
 item_32- "package/bootstrap/qps-components.qps records the observed QPS CMake build contract and exact pinned revisions for coreutils, diffutils, findutils, gawk, grep, patch, ripgrep, and sed";
 item_33- "package/bootstrap/qps-bootstrap.sh verifies each vendored source revision before use and builds QPS only into repository-local reconstruction scratch";
 item_34- "package/tests/test_qps_bootstrap.sh validates the bootstrap authority using the public qps file --check CLI contract, and the complete package suite remains green";
+item_35- "Provisioning-media recovery on 2026-09-10 located the complete Ubuntu Server 26.04.1 LTS amd64 ISO at ~/ubuntu-26.04.1-live-server-amd64.iso, size 2927861760 bytes, SHA-256 cc8a95cde20f6ced61a322420de00f10cc3c90ced545daa46cb9c1a117f1d927; upstream-origin verification remains required before accepting it as package substrate authority";
+item_36- "Provisioning-media recovery located ~/ceos-ubuntu-boot.img, size 268435456 bytes, SHA-256 7b8c39c69661d71634ebc54507300b2dcf8c10de3d63b88cd9f06839fe8f3d44, with CEOSUEFI image signature";
+item_37- "Provisioning-media recovery located ~/ceos-ubuntu-installer.img, size 3565158400 bytes, SHA-256 7a750813f992aa2303edef536ea5e253ccce3276ad3c6f7db612859ea180baf0, with CEOSINST image signature and embedded Ubuntu installer/GRUB material";
+item_38- "The canonical carrier path usb/bootstrap/ce-os-bootstrap.img currently resolves by symlink to ~/ceos-ubuntu-installer.img and package-local SHA256SUMS records the carrier checksum";
+item_39- "A repository-local scratch proof staged the recovered UEFI files, Ubuntu kernel/initrd, and a four-entry GRUB concept surface: Try or Install Ubuntu Server, LTS Basic, CE-OS Installer, and Install CE-OS Package; the additional entries are menu design only and do not yet implement distinct installation profiles";
+item_40- "The recovered partial extraction beneath trash/tmp/ubuntu-iso-extract contains EFI boot files plus casper/vmlinuz and casper/initrd but not the installer root filesystem; the complete ISO recovered separately supersedes that partial extraction as the candidate source";
+item_41- "The first live CE-OS USB handoff attempt interrupted the active Operator transport/control session; therefore physical boot-media discoverability is NOT accepted as proven and the operation must not be repeated from a control path that depends on the USB state being mutated";
+item_42- "Post-interruption read-only observation shows Android g1 owns UDC 11110000.dwc3, CE-OS g2 is unbound, and vendor.usb-gadget-hal is running, demonstrating Android USB ownership recovery";
+item_43- "The same post-interruption Termux observation did not find ap_br_wlan2 or an SSH listener on port 8022; this observation must not be treated as proof that hotspot or SSH continuity survived the handoff";
+item_44- "Before another UDC handoff, establish and verify an independent operator/recovery channel whose availability does not depend on the USB gadget state under test, then perform only the minimum bounded discoverability activation";
 );
 
 documentation: (
@@ -163,8 +173,22 @@ remaining: (
 item_1- "Complete steps 2 through 18 with evidence before accepting the task";
 );
 
-next- "Portable package groundwork is verified and checkpointed; physical boot-media activation, exact Ubuntu image acceptance, and real-target provisioning remain separate future work";
+next- "Accept and provenance-verify the recovered Ubuntu 26.04.1 LTS ISO, then establish an operator/recovery channel independent of the USB gadget under test before retrying the minimum physical boot-media discoverability proof; do not begin LTS Basic, CE-OS Installer, or full CE-OS Package profile implementation until discoverability is proven";
 );
 
 );
+);
+
+
+pixel_usb_carrier_physical_discovery: (
+state- "complete";
+date- "2026-09-10";
+carrier- "~/ceos-ubuntu-installer.img exposed read-only through the existing Pixel g2 ConfigFS mass-storage gadget";
+preconditions- "g1 initially owned 11110000.dwc3, g2 was unbound, Android USB gadget HAL was running, LUN ro=1 and removable=1, and handoff preflight passed";
+activation- "ce-os-usb-handoff enable-test transferred 11110000.dwc3 from g1 to g2 with the rollback lease armed";
+device_side_sample- "Immediately after activation /sys/class/udc/11110000.dwc3/state reported not attached and current_speed UNKNOWN; this sample did not establish host enumeration and must not be treated as a host-enumeration oracle";
+physical_evidence- "Operator physically found the Pixel-presented carrier on the target laptop";
+acceptance- "Pixel to g2 to DWC3 UDC to target-laptop read-only mass-storage discoverability PASS";
+boundary- "This proves physical carrier discovery only; UEFI bootability, GRUB menu loading, Ubuntu installation, and CE-OS reconstruction remain independent acceptance layers";
+next- "Proceed upward to UEFI/GRUB behavior without reopening USB mass-storage discoverability unless later evidence regresses it";
 );

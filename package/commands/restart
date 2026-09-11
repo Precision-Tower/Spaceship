@@ -5,7 +5,7 @@ source "$SCRIPT_DIR/../lib/common.sh"
 pt_initialize
 TARGET="${1:-}"
 CONFIRM="${2:-}"
-pt_print_line "Precision Tower restart"
+pt_print_line "CE-OS restart"
 pt_require_dashboard_root || exit 1
 pt_status_line "PASS" "model manager" "$REPO_ROOT/Agency/Core/runtime/model_server_manager.py"
 pt_status_line "UNRESOLVED" "Agency service restart" "No installed service or AGENCY_COMMAND is selected."

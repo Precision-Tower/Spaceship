@@ -8,6 +8,7 @@ services=(
   ce-os-live-sync
   ce-os-guardian
   ce-os-privileged-broker
+  ce-os-geminigo
 )
 
 ok=1

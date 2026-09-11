@@ -5,7 +5,7 @@ source "$SCRIPT_DIR/../lib/common.sh"
 pt_initialize
 CHECK_ONLY=false
 [[ "${1:-}" == "--check" ]] && CHECK_ONLY=true
-pt_print_line "Precision Tower browser launcher"
+pt_print_line "CE-OS browser launcher"
 pt_require_dashboard_root || exit 1
 BRAVE="$(pt_brave_command || true)"
 if [[ -z "$BRAVE" ]]; then

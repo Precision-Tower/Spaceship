@@ -49,7 +49,7 @@ resume_rule- "First determine whether named execution definitions should gain th
 );
 
 kernel_driver_discovery: (
-status- "PLANNED";
+status- "ACTIVE";
 
 goal- "Discover the hardware and operating-system capabilities actually exposed on the rooted Pixel, identify their callable userspace contracts, and represent those contracts in QPS";
 
@@ -71,7 +71,7 @@ native_rule- "Use the thinnest native adapter necessary to invoke the discovered
 
 discovery_rule- "Do not recursively vacuum the filesystem; follow observed device, service, subsystem, and authored index relationships";
 
-next- "When kernel work resumes, inventory the Pixel's actual exposed interfaces and create qps/kernel/_index.qps from observed capability contracts";
+next- "Continue from qps/kernel/_index.qps by turning observed Android, Binder, sysfs, device-node, and proc evidence into named userspace ABI contracts that QPS can safely invoke";
 );
 
 current_work: (
@@ -87,7 +87,86 @@ state- "complete";
 task_2: (
 identity- "kernel.driver_discovery";
 summary- "Inventory the rooted Pixel userspace hardware and operating-system interfaces and represent their observed capability contracts in qps/kernel";
-state- "waiting";
+state- "active";
+
+product- "qps/kernel/_index.qps becomes the QPS doorway for the Pixel Kernel as observed userspace ABI contracts, so later QPS code can control hardware through named, proven, bounded surfaces";
+
+scope: (
+primary_catalog- "qps/kernel/_index.qps";
+checklist_authority- "qps/checklist.qps";
+index_authority- "qps/_index.qps";
+non_cipher- true;
+parser_runtime_language_semantics- false;
+);
+
+boundaries: (
+reality_first- "Record observed device, service, mount, property, and permission evidence before designing any control API";
+kernel_meaning- "Kernel means callable userspace ABI contracts, not a vague driver list";
+qps_role- "QPS names authority, policy, safety checks, and expected evidence; capabilities or native adapters perform irreducible host calls";
+permission_boundary- "Do not treat root as implicit; privileged probes must cross through the CE-OS privileged control path and remain read-only until a mutation contract is authored";
+control_boundary- "Do not write hardware state, sysfs, device nodes, Binder transactions, or Android settings during discovery";
+cipher_boundary- "Do not modify qps/cipher or Cipher semantics";
+runtime_boundary- "Do not modify qps/cpp parser/runtime semantics unless an observed kernel ABI requires a missing terminal or execution primitive";
+worktree_boundary- "Preserve unrelated worktree changes and do not stage, commit, save, reset, clean, or discard unrelated modifications";
+);
+
+phases: (
+phase_1- "Create the initial qps/kernel authority from unprivileged Pixel evidence";
+phase_2- "Add a bounded privileged read-only inventory for /dev, /sys/class, /sys/bus, /proc/devices, and relevant Android HAL metadata";
+phase_3- "Choose one low-risk capability domain and write its exact userspace ABI contract in QPS before any mutation adapter exists";
+phase_4- "Implement the thinnest native or privileged adapter only after QPS owns the contract and proof expectations";
+);
+
+progress: (
+phase_1- "complete: qps/kernel/_index.qps now exists and records unprivileged Termux observations";
+phase_2- "initial complete: ops.cmd root-file produced a bounded read-only inventory of direct device nodes, sysfs class names, proc device tables, modules, and input devices";
+phase_3- "continued proof complete: graphics.identify now records and witnesses read-only DRM, Mali, EdgeTPU, BigOcean, DMA heap, and V4L2 metadata surfaces";
+);
+
+observed_evidence: (
+grounding_1- "ops.cmd exec-file ran from ~/ce-os and showed qps/kernel was absent before this task";
+grounding_2- "Normal Termux observer identity is uid=10283 u0_a283 with SELinux context u:r:untrusted_app_27:s0:c27,c257,c512,c768";
+grounding_3- "Host reports Linux 6.1.145-android14-11-gfa1d6308d1fe-ab14691759 on aarch64 Android";
+grounding_4- "Android properties identify Pixel 6 oriole on gs101, boot device 14700000.ufs, 256GB Kioxia UFS, 8GiB Samsung LPDDR5, unlocked bootloader, and orange verified boot state";
+grounding_5- "Current context cannot list /dev, /sys, /sys/class, /proc/devices, /proc/filesystems, or /proc/bus/input/devices";
+grounding_6- "Current context can read /proc/self/mountinfo and observe binderfs, functionfs adb/mtp/ptp/ctrl/aoa, sysfs, tracefs, bpf, pstore, fuse, vendor partitions, and Pixel hardware APEX mounts";
+grounding_7- "cmd -l exposes hardware-adjacent Android services including media.camera, input, display, gpu, power, thermalservice, usb, nfc, wifi, bluetooth_manager, lights, vibrator_manager, sensorservice, android.hardware.graphics.allocator, android.hardware.neuralnetworks.IDevice/google-edgetpu, and com.google.edgetpu.IEdgeTpuAppService/default";
+grounding_8- "ops.cmd root-file ran a read-only privileged inventory as uid=0 root with SELinux context u:r:magisk:s0";
+grounding_9- "Privileged /dev evidence found binder, hwbinder, vndbinder, input event0-event3, uinput, uhid, DRI card0/renderD128, mali0, dma_heap entries, video6-video12, v4l-touch0, i2c nodes, gpiochip0-gpiochip56, fuse, USB FunctionFS, ttyGS0-ttyGS2, and block by-name links";
+grounding_10- "Privileged /sys/class evidence found classes including android_usb, backlight, block, dma_heap, drm, edgetpu, gpio, goodix_fp, i2c-dev, iio, input, leds, lwis, nfc, power_supply, rfkill, sound, spidev, thermal, touch_offload, trusty_ipc, tty, typec, udc, usb_role, video4linux, wakeup, watchdog, and wwan";
+grounding_11- "/proc/devices identifies relevant character majors including input 13, video4linux 81, i2c 89, alsa 116, spi 153 and 495/496, usb 180/189, drm 226, watchdog 239, iio 240, media 246, rtc 247, dma_heap 248, rpmsg_char 253, gpiochip 254, touch_offload 481, lwis 484, gnss 503, binder 504, hidraw 506, ttyGS 508, and uio 509";
+grounding_12- "/proc/modules shows concrete Pixel driver families including mali_kbase/mali_pixel, exynos_drm, ufs_exynos_gs, aoc_core/aoc_usb_driver, st21nfc/nfc, max77779 power components, gs_thermal, i2c_dev, spidev, s2mpg1x_gpio, snd_soc audio components, usbserial/usbnet, and dwc3_exynos_usb";
+grounding_13- "/proc/bus/input/devices maps event0 gpio_keys, event1 goodix_fingerprint, event2 STM VL53L1 proximity sensor, and event3 fts touchscreen";
+grounding_14- "Local UAPI headers /data/data/com.termux/files/usr/include/linux/input.h and input-event-codes.h define input_event, input_id, input_absinfo, read-only EVIOCG* ioctls, and event/key/absolute code values";
+grounding_15- "Privileged getevent -il confirms event3 fts touchscreen, event2 STM VL53L1 proximity sensor, event0 gpio_keys, and event1 goodix_fingerprint metadata without reading live event streams or injecting input";
+grounding_16- "qps/kernel/evdev_identify.py run through ops.cmd root-file returns EVDEV_IDENTIFY=PASS for event0 gpio_keys and event3 fts, including ids, properties, event types, keys, and multitouch axis limits";
+grounding_17- "The same evdev identify witness rejects /dev/uinput because input injection is outside the read-only allowlist";
+grounding_18- "Privileged graphics inventory found /dev/dri/card0, /dev/dri/renderD128, /dev/mali0, /dev/edgetpu -> /dev/abrolhos, /dev/abrolhos, /dev/edgetpu-soc, /dev/bigocean, DMA heaps, and V4L2 nodes present";
+grounding_19- "Read-only open checks pass for card0, renderD128, mali0, edgetpu, abrolhos, edgetpu-soc, bigocean, dma_heap system heaps, video6, and video12 without ioctl, rendering, allocation, inference, or streaming";
+grounding_20- "Graphics sysfs reads identify DRM 1.1.0, DSI modes 1080x2400 at 60 and 90Hz, Mali-G78 20 cores, EdgeTPU abrolhos firmware prod version 1.0 vii=2 kci=3 cl=836291931, and BigOcean google,bigocean";
+grounding_21- "/proc/devices maps drm 226, dma_heap 248, video4linux 81, media 246, bigocean 483, lwis 484, and abrolhos 486; /proc/modules maps mali_kbase, mali_pixel, exynos_drm, abrolhos, bigocean dependencies, samsung_dma_heap, and related display/panel modules";
+grounding_22- "qps/kernel/graphics_identify.py run through ops.cmd root-file returns GRAPHICS_IDENTIFY=PASS for all and drm families, reads only allowlisted node/sysfs/proc metadata, and rejects unknown family ioctl";
+grounding_23- "card0-DSI-1 enabled state changed between read-only observations, so graphics.qps treats connector enabled as live state while status and modes remain identification evidence";
+);
+
+grounding_24- "Unprivileged Termux can see /sys/class/power_supply and /sys/class/thermal but thermalservice dumpsys is denied for missing android.permission.DUMP; service-list probing from that context did not establish the named service identities";
+grounding_25- "The CE-OS privileged read-only path runs as uid=0 root with SELinux context u:r:magisk:s0 and successfully reads dumpsys battery, power, and thermalservice without mutating state";
+grounding_26- "Battery service evidence exposes AC/USB/wireless power flags, charging current/voltage, charge counter, status, health, presence, level, voltage, temperature, technology, charging state/policy, and capacity level";
+grounding_27- "PowerManager evidence exposes wakefulness, powered state, plug type, battery level/low state, and display-power state";
+grounding_28- "ThermalManager evidence reports ThermalHAL AIDL 3 connected, thermal status, cached and current HAL temperatures including CPU LITTLE/MID/BIG, G3D, TPU, battery and virtual sensors, cooling-device state, and static thresholds";
+grounding_29- "/sys/class/power_supply read-only metadata identifies battery, dc, gcpm, gcpm_pps, main-charger, maxfg, pca9468-mains, USB source, usb, and wireless supplies with readable type/status/health/capacity/voltage/current/temp/online/present fields where exposed";
+grounding_30- "/sys/class/thermal read-only metadata maps thermal zones to CPU, BIG/LITTLE/MID, G3D, TPU, battery, RF, display, USB-power, GNSS, charger, and other sensor types with live temperature values where readable";
+
+grounding_31- "qps/kernel/resource_state.qps now names the read-only resource_state.identify contract and qps/kernel/resource_state_identify.py is its bounded witness";
+grounding_32- "Privileged witness returns RESOURCE_STATE_IDENTIFY=PASS for all, records battery/power/thermal service and sysfs observations, reports unreadable thermal_zone19 temp as errno 5, and rejects unknown family mutate";
+next- "Start GeminiGo kernel priority_2 with a bounded read-only Mali/GPU evidence pass: identify the exact /dev/mali0 node path, type, ownership, permissions, major/minor identity, read-only open behavior, and associated Mali platform/sysfs metadata already exposed by the Pixel; record only observed driver/version/core/frequency/power-domain metadata where readable; do not mmap, allocate buffers, submit rendering or compute work, issue speculative ioctls, change clocks or DVFS, write sysfs, or mutate hardware state; use the resulting evidence to decide the smallest named Mali identification contract";
+
+done_when: (
+condition_1- "qps/kernel/_index.qps records observed Pixel access surfaces and explicit unknowns";
+condition_2- "The first privileged read-only inventory identifies direct device-node and sysfs candidates without mutating hardware state";
+condition_3- "At least one hardware domain has a named QPS contract from service or ABI to operation, parameters, result, safety, and evidence";
+condition_4- "The selected contract is validated by QPS checks and does not modify Cipher or parser/runtime language semantics";
+);
 );
 
 );
@@ -96,6 +175,6 @@ state- "waiting";
 
 continuation: (
 runtime- "Resume qps/cpp work only when a concrete missing primitive is demonstrated";
-kernel- "Begin system reconnaissance from actual Pixel interfaces when this lane becomes active";
+kernel- "Continue active Kernel discovery from qps/kernel/_index.qps, preserving reality-first ABI evidence before hardware-control adapters";
 language- "Current authored QPS continuation lives in qps/qps/checklist.qps";
 );

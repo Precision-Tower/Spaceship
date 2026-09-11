@@ -14,6 +14,7 @@ Do not duplicate knowledge that belongs deeper in the repository.
 
 surface: (
 Engineering- "Engineering/_index.qps";
+package- "package/_index.qps";
 Agency- "Agency/_index.qps";
 Android- "Android/_index.qps";
 UI- "UI/_index.qps";
@@ -27,9 +28,11 @@ door- "qps/_index.qps";
 build- "qps build";
 build_authority- "qps/qps/build.qps";
 
-check- "qps path/file.qps --check";
+check- "qps check <file.qps> or qps path/file.qps --check";
 test- "qps test path/file-or-folder";
 query- "qps qry <selector> [path]";
+refs- "qps refs [--absent] <path>";
+move- "qps move <old.qps> <new.qps>";
 cipher- "qps cipher <source> [--report]";
 
 checklist- "qps checklist [checklist-index] [task-number]";
@@ -53,6 +56,7 @@ checklist_authority- "qps/qps/checklist.qps";
 save_authority- "qps/qps/save.qps";
 history_authority- "qps/qps/history.qps";
 history_ledger- "history.qps";
+
 library_authority- "qps/libs/_index.qps";
 
 reference_document_authority- "qps/qps/reference_document.qps";
@@ -61,6 +65,24 @@ semantic_walk_authority- "qps/qps/semantic_walk.qps";
 authored_qps_state- "qps/qps/checklist.qps";
 native_runtime_kernel_state- "qps/checklist.qps";
 future_kernel_catalog- "qps/kernel/_index.qps";
+);
+
+discovery_policy: (
+current_source- "Ordinary semantic discovery searches authored current-source documents in the selected indexed module";
+excluded_roles- "Ledger, generated, archive, and non-authority documents are excluded from ordinary broad semantic discovery";
+excluded_documents- "history.qps";
+explicit_address- "An excluded document remains directly inspectable when the operator explicitly addresses that file through probe, scope, or its dedicated semantic interface";
+mechanism_boundary- "discovery_policy.excluded_documents is authored corpus data consumed by scout before matching; rg, grep, parser traversal, or future mechanisms may implement matching without owning corpus semantics";
+);
+
+document_roles: (
+index- "_index.qps owns durable current truth and navigation for the repository root";
+checklist- "checklist.qps owns living task memory, including unresolved provenance and complete-but-unsaved work";
+goals- "goals.qps owns architectural direction; it does not establish implemented capability";
+history- "history.qps is a ledger document: authoritative accepted History, but excluded from ordinary current-source discovery";
+trash- "trash is non-authority and is outside authored current-source discovery";
+generated- "Generated material is eligible for ordinary discovery only when its owning indexed authority explicitly promotes it as current authored evidence";
+archive- "Archived or retired material is historical evidence rather than ordinary current-source discovery";
 );
 
 workflow: (
@@ -133,6 +155,100 @@ calculation_compatibility- "%target: expression remains supported, but % is not 
 reference_boundary- "Structural references enclose the complete primitive identity; [>alpha.dimensions.radius-] is valid while [>alpha.dimensions.radius]- is invalid";
 );
 
+
+programming_language: (
+purpose- "This is the model-entry index for the current QPS programming language; it establishes the major semantic surfaces and sends detailed implementation work to qps/_index.qps and the owning QPS authorities";
+authority_rule- "Current authored _index.qps authority plus proven implementation and passing tests define current QPS behavior; stale comments, retired documentation, and historical parser residue do not independently define language semantics";
+one_namespace- "QPS has one authored structural identity system: the repository is a structural namespace addressed as folder/file.key.term.item-";
+structure_vs_execution- "Structural declarations establish identity and data ownership; executable syntax performs behavior; runtime values are machine representations and do not create a second authored identity system";
+
+structure: (
+file- "A .qps file is an authored document and structural root; filesystem navigation selects the document before semantic navigation enters it";
+key- "key. begins a Key paragraph and navigable namespace inside the file; the first blank line at that Key's own structural depth closes the Key";
+term- "term: declares a named structural child and may own data or an executable body";
+item- "item- binds a value; the value may be a literal, structural reference, execution result, or full supported expression";
+container- "(...) is structural Container syntax where accepted by the grammar; parentheses are not available to be redefined casually as sequence delimiters";
+identity- "Authored declarations use key. term: item- while structural navigation uses . between semantic segments and final - only when an Item/value is explicitly required";
+);
+
+references: (
+surface- "[>structural.address]";
+meaning- "[>...] dereferences authored structure from the repository-wide structural namespace";
+item_expectation- "A trailing - belongs inside the reference when the final target must resolve as an Item value";
+example- "[>alpha.dimensions.radius-]";
+filesystem_then_structure- "Within a reference, / navigates filesystem relationships to an extensionless QPS file identity and . then navigates semantic children";
+identity_rule- "References select existing authored identity; they do not allocate local numeric identities or create a competing container namespace";
+);
+
+inline_qps: (
+surface- "[< code]";
+meaning- "[< begins QPS Inline: transient authored QPS source is fed through the canonical QPS parser and execution path in the terminal's current working directory";
+close- "The matching ] closes the inline source boundary outside strings and nested square containers, parentheses, and braces";
+single_and_multiline- "One-line and multiline QPS Inline are the same language surface; terminal Shift+Enter affects editing only, not QPS grammar";
+not_library_input- "[< ...] is current source-input syntax and must not be interpreted from historical comments as library insertion or Dictionary input identity";
+authority- "qps/bin/_index.qps";
+);
+
+expressions: (
+item_expression- "An Item may bind a full expression directly; arithmetic does not require a separate calculation declaration";
+calculation_compatibility- "%target: expression remains supported compatibility syntax";
+reference_values- "Structural references may participate in expressions where the runtime can resolve the addressed value";
+calls- "Dash-prefixed callable and statement forms belong to the executable expression/statement grammar proven by the QPS parser and runtime";
+grammar_boundary- "Only expression forms accepted by the current parser and runtime are authored QPS; a runtime representation alone does not authorize new source syntax";
+);
+
+execution: (
+braces- "{...} owns executable syntax; braces are behavior boundaries rather than generic data grouping";
+term_body- "term: {...}; is the canonical direction for a reusable executable body owned by the Term's structural identity";
+term_body_state- "Term-owned execution bodies parse today; reusable runtime registration and instantiation remain active language work until proven complete";
+statements- "Execution bodies use the common executable statement grammar, including currently proven return, conditional, loop, binding, calculation, call, and host-action forms";
+scope- "Execution inputs, local bindings, references, and return values are runtime scope concerns and do not create new authored structural identities";
+connected_documents- "Immediate connected authored QPS documents may contribute reusable definitions without import/include syntax; native module loading supplies the mechanism";
+qualified_forms- "Specialized execution domains or historical execution-definition forms remain valid only where current parser/runtime tests prove them; do not generalize punctuation from examples without authority";
+);
+
+runtime_values: (
+boundary- "RuntimeValue is the native representation used while QPS executes; runtime kinds are not automatically source-language literals";
+kinds- "The current native runtime kinds are NUMERIC, STRING, DICTIONARY, SEQUENCE, GEOMETRY, and STRUCTURE";
+sequence- "SEQUENCE is a distinct ordered runtime value supporting nested heterogeneous RuntimeValue members";
+sequence_source_state- "RuntimeValue SEQUENCE is proven, but no canonical authored sequence literal is established by this index; source syntax must be proven before Cipher emits sequences";
+dictionary- "DICTIONARY remains a native runtime kind and parser-supported historical surface, but its old numeric-ID identity model is not the current repository structural identity model";
+structure- "STRUCTURE represents resolved authored structure at runtime";
+geometry- "GEOMETRY represents native geometry handles and belongs to the irreducible runtime/library capability boundary";
+);
+
+punctuation: (
+slash- "/ navigates filesystem relationships inside structural addresses";
+dot- ". traverses semantic structure after file selection and also terminates authored Key identity";
+colon- ": terminates authored Term identity and participates in currently proven statement/data grammar according to parser context";
+dash- "A declaration-final - identifies an Item; a final - inside [>...] explicitly requires Item/value resolution; dash-prefixed executable words belong to statement/call grammar";
+parentheses- "(...) is already owned by Container and expression/call grammar according to context";
+braces- "{...} is already owned by execution grammar";
+reference_bracket- "[>...] is structural dereference";
+inline_bracket- "[< ...] is terminal QPS source input";
+square_bracket_boundary- "Bare [...] remains parser/runtime territory with historical Dictionary behavior; it must not be assigned new canonical semantics merely because a new feature needs delimiters";
+semicolon- "; terminates authored declarations or executable statements where required by the grammar";
+blank_line- "A blank line at a Key's own structural depth is semantic: it closes that Key paragraph";
+);
+
+compatibility: (
+principle- "Implemented compatibility behavior may keep old documents executable without making that behavior the preferred current language model";
+dictionary_residue- "Parser names such as DICT_OUTPUT_REF and comments describing numeric Dictionary input/output predate the current repository-wide structural reference model and are not semantic authority for new QPS design";
+calculation- "%target: expression is supported compatibility syntax while direct Item-bound expressions are preferred for values";
+execution_identity- "Historical named execution-definition identity may remain supported while reusable execution migrates toward Term-owned term: {...}; identity";
+no_invention- "Do not promote parser comments, token names, runtime storage types, or historical examples into canonical syntax without authored authority and regression proof";
+);
+
+model_entry_rules: (
+first- "Read repository _index.qps before acting; when programming QPS, continue through qps/_index.qps and the nearest owning QPS authority";
+distinguish- "Before changing QPS, classify the change as structural identity, reference/navigation, inline source transport, expression syntax, execution syntax, runtime representation, or compatibility behavior";
+language_change- "A new source construct requires explicit authored syntax, parser/AST support, runtime semantics, regression tests, and an _index.qps authority update";
+runtime_not_syntax- "The existence of a RuntimeValue kind is evidence of runtime capability, not permission for Cipher or another producer to invent source syntax";
+cipher_rule- "Cipher translates into canonical QPS; Cipher must not silently define QPS syntax to make a source-language construct convenient";
+implementation_rule- "When documentation and implementation disagree, inspect the smallest relevant parser/runtime tests and repair authority from proven current behavior rather than guessing";
+);
+);
+
 access: (
 pixel- "ssh pixel";
 repository- "cd ~/ce-os";
@@ -146,6 +262,7 @@ powershell_script- "ops.cmd exec-file \"path-to-script.sh\"";
 
 doors: (
 Engineering- "Engineering/_index.qps";
+package- "package/_index.qps";
 door_rule- "If a directory contains _index.qps, read it before working deeper in that directory";
 missing_door_rule- "If no _index.qps exists, treat the directory as a filesystem surface until a door is established";
 );
@@ -169,12 +286,14 @@ goals_boundary- "goals.qps describes intended CE-OS direction; goals are not imp
 source_location- "Use path:start-end with numbered source lines as the canonical source-evidence form";
 stage_feature_only- "Stage only files belonging to the feature being checkpointed";
 git_workflow- "Use Git continuously as the byte-level checkpoint substrate: inspect status before work, keep unrelated changes separated, stage only coherent proven work, and checkpoint completed units before starting another subsystem";
-git_hygiene- "Do not allow generated artifacts, temporary probes, backups, zero-byte shell fallout, caches, build products, or vendored source/build trees to accumulate as unexplained repository changes";
+git_hygiene- "Unexplained repository entries must be preserved until ownership and origin are classified; file size, unusual naming, generated appearance, or apparent shell fallout are evidence for investigation and never deletion authority";
 root_immaculacy- "The ~/ce-os repository root is an authority surface and must remain immaculate; only intentional top-level architecture and authority entries may exist there";
 trash_authority- "trash/_index.qps defines the repository-local disposal boundary";
 trash_tmp- "All CE-OS-owned transient files, test sandboxes, patch staging, temporary scripts, probes, intermediate edits, and other disposable work use ~/ce-os/trash/tmp instead of host-global /tmp, default host temporary directories, or incidental repository locations";
 trash_retired- "Intentionally displaced but temporarily retained material belongs under ~/ce-os/trash/retired";
-trash_recovered- "Unclassified cleanup discoveries belong under ~/ce-os/trash/recovered until ownership is established";
+trash_recovered- "Unclassified repository discoveries may be copied or moved to ~/ce-os/trash/recovered only when preservation is required and ownership is not yet established; unknown files must not be deleted merely because they appear temporary, malformed, empty, generated, or accidental";
+unknown_file_rule- "Unknown filesystem entries are preserve-first: classify provenance, references, ownership, and runtime purpose before any destructive action";
+deletion_authority- "Deletion requires positive evidence that an entry is disposable or explicit authored/user authority; absence of discovered references is not sufficient proof of disposability";
 trash_non_authority- "Nothing below ~/ce-os/trash is authoritative source";
 trash_tmp_cleanup- "Contents of ~/ce-os/trash/tmp are disposable and may be cleared freely";
 root_creation_policy- "Tools and agents may not create incidental files or directories at ~/ce-os root; a new root entry requires explicit architectural purpose";
@@ -184,4 +303,38 @@ save_atomicity- "Save constructs and parses complete History and Checklist candi
 single_root_model- "CE-OS owns one outermost indexed root; nested indexed structures are modules within that root rather than independent congruent CE-OS repositories, and the current ~/ce-os root is intended to move outward toward ~ rather than multiply";
 git_review_before_commit- "Before each commit run the smallest relevant tests, qps validation where applicable, git diff --check, targeted diff review, and targeted status review";
 git_clean_tree_goal- "Prefer ending each accepted work unit with a clean working tree; if unfinished work must remain, its ownership and continuation must be represented by the appropriate checklist.qps rather than left as unexplained Git state";
+);
+
+qps_language_entry: (
+authority- "qps/language.qps";
+purpose- "Read this before programming or translating QPS; it indexes current structural, value, reference, execution, punctuation, runtime, canonical, compatibility, and not-yet-canonical language semantics";
+identity- "QPS uses the repository-wide folder/file.key.term.item- structural namespace";
+reference- "[>folder/file.key.term.item-] is structural dereference with final - asserting Item/value selection";
+inline- "[< code] is the QPS Inline source-input surface, not historical library insertion";
+execution- "{...} is executable syntax rather than generic grouping; reusable execution identity is migrating toward term: {...};";
+sequence- "RuntimeValue SEQUENCE is proven, but no canonical authored sequence literal/constructor is yet accepted";
+authority_rule- "Current implementation and green regressions outrank stale comments and historical syntax";
+);
+
+search_policy: (
+bounded_search- "Repository discovery begins at the narrowest known directory, file, symbol, or authority boundary.";
+broad_search- "Recursive repository-wide search is prohibited when a narrower known scope exists.";
+output_limit- "Discovery commands must bound expected output with a path, match limit, summary, or equivalent constraint before displaying source context.";
+refinement- "When discovery produces excessive matches, refine the path or query before requesting additional source.";
+context_limit- "Source context is requested only around identified matches and only to the minimum extent required for the next decision.";
+known_file- "When the responsible file is known, inspect that file directly rather than searching parent directories.";
+known_symbol- "When the responsible symbol or function is known, locate that identity first and inspect only its immediate implementation context.";
+expansion- "Search scope may expand one repository boundary at a time only when the current boundary does not contain enough evidence.";
+generated_output- "A command expected to emit large output must summarize, count, cap, or redirect the result before displaying source text.";
+tool_authority- "Prefer CE-OS QPS discovery tools when they provide an equivalent bounded operation; shell discovery remains a bootstrap fallback.";
+);
+
+
+task_completion_authority: (
+owner- "The agent assigned an authored Checklist task owns routine completion judgment for that task when its authored finish conditions and required verification are proven";
+index_update- "Before acceptance, update every relevant _index.qps authority surface so repository navigation and current semantic truth match the finished implementation";
+checklist_transition- "When the assigned agent proves the authored finish conditions, it transitions the task to complete and runs qps save through the authored Checklist lifecycle without requiring a separate operator confirmation";
+git_checkpoint- "After successful qps save and final verification, the assigned agent stages only the files belonging to the completed task and creates the task checkpoint Git commit";
+operator_boundary- "Stop for operator judgment only when scope, semantics, safety, conflicting ownership, destructive action, or acceptance criteria are genuinely ambiguous; routine checklist save and task checkpoint commit are not operator-only actions";
+preservation- "Never stage, reset, clean, overwrite, or commit unrelated dirty work; a task checkpoint must preserve concurrent unfinished work outside its ownership";
 );

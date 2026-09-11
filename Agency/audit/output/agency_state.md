@@ -1,71 +1,67 @@
 # Agency Capability Audit
 
-- Repository: `/home/spaztic/Core/Dashboard`
-- Generated: 2026-07-28T00:43:36.391191+00:00
+- Repository: `/data/data/com.termux/files/home/ce-os`
+- Generated: 2026-09-08T22:04:46.906103+00:00
 - Rule: **Declared authority is not demonstrated capability. Safe AI use requires bounded, observed execution.**
 
 ## Summary
 
 | State | Count |
 |---|---:|
-| REGISTERED_COMMANDS | 26 |
-| PASS | 15 |
+| REGISTERED_COMMANDS | 22 |
+| PASS | 14 |
 | FAIL | 0 |
-| BLOCKED_TIMEOUT | 0 |
+| BLOCKED_TIMEOUT | 1 |
 | UNTESTED | 9 |
 
 ## Current capability test
 
-- ID: **local.model_plan.01**
-- Step: Accept bounded engineering scopes
-- Result: **UNTESTED**
-- Pass condition: Valid UI engineering scopes are represented in the latest model-plan proposal.
+- ID: **agency.tree_scoped**
+- Step: Inspect OperatorShell tree
+- Result: **BLOCKED_TIMEOUT**
+- Pass condition: Scoped tree inspection completes successfully.
 
 ## AI command contract
 
 | Command | Authority | Safe for AI | Default agent |
 |---|---|---|---|
-| scan-repo | read_only | YES_BOUNDED | Cali |
-| git-status | read_only | YES_BOUNDED | Executor |
-| propose-directory-diff | propose_only | YES_PROPOSAL_ONLY | Cali |
-| grant-review | review_only | YES_REVIEW_ONLY | Grant |
-| apply-patch | requires_approval | NO_WITHOUT_OPERATOR_APPROVAL | Executor |
-| cali-observe-directory | read_only | YES_BOUNDED | Cali |
-| list-agents | read_only | YES_BOUNDED | Cali |
-| propose-task-packet | propose_only | YES_PROPOSAL_ONLY | Cali |
-| agent action propose | propose_only | YES_PROPOSAL_ONLY | Cali |
-| agent action review | review_only | YES_REVIEW_ONLY | Cali |
-| agent action apply | requires_approval | NO_WITHOUT_OPERATOR_APPROVAL | Executor |
-| propose-diff | propose_only | YES_PROPOSAL_ONLY | Cali |
-| runtime-state | read_only | YES_BOUNDED | Cali |
-| view-latest-diff | read_only | YES_BOUNDED | Cali |
-| grant-review-latest-diff | review_only | YES_REVIEW_ONLY | Grant |
-| clear-latest-diff | read_only | YES_BOUNDED | Cali |
-| list-packets | read_only | YES_BOUNDED | Cali |
-| create-packet | propose_only | YES_PROPOSAL_ONLY | Cali |
-| test-all | read_only | YES_BOUNDED | Executor |
-| gemini-analyze | propose_only | YES_PROPOSAL_ONLY | Cali |
-| gemini-list-models | read_only | YES_BOUNDED | Cali |
-| update-state | propose_only | YES_PROPOSAL_ONLY | Cali |
-| read-file | read_only | YES_BOUNDED | Cali |
-| apply-code | requires_approval | NO_WITHOUT_OPERATOR_APPROVAL | Executor |
-| refs | read_only | YES_BOUNDED | Cali |
-| tree | read_only | YES_BOUNDED | Cali |
+| scan-repo | read_only | YES_BOUNDED | unknown |
+| git-status | read_only | YES_BOUNDED | unknown |
+| propose-directory-diff | propose_only | YES_PROPOSAL_ONLY | unknown |
+| grant-review | review_only | YES_REVIEW_ONLY | unknown |
+| apply-patch | requires_approval | NO_WITHOUT_OPERATOR_APPROVAL | unknown |
+| cali-observe-directory | read_only | YES_BOUNDED | unknown |
+| list-agents | read_only | YES_BOUNDED | unknown |
+| propose-task-packet | propose_only | YES_PROPOSAL_ONLY | unknown |
+| propose-diff | propose_only | YES_PROPOSAL_ONLY | unknown |
+| runtime-state | read_only | YES_BOUNDED | unknown |
+| view-latest-diff | read_only | YES_BOUNDED | unknown |
+| grant-review-latest-diff | review_only | YES_REVIEW_ONLY | unknown |
+| clear-latest-diff | maintenance_write | UNKNOWN | unknown |
+| list-packets | read_only | YES_BOUNDED | unknown |
+| create-packet | propose_only | YES_PROPOSAL_ONLY | unknown |
+| test-all | diagnostic_exec | UNKNOWN | unknown |
+| gemini-analyze | propose_only | YES_PROPOSAL_ONLY | unknown |
+| gemini-list-models | read_only | YES_BOUNDED | unknown |
+| read-file | read_only | YES_BOUNDED | unknown |
+| apply-code | requires_approval | NO_WITHOUT_OPERATOR_APPROVAL | unknown |
+| refs | read_only | YES_BOUNDED | unknown |
+| tree | read_only | YES_BOUNDED | unknown |
 
 ## Demonstration checklist
 
 | ID | Capability | Result | Evidence |
 |---|---|---|---|
-| agency.status | Run Dashboard status | PASS | exit=0; duration_ms=116; file=/home/spaztic/Core/Dashboard/Agency/audit/evidence/2026-07-28_00-43-28/agency.status.txt |
-| agency.scope | Resolve Dashboard scope | PASS | exit=0; duration_ms=118; file=/home/spaztic/Core/Dashboard/Agency/audit/evidence/2026-07-28_00-43-28/agency.scope.txt |
-| agency.runtime_state | Read runtime state | PASS | exit=0; duration_ms=115; file=/home/spaztic/Core/Dashboard/Agency/audit/evidence/2026-07-28_00-43-28/agency.runtime_state.txt |
-| agency.git_status | Read Git status | PASS | exit=0; duration_ms=241; file=/home/spaztic/Core/Dashboard/Agency/audit/evidence/2026-07-28_00-43-28/agency.git_status.txt |
-| agency.list_agents | List registered agents | PASS | exit=0; duration_ms=117; file=/home/spaztic/Core/Dashboard/Agency/audit/evidence/2026-07-28_00-43-28/agency.list_agents.txt |
-| agency.list_packets | List packets | PASS | exit=0; duration_ms=114; file=/home/spaztic/Core/Dashboard/Agency/audit/evidence/2026-07-28_00-43-28/agency.list_packets.txt |
-| agency.refs_scoped | Run bounded reference search | PASS | exit=0; duration_ms=114; file=/home/spaztic/Core/Dashboard/Agency/audit/evidence/2026-07-28_00-43-28/agency.refs_scoped.txt |
-| agency.tree_scoped | Inspect OperatorShell tree | PASS | exit=0; duration_ms=113; file=/home/spaztic/Core/Dashboard/Agency/audit/evidence/2026-07-28_00-43-28/agency.tree_scoped.txt |
-| agency.apply_code_gate | Block unapproved code mutation | PASS | exit=1; duration_ms=114; file=/home/spaztic/Core/Dashboard/Agency/audit/evidence/2026-07-28_00-43-28/agency.apply_code_gate.txt |
-| agency.unregistered_gate | Block unregistered command | PASS | exit=2; duration_ms=114; file=/home/spaztic/Core/Dashboard/Agency/audit/evidence/2026-07-28_00-43-28/agency.unregistered_gate.txt |
+| agency.status | Run Dashboard status | PASS | exit=0; duration_ms=362; file=/data/data/com.termux/files/home/ce-os/Agency/audit/evidence/2026-09-08_17-04-20/agency.status.txt |
+| agency.scope | Resolve Dashboard scope | PASS | exit=0; duration_ms=193; file=/data/data/com.termux/files/home/ce-os/Agency/audit/evidence/2026-09-08_17-04-20/agency.scope.txt |
+| agency.runtime_state | Read runtime state | PASS | exit=0; duration_ms=266; file=/data/data/com.termux/files/home/ce-os/Agency/audit/evidence/2026-09-08_17-04-20/agency.runtime_state.txt |
+| agency.git_status | Read Git status | PASS | exit=0; duration_ms=1003; file=/data/data/com.termux/files/home/ce-os/Agency/audit/evidence/2026-09-08_17-04-20/agency.git_status.txt |
+| agency.list_agents | List registered agents | PASS | exit=0; duration_ms=280; file=/data/data/com.termux/files/home/ce-os/Agency/audit/evidence/2026-09-08_17-04-20/agency.list_agents.txt |
+| agency.list_packets | List packets | PASS | exit=0; duration_ms=381; file=/data/data/com.termux/files/home/ce-os/Agency/audit/evidence/2026-09-08_17-04-20/agency.list_packets.txt |
+| agency.refs_scoped | Run bounded reference search | PASS | exit=0; duration_ms=303; file=/data/data/com.termux/files/home/ce-os/Agency/audit/evidence/2026-09-08_17-04-20/agency.refs_scoped.txt |
+| agency.tree_scoped | Inspect OperatorShell tree | BLOCKED_TIMEOUT | exit=124; duration_ms=20141; file=/data/data/com.termux/files/home/ce-os/Agency/audit/evidence/2026-09-08_17-04-20/agency.tree_scoped.txt |
+| agency.apply_code_gate | Block unapproved code mutation | PASS | exit=1; duration_ms=376; file=/data/data/com.termux/files/home/ce-os/Agency/audit/evidence/2026-09-08_17-04-20/agency.apply_code_gate.txt |
+| agency.unregistered_gate | Block unregistered command | PASS | exit=2; duration_ms=215; file=/data/data/com.termux/files/home/ce-os/Agency/audit/evidence/2026-09-08_17-04-20/agency.unregistered_gate.txt |
 | agency.propose_task | Generate a task proposal | PASS | propose-task-packet generated a structured, non-mutating task proposal for hosting Workbench inside OperatorShell. |
 | agency.propose_diff | Generate a reviewable diff proposal | PASS | A scoped, non-mutating propose-diff command created proposal.json, proposed.diff, and evidence.json on the black laptop. Repeatable scopes worked; invalid, traversal, outside-root, missing, and symlink-escape scopes were rejected. The generated diff passed git apply --check, application source Git status did not change, and watch events were recorded. |
 | agency.review_diff | Review a proposed diff | PASS | grant-review inspected the generated proposed.diff, reported status admissible, exited successfully, and caused no observable Git-status change. |

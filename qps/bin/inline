@@ -1,0 +1,28 @@
+#!/usr/bin/env python3
+
+from __future__ import annotations
+
+import sys
+
+from inline_lib import InlineError, execute
+
+
+def main(argv: list[str]) -> int:
+    if len(argv) == 2:
+        surface = argv[1]
+    elif len(argv) == 1:
+        surface = sys.stdin.read()
+    else:
+        print("Usage: inline '[< code]'", file=sys.stderr)
+        print("       printf '%s' '[< code]' | inline", file=sys.stderr)
+        return 2
+
+    try:
+        return execute(surface)
+    except InlineError as error:
+        print(f"QPS_INLINE=FAIL {error}", file=sys.stderr)
+        return 2
+
+
+if __name__ == "__main__":
+    raise SystemExit(main(sys.argv))

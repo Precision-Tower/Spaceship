@@ -224,6 +224,87 @@ def main():
             f"nested structural source missing: {result.stdout!r}",
         )
 
+        # A filename alone does not define an excluded document role.
+        # Arbitrary indexed modules may legitimately own current source named
+        # history.qps; broad discovery must not hard-code that filename.
+        (root / "history.qps").write_text(
+            "FixtureHistory.\n"
+            "fixture_current_identity- true;\n"
+        )
+
+        result = run(
+            qps,
+            "scout",
+            str(root),
+            "fixture_current_identity",
+        )
+
+        require(
+            result.returncode == 0,
+            result.stderr,
+        )
+
+        require(
+            "history.qps:2" in result.stdout,
+            "scout hard-coded history.qps exclusion without authored policy",
+        )
+
+        # Corpus exclusion is authored in the selected module's _index.qps and
+        # may name any document; scout consumes the policy generically.
+        (root / "_index.qps").write_text(
+            "FixtureIndex.\n"
+            "\n"
+            "discovery_policy: (\n"
+            "excluded_documents- \"history.qps\";\n"
+            ");\n"
+        )
+
+        result = run(
+            qps,
+            "scout",
+            str(root),
+            "fixture_current_identity",
+        )
+
+        require(
+            result.returncode != 0,
+            "authored excluded document unexpectedly remained discoverable",
+        )
+
+        require(
+            "history.qps:" not in result.stdout,
+            "authored exclusion leaked into scout evidence",
+        )
+
+        (root / "archive.qps").write_text(
+            "FixtureArchive.\n"
+            "fixture_archive_identity- true;\n"
+        )
+        (root / "_index.qps").write_text(
+            "FixtureIndex.\n"
+            "\n"
+            "discovery_policy: (\n"
+            "excluded_documents- \"archive.qps\";\n"
+            ");\n"
+        )
+
+        result = run(
+            qps,
+            "scout",
+            str(root),
+            "fixture_archive_identity",
+        )
+
+        require(
+            result.returncode != 0,
+            "generic authored archive exclusion was ignored",
+        )
+
+        require(
+            "archive.qps:" not in result.stdout,
+            "generic authored exclusion leaked into scout evidence",
+        )
+
     print("qps scout CLI: PASS")
 
 

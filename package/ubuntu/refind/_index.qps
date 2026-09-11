@@ -1,0 +1,28 @@
+REFIND_BOOT_SURFACE.
+
+identity- "package.ubuntu.refind_boot_surface";
+
+role- "Stable UEFI-visible CE-OS launcher surface carried by the Pixel-presented provisioning medium";
+
+top_level: (
+first- "CE-OS Install";
+second- "Network Install";
+third- "Ubuntu Live Installer";
+fourth- "Clonezilla Live";
+tools- "About rEFInd, System Reboot, Shutdown";
+);
+
+install_surfaces: (
+ce_os_install- "Uses the accepted Ubuntu kernel/initrd substrate with autoinstall and CE-OS NoCloud input for the full CE-OS package path";
+network_install- "Uses the accepted Ubuntu kernel/initrd substrate with autoinstall and Network Install NoCloud input for the small repeatable Ubuntu plus networking plus SSH path";
+ubuntu_live- "Preserves the Ubuntu live-server installer path as an explicit substrate/debug option";
+clonezilla- "Remains independent of CE-OS installation and directly available from the top level";
+);
+
+policy: (
+scan- "manual only";
+reason- "Manual scanning is physically proven on the target laptop and avoids the EFI directory-scanning errors observed with automatic scanning";
+ordering- "CE-OS Install, Network Install, Ubuntu Live Installer, and Clonezilla Live are explicit top-level launcher entries in that order";
+recovery- "Clonezilla remains independent of CE-OS installation and directly available from the top level";
+activation- "This tracked configuration is authority only until incorporated into a carrier image and physically proven";
+);

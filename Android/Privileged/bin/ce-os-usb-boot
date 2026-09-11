@@ -1,0 +1,285 @@
+#!/data/data/com.termux/files/usr/bin/python3
+from __future__ import annotations
+
+import hashlib
+import os
+import sys
+import time
+from pathlib import Path
+
+ROOT = Path("/data/data/com.termux/files/home/ce-os")
+IMAGE = Path("/data/data/com.termux/files/home/ubuntu-26.04.1-live-server-amd64.iso")
+IMAGE_SIZE = 2927861760
+IMAGE_SHA256 = "cc8a95cde20f6ced61a322420de00f10cc3c90ced545daa46cb9c1a117f1d927"
+
+USB_ROOT = Path("/config/usb_gadget")
+G = USB_ROOT / "ceos"
+F = G / "functions/mass_storage.usb0"
+L = F / "lun.0"
+C = G / "configs/c.1"
+UDC = "11110000.dwc3"
+UDC_ROOT = Path("/sys/class/udc") / UDC
+
+
+class Error(RuntimeError):
+    pass
+
+
+def read(path: Path) -> str:
+    try:
+        return path.read_text().strip()
+    except FileNotFoundError:
+        return ""
+
+
+def write(path: Path, value: str) -> None:
+    with path.open("w") as h:
+        h.write(value)
+
+
+def clear_udc(path: Path) -> None:
+    with path.open("w") as h:
+        h.write("\n")
+
+
+def require_root() -> None:
+    if os.geteuid() != 0:
+        raise Error("uid0_required")
+
+
+def digest(path: Path) -> str:
+    h = hashlib.sha256()
+    with path.open("rb") as f:
+        for block in iter(lambda: f.read(1024 * 1024), b""):
+            h.update(block)
+    return h.hexdigest()
+
+
+def owners() -> list[str]:
+    result = []
+    if not USB_ROOT.is_dir():
+        return result
+    for p in USB_ROOT.iterdir():
+        if p.is_dir() and read(p / "UDC") == UDC:
+            result.append(p.name)
+    return sorted(result)
+
+
+def status() -> None:
+    own = owners()
+    print(f"GADGET_EXISTS={'yes' if G.is_dir() else 'no'}")
+    print(f"GADGET_UDC={read(G / 'UDC') or 'none'}")
+    print(f"UDC_OWNER={own[0] if len(own) == 1 else ('none' if not own else 'ambiguous')}")
+    print(f"UDC_OWNER_COUNT={len(own)}")
+    print(f"UDC_STATE={read(UDC_ROOT / 'state') or 'unknown'}")
+    print(f"CURRENT_SPEED={read(UDC_ROOT / 'current_speed') or 'UNKNOWN'}")
+    print(f"LUN_FILE={read(L / 'file') or 'none'}")
+    print(f"LUN_RO={read(L / 'ro') or 'none'}")
+    print(f"LUN_REMOVABLE={read(L / 'removable') or 'none'}")
+    print(f"LUN_CDROM={read(L / 'cdrom') or 'none'}")
+
+
+def verify_image() -> None:
+    if not IMAGE.is_file():
+        raise Error("ubuntu_iso_missing")
+    if IMAGE.stat().st_size != IMAGE_SIZE:
+        raise Error("ubuntu_iso_size_mismatch")
+    got = digest(IMAGE)
+    if got != IMAGE_SHA256:
+        raise Error(f"ubuntu_iso_sha256_mismatch:{got}")
+
+
+def wait_free() -> None:
+    stable = 0
+    deadline = time.monotonic() + 10.0
+    while time.monotonic() < deadline:
+        if not owners() and read(UDC_ROOT / "state") == "not attached":
+            stable += 1
+            if stable >= 5:
+                return
+        else:
+            stable = 0
+        time.sleep(0.1)
+    raise Error("udc_not_stably_free")
+
+
+def prepare() -> None:
+    require_root()
+    verify_image()
+
+    if G.exists():
+        raise Error("ceos_gadget_already_exists")
+
+    G.mkdir()
+    write(G / "idVendor", "0x1d6b\n")
+    write(G / "idProduct", "0x0104\n")
+    write(G / "bcdUSB", "0x0200\n")
+    write(G / "bcdDevice", "0x0100\n")
+    write(G / "bDeviceClass", "0x00\n")
+    write(G / "bDeviceSubClass", "0x00\n")
+    write(G / "bDeviceProtocol", "0x00\n")
+
+    s = G / "strings/0x409"
+    s.mkdir(parents=True)
+    write(s / "serialnumber", "CEOSBOOT64M\n")
+    write(s / "manufacturer", "CE-OS\n")
+    write(s / "product", "CE-OS USB Boot\n")
+
+    C.mkdir(parents=True)
+    cs = C / "strings/0x409"
+    cs.mkdir()
+    write(cs / "configuration", "CE-OS USB Boot\n")
+    write(C / "bmAttributes", "0x80\n")
+    write(C / "MaxPower", "100\n")
+
+    F.mkdir(parents=True)
+    if not L.is_dir():
+        raise Error("kernel_mass_storage_lun0_missing")
+
+    write(F / "stall", "1\n")
+    write(L / "ro", "1\n")
+    write(L / "removable", "1\n")
+    write(L / "cdrom", "0\n")
+    write(L / "file", str(IMAGE) + "\n")
+
+    (C / "mass_storage.usb0").symlink_to(F)
+
+    if read(G / "UDC"):
+        raise Error("prepare_postcondition_bound")
+    if read(L / "file") != str(IMAGE):
+        raise Error("prepare_postcondition_lun")
+    print("PREPARE=PASS")
+
+
+def bind() -> None:
+    require_root()
+    verify_image()
+
+    if not G.is_dir():
+        raise Error("ceos_gadget_missing")
+    if read(G / "UDC"):
+        raise Error("ceos_gadget_already_bound")
+    if owners():
+        raise Error(f"udc_owned:{','.join(owners())}")
+
+    wait_free()
+    write(G / "UDC", UDC + "\n")
+
+    if owners() != ["ceos"] or read(G / "UDC") != UDC:
+        raise Error("bind_postcondition_failed")
+    print("BIND=PASS")
+
+
+def unbind() -> None:
+    require_root()
+    if not G.is_dir():
+        print("UNBIND=PASS")
+        return
+
+    u = read(G / "UDC")
+    if not u:
+        print("UNBIND=PASS")
+        return
+    if u != UDC or owners() != ["ceos"]:
+        raise Error("unbind_ownership_ambiguous")
+
+    clear_udc(G / "UDC")
+    if read(G / "UDC") or "ceos" in owners():
+        raise Error("unbind_postcondition_failed")
+    print("UNBIND=PASS")
+
+
+def dispose() -> None:
+    require_root()
+
+    if not G.exists():
+        print("DISPOSE=PASS")
+        return
+    if read(G / "UDC"):
+        raise Error("dispose_requires_unbound")
+
+    allowed_functions = []
+    fr = G / "functions"
+    if fr.is_dir():
+        allowed_functions = sorted(p.name for p in fr.iterdir() if p.is_dir())
+    if allowed_functions != ["mass_storage.usb0"]:
+        raise Error(f"unexpected_functions:{allowed_functions}")
+
+    allowed_configs = []
+    cr = G / "configs"
+    if cr.is_dir():
+        allowed_configs = sorted(p.name for p in cr.iterdir() if p.is_dir())
+    if allowed_configs != ["c.1"]:
+        raise Error(f"unexpected_configs:{allowed_configs}")
+
+    link = C / "mass_storage.usb0"
+    if not link.is_symlink():
+        raise Error("expected_config_link_missing")
+
+    link.unlink()
+
+    cs = C / "strings/0x409"
+    if cs.is_dir():
+        cs.rmdir()
+    C.rmdir()
+
+    # lun.0 is kernel-owned beneath the mass-storage function; removing the
+    # function removes its children.
+    F.rmdir()
+
+    s = G / "strings/0x409"
+    if s.is_dir():
+        s.rmdir()
+    G.rmdir()
+
+    if G.exists():
+        raise Error("dispose_postcondition_failed")
+    print("DISPOSE=PASS")
+
+
+def release_current_owner() -> None:
+    require_root()
+    own = owners()
+    if not own:
+        print("RELEASE_CURRENT_OWNER=PASS")
+        return
+    if len(own) != 1:
+        raise Error("ambiguous_udc_ownership")
+
+    name = own[0]
+    if name not in ("g1", "ceos"):
+        raise Error(f"unexpected_udc_owner:{name}")
+
+    clear_udc(USB_ROOT / name / "UDC")
+    if owners():
+        raise Error("release_current_owner_postcondition_failed")
+
+    wait_free()
+    print(f"RELEASE_CURRENT_OWNER=PASS:{name}")
+
+
+COMMANDS = {
+    "status": status,
+    "prepare": prepare,
+    "bind": bind,
+    "unbind": unbind,
+    "dispose": dispose,
+    "release-current-owner": release_current_owner,
+}
+
+
+def main() -> int:
+    if len(sys.argv) != 2 or sys.argv[1] not in COMMANDS:
+        print("usage: ce-os-usb-boot status|prepare|bind|unbind|dispose|release-current-owner", file=sys.stderr)
+        return 2
+    try:
+        COMMANDS[sys.argv[1]]()
+        return 0
+    except (Error, OSError) as exc:
+        print(f"USB_BOOT_RESULT=FAIL")
+        print(f"USB_BOOT_ERROR={exc}")
+        return 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

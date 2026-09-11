@@ -1,7 +1,7 @@
-# Precision Tower Deployment Package
+# CE-OS Deployment Package
 
 This directory contains the deployment, verification, operator-command, and
-service-definition surface for a Precision Tower Node.
+service-definition surface for a CE-OS Node.
 
 ## Current scope
 
@@ -18,9 +18,9 @@ services, modify SSH or Tailscale, or select a persistent Agency daemon.
 
 ## Hardware readiness
 
-`config/machines/precision-tower.env` is the explicit Precision Tower machine profile. `PT_MACHINE_PROFILE` selects package-owned machine policy, while `PT_HARDWARE_POLICY_FILE` remains an explicit compatibility override and `config/hardware.env` remains the legacy fallback during generalization.
+`config/machines/precision-tower.env` is the explicit CE-OS machine profile. `PT_MACHINE_PROFILE` selects package-owned machine policy, while `PT_HARDWARE_POLICY_FILE` remains an explicit compatibility override and `config/hardware.env` remains the legacy fallback during generalization.
 `verify.sh` reports host inventory, NVIDIA detection, driver visibility, CUDA
-runtime/toolkit visibility, VRAM, and Precision Tower acceptance.
+runtime/toolkit visibility, VRAM, and CE-OS acceptance.
 
 `install.sh --dry-run` reports whether `--apply` would be blocked.
 `install.sh --apply` refuses to mutate the installation destinations unless the

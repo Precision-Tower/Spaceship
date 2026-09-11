@@ -18,6 +18,11 @@
 #include <ctime>
 #include <iomanip>
 
+#if !defined(_WIN32)
+#include <sys/wait.h>
+#include <unistd.h>
+#endif
+
 #include "ast/structural_selection.hpp"
 #include "ast/scalar_query.hpp"
 #include "ast/ast_node.hpp"
@@ -1860,7 +1865,67 @@ int runScoutCommand(
         std::vector<qps::runtime::SourceSpan> spans;
         std::size_t unreadable_documents = 0;
 
+        std::vector<fs::path> excluded_documents;
+
+        try {
+            std::unique_ptr<qps::ast::ProgramNode> module_index =
+                parseFileQuiet(module / "_index.qps");
+
+            if (module_index) {
+                /*
+                 * discovery_policy is authored at the document structural
+                 * surface of _index.qps. A leading Key such as CE_OS. names
+                 * its own paragraph only; later peer Terms are selected
+                 * directly from ProgramNode.
+                 *
+                 * Scout consumes the same structural selector proven through
+                 * probe/scope and does not know excluded filenames.
+                 */
+                try {
+                    const std::string authored_exclusions =
+                        qps::ast::queryScalar(
+                            *module_index,
+                            "discovery_policy.excluded_documents-");
+
+                    std::istringstream entries(authored_exclusions);
+                    std::string entry;
+
+                    while (std::getline(entries, entry, ',')) {
+                        const auto first =
+                            entry.find_first_not_of(" \t\r\n");
+                        const auto last =
+                            entry.find_last_not_of(" \t\r\n");
+
+                        if (first != std::string::npos) {
+                            excluded_documents.emplace_back(
+                                entry.substr(
+                                    first,
+                                    last - first + 1));
+                        }
+                    }
+                } catch (const std::exception&) {
+                    /*
+                     * No authored exclusion list means the module's immediate
+                     * QPS documents are all eligible current-source evidence.
+                     */
+                }
+            }
+        } catch (const std::exception&) {
+            /*
+             * Malformed authority remains owned by normal module/document
+             * validation. Discovery policy itself is optional.
+             */
+        }
+
         for (const auto& relative : paths.qpsFiles(".")) {
+            if (std::find(
+                    excluded_documents.begin(),
+                    excluded_documents.end(),
+                    relative) != excluded_documents.end()) {
+
+                continue;
+            }
+
             const fs::path absolute =
                 paths.resolveFile(relative);
 
@@ -2890,7 +2955,19 @@ int main(int argc, char* argv[]) {
             << " <source_file.qps> [--check | --get path]\n"
             << "       "
             << argv[0]
-            << " test <path/file.qps|path/folder>"
+            << " test <path/file.qps|path/folder>\n"
+            << "       "
+            << argv[0]
+            << " check <file.qps>\n"
+            << "       "
+            << argv[0]
+            << " refs [--absent] <path>\n"
+            << "       "
+            << argv[0]
+            << " move <old.qps> <new.qps>"
+            << "\n       "
+            << argv[0]
+            << " screenshot"
             << std::endl;
         return 1;
     }
@@ -2910,7 +2987,19 @@ int main(int argc, char* argv[]) {
             << " <source_file.qps> [--check | --get path]\n"
             << "       "
             << argv[0]
-            << " test <path/file.qps|path/folder>"
+            << " test <path/file.qps|path/folder>\n"
+            << "       "
+            << argv[0]
+            << " check <file.qps>\n"
+            << "       "
+            << argv[0]
+            << " refs [--absent] <path>\n"
+            << "       "
+            << argv[0]
+            << " move <old.qps> <new.qps>"
+            << "\n       "
+            << argv[0]
+            << " screenshot"
             << std::endl;
         return 1;
     }
