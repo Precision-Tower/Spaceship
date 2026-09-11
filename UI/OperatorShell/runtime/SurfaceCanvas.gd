@@ -31,6 +31,20 @@ func _ready() -> void:
 	else:
 		push_warning("[SurfaceCanvas] missing " + abs_path)
 	add_child(texture_rect)
+	resized.connect(_dump_state)
+	call_deferred("_dump_state")
+
+func _dump_state() -> void:
+	if texture_rect == null:
+		return
+	var tex_size := "none"
+	if texture_rect.texture != null:
+		var ts: Vector2 = texture_rect.texture.get_size()
+		tex_size = str(int(ts.x)) + "x" + str(int(ts.y))
+	print("[SurfaceCanvasState] self=", int(size.x), "x", int(size.y),
+		" tex_rect=", int(texture_rect.size.x), "x", int(texture_rect.size.y),
+		" tex_loaded=", texture_rect.texture != null,
+		" tex_size=", tex_size)
 
 func content_rect() -> Rect2:
 	if not is_inside_tree():

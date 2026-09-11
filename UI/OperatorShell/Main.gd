@@ -167,6 +167,7 @@ var current_status := {
 }
 
 func _toggle_terminal_dock() -> void:
+	print("[Toggle] terminal called, main_v_split=", main_v_split)
 	if mobile_mode:
 		terminal_collapsed = false
 		if bottom_shell:
@@ -408,6 +409,7 @@ func _build() -> void:
 	desktop_root.add_child(right_scroll_strip)
 
 	call_deferred("_apply_initial_splits")
+	call_deferred("_dump_panel_state")
 
 func _apply_initial_splits() -> void:
 	if left_split:
@@ -415,6 +417,26 @@ func _apply_initial_splits() -> void:
 	if center_right_split:
 		var w: int = int(center_right_split.size.x)
 		center_right_split.split_offset = w - 340
+
+func _dump_panel_state() -> void:
+	var lw := 0
+	var lmin := 0
+	var rw := 0
+	var rmin := 0
+	var cw := 0
+	if left_dock_shell:
+		lw = int(left_dock_shell.size.x)
+		lmin = int(left_dock_shell.get_combined_minimum_size().x)
+	if right_dock_shell:
+		rw = int(right_dock_shell.size.x)
+		rmin = int(right_dock_shell.get_combined_minimum_size().x)
+	if center_vbox:
+		cw = int(center_vbox.size.x)
+	print("[PanelState] left_w=", lw, " left_min=", lmin,
+		" right_w=", rw, " right_min=", rmin,
+		" center_w=", cw,
+		" left_off=", left_split.split_offset if left_split else -1,
+		" right_off=", center_right_split.split_offset if center_right_split else -1)
 
 func _build_left_scroll_strip() -> Control:
 	var rail := PanelContainer.new()
@@ -955,6 +977,7 @@ func _build_right_dock_shell() -> VBoxContainer:
 
 
 func _toggle_left_dock() -> void:
+	print("[Toggle] left called, left_split=", left_split)
 	if left_split == null:
 		return
 	if left_split.split_offset > 30:
@@ -964,6 +987,7 @@ func _toggle_left_dock() -> void:
 
 
 func _toggle_right_dock() -> void:
+	print("[Toggle] right called, center_right_split=", center_right_split)
 	if center_right_split == null:
 		return
 	var total_w: int = int(center_right_split.size.x)
