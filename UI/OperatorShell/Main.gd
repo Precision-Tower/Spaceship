@@ -167,24 +167,20 @@ var current_status := {
 }
 
 func _toggle_terminal_dock() -> void:
-	print("[Toggle] terminal called, main_v_split=", main_v_split)
 	if mobile_mode:
 		terminal_collapsed = false
 		if bottom_shell:
 			bottom_shell.custom_minimum_size = Vector2.ZERO
 		return
 	terminal_collapsed = !terminal_collapsed
-
-	if bottom_shell:
-		bottom_shell.custom_minimum_size = Vector2(0, 60)
-
-	if main_v_split:
-		var total_h: int = int(main_v_split.size.y)
-		var bottom_h: int = 42 if terminal_collapsed else int(config.bottom_height_expanded)
-		main_v_split.split_offset = total_h - bottom_h
-
+	if main_v_split == null:
+		return
+	var total_h: int = int(main_v_split.size.y)
+	var bottom_h: int = 0 if terminal_collapsed else int(config.bottom_height_expanded)
+	main_v_split.split_offset = total_h - bottom_h
 	if terminal_toggle_button:
 		terminal_toggle_button.text = "?" if terminal_collapsed else "?"
+	print("[Toggle] terminal, collapsed=", terminal_collapsed, " offset=", main_v_split.split_offset)
 
 
 func _cycle_terminal_density() -> void:
@@ -1238,6 +1234,8 @@ func _apply_config() -> void:
 func _bottom() -> Control:
 	bottom_dock = BottomDock.new(self)
 	bottom_shell = bottom_dock.build()
+	bottom_shell.custom_minimum_size = Vector2(0, 0)
+	bottom_shell.clip_contents = true
 	bottom_tabs = bottom_dock.bottom_tabs
 	return bottom_shell
 
