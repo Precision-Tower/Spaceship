@@ -166,6 +166,15 @@ var current_status := {
 	"next_required_action": "Refresh State"
 }
 
+func _on_main_v_dragged(offset: int) -> void:
+	if main_v_split == null or bottom_shell == null:
+		return
+	var total_h: int = int(main_v_split.size.y)
+	var bottom_h: int = total_h - offset
+	if bottom_h < 50:
+		main_v_split.split_offset = total_h
+		terminal_collapsed = true
+
 func _toggle_terminal_dock() -> void:
 	if mobile_mode:
 		terminal_collapsed = false
@@ -388,6 +397,7 @@ func _build() -> void:
 	main_v_split.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	main_v_split.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	center_vbox.add_child(main_v_split)
+	main_v_split.dragged.connect(_on_main_v_dragged)
 
 	var workspace_host := HBoxContainer.new()
 	workspace_host.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -1223,10 +1233,11 @@ func _apply_config() -> void:
 		if mobile_mode:
 			bottom_shell.custom_minimum_size = Vector2.ZERO
 		else:
-			bottom_shell.custom_minimum_size = Vector2(
-				0,
-				config.bottom_height_expanded if bottom_expanded else config.bottom_height_collapsed
-			)
+			pass
+
+
+
+
 
 		if bottom_dock:
 			bottom_dock.apply_terminal_density(config.terminal_density)
@@ -1234,7 +1245,7 @@ func _apply_config() -> void:
 func _bottom() -> Control:
 	bottom_dock = BottomDock.new(self)
 	bottom_shell = bottom_dock.build()
-	bottom_shell.custom_minimum_size = Vector2(0, 0)
+
 	bottom_shell.clip_contents = true
 	bottom_tabs = bottom_dock.bottom_tabs
 	return bottom_shell
@@ -1475,7 +1486,7 @@ func _on_approve_task_pressed() -> void:
 
 func _toggle_bottom() -> void:
 	bottom_expanded = !bottom_expanded
-	bottom_shell.custom_minimum_size = Vector2(0, 710 if bottom_expanded else 245)
+
 
 func _panel(panel: PanelContainer, fill: Color, border: Color, width: int, radius: int) -> void:
 	var s := StyleBoxFlat.new()

@@ -19,9 +19,13 @@ func build() -> Control:
 
 	var box := VBoxContainer.new()
 	bottom_shell.add_child(box)
+	box.custom_minimum_size = Vector2(0, 0)
+	box.clip_contents = true
 
 	var row := HBoxContainer.new()
 	box.add_child(row)
+	row.custom_minimum_size = Vector2(0, 0)
+	row.clip_contents = true
 
 	var title := Label.new()
 	title.text = "Runtime Surfaces"
@@ -38,16 +42,11 @@ func build() -> Control:
 	host._connect_observed_button(density, "Cycle Density", host._cycle_terminal_density)
 	row.add_child(density)
 
-	var toggle := Button.new()
-	toggle.text = "▼"
-	host._button(toggle, true)
-	host._connect_observed_button(toggle, "Toggle Terminal Dock", host._toggle_terminal_dock)
-	row.add_child(toggle)
-
-	host.terminal_density_button = density
-	host.terminal_toggle_button = toggle
+	host.terminal_toggle_button = null
 
 	bottom_tabs = TabContainer.new()
+	bottom_tabs.custom_minimum_size = Vector2(0, 0)
+	bottom_tabs.clip_contents = true
 	bottom_tabs.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	box.add_child(bottom_tabs)
 
