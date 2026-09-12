@@ -449,6 +449,9 @@ func _apply_initial_splits() -> void:
 	if center_right_split:
 		var w: int = int(center_right_split.size.x)
 		center_right_split.split_offset = w - 340
+	if main_v_split:
+		var h: int = int(main_v_split.size.y)
+		main_v_split.split_offset = h - 30
 
 func _dump_panel_state() -> void:
 	var lw := 0

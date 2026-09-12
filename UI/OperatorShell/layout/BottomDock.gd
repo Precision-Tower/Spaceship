@@ -21,7 +21,7 @@ func _init(owner) -> void:
 
 func build() -> Control:
 	bottom_shell = PanelContainer.new()
-	bottom_shell.custom_minimum_size = Vector2(0, 0)
+	bottom_shell.custom_minimum_size = Vector2(0, 30)
 	host._panel(bottom_shell, Palette.PLUM_DEEP, Palette.GOLD_DARK, 1, 16)
 
 	var box := VBoxContainer.new()
@@ -88,8 +88,12 @@ func build() -> Control:
 func _on_shell_resized() -> void:
 	var h := bottom_shell.size.y
 	var show_input := h > 80.0
-	if terminal_input.visible != show_input:
+	if terminal_input != null and terminal_input.visible != show_input:
 		terminal_input.visible = show_input
+	# Content area is only useful when there is meaningful height to show it in
+	var show_content := h > 80.0
+	if content_host != null and content_host.visible != show_content:
+		content_host.visible = show_content
 
 func _make_tab_button(name: String) -> Button:
 	var btn := Button.new()
