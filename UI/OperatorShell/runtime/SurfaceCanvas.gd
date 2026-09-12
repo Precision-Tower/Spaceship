@@ -43,25 +43,25 @@ func _tab_bar_height() -> int:
 	return 0
 
 func _dump_state() -> void:
-	print("[SurfaceCanvasState] self=", int(size.x), "x", int(size.y),
-		" tab_bar_h=", _tab_bar_height(),
-		" content_rect=", content_rect())
-
-var cr := content_rect()
-var ws := DisplayServer.window_get_size()
-var ss := DisplayServer.screen_get_size()
-print("[SurfaceCanvasScreen] window=", ws.x, "x", ws.y,
-" screen=", ss.x, "x", ss.y,
-" cr=", cr)
+	var cr := content_rect()
+	var ws := DisplayServer.window_get_size()
+	var ss := DisplayServer.screen_get_size()
+	var pos := DisplayServer.window_get_position()
+	print("[SurfaceCanvasScreen] window=", ws.x, "x", ws.y,
+		" | screen=", ss.x, "x", ss.y,
+		" | win_pos=", pos.x, ",", pos.y,
+		" | content_rect=", cr)
 
 func content_rect() -> Rect2:
 	if not is_inside_tree():
 		return Rect2()
-	var base := get_global_rect()
-	var h := _tab_bar_height()
-	base.position.y += float(h)
-	base.size.y = max(1.0, base.size.y - float(h))
-	return base
+	var canvas_rect := get_global_rect()
+	var xform := get_viewport().get_screen_transform()
+	var screen_rect := xform * canvas_rect
+	var h := float(_tab_bar_height())
+	screen_rect.position.y += h
+	screen_rect.size.y = max(1.0, screen_rect.size.y - h)
+	return screen_rect
 
 func add_anchor(name: String, normalized_rect: Rect2) -> void:
 	anchors[name] = normalized_rect
