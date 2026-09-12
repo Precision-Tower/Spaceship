@@ -1660,9 +1660,46 @@ func _settle_vsplit() -> void:
 	var h: int = int(main_v_split.size.y)
 	if h < 200:
 		return
-	var screen_h: int = DisplayServer.screen_get_size().y
-	var usable: int = h if h <= screen_h else screen_h
-	main_v_split.split_offset = usable - 48
+
+	# Pin top child's minimum so the split has surplus to allocate.
+	# Per Godot 4.2: split_offset is offset past top child's combined minimum.
+	if main_v_split.get_child_count() < 2:
+		return
+	var top := main_v_split.get_child(0) as Control
+	var bottom := main_v_split.get_child(1) as Control
+	if top == null or bottom == null:
+		return
+
+	top.custom_minimum_size = Vector2(0, 0)
+	bottom.custom_minimum_size = Vector2(0, 48)
+	top.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	bottom.size_flags_vertical = Control.SIZE_EXPAND_FILL
+
+	# Re-sort so combined minimums are recalculated
+	main_v_split.queue_sort()
+
+	# Defer actual offset assignment one process frame
+	var t := Timer.new()
+	t.wait_time = 0.15
+	t.one_shot = true
+	t.timeout.connect(_apply_split_offset_real)
+	add_child(t)
+	t.start()
+
+func _apply_split_offset_real() -> void:
+	if main_v_split == null or main_v_split.get_child_count() < 2:
+		return
+	var top := main_v_split.get_child(0) as Control
+	var bottom := main_v_split.get_child(1) as Control
+	var sep: int = main_v_split.get_theme_constant("separation")
+	var h: int = int(main_v_split.size.y)
+	var desired_bottom: int = 48
+	var top_min: int = int(top.get_combined_minimum_size().y)
+	var target_top: int = h - sep - desired_bottom
+	var offset: int = target_top - top_min
+	main_v_split.split_offset = offset
+	main_v_split.clamp_split_offset()
 	_vsplit_settled = true
-	print("[Startup] settled vsplit h=", h, " screen_h=", screen_h, " offset=", main_v_split.split_offset)
+	print("[Startup] h=", h, " sep=", sep, " top_min=", top_min, " offset_set=", offset, " clamped=", main_v_split.split_offset,
+		" top_size=", top.size.y, " bottom_size=", bottom.size.y)
 
