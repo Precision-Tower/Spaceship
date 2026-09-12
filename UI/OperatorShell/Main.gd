@@ -1662,7 +1662,7 @@ func _settle_vsplit() -> void:
 		return
 	var screen_h: int = DisplayServer.screen_get_size().y
 	var usable: int = h if h <= screen_h else screen_h
-	main_v_split.split_offset = usable - 30
+	main_v_split.split_offset = usable - 42
 	_vsplit_settled = true
 	print("[Startup] settled vsplit h=", h, " screen_h=", screen_h, " offset=", main_v_split.split_offset)
 

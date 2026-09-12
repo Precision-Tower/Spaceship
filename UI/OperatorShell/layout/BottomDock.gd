@@ -21,8 +21,8 @@ func _init(owner) -> void:
 
 func build() -> Control:
 	bottom_shell = PanelContainer.new()
-	bottom_shell.custom_minimum_size = Vector2(0, 30)
-	host._panel(bottom_shell, Palette.PLUM_DEEP, Palette.GOLD_DARK, 1, 16)
+	bottom_shell.custom_minimum_size = Vector2(0, 42)
+	host._panel(bottom_shell, Palette.PLUM_DEEP, Palette.GOLD_DARK, 1, 6)
 
 	var box := VBoxContainer.new()
 	box.add_theme_constant_override("separation", 0)
