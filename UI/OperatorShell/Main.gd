@@ -73,6 +73,7 @@ var mobile_editor_loading := false
 var operator_control_server
 var chrome_bridge
 var surface_canvas
+var _layout_diag_t: float = 0.0
 var left_scroll_strip: Control
 var right_scroll_strip: Control
 var left_split: HSplitContainer
@@ -266,9 +267,21 @@ func _ready() -> void:
 	request_assist_wake.connect(_on_request_assist_wake)
 
 func _process(_delta: float) -> void:
-	if mobile_mode:
-		_update_mobile_keyboard_layout()
-
+	_layout_diag_t += _delta
+	if _layout_diag_t > 3.0:
+		_layout_diag_t = 0.0
+		var ws_size := Vector2.ZERO
+		var btm_size := Vector2.ZERO
+		var off := -1
+		if workspace_control != null:
+			ws_size = workspace_control.size
+		if bottom_shell != null:
+			btm_size = bottom_shell.size
+		if main_v_split != null:
+			off = main_v_split.split_offset
+		print("[LayoutDiag] vsplit_offset=", off,
+			" ws=", int(ws_size.x), "x", int(ws_size.y),
+			" bottom=", int(btm_size.x), "x", int(btm_size.y))
 func _update_mobile_keyboard_layout() -> void:
 	if mobile_root == null:
 		return
@@ -448,21 +461,9 @@ func _apply_initial_splits() -> void:
 		left_split.split_offset = 320
 	if center_right_split:
 		var w: int = int(center_right_split.size.x)
-		center_right_split.split_offset = max(200, w - 340)
-	# Vertical split needs a real frame before sizes are valid
-	var t := Timer.new()
-	t.wait_time = 0.4
-	t.one_shot = true
-	t.timeout.connect(_apply_vertical_split)
-	add_child(t)
-	t.start()
-
-func _apply_vertical_split() -> void:
-	if main_v_split == null:
-		return
-	var h: int = int(main_v_split.size.y)
-	print("[Startup] vertical split h=", h)
-	if h > 200:
+		center_right_split.split_offset = w - 340
+	if main_v_split:
+		var h: int = int(main_v_split.size.y)
 		main_v_split.split_offset = h - 30
 
 func _dump_panel_state() -> void:
