@@ -1,4 +1,4 @@
-﻿extends RefCounted
+extends RefCounted
 class_name OperatorShellBottomDock
 
 const Palette = preload("res://widgets/Palette.gd")
@@ -23,14 +23,24 @@ func build() -> Control:
 	box.clip_contents = true
 
 	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 6)
 	box.add_child(row)
 	row.custom_minimum_size = Vector2(0, 0)
 	row.clip_contents = true
 
 	var title := Label.new()
-	title.text = "Runtime Surfaces"
+	title.text = "CodeGo:"
 	title.add_theme_color_override("font_color", Palette.GOLD_BRIGHT)
 	row.add_child(title)
+
+	for provider in ["qwen", "gemini", "deepseek"]:
+		var btn := Button.new()
+		btn.text = provider.capitalize()
+		btn.tooltip_text = "Launch " + provider.capitalize() + " in Chrome"
+		btn.custom_minimum_size = Vector2(80, 26)
+		host._button(btn, false)
+		btn.pressed.connect(host._codego_provider.bind(provider))
+		row.add_child(btn)
 
 	var spacer := Control.new()
 	spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -123,17 +133,14 @@ func record_command(name: String, result: Dictionary, summary: String) -> void:
 	host.current_status["last_command"] = name + " (" + status + ")"
 	host.current_status["next_required_action"] = "Review " + name + " output"
 	host._render_current_status()
-
 	host.command_history.push_front({
 		"command": name,
 		"status": status,
 		"time": Time.get_time_string_from_system(),
 		"summary": summary
 	})
-
 	if host.command_history.size() > 10:
 		host.command_history.pop_back()
-
 	render_history()
 
 func shutdown_terminals() -> void:
@@ -143,7 +150,6 @@ func shutdown_terminals() -> void:
 func render_history() -> void:
 	if not host.history_label:
 		return
-
 	var text := "[color=#f1d58a]Command History[/color]\n"
 	if host.command_history.is_empty():
 		text += "\n(no commands yet)\n"
@@ -155,14 +161,12 @@ func render_history() -> void:
 			text += "time: " + str(row.get("time", "--:--")) + "\n"
 			text += "command: " + str(row.get("command", "unknown")) + "\n"
 			text += "summary: " + str(row.get("summary", "")) + "\n"
-
 	text += "\n[color=#b8aebe]history != evidence[/color]"
 	host.history_label.text = text
 
 func apply_terminal_density(mode: String) -> void:
 	var font_size := 12
 	var margin := 6
-
 	match mode:
 		"comfortable":
 			font_size = 14
@@ -173,7 +177,6 @@ func apply_terminal_density(mode: String) -> void:
 		"dense":
 			font_size = 10
 			margin = 2
-
 	for name in ["Logs", "Diffs", "Packets"]:
 		var label := bottom_text(name)
 		if label:

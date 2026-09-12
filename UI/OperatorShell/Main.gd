@@ -1503,6 +1503,37 @@ func _render_packets(result: Dictionary) -> void:
 	_packets(_format(result))
 func _render_task_proposal(proposal: Dictionary, intent: String) -> void:
 	_diff(ResultRenderer.task_proposal(proposal, intent))
+const CODEGO_PROVIDERS := {
+	"qwen": "https://chat.qwen.ai",
+	"gemini": "https://gemini.google.com/app",
+	"deepseek": "https://chat.deepseek.com",
+}
+
+func _codego_provider(provider: String) -> void:
+	if not CODEGO_PROVIDERS.has(provider):
+		return
+	var url: String = CODEGO_PROVIDERS[provider]
+
+	# Write active thread file so CodeGo.py can pick it up later
+	var home := OS.get_environment("HOME")
+	if home == "":
+		home = OS.get_environment("USERPROFILE")
+	if home != "":
+		var dir_path := home + "/Core/DeepSeek/_sandbox"
+		var thread_file := dir_path + "/active_thread.txt"
+		DirAccess.make_dir_recursive_absolute(dir_path)
+		var f := FileAccess.open(thread_file, FileAccess.WRITE)
+		if f:
+			f.store_string(url)
+			f.close()
+
+	# Open a new tab in the already-running Chrome via CDP
+	var cdp_url := "http://127.0.0.1:9222/json/new?" + url
+	OS.execute("curl", ["-s", "-X", "PUT", cdp_url], [], true)
+
+	_log("codego: launched " + provider + " -> " + url)
+	_terminal("codego: " + provider + " opened in Chrome")
+
 func _on_approve_task_pressed() -> void:
 	approve_button.visible = false
 	_log("Approving task: " + last_proposal_intent)
