@@ -13,11 +13,12 @@ func build() -> Control:
 	var shell := PanelContainer.new()
 	shell.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	shell.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	shell.custom_minimum_size = Vector2(0, 0)
+	shell.custom_minimum_size = Vector2(600, 400)
 	host._panel(shell, Palette.PLUM_PANEL, Palette.GOLD_DARK, 1, 18)
 	workspace_tabs = TabContainer.new()
 	workspace_tabs.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	workspace_tabs.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	workspace_tabs.custom_minimum_size = Vector2(600, 400)
 	shell.add_child(workspace_tabs)
 	return shell
 

@@ -1,10 +1,6 @@
 extends Control
 class_name OperatorShellSurfaceCanvas
 
-# Fullbleed workspace surface. Fits inside TabContainer via size_flags;
-# does NOT use anchors (containers ignore them and it breaks layout).
-# Renders background image and exposes content_rect()/anchor_rect().
-
 var texture_rect: TextureRect
 var background_path: String = "res://assets/background.jpg"
 var anchors: Dictionary = {}
@@ -12,6 +8,7 @@ var anchors: Dictionary = {}
 func _ready() -> void:
     size_flags_horizontal = Control.SIZE_EXPAND_FILL
     size_flags_vertical = Control.SIZE_EXPAND_FILL
+    custom_minimum_size = Vector2(600, 400)
 
     texture_rect = TextureRect.new()
     texture_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -38,26 +35,7 @@ func _dump_state() -> void:
     if texture_rect == null:
         return
     print("[SurfaceCanvasState] self=", int(size.x), "x", int(size.y),
-        " tex_rect=", int(texture_rect.size.x), "x", int(texture_rect.size.y),
-        " visible=", visible)
-    _walk_up()
-
-func _walk_up() -> void:
-    var node := get_parent()
-    var depth := 1
-    while node != null and depth <= 8:
-        if node is Control:
-            var c := node as Control
-            print("[SurfaceAncestor ", depth, "] ", c.name,
-                " class=", c.get_class(),
-                " size=", int(c.size.x), "x", int(c.size.y),
-                " min=", int(c.get_combined_minimum_size().x), "x", int(c.get_combined_minimum_size().y),
-                " flags_h=", c.size_flags_horizontal,
-                " flags_v=", c.size_flags_vertical)
-        else:
-            print("[SurfaceAncestor ", depth, "] ", node.name, " class=", node.get_class())
-        node = node.get_parent()
-        depth += 1
+        " tex_rect=", int(texture_rect.size.x), "x", int(texture_rect.size.y))
 
 func content_rect() -> Rect2:
     if not is_inside_tree():
