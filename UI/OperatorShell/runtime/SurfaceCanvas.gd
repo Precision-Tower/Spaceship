@@ -12,7 +12,6 @@ var anchors: Dictionary = {}
 func _ready() -> void:
     size_flags_horizontal = Control.SIZE_EXPAND_FILL
     size_flags_vertical = Control.SIZE_EXPAND_FILL
-    custom_minimum_size = Vector2(1, 1)
 
     texture_rect = TextureRect.new()
     texture_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -38,7 +37,11 @@ func _ready() -> void:
 func _dump_state() -> void:
     if texture_rect == null:
         return
+    var psize := "no-parent"
+    if get_parent() != null:
+        psize = str(int(get_parent().size.x)) + "x" + str(int(get_parent().size.y))
     print("[SurfaceCanvasState] self=", int(size.x), "x", int(size.y),
+        " parent=", psize,
         " tex_rect=", int(texture_rect.size.x), "x", int(texture_rect.size.y),
         " visible=", visible)
 

@@ -96,15 +96,13 @@ func open_screen(name: String, observed := true) -> void:
 func open_workbench(name: String = "Workbench") -> void:
 	host.active_surface = name
 	host._render_current_status()
-	var box := VBoxContainer.new()
-	box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	box.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	var surface: Control = load("res://runtime/SurfaceCanvas.gd").new()
+	surface.name = name
 	surface.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	surface.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	box.add_child(surface)
-	add_or_focus_tab(name, box)
+	add_or_focus_tab(name, surface)
 	host.surface_canvas = surface
+
 
 func add_or_focus_tab(name: String, node: Control) -> void:
 	for i in workspace_tabs.get_tab_count():
