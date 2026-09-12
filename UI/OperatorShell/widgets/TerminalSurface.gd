@@ -5,6 +5,7 @@ const Palette = preload("res://widgets/Palette.gd")
 const TerminalClient = preload("res://runtime/TerminalServiceClient.gd")
 
 const SYSTEM_SESSION_ID := "system-log"
+const CODEGO_SESSION_ID := "codego-session"
 const SYSTEM_LOG_PATH := "/home/spaztic/Core/Dashboard/dashboard.log"
 const SYSTEM_INITIAL_LINES := 200
 const MAX_SCREEN_LINES := 5000
@@ -68,6 +69,7 @@ func build() -> Control:
 	root.add_child(poll_timer)
 
 	_create_system_console()
+	_create_codego_console()
 	return root
 
 func apply_terminal_density(mode: String) -> void:
@@ -170,6 +172,50 @@ func _create_system_console() -> void:
 	_select_session(SYSTEM_SESSION_ID)
 	_load_system_log_tail()
 	_log_terminal("system console following " + SYSTEM_LOG_PATH)
+
+func _create_codego_console() -> void:
+	if sessions.has(CODEGO_SESSION_ID):
+		return
+	var dims := _terminal_dimensions()
+	var response := TerminalClient.create_session(dims.x, dims.y)
+	if not bool(response.get("ok", false)):
+		print("[OperatorTerminal] codego PTY failed: " + str(response.get("error", "")))
+		return
+	var sid := str(response.get("session_id", ""))
+	if sid == "":
+		return
+	var label := _create_terminal_label(sid)
+	var tab_shell := _create_tab_button(sid, "T2 CODEGO", false)
+	sessions[sid] = {
+		"id": sid,
+		"kind": "codego",
+		"title": "T2 CODEGO",
+		"pid": int(response.get("pid", -1)),
+		"state": "running",
+		"cwd": str(response.get("cwd", "")),
+		"label": label,
+		"tab_shell": tab_shell,
+		"tab_button": tab_shell.get_child(0),
+		"lines": [[]],
+		"cursor_col": 0,
+		"fg": "",
+		"exit_noted": false,
+	}
+	if empty_state:
+		empty_state.visible = false
+	_launch_codego(sid)
+
+func _launch_codego(sid: String) -> void:
+	var t := Timer.new()
+	t.wait_time = 2.0
+	t.one_shot = true
+	t.timeout.connect(func():
+		if sessions.has(sid):
+			TerminalClient.write_input(sid, "cd ~/Core/CodeGo && python3 CodeGo.py\n")
+			t.queue_free()
+	)
+	root.add_child(t)
+	t.start()
 
 func _load_system_log_tail() -> void:
 	if not sessions.has(SYSTEM_SESSION_ID):
@@ -391,11 +437,18 @@ func _select_session(sid: String) -> void:
 		selected_label.grab_focus()
 	_resize_session(sid)
 
+func _is_permanent_session(sid: String) -> bool:
+	if not sessions.has(sid):
+		return false
+	var data: Dictionary = sessions[sid]
+	var k := str(data.get("kind", "bash"))
+	return k == "system" or k == "codego"
+
 func _close_session(sid: String) -> void:
 	if not sessions.has(sid):
 		return
-	if _is_system_session(sid):
-		_select_session(SYSTEM_SESSION_ID)
+	if _is_permanent_session(sid):
+		_select_session(sid)
 		return
 	var data: Dictionary = sessions[sid]
 	TerminalClient.close_session(sid)

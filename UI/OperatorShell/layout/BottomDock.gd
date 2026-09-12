@@ -18,47 +18,41 @@ func build() -> Control:
 	host._panel(bottom_shell, Palette.PLUM_DEEP, Palette.GOLD_DARK, 1, 16)
 
 	var box := VBoxContainer.new()
+	box.add_theme_constant_override("separation", 0)
 	bottom_shell.add_child(box)
 	box.custom_minimum_size = Vector2(0, 0)
 	box.clip_contents = true
 
-	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 6)
-	box.add_child(row)
-	row.custom_minimum_size = Vector2(0, 0)
-	row.clip_contents = true
+	# Tab host: TabContainer fills, Dense button overlays top-right
+	var tab_host := Control.new()
+	tab_host.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	tab_host.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	box.add_child(tab_host)
 
-	var title := Label.new()
-	title.text = "CodeGo:"
-	title.add_theme_color_override("font_color", Palette.GOLD_BRIGHT)
-	row.add_child(title)
-
-	for provider in ["qwen", "gemini", "deepseek"]:
-		var btn := Button.new()
-		btn.text = provider.capitalize()
-		btn.tooltip_text = "Launch " + provider.capitalize() + " in Chrome"
-		btn.custom_minimum_size = Vector2(80, 26)
-		host._button(btn, false)
-		btn.pressed.connect(host._codego_provider.bind(provider))
-		row.add_child(btn)
-
-	var spacer := Control.new()
-	spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	row.add_child(spacer)
+	bottom_tabs = TabContainer.new()
+	bottom_tabs.anchor_left = 0.0
+	bottom_tabs.anchor_top = 0.0
+	bottom_tabs.anchor_right = 1.0
+	bottom_tabs.anchor_bottom = 1.0
+	bottom_tabs.custom_minimum_size = Vector2(0, 0)
+	bottom_tabs.clip_contents = true
+	tab_host.add_child(bottom_tabs)
 
 	var density := Button.new()
 	density.text = "Dense"
+	density.anchor_left = 1.0
+	density.anchor_right = 1.0
+	density.offset_left = -84
+	density.offset_right = -8
+	density.offset_top = 3
+	density.offset_bottom = 27
+	density.grow_horizontal = Control.GROW_DIRECTION_BEGIN
 	host._button(density, true)
 	host._connect_observed_button(density, "Cycle Density", host._cycle_terminal_density)
-	row.add_child(density)
+	tab_host.add_child(density)
 
+	host.terminal_density_button = density
 	host.terminal_toggle_button = null
-
-	bottom_tabs = TabContainer.new()
-	bottom_tabs.custom_minimum_size = Vector2(0, 0)
-	bottom_tabs.clip_contents = true
-	bottom_tabs.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	box.add_child(bottom_tabs)
 
 	host.approve_button = Button.new()
 	host.approve_button.text = "Approve Proposal"
@@ -68,13 +62,13 @@ func build() -> Control:
 	box.add_child(host.approve_button)
 
 	host.terminal_input = LineEdit.new()
-	host.terminal_input.placeholder_text = "Type operational intent (e.g., 'connect Gear to Dashboard')..."
+	host.terminal_input.placeholder_text = "Type operational intent..."
 	host.terminal_input.focus_mode = Control.FOCUS_ALL
 	host.terminal_input.text_submitted.connect(host._on_terminal_input_submitted)
 	box.add_child(host.terminal_input)
 
 	add_bottom("Logs", "No CLI bridge output yet.")
-	add_bottom("Diffs", "Diff proposal/review output will render here.\n\nviewed_diff != approved_diff")
+	add_bottom("Diffs", "Diff proposal/review output will render here.")
 	add_bottom("Packets", "Packet intake and registry output will render here.")
 	add_terminal_bottom()
 
