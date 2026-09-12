@@ -35,6 +35,10 @@ const OBSERVATION_SURFACES := [
 	"right:commands"
 ]
 
+var dock_handle: Control
+var dock_handle_bar: ColorRect
+var _dock_dragging := false
+var _dock_drag_start_y := 0.0
 var main_v_split: VBoxContainer
 var desktop_root: HBoxContainer
 var center_vbox: VBoxContainer
@@ -1665,8 +1669,13 @@ func open_document_in_docs(file_path: String) -> void:
 	if not left_dock_open:
 		_toggle_left_dock()
 
-var _dock_dragging := false
-var _dock_drag_start_y := 0.0
+func _on_dock_handle_hover(hovering: bool) -> void:
+	if dock_handle_bar == null:
+		return
+	if hovering:
+		dock_handle_bar.color = Color("f1d58a")
+	else:
+		dock_handle_bar.color = Color(0.54, 0.42, 0.12, 0.35)
 
 func _on_dock_handle_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
