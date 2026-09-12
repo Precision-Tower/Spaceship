@@ -9,6 +9,35 @@ var workspace_tabs: TabContainer
 func _init(owner) -> void:
 	host = owner
 
+func _make_tab_style(bg: Color) -> StyleBoxFlat:
+	var sb := StyleBoxFlat.new()
+	sb.bg_color = bg
+	sb.corner_radius_top_left = 4
+	sb.corner_radius_top_right = 4
+	sb.content_margin_left = 10
+	sb.content_margin_right = 10
+	sb.content_margin_top = 4
+	sb.content_margin_bottom = 4
+	return sb
+
+func _apply_tab_theme() -> void:
+	var dark_purple := Color("26143d")
+	var light_purple := Color("4a2d63")
+	var gold := Color("d6b15f")
+	var pale_gold := Color("f1d58a")
+
+	var bg_style := StyleBoxFlat.new()
+	bg_style.bg_color = dark_purple
+
+	workspace_tabs.add_theme_stylebox_override("tabbar_background", bg_style)
+	workspace_tabs.add_theme_stylebox_override("tab_unselected", _make_tab_style(light_purple))
+	workspace_tabs.add_theme_stylebox_override("tab_selected", _make_tab_style(gold))
+	workspace_tabs.add_theme_stylebox_override("tab_hovered", _make_tab_style(pale_gold))
+	workspace_tabs.add_theme_color_override("font_unselected_color", gold)
+	workspace_tabs.add_theme_color_override("font_selected_color", dark_purple)
+	workspace_tabs.add_theme_color_override("font_hovered_color", dark_purple)
+	workspace_tabs.add_theme_font_size_override("font_size", 12)
+
 func build() -> Control:
 	var shell := PanelContainer.new()
 	shell.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -16,16 +45,10 @@ func build() -> Control:
 	shell.custom_minimum_size = Vector2(0, 0)
 	host._panel(shell, Palette.PLUM_PANEL, Palette.GOLD_DARK, 1, 18)
 
-	var probe_bg := ColorRect.new()
-	probe_bg.color = Color(0.9, 0.1, 0.1, 1.0)
-	probe_bg.set_anchors_preset(Control.PRESET_FULL_RECT)
-	probe_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	shell.add_child(probe_bg)
-
 	workspace_tabs = TabContainer.new()
 	workspace_tabs.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	workspace_tabs.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	workspace_tabs.custom_minimum_size = Vector2(600, 400)
+	_apply_tab_theme()
 	shell.add_child(workspace_tabs)
 	return shell
 
