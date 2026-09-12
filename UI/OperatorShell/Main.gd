@@ -110,7 +110,7 @@ var operator_observation_label: RichTextLabel
 var state_label: Label
 var workspace_tabs: TabContainer
 var workspace_surface
-var bottom_tabs: TabContainer
+var bottom_tabs
 var bottom_shell: PanelContainer
 var bottom_dock
 
@@ -178,10 +178,8 @@ func _toggle_terminal_dock() -> void:
 		return
 	var total_h: int = int(main_v_split.size.y)
 	var bottom_h: int = 48 if terminal_collapsed else int(config.bottom_height_expanded)
-	main_v_split.split_offset = total_h - bottom_h
 	if terminal_toggle_button:
 		terminal_toggle_button.text = "?" if terminal_collapsed else "?"
-	print("[Toggle] terminal, collapsed=", terminal_collapsed, " offset=", main_v_split.split_offset)
 
 
 func _cycle_terminal_density() -> void:
@@ -264,7 +262,6 @@ func _process(_delta: float) -> void:
 		var off := -1
 		var vs := Vector2.ZERO
 		if main_v_split != null:
-			off = main_v_split.split_offset
 			vs = main_v_split.size
 		print("[LayoutDiag] vsplit=", int(vs.x), "x", int(vs.y), " offset=", off)
 func _update_mobile_keyboard_layout() -> void:
