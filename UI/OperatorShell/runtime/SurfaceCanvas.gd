@@ -47,6 +47,13 @@ func _dump_state() -> void:
 		" tab_bar_h=", _tab_bar_height(),
 		" content_rect=", content_rect())
 
+var cr := content_rect()
+var ws := DisplayServer.window_get_size()
+var ss := DisplayServer.screen_get_size()
+print("[SurfaceCanvasScreen] window=", ws.x, "x", ws.y,
+" screen=", ss.x, "x", ss.y,
+" cr=", cr)
+
 func content_rect() -> Rect2:
 	if not is_inside_tree():
 		return Rect2()
