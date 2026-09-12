@@ -8,13 +8,6 @@ var anchors: Dictionary = {}
 func _ready() -> void:
 	size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	size_flags_vertical = Control.SIZE_EXPAND_FILL
-	custom_minimum_size = Vector2(600, 400)
-
-	var probe := ColorRect.new()
-	probe.color = Color(1, 0, 0, 1)
-	probe.set_anchors_preset(Control.PRESET_FULL_RECT)
-	probe.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(probe)
 
 	texture_rect = TextureRect.new()
 	texture_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -38,17 +31,30 @@ func _ready() -> void:
 	call_deferred("_dump_state")
 
 func _dump_state() -> void:
-	if texture_rect == null:
-		return
-	var parent_info := "none"
-	var par = get_parent()
-	if par is TabContainer:
-		var tc := par as TabContainer
-		parent_info = "tabs=" + str(tc.get_tab_count()) + " current=" + str(tc.current_tab)
 	print("[SurfaceCanvasState] self=", int(size.x), "x", int(size.y),
-		" tex_rect=", int(texture_rect.size.x), "x", int(texture_rect.size.y),
-		" | ", parent_info,
-		" | tex_null=", texture_rect.texture == null)
+		" visible=", visible, " in_tree=", is_inside_tree(),
+		" top_level=", top_level,
+		" clip=", clip_contents)
+	_walk_up()
+
+func _walk_up() -> void:
+	var node := get_parent()
+	var depth := 1
+	while node != null and depth <= 8:
+		if node is Control:
+			var c := node as Control
+			var mins := c.get_combined_minimum_size()
+			print("[SurfaceAncestor ", depth, "] ", c.name,
+				" class=", c.get_class(),
+				" size=", int(c.size.x), "x", int(c.size.y),
+				" min=", int(mins.x), "x", int(mins.y),
+				" pos=", int(c.position.x), ",", int(c.position.y),
+				" vis=", c.visible,
+				" clip=", c.clip_contents)
+		else:
+			print("[SurfaceAncestor ", depth, "] ", node.name, " class=", node.get_class())
+		node = node.get_parent()
+		depth += 1
 
 func content_rect() -> Rect2:
 	if not is_inside_tree():
