@@ -13,7 +13,7 @@ func build() -> Control:
 	var shell := PanelContainer.new()
 	shell.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	shell.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	shell.custom_minimum_size = Vector2(1200, 800)
+	shell.custom_minimum_size = Vector2(0, 0)
 	host._panel(shell, Palette.PLUM_PANEL, Palette.GOLD_DARK, 1, 18)
 
 	var probe_bg := ColorRect.new()

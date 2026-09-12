@@ -1217,6 +1217,7 @@ func _workspace() -> Control:
 	workspace_control = workspace_surface.build()
 	workspace_control.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	workspace_control.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	workspace_control.visible = true
 	workspace_tabs = workspace_surface.workspace_tabs
 	return workspace_control
 
