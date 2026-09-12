@@ -35,7 +35,7 @@ const OBSERVATION_SURFACES := [
 	"right:commands"
 ]
 
-var main_v_split: VSplitContainer
+var main_v_split: VBoxContainer
 var desktop_root: HBoxContainer
 var center_vbox: VBoxContainer
 var left_dock_shell: VBoxContainer
@@ -258,7 +258,6 @@ func _ready() -> void:
 	request_assist_wake.connect(_on_request_assist_wake)
 
 func _process(_delta: float) -> void:
-	_settle_vsplit()
 	_layout_diag_t += _delta
 	if _layout_diag_t > 3.0:
 		_layout_diag_t = 0.0
@@ -418,19 +417,24 @@ func _build() -> void:
 	center_vbox.add_child(_top_bar())
 	center_vbox.add_child(_runtime_state_bar())
 
-	main_v_split = VSplitContainer.new()
+	main_v_split = VBoxContainer.new()
 	main_v_split.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	main_v_split.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	main_v_split.custom_minimum_size = Vector2(0, 0)
+	main_v_split.add_theme_constant_override("separation", 0)
 	center_vbox.add_child(main_v_split)
 
 	var workspace_host := HBoxContainer.new()
 	workspace_host.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	workspace_host.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	workspace_host.custom_minimum_size = Vector2(0, 0)
 	workspace_host.add_theme_constant_override("separation", 0)
 	workspace_host.add_child(_workspace())
 	main_v_split.add_child(workspace_host)
-	main_v_split.add_child(_bottom())
+
+	var bottom := _bottom()
+	bottom.size_flags_vertical = Control.SIZE_SHRINK_END
+	bottom.custom_minimum_size = Vector2(0, 48)
+	main_v_split.add_child(bottom)
 
 	right_dock_shell = _build_right_dock_shell()
 	right_dock_shell.custom_minimum_size = Vector2(0, 0)
@@ -1652,85 +1656,5 @@ func open_document_in_docs(file_path: String) -> void:
 	if not left_dock_open:
 		_toggle_left_dock()
 
-var _vsplit_settled: bool = false
 
-
-func _deep_min_walk(node: Node, depth: int, max_depth: int) -> void:
-	if depth > max_depth:
-		return
-	var indent := "  ".repeat(depth)
-	if node is Control:
-		var c := node as Control
-		var cm := c.get_combined_minimum_size()
-		print("[MIN] ", indent, c.name, " ", c.get_class(),
-			" sz=", int(c.size.x), "x", int(c.size.y),
-			" min=", int(cm.x), "x", int(cm.y),
-			" vis=", c.visible,
-			" flg_v=", c.size_flags_vertical)
-	elif node is Node:
-		print("[MIN] ", indent, node.name, " [", node.get_class(), "]")
-	for child in node.get_children():
-		_deep_min_walk(child, depth + 1, max_depth)
-
-func _emit_deep_min_walk() -> void:
-	print("[MIN] ====== main_v_split tree ======")
-	if main_v_split != null:
-		_deep_min_walk(main_v_split, 0, 6)
-	print("[MIN] ====== end ======")
-
-func _settle_vsplit() -> void:
-	if _vsplit_settled or main_v_split == null:
-		return
-	var h: int = int(main_v_split.size.y)
-	if h < 200:
-		return
-
-	# Pin top child's minimum so the split has surplus to allocate.
-	# Per Godot 4.2: split_offset is offset past top child's combined minimum.
-	if main_v_split.get_child_count() < 2:
-		return
-	var top := main_v_split.get_child(0) as Control
-	var bottom := main_v_split.get_child(1) as Control
-	if top == null or bottom == null:
-		return
-
-	top.custom_minimum_size = Vector2(0, 0)
-	bottom.custom_minimum_size = Vector2(0, 48)
-	top.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	bottom.size_flags_vertical = Control.SIZE_EXPAND_FILL
-
-	# Re-sort so combined minimums are recalculated
-	main_v_split.queue_sort()
-
-	# Defer actual offset assignment one process frame
-	var t := Timer.new()
-	t.wait_time = 0.15
-	t.one_shot = true
-	t.timeout.connect(_apply_split_offset_real)
-	add_child(t)
-	t.start()
-
-func _apply_split_offset_real() -> void:
-	if main_v_split == null or main_v_split.get_child_count() < 2:
-		return
-	var top := main_v_split.get_child(0) as Control
-	var bottom := main_v_split.get_child(1) as Control
-	var sep: int = main_v_split.get_theme_constant("separation")
-	var h: int = int(main_v_split.size.y)
-	var desired_bottom: int = 48
-	var top_min: int = int(top.get_combined_minimum_size().y)
-	var target_top: int = h - sep - desired_bottom
-	var offset: int = target_top - top_min
-	main_v_split.split_offset = offset
-	main_v_split.clamp_split_offset()
-	_vsplit_settled = true
-	var wt := Timer.new()
-	wt.wait_time = 5.0
-	wt.one_shot = true
-	wt.timeout.connect(_emit_deep_min_walk)
-	add_child(wt)
-	wt.start()
-	print("[Startup] h=", h, " sep=", sep, " top_min=", top_min, " bottom_min=", int(bottom.get_combined_minimum_size().y),
-		" offset=", main_v_split.split_offset,
-		" top_size=", int(top.size.y), " bottom_size=", int(bottom.size.y))
 
