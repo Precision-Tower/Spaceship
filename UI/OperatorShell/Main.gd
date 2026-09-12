@@ -428,6 +428,18 @@ func _build() -> void:
 	workspace_host.add_child(_workspace())
 	main_v_split.add_child(workspace_host)
 
+	var dock_handle := Control.new()
+	dock_handle.custom_minimum_size = Vector2(0, 6)
+	dock_handle.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	dock_handle.mouse_filter = Control.MOUSE_FILTER_STOP
+	dock_handle.gui_input.connect(_on_dock_handle_input)
+	var handle_bg := ColorRect.new()
+	handle_bg.color = Color(0.3, 0.2, 0.4, 0.001)
+	handle_bg.set_anchors_preset(Control.PRESET_FULL_RECT)
+	handle_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	dock_handle.add_child(handle_bg)
+	main_v_split.add_child(dock_handle)
+
 	var bottom := _bottom()
 	bottom.size_flags_vertical = Control.SIZE_SHRINK_END
 	bottom.custom_minimum_size = Vector2(0, 48)
@@ -1653,5 +1665,18 @@ func open_document_in_docs(file_path: String) -> void:
 	if not left_dock_open:
 		_toggle_left_dock()
 
+var _dock_dragging := false
+var _dock_drag_start_y := 0.0
 
-
+func _on_dock_handle_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		_dock_dragging = event.pressed
+		_dock_drag_start_y = event.global_position.y
+	elif event is InputEventMouseMotion and _dock_dragging:
+		var delta: float = _dock_drag_start_y - event.global_position.y
+		_dock_drag_start_y = event.global_position.y
+		if bottom_shell == null:
+			return
+		var cur_h: float = bottom_shell.custom_minimum_size.y
+		var new_h: float = clampf(cur_h + delta, 48.0, 800.0)
+		bottom_shell.custom_minimum_size = Vector2(0, new_h)
