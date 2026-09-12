@@ -448,9 +448,21 @@ func _apply_initial_splits() -> void:
 		left_split.split_offset = 320
 	if center_right_split:
 		var w: int = int(center_right_split.size.x)
-		center_right_split.split_offset = w - 340
-	if main_v_split:
-		var h: int = int(main_v_split.size.y)
+		center_right_split.split_offset = max(200, w - 340)
+	# Vertical split needs a real frame before sizes are valid
+	var t := Timer.new()
+	t.wait_time = 0.4
+	t.one_shot = true
+	t.timeout.connect(_apply_vertical_split)
+	add_child(t)
+	t.start()
+
+func _apply_vertical_split() -> void:
+	if main_v_split == null:
+		return
+	var h: int = int(main_v_split.size.y)
+	print("[Startup] vertical split h=", h)
+	if h > 200:
 		main_v_split.split_offset = h - 30
 
 func _dump_panel_state() -> void:
