@@ -1,4 +1,4 @@
-﻿extends RefCounted
+extends RefCounted
 class_name OperatorShellWorkspaceSurface
 
 const Palette = preload("res://widgets/Palette.gd")
@@ -13,8 +13,15 @@ func build() -> Control:
 	var shell := PanelContainer.new()
 	shell.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	shell.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	shell.custom_minimum_size = Vector2(600, 400)
+	shell.custom_minimum_size = Vector2(1200, 800)
 	host._panel(shell, Palette.PLUM_PANEL, Palette.GOLD_DARK, 1, 18)
+
+	var probe_bg := ColorRect.new()
+	probe_bg.color = Color(0.9, 0.1, 0.1, 1.0)
+	probe_bg.set_anchors_preset(Control.PRESET_FULL_RECT)
+	probe_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	shell.add_child(probe_bg)
+
 	workspace_tabs = TabContainer.new()
 	workspace_tabs.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	workspace_tabs.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -104,7 +111,6 @@ func open_workbench(name: String = "Workbench") -> void:
 	add_or_focus_tab(name, surface)
 	host.surface_canvas = surface
 
-
 func add_or_focus_tab(name: String, node: Control) -> void:
 	for i in workspace_tabs.get_tab_count():
 		if workspace_tabs.get_tab_title(i) == name:
@@ -115,4 +121,3 @@ func add_or_focus_tab(name: String, node: Control) -> void:
 	workspace_tabs.add_child(node)
 	workspace_tabs.set_tab_title(workspace_tabs.get_tab_count() - 1, name)
 	workspace_tabs.current_tab = workspace_tabs.get_tab_count() - 1
-
