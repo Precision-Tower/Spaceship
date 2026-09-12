@@ -167,15 +167,6 @@ var current_status := {
 	"next_required_action": "Refresh State"
 }
 
-func _on_main_v_dragged(offset: int) -> void:
-	if main_v_split == null or bottom_shell == null:
-		return
-	var total_h: int = int(main_v_split.size.y)
-	var bottom_h: int = total_h - offset
-	if bottom_h < 50:
-		main_v_split.split_offset = total_h
-		terminal_collapsed = true
-
 func _toggle_terminal_dock() -> void:
 	if mobile_mode:
 		terminal_collapsed = false
@@ -267,21 +258,16 @@ func _ready() -> void:
 	request_assist_wake.connect(_on_request_assist_wake)
 
 func _process(_delta: float) -> void:
+	_settle_vsplit()
 	_layout_diag_t += _delta
 	if _layout_diag_t > 3.0:
 		_layout_diag_t = 0.0
-		var ws_size := Vector2.ZERO
-		var btm_size := Vector2.ZERO
 		var off := -1
-		if workspace_control != null:
-			ws_size = workspace_control.size
-		if bottom_shell != null:
-			btm_size = bottom_shell.size
+		var vs := Vector2.ZERO
 		if main_v_split != null:
 			off = main_v_split.split_offset
-		print("[LayoutDiag] vsplit_offset=", off,
-			" ws=", int(ws_size.x), "x", int(ws_size.y),
-			" bottom=", int(btm_size.x), "x", int(btm_size.y))
+			vs = main_v_split.size
+		print("[LayoutDiag] vsplit=", int(vs.x), "x", int(vs.y), " offset=", off)
 func _update_mobile_keyboard_layout() -> void:
 	if mobile_root == null:
 		return
@@ -435,8 +421,8 @@ func _build() -> void:
 	main_v_split = VSplitContainer.new()
 	main_v_split.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	main_v_split.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	main_v_split.custom_minimum_size = Vector2(0, 0)
 	center_vbox.add_child(main_v_split)
-	main_v_split.dragged.connect(_on_main_v_dragged)
 
 	var workspace_host := HBoxContainer.new()
 	workspace_host.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -461,11 +447,8 @@ func _apply_initial_splits() -> void:
 		left_split.split_offset = 320
 	if center_right_split:
 		var w: int = int(center_right_split.size.x)
-		center_right_split.split_offset = w - 340
-	if main_v_split:
-		var h: int = int(main_v_split.size.y)
-		main_v_split.split_offset = h - 30
-
+		if w > 400:
+			center_right_split.split_offset = w - 340
 func _dump_panel_state() -> void:
 	var lw := 0
 	var lmin := 0
@@ -1668,3 +1651,18 @@ func open_document_in_docs(file_path: String) -> void:
 	set_left_mode("docs")
 	if not left_dock_open:
 		_toggle_left_dock()
+
+var _vsplit_settled: bool = false
+
+func _settle_vsplit() -> void:
+	if _vsplit_settled or main_v_split == null:
+		return
+	var h: int = int(main_v_split.size.y)
+	if h < 200:
+		return
+	var screen_h: int = DisplayServer.screen_get_size().y
+	var usable: int = h if h <= screen_h else screen_h
+	main_v_split.split_offset = usable - 30
+	_vsplit_settled = true
+	print("[Startup] settled vsplit h=", h, " screen_h=", screen_h, " offset=", main_v_split.split_offset)
+
