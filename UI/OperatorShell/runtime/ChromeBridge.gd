@@ -65,6 +65,13 @@ func _sync_geometry(force: bool) -> void:
 	else:
 		rect = target_control.get_global_rect()
 
+	# Inset Chrome so splitter boundaries stay grabbable.
+	var inset := 8.0
+	rect.position.x += inset
+	rect.position.y += inset
+	rect.size.x -= inset * 2.0
+	rect.size.y -= inset * 2.0
+
 	var screen_size := DisplayServer.screen_get_size()
 	var max_w := float(screen_size.x) - rect.position.x
 	var max_h := float(screen_size.y) - rect.position.y
