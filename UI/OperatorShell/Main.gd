@@ -1700,6 +1700,7 @@ func _apply_split_offset_real() -> void:
 	main_v_split.split_offset = offset
 	main_v_split.clamp_split_offset()
 	_vsplit_settled = true
-	print("[Startup] h=", h, " sep=", sep, " top_min=", top_min, " offset_set=", offset, " clamped=", main_v_split.split_offset,
-		" top_size=", top.size.y, " bottom_size=", bottom.size.y)
+	print("[Startup] h=", h, " sep=", sep, " top_min=", top_min, " bottom_min=", int(bottom.get_combined_minimum_size().y),
+		" offset=", main_v_split.split_offset,
+		" top_size=", int(top.size.y), " bottom_size=", int(bottom.size.y))
 

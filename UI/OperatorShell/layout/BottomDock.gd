@@ -13,7 +13,7 @@ func _init(owner) -> void:
 
 func build() -> Control:
 	bottom_shell = PanelContainer.new()
-	bottom_shell.custom_minimum_size = Vector2(0, 48)
+	bottom_shell.custom_minimum_size = Vector2(0, 0)
 	host._panel(bottom_shell, Palette.PLUM_DEEP, Palette.GOLD_DARK, 1, 0)
 
 	var strip := ColorRect.new()
