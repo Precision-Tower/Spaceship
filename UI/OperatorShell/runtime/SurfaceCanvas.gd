@@ -10,7 +10,11 @@ func _ready() -> void:
 	size_flags_vertical = Control.SIZE_EXPAND_FILL
 
 	texture_rect = TextureRect.new()
-	texture_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
+	texture_rect.anchor_left = 0
+	texture_rect.anchor_right = 1
+	texture_rect.anchor_top = 0
+	texture_rect.anchor_bottom = 1
+	texture_rect.offset_top = float(_tab_bar_height())
 	texture_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	texture_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 	texture_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -27,39 +31,30 @@ func _ready() -> void:
 	else:
 		push_warning("[SurfaceCanvas] missing " + abs_path)
 	add_child(texture_rect)
-	resized.connect(_dump_state)
 	call_deferred("_dump_state")
+
+func _tab_bar_height() -> int:
+	var p := get_parent()
+	if p is TabContainer:
+		var tc := p as TabContainer
+		var tb: TabBar = tc.get_tab_bar()
+		if tb:
+			return int(tb.size.y)
+	return 0
 
 func _dump_state() -> void:
 	print("[SurfaceCanvasState] self=", int(size.x), "x", int(size.y),
-		" visible=", visible, " in_tree=", is_inside_tree(),
-		" top_level=", top_level,
-		" clip=", clip_contents)
-	_walk_up()
-
-func _walk_up() -> void:
-	var node := get_parent()
-	var depth := 1
-	while node != null and depth <= 8:
-		if node is Control:
-			var c := node as Control
-			var mins := c.get_combined_minimum_size()
-			print("[SurfaceAncestor ", depth, "] ", c.name,
-				" class=", c.get_class(),
-				" size=", int(c.size.x), "x", int(c.size.y),
-				" min=", int(mins.x), "x", int(mins.y),
-				" pos=", int(c.position.x), ",", int(c.position.y),
-				" vis=", c.visible,
-				" clip=", c.clip_contents)
-		else:
-			print("[SurfaceAncestor ", depth, "] ", node.name, " class=", node.get_class())
-		node = node.get_parent()
-		depth += 1
+		" tab_bar_h=", _tab_bar_height(),
+		" content_rect=", content_rect())
 
 func content_rect() -> Rect2:
 	if not is_inside_tree():
 		return Rect2()
-	return get_global_rect()
+	var base := get_global_rect()
+	var h := _tab_bar_height()
+	base.position.y += float(h)
+	base.size.y = max(1.0, base.size.y - float(h))
+	return base
 
 func add_anchor(name: String, normalized_rect: Rect2) -> void:
 	anchors[name] = normalized_rect
