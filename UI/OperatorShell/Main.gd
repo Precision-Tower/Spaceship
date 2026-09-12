@@ -1654,6 +1654,30 @@ func open_document_in_docs(file_path: String) -> void:
 
 var _vsplit_settled: bool = false
 
+
+func _deep_min_walk(node: Node, depth: int, max_depth: int) -> void:
+	if depth > max_depth:
+		return
+	var indent := "  ".repeat(depth)
+	if node is Control:
+		var c := node as Control
+		var cm := c.get_combined_minimum_size()
+		print("[MIN] ", indent, c.name, " ", c.get_class(),
+			" sz=", int(c.size.x), "x", int(c.size.y),
+			" min=", int(cm.x), "x", int(cm.y),
+			" vis=", c.visible,
+			" flg_v=", c.size_flags_vertical)
+	elif node is Node:
+		print("[MIN] ", indent, node.name, " [", node.get_class(), "]")
+	for child in node.get_children():
+		_deep_min_walk(child, depth + 1, max_depth)
+
+func _emit_deep_min_walk() -> void:
+	print("[MIN] ====== main_v_split tree ======")
+	if main_v_split != null:
+		_deep_min_walk(main_v_split, 0, 6)
+	print("[MIN] ====== end ======")
+
 func _settle_vsplit() -> void:
 	if _vsplit_settled or main_v_split == null:
 		return
@@ -1700,6 +1724,12 @@ func _apply_split_offset_real() -> void:
 	main_v_split.split_offset = offset
 	main_v_split.clamp_split_offset()
 	_vsplit_settled = true
+	var wt := Timer.new()
+	wt.wait_time = 5.0
+	wt.one_shot = true
+	wt.timeout.connect(_emit_deep_min_walk)
+	add_child(wt)
+	wt.start()
 	print("[Startup] h=", h, " sep=", sep, " top_min=", top_min, " bottom_min=", int(bottom.get_combined_minimum_size().y),
 		" offset=", main_v_split.split_offset,
 		" top_size=", int(top.size.y), " bottom_size=", int(bottom.size.y))
