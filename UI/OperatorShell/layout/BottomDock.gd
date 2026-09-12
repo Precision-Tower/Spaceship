@@ -21,8 +21,8 @@ func _init(owner) -> void:
 
 func build() -> Control:
 	bottom_shell = PanelContainer.new()
-	bottom_shell.custom_minimum_size = Vector2(0, 42)
-	host._panel(bottom_shell, Palette.PLUM_DEEP, Palette.GOLD_DARK, 1, 6)
+	bottom_shell.custom_minimum_size = Vector2(0, 48)
+	host._panel(bottom_shell, Palette.PLUM_DEEP, Palette.GOLD_DARK, 1, 4)
 
 	var box := VBoxContainer.new()
 	box.add_theme_constant_override("separation", 0)
@@ -32,7 +32,7 @@ func build() -> Control:
 	# Tab row: [buttons ...] [spacer] [Dense]
 	tab_row = HBoxContainer.new()
 	tab_row.add_theme_constant_override("separation", 4)
-	tab_row.custom_minimum_size = Vector2(0, 28)
+	tab_row.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	box.add_child(tab_row)
 
 	tab_buttons = HBoxContainer.new()

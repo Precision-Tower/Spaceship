@@ -177,7 +177,7 @@ func _toggle_terminal_dock() -> void:
 	if main_v_split == null:
 		return
 	var total_h: int = int(main_v_split.size.y)
-	var bottom_h: int = 0 if terminal_collapsed else int(config.bottom_height_expanded)
+	var bottom_h: int = 48 if terminal_collapsed else int(config.bottom_height_expanded)
 	main_v_split.split_offset = total_h - bottom_h
 	if terminal_toggle_button:
 		terminal_toggle_button.text = "?" if terminal_collapsed else "?"
@@ -1662,7 +1662,7 @@ func _settle_vsplit() -> void:
 		return
 	var screen_h: int = DisplayServer.screen_get_size().y
 	var usable: int = h if h <= screen_h else screen_h
-	main_v_split.split_offset = usable - 42
+	main_v_split.split_offset = usable - 48
 	_vsplit_settled = true
 	print("[Startup] settled vsplit h=", h, " screen_h=", screen_h, " offset=", main_v_split.split_offset)
 
