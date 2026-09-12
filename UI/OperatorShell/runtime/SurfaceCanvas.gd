@@ -37,13 +37,27 @@ func _ready() -> void:
 func _dump_state() -> void:
     if texture_rect == null:
         return
-    var psize := "no-parent"
-    if get_parent() != null:
-        psize = str(int(get_parent().size.x)) + "x" + str(int(get_parent().size.y))
     print("[SurfaceCanvasState] self=", int(size.x), "x", int(size.y),
-        " parent=", psize,
         " tex_rect=", int(texture_rect.size.x), "x", int(texture_rect.size.y),
         " visible=", visible)
+    _walk_up()
+
+func _walk_up() -> void:
+    var node := get_parent()
+    var depth := 1
+    while node != null and depth <= 8:
+        if node is Control:
+            var c := node as Control
+            print("[SurfaceAncestor ", depth, "] ", c.name,
+                " class=", c.get_class(),
+                " size=", int(c.size.x), "x", int(c.size.y),
+                " min=", int(c.get_combined_minimum_size().x), "x", int(c.get_combined_minimum_size().y),
+                " flags_h=", c.size_flags_horizontal,
+                " flags_v=", c.size_flags_vertical)
+        else:
+            print("[SurfaceAncestor ", depth, "] ", node.name, " class=", node.get_class())
+        node = node.get_parent()
+        depth += 1
 
 func content_rect() -> Rect2:
     if not is_inside_tree():
