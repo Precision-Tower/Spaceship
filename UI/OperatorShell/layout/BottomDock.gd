@@ -73,6 +73,8 @@ func build() -> Control:
 	terminal_input.text_submitted.connect(host._on_terminal_input_submitted)
 	box.add_child(terminal_input)
 	host.terminal_input = terminal_input
+	# Hide input on startup; _on_shell_resized will show it when dock is expanded
+	terminal_input.visible = false
 
 	bottom_shell.resized.connect(_on_shell_resized)
 
