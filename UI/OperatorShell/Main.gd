@@ -361,6 +361,32 @@ func _background() -> void:
 	bg.set_anchors_preset(Control.PRESET_FULL_RECT)
 	add_child(bg)
 
+func _dump_tree() -> void:
+	print("[TREE_DUMP_BEGIN]")
+	_walk_tree(self, 0)
+	print("[TREE_DUMP_END]")
+
+func _walk_tree(node: Node, depth: int) -> void:
+	if depth > 12:
+		return
+	if node is Control:
+		var c := node as Control
+		var mins := c.get_combined_minimum_size()
+		print("[TREE] ", "  ".repeat(depth), c.name,
+			" | size=", int(c.size.x), "x", int(c.size.y),
+			" | min=", int(mins.x), "x", int(mins.y),
+			" | flags_h=", c.size_flags_horizontal,
+			" flags_v=", c.size_flags_vertical,
+			" | vis=", c.visible)
+	elif node is Node:
+		print("[TREE] ", "  ".repeat(depth), node.name, " (", node.get_class(), ")")
+	for child in node.get_children():
+		_walk_tree(child, depth + 1)
+
+func _delayed_tree_dump() -> void:
+	await get_tree().create_timer(4.0).timeout
+	_dump_tree()
+
 func _build() -> void:
 	desktop_root = HBoxContainer.new()
 	desktop_root.set_anchors_preset(Control.PRESET_FULL_RECT)
