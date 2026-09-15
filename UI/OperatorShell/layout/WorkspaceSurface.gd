@@ -5,6 +5,7 @@ const Palette = preload("res://widgets/Palette.gd")
 
 var host
 var workspace_tabs: TabContainer
+var internet_surface: Control
 
 func _init(owner) -> void:
 	host = owner
@@ -91,6 +92,15 @@ func open_screen(name: String, observed := true) -> void:
 	host._render_current_status()
 	if observed:
 		host._observe_surface(name)
+	if name == "Home":
+		var bg := ColorRect.new()
+		bg.name = "HomeBackground"
+		bg.color = Palette.PLUM_BLACK
+		bg.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		bg.size_flags_vertical = Control.SIZE_EXPAND_FILL
+		add_or_focus_tab(name, bg)
+		return
+
 
 	var box := VBoxContainer.new()
 	box.add_theme_constant_override("separation", 12)
@@ -133,6 +143,28 @@ func open_workbench(name: String = "Workbench") -> void:
 	surface.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	add_or_focus_tab(name, surface)
 	host.surface_canvas = surface
+
+func open_internet(observed := true) -> void:
+	host.active_surface = "Internet"
+	host._render_current_status()
+	if observed:
+		host._observe_surface("Internet")
+
+	if internet_surface != null and is_instance_valid(internet_surface):
+		for i in workspace_tabs.get_tab_count():
+			if workspace_tabs.get_tab_title(i) == "Internet":
+				workspace_tabs.current_tab = i
+				return
+		return
+
+	var surface := Control.new()
+	surface.name = "InternetSurface"
+	surface.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	surface.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	internet_surface = surface
+	workspace_tabs.add_child(surface)
+	workspace_tabs.set_tab_title(workspace_tabs.get_tab_count() - 1, "Internet")
+	workspace_tabs.current_tab = workspace_tabs.get_tab_count() - 1
 
 func add_or_focus_tab(name: String, node: Control) -> void:
 	for i in workspace_tabs.get_tab_count():

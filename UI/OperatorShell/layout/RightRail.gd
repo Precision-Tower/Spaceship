@@ -208,7 +208,7 @@ func _make_tree(name: String, height: int) -> Tree:
 	t.hide_root = false
 	t.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	t.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	t.custom_minimum_size = Vector2(300, height)
+	t.custom_minimum_size = Vector2(0, height)
 	return t
 
 func _tree_root(tree: Tree, label: String) -> TreeItem:

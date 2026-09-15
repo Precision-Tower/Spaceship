@@ -6,89 +6,117 @@ const TerminalSurface = preload("res://widgets/TerminalSurface.gd")
 
 var host
 var bottom_shell: PanelContainer
-var bottom_tabs: TabContainer
-var terminal_surface
+var tab_row: HBoxContainer
+var tab_buttons: HBoxContainer
 var content_host: Control
 var terminal_input: LineEdit
-var tab_buttons := {}
-var tab_contents := {}
+var terminal_surface
 var tab_order: Array[String] = []
-var current_name := ""
+var tab_data := {}
+var current_tab_name := ""
+var bottom_tabs
 
 func _init(owner) -> void:
 	host = owner
 
 func build() -> Control:
 	bottom_shell = PanelContainer.new()
-	bottom_shell.custom_minimum_size = Vector2(0, 48)
+	bottom_shell.custom_minimum_size = Vector2(0, 10)
 	host._panel(bottom_shell, Palette.PLUM_DEEP, Palette.GOLD_DARK, 1, 4)
 
-	var root := VBoxContainer.new()
-	root.add_theme_constant_override("separation", 0)
-	root.clip_contents = true
-	bottom_shell.add_child(root)
+	var box := VBoxContainer.new()
+	box.add_theme_constant_override("separation", 0)
+	box.clip_contents = true
+	bottom_shell.add_child(box)
 
-	# Tab strip
-	var tab_strip := HBoxContainer.new()
-	tab_strip.add_theme_constant_override("separation", 4)
-	tab_strip.custom_minimum_size = Vector2(0, 26)
-	root.add_child(tab_strip)
+	# Tab row: [buttons ...] [spacer] [Dense]
+	tab_row = HBoxContainer.new()
+	tab_row.add_theme_constant_override("separation", 4)
+	tab_row.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
+	box.add_child(tab_row)
 
-	var buttons_row := HBoxContainer.new()
-	buttons_row.add_theme_constant_override("separation", 2)
-	buttons_row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	tab_strip.add_child(buttons_row)
+	tab_buttons = HBoxContainer.new()
+	tab_buttons.add_theme_constant_override("separation", 2)
+	tab_buttons.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	tab_row.add_child(tab_buttons)
 
 	var density := Button.new()
 	density.text = "Dense"
-	density.custom_minimum_size = Vector2(70, 22)
+	density.custom_minimum_size = Vector2(54, 22)
 	host._button(density, true)
 	host._connect_observed_button(density, "Cycle Density", host._cycle_terminal_density)
-	tab_strip.add_child(density)
+	tab_row.add_child(density)
+	host.terminal_density_button = density
+	var collapse := Button.new()
+	collapse.text = "v"
+	collapse.tooltip_text = "Collapse bottom dock"
+	collapse.custom_minimum_size = Vector2(28, 22)
+	host._button(collapse, true)
+	host._connect_observed_button(collapse, "Collapse Bottom Dock", host._toggle_terminal_dock)
+	tab_row.add_child(collapse)
+	host.terminal_toggle_button = collapse
 
-	# Content host (hidden when collapsed)
+	# Content host
 	content_host = Control.new()
 	content_host.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	content_host.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	content_host.custom_minimum_size = Vector2(0, 0)
 	content_host.clip_contents = true
-	root.add_child(content_host)
+	box.add_child(content_host)
 
-	# Placeholder tab host so bottom_tabs var is valid
-	bottom_tabs = TabContainer.new()
-	bottom_tabs.visible = false
-	content_host.add_child(bottom_tabs)
+	# Approve (hidden)
+	host.approve_button = Button.new()
+	host.approve_button.text = "Approve Proposal"
+	host.approve_button.visible = false
+	host.approve_button.pressed.connect(host._on_approve_task_pressed)
+	host._button(host.approve_button, true)
+	box.add_child(host.approve_button)
 
-	# Input line (hidden until expanded)
+	# Input line — hidden when collapsed to taskbar height
 	terminal_input = LineEdit.new()
 	terminal_input.placeholder_text = "Type operational intent..."
+	terminal_input.focus_mode = Control.FOCUS_ALL
 	terminal_input.custom_minimum_size = Vector2(0, 26)
-	terminal_input.visible = false
 	terminal_input.text_submitted.connect(host._on_terminal_input_submitted)
-	root.add_child(terminal_input)
+	box.add_child(terminal_input)
 	host.terminal_input = terminal_input
+	# Hide input on startup; _on_shell_resized will show it when dock is expanded
+	terminal_input.visible = false
 
-	# Build tabs
-	for name in ["Logs", "Diffs", "Packets"]:
-		_make_tab(name, "No output yet.")
-	_make_terminal_tab()
+	bottom_shell.resized.connect(_on_shell_resized)
 
-	bottom_shell.resized.connect(_on_resized)
+	add_bottom("Logs", "No CLI bridge output yet.")
+	add_bottom("Diffs", "Diff proposal/review output will render here.")
+	add_bottom("Packets", "Packet intake and registry output will render here.")
+	add_terminal_bottom()
+
 	_select_tab("Logs")
+	bottom_tabs = self
 	return bottom_shell
 
-func _make_tab(name: String, content: String) -> void:
+func _on_shell_resized() -> void:
+	var h := bottom_shell.size.y
+	var expanded := h > 36.0
+	if tab_row != null and tab_row.visible != expanded:
+		tab_row.visible = expanded
+	if terminal_input != null and terminal_input.visible != expanded:
+		terminal_input.visible = expanded
+	if content_host != null and content_host.visible != expanded:
+		content_host.visible = expanded
+
+func _make_tab_button(name: String) -> Button:
 	var btn := Button.new()
 	btn.text = name
 	btn.toggle_mode = true
-	btn.custom_minimum_size = Vector2(64, 22)
-	btn.add_theme_font_size_override("font_size", 11)
+	btn.custom_minimum_size = Vector2(52, 22)
+	btn.add_theme_font_size_override("font_size", 10)
 	host._button(btn, false)
 	btn.pressed.connect(_select_tab.bind(name))
-	tab_buttons[name] = btn
-	btn.get_parent() # no-op
-	# Add button to the buttons_row inside build (deferred)
-	var strip := bottom_shell.get_child(0).get_child(0).get_child(0)
-	strip.add_child(btn)
+	tab_buttons.add_child(btn)
+	return btn
+
+func add_bottom(name: String, content: String) -> void:
+	var btn := _make_tab_button(name)
 
 	var label := RichTextLabel.new()
 	label.name = name
@@ -99,101 +127,30 @@ func _make_tab(name: String, content: String) -> void:
 	label.anchor_bottom = 1.0
 	label.visible = false
 	content_host.add_child(label)
-	tab_contents[name] = label
+
+	tab_data[name] = { "button": btn, "content": label }
 	tab_order.append(name)
 
-func _make_terminal_tab() -> void:
+func add_terminal_bottom() -> void:
 	terminal_surface = TerminalSurface.new(host)
-	var term_control: Control = terminal_surface.build()
-	term_control.name = "Terminal"
-	term_control.anchor_right = 1.0
-	term_control.anchor_bottom = 1.0
-	term_control.visible = false
-	content_host.add_child(term_control)
+	var terminal_control: Control = terminal_surface.build()
+	terminal_control.name = "Terminal"
+	terminal_control.anchor_right = 1.0
+	terminal_control.anchor_bottom = 1.0
+	terminal_control.visible = false
+	content_host.add_child(terminal_control)
 
-	var btn := Button.new()
-	btn.text = "Terminal"
-	btn.toggle_mode = true
-	btn.custom_minimum_size = Vector2(74, 22)
-	btn.add_theme_font_size_override("font_size", 11)
-	host._button(btn, false)
-	btn.pressed.connect(_select_tab.bind("Terminal"))
-	tab_buttons["Terminal"] = btn
-	var strip := bottom_shell.get_child(0).get_child(0).get_child(0)
-	strip.add_child(btn)
-
-	tab_contents["Terminal"] = term_control
+	var btn := _make_tab_button("Terminal")
+	tab_data["Terminal"] = { "button": btn, "content": terminal_control }
 	tab_order.append("Terminal")
 
 func _select_tab(name: String) -> void:
-	if not tab_contents.has(name):
+	if not tab_data.has(name):
 		return
-	current_name = name
-	for n in tab_contents.keys():
-		if tab_buttons.has(n):
-			tab_buttons[n].button_pressed = (n == name)
-		tab_contents[n].visible = (n == name)
-
-func _on_resized() -> void:
-	var h := bottom_shell.size.y
-	var expanded := h > 80.0
-	if terminal_input != null:
-		terminal_input.visible = expanded
-	if content_host != null:
-		content_host.visible = expanded
-
-func set_bottom(name: String) -> void:
-	_select_tab(name)
-
-func log_line(text: String) -> void:
-	var l = tab_contents.get("Logs")
-	if l is RichTextLabel:
-		l.append_text("\n[color=#d6b15f]" + Time.get_time_string_from_system() + "[/color] " + text)
-
-func terminal(text: String) -> void:
-	if terminal_surface and terminal_surface.has_method("append_system_text"):
-		terminal_surface.append_system_text(text)
-	_select_tab("Terminal")
-
-func diff(text: String) -> void:
-	var d = tab_contents.get("Diffs")
-	if d is RichTextLabel:
-		d.append_text("\n\n[color=#d6b15f]>[/color] " + text)
-	_select_tab("Diffs")
-
-func packets(text: String) -> void:
-	var p = tab_contents.get("Packets")
-	if p is RichTextLabel:
-		p.append_text("\n\n[color=#d6b15f]>[/color] " + text)
-	_select_tab("Packets")
-
-func record_command(name: String, result: Dictionary, summary: String) -> void:
-	var status := "success" if result.get("ok", false) else "failed"
-	host.current_status["last_command"] = name + " (" + status + ")"
-	host._render_current_status()
-	host.command_history.push_front({"command": name, "status": status, "time": Time.get_time_string_from_system(), "summary": summary})
-	if host.command_history.size() > 10:
-		host.command_history.pop_back()
-	render_history()
-
-func render_history() -> void:
-	if not host.history_label:
-		return
-	var text := "[color=#f1d58a]Command History[/color]\n"
-	for row in host.command_history:
-		text += "\n" + str(row.get("command", "?")) + " -> " + str(row.get("status", "?")) + "\n"
-	host.history_label.text = text
-
-func shutdown_terminals() -> void:
-	if terminal_surface and terminal_surface.has_method("shutdown"):
-		terminal_surface.shutdown()
-
-func apply_terminal_density(mode: String) -> void:
-	if terminal_surface and terminal_surface.has_method("apply_terminal_density"):
-		terminal_surface.apply_terminal_density(mode)
-
-func bottom_text(name: String):
-	return tab_contents.get(name)
+	current_tab_name = name
+	for n in tab_data.keys():
+		tab_data[n].button.button_pressed = (n == name)
+		tab_data[n].content.visible = (n == name)
 
 func get_tab_count() -> int:
 	return tab_order.size()
@@ -206,4 +163,123 @@ func set_current_tab(i: int) -> void:
 		_select_tab(tab_order[i])
 
 func get_current_tab() -> int:
-	return tab_order.find(current_name)
+	return tab_order.find(current_tab_name)
+
+func bottom_text(name: String) -> RichTextLabel:
+	if tab_data.has(name):
+		var c = tab_data[name].content
+		if c is RichTextLabel:
+			return c
+	return null
+
+func set_bottom(name: String) -> void:
+	_select_tab(name)
+
+func select_surface(name: String) -> bool:
+	var aliases := {
+		"l": "Logs",
+		"logs": "Logs",
+		"d": "Diffs",
+		"diffs": "Diffs",
+		"p": "Packets",
+		"packets": "Packets",
+		"t": "Terminal",
+		"terminal": "Terminal",
+	}
+	var key := name.to_lower()
+	if not aliases.has(key):
+		return false
+	_select_tab(aliases[key])
+	return true
+
+func create_terminal_session() -> bool:
+	if terminal_surface == null or not terminal_surface.has_method("create_session"):
+		return false
+	_select_tab("Terminal")
+	return terminal_surface.create_session()
+
+func controller_status() -> String:
+	var session_count := 0
+	if terminal_surface != null:
+		session_count = terminal_surface.sessions.size()
+	return "surface=" + current_tab_name.to_lower() + " sessions=" + str(session_count)
+
+func log_line(text: String) -> void:
+	var l := bottom_text("Logs")
+	if l:
+		l.append_text("\n[color=#d6b15f]" + Time.get_time_string_from_system() + "[/color] " + text)
+
+func terminal(text: String) -> void:
+	if terminal_surface and terminal_surface.has_method("append_system_text"):
+		terminal_surface.append_system_text(text)
+	_select_tab("Terminal")
+
+func diff(text: String) -> void:
+	var d := bottom_text("Diffs")
+	if d:
+		d.append_text("\n\n[color=#d6b15f]>[/color] " + text)
+	_select_tab("Diffs")
+
+func packets(text: String) -> void:
+	var p := bottom_text("Packets")
+	if p:
+		p.append_text("\n\n[color=#d6b15f]>[/color] " + text)
+	_select_tab("Packets")
+
+func shutdown_terminals() -> void:
+	if terminal_surface and terminal_surface.has_method("shutdown"):
+		terminal_surface.shutdown()
+
+func record_command(name: String, result: Dictionary, summary: String) -> void:
+	var status := "success" if result.get("ok", false) else "failed"
+	host.current_status["last_command"] = name + " (" + status + ")"
+	host.current_status["next_required_action"] = "Review " + name + " output"
+	host._render_current_status()
+	host.command_history.push_front({
+		"command": name,
+		"status": status,
+		"time": Time.get_time_string_from_system(),
+		"summary": summary
+	})
+	if host.command_history.size() > 10:
+		host.command_history.pop_back()
+	render_history()
+
+func render_history() -> void:
+	if not host.history_label:
+		return
+	var text := "[color=#f1d58a]Command History[/color]\n"
+	if host.command_history.is_empty():
+		text += "\n(no commands yet)\n"
+	else:
+		for row in host.command_history:
+			var status := str(row.get("status", "unknown"))
+			var color := "#8fca7a" if status == "success" else "#e05f5f"
+			text += "\n[color=" + color + "]status: " + status + "[/color]\n"
+			text += "time: " + str(row.get("time", "--:--")) + "\n"
+			text += "command: " + str(row.get("command", "unknown")) + "\n"
+			text += "summary: " + str(row.get("summary", "")) + "\n"
+	text += "\n[color=#b8aebe]history != evidence[/color]"
+	host.history_label.text = text
+
+func apply_terminal_density(mode: String) -> void:
+	var font_size := 12
+	var margin := 6
+	match mode:
+		"comfortable":
+			font_size = 14
+			margin = 12
+		"compact":
+			font_size = 12
+			margin = 6
+		"dense":
+			font_size = 10
+			margin = 2
+	for name in ["Logs", "Diffs", "Packets"]:
+		var label := bottom_text(name)
+		if label:
+			label.add_theme_font_size_override("normal_font_size", font_size)
+			label.add_theme_constant_override("text_highlight_h_padding", margin)
+			label.add_theme_constant_override("text_highlight_v_padding", margin)
+	if terminal_surface and terminal_surface.has_method("apply_terminal_density"):
+		terminal_surface.apply_terminal_density(mode)

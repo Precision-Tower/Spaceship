@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+port=8767
+
+usage() {
+    cat >&2 <<'USAGE'
+usage:
+  os {home|workbench|internet|chat|next|prev|status|ping}
+  os t {SIZE|l|d|p|t|+|status}
+  os lr {SIZE|status}
+  os rr {SIZE|status}
+
+SIZE: 0 | Npx | N%
+USAGE
+}
+
+case "${1:-}" in
+    home|workbench|internet|chat|next|prev|status|ping)
+        [[ $# -eq 1 ]] || { usage; exit 2; }
+        cmd="$1"
+        ;;
+    t|lr|rr)
+        [[ $# -eq 2 ]] || { usage; exit 2; }
+        case "$2" in
+            0|+|l|logs|d|diffs|p|packets|t|terminal|status|*px|*%)
+                cmd="$1 $2"
+                ;;
+            *)
+                usage
+                exit 2
+                ;;
+        esac
+        ;;
+    *)
+        usage
+        exit 2
+        ;;
+esac
+
+if command -v nc >/dev/null 2>&1; then
+    printf '%s\n' "$cmd" | nc -N -w 2 127.0.0.1 "$port"
+else
+    exec 3<>"/dev/tcp/127.0.0.1/$port"
+    printf '%s\n' "$cmd" >&3
+    IFS= read -r response <&3
+    printf '%s\n' "$response"
+fi

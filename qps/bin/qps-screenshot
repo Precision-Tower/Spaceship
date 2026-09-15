@@ -1,4 +1,4 @@
-#!/data/data/com.termux/files/usr/bin/python3
+#!/usr/bin/env python3
 from __future__ import annotations
 
 import json
@@ -34,13 +34,11 @@ def main(argv: list[str]) -> int:
 
     root = Path(os.environ.get("CEOS_ROOT", Path(__file__).resolve().parents[2])).resolve()
     trash = root / "trash" / "tmp"
-    control = Path(os.environ.get(
-        "QPS_SCREENSHOT_CONTROL",
-        root / "Android" / "Privileged" / "bin" / "ce-os-android-shell",
-    ))
+    control_override = os.environ.get("QPS_SCREENSHOT_CONTROL")
+    control = Path(control_override) if control_override else None
     upload_url = os.environ.get(
         "QPS_SCREENSHOT_UPLOAD_URL",
-        "https://tmpfiles.org/api/v1/upload",
+        "https://catbox.moe/user/api.php",
     )
     curl = os.environ.get("QPS_SCREENSHOT_CURL", "curl")
 
@@ -49,8 +47,27 @@ def main(argv: list[str]) -> int:
     shot = trash / f"qps-screenshot-{stamp}.png"
 
     try:
+        if control is not None:
+            capture_command = [str(control), "operator.screenshot", str(shot)]
+        elif Path("/system/bin/screencap").is_file():
+            capture_command = [
+                str(root / "Android" / "Privileged" / "bin" / "ce-os-android-shell"),
+                "operator.screenshot",
+                str(shot),
+            ]
+        else:
+            display = os.environ.get("DISPLAY", ":0")
+            capture_command = [
+                "import",
+                "-display",
+                display,
+                "-window",
+                "root",
+                str(shot),
+            ]
+
         capture = subprocess.run(
-            [str(control), "operator.screenshot", str(shot)],
+            capture_command,
             cwd=root,
             text=True,
             stdout=subprocess.PIPE,
@@ -75,7 +92,9 @@ def main(argv: list[str]) -> int:
                 "--silent",
                 "--show-error",
                 "-F",
-                f"file=@{shot}",
+                "reqtype=fileupload",
+                "-F",
+                f"fileToUpload=@{shot}",
                 upload_url,
             ],
             cwd=root,
@@ -87,16 +106,9 @@ def main(argv: list[str]) -> int:
             detail = upload.stderr.strip() or f"exit {upload.returncode}"
             return fail(f"publication failed: {detail}")
 
-        try:
-            payload = json.loads(upload.stdout)
-            if payload.get("status") != "success":
-                raise ValueError("upload service did not report success")
-            url = payload["data"]["url"]
-            if not isinstance(url, str) or not url.startswith("https://"):
-                raise ValueError("upload service returned no HTTPS URL")
-            url = url.replace("https://tmpfiles.org/", "https://tmpfiles.org/dl/", 1)
-        except (json.JSONDecodeError, KeyError, TypeError, ValueError) as exc:
-            return fail(f"publication response invalid: {exc}")
+        url = upload.stdout.strip()
+        if not url.startswith("https://files.catbox.moe/"):
+            return fail("publication response invalid: upload service returned no direct HTTPS file URL")
 
         print("SCREENSHOT=PASS")
         print(f"path={shot.relative_to(root).as_posix()}")

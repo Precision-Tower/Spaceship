@@ -67,9 +67,43 @@ func _drop_peer(peer: StreamPeerTCP) -> void:
 func _dispatch(command: String) -> String:
 	print("[OperatorShell] ops ", command)
 
+	var parts := command.split(" ", false)
+	if parts.size() >= 2 and parts[0] in ["t", "lr", "rr"]:
+		var region := parts[0]
+		var arg := parts[1]
+		if region == "t":
+			if arg == "+":
+				return _bool_result(operator_shell.operator_control_terminal_new(), "terminal created")
+			if arg in ["l", "logs", "d", "diffs", "p", "packets", "t", "terminal"]:
+				return _bool_result(operator_shell.operator_control_terminal_surface(arg), "terminal surface " + arg)
+			if arg == "status":
+				return "OK " + operator_shell.operator_control_terminal_status()
+		else:
+			if arg == "status":
+				return "OK " + operator_shell.operator_control_region_status(region)
+		return _bool_result(operator_shell.operator_control_region(region, arg), region + " " + arg)
+
 	match command:
 		"ping":
 			return "OK pong"
+
+		"home":
+			return _workspace("Home")
+
+		"workbench":
+			return _workspace("Workbench")
+
+		"internet":
+			return _workspace("Internet")
+
+		"chat":
+			return _workspace("Chat 01")
+
+		"next":
+			return _cycle_workspace(1)
+
+		"prev":
+			return _cycle_workspace(-1)
 
 		"surface.files":
 			return _surface("files")
@@ -121,3 +155,17 @@ func _surface(name: String) -> String:
 
 func _bool_result(ok: bool, message: String) -> String:
 	return ("OK " if ok else "ERROR ") + message
+
+
+func _workspace(name: String) -> String:
+	return _bool_result(
+		operator_shell.operator_control_workspace(name),
+		"workspace " + name
+	)
+
+
+func _cycle_workspace(direction: int) -> String:
+	return _bool_result(
+		operator_shell.operator_control_workspace_cycle(direction),
+		"workspace cycled"
+	)

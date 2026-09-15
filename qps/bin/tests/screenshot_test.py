@@ -4,6 +4,7 @@ from __future__ import annotations
 import json
 import os
 import shutil
+import sys
 import struct
 import subprocess
 import zlib
@@ -12,7 +13,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
 COMMAND = ROOT / "qps" / "bin" / "qps-screenshot"
-QPS = ROOT / "qps" / "cpp" / "build-pixel" / "qps"
+QPS = Path(os.environ.get("QPS_SCREENSHOT_TEST_QPS", ROOT / "qps" / "cpp" / "build-pixel" / "qps"))
 TMP = ROOT / "trash" / "tmp" / f"qps-screenshot-test-{os.getpid()}"
 
 
@@ -63,7 +64,7 @@ def main() -> None:
 
     executable(
         control,
-        """#!/data/data/com.termux/files/usr/bin/bash
+        """#!/usr/bin/env bash
 set -e
 [[ "$1" == "operator.screenshot" ]]
 python3 - "$2" <<'INNER'
@@ -77,7 +78,7 @@ INNER
     # Replace recursive fixture with a minimal PNG writer executable.
     executable(
         control,
-        """#!/data/data/com.termux/files/usr/bin/python3
+        """#!{}
 import struct, sys, zlib
 from pathlib import Path
 assert sys.argv[1] == "operator.screenshot"
@@ -87,20 +88,20 @@ def c(k,d):
 w,h=3,2
 raw=b"".join(b"\\x00"+b"\\x00\\x00\\x00"*w for _ in range(h))
 p.write_bytes(b"\\x89PNG\\r\\n\\x1a\\n"+c(b"IHDR",struct.pack(">IIBBBBB",w,h,8,2,0,0,0))+c(b"IDAT",zlib.compress(raw))+c(b"IEND",b""))
-""",
+""".format(sys.executable),
     )
     executable(
         curl,
-        """#!/data/data/com.termux/files/usr/bin/python3
+        """#!{}
 import json
-print(json.dumps({"status":"success","data":{"url":"https://tmpfiles.org/abc123/test.png"}}))
-""",
+print("https://files.catbox.moe/test.png")
+""".format(sys.executable),
     )
 
     result = run(COMMAND, control, curl)
     require(result.returncode == 0, result.stdout + result.stderr)
     require("SCREENSHOT=PASS" in result.stdout, result.stdout)
-    require("url=https://tmpfiles.org/dl/abc123/test.png" in result.stdout, result.stdout)
+    require("url=https://files.catbox.moe/test.png" in result.stdout, result.stdout)
     require("width=3" in result.stdout and "height=2" in result.stdout, result.stdout)
     require("exposure=temporary-public-https" in result.stdout, result.stdout)
     require(not list((TMP / "trash" / "tmp").glob("qps-screenshot-*.png")), "local screenshot was not cleaned")
@@ -109,7 +110,7 @@ print(json.dumps({"status":"success","data":{"url":"https://tmpfiles.org/abc123/
     require(result.returncode == 0, result.stdout + result.stderr)
     require("SCREENSHOT=PASS" in result.stdout, result.stdout)
 
-    executable(curl, "#!/data/data/com.termux/files/usr/bin/bash\nexit 22\n")
+    executable(curl, "#!/usr/bin/env bash\nexit 22\n")
     result = run(COMMAND, control, curl)
     require(result.returncode != 0, "failed uploader unexpectedly passed")
     require("SCREENSHOT=FAIL" in result.stderr, result.stderr)
@@ -118,7 +119,7 @@ print(json.dumps({"status":"success","data":{"url":"https://tmpfiles.org/abc123/
 
     executable(
         control,
-        "#!/data/data/com.termux/files/usr/bin/bash\nprintf 'not-png' > \"$2\"\n",
+        "#!/usr/bin/env bash\nprintf 'not-png' > \"$2\"\n",
     )
     result = run(COMMAND, control, curl)
     require(result.returncode != 0, "invalid PNG unexpectedly passed")

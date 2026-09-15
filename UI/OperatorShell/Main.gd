@@ -35,11 +35,8 @@ const OBSERVATION_SURFACES := [
 	"right:commands"
 ]
 
-var dock_handle: Control
-var dock_handle_bar: ColorRect
-var _dock_dragging := false
-var _dock_drag_start_y := 0.0
-var main_v_split: VBoxContainer
+var main_v_split: VSplitContainer
+var workspace_host: HBoxContainer
 var desktop_root: HBoxContainer
 var center_vbox: VBoxContainer
 var left_dock_shell: VBoxContainer
@@ -78,6 +75,7 @@ var operator_control_server
 var chrome_bridge
 var surface_canvas
 var _layout_diag_t: float = 0.0
+var _workspace_tab_changed_this_frame := false
 var left_scroll_strip: Control
 var right_scroll_strip: Control
 var left_split: HSplitContainer
@@ -177,13 +175,12 @@ func _toggle_terminal_dock() -> void:
 		if bottom_shell:
 			bottom_shell.custom_minimum_size = Vector2.ZERO
 		return
-	terminal_collapsed = !terminal_collapsed
 	if main_v_split == null:
 		return
+	terminal_collapsed = true
 	var total_h: int = int(main_v_split.size.y)
-	var bottom_h: int = 48 if terminal_collapsed else int(config.bottom_height_expanded)
-	if terminal_toggle_button:
-		terminal_toggle_button.text = "?" if terminal_collapsed else "?"
+	main_v_split.split_offset = total_h - 10
+	print("[Toggle] terminal collapsed offset=", main_v_split.split_offset)
 
 
 func _cycle_terminal_density() -> void:
@@ -230,8 +227,12 @@ func _ready() -> void:
 	mobile_fs_request.request_completed.connect(_on_mobile_fs_request_completed)
 	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 	var screen_size := DisplayServer.screen_get_size()
-	DisplayServer.window_set_size(screen_size)
-	DisplayServer.window_set_position(Vector2i.ZERO)
+	var screen_pos := DisplayServer.screen_get_position()
+	var usable_rect := DisplayServer.screen_get_usable_rect()
+	if usable_rect.size.x <= 0 or usable_rect.size.y <= 0:
+		usable_rect = Rect2i(screen_pos, screen_size)
+	DisplayServer.window_set_size(usable_rect.size)
+	DisplayServer.window_set_position(usable_rect.position)
 	config = load("res://resources/dashboard_config.tres")
 # 	var qps_config := QPSConfig.new(CliBridge.dashboard_root())
 # 	qps_config.apply(config)
@@ -260,12 +261,14 @@ func _ready() -> void:
 	request_assist_wake.connect(_on_request_assist_wake)
 
 func _process(_delta: float) -> void:
+	_settle_vsplit()
 	_layout_diag_t += _delta
 	if _layout_diag_t > 3.0:
 		_layout_diag_t = 0.0
 		var off := -1
 		var vs := Vector2.ZERO
 		if main_v_split != null:
+			off = main_v_split.split_offset
 			vs = main_v_split.size
 		print("[LayoutDiag] vsplit=", int(vs.x), "x", int(vs.y), " offset=", off)
 func _update_mobile_keyboard_layout() -> void:
@@ -418,36 +421,19 @@ func _build() -> void:
 	center_vbox.add_child(_top_bar())
 	center_vbox.add_child(_runtime_state_bar())
 
-	main_v_split = VBoxContainer.new()
+	main_v_split = VSplitContainer.new()
 	main_v_split.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	main_v_split.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	main_v_split.add_theme_constant_override("separation", 0)
+	main_v_split.custom_minimum_size = Vector2(0, 0)
 	center_vbox.add_child(main_v_split)
 
-	var workspace_host := HBoxContainer.new()
+	workspace_host = HBoxContainer.new()
 	workspace_host.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	workspace_host.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	workspace_host.custom_minimum_size = Vector2(0, 0)
+	workspace_host.size_flags_vertical = Control.SIZE_FILL
 	workspace_host.add_theme_constant_override("separation", 0)
 	workspace_host.add_child(_workspace())
 	main_v_split.add_child(workspace_host)
-
-	var dock_handle := Control.new()
-	dock_handle.custom_minimum_size = Vector2(0, 6)
-	dock_handle.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	dock_handle.mouse_filter = Control.MOUSE_FILTER_STOP
-	dock_handle.gui_input.connect(_on_dock_handle_input)
-	var handle_bg := ColorRect.new()
-	handle_bg.color = Color(0.3, 0.2, 0.4, 0.001)
-	handle_bg.set_anchors_preset(Control.PRESET_FULL_RECT)
-	handle_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	dock_handle.add_child(handle_bg)
-	main_v_split.add_child(dock_handle)
-
-	var bottom := _bottom()
-	bottom.size_flags_vertical = Control.SIZE_SHRINK_END
-	bottom.custom_minimum_size = Vector2(0, 48)
-	main_v_split.add_child(bottom)
+	main_v_split.add_child(_bottom())
 
 	right_dock_shell = _build_right_dock_shell()
 	right_dock_shell.custom_minimum_size = Vector2(0, 0)
@@ -968,71 +954,41 @@ func _move_control_to(control: Control, next_parent: Node) -> void:
 
 func _build_left_dock_shell() -> VBoxContainer:
 	var shell := VBoxContainer.new()
-	shell.custom_minimum_size = Vector2(320, 0)
+	shell.custom_minimum_size = Vector2(0, 0)
 	shell.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	shell.add_theme_constant_override("separation", 4)
-
-	var collapse := Button.new()
-	collapse.text = "«"
-	collapse.tooltip_text = "Collapse left dock"
-	collapse.custom_minimum_size = Vector2(32, 28)
-	collapse.pressed.connect(_toggle_left_dock)
-	shell.add_child(collapse)
 
 	left_panel_control = _left_awareness()
 	left_panel_control.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	shell.add_child(left_panel_control)
-
-	left_reveal_button = Button.new()
-	left_reveal_button.text = "›"
-	left_reveal_button.tooltip_text = "Open left dock"
-	left_reveal_button.custom_minimum_size = Vector2(28, 0)
-	left_reveal_button.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	left_reveal_button.visible = false
-	left_reveal_button.pressed.connect(_toggle_left_dock)
-	shell.add_child(left_reveal_button)
 
 	return shell
 
 
 func _build_right_dock_shell() -> VBoxContainer:
 	var shell := VBoxContainer.new()
-	shell.custom_minimum_size = Vector2(320, 0)
+	shell.custom_minimum_size = Vector2(0, 0)
 	shell.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	shell.add_theme_constant_override("separation", 4)
 
-	var collapse := Button.new()
-	collapse.text = "»"
-	collapse.tooltip_text = "Collapse right dock"
-	collapse.custom_minimum_size = Vector2(32, 28)
-	collapse.pressed.connect(_toggle_right_dock)
-	shell.add_child(collapse)
+	var viewport := Control.new()
+	viewport.custom_minimum_size = Vector2.ZERO
+	viewport.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	viewport.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	viewport.clip_contents = true
+	shell.add_child(viewport)
 
 	right_rail_control = _right_control_rail()
-	right_rail_control.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	shell.add_child(right_rail_control)
-
-	right_reveal_button = Button.new()
-	right_reveal_button.text = "‹"
-	right_reveal_button.tooltip_text = "Open right dock"
-	right_reveal_button.custom_minimum_size = Vector2(28, 0)
-	right_reveal_button.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	right_reveal_button.visible = false
-	right_reveal_button.pressed.connect(_toggle_right_dock)
-	shell.add_child(right_reveal_button)
+	right_rail_control.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	viewport.add_child(right_rail_control)
 
 	return shell
 
 
 func _toggle_left_dock() -> void:
-	print("[Toggle] left, open=", left_dock_open, " split=", left_split)
 	if left_split == null:
 		return
-	left_dock_open = not left_dock_open
-	if left_dock_shell:
-		left_dock_shell.visible = left_dock_open
-	if left_split:
-		left_split.split_offset = 320 if left_dock_open else 0
+	operator_control_region("lr", "0" if left_dock_open else "320px")
 	call_deferred("_dump_panel_state")
 
 func _on_left_drag_ended() -> void:
@@ -1049,15 +1005,9 @@ func _on_left_drag_ended() -> void:
 
 
 func _toggle_right_dock() -> void:
-	print("[Toggle] right, open=", right_dock_open, " split=", center_right_split)
 	if center_right_split == null:
 		return
-	right_dock_open = not right_dock_open
-	if right_dock_shell:
-		right_dock_shell.visible = right_dock_open
-	if center_right_split:
-		var total_w: int = int(center_right_split.size.x)
-		center_right_split.split_offset = (total_w - 340) if right_dock_open else total_w
+	operator_control_region("rr", "0" if right_dock_open else "340px")
 	call_deferred("_dump_panel_state")
 
 func _on_right_drag_ended() -> void:
@@ -1240,6 +1190,56 @@ func _workspace() -> Control:
 func _open_workbench(observed := true) -> void:
 	workspace_surface.open_workbench("Workbench")
 
+func _open_internet(observed := true) -> void:
+	workspace_surface.open_internet(observed)
+
+
+func _toggle_internet(observed := true) -> void:
+	if chrome_bridge == null:
+		return
+	if chrome_bridge.IsVisible():
+		chrome_bridge.Close()
+		return
+	chrome_bridge.Open()
+	workspace_surface.open_internet(observed)
+	chrome_bridge.Show(workspace_surface.internet_surface)
+func _on_workspace_tab_changed(tab: int) -> void:
+	_workspace_tab_changed_this_frame = true
+	call_deferred("_clear_workspace_tab_changed_guard")
+	if chrome_bridge == null or workspace_surface == null or workspace_tabs == null:
+		return
+	var title := ""
+	if tab >= 0 and tab < workspace_tabs.get_tab_count():
+		title = workspace_tabs.get_tab_title(tab)
+	if title == "Internet" and workspace_surface.internet_surface != null:
+		chrome_bridge.Open()
+		chrome_bridge.Show(workspace_surface.internet_surface)
+	else:
+		chrome_bridge.Hide()
+
+func _clear_workspace_tab_changed_guard() -> void:
+	_workspace_tab_changed_this_frame = false
+
+func _on_workspace_tab_clicked(tab: int) -> void:
+	if chrome_bridge == null or workspace_tabs == null:
+		return
+	if tab < 0 or tab >= workspace_tabs.get_tab_count():
+		return
+	if workspace_tabs.get_tab_title(tab) != "Internet":
+		return
+	if workspace_tabs.current_tab != tab:
+		return
+	# A different tab becoming Internet emits tab_changed and tab_clicked in the same frame.
+	# tab_changed owns show/hide; only a repeat click on already-selected Internet toggles Chrome.
+	if _workspace_tab_changed_this_frame:
+		return
+	if chrome_bridge.IsVisible():
+		chrome_bridge.Close()
+		return
+	chrome_bridge.Open()
+	if workspace_surface != null and workspace_surface.internet_surface != null:
+		chrome_bridge.Show(workspace_surface.internet_surface)
+
 func _new_chat(observed := true) -> void:
 	workspace_surface.new_chat(observed)
 
@@ -1288,7 +1288,6 @@ func _apply_config() -> void:
 func _bottom() -> Control:
 	bottom_dock = BottomDock.new(self)
 	bottom_shell = bottom_dock.build()
-
 	bottom_shell.clip_contents = true
 	bottom_tabs = bottom_dock.bottom_tabs
 	return bottom_shell
@@ -1297,9 +1296,23 @@ func _seed() -> void:
 	_apply_config()
 	_set_status_value("current_root", CliBridge.core_root())
 	_set_status_value("dashboard_boot", "rendered")
-	_new_chat(false)
 	_open_screen("Home", false)
 	_open_workbench(false)
+	_open_internet(false)
+	_new_chat(false)
+	if workspace_tabs != null:
+		if not workspace_tabs.tab_changed.is_connected(_on_workspace_tab_changed):
+			workspace_tabs.tab_changed.connect(_on_workspace_tab_changed)
+		var tab_bar := workspace_tabs.get_tab_bar()
+		if tab_bar != null and not tab_bar.tab_clicked.is_connected(_on_workspace_tab_clicked):
+			tab_bar.tab_clicked.connect(_on_workspace_tab_clicked)
+		for i in workspace_tabs.get_tab_count():
+			if workspace_tabs.get_tab_title(i) == "Internet":
+				workspace_tabs.current_tab = i
+				break
+	if bottom_dock != null and bottom_dock.terminal_surface != null:
+		bottom_dock.terminal_surface.start_codego()
+		chrome_bridge.Show(workspace_surface.internet_surface)
 	_log("Phase 4.5 loaded. Operator-triggered state refresh only.")
 	_terminal("Path debug\n" + CliBridge.debug_paths())
 	_render_mission()
@@ -1519,37 +1532,6 @@ func _render_packets(result: Dictionary) -> void:
 	_packets(_format(result))
 func _render_task_proposal(proposal: Dictionary, intent: String) -> void:
 	_diff(ResultRenderer.task_proposal(proposal, intent))
-const CODEGO_PROVIDERS := {
-	"qwen": "https://chat.qwen.ai",
-	"gemini": "https://gemini.google.com/app",
-	"deepseek": "https://chat.deepseek.com",
-}
-
-func _codego_provider(provider: String) -> void:
-	if not CODEGO_PROVIDERS.has(provider):
-		return
-	var url: String = CODEGO_PROVIDERS[provider]
-
-	# Write active thread file so CodeGo.py can pick it up later
-	var home := OS.get_environment("HOME")
-	if home == "":
-		home = OS.get_environment("USERPROFILE")
-	if home != "":
-		var dir_path := home + "/Core/DeepSeek/_sandbox"
-		var thread_file := dir_path + "/active_thread.txt"
-		DirAccess.make_dir_recursive_absolute(dir_path)
-		var f := FileAccess.open(thread_file, FileAccess.WRITE)
-		if f:
-			f.store_string(url)
-			f.close()
-
-	# Open a new tab in the already-running Chrome via CDP
-	var cdp_url := "http://127.0.0.1:9222/json/new?" + url
-	OS.execute("curl", ["-s", "-X", "PUT", cdp_url], [], true)
-
-	_log("codego: launched " + provider + " -> " + url)
-	_terminal("codego: " + provider + " opened in Chrome")
-
 func _on_approve_task_pressed() -> void:
 	approve_button.visible = false
 	_log("Approving task: " + last_proposal_intent)
@@ -1599,6 +1581,11 @@ func _button(button: Button, primary: bool) -> void:
 	button.add_theme_color_override("font_hover_color", Palette.PLUM_BLACK if primary else Palette.GOLD_BRIGHT)
 
 func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and not event.echo and event.alt_pressed and event.keycode == KEY_TAB:
+		operator_control_workspace_cycle(-1 if event.shift_pressed else 1)
+		get_viewport().set_input_as_handled()
+		return
+
 	if audit_controller != null and audit_controller.handle_input(event):
 		get_viewport().set_input_as_handled()
 		return
@@ -1669,23 +1656,162 @@ func open_document_in_docs(file_path: String) -> void:
 	if not left_dock_open:
 		_toggle_left_dock()
 
-func _on_dock_handle_hover(hovering: bool) -> void:
-	if dock_handle_bar == null:
-		return
-	if hovering:
-		dock_handle_bar.color = Color("f1d58a")
-	else:
-		dock_handle_bar.color = Color(0.54, 0.42, 0.12, 0.35)
+var _vsplit_initialized: bool = false
+var _last_vsplit_h: int = -1
 
-func _on_dock_handle_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
-		_dock_dragging = event.pressed
-		_dock_drag_start_y = event.global_position.y
-	elif event is InputEventMouseMotion and _dock_dragging:
-		var delta: float = _dock_drag_start_y - event.global_position.y
-		_dock_drag_start_y = event.global_position.y
-		if bottom_shell == null:
-			return
-		var cur_h: float = bottom_shell.custom_minimum_size.y
-		var new_h: float = clampf(cur_h + delta, 48.0, 800.0)
-		bottom_shell.custom_minimum_size = Vector2(0, new_h)
+func _settle_vsplit() -> void:
+	if main_v_split == null:
+		return
+	var h: int = int(main_v_split.size.y)
+	if h < 200:
+		return
+	# Only react when the split actually changed size. Operator drags
+	# between size changes are left alone.
+	if h == _last_vsplit_h:
+		return
+	_last_vsplit_h = h
+
+	var total_h: int = h
+	var min_dock: int = 10
+	var ws_min: int = 48
+	if workspace_host != null:
+		ws_min = int(workspace_host.get_combined_minimum_size().y)
+
+	if not _vsplit_initialized:
+		# First real size: collapse to the minimal draggable bar.
+		main_v_split.split_offset = total_h - min_dock
+		_vsplit_initialized = true
+
+	# Clamp within sensible bounds so drag cannot squeeze the workspace
+	# below its minimum or the dock below the grab bar.
+	main_v_split.split_offset = clampi(
+		main_v_split.split_offset,
+		ws_min,
+		total_h - min_dock)
+
+
+
+func _parse_region_size(spec: String, total: int) -> int:
+	var value := spec.strip_edges().to_lower()
+	if value == "0":
+		return 0
+	if value.ends_with("px"):
+		var raw := value.trim_suffix("px")
+		if not raw.is_valid_int():
+			return -1
+		return maxi(0, raw.to_int())
+	if value.ends_with("%"):
+		var raw := value.trim_suffix("%")
+		if not raw.is_valid_float():
+			return -1
+		return maxi(0, int(round(float(total) * raw.to_float() / 100.0)))
+	return -1
+
+func operator_control_region(region: String, spec: String) -> bool:
+	if mobile_mode:
+		return false
+	match region:
+		"t":
+			if main_v_split == null:
+				return false
+			var total := int(main_v_split.size.y)
+			var requested := _parse_region_size(spec, total)
+			if requested < 0:
+				return false
+			var min_h := 10
+			var ws_min := 48
+			if workspace_host != null:
+				ws_min = int(workspace_host.get_combined_minimum_size().y)
+			var actual := min_h if requested == 0 else clampi(requested, min_h, maxi(min_h, total - ws_min))
+			terminal_collapsed = requested == 0
+			main_v_split.split_offset = total - actual
+			_vsplit_initialized = true
+			_last_vsplit_h = total
+			return true
+		"lr":
+			if left_split == null or left_dock_shell == null:
+				return false
+			var total := int(left_split.size.x)
+			var requested := _parse_region_size(spec, total)
+			if requested < 0:
+				return false
+			left_dock_open = requested > 0
+			left_dock_shell.visible = left_dock_open
+			if requested == 0:
+				left_split.split_offset = 0
+			else:
+				var min_w := int(left_dock_shell.get_combined_minimum_size().x)
+				left_split.split_offset = clampi(maxi(requested, min_w), min_w, maxi(min_w, total - 60))
+			return true
+		"rr":
+			if center_right_split == null or right_dock_shell == null:
+				return false
+			var total := int(center_right_split.size.x)
+			var requested := _parse_region_size(spec, total)
+			if requested < 0:
+				return false
+			right_dock_open = requested > 0
+			right_dock_shell.visible = right_dock_open
+			if requested == 0:
+				center_right_split.split_offset = total
+			else:
+				var min_w := int(right_dock_shell.get_combined_minimum_size().x)
+				var actual := clampi(maxi(requested, min_w), min_w, maxi(min_w, total - 60))
+				center_right_split.split_offset = total - actual
+			return true
+		_:
+			return false
+
+func operator_control_terminal_surface(name: String) -> bool:
+	return bottom_dock != null and bottom_dock.select_surface(name)
+
+func operator_control_terminal_new() -> bool:
+	return bottom_dock != null and bottom_dock.create_terminal_session()
+
+func operator_control_terminal_status() -> String:
+	if bottom_dock == null or main_v_split == null:
+		return "unavailable"
+	var height := int(main_v_split.size.y) - main_v_split.split_offset
+	return "height=" + str(height) + "px " + bottom_dock.controller_status()
+
+func operator_control_region_status(region: String) -> String:
+	match region:
+		"lr":
+			return "width=" + str(int(left_dock_shell.size.x) if left_dock_open and left_dock_shell != null else 0) + "px"
+		"rr":
+			if center_right_split == null or not right_dock_open:
+				return "width=0px"
+			return "width=" + str(maxi(0, int(center_right_split.size.x) - center_right_split.split_offset)) + "px"
+		_:
+			return "unavailable"
+
+func operator_control_workspace(name: String) -> bool:
+	if workspace_surface == null or workspace_tabs == null:
+		return false
+
+	match name:
+		"Home":
+			_open_screen("Home", false)
+		"Workbench":
+			_open_workbench(false)
+		"Internet":
+			_open_internet(false)
+		"Chat 01":
+			_open_chat("Chat 01", false)
+		_:
+			return false
+
+	return true
+
+
+func operator_control_workspace_cycle(direction: int) -> bool:
+	if workspace_tabs == null:
+		return false
+	var count := workspace_tabs.get_tab_count()
+	if count <= 0:
+		return false
+
+	var step := 1 if direction >= 0 else -1
+	var next := (workspace_tabs.current_tab + step + count) % count
+	workspace_tabs.current_tab = next
+	return true

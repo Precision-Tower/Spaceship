@@ -72,6 +72,10 @@ func build() -> Control:
 	_create_codego_console()
 	return root
 
+func create_session() -> bool:
+	_create_session()
+	return true
+
 func apply_terminal_density(mode: String) -> void:
 	match mode:
 		"comfortable":
@@ -203,19 +207,19 @@ func _create_codego_console() -> void:
 	}
 	if empty_state:
 		empty_state.visible = false
-	_launch_codego(sid)
+
+func start_codego() -> void:
+	for sid in sessions.keys():
+		var data: Dictionary = sessions.get(sid, {})
+		if str(data.get("kind", "")) == "codego":
+			_launch_codego(str(sid))
+			return
 
 func _launch_codego(sid: String) -> void:
-	var t := Timer.new()
-	t.wait_time = 2.0
-	t.one_shot = true
-	t.timeout.connect(func():
-		if sessions.has(sid):
-			TerminalClient.write_input(sid, "cd ~/Core/CodeGo && python3 CodeGo.py\n")
-			t.queue_free()
-	)
-	root.add_child(t)
-	t.start()
+	if sessions.has(sid):
+		var response := TerminalClient.write_input(sid, "cd ~/ce-os && python3 UI/OperatorShell/runtime/codego/codego.py\n")
+		if not bool(response.get("ok", false)):
+			print("[OperatorTerminal] codego launch failed: " + str(response.get("error", "")))
 
 func _load_system_log_tail() -> void:
 	if not sessions.has(SYSTEM_SESSION_ID):

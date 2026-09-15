@@ -126,3 +126,7 @@ Thumbs.db
 # Local kernel binaries & build output
 /qps/kernel/*
 !/qps/kernel/.gitkeep
+
+# OperatorShell backup/debug debris
+*.broken*
+/UI/OperatorShell/*.broken*
